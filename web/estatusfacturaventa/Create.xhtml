@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EstatusfacturaventaCreateDlg" widgetVar="EstatusfacturaventaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlefactura.CreateEstatusfacturaventaTitle}">
+            <h:form id="EstatusfacturaventaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{estatusfacturaventaController.selected != null}">
+                        <p:outputLabel value="#{bundlefactura.CreateEstatusfacturaventaLabel_idestatusfacturaventa}" for="idestatusfacturaventa" />
+                        <p:inputText id="idestatusfacturaventa" value="#{estatusfacturaventaController.selected.idestatusfacturaventa}" title="#{bundlefactura.CreateEstatusfacturaventaTitle_idestatusfacturaventa}" required="true" requiredMessage="#{bundlefactura.CreateEstatusfacturaventaRequiredMessage_idestatusfacturaventa}"/>
+                        <p:outputLabel value="#{bundlefactura.CreateEstatusfacturaventaLabel_estatusfacturaventa}" for="estatusfacturaventa" />
+                        <p:inputText id="estatusfacturaventa" value="#{estatusfacturaventaController.selected.estatusfacturaventa}" title="#{bundlefactura.CreateEstatusfacturaventaTitle_estatusfacturaventa}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{estatusfacturaventaController.create}" value="#{bundlefactura.Save}" update="display,:EstatusfacturaventaListForm:datalist,:growl" oncomplete="handleSubmit(args,'EstatusfacturaventaCreateDialog');"/>
+                    <p:commandButton value="#{bundlefactura.Cancel}" onclick="EstatusfacturaventaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

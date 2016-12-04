@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EstatusfacturaventaEditDlg" widgetVar="EstatusfacturaventaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlefactura.EditEstatusfacturaventaTitle}">
+            <h:form id="EstatusfacturaventaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{estatusfacturaventaController.selected != null}">
+                        <p:outputLabel value="#{bundlefactura.EditEstatusfacturaventaLabel_idestatusfacturaventa}" for="idestatusfacturaventa" />
+                        <p:inputText id="idestatusfacturaventa" value="#{estatusfacturaventaController.selected.idestatusfacturaventa}" title="#{bundlefactura.EditEstatusfacturaventaTitle_idestatusfacturaventa}" required="true" requiredMessage="#{bundlefactura.EditEstatusfacturaventaRequiredMessage_idestatusfacturaventa}"/>
+                        <p:outputLabel value="#{bundlefactura.EditEstatusfacturaventaLabel_estatusfacturaventa}" for="estatusfacturaventa" />
+                        <p:inputText id="estatusfacturaventa" value="#{estatusfacturaventaController.selected.estatusfacturaventa}" title="#{bundlefactura.EditEstatusfacturaventaTitle_estatusfacturaventa}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{estatusfacturaventaController.update}" value="#{bundlefactura.Save}" update="display,:EstatusfacturaventaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EstatusfacturaventaEditDialog');"/>
+                    <p:commandButton value="#{bundlefactura.Cancel}" onclick="EstatusfacturaventaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

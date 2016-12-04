@@ -33,6 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Estatuscontable.findByIdestatuscontable", query = "SELECT e FROM Estatuscontable e WHERE e.idestatuscontable = :idestatuscontable"),
     @NamedQuery(name = "Estatuscontable.findByEstatuscontable", query = "SELECT e FROM Estatuscontable e WHERE e.estatuscontable = :estatuscontable")})
 public class Estatuscontable implements Serializable {
+    @OneToMany(mappedBy = "idestatuscontable")
+    private Collection<Factura> facturaCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,6 +102,15 @@ public class Estatuscontable implements Serializable {
     @Override
     public String toString() {
         return "Modelo.Estatuscontable[ idestatuscontable=" + idestatuscontable + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Factura> getFacturaCollection() {
+        return facturaCollection;
+    }
+
+    public void setFacturaCollection(Collection<Factura> facturaCollection) {
+        this.facturaCollection = facturaCollection;
     }
     
 }

@@ -28,5 +28,9 @@
             <base-name>/Bundlepagos</base-name>
             <var>bundlepagos</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/Bundlefactura</base-name>
+            <var>bundlefactura</var>
+        </resource-bundle>
     </application>
 </faces-config>

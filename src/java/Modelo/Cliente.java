@@ -6,6 +6,7 @@
 package Modelo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,12 +16,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,6 +43,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Cliente.findByPersonacontacto", query = "SELECT c FROM Cliente c WHERE c.personacontacto = :personacontacto"),
     @NamedQuery(name = "Cliente.findByTelefonocontacto", query = "SELECT c FROM Cliente c WHERE c.telefonocontacto = :telefonocontacto")})
 public class Cliente implements Serializable {
+    @OneToMany(mappedBy = "rifcliente")
+    private Collection<Factura> facturaCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -196,6 +201,15 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         return "Modelo.Cliente[ rifcliente=" + rifcliente + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Factura> getFacturaCollection() {
+        return facturaCollection;
+    }
+
+    public void setFacturaCollection(Collection<Factura> facturaCollection) {
+        this.facturaCollection = facturaCollection;
     }
     
 }
