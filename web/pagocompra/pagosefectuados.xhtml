@@ -34,15 +34,15 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column style="width:6%" sortBy="#{item.idpagocompra}">
+                        <p:column style="width:6%" sortBy="#{item.idpagocompra}" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_idpago}"/>
                             </f:facet>
                             <h:outputText value="PGC-#{item.idpagocompra}"/>
                         </p:column>
-                        <p:column width="100" >
+                        <p:column width="100" filterBy="#{item.idcompra.idauxiliarrequerimiento.iddepartamento.departamento}" filterMatchMode="contains">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPagoCompraTitle_solicitante}"/>
+                                <h:outputText value="#{bundle.ListPagoCompraTitle_solicitante} "/>
                             </f:facet>
                             <h:outputText value="#{item.idcompra.idauxiliarrequerimiento.iddepartamento.departamento}"/>
                         </p:column>

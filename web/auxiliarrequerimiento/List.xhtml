@@ -29,7 +29,7 @@
                                  rows="15"
                                  rowStyleClass="#{item.idestatusrequerimiento.idestatusrequerimiento le 2 ? 'old' : null}"
                                  rowsPerPageTemplate="15,20,30,40,50"
-                                 >
+                                     >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton "/>
@@ -94,12 +94,10 @@
                             <h:outputText value="#{item.idestatusrequerimiento.estatusrequerimiento}"/>
                         </p:column>
                         <p:column style="text-align: center" headerText="Procesar">
-                            <h:commandLink action="compra.xhtml" actionListener="#{comprasController.asignar(item)}"> 
+                            <h:commandLink action="compra.xhtml" actionListener="#{comprasController.asignar(item)}">       
                                 <h:graphicImage library="images" name="apply.png" width="20" height="20" alt="Procesar"/>
                             </h:commandLink>      
                         </p:column>
-                        
-
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{auxiliarrequerimientoController.prepareCreate}" update=":AuxiliarrequerimientoCreateForm" oncomplete="PF('AuxiliarrequerimientoCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AuxiliarrequerimientoViewForm" oncomplete="PF('AuxiliarrequerimientoViewDialog').show()" disabled="#{empty auxiliarrequerimientoController.selected}"/>
