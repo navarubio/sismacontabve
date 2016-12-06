@@ -30,4 +30,6 @@ public interface CajaFacadeLocal {
 
     int count();
     
+    public Caja ubicarCaja ();
+    
 }

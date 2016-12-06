@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+        <ui:composition template="./../template.xhtml">
+            <ui:define name="title">
+                Nueva Factura
+                <h:outputStylesheet library="css" name="index.css" />    
+            </ui:define>
+            <ui:define name="body">
+                <p:growl id="msgs" showDetail="true" autoUpdate="true" showSummary="false" />
+
+                <h:form id ="formulario">
+                    <div id="imag2">
+                        <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca"/>
+                    </div>      
+                    <img src="../resources/images/business.png" width="70" height="70" alt="Facturacion" align="right" />
+
+                    <p:panel header="FACTURACION">
+                        <p:fieldset legend="Datos Vendedor y Cliente" >
+                            <p:panelGrid columns="2">
+                                <p:outputLabel for="usuario" value="USUARIO" styleClass="optionalLbl"/>
+                                <p:outputLabel id="usuario" value="#{requerimientosController.usuario.nombre}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="departamento" value="DEPARTAMENTO" styleClass="optionalLbl"/>
+                                <p:outputLabel id="departamento" value="#{requerimientosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="numero" value="Nro. Factura" styleClass="optionalLbl"/>                                
+                                <p:outputLabel id="numero" value="000#{facturasController.devolversiguientefactura()}" title="#{bundle.CreateFacturaTitle_numerofactura}" />
+
+                                <p:outputLabel for="control" value="Nro. Control" styleClass="optionalLbl"/>
+                                <p:inputText id="control" value="#{facturasController.factura.numerocontrol}" title="#{bundle.CreateFacturaTitle_controlfactura}" />
+                                
+                                <p:outputLabel for="client" value="Cliente" styleClass="optionalLbl"/>
+                                <p:selectOneMenu id="client" value="#{facturasController.cliente}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
+                                    <p:ajax event="change" update="rif, direccioncliente, telefono"/>                              
+
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                    <f:selectItems value="#{facturasController.clientes}"
+                                                   var="idarticuloItem"
+                                                   itemLabel="#{idarticuloItem.razonsocial}"  itemValue="#{idarticuloItem}" /> 
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="rif" value="R.I.F." styleClass="optionalLbl"/>
+                                <p:outputLabel id="rif" value="#{facturasController.cliente.rifcliente}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="direccioncliente" value="Direccion Fiscal" styleClass="optionalLbl"/>
+                                <p:outputLabel id="direccioncliente" value="#{facturasController.cliente.direccionfiscal}"/>
+                                <p:outputLabel for="telefono" value="Telefonos" styleClass="optionalLbl"/>
+                                <p:outputLabel id="telefono" value="#{facturasController.cliente.telefonos}"/>
+
+                                <p:outputLabel for="fechaventa" value="Fecha Venta" />
+                                <p:calendar id="fechaventa" pattern="dd/MM/yyyy" value="#{facturasController.factura.fecha}" showOn="button" navigator="true"/>
+                                <p:outputLabel for="observa" value="Observaciones" styleClass="optionalLbl"/>
+                                <p:inputTextarea id="observa"  rows="2" cols="50" label="Observaciones" value="#{facturasController.factura.observacionesfact}"/>
+                            </p:panelGrid>
+                        </p:fieldset>
+                        <p:fieldset legend="Datos de Articulos">
+                            <p:panelGrid id= "datosarticulo" columns="7">
+                                <p:outputLabel value="Articulo" for="idrequerimiento"  />
+                                <p:selectOneMenu id="idrequerimiento" value="#{requerimientosController.requer.codigo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" >
+                                    <p:ajax event="change" listener="#{requerimientosController.buscarArticulo()}" update="precio"/>                              
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                    <!--f:selectItems value=".{articuloController.itemsAvailableSelectOne}"-->
+                                    <f:selectItems value="#{requerimientosController.articulos}"
+                                                   var="idarticuloItem"
+                                                   itemLabel="#{idarticuloItem.descripcion}"  itemValue="#{idarticuloItem}" /> 
+                                </p:selectOneMenu>
+                                <p:outputLabel for="cantidad" value="Cantidad" />
+                                <p:inputText id="cantidad" value="#{requerimientosController.cantidad}" style="text-align:right"/>
+                                <p:outputLabel for="precio"  value="Precio sin IVA" styleClass="optionalLbl"/>
+                                <p:inputText id="precio"  label="#{requerimientosController.articulo.pcosto}"  size="20" value="#{requerimientosController.pcosto}" style="text-align:right"/>
+                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{requerimientosController.anexar()}" update="listado"/>   
+                            </p:panelGrid>
+                        </p:fieldset>
+                        <p:panel>
+                            <p:dataTable id="listado" widgetVar="listadoreq" value="#{requerimientosController.listarequerimiento}" 
+                                         var="req" emptyMessage="No hay articulos para mostrar" rowKey="#{req.codigo.codigo}"
+                                         selectionMode="single" >
+                                <p:column style="width:8%"  headerText="Codigo Articulo">
+                                    #{req.codigo.codigo} 
+                                </p:column>
+                                <p:column style="width:25%"  headerText="Descripcion del Articulo">
+                                    #{req.codigo} 
+                                </p:column>
+                                <p:column style="text-align: center" headerText="Cantidad">
+                                    #{req.cantidad} 
+                                </p:column >
+                                <p:column style="text-align: right" headerText="Precio Unitario ">
+                                    <h:outputText value="#{req.pcosto}">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right" headerText="SUB TOTAL">
+                                    <h:outputText value="#{req.subtotal}">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                </p:column>                                
+                                <p:column style="text-align: right" headerText="IVA">
+                                    <h:outputText value="#{req.tributoiva}">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right" headerText="TOTAL">
+                                    <h:outputText value="#{req.total}">
+                                        <f:convertNumber type="currency" currencySymbol=""  />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="width:10%" headerText="Eliminar">
+                                    <p:commandLink value="Eliminar" actionListener="#{requerimientosController.eliminar(req)}" update="listado" />
+                                </p:column>
+                                <p:columnGroup type="footer">
+                                    <p:row>
+                                        <p:column colspan="4" style="text-align:right" footerText="TOTALES GENERALES" />
+                                        <p:column style="text-align: right"  footerText="#{requerimientosController.totalbaseimponible()}"/> 
+                                        <p:column style="text-align: right"  footerText="#{requerimientosController.totaliva()}" />
+                                        <p:column style="text-align: right"  footerText="#{requerimientosController.totaltotal()}" />
+                                    </p:row>
+                                </p:columnGroup>                            
+                            </p:dataTable>
+                            <p:commandButton value="Registrar" actionListener="#{facturasController.registrarventa()}"  action="/factura/List?faces-redirect=true" update=":formulario,:growl"/>
+                        </p:panel>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
+

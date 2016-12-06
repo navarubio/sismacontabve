@@ -30,4 +30,8 @@ public interface FacturaFacadeLocal {
 
     int count();
     
+    Factura ultimaInsertada();
+     
+    int siguientefactura();
+    
 }

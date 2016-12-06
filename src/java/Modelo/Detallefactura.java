@@ -30,13 +30,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Detallefactura.findAll", query = "SELECT d FROM Detallefactura d"),
     @NamedQuery(name = "Detallefactura.findByIddetallefact", query = "SELECT d FROM Detallefactura d WHERE d.iddetallefact = :iddetallefact"),
     @NamedQuery(name = "Detallefactura.findByUnidades", query = "SELECT d FROM Detallefactura d WHERE d.unidades = :unidades"),
-    @NamedQuery(name = "Detallefactura.findByPreciocosto", query = "SELECT d FROM Detallefactura d WHERE d.preciocosto = :preciocosto"),
-    @NamedQuery(name = "Detallefactura.findByPrecioventabruto", query = "SELECT d FROM Detallefactura d WHERE d.precioventabruto = :precioventabruto"),
-    @NamedQuery(name = "Detallefactura.findByDescuento", query = "SELECT d FROM Detallefactura d WHERE d.descuento = :descuento"),
-    @NamedQuery(name = "Detallefactura.findByPrecioventaneta", query = "SELECT d FROM Detallefactura d WHERE d.precioventaneta = :precioventaneta"),
-    @NamedQuery(name = "Detallefactura.findByTotalcosto", query = "SELECT d FROM Detallefactura d WHERE d.totalcosto = :totalcosto"),
-    @NamedQuery(name = "Detallefactura.findByTotaldescuento", query = "SELECT d FROM Detallefactura d WHERE d.totaldescuento = :totaldescuento"),
-    @NamedQuery(name = "Detallefactura.findByTotalventa", query = "SELECT d FROM Detallefactura d WHERE d.totalventa = :totalventa")})
+    @NamedQuery(name = "Detallefactura.findByPrecioventa", query = "SELECT d FROM Detallefactura d WHERE d.precioventa = :precioventa"),
+    @NamedQuery(name = "Detallefactura.findBySubtotal", query = "SELECT d FROM Detallefactura d WHERE d.subtotal= :subtotal"),
+    @NamedQuery(name = "Detallefactura.findByTributoiva", query = "SELECT d FROM Detallefactura d WHERE d.tributoiva= :tributoiva"),
+    @NamedQuery(name = "Detallefactura.findByTotal", query = "SELECT d FROM Detallefactura d WHERE d.total= :total")})
 public class Detallefactura implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,22 +42,16 @@ public class Detallefactura implements Serializable {
     @Column(name = "iddetallefact")
     private Integer iddetallefact;
     @Column(name = "unidades")
-    private Integer unidades;
+    private Double unidades;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "preciocosto")
-    private Double preciocosto;
-    @Column(name = "precioventabruto")
-    private Double precioventabruto;
-    @Column(name = "descuento")
-    private Double descuento;
-    @Column(name = "precioventaneta")
-    private Double precioventaneta;
-    @Column(name = "totalcosto")
-    private Double totalcosto;
-    @Column(name = "totaldescuento")
-    private Double totaldescuento;
-    @Column(name = "totalventa")
-    private Double totalventa;
+    @Column(name = "precioventa")
+    private Double precioventa;
+    @Column(name = "subtotal")
+    private Double subtotal;
+    @Column(name = "tributoiva")
+    private Double tributoiva;
+    @Column(name = "total")
+    private Double total;
     @JoinColumn(name = "numerofact", referencedColumnName = "numerofact")
     @ManyToOne
     private Factura numerofact;
@@ -83,68 +74,44 @@ public class Detallefactura implements Serializable {
         this.iddetallefact = iddetallefact;
     }
 
-    public Integer getUnidades() {
+    public Double getUnidades() {
         return unidades;
     }
 
-    public void setUnidades(Integer unidades) {
+    public void setUnidades(Double unidades) {
         this.unidades = unidades;
     }
 
-    public Double getPreciocosto() {
-        return preciocosto;
+    public Double getPrecioventa() {
+        return precioventa;
     }
 
-    public void setPreciocosto(Double preciocosto) {
-        this.preciocosto = preciocosto;
+    public void setPrecioventa(Double precioventa) {
+        this.precioventa = precioventa;
     }
 
-    public Double getPrecioventabruto() {
-        return precioventabruto;
+    public Double getSubtotal() {
+        return subtotal;
     }
 
-    public void setPrecioventabruto(Double precioventabruto) {
-        this.precioventabruto = precioventabruto;
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
     }
 
-    public Double getDescuento() {
-        return descuento;
+    public Double getTributoiva() {
+        return tributoiva;
     }
 
-    public void setDescuento(Double descuento) {
-        this.descuento = descuento;
+    public void setTributoiva(Double tributoiva) {
+        this.tributoiva= tributoiva;
     }
 
-    public Double getPrecioventaneta() {
-        return precioventaneta;
+    public Double getTotal() {
+        return total;
     }
 
-    public void setPrecioventaneta(Double precioventaneta) {
-        this.precioventaneta = precioventaneta;
-    }
-
-    public Double getTotalcosto() {
-        return totalcosto;
-    }
-
-    public void setTotalcosto(Double totalcosto) {
-        this.totalcosto = totalcosto;
-    }
-
-    public Double getTotaldescuento() {
-        return totaldescuento;
-    }
-
-    public void setTotaldescuento(Double totaldescuento) {
-        this.totaldescuento = totaldescuento;
-    }
-
-    public Double getTotalventa() {
-        return totalventa;
-    }
-
-    public void setTotalventa(Double totalventa) {
-        this.totalventa = totalventa;
+    public void setTotal(Double total) {
+        this.total = total;
     }
 
     public Factura getNumerofact() {

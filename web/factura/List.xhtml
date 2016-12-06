@@ -93,7 +93,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_idusuario}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idusuario}"/>
+                            <h:outputText value="#{item.idusuario.nombre}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -105,13 +105,13 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_idestatusfacturaventa}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idestatusfacturaventa}"/>
+                            <h:outputText value="#{item.idestatusfacturaventa.estatusfacturaventa}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_idestatuscontable}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idestatuscontable}"/>
+                            <h:outputText value="#{item.idestatuscontable.estatuscontable}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlefactura.Create}" actionListener="#{facturaController.prepareCreate}" update=":FacturaCreateForm" oncomplete="PF('FacturaCreateDialog').show()"/>

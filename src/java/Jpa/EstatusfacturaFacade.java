@@ -50,6 +50,7 @@ public class EstatusfacturaFacade extends AbstractFacade<Estatusfactura> impleme
         }
         return estatus;
     }
+    @Override
     public Estatusfactura estatusfacturaPagada(int tipo) {
         String consulta;
         int idstatus=tipo;

@@ -146,7 +146,7 @@ public class Caja implements Serializable {
 
     @Override
     public String toString() {
-        return "Modelo.Caja[ idcaja=" + idcaja + " ]";
+        return descripcion;
     }
     
 }

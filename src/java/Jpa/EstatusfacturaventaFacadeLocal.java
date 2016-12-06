@@ -30,4 +30,6 @@ public interface EstatusfacturaventaFacadeLocal {
 
     int count();
     
+    public Estatusfacturaventa estatusFacturaPorCobrar ();
+    
 }

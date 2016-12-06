@@ -4,6 +4,7 @@ import Modelo.Caja;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.CajaFacade;
+import Jpa.CajaFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +25,7 @@ import javax.faces.convert.FacesConverter;
 public class CajaController implements Serializable {
 
     @EJB
-    private Jpa.CajaFacade ejbFacade;
+    private Jpa.CajaFacadeLocal ejbFacade;
     private List<Caja> items = null;
     private Caja selected;
 
@@ -45,7 +46,7 @@ public class CajaController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private CajaFacade getFacade() {
+    private CajaFacadeLocal getFacade() {
         return ejbFacade;
     }
 

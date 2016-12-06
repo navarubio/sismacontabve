@@ -4,6 +4,7 @@ import Modelo.Estatusfacturaventa;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.EstatusfacturaventaFacade;
+import Jpa.EstatusfacturaventaFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +25,7 @@ import javax.faces.convert.FacesConverter;
 public class EstatusfacturaventaController implements Serializable {
 
     @EJB
-    private Jpa.EstatusfacturaventaFacade ejbFacade;
+    private Jpa.EstatusfacturaventaFacadeLocal ejbFacade;
     private List<Estatusfacturaventa> items = null;
     private Estatusfacturaventa selected;
 
@@ -45,7 +46,7 @@ public class EstatusfacturaventaController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private EstatusfacturaventaFacade getFacade() {
+    private EstatusfacturaventaFacadeLocal getFacade() {
         return ejbFacade;
     }
 

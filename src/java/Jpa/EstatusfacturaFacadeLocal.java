@@ -32,4 +32,6 @@ public interface EstatusfacturaFacadeLocal {
     
     Estatusfactura cambiarestatusFactura(int tipo);
     
+    Estatusfactura estatusfacturaPagada(int tipo);
+    
 }

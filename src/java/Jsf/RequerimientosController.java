@@ -38,16 +38,16 @@ public class RequerimientosController implements Serializable {
 
     private List<Articulo> articulos = null;
     private List<Requerimiento> requerimientos = null;
-    private List<Requerimiento> requerimientosfiltrados;
-    private List<Requerimiento> listarequerimiento = new ArrayList();
+    private List<Requerimiento> requerimientosfiltrados;    
+    private static List<Requerimiento> listarequerimiento = new ArrayList();
     private String codigo = null;
     private String descripcion = null;
     private double cantidad = 0;
     private double pcosto = 0;
     private double subtotal = 0;
-    private double totalgeneral = 0;
-    private double totaliva = 0;
-    private double totalsubtotal = 0;
+    private static double totalgeneral = 0;
+    private static double totaliva = 0;
+    private static double totalsubtotal = 0;
     private int id = 0;
 
     private Auxiliarrequerimiento codAux;
@@ -275,8 +275,72 @@ public class RequerimientosController implements Serializable {
 
         return montotgeneral;
     }
+    public double totaliva() {
+        double montotgeneral = 0;
+        double montotiva = 0;
+        double montotsubtotal = 0;
+
+        for (Requerimiento requeri : listarequerimiento) {
+            montotgeneral += requeri.getTotal();
+            montotiva += requeri.getTributoiva();
+            montotsubtotal += requeri.getSubtotal();
+        }
+        totalgeneral = montotgeneral;
+        totaliva = montotiva;
+        totalsubtotal = montotsubtotal;
+
+        return montotiva;
+    }
+    public double totalbaseimponible() {
+        double montotgeneral = 0;
+        double montotiva = 0;
+        double montotsubtotal = 0;
+
+        for (Requerimiento requeri : listarequerimiento) {
+            montotgeneral += requeri.getTotal();
+            montotiva += requeri.getTributoiva();
+            montotsubtotal += requeri.getSubtotal();
+        }
+        totalgeneral = montotgeneral;
+        totaliva = montotiva;
+        totalsubtotal = montotsubtotal;
+
+        return montotsubtotal;
+    }
 
     public void registrar() {
+        Articulo art = new Articulo();
+        try {
+            auxrequer.setIddepartamento(dpto);
+            auxrequer.setIdusuario(usa);
+            auxrequer.setIdestatusrequerimiento(statusreq);
+            auxrequer.setSubtotal(totalsubtotal);
+            auxrequer.setMontoiva(totaliva);
+            auxrequer.setMontototal(totalgeneral);
+
+            auxiliarrequerimientoEJB.create(auxrequer);
+
+            codAux = requerimientoEJB.ultimoInsertado();
+
+            for (Requerimiento rq : listarequerimiento) {
+                Articulo arti = rq.getCodigo();
+                requer.setIdauxiliarrequerimiento(codAux);
+                requer.setCodigo(arti);
+                requer.setCantidad(rq.getCantidad());
+                requer.setPcosto(rq.getPcosto());
+                requer.setSubtotal(rq.getSubtotal());
+                requer.setTributoiva(rq.getTributoiva());
+                requer.setTotal(rq.getTotal());
+                requerimientoEJB.create(requer);
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Requerimiento fue Almacenado"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Requerimiento"));
+        } finally {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        }
+    }
+    public void registrarventa() {
         Articulo art = new Articulo();
         try {
             auxrequer.setIddepartamento(dpto);

@@ -6,9 +6,11 @@
 package Jpa;
 
 import Modelo.Factura;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,5 +29,42 @@ public class FacturaFacade extends AbstractFacade<Factura> implements FacturaFac
     public FacturaFacade() {
         super(Factura.class);
     }
+    
+    @Override
+    public Factura ultimaInsertada() {
+        String consulta = null;
+        Factura ultima = new Factura();
+        try {
+            consulta = "Select f From Factura f Order By f.numerofact Desc";
+            Query query = em.createQuery(consulta);
+            List<Factura> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                ultima = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return ultima;
+    }
+    
+    @Override
+    public int siguientefactura() {
+        String consulta = null;
+        Factura ultima = new Factura();
+        int numeracion;
+        try {
+            consulta = "Select f From Factura f Order By f.numerofact Desc";
+            Query query = em.createQuery(consulta);
+            List<Factura> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                ultima = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        numeracion = ultima.getNumerofact()+1;
+        return numeracion;
+    }
+    
     
 }
