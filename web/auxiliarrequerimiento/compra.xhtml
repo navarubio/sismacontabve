@@ -107,7 +107,9 @@
                                 <h:outputText style="width:10px"  value="#{req.cantidad}"/>
                             </p:column >
                             <p:column style="text-align:right" headerText="Precio Unitario ">
-                                <h:outputText style="width:10px"  value="#{req.pcosto}"/>
+                                <h:outputText style="width:10px"  value="#{req.pcosto}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
                             </p:column>
                             <p:column style="text-align:right" headerText="SUB TOTAL">
                                 <h:outputText value="#{req.subtotal}"> 

@@ -20,26 +20,26 @@
                                  selectionMode="single" selection="#{facturaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.numerofact}"
-                                 rows="10"
+                                 rows="20"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column style="text-align: center" width="80" filterBy="#{item.numerofact}" sortBy="#{item.numerofact}" filterMatchMode="contains"> 
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_numerofact}"/>
                             </f:facet>
                             <h:outputText value="#{item.numerofact}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center" filterBy="#{item.numerocontrol}" sortBy="#{item.numerocontrol}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_numerocontrol}"/>
                             </f:facet>
                             <h:outputText value="#{item.numerocontrol}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center" sortBy="#{item.fecha}" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_fecha}"/>
                             </f:facet>
@@ -47,71 +47,53 @@
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_hora}"/>
                             </f:facet>
                             <h:outputText value="#{item.hora}"/>
                         </p:column>
-                        <p:column>
+                        <p:column filterBy="#{item.rifcliente.razonsocial}" sortBy="#{item.rifcliente.razonsocial}" filterMatchMode="contains" width="150">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlefactura.ListFacturaTitle_rifcliente}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.rifcliente.razonsocial}"/>
+                        </p:column>                        
+                        <p:column width="200">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_observacionesfact}"/>
                             </f:facet>
                             <h:outputText value="#{item.observacionesfact}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align:right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_bimponiblefact}"/>
                             </f:facet>
-                            <h:outputText value="#{item.bimponiblefact}"/>
+                            <h:outputText value="#{item.bimponiblefact}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>                                  
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align:right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_ivafact}"/>
                             </f:facet>
-                            <h:outputText value="#{item.ivafact}"/>
+                            <h:outputText value="#{item.ivafact}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>                                  
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align:right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_totalgeneral}"/>
                             </f:facet>
-                            <h:outputText value="#{item.totalgeneral}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlefactura.ListFacturaTitle_cantidadenletras}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.cantidadenletras}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlefactura.ListFacturaTitle_idcaja}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idcaja}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlefactura.ListFacturaTitle_idusuario}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idusuario.nombre}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlefactura.ListFacturaTitle_rifcliente}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.rifcliente}"/>
+                            <h:outputText value="#{item.totalgeneral}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>                                  
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_idestatusfacturaventa}"/>
                             </f:facet>
                             <h:outputText value="#{item.idestatusfacturaventa.estatusfacturaventa}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlefactura.ListFacturaTitle_idestatuscontable}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idestatuscontable.estatuscontable}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlefactura.Create}" actionListener="#{facturaController.prepareCreate}" update=":FacturaCreateForm" oncomplete="PF('FacturaCreateDialog').show()"/>

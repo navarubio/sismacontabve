@@ -27,71 +27,61 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_iddetallefact}"/>
                             </f:facet>
                             <h:outputText value="#{item.iddetallefact}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_unidades}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.unidades}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_preciocosto}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.preciocosto}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_precioventabruto}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.precioventabruto}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_descuento}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.descuento}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_precioventaneta}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.precioventaneta}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_totalcosto}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.totalcosto}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_totaldescuento}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.totaldescuento}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_totalventa}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.totalventa}"/>
-                        </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_numerofact}"/>
                             </f:facet>
                             <h:outputText value="#{item.numerofact}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="300" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_codigo}"/>
                             </f:facet>
-                            <h:outputText value="#{item.codigo}"/>
+                            <h:outputText value="#{item.codigo.descripcion}"/>
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_unidades}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.unidades}"/>
+                        </p:column>
+                        <p:column style="text-align:right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_preciocosto}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.precioventa}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>                                
+                        </p:column>
+                        <p:column style="text-align:right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_precioventabruto}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.subtotal}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="text-align:right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_descuento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tributoiva}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>                                    
+                        </p:column>
+                        <p:column  style="text-align:right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_precioventaneta}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.total}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlefactura.Create}" actionListener="#{detallefacturaController.prepareCreate}" update=":DetallefacturaCreateForm" oncomplete="PF('DetallefacturaCreateDialog').show()"/>
@@ -101,7 +91,7 @@
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
-            </h:form>
+            </h:form> 
 
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>

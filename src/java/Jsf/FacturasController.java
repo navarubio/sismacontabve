@@ -53,13 +53,12 @@ public class FacturasController implements Serializable {
     @EJB
     private ArticuloFacadeLocal articuloEJB;
     @EJB
-    private CajaFacadeLocal cajaEJB; 
+    private CajaFacadeLocal cajaEJB;
     @EJB
     private EstatuscontableFacadeLocal estatuscontableEJB;
     @EJB
     private EstatusfacturaventaFacadeLocal estatusfacturaventaEJB;
 
-    
     private Detallefactura detallefactura;
     private RequerimientosController reque = new RequerimientosController();
 
@@ -155,7 +154,7 @@ public class FacturasController implements Serializable {
             factura.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
             factura.setIdestatusfacturaventa(estatusfacturaventaEJB.estatusFacturaPorCobrar());
             facturaEJB.create(factura);
-            
+
             codfactura = facturaEJB.ultimaInsertada();
 
             for (Requerimiento rq : reque.getListarequerimiento()) {
@@ -170,18 +169,18 @@ public class FacturasController implements Serializable {
                 detallefacturaEJB.create(detalle);
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Requerimiento fue Almacenado"));
+            reque.limpiarListaArreglo();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Requerimiento"));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
-        
+
     }
-   
+
     public int devolversiguientefactura() {
         int siguiente;
         siguiente = facturaEJB.siguientefactura();
         return siguiente;
     }
 }
-

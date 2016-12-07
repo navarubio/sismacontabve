@@ -38,7 +38,7 @@ public class RequerimientosController implements Serializable {
 
     private List<Articulo> articulos = null;
     private List<Requerimiento> requerimientos = null;
-    private List<Requerimiento> requerimientosfiltrados;    
+    private List<Requerimiento> requerimientosfiltrados;
     private static List<Requerimiento> listarequerimiento = new ArrayList();
     private String codigo = null;
     private String descripcion = null;
@@ -202,7 +202,7 @@ public class RequerimientosController implements Serializable {
     public void setAuxrequer(Auxiliarrequerimiento auxrequer) {
         this.auxrequer = auxrequer;
     }
- 
+
     public Usuario getUsuario() {
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         usa = us;
@@ -275,6 +275,7 @@ public class RequerimientosController implements Serializable {
 
         return montotgeneral;
     }
+
     public double totaliva() {
         double montotgeneral = 0;
         double montotiva = 0;
@@ -291,6 +292,7 @@ public class RequerimientosController implements Serializable {
 
         return montotiva;
     }
+
     public double totalbaseimponible() {
         double montotgeneral = 0;
         double montotiva = 0;
@@ -334,38 +336,7 @@ public class RequerimientosController implements Serializable {
                 requerimientoEJB.create(requer);
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Requerimiento fue Almacenado"));
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Requerimiento"));
-        } finally {
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-        }
-    }
-    public void registrarventa() {
-        Articulo art = new Articulo();
-        try {
-            auxrequer.setIddepartamento(dpto);
-            auxrequer.setIdusuario(usa);
-            auxrequer.setIdestatusrequerimiento(statusreq);
-            auxrequer.setSubtotal(totalsubtotal);
-            auxrequer.setMontoiva(totaliva);
-            auxrequer.setMontototal(totalgeneral);
-
-            auxiliarrequerimientoEJB.create(auxrequer);
-
-            codAux = requerimientoEJB.ultimoInsertado();
-
-            for (Requerimiento rq : listarequerimiento) {
-                Articulo arti = rq.getCodigo();
-                requer.setIdauxiliarrequerimiento(codAux);
-                requer.setCodigo(arti);
-                requer.setCantidad(rq.getCantidad());
-                requer.setPcosto(rq.getPcosto());
-                requer.setSubtotal(rq.getSubtotal());
-                requer.setTributoiva(rq.getTributoiva());
-                requer.setTotal(rq.getTotal());
-                requerimientoEJB.create(requer);
-            }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Requerimiento fue Almacenado"));
+            listarequerimiento.clear();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Requerimiento"));
         } finally {
@@ -404,9 +375,15 @@ public class RequerimientosController implements Serializable {
         auxrequer = auxiliar;
         return requerimientosfiltrados;
     }
+
     public List<Requerimiento> buscarRequerimientosGenerales() {
-        
+
         return requerimientosfiltrados;
+    }
+
+    public void limpiarListaArreglo() {
+        listarequerimiento.clear();
+
     }
 
 }

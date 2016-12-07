@@ -24,17 +24,17 @@
                     <p:panel header="FACTURACION">
                         <p:fieldset legend="Datos Vendedor y Cliente" >
                             <p:panelGrid columns="2">
-                                <p:outputLabel for="usuario" value="USUARIO" styleClass="optionalLbl"/>
+                                <p:outputLabel for="usuario" style="font-weight:bold" value="USUARIO" styleClass="optionalLbl"/>
                                 <p:outputLabel id="usuario" value="#{requerimientosController.usuario.nombre}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="departamento" value="DEPARTAMENTO" styleClass="optionalLbl"/>
+                                <p:outputLabel for="departamento" style="font-weight:bold" value="DEPARTAMENTO" styleClass="optionalLbl"/>
                                 <p:outputLabel id="departamento" value="#{requerimientosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="numero" value="Nro. Factura" styleClass="optionalLbl"/>                                
+                                <p:outputLabel for="numero" style="font-weight:bold" value="Nro. Factura" styleClass="optionalLbl"/>                                
                                 <p:outputLabel id="numero" value="000#{facturasController.devolversiguientefactura()}" title="#{bundle.CreateFacturaTitle_numerofactura}" />
 
-                                <p:outputLabel for="control" value="Nro. Control" styleClass="optionalLbl"/>
+                                <p:outputLabel for="control" style="font-weight:bold" value="Nro. Control" styleClass="optionalLbl"/>
                                 <p:inputText id="control" value="#{facturasController.factura.numerocontrol}" title="#{bundle.CreateFacturaTitle_controlfactura}" />
                                 
-                                <p:outputLabel for="client" value="Cliente" styleClass="optionalLbl"/>
+                                <p:outputLabel for="client" style="font-weight:bold" value="Cliente" styleClass="optionalLbl"/>
                                 <p:selectOneMenu id="client" value="#{facturasController.cliente}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
                                     <p:ajax event="change" update="rif, direccioncliente, telefono"/>                              
 
@@ -44,22 +44,22 @@
                                                    itemLabel="#{idarticuloItem.razonsocial}"  itemValue="#{idarticuloItem}" /> 
                                 </p:selectOneMenu>
 
-                                <p:outputLabel for="rif" value="R.I.F." styleClass="optionalLbl"/>
+                                <p:outputLabel for="rif" style="font-weight:bold" value="R.I.F." styleClass="optionalLbl"/>
                                 <p:outputLabel id="rif" value="#{facturasController.cliente.rifcliente}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="direccioncliente" value="Direccion Fiscal" styleClass="optionalLbl"/>
+                                <p:outputLabel for="direccioncliente" style="font-weight:bold"  value="Direccion Fiscal" styleClass="optionalLbl"/>
                                 <p:outputLabel id="direccioncliente" value="#{facturasController.cliente.direccionfiscal}"/>
-                                <p:outputLabel for="telefono" value="Telefonos" styleClass="optionalLbl"/>
+                                <p:outputLabel for="telefono" style="font-weight:bold" value="Telefonos" styleClass="optionalLbl"/>
                                 <p:outputLabel id="telefono" value="#{facturasController.cliente.telefonos}"/>
 
-                                <p:outputLabel for="fechaventa" value="Fecha Venta" />
+                                <p:outputLabel for="fechaventa" style="font-weight:bold"  value="Fecha Venta" />
                                 <p:calendar id="fechaventa" pattern="dd/MM/yyyy" value="#{facturasController.factura.fecha}" showOn="button" navigator="true"/>
-                                <p:outputLabel for="observa" value="Observaciones" styleClass="optionalLbl"/>
+                                <p:outputLabel for="observa" style="font-weight:bold"  value="Observaciones" styleClass="optionalLbl"/>
                                 <p:inputTextarea id="observa"  rows="2" cols="50" label="Observaciones" value="#{facturasController.factura.observacionesfact}"/>
                             </p:panelGrid>
                         </p:fieldset>
                         <p:fieldset legend="Datos de Articulos">
                             <p:panelGrid id= "datosarticulo" columns="7">
-                                <p:outputLabel value="Articulo" for="idrequerimiento"  />
+                                <p:outputLabel value="Articulo" style="font-weight:bold" for="idrequerimiento"  />
                                 <p:selectOneMenu id="idrequerimiento" value="#{requerimientosController.requer.codigo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" >
                                     <p:ajax event="change" listener="#{requerimientosController.buscarArticulo()}" update="precio"/>                              
                                     <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
@@ -68,9 +68,9 @@
                                                    var="idarticuloItem"
                                                    itemLabel="#{idarticuloItem.descripcion}"  itemValue="#{idarticuloItem}" /> 
                                 </p:selectOneMenu>
-                                <p:outputLabel for="cantidad" value="Cantidad" />
+                                <p:outputLabel for="cantidad" style="font-weight:bold" value="Cantidad" />
                                 <p:inputText id="cantidad" value="#{requerimientosController.cantidad}" style="text-align:right"/>
-                                <p:outputLabel for="precio"  value="Precio sin IVA" styleClass="optionalLbl"/>
+                                <p:outputLabel for="precio"  style="font-weight:bold" value="Precio sin IVA" styleClass="optionalLbl"/>
                                 <p:inputText id="precio"  label="#{requerimientosController.articulo.pcosto}"  size="20" value="#{requerimientosController.pcosto}" style="text-align:right"/>
                                 <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{requerimientosController.anexar()}" update="listado"/>   
                             </p:panelGrid>

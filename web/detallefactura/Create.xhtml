@@ -17,19 +17,13 @@
                         <p:outputLabel value="#{bundlefactura.CreateDetallefacturaLabel_unidades}" for="unidades" />
                         <p:inputText id="unidades" value="#{detallefacturaController.selected.unidades}" title="#{bundlefactura.CreateDetallefacturaTitle_unidades}" />
                         <p:outputLabel value="#{bundlefactura.CreateDetallefacturaLabel_preciocosto}" for="preciocosto" />
-                        <p:inputText id="preciocosto" value="#{detallefacturaController.selected.preciocosto}" title="#{bundlefactura.CreateDetallefacturaTitle_preciocosto}" />
+                        <p:inputText id="preciocosto" value="#{detallefacturaController.selected.precioventa}" title="#{bundlefactura.CreateDetallefacturaTitle_preciocosto}" />
                         <p:outputLabel value="#{bundlefactura.CreateDetallefacturaLabel_precioventabruto}" for="precioventabruto" />
-                        <p:inputText id="precioventabruto" value="#{detallefacturaController.selected.precioventabruto}" title="#{bundlefactura.CreateDetallefacturaTitle_precioventabruto}" />
+                        <p:inputText id="precioventabruto" value="#{detallefacturaController.selected.subtotal}" title="#{bundlefactura.CreateDetallefacturaTitle_precioventabruto}" />
                         <p:outputLabel value="#{bundlefactura.CreateDetallefacturaLabel_descuento}" for="descuento" />
-                        <p:inputText id="descuento" value="#{detallefacturaController.selected.descuento}" title="#{bundlefactura.CreateDetallefacturaTitle_descuento}" />
+                        <p:inputText id="descuento" value="#{detallefacturaController.selected.tributoiva}" title="#{bundlefactura.CreateDetallefacturaTitle_descuento}" />
                         <p:outputLabel value="#{bundlefactura.CreateDetallefacturaLabel_precioventaneta}" for="precioventaneta" />
-                        <p:inputText id="precioventaneta" value="#{detallefacturaController.selected.precioventaneta}" title="#{bundlefactura.CreateDetallefacturaTitle_precioventaneta}" />
-                        <p:outputLabel value="#{bundlefactura.CreateDetallefacturaLabel_totalcosto}" for="totalcosto" />
-                        <p:inputText id="totalcosto" value="#{detallefacturaController.selected.totalcosto}" title="#{bundlefactura.CreateDetallefacturaTitle_totalcosto}" />
-                        <p:outputLabel value="#{bundlefactura.CreateDetallefacturaLabel_totaldescuento}" for="totaldescuento" />
-                        <p:inputText id="totaldescuento" value="#{detallefacturaController.selected.totaldescuento}" title="#{bundlefactura.CreateDetallefacturaTitle_totaldescuento}" />
-                        <p:outputLabel value="#{bundlefactura.CreateDetallefacturaLabel_totalventa}" for="totalventa" />
-                        <p:inputText id="totalventa" value="#{detallefacturaController.selected.totalventa}" title="#{bundlefactura.CreateDetallefacturaTitle_totalventa}" />
+                        <p:inputText id="precioventaneta" value="#{detallefacturaController.selected.total}" title="#{bundlefactura.CreateDetallefacturaTitle_precioventaneta}" />
                         <p:outputLabel value="#{bundlefactura.CreateDetallefacturaLabel_numerofact}" for="numerofact" />
                         <p:selectOneMenu id="numerofact" value="#{detallefacturaController.selected.numerofact}" >
                             <f:selectItems value="#{facturaController.itemsAvailableSelectOne}"
