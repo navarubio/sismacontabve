@@ -149,6 +149,7 @@ public class FacturasController implements Serializable {
             factura.setBimponiblefact(reque.getTotalsubtotal());
             factura.setIvafact(reque.getTotaliva());
             factura.setTotalgeneral(reque.getTotalgeneral());
+            factura.setSaldopendiente(reque.getTotalgeneral());            
             factura.setHora(fechaCadena);
             factura.setIdcaja(cajaEJB.ubicarCaja());
             factura.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
@@ -175,7 +176,6 @@ public class FacturasController implements Serializable {
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
-
     }
 
     public int devolversiguientefactura() {

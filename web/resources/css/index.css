@@ -29,7 +29,14 @@
 
 }
 
-#usuario{
+
+
+#formulario .text-ouput{
     font-weight:  bold;
+    color:black;
 }
 
+.text-cantidad{
+    font-weight: bold;
+    color:greenyellow;
+}

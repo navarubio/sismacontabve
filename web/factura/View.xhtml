@@ -7,8 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-
-        <p:dialog id="FacturaViewDlg" widgetVar="FacturaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlefactura.ViewFacturaTitle}">
+        <p:dialog id="FacturaViewDlg" widgetVar="FacturaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlefactura.ViewFacturaTitle}" >
             <h:form id="FacturaViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{facturaController.selected != null}">
@@ -35,7 +34,7 @@
                         <h:outputText value="#{bundlefactura.ViewFacturaLabel_razonsocial}"/>
                         <h:outputText value="#{facturaController.selected.rifcliente.razonsocial}" title="#{bundlefactura.ViewFacturaTitle_rifcliente}"/>
                         <h:outputText value="#{bundlefactura.ViewFacturaLabel_observacionesfact}"/>
-                        <h:outputText value="#{facturaController.selected.observacionesfact}" title="#{bundlefactura.ViewFacturaTitle_observacionesfact}"/>
+                        <h:outputText style="width: 150px;white-space: normal" value="#{facturaController.selected.observacionesfact}" title="#{bundlefactura.ViewFacturaTitle_observacionesfact}"/>
                         <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_bimponiblefact}"/>
                         <h:outputText style="float:right" value="#{facturaController.selected.bimponiblefact}" title="#{bundlefactura.ViewFacturaTitle_bimponiblefact}">
                             <f:convertNumber type="currency" currencySymbol=" " />

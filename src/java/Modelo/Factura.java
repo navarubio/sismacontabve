@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Factura.findByBimponiblefact", query = "SELECT f FROM Factura f WHERE f.bimponiblefact = :bimponiblefact"),
     @NamedQuery(name = "Factura.findByIvafact", query = "SELECT f FROM Factura f WHERE f.ivafact = :ivafact"),
     @NamedQuery(name = "Factura.findByTotalgeneral", query = "SELECT f FROM Factura f WHERE f.totalgeneral = :totalgeneral"),
+    @NamedQuery(name = "Factura.findBySaldopendiente", query = "SELECT f FROM Factura f WHERE f.saldopendiente= :saldopendiente"),
     @NamedQuery(name = "Factura.findByCantidadenletras", query = "SELECT f FROM Factura f WHERE f.cantidadenletras = :cantidadenletras")})
 public class Factura implements Serializable {
     @OneToMany(mappedBy = "numerofact")
@@ -71,6 +72,8 @@ public class Factura implements Serializable {
     private Double ivafact;
     @Column(name = "totalgeneral")
     private Double totalgeneral;
+    @Column(name = "saldopendiente")
+    private Double saldopendiente;
     @Size(max = 250)
     @Column(name = "cantidadenletras")
     private String cantidadenletras;
@@ -161,6 +164,14 @@ public class Factura implements Serializable {
         this.totalgeneral = totalgeneral;
     }
 
+    public Double getSaldopendiente() {
+        return saldopendiente;
+    }
+
+    public void setSaldopendiente(Double saldopendiente) {
+        this.saldopendiente = saldopendiente;
+    }
+    
     public String getCantidadenletras() {
         return cantidadenletras;
     }
