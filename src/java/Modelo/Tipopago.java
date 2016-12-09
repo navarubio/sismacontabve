@@ -33,8 +33,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Tipopago.findByIdtipopago", query = "SELECT t FROM Tipopago t WHERE t.idtipopago = :idtipopago"),
     @NamedQuery(name = "Tipopago.findByTipopago", query = "SELECT t FROM Tipopago t WHERE t.tipopago = :tipopago")})
 public class Tipopago implements Serializable {
+
     @OneToMany(mappedBy = "idtipopago")
     private Collection<Pagocompra> pagocompraCollection;
+    @OneToMany(mappedBy = "idtipopago")
+    private Collection<Cobroventa> cobroventaCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -101,5 +105,13 @@ public class Tipopago implements Serializable {
     public void setPagocompraCollection(Collection<Pagocompra> pagocompraCollection) {
         this.pagocompraCollection = pagocompraCollection;
     }
-    
+
+    @XmlTransient
+    public Collection<Cobroventa> getCobroventaCollection() {
+        return cobroventaCollection;
+    }
+
+    public void setCobroventaCollection(Collection<Cobroventa> cobroventaCollection) {
+        this.cobroventaCollection = cobroventaCollection;
+    }
 }

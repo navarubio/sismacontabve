@@ -89,12 +89,18 @@
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>                                  
                         </p:column>
-                        <p:column>
+                        <p:column width="100">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_idestatusfacturaventa}"/>
                             </f:facet>
                             <h:outputText value="#{item.idestatusfacturaventa.estatusfacturaventa}"/>
                         </p:column>
+                        <p:column width="40" style="text-align: center" headerText="Cobrar">
+                            <h:commandLink action="/auxiliarrequerimiento/Pagocompra.xhtml" actionListener="#{pagosController.asignar(item)}" > 
+                                <h:graphicImage library="images" name="business.png" width="30" height="30" alt="Pagar Compra"/>
+                            </h:commandLink>      
+                        </p:column>
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlefactura.Create}" actionListener="#{facturaController.prepareCreate}" update=":FacturaCreateForm" oncomplete="PF('FacturaCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlefactura.View}" update=":FacturaViewForm" oncomplete="PF('FacturaViewDialog').show()" disabled="#{empty facturaController.selected}"/>

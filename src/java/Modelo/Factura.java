@@ -47,6 +47,9 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Factura implements Serializable {
     @OneToMany(mappedBy = "numerofact")
     private Collection<Detallefactura> detallefacturaCollection;
+    @OneToMany(mappedBy = "numerofact")
+    private Collection<Cobroventa> cobroventaCollection;
+    
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -252,6 +255,15 @@ public class Factura implements Serializable {
 
     public void setDetallefacturaCollection(Collection<Detallefactura> detallefacturaCollection) {
         this.detallefacturaCollection = detallefacturaCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Cobroventa> getCobroventaCollection() {
+        return cobroventaCollection;
+    }
+
+    public void setCobroventaCollection(Collection<Cobroventa> CobroventaCollection) {
+        this.cobroventaCollection = CobroventaCollection;
     }
     
 }
