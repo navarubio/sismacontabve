@@ -32,5 +32,9 @@
             <base-name>/Bundlefactura</base-name>
             <var>bundlefactura</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/Bundlecobro</base-name>
+            <var>bundlecobro</var>
+        </resource-bundle>
     </application>
 </faces-config>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CobroventaCreateDlg" widgetVar="CobroventaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecobro.CreateCobroventaTitle}">
+            <h:form id="CobroventaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{cobroventaController.selected != null}">
+                        <p:outputLabel value="#{bundlecobro.CreateCobroventaLabel_idcobroventa}" for="idcobroventa" />
+                        <p:inputText id="idcobroventa" value="#{cobroventaController.selected.idcobroventa}" title="#{bundlecobro.CreateCobroventaTitle_idcobroventa}" required="true" requiredMessage="#{bundlecobro.CreateCobroventaRequiredMessage_idcobroventa}"/>
+                        <p:outputLabel value="#{bundlecobro.CreateCobroventaLabel_cuentaoriginadora}" for="cuentaoriginadora" />
+                        <p:inputText id="cuentaoriginadora" value="#{cobroventaController.selected.cuentaoriginadora}" title="#{bundlecobro.CreateCobroventaTitle_cuentaoriginadora}" />
+                        <p:outputLabel value="#{bundlecobro.CreateCobroventaLabel_montocobrado}" for="montocobrado" />
+                        <p:inputText id="montocobrado" value="#{cobroventaController.selected.montocobrado}" title="#{bundlecobro.CreateCobroventaTitle_montocobrado}" />
+                        <p:outputLabel value="#{bundlecobro.CreateCobroventaLabel_aprobacion}" for="aprobacion" />
+                        <p:inputText id="aprobacion" value="#{cobroventaController.selected.aprobacion}" title="#{bundlecobro.CreateCobroventaTitle_aprobacion}" />
+                        <p:outputLabel value="#{bundlecobro.CreateCobroventaLabel_fechacobro}" for="fechacobro" />
+                        <p:calendar id="fechacobro" pattern="MM/dd/yyyy" value="#{cobroventaController.selected.fechacobro}" title="#{bundlecobro.EditCobroventaTitle_fechacobro}"  showOn="button"/>
+                        <p:outputLabel value="#{bundlecobro.CreateCobroventaLabel_montopendiente}" for="montopendiente" />
+                        <p:inputText id="montopendiente" value="#{cobroventaController.selected.montopendiente}" title="#{bundlecobro.CreateCobroventaTitle_montopendiente}" />
+                        <p:outputLabel value="#{bundlecobro.CreateCobroventaLabel_numerofact}" for="numerofact" />
+                        <p:selectOneMenu id="numerofact" value="#{cobroventaController.selected.numerofact}" >
+                            <f:selectItems value="#{facturaController.itemsAvailableSelectOne}"
+                                           var="numerofactItem"
+                                           itemValue="#{numerofactItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecobro.CreateCobroventaLabel_idtipopago}" for="idtipopago" />
+                        <p:selectOneMenu id="idtipopago" value="#{cobroventaController.selected.idtipopago}" >
+                            <f:selectItems value="#{tipopagoController.itemsAvailableSelectOne}"
+                                           var="idtipopagoItem"
+                                           itemValue="#{idtipopagoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecobro.CreateCobroventaLabel_idcuentabancaria}" for="idcuentabancaria" />
+                        <p:selectOneMenu id="idcuentabancaria" value="#{cobroventaController.selected.idcuentabancaria}" >
+                            <f:selectItems value="#{cuentabancariaController.itemsAvailableSelectOne}"
+                                           var="idcuentabancariaItem"
+                                           itemValue="#{idcuentabancariaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecobro.CreateCobroventaLabel_idestatuscontable}" for="idestatuscontable" />
+                        <p:selectOneMenu id="idestatuscontable" value="#{cobroventaController.selected.idestatuscontable}" >
+                            <f:selectItems value="#{estatuscontableController.itemsAvailableSelectOne}"
+                                           var="idestatuscontableItem"
+                                           itemValue="#{idestatuscontableItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cobroventaController.create}" value="#{bundlecobro.Save}" update="display,:CobroventaListForm:datalist,:growl" oncomplete="handleSubmit(args,'CobroventaCreateDialog');"/>
+                    <p:commandButton value="#{bundlecobro.Cancel}" onclick="CobroventaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

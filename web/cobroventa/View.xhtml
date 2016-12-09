@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CobroventaViewDlg" widgetVar="CobroventaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecobro.ViewCobroventaTitle}">
+            <h:form id="CobroventaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{cobroventaController.selected != null}">
+                        <h:outputText value="#{bundlecobro.ViewCobroventaLabel_idcobroventa}"/>
+                        <h:outputText value="#{cobroventaController.selected.idcobroventa}" title="#{bundlecobro.ViewCobroventaTitle_idcobroventa}"/>
+                        <h:outputText value="#{bundlecobro.ViewCobroventaLabel_cuentaoriginadora}"/>
+                        <h:outputText value="#{cobroventaController.selected.cuentaoriginadora}" title="#{bundlecobro.ViewCobroventaTitle_cuentaoriginadora}"/>
+                        <h:outputText value="#{bundlecobro.ViewCobroventaLabel_montocobrado}"/>
+                        <h:outputText value="#{cobroventaController.selected.montocobrado}" title="#{bundlecobro.ViewCobroventaTitle_montocobrado}"/>
+                        <h:outputText value="#{bundlecobro.ViewCobroventaLabel_aprobacion}"/>
+                        <h:outputText value="#{cobroventaController.selected.aprobacion}" title="#{bundlecobro.ViewCobroventaTitle_aprobacion}"/>
+                        <h:outputText value="#{bundlecobro.ViewCobroventaLabel_fechacobro}"/>
+                        <h:outputText value="#{cobroventaController.selected.fechacobro}" title="#{bundlecobro.ViewCobroventaTitle_fechacobro}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundlecobro.ViewCobroventaLabel_montopendiente}"/>
+                        <h:outputText value="#{cobroventaController.selected.montopendiente}" title="#{bundlecobro.ViewCobroventaTitle_montopendiente}"/>
+                        <h:outputText value="#{bundlecobro.ViewCobroventaLabel_numerofact}"/>
+                        <h:outputText value="#{cobroventaController.selected.numerofact}" title="#{bundlecobro.ViewCobroventaTitle_numerofact}"/>
+                        <h:outputText value="#{bundlecobro.ViewCobroventaLabel_idtipopago}"/>
+                        <h:outputText value="#{cobroventaController.selected.idtipopago}" title="#{bundlecobro.ViewCobroventaTitle_idtipopago}"/>
+                        <h:outputText value="#{bundlecobro.ViewCobroventaLabel_idcuentabancaria}"/>
+                        <h:outputText value="#{cobroventaController.selected.idcuentabancaria}" title="#{bundlecobro.ViewCobroventaTitle_idcuentabancaria}"/>
+                        <h:outputText value="#{bundlecobro.ViewCobroventaLabel_idestatuscontable}"/>
+                        <h:outputText value="#{cobroventaController.selected.idestatuscontable}" title="#{bundlecobro.ViewCobroventaTitle_idestatuscontable}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlecobro.Close}" onclick="CobroventaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
