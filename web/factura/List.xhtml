@@ -96,7 +96,7 @@
                             <h:outputText value="#{item.idestatusfacturaventa.estatusfacturaventa}"/>
                         </p:column>
                         <p:column width="40" style="text-align: center" headerText="Cobrar">
-                            <h:commandLink action="/auxiliarrequerimiento/Pagocompra.xhtml" actionListener="#{pagosController.asignar(item)}" > 
+                            <h:commandLink action="/factura/cobroVenta.xhtml" actionListener="#{cobroventasController.asignar(item)}" > 
                                 <h:graphicImage library="images" name="business.png" width="30" height="30" alt="Pagar Compra"/>
                             </h:commandLink>      
                         </p:column>

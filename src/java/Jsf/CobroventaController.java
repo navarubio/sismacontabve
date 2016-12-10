@@ -3,9 +3,7 @@ package Jsf;
 import Modelo.Cobroventa;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
-import Jpa.CobroventaFacade;
 import Jpa.CobroventaFacadeLocal;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;

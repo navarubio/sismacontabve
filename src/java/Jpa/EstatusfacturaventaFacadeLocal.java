@@ -31,5 +31,6 @@ public interface EstatusfacturaventaFacadeLocal {
     int count();
     
     public Estatusfacturaventa estatusFacturaPorCobrar ();
-    
+
+    public Estatusfacturaventa estatusfacturaPagada(int tipo);
 }

@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Detallefactura;
+import Modelo.Factura;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,4 +31,5 @@ public interface DetallefacturaFacadeLocal {
 
     int count();
     
+    public List<Detallefactura> buscardetallefactura(Factura factu);
 }

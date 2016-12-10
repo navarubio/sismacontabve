@@ -7,9 +7,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"> 
 
     <body>
-
         <ui:composition template="/template.xhtml">
-
             <ui:define name="title">
                 Cobro de Ventas Efectuadas
                 <h:outputStylesheet library="css" name="index.css" />    
@@ -19,93 +17,63 @@
                 <p:growl id="msgs" showDetail="true" /> 
 
                 <h:form id="formulario" >
-
                     <div id="imag2">
                         <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca"/>
                     </div>      
                     <img src="../resources/images/kwallet2.png" width="70" height="70" alt="Clientes" align="right" />
 
                     <p:panel id="panel1" header="COBRO DE FACTURAS EMITIDAS">
-                        <p:panelGrid columns="3">
+                        <p:panelGrid columns="2">
                             <p:fieldset legend="Datos Facturación" >
                                 <p:panelGrid columns="2">
-                                    <p:outputLabel for="numero" value="Solicitud" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="numero" value="REQ- #{pagosController.auxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="numero" value="Numero Factura" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="numero" value="#{cobroventasController.factura.numerofact}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="control" value="Numero Control" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="control" value="#{cobroventasController.factura.numerocontrol}" styleClass="optionalLbl"/>                                  
                                     <p:outputLabel for="usuario" value="Usuario" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="usuario" value="#{pagosController.auxiliarrequerimiento.idusuario.nombre}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="departamento" value="Departamento" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="departamento" value="#{pagosController.auxiliarrequerimiento.iddepartamento.departamento}" styleClass="optionalLbl"/>
-
-                                    <p:outputLabel for="proveedor" value="Proveedor Referido" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="proveedor" value="#{pagosController.auxiliarrequerimiento.posibleproveedor}"/>
+                                    <p:outputLabel id="usuario" value="#{cobroventasController.factura.idusuario.usuario}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="cliente" value="Cliente" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="cliente" value="#{cobroventasController.factura.rifcliente.razonsocial}"/>
+                                    <p:outputLabel for="rifcliente" value="R.I.F." styleClass="optionalLbl"/>
+                                    <p:outputLabel id="rifcliente" value="#{cobroventasController.factura.rifcliente}"/>                                    
                                     <p:outputLabel for="telefono" value="Telefonos" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="telefono" value="#{pagosController.auxiliarrequerimiento.telefonoproveedor}"/>
-                                    <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" />
-                                    <p:outputLabel id="fechasolicitud" value="#{pagosController.auxiliarrequerimiento.fecharequerimiento}">
+                                    <p:outputLabel id="telefono" value="#{cobroventasController.factura.idusuario.telefono}"/>
+                                    <p:outputLabel for="fechaventa" value="Fecha Facturacion" />
+                                    <p:outputLabel id="fechaventa" value="#{cobroventasController.factura.fecha}">
                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </p:outputLabel>
-                                    <p:outputLabel for="resena" value="Breve Reseña" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="resena" value="#{pagosController.auxiliarrequerimiento.descripcion}" />
+                                    <p:outputLabel for="resena" value="Observaciones" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="resena" value="#{cobroventasController.factura.observacionesfact}" />
                                 </p:panelGrid>
-                            </p:fieldset>
-                            <p:fieldset legend="Datos Compra" >
-                                <p:panelGrid columns="2">
-                                    <p:outputLabel for="numeroc" value="Compra" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="numeroc" value="CMP- #{pagosController.compra.idcompra}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="usua" value="Usuario" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="usua" value="#{pagosController.usuario.nombre}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="depto" value="Departamento" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="depto" value="#{pagosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="proveedor1" value="Proveedor" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="proveedor1" value="#{pagosController.compra.rifproveedor.razonsocial}"   /> 
-                                    <p:outputLabel for="rif" value="R.I.F." styleClass="optionalLbl"/>
-                                    <p:outputLabel id="rif" value="#{pagosController.compra.rifproveedor.rifproveedor}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="fechacompra" value="Fecha Orden Compra" />
-                                    <p:outputLabel id="fechacompra" value="#{pagosController.compra.fechaorden}" >
-                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                    </p:outputLabel>
-                                    <p:outputLabel for="observa" value="Observaciones" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="observa" value="#{pagosController.compra.observacionescompra}" />
-                                </p:panelGrid>                                
                             </p:fieldset>
                             <p:fieldset legend="Datos del Pago" >
                                 <p:panelGrid columns="4">
-                                    <p:outputLabel for="usua1" value="USUARIO" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="usua1" value="#{pagosController.usuario.nombre}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="depto1" value="DEPARTAMENTO" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="depto1" value="#{pagosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="numerofact" value="Numero Factura" styleClass="optionalLbl"/>
-                                    <p:inputText id="numerofact" label="Numero de Factura" size ="10" value="#{pagosController.compra.numerofactura}" />
-                                    <p:outputLabel for="numerocontrol" value="Numero Control" styleClass="optionalLbl"/>
-                                    <p:inputText id="numerocontrol" label="Numero de Control" size ="10" value="#{pagosController.compra.controlfactura}" />
-                                    <p:outputLabel for="fechacompra1" value="Fecha Factura" />
-                                    <p:calendar size="10" id="fechacompra1" pattern="dd/MM/yyyy" value="#{pagosController.compra.fechafactura}" showOn="button" navigator="true"/>
-                                    <p:outputLabel for="montop" value="Monto a Pagar" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="montop" value="#{pagosController.compra.total}" styleClass="optionalLbl" >
+                                    <p:outputLabel for="fechacobro" value="Fecha Cobro" />
+                                    <p:calendar size="10" id="fechacobro" pattern="dd/MM/yyyy" value="#{cobroventasController.cobro.fechacobro}" showOn="button" navigator="true"/>
+ 
+                                    <p:outputLabel for="montoc" value="Monto a Cobrar" styleClass="optionalLbl"/>
+                                    <p:inputText id="montoc" value="#{cobroventasController.cobro.montocobrado}" styleClass="optionalLbl" >
                                         <f:convertNumber type="currency" currencySymbol=" " />
-                                    </p:outputLabel>
-                                    <p:outputLabel for="fechapago" value="Fecha Pago" />
-                                    <p:calendar size="10" id="fechapago" pattern="dd/MM/yyyy" value="#{pagosController.pagocompra.fechapago}" showOn="button" navigator="true"/>
+                                    </p:inputText>
                                     <p:outputLabel for="tipopag" value="Forma de Pago" styleClass="optionalLbl"/>
-                                    <p:selectOneMenu id="tipopag" value="#{pagosController.pagocompra.idtipopago}" converter="omnifaces.SelectItemsConverter" > 
+                                    <p:selectOneMenu id="tipopag" value="#{cobroventasController.cobro.idtipopago}" converter="omnifaces.SelectItemsConverter" > 
                                         <!--f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/-->
-                                        <f:selectItems value="#{pagosController.tipopagos}"
+                                        <f:selectItems value="#{cobroventasController.tipopagos}"
                                                        var="idtpagoItem"
                                                        itemLabel="#{idtpagoItem.tipopago}"  itemValue="#{idtpagoItem}" /> 
                                     </p:selectOneMenu>
-
                                     <p:outputLabel for="banco" value="Banco" styleClass="optionalLbl"/>
-                                    <p:selectOneMenu id="banco" value="#{pagosController.pagocompra.idbanco}" converter="omnifaces.SelectItemsConverter" > 
-                                        <p:ajax event="change" listener="#{pagosController.refrescarCuentasBancarias()}" update="cuentabanco"/>
+                                    <p:selectOneMenu id="banco" value="#{cobroventasController.banco.idbanco}" converter="omnifaces.SelectItemsConverter" > 
+                                        <p:ajax event="change" listener="#{cobroventasController.refrescarCuentasBancarias()}" update="cuentabanco"/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
-                                        <f:selectItems value="#{pagosController.bancos}"
+                                        <f:selectItems value="#{cobroventasController.bancos}"
                                                        var="idbancoItem"
                                                        itemLabel="#{idbancoItem.nombrebanco}"  itemValue="#{idbancoItem}" /> 
                                     </p:selectOneMenu>
                                     <p:outputLabel for="cuentabanco" value="Cuenta Bancaria" styleClass="optionalLbl"/>
-                                    <p:selectOneMenu id="cuentabanco" value="#{pagosController.pagocompra.idcuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
+                                    <p:selectOneMenu id="cuentabanco" value="#{cobroventasController.cobro.idcuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
                                         <p:ajax event="change" update="saldocuenta"/>                              
-                                        <f:selectItems value="#{pagosController.lstCuentasSelecc}"
+                                        <f:selectItems value="#{cobroventasController.lstCuentasSelecc}"
                                                        var="cuentaporbancoItem"
                                                        itemLabel="#{cuentaporbancoItem.numerocuenta}" itemValue="#{cuentaporbancoItem}"/>
                                     </p:selectOneMenu>
@@ -113,17 +81,10 @@
                                     <h:outputText id="saldocuenta" value="#{pagosController.pagocompra.idcuentabancaria.saldo}" styleClass="optionalLbl">
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </h:outputText>
-                                    <p:outputLabel for="ctareceptora" value="Cta. Receptora" styleClass="optionalLbl"/>
-                                    <p:inputText id="ctareceptora" label="Cta. Receptora" size ="25" value="#{pagosController.pagocompra.cuentareceptora}" />                                    
-                                    <p:outputLabel for="aprobacion" value="Nro. Aprobacion" styleClass="optionalLbl"/>
-                                    <p:inputText id="aprobacion" label="Nro. Aprobacion " size ="15" value="#{pagosController.pagocompra.aprobacion}" />
-                                    <p:outputLabel for="observa2" value="Observaciones" styleClass="optionalLbl"/>
-                                    <p:inputTextarea id="observa2"  rows="2" cols="30" label="Observaciones" value="#{comprasController.compra.observacionescompra}" required="true"/>
-
+                                    <!--p:outputLabel for="aprobacion" value="Nro. Aprobacion" styleClass="optionalLbl"/>
+                                    <p:inputText id="aprobacion" label="Nro. Aprobacion " size ="15" value=".{cobroventasController.cobro.aprobacion}" /-->
                                 </p:panelGrid>                                
                             </p:fieldset>
-
-
                         </p:panelGrid>
 
                         <!--p:fieldset legend="Datos de Articulos" toggleable="true" toggleSpeed="500" >
@@ -146,7 +107,7 @@
                         </p:fieldset-->
                     </p:panel>
                     <p:panel id="panelart"  >
-                        <p:dataTable id="listado" value="#{pagosController.detallecompraFiltrados}"
+                        <p:dataTable id="listado" value="#{cobroventasController.detallesfacturafiltrados}"
                                      var="req" emptyMessage="No hay articulos para mostrar" >
                             <p:column style="width:8%"  headerText="Codigo Articulo">
                                 <h:outputText value="#{req.codigo.codigo}" />
@@ -155,10 +116,10 @@
                                 <h:outputText value="#{req.codigo.descripcion}"/>  
                             </p:column>
                             <p:column style="text-align:center" headerText="Cantidad">                                
-                                <h:outputText style="width:10px"  value="#{req.cantidad}"/>
+                                <h:outputText style="width:10px"  value="#{req.unidades}"/>
                             </p:column >
                             <p:column style="text-align:right" headerText="Precio Unitario ">
-                                <h:outputText style="width:10px"  value="#{req.pcosto}">
+                                <h:outputText style="width:10px"  value="#{req.precioventa}">
                                     <f:convertNumber type="currency" currencySymbol=" " />
                                 </h:outputText>
                             </p:column>
@@ -173,7 +134,7 @@
                                 </h:outputText>
                             </p:column>
                             <p:column style="text-align:right" headerText="TOTAL">
-                                <h:outputText value="#{req.totalapagar}"> 
+                                <h:outputText value="#{req.total}"> 
                                     <f:convertNumber type="currency" currencySymbol=" " />
                                 </h:outputText>
                             </p:column>
@@ -186,13 +147,13 @@
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
-                                    <p:column style="text-align: right"  footerText="#{pagosController.compra.subtotal}" /> 
-                                    <p:column style="text-align: right"  footerText="#{pagosController.compra.iva}" />
-                                    <p:column style="text-align: right"  footerText="#{pagosController.compra.total}" />                                        
+                                    <p:column style="text-align: right"  footerText="#{cobroventasController.factura.bimponiblefact}" /> 
+                                    <p:column style="text-align: right"  footerText="#{cobroventasController.factura.ivafact}" />
+                                    <p:column style="text-align: right"  footerText="#{cobroventasController.factura.totalgeneral}" />                                        
                                 </p:row>
                             </p:columnGroup>       
                         </p:dataTable> 
-                        <p:commandButton value="Registrar" actionListener="#{pagosController.registrar()}" update=":msgs" action="/compra/List?faces-redirect=true"/>
+                        <p:commandButton value="Registrar" actionListener="#{cobroventasController.registrar()}" update=":msgs" action="/factura/List?faces-redirect=true"/>
                         <p:commandButton value="Cancelar" />
                     </p:panel>
                 </h:form>

@@ -49,5 +49,26 @@ public class EstatusfacturaventaFacade extends AbstractFacade<Estatusfacturavent
         return estatus;
     }
     
+    @Override
+    public Estatusfacturaventa estatusfacturaPagada(int tipo) {
+        String consulta;
+        int idstatus=tipo;
+        Estatusfacturaventa estatus = new Estatusfacturaventa();
+        try {
+            consulta = "From Estatusfacturaventa e where e.idestatusfacturaventa= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, idstatus);
+            List<Estatusfacturaventa> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                estatus = lista.get(0);
+            }
+
+        } catch (Exception e) {
+            throw e;
+        }
+        return estatus;
+    }
+
+    
     
 }
