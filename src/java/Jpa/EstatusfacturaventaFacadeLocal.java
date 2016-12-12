@@ -33,4 +33,6 @@ public interface EstatusfacturaventaFacadeLocal {
     public Estatusfacturaventa estatusFacturaPorCobrar ();
 
     public Estatusfacturaventa estatusfacturaPagada(int tipo);
+    
+    public Estatusfacturaventa estatusfacturaAbonada(int tipo);
 }

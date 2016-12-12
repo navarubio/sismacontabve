@@ -31,14 +31,29 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecobro.ListCobroventaTitle_idcobroventa}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idcobroventa}"/>
+                            <h:outputText value="COB-#{item.idcobroventa}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_numerofact}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numerofact}"/>
+                        </p:column> 
+                        <p:column width="150">
+                            <f:facet name="header">
                                 <h:outputText value="#{bundlecobro.ListCobroventaTitle_cuentaoriginadora}"/>
                             </f:facet>
-                            <h:outputText value="#{item.cuentaoriginadora}"/>
+                            <h:outputText value="#{item.numerofact.rifcliente.razonsocial}"/>
+                        </p:column>                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_fechacobro}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechacobro}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
                         </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecobro.ListCobroventaTitle_montocobrado}"/>
@@ -53,41 +68,27 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_fechacobro}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.fechacobro}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundlecobro.ListCobroventaTitle_montopendiente}"/>
                             </f:facet>
                             <h:outputText value="#{item.montopendiente}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_numerofact}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.numerofact}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundlecobro.ListCobroventaTitle_idtipopago}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idtipopago}"/>
+                            <h:outputText value="#{item.idtipopago.tipopago}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="190">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecobro.ListCobroventaTitle_idcuentabancaria}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idcuentabancaria}"/>
+                            <h:outputText value="#{item.idcuentabancaria.numerocuenta}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecobro.ListCobroventaTitle_idestatuscontable}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idestatuscontable}"/>
+                            <h:outputText value="#{item.idestatuscontable.estatuscontable}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlecobro.Create}" actionListener="#{cobroventaController.prepareCreate}" update=":CobroventaCreateForm" oncomplete="PF('CobroventaCreateDialog').show()"/>

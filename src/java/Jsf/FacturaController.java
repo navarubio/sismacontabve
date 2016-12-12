@@ -7,10 +7,13 @@ import Jpa.FacturaFacade;
 import Jpa.FacturaFacadeLocal;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
@@ -40,6 +43,10 @@ public class FacturaController implements Serializable {
         this.selected = selected;
     }
 
+    /*public List<Factura> getFact() {
+        return items;
+    }*/
+
     protected void setEmbeddableKeys() {
     }
 
@@ -55,6 +62,20 @@ public class FacturaController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
+/*@PostConstruct
+public void init(){
+    items = new ArrayList<Factura>();
+}
+        
+    public String getTotalSubtotal() {
+        int total = 0;
+
+        for (items fact : getItems()) {
+            total += fact();
+        }
+
+        return new DecimalFormat("###,###.###").format(total);
+    }*/
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundlefactura").getString("FacturaCreated"));
