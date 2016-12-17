@@ -36,6 +36,13 @@
     color:black;
 }
 
+#formulario .text-ouputfact{
+    font-weight:  bold;
+    color:red;
+    font-size: 16px;
+}
+
+
 .text-cantidad{
     font-weight: bold;
     color:greenyellow;

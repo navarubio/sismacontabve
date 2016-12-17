@@ -33,7 +33,7 @@
                                 <p:outputLabel for="telefono" style="font-weight:bold"  value="Telefonos" styleClass="optionalLbl"/>
                                 <p:inputText id="telefono" label="Telefonos" size="40" value="#{requerimientosController.auxrequer.telefonoproveedor}"/>
                                 <p:outputLabel for="fechasolicitud" style="font-weight:bold"  value="Fecha Solicitud" />
-                                <p:calendar id="fechasolicitud" pattern="dd/MM/yyyy" value="#{requerimientosController.auxrequer.fecharequerimiento}" showOn="button" navigator="true"/>
+                                <p:calendar id="fechasolicitud" locale="es" pattern="dd/MM/yyyy" value="#{requerimientosController.auxrequer.fecharequerimiento}" showOn="button" navigator="true"/>
                                 <p:outputLabel for="resena" style="font-weight:bold" value="Breve Reseña" styleClass="optionalLbl"/>
                                 <p:inputTextarea id="resena"  rows="3" cols="50" label="breve resena" value="#{requerimientosController.auxrequer.descripcion}" required="true" />
                             </p:panelGrid>
@@ -104,6 +104,7 @@
                         </p:panel>
                     </p:panel>
                 </h:form>
+                <h:outputScript library="js" name="spanishLocale.js"/>
             </ui:define>
         </ui:composition>
 

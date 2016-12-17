@@ -15,19 +15,19 @@
                         <p:outputLabel value="#{bundle.EditClienteLabel_rifcliente}" for="rifcliente" />
                         <p:inputText id="rifcliente" value="#{clienteController.selected.rifcliente}" title="#{bundle.EditClienteTitle_rifcliente}" required="true" requiredMessage="#{bundle.EditClienteRequiredMessage_rifcliente}"/>
                         <p:outputLabel value="#{bundle.EditClienteLabel_razonsocial}" for="razonsocial" />
-                        <p:inputText id="razonsocial" size="60" value="#{clienteController.selected.razonsocial}" title="#{bundle.EditClienteTitle_razonsocial}" />
+                        <p:inputText id="razonsocial" size="50" value="#{clienteController.selected.razonsocial}" title="#{bundle.EditClienteTitle_razonsocial}" />
                         <p:outputLabel value="#{bundle.EditClienteLabel_direccionfiscal}" for="direccionfiscal" />
-                        <p:inputText id="direccionfiscal" size="60" value="#{clienteController.selected.direccionfiscal}" title="#{bundle.EditClienteTitle_direccionfiscal}" />
+                        <p:inputText id="direccionfiscal" size="50" value="#{clienteController.selected.direccionfiscal}" title="#{bundle.EditClienteTitle_direccionfiscal}" />
                         <p:outputLabel value="#{bundle.EditClienteLabel_telefonos}" for="telefonos" />
-                        <p:inputText id="telefonos" value="#{clienteController.selected.telefonos}" title="#{bundle.EditClienteTitle_telefonos}" />
+                        <p:inputText id="telefonos" size="50" value="#{clienteController.selected.telefonos}" title="#{bundle.EditClienteTitle_telefonos}" />
                         <p:outputLabel value="#{bundle.EditClienteLabel_correo}" for="correo" />
-                        <p:inputText id="correo" value="#{clienteController.selected.correo}" title="#{bundle.EditClienteTitle_correo}" />
-                        <p:outputLabel value="#{bundle.EditClienteLabel_fechainscripcion}" for="fechainscripcion" />
-                        <p:calendar id="fechainscripcion" pattern="MM/dd/yyyy" value="#{clienteController.selected.fechainscripcion}" title="#{bundle.EditClienteTitle_fechainscripcion}"  showOn="button"/>
+                        <p:inputText id="correo" size="50" value="#{clienteController.selected.correo}" title="#{bundle.EditClienteTitle_correo}" />
                         <p:outputLabel value="#{bundle.EditClienteLabel_personacontacto}" for="personacontacto" />
-                        <p:inputText id="personacontacto" size="60" value="#{clienteController.selected.personacontacto}" title="#{bundle.EditClienteTitle_personacontacto}" />
+                        <p:inputText id="personacontacto" size="50" value="#{clienteController.selected.personacontacto}" title="#{bundle.EditClienteTitle_personacontacto}" />
                         <p:outputLabel value="#{bundle.EditClienteLabel_telefonocontacto}" for="telefonocontacto" />
-                        <p:inputText id="telefonocontacto" value="#{clienteController.selected.telefonocontacto}" title="#{bundle.EditClienteTitle_telefonocontacto}" />
+                        <p:inputText id="telefonocontacto" size="50" value="#{clienteController.selected.telefonocontacto}" title="#{bundle.EditClienteTitle_telefonocontacto}" />
+                        <p:outputLabel value="#{bundle.EditClienteLabel_fechainscripcion}" for="fechainscripcion" />
+                        <p:calendar id="fechainscripcion" size="12" pattern="MM/dd/yyyy" value="#{clienteController.selected.fechainscripcion}" title="#{bundle.EditClienteTitle_fechainscripcion}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.EditClienteLabel_idcontribuyente}" for="idcontribuyente" />
                         <p:selectOneMenu id="idcontribuyente" value="#{clienteController.selected.idcontribuyente}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>

@@ -10,7 +10,7 @@
         <ui:composition template="./../template.xhtml">
             <ui:define name="title">
                 Nueva Factura
-                <h:outputStylesheet library="css" name="index.css" />    
+                <h:outputStylesheet library="css" name="index.css" />   
             </ui:define>
             <ui:define name="body">
                 <p:growl id="msgs" showDetail="true" autoUpdate="true" showSummary="false" />
@@ -29,11 +29,11 @@
                                 <p:outputLabel for="departamento" styleClass="text-ouput" value="DEPARTAMENTO" />
                                 <p:outputLabel id="departamento" value="#{requerimientosController.buscarDepartamento().departamento}" />
                                 <p:outputLabel for="numero" styleClass="text-ouput" value="Nro. Factura" />                                
-                                <p:outputLabel id="numero" value="000#{facturasController.devolversiguientefactura()}" title="#{bundle.CreateFacturaTitle_numerofactura}" />
+                                <p:outputLabel id="numero" styleClass="text-ouputfact" value="000#{facturasController.devolversiguientefactura()}" title="#{bundle.CreateFacturaTitle_numerofactura}" />
 
                                 <p:outputLabel for="control" styleClass="text-ouput" value="Nro. Control" />
                                 <p:inputText id="control" value="#{facturasController.factura.numerocontrol}" title="#{bundle.CreateFacturaTitle_controlfactura}" />
-                                
+
                                 <p:outputLabel for="client" styleClass="text-ouput" value="Cliente" />
                                 <p:selectOneMenu id="client" value="#{facturasController.cliente}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
                                     <p:ajax event="change" update="rif, direccioncliente, telefono"/>                              
@@ -52,7 +52,7 @@
                                 <p:outputLabel id="telefono" value="#{facturasController.cliente.telefonos}"/>
 
                                 <p:outputLabel for="fechaventa" styleClass="text-ouput"  value="Fecha Venta" />
-                                <p:calendar id="fechaventa" pattern="dd/MM/yyyy" value="#{facturasController.factura.fecha}" showOn="button" navigator="true"/>
+                                <p:calendar id="fechaventa" pattern="dd/MM/yyyy" locale="es" value="#{facturasController.factura.fecha}" showOn="button" navigator="true"/>
                                 <p:outputLabel for="observa" styleClass="text-ouput"  value="Observaciones" />
                                 <p:inputTextarea id="observa"  rows="2" cols="50" label="Observaciones" value="#{facturasController.factura.observacionesfact}"/>
                             </p:panelGrid>
@@ -124,6 +124,8 @@
                         </p:panel>
                     </p:panel>
                 </h:form>
+                <h:outputScript library="js" name="spanishLocale.js"/>
+
             </ui:define>
         </ui:composition>
     </body>

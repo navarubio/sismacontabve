@@ -67,7 +67,7 @@
                                     <p:outputLabel for="rif" value="R.I.F." styleClass="optionalLbl"/>
                                     <p:outputLabel id="rif" value="#{comprasController.provee.rifproveedor}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="fechacompra" value="Fecha Compra" />
-                                    <p:calendar id="fechacompra" pattern="dd/MM/yyyy" value="#{comprasController.compra.fechaorden}" showOn="button" navigator="true"/>
+                                    <p:calendar id="fechacompra" locale="es" pattern="dd/MM/yyyy" value="#{comprasController.compra.fechaorden}" showOn="button" navigator="true"/>
                                     <p:outputLabel for="observa" value="Observaciones" styleClass="optionalLbl"/>
                                     <p:inputTextarea id="observa"  rows="2" cols="50" label="Observaciones" value="#{comprasController.compra.observacionescompra}"/>
 
@@ -158,6 +158,7 @@
                             <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
                         </h:panelGrid>
                     </h:form>
+                    <h:outputScript library="js" name="spanishLocale.js"/>
                 </p:dialog>
             </ui:define>
         </ui:composition>

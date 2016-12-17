@@ -79,14 +79,14 @@
                                     <p:outputLabel for="numerocontrol" value="Numero Control" styleClass="optionalLbl"/>
                                     <p:inputText id="numerocontrol" label="Numero de Control" size ="10" value="#{pagosController.compra.controlfactura}" />
                                     <p:outputLabel for="fechacompra1" value="Fecha Factura" />
-                                    <p:calendar size="10" id="fechacompra1" pattern="dd/MM/yyyy" value="#{pagosController.compra.fechafactura}" showOn="button" navigator="true"/>
+                                    <p:calendar size="10"  locale="es" id="fechacompra1" pattern="dd/MM/yyyy" value="#{pagosController.compra.fechafactura}" showOn="button" navigator="true"/>
                                     <p:outputLabel for="montop" value="Monto a Pagar" styleClass="optionalLbl"/>
                                     <p:outputLabel id="montop" value="#{pagosController.compra.total}" styleClass="optionalLbl" >
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </p:outputLabel>
                                     <p:outputLabel for="fechapago" value="Fecha Pago" />
-                                    <p:calendar size="10" id="fechapago" pattern="dd/MM/yyyy" value="#{pagosController.pagocompra.fechapago}" showOn="button" navigator="true"/>
-                                    <p:outputLabel for="tipopag" value="Forma de Pago" styleClass="optionalLbl"/>
+                                    <p:calendar size="10" locale="es" id="fechapago" pattern="dd/MM/yyyy" value="#{pagosController.pagocompra.fechapago}" showOn="button" navigator="true"/>
+                                    <p:outputLabel for="tipopag"  value="Forma de Pago" styleClass="optionalLbl"/>
                                     <p:selectOneMenu id="tipopag" value="#{pagosController.pagocompra.idtipopago}" converter="omnifaces.SelectItemsConverter" > 
                                         <!--f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/-->
                                         <f:selectItems value="#{pagosController.tipopagos}"
@@ -208,6 +208,7 @@
                             <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
                         </h:panelGrid>
                     </h:form>
+                    <h:outputScript library="js" name="spanishLocale.js"/>
                 </p:dialog>
             </ui:define>
         </ui:composition>

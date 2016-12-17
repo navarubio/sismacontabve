@@ -49,7 +49,7 @@
                             <p:fieldset legend="Datos del Pago" >
                                 <p:panelGrid columns="4">
                                     <p:outputLabel for="fechacobro" value="Fecha Cobro" />
-                                    <p:calendar size="15" id="fechacobro" pattern="dd/MM/yyyy" value="#{cobroventasController.cobro.fechacobro}" showOn="button" navigator="true" required="true"/>
+                                    <p:calendar size="15" id="fechacobro" locale="es" pattern="dd/MM/yyyy" value="#{cobroventasController.cobro.fechacobro}" showOn="button" navigator="true" required="true"/>
                                     <p:outputLabel for="montofact" value="MONTO POR COBRAR" styleClass="optionalLbl"/>
                                     <p:outputLabel id="montofact" value="#{cobroventasController.factura.totalgeneral}" >
                                         <f:convertNumber type="currency" currencySymbol=" " />
@@ -155,6 +155,7 @@
                             <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
                         </h:panelGrid>
                     </h:form>
+                    <h:outputScript library="js" name="spanishLocale.js"/>
                 </p:dialog>
             </ui:define>
         </ui:composition>
