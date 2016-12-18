@@ -87,7 +87,4 @@ public class EstatusfacturaventaFacade extends AbstractFacade<Estatusfacturavent
         }
         return estatus;
     }
-
-    
-    
 }

@@ -138,8 +138,8 @@
                             <h:outputText value="#{item.idestatusfactura.estatusfactura}"/>
                         </p:column>                        
                         <p:column style="text-align: center" headerText="Pagar">
-                            <h:commandLink action="/auxiliarrequerimiento/Pagocompra.xhtml" actionListener="#{pagosController.asignar(item)}" > 
-                                <h:graphicImage library="images" name="Dollar.png" width="30" height="30" alt="Pagar Compra"/>
+                            <h:commandLink action="/auxiliarrequerimiento/Pagocompraver.xhtml" actionListener="#{pagosController.asignarCompra(item)}"> 
+                                <h:graphicImage library="images" name="viewmag.png" width="30" height="30" alt="Ver Pago"/>
                             </h:commandLink>      
                         </p:column>
                         <f:facet name="footer">

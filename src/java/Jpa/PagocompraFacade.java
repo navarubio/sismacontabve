@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Compra;
 import Modelo.Pagocompra;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -17,7 +18,7 @@ import javax.persistence.Query;
  * @author sofimarye
  */
 @Stateless
-public class PagocompraFacade extends AbstractFacade<Pagocompra> implements PagocompraFacadeLocal{
+public class PagocompraFacade extends AbstractFacade<Pagocompra> implements PagocompraFacadeLocal {
 
     @PersistenceContext(unitName = "InpecaPU")
     private EntityManager em;
@@ -30,7 +31,7 @@ public class PagocompraFacade extends AbstractFacade<Pagocompra> implements Pago
     public PagocompraFacade() {
         super(Pagocompra.class);
     }
-    
+
     @Override
     public List<Pagocompra> buscarPagosefectuados() {
         String consulta;
@@ -44,5 +45,40 @@ public class PagocompraFacade extends AbstractFacade<Pagocompra> implements Pago
         }
         return lista;
     }
-    
+
+    @Override
+    public List<Pagocompra> buscarpago(Compra compr) {
+        String consulta;
+        List<Pagocompra> lista = null;
+        try {
+            consulta = "From Pagocompra p where p.idcompra.idcompra= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, compr.getIdcompra());
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+
+    @Override
+    public Pagocompra buscarpagototal(Compra compr) {
+        String consulta;
+        Pagocompra pago=null;
+        List<Pagocompra> lista = null;
+        try {
+            consulta = "From Pagocompra p where p.idcompra.idcompra= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, compr.getIdcompra());
+            lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                pago = lista.get(0);
+}
+        } catch (Exception e) {
+            throw e;
+                    
+        }
+        return pago;
+    }
+
 }

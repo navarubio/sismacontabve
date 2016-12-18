@@ -7,6 +7,7 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -66,7 +67,7 @@ public class Estatusfacturaventa implements Serializable {
 
     public void setEstatusfacturaventa(String estatusfacturaventa) {
         this.estatusfacturaventa = estatusfacturaventa;
-    }
+    }  
 
     @XmlTransient
     public Collection<Factura> getFacturaCollection() {
@@ -99,7 +100,7 @@ public class Estatusfacturaventa implements Serializable {
 
     @Override
     public String toString() {
-        return "Modelo.Estatusfacturaventa[ idestatusfacturaventa=" + idestatusfacturaventa + " ]";
+        return estatusfacturaventa;
     }
     
 }

@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"> 
+
+    <body>
+
+        <ui:composition template="/template.xhtml">
+
+            <ui:define name="title">
+                Ver Compra
+                <h:outputStylesheet library="css" name="index.css" />    
+            </ui:define>
+
+            <ui:define name="body">
+                <p:growl id="msgs" showDetail="true" /> 
+
+                <h:form id="formulario" >
+
+                    <div id="imag2">
+                        <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca"/>
+                    </div>      
+                    <img src="../resources/images/viewmag.png" width="70" height="70" alt="Clientes" align="right" />
+
+                    <p:panel id="panel1" header="VER DETALLE DE COMPRA EFECTUADA">
+                        <p:panelGrid columns="3">
+                            <p:fieldset legend="Datos Requerimiento" >
+                                <p:panelGrid columns="2">
+                                    <p:outputLabel for="numero" value="Solicitud" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="numero" value="REQ- #{pagosController.auxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="usuario" value="Usuario" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="usuario" value="#{pagosController.auxiliarrequerimiento.idusuario.nombre}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="departamento" value="Departamento" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="departamento" value="#{pagosController.auxiliarrequerimiento.iddepartamento.departamento}" styleClass="optionalLbl"/>
+
+                                    <p:outputLabel for="proveedor" value="Proveedor Referido" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="proveedor" value="#{pagosController.auxiliarrequerimiento.posibleproveedor}"/>
+                                    <p:outputLabel for="telefono" value="Telefonos" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="telefono" value="#{pagosController.auxiliarrequerimiento.telefonoproveedor}"/>
+                                    <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" />
+                                    <p:outputLabel id="fechasolicitud" value="#{pagosController.auxiliarrequerimiento.fecharequerimiento}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                    <p:outputLabel for="resena" value="Breve Reseña" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="resena" value="#{pagosController.auxiliarrequerimiento.descripcion}" />
+                                </p:panelGrid>
+                            </p:fieldset>
+                            <p:fieldset legend="Datos Compra" >
+                                <p:panelGrid columns="2">
+                                    <p:outputLabel for="numeroc" value="Compra" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="numeroc" value="CMP- #{pagosController.compra.idcompra}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="usua" value="Usuario" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="usua" value="#{pagosController.usuario.nombre}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="depto" value="Departamento" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="depto" value="#{pagosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="proveedor1" value="Proveedor" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="proveedor1" value="#{pagosController.compra.rifproveedor.razonsocial}"   /> 
+                                    <p:outputLabel for="rif" value="R.I.F." styleClass="optionalLbl"/>
+                                    <p:outputLabel id="rif" value="#{pagosController.compra.rifproveedor.rifproveedor}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="fechacompra" value="Fecha Orden Compra" />
+                                    <p:outputLabel id="fechacompra" value="#{pagosController.compra.fechaorden}" >
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                    <p:outputLabel for="observa" value="Observaciones" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="observa" value="#{pagosController.compra.observacionescompra}" />
+                                </p:panelGrid>                                
+                            </p:fieldset>
+                            <p:fieldset legend="Datos del Pago" >
+                                <p:panelGrid columns="4">
+                                    <p:outputLabel for="usua1" value="USUARIO" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="usua1" value="#{pagosController.usuario.nombre}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="depto1" value="DEPARTAMENTO" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="depto1" value="#{pagosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="numerofact" value="Numero Factura" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="numerofact" value="#{pagosController.compra.numerofactura}" />
+                                    <p:outputLabel for="numerocontrol" value="Numero Control" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="numerocontrol" value="#{pagosController.compra.controlfactura}" />
+                                    <p:outputLabel for="fechacompra1" value="Fecha Factura" />
+                                    <p:outputLabel  id="fechacompra1" value="#{pagosController.compra.fechafactura}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                    <p:outputLabel for="montop" value="Monto a Pagar" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="montop" value="#{pagosController.compra.total}" styleClass="optionalLbl" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+                                    <p:outputLabel for="fechapago" value="Fecha Pago" />
+                                    <p:outputLabel id="fechapago" value="#{pagosController.compra.fechaorden}" > 
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                    <p:outputLabel for="tipopag"  value="Forma de Pago" styleClass="optionalLbl"/>
+                                    <p:outputLabel  id="tipopag" value="#{pagosController.pagocompra.idtipopago.tipopago}"/>
+                                    <p:outputLabel for="banco" value="Banco" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="banco" value="#{pagosController.pagocompra.idbanco.nombrebanco}"/>  
+                                    <p:outputLabel for="cuentabanco" value="Cuenta Bancaria" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="cuentabanco" value="#{pagosController.pagocompra.idcuentabancaria.numerocuenta}" />
+                                    <p:outputLabel for="saldocuenta" value="Saldo Anterior en Cuenta" styleClass="optionalLbl"/>
+                                    <h:outputText id="saldocuenta" value="#{pagosController.pagocompra.idcuentabancaria.saldo}" styleClass="optionalLbl">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                    <p:outputLabel for="ctareceptora" value="Cta. Receptora" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="ctareceptora" value="#{pagosController.pagocompra.cuentareceptora}" />                                    
+                                    <p:outputLabel for="aprobacion" value="Nro. Aprobacion" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="aprobacion" value="#{pagosController.pagocompra.aprobacion}" />
+                                    <p:outputLabel for="observa2" value="Observaciones" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="observa2"  value="#{comprasController.compra.observacionescompra}" />
+
+                                </p:panelGrid>                                
+                            </p:fieldset>
+
+
+                        </p:panelGrid>
+
+                        <!--p:fieldset legend="Datos de Articulos" toggleable="true" toggleSpeed="500" >
+                            <p:panelGrid columns="7">
+                                <p:outputLabel value="Articulo" for="idrequerimiento"  />
+                                <p:selectOneMenu id="idrequerimiento" value=".{requerimientosController.requer.codigo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/>
+                                    <f:selectItems value=".{articuloController.itemsAvailableSelectOne}">
+                                    <f:selectItems value=".{requerimientosController.articulos}"
+                                                   var="idarticuloItem"
+                                                   itemLabel=".{idarticuloItem.descripcion}"  itemValue=".{idarticuloItem}" /> 
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="cantidad" value="Cantidad" />
+                                <p:inputText id="cantidad" value=".{requerimientosController.cantidad}" style="text-align:right"/>
+                                <p:outputLabel for="precio"  value="Precio" styleClass="optionalLbl"/>
+                                <p:inputText id="precio" size="20" value=".{requerimientosController.pcosto}" style="text-align:right"/>
+                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action=".{requerimientosController.anexar()}" update="listado"/>  
+                            </p:panelGrid>
+                        </p:fieldset-->
+                    </p:panel>
+                    <p:panel id="panelart"  >
+                        <p:dataTable id="listado" value="#{pagosController.detallecompraFiltrados}"
+                                     var="req" emptyMessage="No hay articulos para mostrar" >
+                            <p:column style="width:8%"  headerText="Codigo Articulo">
+                                <h:outputText value="#{req.codigo.codigo}" />
+                            </p:column>
+                            <p:column style="width:35%"  headerText="Descripcion del Articulo">
+                                <h:outputText value="#{req.codigo.descripcion}"/>  
+                            </p:column>
+                            <p:column style="text-align:center" headerText="Cantidad">                                
+                                <h:outputText style="width:10px"  value="#{req.cantidad}"/>
+                            </p:column >
+                            <p:column style="text-align:right" headerText="Precio Unitario ">
+                                <h:outputText style="width:10px"  value="#{req.pcosto}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align:right" headerText="SUB TOTAL">
+                                <h:outputText value="#{req.subtotal}"> 
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align:right" headerText="IVA">
+                                <h:outputText value="#{req.tributoiva}"> 
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align:right" headerText="TOTAL">
+                                <h:outputText value="#{req.totalapagar}"> 
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+
+                            <!--p:column style="width:10%" headerText="Editar">
+                                <p:commandLink actionListener=".{comprasController.asignarRequerimiento(req)}" value="Editar" update="listado" oncomplete="PF('wdialogo').show();" >
+
+                                </p:commandLink>
+                            </p:column-->
+                            <p:columnGroup type="footer">
+                                <p:row>
+                                    <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
+                                    <p:column style="text-align: right"  footerText="#{pagosController.compra.subtotal}" /> 
+                                    <p:column style="text-align: right"  footerText="#{pagosController.compra.iva}" />
+                                    <p:column style="text-align: right"  footerText="#{pagosController.compra.total}" />                                        
+                                </p:row>
+                            </p:columnGroup>       
+                        </p:dataTable> 
+                        <p:commandButton value="Registrar" actionListener="#{pagosController.registrar()}" update=":msgs" action="/compra/List?faces-redirect=true"/>
+                        <p:commandButton value="Cancelar" />
+                    </p:panel>
+                </h:form>
+                <p:dialog id="dialogo" widgetVar="wdialogo" header="Modificar cantidad y precio del Articulo" modal="true" closeOnEscape="true" 
+                          resizable="false" showEffect="explode" appendTo="@(body)"  >
+                    <h:form>
+                        <h:panelGrid  id="display" columns="4">
+                            <p:outputLabel for="cantidad" value="Cantidad" />
+                            <p:inputText id="cantidad" label="#{comprasController.requerimiento.cantidad}" value="#{comprasController.requerimiento.cantidad}" style="text-align:right"/>
+                            <p:outputLabel for="precio"  value="Precio sin IVA" styleClass="optionalLbl"/>
+                            <p:inputText id="precio"  label="#{comprasController.requerimiento.pcosto}"  size="20" value="#{comprasController.requerimiento.pcosto}" style="text-align:right"/>
+                            <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{comprasController.modificar()}"  oncomplete="PF('wdialogo').hide();" update="display" />                             
+                            <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
+                        </h:panelGrid>
+                    </h:form>
+                    <h:outputScript library="js" name="spanishLocale.js"/>
+                </p:dialog>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

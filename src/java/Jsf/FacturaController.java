@@ -5,6 +5,8 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.FacturaFacade;
 import Jpa.FacturaFacadeLocal;
+import Modelo.Estatusfactura;
+import Modelo.Estatusfacturaventa;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -29,7 +31,10 @@ public class FacturaController implements Serializable {
 
     @EJB
     private Jpa.FacturaFacadeLocal ejbFacade;
+    @EJB
+    private Jpa.EstatusfacturaventaFacadeLocal estatusfacturaEJB;
     private List<Factura> items = null;
+    private List<Estatusfacturaventa> estatusfact;
     private Factura selected;
 
     public FacturaController() {
@@ -41,6 +46,14 @@ public class FacturaController implements Serializable {
 
     public void setSelected(Factura selected) {
         this.selected = selected;
+    }
+
+    public List<Estatusfacturaventa> getEstatusfact() {
+        return estatusfact;
+    }
+
+    public void setEstatusfact(List<Estatusfacturaventa> estatusfact) {
+        this.estatusfact = estatusfact;
     }
 
     /*public List<Factura> getFact() {
@@ -101,6 +114,11 @@ public void init(){
             items = getFacade().findAll();
         }
         return items;
+    }
+    
+    public List<Estatusfacturaventa> getEstatusFacturas(){
+        estatusfact = estatusfacturaEJB.findAll();
+        return estatusfact;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

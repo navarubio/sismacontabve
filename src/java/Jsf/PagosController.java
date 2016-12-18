@@ -68,6 +68,7 @@ public class PagosController implements Serializable {
     private Compra compra;
     private Detallecompra detallecompras;
     private Pagocompra pagocompra = new Pagocompra();
+    private Pagocompra pagocompraver ;
     private Estatusfactura statusfactu = null;
 
     private Usuario usa;
@@ -82,6 +83,7 @@ public class PagosController implements Serializable {
     private List<Banco> bancos;
     private List<Cuentabancaria> lstCuentasSelecc;
     private List<Pagocompra> pagosefectuados;
+    private List <Pagocompra> pagoespecifico;
 
     @Inject
     private Auxiliarrequerimiento auxiliar;
@@ -104,13 +106,20 @@ public class PagosController implements Serializable {
         this.lstCuentasSelecc = lstCuentasSelecc;
     }
 
-    
     public Pagocompra getPagocompra() {
         return pagocompra;
     }
 
     public void setPagocompra(Pagocompra pagocompra) {
         this.pagocompra = pagocompra;
+    }
+
+    public Pagocompra getPagocompraver() {
+        return pagocompraver;
+    }
+
+    public void setPagocompraver(Pagocompra pagocompraver) {
+        this.pagocompraver = pagocompraver;
     }
 
     public List<Banco> getBancos() {
@@ -185,6 +194,14 @@ public class PagosController implements Serializable {
         this.pagosefectuados = pagosefectuados;
     }
 
+    public List<Pagocompra> getPagoespecifico() {
+        return pagoespecifico;
+    }
+
+    public void setPagoespecifico(List<Pagocompra> pagoespecifico) {
+        this.pagoespecifico = pagoespecifico;
+    }
+
     @PostConstruct
     public void init() {
         auxiliarrequerimientos = auxiliarrequerimientoEJB.findAll();
@@ -201,6 +218,17 @@ public class PagosController implements Serializable {
     public void asignar(Compra compr) {
         this.compra = compr;
         this.idCompra = compr.getIdcompra();
+        this.auxiliarrequerimiento = compr.getIdauxiliarrequerimiento();
+//        this.auxiliar = aux;
+        detallecompraFiltrados = detallecompraAuxiliar();
+//        this.compra.setIdauxiliarrequerimiento(auxiliar);
+    }
+
+    public void asignarCompra(Compra compr) {
+        this.compra = compr;
+        this.idCompra = compr.getIdcompra();
+        this.pagoespecifico = pagocompraEJB.buscarpago(compr);
+        this.pagocompra=pagocompraEJB.buscarpagototal(compr);
         this.auxiliarrequerimiento = compr.getIdauxiliarrequerimiento();
 //        this.auxiliar = aux;
         detallecompraFiltrados = detallecompraAuxiliar();
@@ -253,7 +281,7 @@ public class PagosController implements Serializable {
              * compra.setIva(auxiliar.getMontoiva());
              * compra.setTotal(auxiliar.getMontototal()); Usuario us = (Usuario)
              * FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-            compra.setIdusuario(us);*
+             * compra.setIdusuario(us);*
              */
             int tipo = 3;
             statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
