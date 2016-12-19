@@ -14,27 +14,23 @@
                     <p:panelGrid columns="2" rendered="#{detallefacturaController.selected != null}">
                         <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_iddetallefact}"/>
                         <h:outputText value="#{detallefacturaController.selected.iddetallefact}" title="#{bundlefactura.ViewDetallefacturaTitle_iddetallefact}"/>
-                        <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_unidades}"/>
-                        <h:outputText value="#{detallefacturaController.selected.unidades}" title="#{bundlefactura.ViewDetallefacturaTitle_unidades}"/>
-                        <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_preciocosto}"/>
-                        <h:outputText value="#{detallefacturaController.selected.preciocosto}" title="#{bundlefactura.ViewDetallefacturaTitle_preciocosto}"/>
-                        <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_precioventabruto}"/>
-                        <h:outputText value="#{detallefacturaController.selected.precioventabruto}" title="#{bundlefactura.ViewDetallefacturaTitle_precioventabruto}"/>
-                        <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_descuento}"/>
-                        <h:outputText value="#{detallefacturaController.selected.descuento}" title="#{bundlefactura.ViewDetallefacturaTitle_descuento}"/>
-                        <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_precioventaneta}"/>
-                        <h:outputText value="#{detallefacturaController.selected.precioventaneta}" title="#{bundlefactura.ViewDetallefacturaTitle_precioventaneta}"/>
-                        <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_totalcosto}"/>
-                        <h:outputText value="#{detallefacturaController.selected.totalcosto}" title="#{bundlefactura.ViewDetallefacturaTitle_totalcosto}"/>
-                        <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_totaldescuento}"/>
-                        <h:outputText value="#{detallefacturaController.selected.totaldescuento}" title="#{bundlefactura.ViewDetallefacturaTitle_totaldescuento}"/>
-                        <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_totalventa}"/>
-                        <h:outputText value="#{detallefacturaController.selected.totalventa}" title="#{bundlefactura.ViewDetallefacturaTitle_totalventa}"/>
-                        <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_numerofact}"/>
+                         <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_numerofact}"/>
                         <h:outputText value="#{detallefacturaController.selected.numerofact}" title="#{bundlefactura.ViewDetallefacturaTitle_numerofact}"/>
                         <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_codigo}"/>
                         <h:outputText value="#{detallefacturaController.selected.codigo}" title="#{bundlefactura.ViewDetallefacturaTitle_codigo}"/>
-                    </p:panelGrid>
+                        <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_codigo}"/>
+                        <h:outputText value="#{detallefacturaController.selected.codigo.descripcion}" title="#{bundlefactura.ViewDetallefacturaTitle_codigo}"/>                        
+                        <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_unidades}"/>
+                        <h:outputText value="#{detallefacturaController.selected.unidades}" title="#{bundlefactura.ViewDetallefacturaTitle_unidades}"/>
+                        <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_precioventabruto}"/>
+                        <h:outputText value="#{detallefacturaController.selected.precioventa}" title="#{bundlefactura.ViewDetallefacturaTitle_precioventabruto}"/>
+                        <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_descuento}"/>
+                        <h:outputText value="#{detallefacturaController.selected.subtotal}" title="#{bundlefactura.ViewDetallefacturaTitle_descuento}"/>
+                        <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_precioventaneta}"/>
+                        <h:outputText value="#{detallefacturaController.selected.tributoiva}" title="#{bundlefactura.ViewDetallefacturaTitle_precioventaneta}"/>
+                        <h:outputText value="#{bundlefactura.ViewDetallefacturaLabel_totalventa}"/>
+                        <h:outputText value="#{detallefacturaController.selected.total}" title="#{bundlefactura.ViewDetallefacturaTitle_totalventa}"/>
+                   </p:panelGrid>
                     <p:commandButton value="#{bundlefactura.Close}" onclick="DetallefacturaViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

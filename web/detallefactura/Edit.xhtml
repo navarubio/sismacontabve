@@ -14,20 +14,6 @@
                     <p:panelGrid columns="2" rendered="#{detallefacturaController.selected != null}">
                         <p:outputLabel value="#{bundlefactura.EditDetallefacturaLabel_iddetallefact}" for="iddetallefact" />
                         <p:inputText id="iddetallefact" value="#{detallefacturaController.selected.iddetallefact}" title="#{bundlefactura.EditDetallefacturaTitle_iddetallefact}" required="true" requiredMessage="#{bundlefactura.EditDetallefacturaRequiredMessage_iddetallefact}"/>
-                        <p:outputLabel value="#{bundlefactura.EditDetallefacturaLabel_unidades}" for="unidades" />
-                        <p:inputText id="unidades" value="#{detallefacturaController.selected.unidades}" title="#{bundlefactura.EditDetallefacturaTitle_unidades}" />
-                        <p:outputLabel value="#{bundlefactura.EditDetallefacturaLabel_precioventabruto}" for="precioventabruto" />
-                        <p:inputText id="precioventabruto" value="#{detallefacturaController.selected.precioventabruto}" title="#{bundlefactura.EditDetallefacturaTitle_precioventabruto}" />
-                        <p:outputLabel value="#{bundlefactura.EditDetallefacturaLabel_descuento}" for="descuento" />
-                        <p:inputText id="descuento" value="#{detallefacturaController.selected.descuento}" title="#{bundlefactura.EditDetallefacturaTitle_descuento}" />
-                        <p:outputLabel value="#{bundlefactura.EditDetallefacturaLabel_precioventaneta}" for="precioventaneta" />
-                        <p:inputText id="precioventaneta" value="#{detallefacturaController.selected.precioventaneta}" title="#{bundlefactura.EditDetallefacturaTitle_precioventaneta}" />
-                        <p:outputLabel value="#{bundlefactura.EditDetallefacturaLabel_totalcosto}" for="totalcosto" />
-                        <p:inputText id="totalcosto" value="#{detallefacturaController.selected.totalcosto}" title="#{bundlefactura.EditDetallefacturaTitle_totalcosto}" />
-                        <p:outputLabel value="#{bundlefactura.EditDetallefacturaLabel_totaldescuento}" for="totaldescuento" />
-                        <p:inputText id="totaldescuento" value="#{detallefacturaController.selected.totaldescuento}" title="#{bundlefactura.EditDetallefacturaTitle_totaldescuento}" />
-                        <p:outputLabel value="#{bundlefactura.EditDetallefacturaLabel_totalventa}" for="totalventa" />
-                        <p:inputText id="totalventa" value="#{detallefacturaController.selected.totalventa}" title="#{bundlefactura.EditDetallefacturaTitle_totalventa}" />
                         <p:outputLabel value="#{bundlefactura.EditDetallefacturaLabel_numerofact}" for="numerofact" />
                         <p:selectOneMenu id="numerofact" value="#{detallefacturaController.selected.numerofact}" >
                             <f:selectItem itemLabel="#{bundlefactura.SelectOneMessage}"/>
@@ -42,6 +28,16 @@
                                            var="codigoItem"
                                            itemValue="#{codigoItem}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlefactura.EditDetallefacturaLabel_unidades}" for="unidades" />
+                        <p:inputText id="unidades" value="#{detallefacturaController.selected.unidades}" title="#{bundlefactura.EditDetallefacturaTitle_unidades}" />
+                        <p:outputLabel value="#{bundlefactura.EditDetallefacturaLabel_precioventabruto}" for="precioventa" />
+                        <p:inputText id="precioventa" value="#{detallefacturaController.selected.precioventa}" title="#{bundlefactura.EditDetallefacturaTitle_precioventabruto}" />
+                        <p:outputLabel value="#{bundlefactura.EditDetallefacturaLabel_descuento}" for="subtotal" />
+                        <p:inputText id="subtotal" value="#{detallefacturaController.selected.subtotal}" title="#{bundlefactura.EditDetallefacturaTitle_descuento}" />
+                        <p:outputLabel value="#{bundlefactura.EditDetallefacturaLabel_precioventaneta}" for="iva" />
+                        <p:inputText id="iva" value="#{detallefacturaController.selected.tributoiva}" title="#{bundlefactura.EditDetallefacturaTitle_precioventaneta}" />
+                        <p:outputLabel value="#{bundlefactura.EditDetallefacturaLabel_totalventa}" for="totalventa" />
+                        <p:inputText id="totalventa" value="#{detallefacturaController.selected.total}" title="#{bundlefactura.EditDetallefacturaTitle_totalventa}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{detallefacturaController.update}" value="#{bundlefactura.Save}" update="display,:DetallefacturaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DetallefacturaEditDialog');"/>
                     <p:commandButton value="#{bundlefactura.Cancel}" onclick="DetallefacturaEditDialog.hide()"/>

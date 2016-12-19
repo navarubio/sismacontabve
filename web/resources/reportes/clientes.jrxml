@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ddba77e-51be-47ac-8b24-c3354df35f82">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="148"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     cliente.`rifcliente` AS cliente_rifcliente,
+     cliente.`razonsocial` AS cliente_razonsocial,
+     cliente.`direccionfiscal` AS cliente_direccionfiscal,
+     cliente.`telefonos` AS cliente_telefonos,
+     cliente.`correo` AS cliente_correo,
+     cliente.`fechainscripcion` AS cliente_fechainscripcion,
+     cliente.`personacontacto` AS cliente_personacontacto,
+     cliente.`telefonocontacto` AS cliente_telefonocontacto,
+     cliente.`idpersonalidad` AS cliente_idpersonalidad,
+     cliente.`idcontribuyente` AS cliente_idcontribuyente,
+     cliente.`idusuario` AS cliente_idusuario,
+     contribuyente.`idcontribuyente` AS contribuyente_idcontribuyente,
+     contribuyente.`contribuyente` AS contribuyente_contribuyente,
+     personalidadjuridica.`idpersonalidad` AS personalidadjuridica_idpersonalidad,
+     personalidadjuridica.`personalidad` AS personalidadjuridica_personalidad
+FROM
+     `contribuyente` contribuyente INNER JOIN `cliente` cliente ON contribuyente.`idcontribuyente` = cliente.`idcontribuyente`
+     INNER JOIN `personalidadjuridica` personalidadjuridica ON cliente.`idpersonalidad` = personalidadjuridica.`idpersonalidad`]]>
+	</queryString>
+	<field name="cliente_rifcliente" class="java.lang.String"/>
+	<field name="cliente_razonsocial" class="java.lang.String"/>
+	<field name="cliente_direccionfiscal" class="java.lang.String"/>
+	<field name="cliente_telefonos" class="java.lang.String"/>
+	<field name="cliente_correo" class="java.lang.String"/>
+	<field name="cliente_fechainscripcion" class="java.sql.Date"/>
+	<field name="personalidadjuridica_personalidad" class="java.lang.String"/>
+	<field name="contribuyente_contribuyente" class="java.lang.String"/>
+	<group name="cliente_razonsocial">
+		<groupExpression><![CDATA[$F{cliente_razonsocial}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="227" height="13" uuid="1a7b2ecc-6866-457e-969d-177a2086da99"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA["INVERSIONES PEDREAÑEZ, C.A".]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="13" width="100" height="12" uuid="5bced9d0-4f76-44cb-a41f-2dbec357a268"/>
+				<textElement>
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[RIF J-26720565-9]]></text>
+			</staticText>
+			<image>
+				<reportElement x="634" y="-3" width="118" height="47" uuid="753d1aab-962a-4e5f-8f4f-aa1d3635fa60"/>
+				<imageExpression><![CDATA["D:\\APLICACIONES JAVA SE - EE\\SistemaINPECA\\Inpeca\\web\\resources\\images\\LogoInpeca.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="25" width="335" height="12" uuid="bdbcbfdf-13f1-43c7-ad3b-a8080e5a1e53"/>
+				<textElement>
+					<font size="8" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[AV. 3H Entre calles 78 y 79 Residencias Republica PB Local 01 Maracaibo Estado Zulia]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="180" y="3" width="237" height="20" uuid="34867c07-73a8-48ed-9283-8f2ca4018671"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RELACION GENERAL DE CLIENTES ]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="4" width="32" height="20" uuid="67466b27-1919-471e-a9c0-d8c58651b4f7"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RIF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="54" y="4" width="100" height="20" uuid="c3d1b701-c5d1-4c06-aafb-3efc4b5915ef"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RAZON SOCIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="5" width="96" height="20" uuid="b68e8447-e6c1-4aaf-b608-807ce6c13682"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCION FISCAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="5" width="60" height="20" uuid="07b03ad7-74e4-46e9-bf19-1bd21d576f7d"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TELEFONOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="492" y="5" width="85" height="20" uuid="38855cd7-dfb8-4edd-ada4-37fc12b40c74"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CORREO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="589" y="4" width="88" height="20" uuid="9e60caad-2501-4c9b-8af6-015026238256"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERSONALIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="688" y="4" width="89" height="20" uuid="dc84d994-5c7c-446f-883b-feb704f7d549"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONTRIBUYENTE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="54" height="22" uuid="8cb3009c-0bf2-49bf-b073-2169639c3def"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_rifcliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="54" y="0" width="155" height="22" uuid="c059d5e7-f733-44c5-a55b-4b4015878a0a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_razonsocial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="209" y="0" width="208" height="22" uuid="a522a60c-dc1f-46a3-8fb8-ae81de4500a8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_direccionfiscal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="0" width="86" height="22" uuid="b5d4ce44-0a4e-41f4-97c2-f313850ff390"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_telefonos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="503" y="0" width="106" height="22" uuid="6c24e338-9d81-42dc-aa07-d5ab5359ef3f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_correo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="623" y="0" width="54" height="22" uuid="898be46b-b0b4-49e6-8e89-961abf8f3735"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{personalidadjuridica_personalidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="698" y="0" width="54" height="22" uuid="f0b519ae-ba61-43f9-8ef5-bc594a5b6687"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contribuyente_contribuyente}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="33" width="100" height="9" uuid="981c901a-0250-4a68-b429-9e601a083caa"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="589" y="33" width="99" height="20" uuid="692bb79a-4fae-49ee-895c-7bd376903665"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="766" y="34" width="40" height="20" uuid="b973ba96-b3ae-4dee-8dfc-169761e1622e"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="698" y="33" width="100" height="20" uuid="7482788d-d8cb-49c2-9d81-22e8bb773744"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="298" y="33" width="100" height="9" uuid="03ad79b6-f9ca-4593-92ce-0d78eec316e0"/>
+				<textElement textAlignment="Center">
+					<font fontName="Poor Richard" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISMACONTAB WEB ]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
