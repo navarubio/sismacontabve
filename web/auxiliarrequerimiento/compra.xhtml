@@ -69,7 +69,7 @@
                                     <p:outputLabel for="fechacompra" value="Fecha Compra" />
                                     <p:calendar id="fechacompra" locale="es" pattern="dd/MM/yyyy" value="#{comprasController.compra.fechaorden}" showOn="button" navigator="true"/>
                                     <p:outputLabel for="observa" value="Observaciones" styleClass="optionalLbl"/>
-                                    <p:inputTextarea id="observa"  rows="2" cols="50" label="Observaciones" value="#{comprasController.compra.observacionescompra}"/>
+                                    <p:inputTextarea id="observa"  rows="2" cols="50" label="Observaciones" value="#{comprasController.compra.observacionescompra}" required="true"/>
 
                                 </p:panelGrid>                                
                             </p:fieldset>
