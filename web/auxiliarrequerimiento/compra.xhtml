@@ -56,17 +56,18 @@
                                     <p:outputLabel id="depto" value="#{comprasController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="proveedor" value="Proveedor" styleClass="optionalLbl"/>
                                     <p:selectOneMenu id="provee" value="#{comprasController.provee}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
-                                        <p:ajax event="change" update="rif"/>                              
+                                        <p:ajax event="change" update="rif, telef"/>                              
 
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                                         <f:selectItems value="#{comprasController.proveedores}"
                                                        var="idarticuloItem"
                                                        itemLabel="#{idarticuloItem.razonsocial}"  itemValue="#{idarticuloItem}" /> 
                                     </p:selectOneMenu>
-
                                     <p:outputLabel for="rif" value="R.I.F." styleClass="optionalLbl"/>
                                     <p:outputLabel id="rif" value="#{comprasController.provee.rifproveedor}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="fechacompra" value="Fecha Compra" />
+                                    <p:outputLabel for="telef" value="Telefono" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="telef" value="#{comprasController.provee.telefonos}" styleClass="optionalLbl"/>                                    
+                                    <p:outputLabel for="fechacompra" value="Fecha Orden de Compra" />
                                     <p:calendar id="fechacompra" locale="es" pattern="dd/MM/yyyy" value="#{comprasController.compra.fechaorden}" showOn="button" navigator="true"/>
                                     <p:outputLabel for="observa" value="Observaciones" styleClass="optionalLbl"/>
                                     <p:inputTextarea id="observa"  rows="2" cols="50" label="Observaciones" value="#{comprasController.compra.observacionescompra}" required="true"/>

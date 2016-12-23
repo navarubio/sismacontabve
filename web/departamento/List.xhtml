@@ -16,7 +16,7 @@
         <ui:define name="body">
             <h:form id="DepartamentoListForm">
                 <p:panel header="#{bundle.ListDepartamentoTitle}">
-                    <p:dataTable id="datalist" value="#{departamentoController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{departamentoController.items}" var="item" style="width:500px"
                                  selectionMode="single" selection="#{departamentoController.selected}"
                                  paginator="true"
                                  rowKey="#{item.iddepartamento}"

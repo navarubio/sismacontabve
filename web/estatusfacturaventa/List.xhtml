@@ -16,7 +16,7 @@
         <ui:define name="body">
             <h:form id="EstatusfacturaventaListForm">
                 <p:panel header="#{bundlefactura.ListEstatusfacturaventaTitle}">
-                    <p:dataTable id="datalist" value="#{estatusfacturaventaController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{estatusfacturaventaController.items}" var="item" style="width:500px"
                                  selectionMode="single" selection="#{estatusfacturaventaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idestatusfacturaventa}"

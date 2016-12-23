@@ -344,6 +344,7 @@ public class ComprasController implements Serializable {
             auxiliarrequerimientoEJB.edit(auxiliarrequerimiento);
 
             codCompra = compraEJB.ultimacompraInsertada();
+            int numerocompra = codCompra.getIdcompra();
             for (Requerimiento rq : requerimientosFiltrados) {
                 Articulo arti = rq.getCodigo();
                 detallecompra.setIdcompra(codCompra);
@@ -355,9 +356,12 @@ public class ComprasController implements Serializable {
                 detallecompra.setTotalapagar(rq.getTotal());
                 detallecompraEJB.create(detallecompra);
             }
-
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Requerimiento fue Almacenado"));
-        } catch (Exception e) {
+            if (tipo==1){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Requerimiento fue enviado para Autorizacion con el Nro " + numerocompra ));                
+            }else{    
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Requerimiento fue Almacenado con el Nro " + numerocompra ));
+            }
+            } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Requerimiento"));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);

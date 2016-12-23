@@ -178,9 +178,9 @@ public class FacturasController implements Serializable {
         }
     }
 
-    public int devolversiguientefactura() {
-        int siguiente;
-        siguiente = facturaEJB.siguientefactura();
+    public String devolversiguientefactura() {
+        String siguiente;
+        siguiente = facturaEJB.siguientefacturaformat();
         return siguiente;
     }
 }

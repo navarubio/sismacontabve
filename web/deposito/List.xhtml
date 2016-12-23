@@ -16,7 +16,7 @@
         <ui:define name="body">
             <h:form id="DepositoListForm">
                 <p:panel header="#{bundle.ListDepositoTitle}">
-                    <p:dataTable id="datalist" value="#{depositoController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{depositoController.items}" var="item" style="width:500px"
                                  selectionMode="single" selection="#{depositoController.selected}"
                                  paginator="true"
                                  rowKey="#{item.iddeposito}"

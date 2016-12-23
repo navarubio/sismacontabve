@@ -34,4 +34,6 @@ public interface FacturaFacadeLocal {
      
     int siguientefactura();
     
+    String  siguientefacturaformat(); 
+    
 }

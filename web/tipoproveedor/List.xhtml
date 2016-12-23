@@ -16,7 +16,7 @@
         <ui:define name="body">
             <h:form id="TipoproveedorListForm">
                 <p:panel header="#{bundle.ListTipoproveedorTitle}">
-                    <p:dataTable id="datalist" value="#{tipoproveedorController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{tipoproveedorController.items}" var="item" style="width:500px"
                                  selectionMode="single" selection="#{tipoproveedorController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idtipoproveedor}"

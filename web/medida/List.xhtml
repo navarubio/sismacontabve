@@ -16,7 +16,7 @@
         <ui:define name="body">
             <h:form id="MedidaListForm">
                 <p:panel header="#{bundle.ListMedidaTitle}">
-                    <p:dataTable id="datalist" value="#{medidaController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{medidaController.items}" var="item" style="width:500px"
                                  selectionMode="single" selection="#{medidaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idmedida}"

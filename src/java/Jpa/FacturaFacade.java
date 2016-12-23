@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Factura;
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -66,5 +67,26 @@ public class FacturaFacade extends AbstractFacade<Factura> implements FacturaFac
         return numeracion;
     }
     
-    
+    @Override
+    public String  siguientefacturaformat() {
+        String consulta = null;
+        Factura ultima = new Factura();
+        int numeracion;
+        DecimalFormat myFormatter = new DecimalFormat("00000"); 
+        //formatear la cantidad 
+        try {
+            consulta = "Select f From Factura f Order By f.numerofact Desc";
+            Query query = em.createQuery(consulta);
+            List<Factura> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                ultima = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        numeracion = ultima.getNumerofact()+1;
+        String output = myFormatter.format(numeracion); 
+
+        return output;
+    }
 }
