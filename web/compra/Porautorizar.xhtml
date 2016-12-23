@@ -139,9 +139,9 @@
                                 </f:facet>
                                 <h:outputText value="#{item.idestatusfactura.estatusfactura}"/>
                             </p:column>                        
-                            <p:column style="text-align: center" headerText="Procesar">
+                            <p:column style="text-align: center" headerText="Autorizar">
                                 <p:commandLink actionListener="#{comprasController.asignarCompra(item)}"  update=":dialogo" oncomplete="PF('wdialogo').show();" >
-                                    <h:graphicImage library="images" name="ark2.png" width="30" height="30" alt="Autorizar Compra"/> 
+                                    <h:graphicImage library="images" name="candadopen.png" width="30" height="30" alt="Autorizar Compra"/> 
                                 </p:commandLink>
                             </p:column>
                             <f:facet name="footer">
