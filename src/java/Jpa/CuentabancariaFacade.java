@@ -50,5 +50,19 @@ public class CuentabancariaFacade extends AbstractFacade<Cuentabancaria> impleme
 }
         return lista;
     }
+    @Override
+    public double saldoencuenta(List <Cuentabancaria> lista){
+        double saldo=0;
+        if (!lista.isEmpty()) {
+            saldo = lista.get(0).getSaldo();
+        }
+        return saldo;
+    }
     
+    //@Override
+    //public double saldoencuentaespecifica(Cuentabancaria cuenta){
+        
+    //}
+    
+   
 }

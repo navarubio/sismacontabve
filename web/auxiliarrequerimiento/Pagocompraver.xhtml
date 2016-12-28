@@ -27,7 +27,7 @@
 
                     <p:panel id="panel1" header="VER DETALLE DE COMPRA EFECTUADA">
                         <p:panelGrid columns="3">
-                            <p:fieldset legend="Datos Requerimiento" >
+                            <p:fieldset styleClass="ui-custompanelgrid1" legend="Datos Requerimiento" >
                                 <p:panelGrid columns="2">
                                     <p:outputLabel for="numero" value="Solicitud" styleClass="optionalLbl"/>
                                     <p:outputLabel id="numero" value="REQ- #{pagosController.auxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
@@ -48,7 +48,7 @@
                                     <p:outputLabel id="resena" value="#{pagosController.auxiliarrequerimiento.descripcion}" />
                                 </p:panelGrid>
                             </p:fieldset>
-                            <p:fieldset legend="Datos Compra" >
+                            <p:fieldset styleClass="ui-custompanelgrid" legend="Datos Compra" >
                                 <p:panelGrid columns="2">
                                     <p:outputLabel for="numeroc" value="Compra" styleClass="optionalLbl"/>
                                     <p:outputLabel id="numeroc" value="CMP- #{pagosController.compra.idcompra}" styleClass="optionalLbl"/>
@@ -68,7 +68,7 @@
                                     <p:outputLabel id="observa" value="#{pagosController.compra.observacionescompra}" />
                                 </p:panelGrid>                                
                             </p:fieldset>
-                            <p:fieldset legend="Datos del Pago" >
+                            <p:fieldset styleClass="ui-custompanelgrid2" legend="Datos del Pago" >
                                 <p:panelGrid columns="4">
                                     <p:outputLabel for="usua1" value="USUARIO" styleClass="optionalLbl"/>
                                     <p:outputLabel id="usua1" value="#{pagosController.usuario.nombre}" styleClass="optionalLbl"/>

@@ -27,7 +27,7 @@
 
                     <p:panel id="panel1" header="PROCESAMIENTO DE COMPRAS">
                         <p:panelGrid columns="2">
-                            <p:fieldset legend="Datos Requerimiento" >
+                            <p:fieldset styleClass="ui-custompanelgrid1" legend="Datos Requerimiento" >
                                 <p:panelGrid columns="2">
                                     <p:outputLabel for="numero" value="Solicitud" styleClass="optionalLbl"/>
                                     <p:outputLabel id="numero" value="REQ- #{comprasController.auxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
@@ -48,7 +48,7 @@
                                     <p:outputLabel id="resena" value="#{comprasController.auxiliarrequerimiento.descripcion}" />
                                 </p:panelGrid>
                             </p:fieldset>
-                            <p:fieldset legend="Datos Compra" >
+                            <p:fieldset styleClass="ui-custompanelgrid" legend="Datos Compra" >
                                 <p:panelGrid columns="2">
                                     <p:outputLabel for="usua" value="USUARIO" styleClass="optionalLbl"/>
                                     <p:outputLabel id="usua" value="#{comprasController.usuario.nombre}" styleClass="optionalLbl"/>

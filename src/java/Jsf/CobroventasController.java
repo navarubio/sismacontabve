@@ -71,11 +71,21 @@ public class CobroventasController implements Serializable {
     private List<Detallefactura> detallesfactura;
     private List<Detallefactura> detallesfacturafiltrados;
     private List<Cuentabancaria> cuentasbancarias;
+    private double saldocuenta;
     private List<Tipopago> tipopagos;
     private List<Cobroventa> cobrosefectuados;
     private List<Cuentabancaria> lstCuentasSelecc;
     private List<Banco> bancos;
 
+    public double getSaldocuenta() {
+        return saldocuenta;
+    }
+
+    public void setSaldocuenta(double saldocuenta) {
+        this.saldocuenta = saldocuenta;
+    }
+
+    
     public Factura getFactura() {
         return factura;
     }
@@ -165,13 +175,17 @@ public class CobroventasController implements Serializable {
         bancos = bancoEJB.findAll();
         cobro = new Cobroventa();
     }
-
     public List<Cuentabancaria> refrescarCuentasBancarias() {
         try {
             lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco());
         } catch (Exception e) {
         }
+        cobro.setIdcuentabancaria(lstCuentasSelecc.get(0));
         return lstCuentasSelecc;
+    }
+    
+    public void saldoactual(){
+        saldocuenta = cuentabancariaEJB.saldoencuenta(lstCuentasSelecc);        
     }
 
     public void asignar(Factura factura) {

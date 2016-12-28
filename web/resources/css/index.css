@@ -28,8 +28,28 @@
     left: 20px;
 
 }
+#panel1
+{ 
+    background-color:#999999;
 
+}
+.ui-custompanelgrid, .ui-custompanelgrid td {
+//font-weight: bold;
+background-color:  #FFEFFF;
+}
+.ui-custompanelgrid1, .ui-custompanelgrid1 td {
+//font-weight: bold;
+background-color:  #FFFFD4;
+}
 
+.ui-custompanelgrid2, .ui-custompanelgrid2 td {
+//font-weight: bold;
+background-color:  #E5FFEA ;
+}
+
+.ui-panelgrid > * > tr, .ui-panelgrid > * > tr > td.ui-panelgrid-cell {
+    border: none;
+}
 
 #formulario .text-ouput{
     font-weight:  bold;
@@ -42,7 +62,11 @@
     font-size: 16px;
 }
 
-
+#formulario .text-ouputcxc{
+    font-weight:  bold;
+    color:red;
+    font-size: 90% !important;
+}
 .text-cantidad{
     font-weight: bold;
     color:greenyellow;
