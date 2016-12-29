@@ -62,6 +62,7 @@ public class CobroventasController implements Serializable {
     private Factura factura;
     private int numeroFact = 0;
     private Cobroventa cobro;
+    private Cuentabancaria cuentabancaria;
     private Detallefactura detallefact;
     private Estatusfacturaventa statusfactu = null;
     private Estatuscontable estatuscontab = null;
@@ -76,6 +77,8 @@ public class CobroventasController implements Serializable {
     private List<Cobroventa> cobrosefectuados;
     private List<Cuentabancaria> lstCuentasSelecc;
     private List<Banco> bancos;
+    private int edad=0;
+    private String mensaje;
 
     public double getSaldocuenta() {
         return saldocuenta;
@@ -88,6 +91,22 @@ public class CobroventasController implements Serializable {
     
     public Factura getFactura() {
         return factura;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 
     public void setFactura(Factura factura) {
@@ -166,6 +185,14 @@ public class CobroventasController implements Serializable {
         this.formacobro = formacobro;
     }
 
+    public Cuentabancaria getCuentabancaria() {
+        return cuentabancaria;
+    }
+
+    public void setCuentabancaria(Cuentabancaria cuentabancaria) {
+        this.cuentabancaria = cuentabancaria;
+    }
+
     @PostConstruct
     public void init() {
         detallesfactura = detallefacturaEJB.findAll();
@@ -175,6 +202,7 @@ public class CobroventasController implements Serializable {
         bancos = bancoEJB.findAll();
         cobro = new Cobroventa();
     }
+    
     public List<Cuentabancaria> refrescarCuentasBancarias() {
         try {
             lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco());
@@ -206,12 +234,13 @@ public class CobroventasController implements Serializable {
             if (formacobro == 1) {
                 double saldo =0;
                 factura.setSaldopendiente(saldo);
+                cobro.setMontocobrado(factura.getSaldopendiente());
                 int tipo = 1;
                 statusfactu = estatusfacturaventaEJB.estatusfacturaPagada(tipo);        
             }else{
                 int tipo =3;
                 double saldop =0;
-                saldop = factura.getTotalgeneral()-cobro.getMontocobrado();
+                saldop = factura.getSaldopendiente()-cobro.getMontocobrado();
                 factura.setSaldopendiente(saldop);
                 statusfactu = estatusfacturaventaEJB.estatusfacturaAbonada(tipo);
             }
@@ -221,12 +250,30 @@ public class CobroventasController implements Serializable {
 
             cobro.setNumerofact(factura);
             cobro.setIdestatuscontable(estatuscontab);
+            cobro.setIdcuentabancaria(cuentabancaria);
             cobroventaEJB.create(cobro);
+            
+
+            double saldoactualbanco=0;
+            saldoactualbanco = cobro.getMontocobrado()+cobro.getIdcuentabancaria().getSaldo();
+            cuentabancaria.setSaldo(saldoactualbanco);
+            cuentabancariaEJB.edit(cuentabancaria); 
+            
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Pago fue Almacenado"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Pago"));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
+    }
+    public void seleccionpagofraccionado() {
+        if(mensaje.equals("total") ){
+            formacobro = 1;
+        }else if (mensaje.equals("parcial")) {
+            formacobro = 2;
+        }else{
+            formacobro=0;
+        }
+            
     }
 }

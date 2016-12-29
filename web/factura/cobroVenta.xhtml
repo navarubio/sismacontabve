@@ -14,7 +14,7 @@
             </ui:define>
 
             <ui:define name="body">
-                <p:growl id="msgs" showDetail="true" /> 
+                <p:growl id="msgs" showDetail="true" autoUpdate="true" showSummary="false" /> 
 
                 <h:form id="formulario" >
                     <div id="imag2">
@@ -51,33 +51,33 @@
                             <p:fieldset styleClass="ui-custompanelgrid2" legend="Datos del Cobro" >
                                 <p:panelGrid columns="4">
                                     <p:outputLabel for="fechacobro" value="Fecha Cobro" styleClass="text-ouput" />
-                                    <p:calendar size="15" id="fechacobro" locale="es" pattern="dd/MM/yyyy" value="#{cobroventasController.cobro.fechacobro}" showOn="button" navigator="true" required="true"/>
+                                    <p:calendar size="15" id="fechacobro" locale="es" pattern="dd/MM/yyyy" value="#{cobroventasController.cobro.fechacobro}" showOn="button" navigator="true" required="true">
+                                    </p:calendar>                                          
                                     <p:outputLabel for="montofact" value="MONTO POR COBRAR" styleClass="text-ouput"/>
-                                    <p:outputLabel id="montofact" value="#{cobroventasController.factura.totalgeneral}" styleClass="text-ouputcxc" >
+                                    <p:outputLabel id="montofact" value="#{cobroventasController.factura.saldopendiente}" styleClass="text-ouputcxc" >
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </p:outputLabel>
-                                    <p:outputLabel for="montoc" value="Porción de Cobro" styleClass="text-ouput"/>
+                                    <p:outputLabel value="Porción de Cobro" styleClass="text-ouput"/>
                                     <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
                                         <p:outputLabel for="console" value="" />
-                                        <p:selectOneRadio id="console" value="#{cobroventasController.formacobro}">
-                                            <f:selectItem itemLabel="Total" itemValue="1"/>
-                                            <f:selectItem itemLabel="Parcial" itemValue="2" />
-                                            <p:ajax event="valueChange" listener="#{mostrarOcultarController.seleccionFechaNacimiento}"
-                                                    process="@this" update="contenedorLabel,contenedorComponente"/>                                        </p:selectOneRadio>                                        
+                                        <p:selectOneRadio id="console" value="#{cobroventasController.mensaje}">
+                                            <f:selectItem itemLabel="Total" itemValue="total"/>
+                                            <f:selectItem itemLabel="Parcial" itemValue="parcial"/>
+                                            <!--f:ajax event="change" render="<Component ID to render>" listener=".{bean--> 
+                                            <p:ajax event="valueChange" 
+                                                    update="contenedorLabel,contenedorComponente" listener="#{cobroventasController.seleccionpagofraccionado()}"   
+                                                    process="@this" > 
+                                            </p:ajax>    
+                                        </p:selectOneRadio>                                        
                                     </h:panelGrid>                             
-
-                                    <h:panelGroup id="contenedorLabel">
-                                        <p:outputLabel value="Cantidad ABONADA" for="observacion"
-                                                       rendered="#{mostrarOcultarController.edad >= 18 ? true:false}"/>
+                                    <h:panelGroup id="contenedorLabel" >
+                                        <p:outputLabel value="Cantidad ABONAR" for="observacion"
+                                                       rendered="#{cobroventasController.formacobro>=2 ? true:false}"/>
                                     </h:panelGroup>
                                     <h:panelGroup id="contenedorComponente">
-                                        <p:inputText value="#{mostrarOcultarController.mensaje}"
-                                                         rendered="#{mostrarOcultarController.edad >= 18 ? true:false}"/>
+                                        <p:inputText value="#{cobroventasController.cobro.montocobrado}" id="observacion"
+                                                     rendered="#{cobroventasController.formacobro>= 2 ? true:false}"/>
                                     </h:panelGroup>
-                                    
-                                    <!--p:inputText id="montoc" size="15" value=".{cobroventasController.cobro.montocobrado}" styleClass="optionalLbl" />
-                                    <h:outputLabel></h:outputLabel-->
-
                                     <p:outputLabel for="tipopag" value="Forma de Pago" styleClass="text-ouput"/>
                                     <p:selectOneMenu id="tipopag" value="#{cobroventasController.cobro.idtipopago}" converter="omnifaces.SelectItemsConverter" > 
                                         <!--f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/-->
@@ -85,23 +85,23 @@
                                                        var="idtpagoItem"
                                                        itemLabel="#{idtpagoItem.tipopago}"  itemValue="#{idtpagoItem}" /> 
                                     </p:selectOneMenu>
-                                    <p:outputLabel for="banco" value="Banco" styleClass="text-ouput"/>
+                                    <p:outputLabel for="banco" value="Banco" style="text-align: right" styleClass="text-ouput"/>
                                     <p:selectOneMenu id="banco" value="#{cobroventasController.banco}" converter="omnifaces.SelectItemsConverter"  >  
-                                        <p:ajax event="change" listener="#{cobroventasController.refrescarCuentasBancarias()}" update="cuentabanco, saldocuenta"/>
+                                        <p:ajax event="valueChange" listener="#{cobroventasController.refrescarCuentasBancarias()}" update="cuentabanco, saldocuenta"/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
                                         <f:selectItems value="#{cobroventasController.bancos}"
                                                        var="idbancoItem"
                                                        itemLabel="#{idbancoItem.nombrebanco}"  itemValue="#{idbancoItem}" /> 
                                     </p:selectOneMenu>
-                                    <p:outputLabel for="cuentabanco" value="Cuenta Bancaria" styleClass="text-ouput"/>
-                                    <p:selectOneMenu id="cuentabanco" value="#{cobroventasController.cobro.idcuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
+                                    <p:outputLabel for="cuentabanco" style="text-align: right" value="Cuenta Bancaria" styleClass="text-ouput"/>
+                                    <p:selectOneMenu id="cuentabanco" value="#{cobroventasController.cuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
                                         <p:ajax event="change" update="saldocuenta"/>                              
                                         <f:selectItems value="#{cobroventasController.lstCuentasSelecc}"
                                                        var="cuentaporbancoItem"
                                                        itemLabel="#{cuentaporbancoItem.numerocuenta}" itemValue="#{cuentaporbancoItem}"/>
                                     </p:selectOneMenu>
                                     <p:outputLabel for="saldocuenta" value="Saldo Cuenta" styleClass="text-ouput"/>
-                                    <h:outputText id="saldocuenta" value="#{cobroventasController.cobro.idcuentabancaria.saldo}" styleClass="optionalLbl">
+                                    <h:outputText id="saldocuenta" value="#{cobroventasController.cobro.idcuentabancaria.saldo}" styleClass="text-ouputsaldo">
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </h:outputText>
                                     <p:outputLabel for="aprobacion" value="Nro. Aprobacion" styleClass="text-ouput"/>

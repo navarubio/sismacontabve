@@ -67,6 +67,11 @@ background-color:  #E5FFEA ;
     color:red;
     font-size: 90% !important;
 }
+#formulario .text-ouputsaldo{
+    font-weight:  bold;
+    color:blue;
+    font-size: 90% !important;
+}
 .text-cantidad{
     font-weight: bold;
     color:greenyellow;

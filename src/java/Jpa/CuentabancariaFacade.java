@@ -59,10 +59,5 @@ public class CuentabancariaFacade extends AbstractFacade<Cuentabancaria> impleme
         return saldo;
     }
     
-    //@Override
-    //public double saldoencuentaespecifica(Cuentabancaria cuenta){
-        
-    //}
-    
    
 }
