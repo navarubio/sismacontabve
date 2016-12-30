@@ -66,7 +66,7 @@ public class CobroventasController implements Serializable {
     private Detallefactura detallefact;
     private Estatusfacturaventa statusfactu = null;
     private Estatuscontable estatuscontab = null;
-    private int formacobro=0;
+    private int formacobro = 0;
     private Banco banco;
     private int idbanco;
     private List<Detallefactura> detallesfactura;
@@ -77,7 +77,7 @@ public class CobroventasController implements Serializable {
     private List<Cobroventa> cobrosefectuados;
     private List<Cuentabancaria> lstCuentasSelecc;
     private List<Banco> bancos;
-    private int edad=0;
+    private int edad = 0;
     private String mensaje;
 
     public double getSaldocuenta() {
@@ -88,7 +88,6 @@ public class CobroventasController implements Serializable {
         this.saldocuenta = saldocuenta;
     }
 
-    
     public Factura getFactura() {
         return factura;
     }
@@ -202,7 +201,7 @@ public class CobroventasController implements Serializable {
         bancos = bancoEJB.findAll();
         cobro = new Cobroventa();
     }
-    
+
     public List<Cuentabancaria> refrescarCuentasBancarias() {
         try {
             lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco());
@@ -211,9 +210,9 @@ public class CobroventasController implements Serializable {
         cobro.setIdcuentabancaria(lstCuentasSelecc.get(0));
         return lstCuentasSelecc;
     }
-    
-    public void saldoactual(){
-        saldocuenta = cuentabancariaEJB.saldoencuenta(lstCuentasSelecc);        
+
+    public void saldoactual() {
+        saldocuenta = cuentabancariaEJB.saldoencuenta(lstCuentasSelecc);
     }
 
     public void asignar(Factura factura) {
@@ -232,48 +231,58 @@ public class CobroventasController implements Serializable {
         try {
             estatuscontab = estatuscontableEJB.estatusContablePorRegistrar();
             if (formacobro == 1) {
-                double saldo =0;
-                factura.setSaldopendiente(saldo);
+                double saldo = 0;
                 cobro.setMontocobrado(factura.getSaldopendiente());
+                factura.setSaldopendiente(saldo);
                 int tipo = 1;
-                statusfactu = estatusfacturaventaEJB.estatusfacturaPagada(tipo);        
-            }else{
-                int tipo =3;
-                double saldop =0;
-                saldop = factura.getSaldopendiente()-cobro.getMontocobrado();
+                statusfactu = estatusfacturaventaEJB.estatusfacturaPagada(tipo);
+            } else {
+                int tipo = 0;
+                double saldop = 0;
+                saldop = factura.getSaldopendiente() - cobro.getMontocobrado();
+                if (saldop < 1) {
+                    tipo = 1;
+                } else {
+                    tipo = 3;
+                }
+
                 factura.setSaldopendiente(saldop);
                 statusfactu = estatusfacturaventaEJB.estatusfacturaAbonada(tipo);
             }
-            factura.setIdestatusfacturaventa(statusfactu);            
+            factura.setIdestatusfacturaventa(statusfactu);
             facturaEJB.edit(factura);
             //codCompra = compraEJB.ultimacompraInsertada();
 
             cobro.setNumerofact(factura);
             cobro.setIdestatuscontable(estatuscontab);
             cobro.setIdcuentabancaria(cuentabancaria);
+            cobro.setMontopendiente(factura.getSaldopendiente());
             cobroventaEJB.create(cobro);
-            
 
-            double saldoactualbanco=0;
-            saldoactualbanco = cobro.getMontocobrado()+cobro.getIdcuentabancaria().getSaldo();
+            double saldoactualbanco = 0;
+            saldoactualbanco = cobro.getMontocobrado() + cobro.getIdcuentabancaria().getSaldo();
             cuentabancaria.setSaldo(saldoactualbanco);
-            cuentabancariaEJB.edit(cuentabancaria); 
-            
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Pago fue Almacenado"));
+            cuentabancariaEJB.edit(cuentabancaria);
+            if (factura.getSaldopendiente() < 1) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Pago fue Almacenado"));
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Abono fue Almacenado"));
+            }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Pago"));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
     }
+
     public void seleccionpagofraccionado() {
-        if(mensaje.equals("total") ){
+        if (mensaje.equals("total")) {
             formacobro = 1;
-        }else if (mensaje.equals("parcial")) {
+        } else if (mensaje.equals("parcial")) {
             formacobro = 2;
-        }else{
-            formacobro=0;
+        } else {
+            formacobro = 0;
         }
-            
+
     }
 }

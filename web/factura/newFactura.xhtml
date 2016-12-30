@@ -33,7 +33,7 @@
                                 <p:outputLabel id="numero" styleClass="text-ouputfact" value="#{facturasController.devolversiguientefactura()}" title="#{bundle.CreateFacturaTitle_numerofactura}" />
 
                                 <p:outputLabel for="control" styleClass="text-ouput" value="Nro. Control" />
-                                <p:inputText id="control" value="#{facturasController.factura.numerocontrol}" title="#{bundle.CreateFacturaTitle_controlfactura}" />
+                                <p:inputText id="control" value="#{facturasController.factura.numerocontrol}" title="#{bundle.CreateFacturaTitle_controlfactura}"  required="true"/>
 
                                 <p:outputLabel for="client" styleClass="text-ouput" value="Cliente" />
                                 <p:selectOneMenu id="client" value="#{facturasController.cliente}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 

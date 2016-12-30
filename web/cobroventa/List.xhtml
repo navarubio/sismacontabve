@@ -20,7 +20,7 @@
                                  selectionMode="single" selection="#{cobroventaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idcobroventa}"
-                                 rows="10"
+                                 rows="15"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
@@ -33,7 +33,7 @@
                             </f:facet>
                             <h:outputText value="COB-#{item.idcobroventa}"/>
                         </p:column>
-                        <p:column style="text-align: center" width="80" >
+                        <p:column style="text-align: center" width="80" filterBy="#{item.numerofact.numerofact}" filterMatchMode="exact" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecobro.ListCobroventaTitle_numerofact}"/>
                             </f:facet>
@@ -69,7 +69,9 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecobro.ListCobroventaTitle_montopendiente}"/>
                             </f:facet>
-                            <h:outputText value="#{item.montopendiente}"/>
+                            <h:outputText value="#{item.montopendiente}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
                         </p:column>
                         <p:column style="text-align: center"  >
                             <f:facet name="header">

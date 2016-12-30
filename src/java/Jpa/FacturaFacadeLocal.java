@@ -36,4 +36,8 @@ public interface FacturaFacadeLocal {
     
     String  siguientefacturaformat(); 
     
+    List<Factura> buscarfacturasporCobrar();
+    
+    List<Factura> buscarfacturasCobradas();
+    
 }

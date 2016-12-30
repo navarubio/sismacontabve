@@ -88,6 +88,11 @@ public class CompraController implements Serializable {
         return comprasporautorizar;
     }
 
+    public List<Compra> buscarComprasPagadas() {
+        comprasporautorizar = ejbFacade.buscarcomprasPagadas();
+        return compraspagadas;
+    }
+
     public Compra prepareCreate() {
         selected = new Compra();
         initializeEmbeddableKey();

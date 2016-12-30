@@ -35,13 +35,13 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column style="text-align: center" width="60" sortBy="#{item.idcompra}">
+                        <p:column style="text-align: center" width="60" filterBy="#{item.idcompra}" sortBy="#{item.idcompra}" filterMatchMode="exact" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCompraTitle_idcompra}"/>
                             </f:facet>
                             <h:outputText value="CMP-#{item.idcompra}"/>
                         </p:column>
-                        <p:column width="60" style="text-align: center">
+                        <p:column width="60" style="text-align: center" filterBy="#{item.idauxiliarrequerimiento.idauxiliarrequerimiento}" sortBy="#{item.idauxiliarrequerimiento.idauxiliarrequerimiento}" filterMatchMode="exact">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCompraTitle_idauxiliarrequerimiento}"/>
                             </f:facet>

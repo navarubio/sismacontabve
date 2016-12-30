@@ -89,4 +89,38 @@ public class FacturaFacade extends AbstractFacade<Factura> implements FacturaFac
 
         return output;
     }
+
+    @Override
+    public List<Factura> buscarfacturasporCobrar() {
+        String consulta;
+        int idstatus = 2;
+        int idstatus2 =3;
+        List<Factura> lista = null;
+        try {
+            consulta = "From Factura f where f.idestatusfacturaventa.idestatusfacturaventa= ?1 or f.idestatusfacturaventa.idestatusfacturaventa= ?2";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, idstatus);
+            query.setParameter(2, idstatus2);            
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Factura> buscarfacturasCobradas() {
+        String consulta;
+        int idstatus = 1;
+        List<Factura> lista = null;
+        try {
+            consulta = "From Factura f where f.idestatusfacturaventa.idestatusfacturaventa= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, idstatus);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
 }

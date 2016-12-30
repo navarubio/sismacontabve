@@ -7,16 +7,24 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-
+        <f:event type="preRenderView" listener="#{facturaController.buscarFacturasActivas()}"/>
 
         <ui:define name="title">
             <h:outputText value="#{bundlefactura.ListFacturaTitle}"></h:outputText>
+            <h:outputStylesheet library="css" name="index.css" />  
         </ui:define>
 
         <ui:define name="body">
+            <p:growl id="msgs" showDetail="true" autoUpdate="true" showSummary="false" /> 
+
             <h:form id="FacturaListForm">
+                <div id="imag2">
+                    <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
+                </div>     
+                <img src="../resources/images/kthememgr_1.png" width="70" height="70" alt="Solicitudes" align="right" />
+
                 <p:panel header="#{bundlefactura.ListFacturaTitle}">
-                    <p:dataTable id="datalist" value="#{facturaController.items}" var="item" widgetVar="facturas"
+                    <p:dataTable id="datalist" value="#{facturaController.facturasactivas}" var="item" widgetVar="facturas"
                                  selectionMode="single" selection="#{facturaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.numerofact}"

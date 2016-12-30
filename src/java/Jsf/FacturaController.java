@@ -24,9 +24,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
 
 @Named("facturaController")
-@SessionScoped
+@ViewScoped
 public class FacturaController implements Serializable {
 
     @EJB
@@ -35,11 +36,16 @@ public class FacturaController implements Serializable {
     private Jpa.EstatusfacturaventaFacadeLocal estatusfacturaEJB;
     private List<Factura> items = null;
     private List<Estatusfacturaventa> estatusfact;
+    private List<Factura> facturasactivas=null;
     private Factura selected;
 
     public FacturaController() {
     }
 
+    @PostConstruct
+    public void init(){
+        facturasactivas= ejbFacade.buscarfacturasporCobrar();
+    }
     public Factura getSelected() {
         return selected;
     }
@@ -68,6 +74,19 @@ public class FacturaController implements Serializable {
 
     private FacturaFacadeLocal getFacade() {
         return ejbFacade;
+    }
+
+    public List<Factura> getFacturasactivas() {
+        return facturasactivas;
+    }
+
+    public void setFacturasactivas(List<Factura> facturasactivas) {
+        this.facturasactivas = facturasactivas;
+    }
+    
+    public List<Factura> buscarFacturasActivas() {
+        facturasactivas = ejbFacade.buscarfacturasporCobrar();
+        return facturasactivas;
     }
 
     public Factura prepareCreate() {
