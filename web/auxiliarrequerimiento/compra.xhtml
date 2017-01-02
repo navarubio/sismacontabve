@@ -59,7 +59,7 @@
                                         <p:ajax event="change" update="rif, telef"/>                              
 
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
-                                        <f:selectItems value="#{comprasController.proveedores}"
+                                        <f:selectItems value="#{comprasController.listarproveedores()}"
                                                        var="idarticuloItem"
                                                        itemLabel="#{idarticuloItem.razonsocial}"  itemValue="#{idarticuloItem}" /> 
                                     </p:selectOneMenu>

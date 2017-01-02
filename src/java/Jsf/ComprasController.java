@@ -57,6 +57,7 @@ public class ComprasController implements Serializable {
     private Usuario usa;
     private Departamento dpto;
     private Compra codCompra;
+    private Compra compraautorizada;
 
     @Inject
     private Auxiliarrequerimiento auxiliar;
@@ -73,6 +74,15 @@ public class ComprasController implements Serializable {
         return compra;
     }
 
+    public Compra getCompraautorizada() {
+        return compraautorizada;
+    }
+
+    public void setCompraautorizada(Compra compraautorizada) {
+        this.compraautorizada = compraautorizada;
+    }
+
+    
     public void setCompra(Compra compra) {
         this.compra = compra;
     }
@@ -220,7 +230,13 @@ public class ComprasController implements Serializable {
 
 //        this.auxiliarrequerimiento=requerimientosController.getAuxrequer();
     }
-
+    
+    public List<Proveedor> listarproveedores(){
+        List<Proveedor> lista= null;
+        lista=proveedorEJB.findAll();
+        return lista;
+    }
+       
     public void asignar(Auxiliarrequerimiento aux) {
         this.auxiliarrequerimiento = aux;
         this.idAuxiliar = aux.getIdauxiliarrequerimiento();
@@ -288,8 +304,8 @@ public class ComprasController implements Serializable {
         Estatusfactura statusfactu = null;
         int tipo = 2;
         statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
-        compra.setIdestatusfactura(statusfactu);
-        compraEJB.edit(compra);
+        compraautorizada.setIdestatusfactura(statusfactu);
+        compraEJB.edit(compraautorizada);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Compra Autorizada por Gerencia"));
     }
 
@@ -299,7 +315,15 @@ public class ComprasController implements Serializable {
     public void asignarCompra(Compra compraselec) {
         compra = compraselec;
     }
-
+    
+    public void asignarCompraAutorizada(Compra compraselec ){
+        this.idAuxiliar = compraselec.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento();
+        this.auxiliar = compraselec.getIdauxiliarrequerimiento();
+        requerimientosFiltrados = requerimientosAuxiliar();
+        compraautorizada=compraselec;      
+        
+        
+    }
     
     public List<Requerimiento> solicitarRequerimientosFiltro() {
         return requerimientosFiltrados;

@@ -93,6 +93,6 @@ public class CompraFacade extends AbstractFacade<Compra> implements CompraFacade
             throw e;
         }
         return lista;
-    }
+    }  
     
 }

@@ -76,3 +76,9 @@ background-color:  #E5FFEA ;
     font-weight: bold;
     color:greenyellow;
 }
+
+#CompraListForm .text-ouput{
+    font-weight:  bold;
+    text-align: right;
+    color:black;
+}

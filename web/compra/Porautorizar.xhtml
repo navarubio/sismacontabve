@@ -140,7 +140,7 @@
                                 <h:outputText value="#{item.idestatusfactura.estatusfactura}"/>
                             </p:column>                        
                             <p:column style="text-align: center" headerText="Autorizar">
-                                <p:commandLink actionListener="#{comprasController.asignarCompra(item)}"  update=":dialogo" oncomplete="PF('wdialogo').show();" >
+                                <p:commandLink actionListener="#{comprasController.asignarCompraAutorizada(item)}"  update=":dialogo" oncomplete="PF('wdialogo').show();" >
                                     <h:graphicImage library="images" name="candadopen.png" width="30" height="30" alt="Autorizar Compra"/> 
                                 </p:commandLink>
                             </p:column>
@@ -156,44 +156,105 @@
                 <ui:include src="Create.xhtml"/>
                 <ui:include src="Edit.xhtml"/>
                 <ui:include src="View.xhtml"/>
-                <p:dialog id="dialogo" widgetVar="wdialogo" header="Actualizar Proceso de Compra" modal="true" closeOnEscape="true" 
+                <p:dialog id="dialogo" widgetVar="wdialogo" header="Autorizar proceso de Compra" modal="true" closeOnEscape="true" 
                           resizable="false" showEffect="explode" appendTo="@(body)"  >
-                    <h:form>
-                        <h:panelGrid  id="display" columns="2" style="vertical-align:top">
+                    <h:form id="formulario">
+                        <h:panelGrid  id="display" columns="2" style="vertical-align:top" width="900">
+                            <p:fieldset  legend="Datos Requerimiento" >
+                                <h:panelGrid styleClass="ui-custompanelgrid1" columns="2" width="400">
+                                    <p:outputLabel for="numero" value="Solicitud" styleClass="text-ouput"/>
+                                    <p:outputLabel id="numero" value="REQ- #{comprasController.compraautorizada.idauxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouput"/>
+                                    <p:outputLabel id="usuario" value="#{comprasController.compraautorizada.idauxiliarrequerimiento.idusuario.nombre}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="departamento" value="Departamento" styleClass="text-ouput"/>
+                                    <p:outputLabel id="departamento" value="#{comprasController.compraautorizada.idauxiliarrequerimiento.iddepartamento.departamento}" styleClass="optionalLbl"/>
 
-                            <h:outputText value="#{bundle.ViewCompraLabel_idcompra}"/>
-                            <h:outputText value="#{compraController.selected.idcompra}" title="#{bundle.ViewCompraTitle_idcompra}"/>
-                            <h:outputText value="#{bundle.ViewCompraLabel_idauxiliarrequerimiento}"/>
-                            <h:outputText value="#{compraController.selected.idauxiliarrequerimiento}" title="#{bundle.ViewCompraTitle_idauxiliarrequerimiento}"/>
-                            <h:outputText value="#{bundle.ViewCompraLabel_fechaorden}"/>
-                            <h:outputText value="#{compraController.selected.fechaorden}" title="#{bundle.ViewCompraTitle_fechaorden}">
-                                <f:convertDateTime pattern="dd/MM/yyyy" />
-                            </h:outputText>
-                            <h:outputText value="#{bundle.ViewCompraLabel_idusuario}"/>
-                            <h:outputText value="#{compraController.selected.idusuario.nombre}" title="#{bundle.ViewCompraTitle_idusuario}"/>
-                            <h:outputText value="#{bundle.ViewCompraLabel_rifproveedor}"/>
-                            <h:outputText value="#{compraController.selected.rifproveedor.razonsocial}" title="#{bundle.ViewCompraTitle_rifproveedor}"/>   
-                            <h:outputText value="#{bundle.ViewCompraLabel_subtotal}" style="float:right"/>
-                            <h:outputText value="#{compraController.selected.subtotal}" style="float:right" title="#{bundle.ViewCompraTitle_subtotal}">
-                                <f:convertNumber type="currency" currencySymbol=" " />
-                            </h:outputText>                               
-                            <h:outputLabel></h:outputLabel>
-                            <h:outputLabel></h:outputLabel>                            
-                            <h:outputText value="#{bundle.ViewCompraLabel_iva}" style="float:right"/>
-                            <h:outputText value="#{compraController.selected.iva}" style="float:right" title="#{bundle.ViewCompraTitle_iva}" >
-                                <f:convertNumber type="currency" currencySymbol=" "  />
-                            </h:outputText>                                
-                            <h:outputLabel></h:outputLabel>
-                            <h:outputLabel></h:outputLabel>                                                    
-                            <h:outputText value="#{bundle.ViewCompraLabel_total}" style="float:right"/>
-                            <h:outputText value="#{compraController.selected.total}" style="float:right" title="#{bundle.ViewCompraTitle_total}">
-                                <f:convertNumber type="currency" currencySymbol=" " />
-                            </h:outputText>
-                            <h:outputLabel></h:outputLabel> 
-                            <h:outputLabel></h:outputLabel>                                                        
-                            <p:commandButton value="Autorizar Compra" icon="ui-icon-check" actionListener="#{comprasController.autorizar()}"  oncomplete="PF('wdialogo').hide();" update="display,:CompraListForm:datalist,:growl" />                             
-                            <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
+                                    <p:outputLabel for="proveedor" value="Proveedor Referido" styleClass="text-ouput"/>
+                                    <p:outputLabel id="proveedor" value="#{comprasController.compraautorizada.idauxiliarrequerimiento.posibleproveedor}"/>
+                                    <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouput"/>
+                                    <p:outputLabel id="telefono" value="#{comprasController.compraautorizada.idauxiliarrequerimiento.telefonoproveedor}"/>
+                                    <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" styleClass="text-ouput" />
+                                    <p:outputLabel id="fechasolicitud" value="#{comprasController.compraautorizada.idauxiliarrequerimiento.fecharequerimiento}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                    <p:outputLabel for="resena" value="Breve Reseña" styleClass="text-ouput"/>
+                                    <p:outputLabel id="resena" value="#{comprasController.compraautorizada.idauxiliarrequerimiento.descripcion}" />
+                                </h:panelGrid>
+                            </p:fieldset>
+                            <p:fieldset legend="Datos de la Orden de Compra" >
+                                <h:panelGrid styleClass="ui-custompanelgrid" columns="2" width="400">
+                                    <p:outputLabel for="numeroc" value="Compra" styleClass="text-ouput"/>
+                                    <p:outputLabel id="numeroc" value="CMP- #{comprasController.compraautorizada.idcompra}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="usua" value="Usuario" styleClass="text-ouput"/>
+                                    <p:outputLabel id="usua" value="#{comprasController.compraautorizada.idusuario.nombre}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="depto" value="Departamento" styleClass="text-ouput"/>
+                                    <p:outputLabel id="depto" value="#{comprasController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="proveedor1" value="Proveedor" styleClass="text-ouput"/>
+                                    <p:outputLabel id="proveedor1" value="#{comprasController.compraautorizada.rifproveedor.razonsocial}"   /> 
+                                    <p:outputLabel for="rif" value="R.I.F." styleClass="text-ouput"/>
+                                    <p:outputLabel id="rif" value="#{comprasController.compraautorizada.rifproveedor.rifproveedor}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="fechacompra" value="Fecha Orden Compra" styleClass="text-ouput" />
+                                    <p:outputLabel id="fechacompra" value="#{comprasController.compraautorizada.fechaorden}" >
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                    <p:outputLabel for="observa" value="Observaciones Orden de Compra" styleClass="text-ouput"/>
+                                    <p:outputLabel id="observa" value="#{comprasController.compraautorizada.observacionescompra}" />
+                                </h:panelGrid>                                
+                            </p:fieldset>
                         </h:panelGrid>
+                        <h:panelGrid columns="1" width="950">
+                            <p:fieldset legend="Datos de los Articulos a Comprar">
+                                <p:panel id="panelart"     >
+                                    <p:dataTable id="listado" value="#{comprasController.requerimientosFiltrados}"
+                                                 var="req" emptyMessage="No hay articulos para mostrar"  >
+                                        <p:column style="width:8%"  headerText="Codigo Articulo">
+                                            <h:outputText value="#{req.codigo.codigo}" />
+                                        </p:column>
+                                        <p:column style="width:35%"  headerText="Descripcion del Articulo">
+                                            <h:outputText value="#{req.codigo.descripcion}"/>  
+                                        </p:column>
+                                        <p:column style="text-align:center" headerText="Cantidad">                                
+                                            <h:outputText style="width:10px"  value="#{req.cantidad}"/>
+                                        </p:column >
+                                        <p:column style="text-align:right" headerText="Precio Unitario ">
+                                            <h:outputText style="width:10px"  value="#{req.pcosto}">
+                                                <f:convertNumber type="currency" currencySymbol=" " />
+                                            </h:outputText>
+                                        </p:column>
+                                        <p:column style="text-align:right" headerText="SUB TOTAL">
+                                            <h:outputText value="#{req.subtotal}"> 
+                                                <f:convertNumber type="currency" currencySymbol=" " />
+                                            </h:outputText>
+                                        </p:column>
+                                        <p:column style="text-align:right" headerText="IVA">
+                                            <h:outputText value="#{req.tributoiva}"> 
+                                                <f:convertNumber type="currency" currencySymbol=" " />
+                                            </h:outputText>
+                                        </p:column>
+                                        <p:column style="text-align:right" headerText="TOTAL">
+                                            <h:outputText value="#{req.total}"> 
+                                                <f:convertNumber type="currency" currencySymbol=" " />
+                                            </h:outputText>
+                                        </p:column>
+                                        <p:columnGroup type="footer">
+                                            <p:row>
+                                                <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
+                                                <p:column style="text-align: right"  footerText="#{comprasController.auxiliarrequerimiento.subtotal}" /> 
+                                                <p:column style="text-align: right"  footerText="#{comprasController.auxiliarrequerimiento.montoiva}" />
+                                                <p:column style="text-align: right"  footerText="#{comprasController.auxiliarrequerimiento.montototal}" />                                        
+                                            </p:row>
+                                        </p:columnGroup>       
+                                    </p:dataTable> 
+                                </p:panel>
+                            </p:fieldset>
+                        </h:panelGrid>
+
+                        <p:panelGrid columns="2">
+                            
+                            <p:commandButton value="Autorizar Compra" icon="ui-icon-key" actionListener="#{comprasController.autorizar()}"  oncomplete="PF('wdialogo').hide();" update="display,:CompraListForm:datalist,:growl" />                             
+                            <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
+                        </p:panelGrid>
+
                     </h:form>
                 </p:dialog>
 
