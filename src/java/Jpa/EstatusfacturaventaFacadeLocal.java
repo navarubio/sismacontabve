@@ -30,9 +30,11 @@ public interface EstatusfacturaventaFacadeLocal {
 
     int count();
     
-    public Estatusfacturaventa estatusFacturaPorCobrar ();
+    Estatusfacturaventa estatusFacturaPorCobrar ();
 
-    public Estatusfacturaventa estatusfacturaPagada(int tipo);
+    Estatusfacturaventa estatusfacturaPagada(int tipo);
     
-    public Estatusfacturaventa estatusfacturaAbonada(int tipo);
+    Estatusfacturaventa estatusfacturaAbonada(int tipo);
+    
+    List<Estatusfacturaventa> ListarEstatusporCobrar();
 }

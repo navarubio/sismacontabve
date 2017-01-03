@@ -31,16 +31,15 @@
                                 <p:outputLabel for="departamento" styleClass="text-ouput" value="DEPARTAMENTO" />
                                 <p:outputLabel id="departamento" value="#{requerimientosController.buscarDepartamento().departamento}" />
                                 <p:outputLabel for="control" styleClass="text-ouput" value="Nro. Control" />
-                                <p:inputText id="control" value="#{facturasController.factura.numerocontrol}" title="#{bundle.CreateFacturaTitle_controlfactura}"  required="true"/>
-
-                                <p:outputLabel for="client" styleClass="text-ouput" value="Cliente" />
+                                <p:inputMask id="control" mask="99-99999" value="#{facturasController.factura.numerocontrol}" title="#{bundle.CreateFacturaTitle_controlfactura}" required="true"/>
+                                <p:outputLabel for="client" styleClass="text-ouput" value="Cliente"/>
                                 <p:selectOneMenu id="client" value="#{facturasController.cliente}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
                                     <p:ajax event="change" update="rif, direccioncliente, telefono"/>                              
 
                                     <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                                     <f:selectItems value="#{facturasController.clientes}"
                                                    var="idarticuloItem"
-                                                   itemLabel="#{idarticuloItem.razonsocial}"  itemValue="#{idarticuloItem}" /> 
+                                                   itemLabel="#{idarticuloItem.razonsocial}"  itemValue="#{idarticuloItem}"/> 
                                 </p:selectOneMenu>
 
                                 <p:outputLabel for="rif" styleClass="text-ouput" value="R.I.F." />
@@ -48,12 +47,11 @@
                                 <p:outputLabel for="direccioncliente" styleClass="text-ouput"  value="Direccion Fiscal" />
                                 <p:outputLabel id="direccioncliente" value="#{facturasController.cliente.direccionfiscal}"/>
                                 <p:outputLabel for="telefono" styleClass="text-ouput" value="Telefonos" />
-                                <p:outputLabel id="telefono" value="#{facturasController.cliente.telefonos}"/>
-
-                                <p:outputLabel for="fechaventa" styleClass="text-ouput"  value="Fecha Venta" />
-                                <p:calendar id="fechaventa" pattern="dd/MM/yyyy" locale="es" value="#{facturasController.factura.fecha}" showOn="button" navigator="true"/>
+                                <p:outputLabel id="telefono" value="#{facturasController.cliente.telefonos}" />
+                                <p:outputLabel for="fechaventa" styleClass="text-ouput"  value="Fecha Venta"  />
+                                <p:calendar id="fechaventa" pattern="dd/MM/yyyy" locale="es" value="#{facturasController.factura.fecha}" showOn="button" navigator="true" required="true"/>
                                 <p:outputLabel for="observa" styleClass="text-ouput"  value="Observaciones" />
-                                <p:inputTextarea id="observa"  rows="2" cols="50" label="Observaciones" value="#{facturasController.factura.observacionesfact}"/>
+                                <p:inputTextarea id="observa"  rows="2" cols="50" label="Observaciones" value="#{facturasController.factura.observacionesfact}" required="true"/>
                             </p:panelGrid>
                         </p:fieldset>
                         <p:fieldset styleClass="ui-custompanelgrid2" legend="Datos de Articulos">

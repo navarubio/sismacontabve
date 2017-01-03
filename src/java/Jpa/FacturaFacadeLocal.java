@@ -40,4 +40,6 @@ public interface FacturaFacadeLocal {
     
     List<Factura> buscarfacturasCobradas();
     
+    String  ultimafacturaformat();
+    
 }

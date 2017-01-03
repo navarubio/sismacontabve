@@ -7,20 +7,28 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
+        <f:event type="preRenderView" listener="#{cobroventaController.items}"/>
 
 
         <ui:define name="title">
             <h:outputText value="#{bundlecobro.ListCobroventaTitle}"></h:outputText>
+            <h:outputStylesheet library="css" name="index.css" />              
         </ui:define>
 
         <ui:define name="body">
             <h:form id="CobroventaListForm">
+                <div id="imag2">
+                    <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
+                </div>     
+                <img src="../resources/images/List manager.png" width="70" height="70" alt="Solicitudes" align="right" />
+
+                
                 <p:panel header="#{bundlecobro.ListCobroventaTitle}">
                     <p:dataTable id="datalist" value="#{cobroventaController.items}" var="item"
                                  selectionMode="single" selection="#{cobroventaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idcobroventa}"
-                                 rows="15"
+                                 rows="20"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
@@ -42,9 +50,9 @@
                             </h:outputText>
 
                         </p:column> 
-                        <p:column width="180">
+                        <p:column width="180" filterBy="#{item.numerofact.rifcliente.razonsocial}" filterMatchMode="contains" >
                             <f:facet name="header">
-                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_cuentaoriginadora}"/>
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_cliente}"/>
                             </f:facet>
                             <h:outputText value="#{item.numerofact.rifcliente.razonsocial}"/>
                         </p:column>                        
@@ -75,7 +83,7 @@
                         </p:column>
                         <p:column style="text-align: center"  >
                             <f:facet name="header">
-                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_aprobacion}"/>
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_banco}"/>
                             </f:facet>
                             <h:outputText value="#{item.idcuentabancaria.idbanco.nombrebanco}"/>
                         </p:column>

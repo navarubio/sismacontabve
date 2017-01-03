@@ -9,19 +9,19 @@
     <ui:composition template="/template.xhtml">
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListClienteTitle}"></h:outputText>
+            <h:outputText value="#{bundle.ListClienteTitle}" styleClass="titulo"></h:outputText>
             <h:outputStylesheet library="css" name="index.css" />            
         </ui:define>
 
         <ui:define name="body">
-            
+
             <h:form id="ClienteListForm">
                 <div id="imag2">
                     <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
                 </div>     
-                
+
                 <img src="../resources/images/kuser.png" width="70" height="70" alt="Clientes" align="right" />
-                
+
                 <p:panel header="#{bundle.ListClienteTitle}">
                     <p:dataTable id="datalist" value="#{clienteController.items}" var="item"
                                  selectionMode="single" selection="#{clienteController.selected}"

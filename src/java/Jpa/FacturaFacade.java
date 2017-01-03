@@ -89,6 +89,28 @@ public class FacturaFacade extends AbstractFacade<Factura> implements FacturaFac
 
         return output;
     }
+    @Override
+    public String  ultimafacturaformat() {
+        String consulta = null;
+        Factura ultima = new Factura();
+        int numeracion;
+        DecimalFormat myFormatter = new DecimalFormat("00000"); 
+        //formatear la cantidad 
+        try {
+            consulta = "Select f From Factura f Order By f.numerofact Desc";
+            Query query = em.createQuery(consulta);
+            List<Factura> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                ultima = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        numeracion = ultima.getNumerofact();
+        String output = myFormatter.format(numeracion); 
+
+        return output;
+    }
 
     @Override
     public List<Factura> buscarfacturasporCobrar() {

@@ -25,7 +25,7 @@
                     <img src="../resources/images/kthememgr_1.png" width="70" height="70" alt="Solicitudes" align="right" />
 
                     <p:panel header="#{bundle.ListCompraTitle}">
-                        <p:dataTable id="datalist" value="#{compraController.comprasporAutorizar}" var="item"
+                        <p:dataTable id="datalist" value="#{compraController.buscarComprasporAutorizar()}" var="item"
                                      selectionMode="single" selection="#{compraController.selected}"
                                      paginator="true"
                                      rowKey="#{item.idcompra}"
@@ -161,7 +161,7 @@
                     <h:form id="formulario">
                         <h:panelGrid  id="display" columns="2" style="vertical-align:top" width="900">
                             <p:fieldset  legend="Datos Requerimiento" >
-                                <h:panelGrid styleClass="ui-custompanelgrid1" columns="2" width="400">
+                                <h:panelGrid styleClass="ui-custompanelgrid1" columns="2" width="450">
                                     <p:outputLabel for="numero" value="Solicitud" styleClass="text-ouput"/>
                                     <p:outputLabel id="numero" value="REQ- #{comprasController.compraautorizada.idauxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouput"/>
@@ -250,14 +250,11 @@
                         </h:panelGrid>
 
                         <p:panelGrid columns="2">
-                            
                             <p:commandButton value="Autorizar Compra" icon="ui-icon-key" actionListener="#{comprasController.autorizar()}"  oncomplete="PF('wdialogo').hide();" update="display,:CompraListForm:datalist,:growl" />                             
                             <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
                         </p:panelGrid>
-
                     </h:form>
                 </p:dialog>
-
             </ui:define>
         </ui:composition>
     </body>

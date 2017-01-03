@@ -36,6 +36,7 @@ public class FacturaController implements Serializable {
     private Jpa.EstatusfacturaventaFacadeLocal estatusfacturaEJB;
     private List<Factura> items = null;
     private List<Estatusfacturaventa> estatusfact;
+    private List<Estatusfacturaventa> estatusfactxcobrar;    
     private List<Factura> facturasactivas=null;
     private Factura selected;
 
@@ -61,6 +62,15 @@ public class FacturaController implements Serializable {
     public void setEstatusfact(List<Estatusfacturaventa> estatusfact) {
         this.estatusfact = estatusfact;
     }
+
+    public List<Estatusfacturaventa> getEstatusfactxcobrar() {
+        return estatusfactxcobrar;
+    }
+
+    public void setEstatusfactxcobrar(List<Estatusfacturaventa> estatusfactxcobrar) {
+        this.estatusfactxcobrar = estatusfactxcobrar;
+    }
+    
 
     /*public List<Factura> getFact() {
         return items;
@@ -138,6 +148,11 @@ public void init(){
     public List<Estatusfacturaventa> getEstatusFacturas(){
         estatusfact = estatusfacturaEJB.findAll();
         return estatusfact;
+    }
+    
+    public List<Estatusfacturaventa> getStatusFactporCobrar(){
+        estatusfactxcobrar = estatusfacturaEJB.ListarEstatusporCobrar();
+        return estatusfactxcobrar;        
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

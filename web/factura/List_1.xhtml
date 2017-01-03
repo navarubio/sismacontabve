@@ -7,10 +7,10 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <f:event type="preRenderView" listener="#{facturaController.buscarFacturasActivas()}"/>
+        <f:event type="preRenderView" listener="#{facturaController.items}"/>
 
         <ui:define name="title">
-            <h:outputText value="#{bundlefactura.ListFacturaTitle}"></h:outputText>
+            <h:outputText value="#{bundlecobro.ListFacturaTitle_total}"></h:outputText>
             <h:outputStylesheet library="css" name="index.css" />  
         </ui:define>
 
@@ -21,10 +21,10 @@
                 <div id="imag2">
                     <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
                 </div>     
-                <img src="../resources/images/calc.png" width="70" height="70" alt="Solicitudes" align="right" />
+                <img src="../resources/images/kthememgr_1.png" width="70" height="70" alt="Solicitudes" align="right" />
 
                 <p:panel header="#{bundlefactura.ListFacturaTitle}">
-                    <p:dataTable id="datalist" value="#{facturaController.facturasactivas}" var="item" widgetVar="facturas"
+                    <p:dataTable id="datalist" value="#{facturaController.items}" var="item" widgetVar="facturas"
                                  selectionMode="single" selection="#{facturaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.numerofact}"
@@ -102,15 +102,10 @@
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('facturas').filter()" >
                                     <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{facturaController.statusFactporCobrar}" />
+                                    <f:selectItems value="#{facturaController.estatusFacturas}" />
                                 </p:selectOneMenu>
                             </f:facet>
                             <h:outputText value="#{item.idestatusfacturaventa.estatusfacturaventa}" />
-                        </p:column>
-                        <p:column width="40" style="text-align: center" headerText="Cobrar">
-                            <h:commandLink action="/factura/cobroVenta.xhtml" actionListener="#{cobroventasController.asignar(item)}" > 
-                                <h:graphicImage library="images" name="dolarfinal.png" width="30" height="30" alt="Pagar Compra"/>
-                            </h:commandLink>      
                         </p:column>
                         <f:facet name="footer">                         
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlefactura.Create}" actionListener="#{facturaController.prepareCreate}" update=":FacturaCreateForm" oncomplete="PF('FacturaCreateDialog').show()"/>

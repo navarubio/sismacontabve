@@ -7,7 +7,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <body>
-        <ui:composition template="./../template.xhtml">
+        <ui:composition template="/template.xhtml">
             <ui:define name="title">
                 Nuevo Requerimiento
                 <h:outputStylesheet library="css" name="index.css" />    
@@ -33,7 +33,7 @@
                                 <p:outputLabel for="telefono" style="font-weight:bold"  value="Telefonos" styleClass="optionalLbl"/>
                                 <p:inputText id="telefono" label="Telefonos" size="40" value="#{requerimientosController.auxrequer.telefonoproveedor}"/>
                                 <p:outputLabel for="fechasolicitud" style="font-weight:bold"  value="Fecha Solicitud" />
-                                <p:calendar id="fechasolicitud" locale="es" pattern="dd/MM/yyyy" value="#{requerimientosController.auxrequer.fecharequerimiento}" showOn="button" navigator="true"/>
+                                <p:calendar id="fechasolicitud" locale="es" pattern="dd/MM/yyyy" value="#{requerimientosController.auxrequer.fecharequerimiento}" showOn="button" navigator="true" required="true"/>
                                 <p:outputLabel for="resena" style="font-weight:bold" value="Breve Reseña" styleClass="optionalLbl"/>
                                 <p:inputTextarea id="resena"  rows="3" cols="50" label="breve resena" value="#{requerimientosController.auxrequer.descripcion}" required="true" />
                             </p:panelGrid>
@@ -100,7 +100,7 @@
                                     </p:row>
                                 </p:columnGroup>                            
                             </p:dataTable>
-                            <p:commandButton value="Registrar" actionListener="#{requerimientosController.registrar()}"  action="/auxiliarrequerimiento/List?faces-redirect=true" update=":formulario,:growl"/>
+                            <p:commandButton value="Registrar" actionListener="#{requerimientosController.registrar()}" action="/auxiliarrequerimiento/List?faces-redirect=true" update=":formulario,:growl" />
                         </p:panel>
                     </p:panel>
                 </h:form>

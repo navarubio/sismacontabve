@@ -34,17 +34,17 @@
 
 }
 .ui-custompanelgrid, .ui-custompanelgrid td {
-//font-weight: bold;
-background-color:  #FFEFFF;
+    //font-weight: bold;
+    background-color:  #FFEFFF;
 }
 .ui-custompanelgrid1, .ui-custompanelgrid1 td {
-//font-weight: bold;
-background-color:  #FFFFD4;
+    //font-weight: bold;
+    background-color:  #FFFFD4;
 }
 
 .ui-custompanelgrid2, .ui-custompanelgrid2 td {
-//font-weight: bold;
-background-color:  #E5FFEA ;
+    //font-weight: bold;
+    background-color:  #E5FFEA ;
 }
 
 .ui-panelgrid > * > tr, .ui-panelgrid > * > tr > td.ui-panelgrid-cell {
@@ -76,7 +76,10 @@ background-color:  #E5FFEA ;
     font-weight: bold;
     color:greenyellow;
 }
-
+.titulo{
+    font-weight:  bold;
+    color:blue;
+}
 #CompraListForm .text-ouput{
     font-weight:  bold;
     text-align: right;
