@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Cobroventa;
+import Modelo.Factura;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -32,4 +33,5 @@ public interface CobroventaFacadeLocal {
 
     int count();
     
+    List<Cobroventa> buscarcobrosporfactura(int factu);
 }

@@ -4,6 +4,7 @@ import Modelo.Cobroventa;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.CobroventaFacadeLocal;
+import Modelo.Factura;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,6 +27,8 @@ public class CobroventaController implements Serializable {
     @EJB
     private Jpa.CobroventaFacadeLocal ejbFacade;
     private List<Cobroventa> items = null;
+    private List<Cobroventa> cobrosporfactura = null;
+
     private Cobroventa selected;
 
     public CobroventaController() {
@@ -61,6 +64,7 @@ public class CobroventaController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
+    
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundlecobro").getString("CobroventaUpdated"));
@@ -81,7 +85,10 @@ public class CobroventaController implements Serializable {
         return items;
     }
     
-    
+    public List<Cobroventa> cobrosFiltrados(int factu){
+        cobrosporfactura = ejbFacade.buscarcobrosporfactura(factu);
+        return cobrosporfactura;
+    }
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {

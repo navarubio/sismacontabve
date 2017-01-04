@@ -20,9 +20,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
 
 @ManagedBean(name = "requerimientoController")
-@SessionScoped
+@ViewScoped
 public class RequerimientoController implements Serializable {
 
     @EJB

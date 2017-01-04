@@ -13,17 +13,21 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{facturaController.selected != null}">
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_numerofact}" for="numerofact" />
-                        <p:inputText id="numerofact" value="#{facturaController.selected.numerofact}" title="#{bundlefactura.EditFacturaTitle_numerofact}" required="true" requiredMessage="#{bundlefactura.EditFacturaRequiredMessage_numerofact}"/>
+                        <p:inputText id="numerofact" value="#{facturaController.selected.numerofact}" title="#{bundlefactura.EditFacturaTitle_numerofact}" required="true" requiredMessage="#{bundlefactura.EditFacturaRequiredMessage_numerofact}">
+                            <f:convertNumber pattern="00000" type="number" />
+                        </p:inputText>
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_numerocontrol}" for="numerocontrol" />
                         <p:inputText id="numerocontrol" value="#{facturaController.selected.numerocontrol}" title="#{bundlefactura.EditFacturaTitle_numerocontrol}" />
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_fecha}" for="fecha" />
-                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{facturaController.selected.fecha}" title="#{bundlefactura.EditFacturaTitle_fecha}"  showOn="button"/>
+                        <p:calendar id="fecha" pattern="dd/MM/yyyy" value="#{facturaController.selected.fecha}" title="#{bundlefactura.EditFacturaTitle_fecha}"  showOn="button"/>
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_hora}" for="hora" />
                         <p:inputText id="hora" value="#{facturaController.selected.hora}" title="#{bundlefactura.EditFacturaTitle_hora}" />
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_observacionesfact}" for="observacionesfact" />
                         <p:inputText id="observacionesfact" value="#{facturaController.selected.observacionesfact}" title="#{bundlefactura.EditFacturaTitle_observacionesfact}" />
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_bimponiblefact}" for="bimponiblefact" />
-                        <p:inputText id="bimponiblefact" value="#{facturaController.selected.bimponiblefact}" title="#{bundlefactura.EditFacturaTitle_bimponiblefact}" />
+                        <p:inputText id="bimponiblefact" value="#{facturaController.selected.bimponiblefact}" title="#{bundlefactura.EditFacturaTitle_bimponiblefact}" >
+                            <f:convertNumber type="currency" currencySymbol=" "/>
+                        </p:inputText>
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_ivafact}" for="ivafact" />
                         <p:inputText id="ivafact" value="#{facturaController.selected.ivafact}" title="#{bundlefactura.EditFacturaTitle_ivafact}" />
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_totalgeneral}" for="totalgeneral" />
@@ -45,7 +49,7 @@
                                            itemValue="#{idusuarioItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_rifcliente}" for="rifcliente" />
-                        <p:selectOneMenu id="rifcliente" value="#{facturaController.selected.rifcliente}" >
+                        <p:selectOneMenu id="rifcliente" value="#{facturaController.selected.rifcliente.rifcliente}" >
                             <f:selectItem itemLabel="#{bundlefactura.SelectOneMessage}"/>
                             <f:selectItems value="#{clienteController.itemsAvailableSelectOne}"
                                            var="rifclienteItem"

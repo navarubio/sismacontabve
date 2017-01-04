@@ -5,6 +5,7 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.FacturaFacade;
 import Jpa.FacturaFacadeLocal;
+import Modelo.Cobroventa;
 import Modelo.Estatusfactura;
 import Modelo.Estatusfacturaventa;
 
@@ -34,10 +35,13 @@ public class FacturaController implements Serializable {
     private Jpa.FacturaFacadeLocal ejbFacade;
     @EJB
     private Jpa.EstatusfacturaventaFacadeLocal estatusfacturaEJB;
+    @EJB
+    private Jpa.CobroventaFacadeLocal cobroventaEJB;
     private List<Factura> items = null;
     private List<Estatusfacturaventa> estatusfact;
     private List<Estatusfacturaventa> estatusfactxcobrar;    
     private List<Factura> facturasactivas=null;
+    private List<Cobroventa> cobrosporfactura=null;
     private Factura selected;
 
     public FacturaController() {
@@ -65,6 +69,14 @@ public class FacturaController implements Serializable {
 
     public List<Estatusfacturaventa> getEstatusfactxcobrar() {
         return estatusfactxcobrar;
+    }
+
+    public List<Cobroventa> getCobrosporfactura() {
+        return cobrosporfactura;
+    }
+
+    public void setCobrosporfactura(List<Cobroventa> cobrosporfactura) {
+        this.cobrosporfactura = cobrosporfactura;
     }
 
     public void setEstatusfactxcobrar(List<Estatusfacturaventa> estatusfactxcobrar) {
@@ -153,6 +165,10 @@ public void init(){
     public List<Estatusfacturaventa> getStatusFactporCobrar(){
         estatusfactxcobrar = estatusfacturaEJB.ListarEstatusporCobrar();
         return estatusfactxcobrar;        
+    }
+    public List<Cobroventa> getListacobrosporfactura(){
+        cobrosporfactura = cobroventaEJB.buscarcobrosporfactura(selected.getNumerofact());
+        return cobrosporfactura;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

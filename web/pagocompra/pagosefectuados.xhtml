@@ -23,49 +23,44 @@
                 <img src="../resources/images/kthememgr_1.png" width="70" height="70" alt="Solicitudes" align="right" />
 
                 <p:panel header="#{bundle.ListPagoCompraTitle_cabecera}">
-                    <p:dataTable id="datalist" value="#{pagocompraController.pagosefectuados}" var="item"
+                    <p:dataTable id="datalist" value="#{pagocompraController.pagosefectuados}" var="item" widgetVar="pagos"
                                  selectionMode="single" selection="#{compraController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idcompra}"
-                                 rows="15"
+                                 rows="20"
                                  rowsPerPageTemplate="20,30,40,50,60"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column style="width:6%" sortBy="#{item.idpagocompra}" >
+                        <p:column filterBy="#{item.idpagocompra}"  filterMatchMode="exact" width="70" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_idpago}"/>
                             </f:facet>
                             <h:outputText value="PGC-#{item.idpagocompra}"/>
                         </p:column>
-                        <p:column width="100" filterBy="#{item.idcompra.idauxiliarrequerimiento.iddepartamento.departamento}" filterMatchMode="contains">
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPagoCompraTitle_solicitante} "/>
+                        <p:column width="150" filterBy="#{item.idcompra.idauxiliarrequerimiento.iddepartamento.departamento}" headerText="Estatus" filterMatchMode="exact" style="text-align: center">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('pagos').filter()" >
+                                    <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{departamentoController.items}" />
+                                </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="#{item.idcompra.idauxiliarrequerimiento.iddepartamento.departamento}"/>
+                            <h:outputText value="#{item.idcompra.idauxiliarrequerimiento.iddepartamento.departamento}" />
                         </p:column>
-
-                        <p:column width="60" >
+                        <p:column width="80" style="text-align: center" filterBy="#{item.idcompra.idcompra}" filterMatchMode="exact" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_idrequerimiento}"/>
                             </f:facet>
-                            <h:outputText value="REQ-#{item.idcompra.idauxiliarrequerimiento.idauxiliarrequerimiento}"/>
+                            <h:outputText value="CMP-#{item.idcompra.idcompra}"/>
                         </p:column>
-                        <!--p:column width="100" >
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPagoCompraTitle_proveedor}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.rifproveedor}"/>
-                        </p:column-->                     
-                        <p:column style="width:20%">
+                        <p:column width="180" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_proveedor}"/>
                             </f:facet>
                             <h:outputText value="#{item.idcompra.rifproveedor.razonsocial}"/>
                         </p:column>                     
-
                         <p:column width="60" style="text-align: center" sortBy="#{item.fechapago}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_fechapago}"/>
@@ -74,18 +69,20 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column width="150" >
+                        <p:column width="100" style="text-align: center" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_tipopago}"/>
                             </f:facet>
                             <h:outputText value="#{item.idtipopago.tipopago}"/>
                         </p:column>
-
-                        <p:column width="70" style="text-align: center">
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPagoCompraTitle_banco}"/>
+                        <p:column width="110" filterBy="#{item.idbanco.nombrebanco}" headerText="Banco" filterMatchMode="exact" style="text-align: center">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('pagos').filter()" >
+                                    <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{bancoController.items}" />
+                                </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="#{item.idbanco.nombrebanco}"/>
+                            <h:outputText value="#{item.idbanco.nombrebanco}" />
                         </p:column>
                         <p:column width="155" style="text-align: center">
                             <f:facet name="header">

@@ -12,7 +12,9 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{facturaController.selected != null}">
                         <h:outputText value="#{bundlefactura.ViewFacturaLabel_numerofact}"/>
-                        <h:outputText value="#{facturaController.selected.numerofact}" title="#{bundlefactura.ViewFacturaTitle_numerofact}"/>
+                        <h:outputText value="#{facturaController.selected.numerofact}" title="#{bundlefactura.ViewFacturaTitle_numerofact}">
+                            <f:convertNumber pattern="00000" type="number"/>
+                        </h:outputText>                            
                         <h:outputText value="#{bundlefactura.ViewFacturaLabel_numerocontrol}"/>
                         <h:outputText value="#{facturaController.selected.numerocontrol}" title="#{bundlefactura.ViewFacturaTitle_numerocontrol}"/>
                         <h:outputText value="#{bundlefactura.ViewFacturaLabel_idestatusfacturaventa}"/>
@@ -46,8 +48,88 @@
                         <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_totalgeneral}"/>
                         <h:outputText style="float:right" value="#{facturaController.selected.totalgeneral}" title="#{bundlefactura.ViewFacturaTitle_totalgeneral}">
                             <f:convertNumber type="currency" currencySymbol=" " />
-                        </h:outputText>                              
+                        </h:outputText>        
                     </p:panelGrid>
+                        
+                    <h1> Transacciones efectuadas sobre esta Factura </h1>
+                    <!--p:panel header="#{bundlecobro.ListCobroventaTitle_abonos}"-->
+                        <p:dataTable id="datalist" value="#{cobroventaController.cobrosFiltrados(facturaController.selected.numerofact)}" var="item"
+                                 paginator="false"
+                                 rowKey="#{item.idcobroventa}"
+                                 >
+
+                        <p:column style="text-align: center" width="80" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_idcobroventa}"/>
+                            </f:facet>
+                            <h:outputText value="COB-#{item.idcobroventa}"/>
+                        </p:column>
+                        <p:column style="text-align: center" width="80" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_numerofact}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numerofact.numerofact}">
+                                <f:convertNumber pattern="00000" type="number"/>
+                            </h:outputText>
+
+                        </p:column> 
+                        <p:column width="180" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_cliente}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numerofact.rifcliente.razonsocial}"/>
+                        </p:column>                        
+                        <p:column style="text-align: center" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_fechacobro}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechacobro}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column style="text-align: right" width="80" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_montocobrado}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montocobrado}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="text-align: right" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_montopendiente}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montopendiente}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="text-align: center"  >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_banco}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idcuentabancaria.idbanco.nombrebanco}"/>
+                        </p:column>
+                        <p:column style="text-align: center" width="100">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_idtipopago}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idtipopago.tipopago}"/>
+                        </p:column>
+                        <p:column style="text-align: center" width="190">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_idcuentabancaria}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idcuentabancaria.numerocuenta}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_idestatuscontable}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idestatuscontable.estatuscontable}"/>
+                        </p:column>
+                    </p:dataTable>
+                    <!--/p:panel-->
                     <p:commandButton value="#{bundlefactura.Close}" onclick="FacturaViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
