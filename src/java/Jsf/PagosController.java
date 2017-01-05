@@ -11,6 +11,7 @@ import Jpa.CompraFacadeLocal;
 import Jpa.CuentabancariaFacadeLocal;
 import Jpa.DepartamentoFacadeLocal;
 import Jpa.DetallecompraFacadeLocal;
+import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaFacadeLocal;
 import Jpa.PagocompraFacadeLocal;
 import Jpa.RequerimientoFacadeLocal;
@@ -21,12 +22,14 @@ import Modelo.Compra;
 import Modelo.Cuentabancaria;
 import Modelo.Departamento;
 import Modelo.Detallecompra;
+import Modelo.Estatuscontable;
 import Modelo.Estatusfactura;
 import Modelo.Pagocompra;
 import Modelo.Requerimiento;
 import Modelo.Tipopago;
 import Modelo.Usuario;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -52,6 +55,9 @@ public class PagosController implements Serializable {
     @EJB
     private EstatusfacturaFacadeLocal estatusfacturaEJB;
     @EJB
+    private EstatuscontableFacadeLocal estatuscontableEJB;
+    
+    @EJB
     private AuxiliarrequerimientoFacadeLocal auxiliarrequerimientoEJB;
     @EJB
     private CompraFacadeLocal compraEJB;
@@ -70,7 +76,10 @@ public class PagosController implements Serializable {
     private Pagocompra pagocompra = new Pagocompra();
     private Pagocompra pagocompraver ;
     private Estatusfactura statusfactu = null;
-
+    private int formapago =0;
+    private Estatuscontable estatuscontab=null;
+    private Banco banco;
+    private Pagocompra pago;
     private Usuario usa;
     private Departamento dpto;
     private Compra codCompra;
@@ -84,6 +93,9 @@ public class PagosController implements Serializable {
     private List<Cuentabancaria> lstCuentasSelecc;
     private List<Pagocompra> pagosefectuados;
     private List <Pagocompra> pagoespecifico;
+    private String mensaje;
+    private Date fechaactual = new Date();
+    
 
     @Inject
     private Auxiliarrequerimiento auxiliar;
@@ -110,6 +122,22 @@ public class PagosController implements Serializable {
         return pagocompra;
     }
 
+    public int getFormapago() {
+        return formapago;
+    }
+
+    public void setFormapago(int formapago) {
+        this.formapago = formapago;
+    }
+
+    public Banco getBanco() {
+        return banco;
+    }
+
+    public void setBanco(Banco banco) {
+        this.banco = banco;
+    }
+
     public void setPagocompra(Pagocompra pagocompra) {
         this.pagocompra = pagocompra;
     }
@@ -120,6 +148,14 @@ public class PagosController implements Serializable {
 
     public void setPagocompraver(Pagocompra pagocompraver) {
         this.pagocompraver = pagocompraver;
+    }
+
+    public Date getFechaactual() {
+        return fechaactual;
+    }
+
+    public void setFechaactual(Date fechaactual) {
+        this.fechaactual = fechaactual;
     }
 
     public List<Banco> getBancos() {
@@ -136,6 +172,22 @@ public class PagosController implements Serializable {
 
     public void setTipopago(Tipopago tipopago) {
         this.tipopago = tipopago;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public Pagocompra getPago() {
+        return pago;
+    }
+
+    public void setPago(Pagocompra pago) {
+        this.pago = pago;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 
     public List<Detallecompra> getDetallecompraFiltrados() {
@@ -209,6 +261,7 @@ public class PagosController implements Serializable {
         tipopagos = tipopagoEJB.findAll();
         bancos = bancoEJB.findAll();
         pagosefectuados = pagocompraEJB.findAll();
+        pago = new Pagocompra();
         //articulos = articuloEJB.findAll();
         //comprasporautorizar=compraEJB.buscarcomprasporAutorizar();
 
@@ -267,9 +320,10 @@ public class PagosController implements Serializable {
 
     public List<Cuentabancaria> refrescarCuentasBancarias() {
         try {
-            lstCuentasSelecc = cuentabancariaEJB.espxBanco(pagocompra.getIdbanco().getIdbanco());
+            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco());
         } catch (Exception e) {
         }
+        pagocompra.setIdcuentabancaria(lstCuentasSelecc.get(0));
         return lstCuentasSelecc;
     }
 
@@ -283,6 +337,10 @@ public class PagosController implements Serializable {
              * FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
              * compra.setIdusuario(us);*
              */
+            estatuscontab = estatuscontableEJB.estatusContablePorRegistrar();
+            if (formapago==1){
+                
+            }
             int tipo = 3;
             statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
             compra.setIdestatusfactura(statusfactu);
@@ -299,4 +357,19 @@ public class PagosController implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
     }
+    
+     public void seleccionpagofraccionado() {
+        if (mensaje.equals("total")) {
+            formapago = 1;
+        } else if (mensaje.equals("parcial")) {
+            formapago = 2;
+        } else {
+            formapago = 0;
+        }
+
+    }
+    public Date fechaactual(){
+        Date fecha = new Date();
+        return fecha;
+    } 
 }

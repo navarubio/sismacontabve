@@ -43,8 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Compra.findByObservacionescompra", query = "SELECT c FROM Compra c WHERE c.observacionescompra = :observacionescompra"),
     @NamedQuery(name = "Compra.findByNumerofactura", query = "SELECT c FROM Compra c WHERE c.numerofactura = :numerofactura"),
     @NamedQuery(name = "Compra.findByControlfactura", query = "SELECT c FROM Compra c WHERE c.controlfactura = :controlfactura"),
-    @NamedQuery(name = "Compra.findByFechafactura", query = "SELECT c FROM Compra c WHERE c.fechafactura = :fechafactura"),
-    @NamedQuery(name = "Compra.findByObservacionespago", query = "SELECT c FROM Compra c WHERE c.observacionespago = :observacionespago")})
+    @NamedQuery(name = "Compra.findByFechafactura", query = "SELECT c FROM Compra c WHERE c.fechafactura = :fechafactura")})
 public class Compra implements Serializable {
     @OneToMany(mappedBy = "idcompra")
     private Collection<Pagocompra> pagocompraCollection;
@@ -64,6 +63,9 @@ public class Compra implements Serializable {
     private Double iva;
     @Column(name = "total")
     private Double total;
+    @Column(name = "montopendiente")
+    private Double montopendiente;
+
     @Size(max = 255)
     @Column(name = "observacionescompra")
     private String observacionescompra;
@@ -76,9 +78,6 @@ public class Compra implements Serializable {
     @Column(name = "fechafactura")
     @Temporal(TemporalType.DATE)
     private Date fechafactura;
-    @Size(max = 255)
-    @Column(name = "observacionespago")
-    private String observacionespago;
     @JoinColumn(name = "idauxiliarrequerimiento", referencedColumnName = "idauxiliarrequerimiento")
     @ManyToOne
     private Auxiliarrequerimiento idauxiliarrequerimiento;
@@ -141,6 +140,14 @@ public class Compra implements Serializable {
         this.total = total;
     }
 
+    public Double getMontopendiente() {
+        return montopendiente;
+    }
+
+    public void setMontopendiente(Double montopendiente) {
+        this.montopendiente = montopendiente;
+    }
+
     public String getObservacionescompra() {
         return observacionescompra;
     }
@@ -171,14 +178,6 @@ public class Compra implements Serializable {
 
     public void setFechafactura(Date fechafactura) {
         this.fechafactura = fechafactura;
-    }
-
-    public String getObservacionespago() {
-        return observacionespago;
-    }
-
-    public void setObservacionespago(String observacionespago) {
-        this.observacionespago = observacionespago;
     }
 
     public Auxiliarrequerimiento getIdauxiliarrequerimiento() {

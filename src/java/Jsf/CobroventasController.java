@@ -255,7 +255,7 @@ public class CobroventasController implements Serializable {
 
             cobro.setNumerofact(factura);
             cobro.setIdestatuscontable(estatuscontab);
-            cobro.setIdcuentabancaria(cuentabancaria);
+            cuentabancaria=cobro.getIdcuentabancaria();
             cobro.setMontopendiente(factura.getSaldopendiente());
             cobroventaEJB.create(cobro);
 
