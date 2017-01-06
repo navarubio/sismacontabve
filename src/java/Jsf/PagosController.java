@@ -56,7 +56,7 @@ public class PagosController implements Serializable {
     private EstatusfacturaFacadeLocal estatusfacturaEJB;
     @EJB
     private EstatuscontableFacadeLocal estatuscontableEJB;
-    
+
     @EJB
     private AuxiliarrequerimientoFacadeLocal auxiliarrequerimientoEJB;
     @EJB
@@ -74,11 +74,12 @@ public class PagosController implements Serializable {
     private Compra compra;
     private Detallecompra detallecompras;
     private Pagocompra pagocompra = new Pagocompra();
-    private Pagocompra pagocompraver ;
+    private Pagocompra pagocompraver;
     private Estatusfactura statusfactu = null;
-    private int formapago =0;
-    private Estatuscontable estatuscontab=null;
+    private int formapago = 0;
+    private Estatuscontable estatuscontab = null;
     private Banco banco;
+    private Cuentabancaria cuentabanco;
     private Pagocompra pago;
     private Usuario usa;
     private Departamento dpto;
@@ -92,10 +93,9 @@ public class PagosController implements Serializable {
     private List<Banco> bancos;
     private List<Cuentabancaria> lstCuentasSelecc;
     private List<Pagocompra> pagosefectuados;
-    private List <Pagocompra> pagoespecifico;
+    private List<Pagocompra> pagoespecifico;
     private String mensaje;
     private Date fechaactual = new Date();
-    
 
     @Inject
     private Auxiliarrequerimiento auxiliar;
@@ -136,6 +136,14 @@ public class PagosController implements Serializable {
 
     public void setBanco(Banco banco) {
         this.banco = banco;
+    }
+
+    public Cuentabancaria getCuentabanco() {
+        return cuentabanco;
+    }
+
+    public void setCuentabanco(Cuentabancaria cuentabanco) {
+        this.cuentabanco = cuentabanco;
     }
 
     public void setPagocompra(Pagocompra pagocompra) {
@@ -281,7 +289,7 @@ public class PagosController implements Serializable {
         this.compra = compr;
         this.idCompra = compr.getIdcompra();
         this.pagoespecifico = pagocompraEJB.buscarpago(compr);
-        this.pagocompra=pagocompraEJB.buscarpagototal(compr);
+        this.pagocompra = pagocompraEJB.buscarpagototal(compr);
         this.auxiliarrequerimiento = compr.getIdauxiliarrequerimiento();
 //        this.auxiliar = aux;
         detallecompraFiltrados = detallecompraAuxiliar();
@@ -337,19 +345,40 @@ public class PagosController implements Serializable {
              * FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
              * compra.setIdusuario(us);*
              */
-            estatuscontab = estatuscontableEJB.estatusContablePorRegistrar();
-            if (formapago==1){
-                
+            //estatuscontab = estatuscontableEJB.estatusContablePorRegistrar();
+            if (formapago == 1) {
+                double saldo = 0;
+                pagocompra.setTotalpago(compra.getMontopendiente());
+                compra.setMontopendiente(saldo);
+                int tipo = 3;
+                statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
+            } else {
+                int tipo = 0;
+                double saldop = 0;
+                saldop = compra.getMontopendiente() - pagocompra.getTotalpago();
+                if (saldop < 1) {
+                    tipo = 3;
+                } else {
+                    tipo = 4;
+                }
+                compra.setMontopendiente(saldop);
+                statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
             }
-            int tipo = 3;
-            statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
+            pagocompra.setSaldopendiente(compra.getMontopendiente());
             compra.setIdestatusfactura(statusfactu);
             compraEJB.edit(compra);
-            //codCompra = compraEJB.ultimacompraInsertada();
-
             pagocompra.setIdcompra(compra);
-            pagocompra.setTotalpago(compra.getTotal());
+            pagocompra.setIdbanco(banco);
+            cuentabanco = pagocompra.getIdcuentabancaria();
+//            pagocompra.setTotalpago(compra.getTotal());
+//            pagocompra.setSaldopendiente(compra.getMontopendiente());
             pagocompraEJB.create(pagocompra);
+            
+            double saldoactualbanco = 0;
+            saldoactualbanco = (pagocompra.getIdcuentabancaria().getSaldo() - pagocompra.getTotalpago());
+            cuentabanco.setSaldo(saldoactualbanco);
+            cuentabancariaEJB.edit(cuentabanco);
+            
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Pago fue Almacenado"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Pago"));
@@ -357,8 +386,8 @@ public class PagosController implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
     }
-    
-     public void seleccionpagofraccionado() {
+
+    public void seleccionpagofraccionado() {
         if (mensaje.equals("total")) {
             formapago = 1;
         } else if (mensaje.equals("parcial")) {
@@ -368,8 +397,9 @@ public class PagosController implements Serializable {
         }
 
     }
-    public Date fechaactual(){
+
+    public Date fechaactual() {
         Date fecha = new Date();
         return fecha;
-    } 
+    }
 }

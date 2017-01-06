@@ -16,7 +16,7 @@
 
         <ui:define name="body">
             <p:growl id="msgs" showDetail="true" autoUpdate="true" showSummary="false" /> 
-            
+
             <h:form id="CompraListForm">
                 <div id="imag2">
                     <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
@@ -24,7 +24,7 @@
                 <img src="../resources/images/kthememgr_1.png" width="70" height="70" alt="Solicitudes" align="right" />
 
                 <p:panel header="#{bundle.ListCompraTitle}">
-                    <p:dataTable id="datalist" value="#{compraController.comprasactivas}" var="item"
+                    <p:dataTable id="datalist" value="#{compraController.comprasactivas}" var="item" widgetVar="compras"
                                  selectionMode="single" selection="#{compraController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idcompra}"
@@ -60,7 +60,7 @@
                             </f:facet>
                             <h:outputText value="#{item.rifproveedor}"/>
                         </p:column-->                     
-                        <p:column style="width:20%">
+                        <p:column style="width:18%">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCompraTitle_razonsocial}"/>
                             </f:facet>
@@ -132,9 +132,12 @@
                             </f:facet>
                             <h:outputText value=".{item.observacionespago}"/>
                         </p:column-->
-                        <p:column width="80" style="text-align: center" >
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCompraTitle_idestatusfactura}"/>
+                        <p:column width="100" filterBy="#{item.idestatusfactura.estatusfactura}" headerText="Estatus" filterMatchMode="exact" filterValue="" style="text-align: center" >
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('compras').filter()" >
+                                    <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{compraController.statusFactporPagar}" />
+                                </p:selectOneMenu>
                             </f:facet>
                             <h:outputText value="#{item.idestatusfactura.estatusfactura}"/>
                         </p:column>                        

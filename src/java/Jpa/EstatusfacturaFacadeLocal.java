@@ -34,4 +34,5 @@ public interface EstatusfacturaFacadeLocal {
     
     Estatusfactura estatusfacturaPagada(int tipo);
     
+    List<Estatusfactura> ListarEstatusporPagar();
 }

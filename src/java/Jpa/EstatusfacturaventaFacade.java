@@ -87,7 +87,8 @@ public class EstatusfacturaventaFacade extends AbstractFacade<Estatusfacturavent
         }
         return estatus;
     }
-        @Override
+
+    @Override
     public List<Estatusfacturaventa> ListarEstatusporCobrar() {
         String consulta;
         int idstatus = 2;

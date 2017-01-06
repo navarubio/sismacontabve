@@ -79,7 +79,7 @@
                                     <p:outputLabel for="numerocontrol" value="Numero Control" styleClass="text-ouput"/>
                                     <p:inputText id="numerocontrol" label="Numero de Control" size ="10" value="#{pagosController.compra.controlfactura}" />
                                     <p:outputLabel for="montop" value="Monto a Pagar" styleClass="text-ouput"/>
-                                    <p:outputLabel id="montop" value="#{pagosController.compra.total}" styleClass="text-ouputfact" >
+                                    <p:outputLabel id="montop" value="#{pagosController.compra.montopendiente}" styleClass="text-ouputfact" >
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </p:outputLabel>
                                     <p:outputLabel value="Porción de Pago" styleClass="text-ouput"/>
@@ -95,13 +95,13 @@
                                         </p:selectOneRadio>                                        
                                     </h:panelGrid>                             
                                     <p:outputLabel for="fechacompra1" value="Fecha Factura" styleClass="text-ouput" />
-                                    <p:calendar size="10"  locale="es" id="fechacompra1" pattern="dd/MM/yyyy" value="#{pagosController.pagocompra.fechapago}" showOn="button" navigator="true" required="true"/>
+                                    <p:calendar size="10"  locale="es" id="fechacompra1" pattern="dd/MM/yyyy" value="#{pagosController.compra.fechafactura}" showOn="button" navigator="true" required="true"/>
                                     <h:panelGroup id="contenedorLabel" >
                                         <p:outputLabel value="MONTO ABONAR" for="observacion" styleClass="text-ouput" 
                                                        rendered="#{pagosController.formapago>=2 ? true:false}"/>
                                     </h:panelGroup>
                                     <h:panelGroup id="contenedorComponente">
-                                        <p:inputText value="#{cobroventasController.cobro.montocobrado}" id="observacion" size="10"
+                                        <p:inputText value="#{pagosController.pagocompra.totalpago}" id="observacion" size="10"
                                                      rendered="#{pagosController.formapago>= 2 ? true:false}"/>
                                     </h:panelGroup>
                                     <p:outputLabel for="fechapago" value="Fecha Pago" styleClass="text-ouput" />
@@ -137,15 +137,11 @@
                                     <p:inputText id="ctareceptora" label="Cta. Receptora" size ="25" value="#{pagosController.pagocompra.cuentareceptora}" />                                    
                                     <p:outputLabel for="aprobacion" value="Nro. Aprobacion" styleClass="text-ouput"/>
                                     <p:inputText id="aprobacion" label="Nro. Aprobacion " size ="15" value="#{pagosController.pagocompra.aprobacion}" />
-                                    <p:outputLabel for="observa2" value="Observaciones" styleClass="text-ouput"/>
-                                    <p:inputTextarea id="observa2"  rows="2" cols="30" label="Observaciones" value="#{comprasController.compra.observacionescompra}" required="true"/>
-
+                                    <!--p:outputLabel for="observa2" value="Observaciones" styleClass="text-ouput"/>
+                                    <p:inputTextarea id="observa2"  rows="2" cols="30" label="Observaciones" value="#{cobroventasController.factura.observacionesfact}" required="true"/-->
                                 </p:panelGrid>                                
                             </p:fieldset>
-
-
                         </p:panelGrid>
-
                         <!--p:fieldset legend="Datos de Articulos" toggleable="true" toggleSpeed="500" >
                             <p:panelGrid columns="7">
                                 <p:outputLabel value="Articulo" for="idrequerimiento"  />

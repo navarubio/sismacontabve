@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pagocompra.findByCuentareceptora", query = "SELECT p FROM Pagocompra p WHERE p.cuentareceptora = :cuentareceptora"),
     @NamedQuery(name = "Pagocompra.findByTotalpago", query = "SELECT p FROM Pagocompra p WHERE p.totalpago = :totalpago"),
     @NamedQuery(name = "Pagocompra.findByAprobacion", query = "SELECT p FROM Pagocompra p WHERE p.aprobacion = :aprobacion"),
+    @NamedQuery(name = "Pagocompra.findByObservacionespago", query = "SELECT c FROM Pagocompra c WHERE c.observacionespago= :observacionespago"),
     @NamedQuery(name = "Pagocompra.findByFechapago", query = "SELECT p FROM Pagocompra p WHERE p.fechapago = :fechapago")})
 public class Pagocompra implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -53,9 +54,14 @@ public class Pagocompra implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "totalpago")
     private Double totalpago;
+    @Column(name = "saldopendiente")
+    private Double saldopendiente;
     @Size(max = 15)
     @Column(name = "aprobacion")
     private String aprobacion;
+    @Size(max = 255)
+    @Column(name = "observacionespago")
+    private String observacionespago;
     @Column(name = "fechapago")
     @Temporal(TemporalType.DATE)
     private Date fechapago;
@@ -110,6 +116,22 @@ public class Pagocompra implements Serializable {
 
     public String getAprobacion() {
         return aprobacion;
+    }
+
+    public Double getSaldopendiente() {
+        return saldopendiente;
+    }
+
+    public void setSaldopendiente(Double saldopendiente) {
+        this.saldopendiente = saldopendiente;
+    }
+
+    public String getObservacionespago() {
+        return observacionespago;
+    }
+
+    public void setObservacionescompra(String observacionespago) {
+        this.observacionespago = observacionespago;
     }
 
     public void setAprobacion(String aprobacion) {

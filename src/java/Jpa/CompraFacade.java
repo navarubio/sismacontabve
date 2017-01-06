@@ -67,12 +67,14 @@ public class CompraFacade extends AbstractFacade<Compra> implements CompraFacade
         String consulta;
         int idstatus = 0;
         int idstatus2 =2;
+        int idstatus3 =4;
         List<Compra> lista = null;
         try {
-            consulta = "From Compra c where c.idestatusfactura.idestatusfactura= ?1 or c.idestatusfactura.idestatusfactura= ?2";
+            consulta = "From Compra c where c.idestatusfactura.idestatusfactura= ?1 or c.idestatusfactura.idestatusfactura= ?2 or c.idestatusfactura.idestatusfactura= ?3";
             Query query = em.createQuery(consulta);
             query.setParameter(1, idstatus);
-            query.setParameter(2, idstatus2);            
+            query.setParameter(2, idstatus2);
+            query.setParameter(3, idstatus3);            
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

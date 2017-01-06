@@ -55,7 +55,7 @@
                             </f:facet>
                             <h:outputText value="CMP-#{item.idcompra.idcompra}"/>
                         </p:column>
-                        <p:column width="180" >
+                        <p:column width="180" filterBy="#{item.idcompra.rifproveedor.razonsocial}" filterMatchMode="contains" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_proveedor}"/>
                             </f:facet>

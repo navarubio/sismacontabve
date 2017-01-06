@@ -65,7 +65,6 @@ public class Compra implements Serializable {
     private Double total;
     @Column(name = "montopendiente")
     private Double montopendiente;
-
     @Size(max = 255)
     @Column(name = "observacionescompra")
     private String observacionescompra;

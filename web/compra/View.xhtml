@@ -12,49 +12,232 @@
             <h:form id="CompraViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{compraController.selected != null}">
-                        <h:outputText value="#{bundle.ViewCompraLabel_idcompra}"/>
-                        <h:outputText value="#{compraController.selected.idcompra}" title="#{bundle.ViewCompraTitle_idcompra}"/>
-                        <h:outputText value="#{bundle.ViewCompraLabel_fechaorden}"/>
-                        <h:outputText value="#{compraController.selected.fechaorden}" title="#{bundle.ViewCompraTitle_fechaorden}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
-                        <h:outputText style="text-align: right" value="#{bundle.ViewCompraLabel_subtotal}"/>
-                        <h:outputText style="text-align: right" value="#{compraController.selected.subtotal}" title="#{bundle.ViewCompraTitle_subtotal}">
-                            <f:convertNumber type="currency" currencySymbol=" " />
-                        </h:outputText>  
-                        <h:outputText style="text-align: right" value="#{bundle.ViewCompraLabel_iva}"/>
-                        <h:outputText style="text-align: right" value="#{compraController.selected.iva}" title="#{bundle.ViewCompraTitle_iva}">
-                            <f:convertNumber type="currency" currencySymbol=" " />
-                        </h:outputText>                            
-                        <h:outputText style="text-align: right" value="#{bundle.ViewCompraLabel_total}"/>
-                        <h:outputText style="text-align: right" value="#{compraController.selected.total}" title="#{bundle.ViewCompraTitle_total}">
-                            <f:convertNumber type="currency" currencySymbol=" " />
-                        </h:outputText>                            
-                        <h:outputText value="#{bundle.ViewCompraLabel_observacionescompra}"/>
-                        <h:outputText value="#{compraController.selected.observacionescompra}" title="#{bundle.ViewCompraTitle_observacionescompra}"/>
-                        <h:outputText value="#{bundle.ViewCompraLabel_numerofactura}"/>
-                        <h:outputText value="#{compraController.selected.numerofactura}" title="#{bundle.ViewCompraTitle_numerofactura}"/>
-                        <h:outputText value="#{bundle.ViewCompraLabel_controlfactura}"/>
-                        <h:outputText value="#{compraController.selected.controlfactura}" title="#{bundle.ViewCompraTitle_controlfactura}"/>
-                        <h:outputText value="#{bundle.ViewCompraLabel_fechafactura}"/>
-                        <h:outputText value="#{compraController.selected.fechafactura}" title="#{bundle.ViewCompraTitle_fechafactura}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
-                        <h:outputText value="#{bundle.ViewCompraLabel_observacionespago}"/>
-                        <h:outputText value="#{compraController.selected.observacionespago}" title="#{bundle.ViewCompraTitle_observacionespago}"/>
-                        <h:outputText value="#{bundle.ViewCompraLabel_idauxiliarrequerimiento}"/>
-                        <h:outputText value="#{compraController.selected.idauxiliarrequerimiento}" title="#{bundle.ViewCompraTitle_idauxiliarrequerimiento}"/>
-                        <h:outputText value="#{bundle.ViewCompraLabel_idusuario}"/>
-                        <h:outputText value="#{compraController.selected.idusuario.nombre}" title="#{bundle.ViewCompraTitle_idusuario}"/>
-                        <h:outputText value="#{bundle.ViewCompraLabel_rifproveedor}"/>
-                        <h:outputText value="#{compraController.selected.rifproveedor}" title="#{bundle.ViewCompraTitle_rifproveedor}"/>
-                        <h:outputText value="#{bundle.ViewCompraLabel_idestatusfactura}"/>
-                        <h:outputText value="#{compraController.selected.idestatusfactura.estatusfactura}" title="#{bundle.ViewCompraTitle_idestatusfactura}"/>
+                        <p:fieldset styleClass="ui-custompanelgrid1" legend="Datos Requerimiento" >
+                            <p:panelGrid columns="2">
+                                <p:outputLabel for="numero" value="Solicitud" styleClass="optionalLbl"/>
+                                <p:outputLabel id="numero" value="REQ- #{compraController.selected.idauxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="usuario" value="Usuario" styleClass="optionalLbl"/>
+                                <p:outputLabel id="usuario" value="#{compraController.selected.idauxiliarrequerimiento.idusuario.nombre}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="departamento" value="Departamento" styleClass="optionalLbl"/>
+                                <p:outputLabel id="departamento" value="#{compraController.selected.idauxiliarrequerimiento.iddepartamento.departamento}" styleClass="optionalLbl"/>
+
+                                <p:outputLabel for="proveedor" value="Proveedor Referido" styleClass="optionalLbl"/>
+                                <p:outputLabel id="proveedor" value="#{compraController.selected.idauxiliarrequerimiento.posibleproveedor}"/>
+                                <p:outputLabel for="telefono" value="Telefonos" styleClass="optionalLbl"/>
+                                <p:outputLabel id="telefono" value="#{compraController.selected.idauxiliarrequerimiento.telefonoproveedor}"/>
+                                <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" />
+                                <p:outputLabel id="fechasolicitud" value="#{compraController.selected.idauxiliarrequerimiento.fecharequerimiento}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:outputLabel>
+                                <p:outputLabel for="resena" value="Breve Reseña" styleClass="optionalLbl"/>
+                                <p:outputLabel id="resena" value="#{compraController.selected.idauxiliarrequerimiento.descripcion}" />
+                            </p:panelGrid>
+                        </p:fieldset>
+                        <p:fieldset styleClass="ui-custompanelgrid" legend="Datos Compra" >
+                            <p:panelGrid columns="2">
+                                <p:outputLabel for="numeroc" value="Compra" styleClass="optionalLbl"/>
+                                <p:outputLabel id="numeroc" value="CMP- #{compraController.selected.idcompra}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="usua" value="Usuario" styleClass="optionalLbl"/>
+                                <p:outputLabel id="usua" value="#{compraController.selected.idusuario.nombre}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="depto" value="Departamento" styleClass="optionalLbl"/>
+                                <p:outputLabel id="depto" value="#{pagosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="proveedor1" value="Proveedor" styleClass="optionalLbl"/>
+                                <p:outputLabel id="proveedor1" value="#{compraController.selected.rifproveedor.razonsocial}"   /> 
+                                <p:outputLabel for="rif" value="R.I.F." styleClass="optionalLbl"/>
+                                <p:outputLabel id="rif" value="#{compraController.selected.rifproveedor.rifproveedor}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="fechacompra" value="Fecha Orden Compra" />
+                                <p:outputLabel id="fechacompra" value="#{compraController.selected.fechaorden}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:outputLabel>
+                                <p:outputLabel for="observa" value="Observaciones" styleClass="optionalLbl"/>
+                                <p:outputLabel id="observa" value="#{compraController.selected.observacionescompra}" />
+                            </p:panelGrid>                                
+                        </p:fieldset>
                     </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="CompraViewDialog.hide()"/>
+                    <p:panel id="panelart"  >
+                        <p:dataTable id="listado" value="#{compraController.detallecompraFiltrados}"
+                                     var="req" emptyMessage="No hay articulos para mostrar" >
+                            <p:column style="width:8%"  headerText="Codigo Articulo">
+                                <h:outputText value="#{req.codigo.codigo}" />
+                            </p:column>
+                            <p:column style="width:35%"  headerText="Descripcion del Articulo">
+                                <h:outputText value="#{req.codigo.descripcion}"/>  
+                            </p:column>
+                            <p:column style="text-align:center" headerText="Cantidad">                                
+                                <h:outputText style="width:10px"  value="#{req.cantidad}"/>
+                            </p:column >
+                            <p:column style="text-align:right" headerText="Precio Unitario ">
+                                <h:outputText style="width:10px"  value="#{req.pcosto}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align:right" headerText="SUB TOTAL">
+                                <h:outputText value="#{req.subtotal}"> 
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align:right" headerText="IVA">
+                                <h:outputText value="#{req.tributoiva}"> 
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align:right" headerText="TOTAL">
+                                <h:outputText value="#{req.totalapagar}"> 
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:columnGroup type="footer">
+                                <p:row>
+                                    <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
+                                    <p:column style="text-align: right"  footerText="#{pagosController.compra.subtotal}" /> 
+                                    <p:column style="text-align: right"  footerText="#{pagosController.compra.iva}" />
+                                    <p:column style="text-align: right"  footerText="#{pagosController.compra.total}" />                                        
+                                </p:row>
+                            </p:columnGroup>       
+                        </p:dataTable> 
+                        <p:commandButton value="Cancelar" action="/compra/ComprasPagadas?faces-redirect=true"/>
+                    </p:panel>
+                        
+                    <h1> Transacciones de Pago efectuadas sobre esta Compra  </h1>
+                    <!--p:panel header="#{bundlecobro.ListCobroventaTitle_abonos}"-->
+                        <p:dataTable id="datalist" value="#{cobroventaController.cobrosFiltrados(facturaController.selected.numerofact)}" var="item"
+                                 paginator="false"
+                                 rowKey="#{item.idcobroventa}"
+                                 >
+
+                        <p:column style="text-align: center" width="80" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_idcobroventa}"/>
+                            </f:facet>
+                            <h:outputText value="COB-#{item.idcobroventa}"/>
+                        </p:column>
+                        <p:column style="text-align: center" width="80" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_numerofact}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numerofact.numerofact}">
+                                <f:convertNumber pattern="00000" type="number"/>
+                            </h:outputText>
+
+                        </p:column> 
+                        <p:column width="180" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_cliente}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numerofact.rifcliente.razonsocial}"/>
+                        </p:column>                        
+                        <p:column style="text-align: center" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_fechacobro}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechacobro}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column style="text-align: right" width="80" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_montocobrado}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montocobrado}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="text-align: right" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_montopendiente}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montopendiente}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="text-align: center"  >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_banco}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idcuentabancaria.idbanco.nombrebanco}"/>
+                        </p:column>
+                        <p:column style="text-align: center" width="100">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_idtipopago}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idtipopago.tipopago}"/>
+                        </p:column>
+                        <p:column style="text-align: center" width="190">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_idcuentabancaria}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idcuentabancaria.numerocuenta}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_idestatuscontable}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idestatuscontable.estatuscontable}"/>
+                        </p:column>
+                    </p:dataTable>
+
+
+      <!--h:outputText value="#{bundle.ViewCompraLabel_idcompra}"/>
+      <h:outputText value="#{compraController.selected.idcompra}" title="#{bundle.ViewCompraTitle_idcompra}"/>
+      <h:outputText value="#{bundle.ViewCompraLabel_fechaorden}"/>
+      <h:outputText value="#{compraController.selected.fechaorden}" title="#{bundle.ViewCompraTitle_fechaorden}">
+          <f:convertDateTime pattern="dd/MM/yyyy" />
+      </h:outputText>
+      <h:outputText style="text-align: right" value="#{bundle.ViewCompraLabel_subtotal}"/>
+      <h:outputText style="text-align: right" value="#{compraController.selected.subtotal}" title="#{bundle.ViewCompraTitle_subtotal}">
+          <f:convertNumber type="currency" currencySymbol=" " />
+      </h:outputText>  
+      <h:outputText style="text-align: right" value="#{bundle.ViewCompraLabel_iva}"/>
+      <h:outputText style="text-align: right" value="#{compraController.selected.iva}" title="#{bundle.ViewCompraTitle_iva}">
+          <f:convertNumber type="currency" currencySymbol=" " />
+      </h:outputText>                            
+      <h:outputText style="text-align: right" value="#{bundle.ViewCompraLabel_total}"/>
+      <h:outputText style="text-align: right" value="#{compraController.selected.total}" title="#{bundle.ViewCompraTitle_total}">
+          <f:convertNumber type="currency" currencySymbol=" " />
+      </h:outputText>                            
+      <h:outputText value="#{bundle.ViewCompraLabel_observacionescompra}"/>
+      <h:outputText value="#{compraController.selected.observacionescompra}" title="#{bundle.ViewCompraTitle_observacionescompra}"/>
+      <h:outputText value="#{bundle.ViewCompraLabel_numerofactura}"/>
+      <h:outputText value="#{compraController.selected.numerofactura}" title="#{bundle.ViewCompraTitle_numerofactura}"/>
+      <h:outputText value="#{bundle.ViewCompraLabel_controlfactura}"/>
+      <h:outputText value="#{compraController.selected.controlfactura}" title="#{bundle.ViewCompraTitle_controlfactura}"/>
+      <h:outputText value="#{bundle.ViewCompraLabel_fechafactura}"/>
+      <h:outputText value="#{compraController.selected.fechafactura}" title="#{bundle.ViewCompraTitle_fechafactura}">
+          <f:convertDateTime pattern="dd/MM/yyyy" />
+      </h:outputText>
+      <h:outputText value="#{bundle.ViewCompraLabel_idauxiliarrequerimiento}"/>
+      <h:outputText value="#{compraController.selected.idauxiliarrequerimiento}" title="#{bundle.ViewCompraTitle_idauxiliarrequerimiento}"/>
+      <h:outputText value="#{bundle.ViewCompraLabel_idusuario}"/>
+      <h:outputText value="#{compraController.selected.idusuario.nombre}" title="#{bundle.ViewCompraTitle_idusuario}"/>
+      <h:outputText value="#{bundle.ViewCompraLabel_rifproveedor}"/>
+      <h:outputText value="#{compraController.selected.rifproveedor}" title="#{bundle.ViewCompraTitle_rifproveedor}"/>
+      <h:outputText value="#{bundle.ViewCompraLabel_idestatusfactura}"/>
+      <h:outputText value="#{compraController.selected.idestatusfactura.estatusfactura}" title="#{bundle.ViewCompraTitle_idestatusfactura}"/>
+  </p:panelGrid>
+  <p:commandButton value="#{bundle.Close}" onclick="CompraViewDialog.hide()"/-->
+
+
+                    <!--p:fieldset legend="Datos de Articulos" toggleable="true" toggleSpeed="500" >
+                        <p:panelGrid columns="7">
+                            <p:outputLabel value="Articulo" for="idrequerimiento"  />
+                            <p:selectOneMenu id="idrequerimiento" value=".{requerimientosController.requer.codigo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
+                                <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/>
+                                <f:selectItems value=".{articuloController.itemsAvailableSelectOne}">
+                                <f:selectItems value=".{requerimientosController.articulos}"
+                                               var="idarticuloItem"
+                                               itemLabel=".{idarticuloItem.descripcion}"  itemValue=".{idarticuloItem}" /> 
+                            </p:selectOneMenu>
+
+                            <p:outputLabel for="cantidad" value="Cantidad" />
+                            <p:inputText id="cantidad" value=".{requerimientosController.cantidad}" style="text-align:right"/>
+                            <p:outputLabel for="precio"  value="Precio" styleClass="optionalLbl"/>
+                            <p:inputText id="precio" size="20" value=".{requerimientosController.pcosto}" style="text-align:right"/>
+                            <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action=".{requerimientosController.anexar()}" update="listado"/>  
+                        </p:panelGrid>
+                    </p:fieldset-->
                 </h:panelGroup>
             </h:form>
         </p:dialog>
-
     </ui:composition>
 </html>

@@ -5,6 +5,10 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.CompraFacade;
 import Jpa.CompraFacadeLocal;
+import Jpa.DetallecompraFacadeLocal;
+import Jpa.EstatusfacturaFacadeLocal;
+import Modelo.Detallecompra;
+import Modelo.Estatusfactura;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,10 +32,18 @@ public class CompraController implements Serializable {
 
     @EJB
     private Jpa.CompraFacadeLocal ejbFacade;
+    @EJB 
+    private EstatusfacturaFacadeLocal estatusfacturaEJB;
+    @EJB
+    private DetallecompraFacadeLocal detallecompraEJB;
+    
     private List<Compra> items = null;
     private List<Compra> comprasactivas = null;
     private List<Compra> comprasporautorizar = null;
     private List<Compra> compraspagadas = null;
+    private List<Estatusfactura> estatusfactxpagar=null;
+    private List<Detallecompra> detallecompraFiltrados;
+    
     private Compra selected;
 
     public CompraController() {
@@ -50,6 +62,7 @@ public class CompraController implements Serializable {
 
     public void setSelected(Compra selected) {
         this.selected = selected;
+        detallecompraFiltrados = detallecompraAuxiliar();
     }
 
     protected void setEmbeddableKeys() {
@@ -70,10 +83,26 @@ public class CompraController implements Serializable {
         return comprasporautorizar;
     }
 
+    public List<Detallecompra> getDetallecompraFiltrados() {
+        return detallecompraFiltrados;
+    }
+
+    public void setDetallecompraFiltrados(List<Detallecompra> detallecompraFiltrados) {
+        this.detallecompraFiltrados = detallecompraFiltrados;
+    }
+
     public List<Compra> getComprasPagadas() {
         return compraspagadas;
     }
 
+    public List<Estatusfactura> getEstatusfactxpagar() {
+        return estatusfactxpagar;
+    }
+
+    public void setEstatusfactxpagar(List<Estatusfactura> estatusfactxpagar) {
+        this.estatusfactxpagar = estatusfactxpagar;
+    }
+    
     public void setRequerimientosactivos(List<Compra> comprasactivas) {
         this.comprasactivas = comprasactivas;
     }
@@ -93,6 +122,19 @@ public class CompraController implements Serializable {
         return compraspagadas;
     }
 
+    public List<Estatusfactura> getStatusFactporPagar(){
+        estatusfactxpagar = estatusfacturaEJB.ListarEstatusporPagar();
+        return estatusfactxpagar;        
+    }
+    
+    public List<Detallecompra> detallecompraAuxiliar() {
+        List<Detallecompra> listado = null;
+        listado = detallecompraEJB.buscardetallecompra(selected);
+        return listado;
+    }
+    
+    
+    
     public Compra prepareCreate() {
         selected = new Compra();
         initializeEmbeddableKey();

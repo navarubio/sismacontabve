@@ -15,7 +15,7 @@
                         <p:outputLabel value="#{bundle.EditCompraLabel_idcompra}" for="idcompra" />
                         <p:inputText id="idcompra" value="#{compraController.selected.idcompra}" title="#{bundle.EditCompraTitle_idcompra}" required="true" requiredMessage="#{bundle.EditCompraRequiredMessage_idcompra}"/>
                         <p:outputLabel value="#{bundle.EditCompraLabel_fechaorden}" for="fechaorden" />
-                        <p:calendar id="fechaorden" pattern="MM/dd/yyyy" value="#{compraController.selected.fechaorden}" title="#{bundle.EditCompraTitle_fechaorden}"  showOn="button"/>
+                        <p:calendar id="fechaorden" pattern="dd/MM/yyyy" value="#{compraController.selected.fechaorden}" title="#{bundle.EditCompraTitle_fechaorden}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.EditCompraLabel_subtotal}" for="subtotal" />
                         <p:inputText id="subtotal" value="#{compraController.selected.subtotal}" title="#{bundle.EditCompraTitle_subtotal}" />
                         <p:outputLabel value="#{bundle.EditCompraLabel_iva}" for="iva" />
@@ -29,9 +29,7 @@
                         <p:outputLabel value="#{bundle.EditCompraLabel_controlfactura}" for="controlfactura" />
                         <p:inputText id="controlfactura" value="#{compraController.selected.controlfactura}" title="#{bundle.EditCompraTitle_controlfactura}" />
                         <p:outputLabel value="#{bundle.EditCompraLabel_fechafactura}" for="fechafactura" />
-                        <p:calendar id="fechafactura" pattern="MM/dd/yyyy" value="#{compraController.selected.fechafactura}" title="#{bundle.EditCompraTitle_fechafactura}"  showOn="button"/>
-                        <p:outputLabel value="#{bundle.EditCompraLabel_observacionespago}" for="observacionespago" />
-                        <p:inputText id="observacionespago" value="#{compraController.selected.observacionespago}" title="#{bundle.EditCompraTitle_observacionespago}" />
+                        <p:calendar id="fechafactura" pattern="dd/MM/yyyy" value="#{compraController.selected.fechafactura}" title="#{bundle.EditCompraTitle_fechafactura}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.EditCompraLabel_idauxiliarrequerimiento}" for="idauxiliarrequerimiento" />
                         <p:selectOneMenu id="idauxiliarrequerimiento" value="#{compraController.selected.idauxiliarrequerimiento}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
