@@ -62,7 +62,7 @@ public class CompraController implements Serializable {
 
     public void setSelected(Compra selected) {
         this.selected = selected;
-        detallecompraFiltrados = detallecompraAuxiliar();
+        //detallecompraFiltrados = detallecompraAuxiliar();
     }
 
     protected void setEmbeddableKeys() {
