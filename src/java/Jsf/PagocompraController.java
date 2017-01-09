@@ -29,6 +29,8 @@ public class PagocompraController implements Serializable {
     private List<Pagocompra> items = null;
     private Pagocompra selected;
     private List<Pagocompra> pagosefectuados;
+    private List<Pagocompra> pagosporcompra;
+    
 
     public PagocompraController() {
     }
@@ -94,6 +96,7 @@ public class PagocompraController implements Serializable {
     @PostConstruct
     public void init() {
         pagosefectuados = ejbFacade.buscarPagosefectuados();
+        
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

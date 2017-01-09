@@ -7,8 +7,10 @@ import Jpa.CompraFacade;
 import Jpa.CompraFacadeLocal;
 import Jpa.DetallecompraFacadeLocal;
 import Jpa.EstatusfacturaFacadeLocal;
+import Jpa.PagocompraFacadeLocal;
 import Modelo.Detallecompra;
 import Modelo.Estatusfactura;
+import Modelo.Pagocompra;
 
 import java.io.Serializable;
 import java.util.List;
@@ -32,19 +34,22 @@ public class CompraController implements Serializable {
 
     @EJB
     private Jpa.CompraFacadeLocal ejbFacade;
-    @EJB 
+    @EJB
     private EstatusfacturaFacadeLocal estatusfacturaEJB;
     @EJB
     private DetallecompraFacadeLocal detallecompraEJB;
-    
+    @EJB
+    private PagocompraFacadeLocal pagocompraEJB;
+
     private List<Compra> items = null;
     private List<Compra> comprasactivas = null;
     private List<Compra> comprasporautorizar = null;
     private List<Compra> compraspagadas = null;
-    private List<Estatusfactura> estatusfactxpagar=null;
+    private List<Estatusfactura> estatusfactxpagar = null;
     private List<Detallecompra> detallecompraFiltrados;
-    
+    private List<Pagocompra> pagosporidcompra;
     private Compra selected;
+    private Compra compraseleccionada;
 
     public CompraController() {
     }
@@ -56,13 +61,34 @@ public class CompraController implements Serializable {
         compraspagadas = ejbFacade.buscarcomprasPagadas();
     }
 
+    public void setSelected(Compra selected) {
+        this.selected = selected;
+    }
+    
+
     public Compra getSelected() {
         return selected;
     }
 
-    public void setSelected(Compra selected) {
-        this.selected = selected;
-        //detallecompraFiltrados = detallecompraAuxiliar();
+    public void setCompraseleccionada(){
+        
+    }
+    public void setCompraseleccionada(Compra compraseleccionada) {
+        
+        if (compraseleccionada != null){
+            this.compraseleccionada = compraseleccionada;
+            this.selected = compraseleccionada;
+            asignar();
+        }
+    }
+
+    public Compra getCompraseleccionada() {
+        return compraseleccionada;
+    }
+
+      public void asignar() {
+        detallecompraFiltrados = detallecompraAuxiliar();
+        pagosporidcompra = pagocompraEJB.buscarpago(selected);
     }
 
     protected void setEmbeddableKeys() {
@@ -99,10 +125,18 @@ public class CompraController implements Serializable {
         return estatusfactxpagar;
     }
 
+    public List<Pagocompra> getPagosporidcompra() {
+        return pagosporidcompra;
+    }
+
+    public void setPagosporidcompra(List<Pagocompra> pagosporidcompra) {
+        this.pagosporidcompra = pagosporidcompra;
+    }
+
     public void setEstatusfactxpagar(List<Estatusfactura> estatusfactxpagar) {
         this.estatusfactxpagar = estatusfactxpagar;
     }
-    
+
     public void setRequerimientosactivos(List<Compra> comprasactivas) {
         this.comprasactivas = comprasactivas;
     }
@@ -122,19 +156,22 @@ public class CompraController implements Serializable {
         return compraspagadas;
     }
 
-    public List<Estatusfactura> getStatusFactporPagar(){
+    public List<Estatusfactura> getStatusFactporPagar() {
         estatusfactxpagar = estatusfacturaEJB.ListarEstatusporPagar();
-        return estatusfactxpagar;        
+        return estatusfactxpagar;
     }
-    
+
     public List<Detallecompra> detallecompraAuxiliar() {
         List<Detallecompra> listado = null;
         listado = detallecompraEJB.buscardetallecompra(selected);
         return listado;
     }
-    
-    
-    
+
+    public List<Pagocompra> pagosFiltrados(Compra compra) {
+        pagosporidcompra = pagocompraEJB.buscarpago(selected);
+        return pagosporidcompra;
+    }
+
     public Compra prepareCreate() {
         selected = new Compra();
         initializeEmbeddableKey();

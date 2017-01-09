@@ -85,3 +85,13 @@
     text-align: right;
     color:black;
 }
+#ClienteViewForm .text-ouput{
+    font-weight:  bold;
+    text-align: right;
+    color:black;
+}
+#ClienteEditForm .text-ouput{
+    font-weight:  bold;
+    text-align: right;
+    color:black;
+}

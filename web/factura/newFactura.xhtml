@@ -33,9 +33,8 @@
                                 <p:outputLabel for="control" styleClass="text-ouput" value="Nro. Control" />
                                 <p:inputMask id="control" mask="99-99999" value="#{facturasController.factura.numerocontrol}" title="#{bundle.CreateFacturaTitle_controlfactura}" required="true"/>
                                 <p:outputLabel for="client" styleClass="text-ouput" value="Cliente"/>
-                                <p:selectOneMenu id="client" value="#{facturasController.cliente}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
+                                <p:selectOneMenu id="client" value="#{facturasController.cliente}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" required="true"> 
                                     <p:ajax event="change" update="rif, direccioncliente, telefono"/>                              
-
                                     <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                                     <f:selectItems value="#{facturasController.clientes}"
                                                    var="idarticuloItem"
@@ -49,7 +48,7 @@
                                 <p:outputLabel for="telefono" styleClass="text-ouput" value="Telefonos" />
                                 <p:outputLabel id="telefono" value="#{facturasController.cliente.telefonos}" />
                                 <p:outputLabel for="fechaventa" styleClass="text-ouput"  value="Fecha Venta"  />
-                                <p:calendar id="fechaventa" pattern="dd/MM/yyyy" locale="es" value="#{facturasController.factura.fecha}" showOn="button" navigator="true" required="true"/>
+                                <p:calendar id="fechaventa" pattern="dd/MM/yyyy" locale="es" value="#{facturasController.factura.fecha}" showOn="button" navigator="true" required="true" size="10"/>
                                 <p:outputLabel for="observa" styleClass="text-ouput"  value="Observaciones" />
                                 <p:inputTextarea id="observa"  rows="2" cols="50" label="Observaciones" value="#{facturasController.factura.observacionesfact}" required="true"/>
                             </p:panelGrid>
@@ -66,9 +65,9 @@
                                                    itemLabel="#{idarticuloItem.descripcion}"  itemValue="#{idarticuloItem}" /> 
                                 </p:selectOneMenu>
                                 <p:outputLabel for="cantidad" styleClass="text-ouput" value="Cantidad" />
-                                <p:inputText id="cantidad" value="#{requerimientosController.cantidad}" style="text-align:right"/>
+                                <p:inputText id="cantidad" value="#{requerimientosController.cantidad}" style="text-align:right" size="5" required="true"/>
                                 <p:outputLabel for="precio"  styleClass="text-ouput" value="Precio sin IVA" />
-                                <p:inputText id="precio"  label="#{requerimientosController.articulo.pcosto}"  size="20" value="#{requerimientosController.pcosto}" style="text-align:right"/>
+                                <p:inputText id="precio"   label="#{requerimientosController.articulo.pcosto}"  size="10" value="#{requerimientosController.pcosto}" style="text-align:right" />
                                 <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{requerimientosController.anexar()}" update="listado"/>   
                             </p:panelGrid>
                         </p:fieldset>
