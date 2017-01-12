@@ -1,11 +1,13 @@
 package Jsf;
 
+import Jpa.DetallefacturaFacadeLocal;
 import Modelo.Factura;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.FacturaFacade;
 import Jpa.FacturaFacadeLocal;
 import Modelo.Cobroventa;
+import Modelo.Detallefactura;
 import Modelo.Estatusfactura;
 import Modelo.Estatusfacturaventa;
 
@@ -37,12 +39,15 @@ public class FacturaController implements Serializable {
     private Jpa.EstatusfacturaventaFacadeLocal estatusfacturaEJB;
     @EJB
     private Jpa.CobroventaFacadeLocal cobroventaEJB;
+    @EJB
+    DetallefacturaFacadeLocal detallefacturaEJB;
     private List<Factura> items = null;
     private List<Estatusfacturaventa> estatusfact;
     private List<Estatusfacturaventa> estatusfactxcobrar;    
     private List<Factura> facturasactivas=null;
     private List<Cobroventa> cobrosporfactura=null;
     private Factura selected;
+    private List<Detallefactura> detallesporfactura= null;    
 
     public FacturaController() {
     }
@@ -57,6 +62,14 @@ public class FacturaController implements Serializable {
 
     public void setSelected(Factura selected) {
         this.selected = selected;
+    }
+
+    public List<Detallefactura> getDetallesporfactura() {
+        return detallesporfactura;
+    }
+
+    public void setDetallesporfactura(List<Detallefactura> detallesporfactura) {
+        this.detallesporfactura = detallesporfactura;
     }
 
     public List<Estatusfacturaventa> getEstatusfact() {
@@ -156,7 +169,11 @@ public void init(){
         }
         return items;
     }
-    
+
+    public List<Detallefactura> buscardetallesporfactura(Factura factura){
+        detallesporfactura = detallefacturaEJB.buscardetallefactura(selected);
+        return detallesporfactura;
+    }
     public List<Estatusfacturaventa> getEstatusFacturas(){
         estatusfact = estatusfacturaEJB.findAll();
         return estatusfact;

@@ -27,6 +27,7 @@
                         </f:facet>
                         <p:menuitem value="#{bundle.Home}" outcome="/protegido/menup.xhtml" icon="ui-icon-home"/>
                         <p:submenu label="Administracion" icon="ui-icon-pencil">
+                            <p:menuitem value="Articulos" outcome="/articulo/List.xhtml" />
                             <p:submenu label="#{bundle.Ventas}" icon="ui-icon-calculator">
                                 <p:menuitem value="Clientes" outcome="/cliente/List.xhtml" />
                                 <p:menuitem value="Facturacion" outcome="/factura/newFactura.xhtml"/>
@@ -37,7 +38,6 @@
                             </p:submenu>
                             <p:submenu label="#{bundle.Compras}" icon="ui-icon-cart">
                                 <p:menuitem value="Proveedores" outcome="/proveedor/List.xhtml" />
-                                <p:menuitem value="Articulos" outcome="/articulo/List.xhtml" />
                                 <p:menuitem value="Requerimientos" outcome="/auxiliarrequerimiento/List.xhtml"/>
                                 <p:menuitem value="Compras por Pagar" outcome="/compra/List.xhtml"/>
                                 <p:menuitem value="Compras Pagadas" outcome="/compra/ComprasPagadas.xhtml"/>                            

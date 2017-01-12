@@ -5,6 +5,7 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.DetallefacturaFacade;
 import Jpa.DetallefacturaFacadeLocal;
+import Modelo.Factura;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,6 +29,7 @@ public class DetallefacturaController implements Serializable {
     private Jpa.DetallefacturaFacadeLocal ejbFacade;
     private List<Detallefactura> items = null;
     private Detallefactura selected;
+    private List<Detallefactura> detallesporfactura= null;
 
     public DetallefacturaController() {
     }
@@ -81,7 +83,7 @@ public class DetallefacturaController implements Serializable {
         }
         return items;
     }
-
+    
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();

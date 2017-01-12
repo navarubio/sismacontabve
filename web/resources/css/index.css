@@ -49,6 +49,7 @@
 
 .ui-panelgrid > * > tr, .ui-panelgrid > * > tr > td.ui-panelgrid-cell {
     border: none;
+    
 }
 
 #formulario .text-ouput{
@@ -81,6 +82,16 @@
     color:blue;
 }
 #CompraListForm .text-ouput{
+    font-weight:  bold;
+    text-align: right;
+    color:black;
+}
+#CompraViewForm .text-ouput{
+    font-weight:  bold;
+    text-align: right;
+    color:black;
+}
+#FacturaViewForm .text-ouput{
     font-weight:  bold;
     text-align: right;
     color:black;

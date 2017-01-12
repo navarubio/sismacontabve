@@ -12,44 +12,44 @@
             <h:form id="CompraViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{compraController.selected != null}" style= "width: 800px"  >
-                        <p:fieldset  styleClass="ui-custompanelgrid1" legend="Datos Requerimiento" >
-                            <p:panelGrid columns="2">
-                                <p:outputLabel for="numero" value="Solicitud" styleClass="optionalLbl"/>
+                        <p:fieldset   legend="Datos Requerimiento" >
+                            <p:panelGrid columns="2" styleClass="ui-custompanelgrid1" >
+                                <p:outputLabel for="numero" value="Solicitud" styleClass="text-ouput"/>
                                 <p:outputLabel id="numero" value="REQ- #{compraController.selected.idauxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="usuario" value="Usuario" styleClass="optionalLbl"/>
+                                <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouput"/>
                                 <p:outputLabel id="usuario" value="#{compraController.selected.idauxiliarrequerimiento.idusuario.nombre}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="departamento" value="Departamento" styleClass="optionalLbl"/>
+                                <p:outputLabel for="departamento" value="Departamento" styleClass="text-ouput"/>
                                 <p:outputLabel id="departamento" value="#{compraController.selected.idauxiliarrequerimiento.iddepartamento.departamento}" styleClass="optionalLbl"/>
 
-                                <p:outputLabel for="proveedor" value="Proveedor Referido" styleClass="optionalLbl"/>
+                                <p:outputLabel for="proveedor" value="Proveedor Referido" styleClass="text-ouput"/>
                                 <p:outputLabel id="proveedor" value="#{compraController.selected.idauxiliarrequerimiento.posibleproveedor}"/>
-                                <p:outputLabel for="telefono" value="Telefonos" styleClass="optionalLbl"/>
+                                <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouput"/>
                                 <p:outputLabel id="telefono" value="#{compraController.selected.idauxiliarrequerimiento.telefonoproveedor}"/>
-                                <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" />
+                                <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" styleClass="text-ouput" />
                                 <p:outputLabel id="fechasolicitud" value="#{compraController.selected.idauxiliarrequerimiento.fecharequerimiento}">
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                                 </p:outputLabel>
-                                <p:outputLabel for="resena" value="Breve Reseña" styleClass="optionalLbl"/>
+                                <p:outputLabel for="resena" value="Breve Reseña" styleClass="text-ouput"/>
                                 <p:outputLabel id="resena" value="#{compraController.selected.idauxiliarrequerimiento.descripcion}" />
                             </p:panelGrid>
                         </p:fieldset>
-                        <p:fieldset styleClass="ui-custompanelgrid" legend="Datos Compra" >
-                            <p:panelGrid columns="2">
-                                <p:outputLabel for="numeroc" value="Compra" styleClass="optionalLbl"/>
+                        <p:fieldset  legend="Datos Compra" >
+                            <p:panelGrid columns="2" styleClass="ui-custompanelgrid">
+                                <p:outputLabel for="numeroc" value="Compra" styleClass="text-ouput"/>
                                 <p:outputLabel id="numeroc" value="CMP- #{compraController.selected.idcompra}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="usua" value="Usuario" styleClass="optionalLbl"/>
+                                <p:outputLabel for="usua" value="Usuario" styleClass="text-ouput"/>
                                 <p:outputLabel id="usua" value="#{compraController.selected.idusuario.nombre}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="depto" value="Departamento" styleClass="optionalLbl"/>
+                                <p:outputLabel for="depto" value="Departamento" styleClass="text-ouput"/>
                                 <p:outputLabel id="depto" value="#{pagosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="proveedor1" value="Proveedor" styleClass="optionalLbl"/>
+                                <p:outputLabel for="proveedor1" value="Proveedor" styleClass="text-ouput"/>
                                 <p:outputLabel id="proveedor1" value="#{compraController.selected.rifproveedor.razonsocial}"   /> 
-                                <p:outputLabel for="rif" value="R.I.F." styleClass="optionalLbl"/>
+                                <p:outputLabel for="rif" value="R.I.F." styleClass="text-ouput"/>
                                 <p:outputLabel id="rif" value="#{compraController.selected.rifproveedor.rifproveedor}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="fechacompra" value="Fecha Orden Compra" />
+                                <p:outputLabel for="fechacompra" value="Fecha Orden Compra" styleClass="text-ouput" />
                                 <p:outputLabel id="fechacompra" value="#{compraController.selected.fechaorden}" >
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                                 </p:outputLabel>
-                                <p:outputLabel for="observa" value="Observaciones" styleClass="optionalLbl"/>
+                                <p:outputLabel for="observa" value="Observaciones" styleClass="text-ouput"/>
                                 <p:outputLabel id="observa" value="#{compraController.selected.observacionescompra}" />
                             </p:panelGrid>                                
                         </p:fieldset>
@@ -62,7 +62,7 @@
                                         <h:outputText value="#{req.codigo.codigo}" />
                                     </p:column>
                                     <p:column style="width:35%"  headerText="Descripcion del Articulo">
-                                        <h:outputText value="#{req.codigo.descripcion}"/>  
+                                        <h:outputText value="#{req.codigo.descripcion}" />  
                                     </p:column>
                                     <p:column style="text-align:center" headerText="Cantidad">                                
                                         <h:outputText style="width:10px"  value="#{req.cantidad}"/>
@@ -117,25 +117,25 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_idrequerimiento}"/>
                             </f:facet>
-                            <h:outputText value="CMP-#{item.idcompra.idcompra}"/>
+                            <h:outputText value="CMP-#{item.idcompra.idcompra}" styleClass="text-ouput"/>
                         </p:column>
                         <p:column width="70" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_idpago}"/>
                             </f:facet>
-                            <h:outputText value="PGC-#{item.idpagocompra}"/>
+                            <h:outputText value="PGC-#{item.idpagocompra}" styleClass="text-ouput"/>
                         </p:column>
                         <p:column width="180" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_proveedor}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idcompra.rifproveedor.razonsocial}"/>
+                            <h:outputText value="#{item.idcompra.rifproveedor.razonsocial}" styleClass="text-ouput"/>
                         </p:column>                     
                         <p:column width="60" style="text-align: center" sortBy="#{item.fechapago}">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPagoCompraTitle_fechapago}"/>
+                                <h:outputText value="#{bundle.ListPagoCompraTitle_fechapago}" styleClass="text-ouput"/>
                             </f:facet>
-                            <h:outputText value="#{item.fechapago}">
+                            <h:outputText value="#{item.fechapago}" styleClass="text-ouput">
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
@@ -143,7 +143,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_totalpagado}"/>
                             </f:facet>
-                            <h:outputText value="#{item.totalpago}">
+                            <h:outputText value="#{item.totalpago}" styleClass="text-ouput">
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>
                         </p:column>
@@ -151,7 +151,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_totalpagado}"/>
                             </f:facet>
-                            <h:outputText value="#{item.saldopendiente}">
+                            <h:outputText value="#{item.saldopendiente}" styleClass="text-ouput">
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>
                         </p:column>
@@ -159,16 +159,16 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_tipopago}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idtipopago.tipopago}"/>
+                            <h:outputText value="#{item.idtipopago.tipopago}" styleClass="text-ouput"/>
                         </p:column>
                         <p:column width="110" headerText="Banco" style="text-align: center">
-                            <h:outputText value="#{item.idbanco.nombrebanco}" />
+                            <h:outputText value="#{item.idbanco.nombrebanco}" styleClass="text-ouput" />
                         </p:column>
                         <p:column width="155" style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_cuenta}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idcuentabancaria.numerocuenta}"/>
+                            <h:outputText value="#{item.idcuentabancaria.numerocuenta}" styleClass="text-ouput"/>
                         </p:column>
                     </p:dataTable>
                     <p:commandButton value="Cerrar" onclick="CompraViewDialog.hide()"/>
