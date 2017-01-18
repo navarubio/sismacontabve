@@ -31,5 +31,6 @@ public interface ArticuloFacadeLocal {
     Articulo buscarArticulo(String codigo);
 
     int count();
-    
+   
+    public List<Articulo> listadoArticulos();
 }

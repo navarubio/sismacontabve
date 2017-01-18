@@ -1,5 +1,7 @@
 package Jsf;
 
+import Jpa.ArticuloFacade;
+import Jpa.ArticuloFacade.reporteCliente;
 import Modelo.Articulo;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
@@ -7,6 +9,7 @@ import Jpa.ArticuloFacadeLocal;
 import Modelo.Usuario;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -20,6 +23,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 
 @ManagedBean(name = "articuloController")
 @SessionScoped
@@ -90,6 +94,13 @@ public class ArticuloController implements Serializable {
     public List<Articulo> getItems() {
         if (items == null) {
             items = getFacade().findAll();
+        }
+        return items;
+    }
+    
+        public List<Articulo> getListaOrdenada() {
+        if (items == null) {
+            items = getFacade().listadoArticulos();
         }
         return items;
     }
@@ -169,6 +180,19 @@ public class ArticuloController implements Serializable {
             }
         }
 
+    }
+    
+    public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        
+        //Instancia hacia la clase reporteClientes        
+        reporteArticulo rArticulo = new reporteArticulo();
+        
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("/resources/reportes/articulos.jasper");
+       
+        rArticulo.getReporte(ruta);        
+        FacesContext.getCurrentInstance().responseComplete();               
     }
 
 }

@@ -8,6 +8,7 @@ import Jpa.ProveedorFacadeLocal;
 import Modelo.Usuario;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -21,6 +22,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 
 @ManagedBean(name = "proveedorController")
 @SessionScoped
@@ -174,5 +176,16 @@ public class ProveedorController implements Serializable {
         }
 
     }
-
+public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        
+        //Instancia hacia la clase reporteClientes        
+        reporteArticulo rArticulo = new reporteArticulo();
+        
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("/resources/reportes/proveedores.jasper");
+       
+        rArticulo.getReporte(ruta);        
+        FacesContext.getCurrentInstance().responseComplete();               
+    }
 }

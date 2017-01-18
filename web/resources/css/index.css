@@ -52,6 +52,10 @@
     
 }
 
+#CompraListForm datatable{
+    background: none repeat scroll 0 0 #F2F5F9;
+}
+
 #formulario .text-ouput{
     font-weight:  bold;
     color:black;
