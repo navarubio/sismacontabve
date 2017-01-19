@@ -7,6 +7,7 @@ import Jpa.AuxiliarrequerimientoFacade;
 import Jpa.AuxiliarrequerimientoFacadeLocal;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -21,6 +22,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.servlet.ServletContext;
 
 @ManagedBean(name = "auxiliarrequerimientoController")
 @ViewScoped
@@ -183,6 +185,18 @@ public class AuxiliarrequerimientoController implements Serializable {
             }
         }
 
+    }
+    public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        
+        //Instancia hacia la clase reporteClientes        
+        reporteArticulo rArticulo = new reporteArticulo();
+        
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("/resources/reportes/requerimientos.jasper");
+       
+        rArticulo.getReporte(ruta);        
+        FacesContext.getCurrentInstance().responseComplete();               
     }
 
 }

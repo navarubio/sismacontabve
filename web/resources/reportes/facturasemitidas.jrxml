@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ddba77e-51be-47ac-8b24-c3354df35f82">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="566"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT
@@ -131,7 +131,7 @@ FROM
 			</staticText>
 			<staticText>
 				<reportElement x="66" y="5" width="64" height="20" uuid="c3d1b701-c5d1-4c06-aafb-3efc4b5915ef"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CONTROL]]></text>
@@ -187,7 +187,7 @@ FROM
 			</staticText>
 			<staticText>
 				<reportElement x="266" y="5" width="54" height="20" uuid="13c6c1da-618d-4cfe-80ee-84d07e66b050"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[RIF]]></text>
@@ -239,7 +239,7 @@ FROM
 				<textFieldExpression><![CDATA[$F{factura_ivafact}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="615" y="1" width="60" height="21" uuid="72d2bace-c810-4359-afa2-125ec0ded227"/>
+				<reportElement x="615" y="1" width="73" height="21" uuid="72d2bace-c810-4359-afa2-125ec0ded227"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
@@ -254,7 +254,7 @@ FROM
 			</textField>
 			<textField>
 				<reportElement x="266" y="0" width="54" height="22" uuid="a10345b0-2637-4fb7-9ce2-5f76c138aa4b"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cliente_rifcliente}]]></textFieldExpression>

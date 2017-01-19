@@ -13,6 +13,7 @@ import Modelo.Estatusfactura;
 import Modelo.Pagocompra;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -27,6 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.servlet.ServletContext;
 
 @Named("compraController")
 @ViewScoped
@@ -63,19 +65,22 @@ public class CompraController implements Serializable {
 
     public void setSelected(Compra selected) {
         this.selected = selected;
+        if (selected != null) {
+            asignar();
+        }
     }
-    
 
     public Compra getSelected() {
         return selected;
     }
 
-    public void setCompraseleccionada(){
-        
+    public void setCompraseleccionada() {
+
     }
+
     public void setCompraseleccionada(Compra compraseleccionada) {
-        
-        if (compraseleccionada != null){
+
+        if (compraseleccionada != null) {
             this.compraseleccionada = compraseleccionada;
             this.selected = compraseleccionada;
             asignar();
@@ -86,7 +91,7 @@ public class CompraController implements Serializable {
         return compraseleccionada;
     }
 
-      public void asignar() {
+    public void asignar() {
         detallecompraFiltrados = detallecompraAuxiliar();
         pagosporidcompra = pagocompraEJB.buscarpago(selected);
     }
@@ -283,6 +288,19 @@ public class CompraController implements Serializable {
             }
         }
 
+    }
+
+    public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        //Instancia hacia la clase reporteClientes        
+        reporteArticulo rArticulo = new reporteArticulo();
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("/resources/reportes/porautorizar.jasper");
+
+        rArticulo.getReporte(ruta);
+        FacesContext.getCurrentInstance().responseComplete();
     }
 
 }

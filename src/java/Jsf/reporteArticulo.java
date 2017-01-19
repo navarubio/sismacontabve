@@ -29,6 +29,9 @@ import net.sf.jasperreports.engine.util.JRLoader;
 public class reporteArticulo {
 
     public void getReporte(String ruta) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
+        if (ruta!=null){
+            
+        
         Connection conexion;
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/inpeca", "root", "091095");
@@ -71,6 +74,7 @@ public class reporteArticulo {
                     e.printStackTrace();
                 }
             }
+        }
         }
     }
 }

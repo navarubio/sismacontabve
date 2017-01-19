@@ -1,7 +1,5 @@
 package Jsf;
 
-import Jpa.ArticuloFacade;
-import Jpa.ArticuloFacade.reporteCliente;
 import Modelo.Articulo;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
