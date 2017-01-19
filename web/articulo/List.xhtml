@@ -22,7 +22,7 @@
                 <img src="../resources/images/blockdevice.png" width="70" height="70" alt="Clientes" align="right" />
 
                 <p:panel header="#{bundle.ListArticuloTitle}">
-                    <p:dataTable id="datalist" value="#{articuloController.listaOrdenada}" var="item"
+                    <p:dataTable id="datalist" value="#{articuloController.items}" var="item"
                                  selectionMode="single" selection="#{articuloController.selected}"
                                  paginator="true"
                                  rowKey="#{item.codigo}"
