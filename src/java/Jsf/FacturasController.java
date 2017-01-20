@@ -13,6 +13,7 @@ import Jpa.EstatuscontableFacade;
 import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaventaFacadeLocal;
 import Jpa.FacturaFacadeLocal;
+import Jpa.Numeroaletras;
 import Modelo.Articulo;
 import Modelo.Caja;
 import Modelo.Cliente;
@@ -22,7 +23,9 @@ import Modelo.Factura;
 import Modelo.Requerimiento;
 import Modelo.Usuario;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,6 +38,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
+
 
 /**
  * @author sofimar
@@ -58,6 +63,7 @@ public class FacturasController implements Serializable {
     private EstatuscontableFacadeLocal estatuscontableEJB;
     @EJB
     private EstatusfacturaventaFacadeLocal estatusfacturaventaEJB;
+    
 
     private Detallefactura detallefactura;
     private RequerimientosController reque = new RequerimientosController();
@@ -67,6 +73,7 @@ public class FacturasController implements Serializable {
     private List<Cliente> clientes;
     private List<Articulo> articulos;
     private Factura codfactura;
+    private int number;
 
     @Inject
     private Factura factura;
@@ -74,7 +81,13 @@ public class FacturasController implements Serializable {
     private Cliente cliente;
     @Inject
     private Detallefactura detalle;
-
+    
+    Numeroaletras numletras= new Numeroaletras();
+    
+    String numero = "";
+    String cantidadenletras="";
+    
+    
     public Detallefactura getDetallefactura() {
         return detallefactura;
     }
@@ -142,6 +155,7 @@ public class FacturasController implements Serializable {
         Date fecha = new Date();
         DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
         String fechaCadena = hourFormat.format(fecha);
+        DecimalFormat numformat = new DecimalFormat("#######.##");
         try {
             Usuario usua = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
             factura.setIdusuario(usua);
@@ -149,6 +163,9 @@ public class FacturasController implements Serializable {
             factura.setBimponiblefact(reque.getTotalsubtotal());
             factura.setIvafact(reque.getTotaliva());
             factura.setTotalgeneral(reque.getTotalgeneral());
+            numero = numformat.format(factura.getTotalgeneral());
+            cantidadenletras = numletras.Convertir(numero, true);
+            factura.setCantidadenletras(cantidadenletras);
             factura.setSaldopendiente(reque.getTotalgeneral());            
             factura.setHora(fechaCadena);
             factura.setIdcaja(cajaEJB.ubicarCaja());
@@ -157,6 +174,7 @@ public class FacturasController implements Serializable {
             facturaEJB.create(factura);
 
             codfactura = facturaEJB.ultimaInsertada();
+            number = codfactura.getNumerofact();
 
             for (Requerimiento rq : reque.getListarequerimiento()) {
                 Articulo arti = rq.getCodigo();
@@ -182,5 +200,19 @@ public class FacturasController implements Serializable {
         String siguiente;
         siguiente = facturaEJB.siguientefacturaformat();
         return siguiente;
+    }
+    
+    public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        
+        //Instancia hacia la clase reporteClientes        
+        reporteArticulo rArticulo = new reporteArticulo();
+
+        String codigofactu = String.valueOf(number);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("/resources/reportes/facturafiscal.jasper");
+       
+        rArticulo.getFactura(ruta, codigofactu);        
+        FacesContext.getCurrentInstance().responseComplete();               
     }
 }

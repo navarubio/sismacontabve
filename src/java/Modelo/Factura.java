@@ -56,7 +56,7 @@ public class Factura implements Serializable {
     @NotNull
     @Column(name = "numerofact")
     private Integer numerofact;
-    @Size(max = 10)
+    @Size(max = 11)
     @Column(name = "numerocontrol")
     private String numerocontrol;
     @Column(name = "fecha")

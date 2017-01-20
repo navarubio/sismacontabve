@@ -151,6 +151,7 @@
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CompraViewForm" oncomplete="PF('CompraViewDialog').show()" disabled="#{empty compraController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CompraEditForm" oncomplete="PF('CompraEditDialog').show()" disabled="#{empty compraController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{compraController.destroy}" update=":growl,datalist" disabled="#{empty compraController.selected}"/>
+                            
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
