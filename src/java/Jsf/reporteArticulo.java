@@ -78,7 +78,7 @@ public class reporteArticulo {
         }
     }
     
-    public void getFactura(String ruta, String numerofact) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
+    public void getFactura(String ruta, int numerofact) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         if (ruta!=null){
             
         

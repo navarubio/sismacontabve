@@ -12,6 +12,7 @@ import Modelo.Estatusfactura;
 import Modelo.Estatusfacturaventa;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.servlet.ServletContext;
 
 @Named("facturaController")
 @ViewScoped
@@ -43,19 +45,20 @@ public class FacturaController implements Serializable {
     DetallefacturaFacadeLocal detallefacturaEJB;
     private List<Factura> items = null;
     private List<Estatusfacturaventa> estatusfact;
-    private List<Estatusfacturaventa> estatusfactxcobrar;    
-    private List<Factura> facturasactivas=null;
-    private List<Cobroventa> cobrosporfactura=null;
+    private List<Estatusfacturaventa> estatusfactxcobrar;
+    private List<Factura> facturasactivas = null;
+    private List<Cobroventa> cobrosporfactura = null;
     private Factura selected;
-    private List<Detallefactura> detallesporfactura= null;    
+    private List<Detallefactura> detallesporfactura = null;
 
     public FacturaController() {
     }
 
     @PostConstruct
-    public void init(){
-        facturasactivas= ejbFacade.buscarfacturasporCobrar();
+    public void init() {
+        facturasactivas = ejbFacade.buscarfacturasporCobrar();
     }
+
     public Factura getSelected() {
         return selected;
     }
@@ -95,12 +98,11 @@ public class FacturaController implements Serializable {
     public void setEstatusfactxcobrar(List<Estatusfacturaventa> estatusfactxcobrar) {
         this.estatusfactxcobrar = estatusfactxcobrar;
     }
-    
+
 
     /*public List<Factura> getFact() {
-        return items;
-    }*/
-
+     return items;
+     }*/
     protected void setEmbeddableKeys() {
     }
 
@@ -118,7 +120,7 @@ public class FacturaController implements Serializable {
     public void setFacturasactivas(List<Factura> facturasactivas) {
         this.facturasactivas = facturasactivas;
     }
-    
+
     public List<Factura> buscarFacturasActivas() {
         facturasactivas = ejbFacade.buscarfacturasporCobrar();
         return facturasactivas;
@@ -129,20 +131,20 @@ public class FacturaController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
-/*@PostConstruct
-public void init(){
-    items = new ArrayList<Factura>();
-}
+    /*@PostConstruct
+     public void init(){
+     items = new ArrayList<Factura>();
+     }
         
-    public String getTotalSubtotal() {
-        int total = 0;
+     public String getTotalSubtotal() {
+     int total = 0;
 
-        for (items fact : getItems()) {
-            total += fact();
-        }
+     for (items fact : getItems()) {
+     total += fact();
+     }
 
-        return new DecimalFormat("###,###.###").format(total);
-    }*/
+     return new DecimalFormat("###,###.###").format(total);
+     }*/
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundlefactura").getString("FacturaCreated"));
@@ -170,20 +172,22 @@ public void init(){
         return items;
     }
 
-    public List<Detallefactura> buscardetallesporfactura(Factura factura){
+    public List<Detallefactura> buscardetallesporfactura(Factura factura) {
         detallesporfactura = detallefacturaEJB.buscardetallefactura(selected);
         return detallesporfactura;
     }
-    public List<Estatusfacturaventa> getEstatusFacturas(){
+
+    public List<Estatusfacturaventa> getEstatusFacturas() {
         estatusfact = estatusfacturaEJB.findAll();
         return estatusfact;
     }
-    
-    public List<Estatusfacturaventa> getStatusFactporCobrar(){
+
+    public List<Estatusfacturaventa> getStatusFactporCobrar() {
         estatusfactxcobrar = estatusfacturaEJB.ListarEstatusporCobrar();
-        return estatusfactxcobrar;        
+        return estatusfactxcobrar;
     }
-    public List<Cobroventa> getListacobrosporfactura(){
+
+    public List<Cobroventa> getListacobrosporfactura() {
         cobrosporfactura = cobroventaEJB.buscarcobrosporfactura(selected.getNumerofact());
         return cobrosporfactura;
     }
@@ -266,7 +270,19 @@ public void init(){
                 return null;
             }
         }
-
     }
 
+    public void verFactura() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        //Instancia hacia la clase reporteClientes        
+        reporteArticulo rArticulo = new reporteArticulo();
+
+        int codigofactu = selected.getNumerofact();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("/resources/reportes/facturafiscal.jasper");
+
+        rArticulo.getFactura(ruta, codigofactu);
+        FacesContext.getCurrentInstance().responseComplete();
+    }
 }

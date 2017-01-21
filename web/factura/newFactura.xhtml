@@ -116,8 +116,8 @@
                                     </p:row>
                                 </p:columnGroup>                            
                             </p:dataTable>
-                            <p:commandButton value="Registrar" actionListener="#{facturasController.registrarventa()}"  update=":growl"/>
-                            <p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value="#{bundle.Imprimir}" actionListener="#{facturasController.verReporte()}" ajax="false" onclick="form.target = '_blank'"/>                            
+                            <p:commandButton value="Registrar" actionListener="#{facturasController.registrarventa()}"  update=":formulario,:growl" action="/factura/List?faces-redirect=true" />
+                            <!--p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value="#{bundle.Imprimir}" actionListener="#{facturasController.verReporte()}" ajax="false" onclick="form.target = '_blank'"/-->                            
                         </p:panel>
                     </p:panel>
                 </h:form>

@@ -207,7 +207,7 @@ public class FacturasController implements Serializable {
         //Instancia hacia la clase reporteClientes        
         reporteArticulo rArticulo = new reporteArticulo();
 
-        String codigofactu = String.valueOf(number);
+        int codigofactu = number;
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
         String ruta = servletContext.getRealPath("/resources/reportes/facturafiscal.jasper");
