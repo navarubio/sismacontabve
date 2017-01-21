@@ -349,6 +349,7 @@ public class ComprasController implements Serializable {
             compra.setSubtotal(auxiliar.getSubtotal());
             compra.setIva(auxiliar.getMontoiva());
             compra.setTotal(auxiliar.getMontototal());
+            compra.setMontopendiente(auxiliar.getMontototal());
             Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
             compra.setIdusuario(us);
             Estatusfactura statusfactu = null;
