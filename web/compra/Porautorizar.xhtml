@@ -161,7 +161,7 @@
                           resizable="false" showEffect="explode" appendTo="@(body)"  >
                     <h:form id="formulario">
                         <h:panelGrid  id="display" columns="2" style="vertical-align:top" width="900">
-                            <p:fieldset  legend="Datos Requerimiento" >
+                            <p:fieldset  legend="Requerimiento" >
                                 <h:panelGrid styleClass="ui-custompanelgrid1" columns="2" width="450">
                                     <p:outputLabel for="numero" value="Solicitud" styleClass="text-ouput"/>
                                     <p:outputLabel id="numero" value="REQ- #{comprasController.compraautorizada.idauxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
@@ -182,7 +182,7 @@
                                     <p:outputLabel id="resena" value="#{comprasController.compraautorizada.idauxiliarrequerimiento.descripcion}" />
                                 </h:panelGrid>
                             </p:fieldset>
-                            <p:fieldset legend="Datos de la Orden de Compra" >
+                            <p:fieldset legend="Orden de Compra" >
                                 <h:panelGrid styleClass="ui-custompanelgrid" columns="2" width="400">
                                     <p:outputLabel for="numeroc" value="Compra" styleClass="text-ouput"/>
                                     <p:outputLabel id="numeroc" value="CMP- #{comprasController.compraautorizada.idcompra}" styleClass="optionalLbl"/>
@@ -202,9 +202,19 @@
                                     <p:outputLabel id="observa" value="#{comprasController.compraautorizada.observacionescompra}" />
                                 </h:panelGrid>                                
                             </p:fieldset>
+                            <p:fieldset legend="Autorización">
+                                <h:panelGrid styleClass="ui-custompanelgrid3" columns="2" width="400">
+                                    <p:outputLabel for="usuaauto" value="Usuario" styleClass="text-ouput"/>
+                                    <p:outputLabel id="usuaauto" value="#{comprasController.usuario.nombre}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="deptoauto" value="Departamento" styleClass="text-ouput"/>
+                                    <p:outputLabel id="deptoauto" value="#{comprasController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="observaauto" value="Observaciones" styleClass="text-ouput"/>
+                                    <p:inputTextarea id="observaauto"  rows="2" cols="50" label="Observaciones" value="#{comprasController.autorizacion.observaciones}"/>
+                                </h:panelGrid>                                
+                            </p:fieldset>
                         </h:panelGrid>
                         <h:panelGrid columns="1" width="950">
-                            <p:fieldset legend="Datos de los Articulos a Comprar">
+                            <p:fieldset legend="Articulos a Comprar">
                                 <p:panel id="panelart"     >
                                     <p:dataTable id="listado" value="#{comprasController.requerimientosFiltrados}"
                                                  var="req" emptyMessage="No hay articulos para mostrar"  >

@@ -36,5 +36,9 @@
             <base-name>/Bundlecobro</base-name>
             <var>bundlecobro</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/BundleAutorizacion</base-name>
+            <var>bundleAutorizacion</var>
+        </resource-bundle>
     </application>
 </faces-config>

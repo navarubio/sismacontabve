@@ -47,6 +47,11 @@
     background-color:  #E5FFEA ;
 }
 
+.ui-custompanelgrid3, .ui-custompanelgrid3 td {
+    //font-weight: bold;
+    background-color:  #E0EDFF ;
+}
+
 .ui-panelgrid > * > tr, .ui-panelgrid > * > tr > td.ui-panelgrid-cell {
     border: none;
     

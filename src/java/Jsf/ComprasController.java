@@ -1,6 +1,7 @@
 package Jsf;
 
 import Jpa.ArticuloFacadeLocal;
+import Jpa.AutorizacionFacadeLocal;
 import Jpa.AuxiliarrequerimientoFacadeLocal;
 import Jpa.CompraFacadeLocal;
 import Jpa.DepartamentoFacadeLocal;
@@ -10,6 +11,7 @@ import Jpa.EstatusrequerimientoFacadeLocal;
 import Jpa.ProveedorFacadeLocal;
 import Jpa.RequerimientoFacadeLocal;
 import Modelo.Articulo;
+import Modelo.Autorizacion;
 import Modelo.Auxiliarrequerimiento;
 import Modelo.Detallecompra;
 import Modelo.Compra;
@@ -20,6 +22,10 @@ import Modelo.Proveedor;
 import Modelo.Requerimiento;
 import Modelo.Usuario;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -36,6 +42,8 @@ public class ComprasController implements Serializable {
 
     @EJB
     private AuxiliarrequerimientoFacadeLocal auxiliarrequerimientoEJB;
+    @EJB
+    private AutorizacionFacadeLocal autorizacionEJB;
     @EJB
     private RequerimientoFacadeLocal requerimientoEJB;
     @EJB
@@ -61,16 +69,14 @@ public class ComprasController implements Serializable {
 
     @Inject
     private Auxiliarrequerimiento auxiliar;
-
     @Inject
     private Requerimiento requerimiento;
-
     @Inject
     private Compra compra;
     @Inject
     private Detallecompra detallecompra;
-
-    
+    @Inject
+    private Autorizacion autorizacion;
 
     public Compra getCompra() {
         return compra;
@@ -86,6 +92,14 @@ public class ComprasController implements Serializable {
 
     public void setCompra(Compra compra) {
         this.compra = compra;
+    }
+
+    public Autorizacion getAutorizacion() {
+        return autorizacion;
+    }
+
+    public void setAutorizacion(Autorizacion autorizacion) {
+        this.autorizacion = autorizacion;
     }
 
     public Detallecompra getDetallecompra() {
@@ -302,8 +316,22 @@ public class ComprasController implements Serializable {
 
     public void autorizar() {
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        compra.setIdusuario(us);
-
+        Date fecha = new Date();
+        DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
+        Date fechafinal=null;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String fechaFormateada = sdf.format(fecha);
+        try{  
+            fechafinal = sdf.parse(fechaFormateada);  
+        }catch(ParseException pe){  
+        }  
+        String fechaCadena = hourFormat.format(fecha);
+        autorizacion.setIdusuario(us);
+        autorizacion.setHora(fechaCadena);
+        autorizacion.setIdcompra(compraautorizada);
+        autorizacion.setFechaautorizacion(fechafinal);
+        autorizacionEJB.create(autorizacion);
+        autorizacion.setObservaciones(null);
         Estatusfactura statusfactu = null;
         int tipo = 2;
         statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);

@@ -5,6 +5,7 @@
  */
 package Jsf;
 
+import Jpa.AutorizacionFacadeLocal;
 import Jpa.AuxiliarrequerimientoFacadeLocal;
 import Jpa.BancoFacadeLocal;
 import Jpa.CompraFacadeLocal;
@@ -16,6 +17,7 @@ import Jpa.EstatusfacturaFacadeLocal;
 import Jpa.PagocompraFacadeLocal;
 import Jpa.RequerimientoFacadeLocal;
 import Jpa.TipopagoFacadeLocal;
+import Modelo.Autorizacion;
 import Modelo.Auxiliarrequerimiento;
 import Modelo.Banco;
 import Modelo.Compra;
@@ -56,7 +58,8 @@ public class PagosController implements Serializable {
     private EstatusfacturaFacadeLocal estatusfacturaEJB;
     @EJB
     private EstatuscontableFacadeLocal estatuscontableEJB;
-
+    @EJB
+    private AutorizacionFacadeLocal autorizacionEJB;
     @EJB
     private AuxiliarrequerimientoFacadeLocal auxiliarrequerimientoEJB;
     @EJB
@@ -72,6 +75,7 @@ public class PagosController implements Serializable {
 
     private Auxiliarrequerimiento auxiliarrequerimiento;
     private Compra compra;
+    private Autorizacion autoriza;
     private Detallecompra detallecompras;
     private Pagocompra pagocompra = new Pagocompra();
     private Pagocompra pagocompraver;
@@ -230,6 +234,14 @@ public class PagosController implements Serializable {
         this.compra = compra;
     }
 
+    public Autorizacion getAutoriza() {
+        return autoriza;
+    }
+
+    public void setAutoriza(Autorizacion autoriza) {
+        this.autoriza = autoriza;
+    }
+
     public Detallecompra getDetallecompra() {
         return detallecompra;
     }
@@ -279,6 +291,7 @@ public class PagosController implements Serializable {
     public void asignar(Compra compr) {
         this.compra = compr;
         this.idCompra = compr.getIdcompra();
+        this.autoriza = autorizacionEJB.find(compra.getIdcompra());
         this.auxiliarrequerimiento = compr.getIdauxiliarrequerimiento();
 //        this.auxiliar = aux;
         detallecompraFiltrados = detallecompraAuxiliar();

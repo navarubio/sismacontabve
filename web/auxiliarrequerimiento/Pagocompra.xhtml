@@ -27,8 +27,8 @@
 
                     <p:panel header="PAGAR COMPRAS EFECTUADAS">
                         <p:panelGrid columns="3">
-                            <p:fieldset styleClass="ui-custompanelgrid1" legend="Datos Requerimiento" >
-                                <p:panelGrid columns="2">
+                            <p:fieldset  legend="Datos Requerimiento" >
+                                <p:panelGrid columns="2" styleClass="ui-custompanelgrid1">
                                     <p:outputLabel for="numero" value="Solicitud" styleClass="text-ouput"/>
                                     <p:outputLabel id="numero" value="REQ- #{pagosController.auxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouput"/>
@@ -48,7 +48,7 @@
                                     <p:outputLabel id="resena" value="#{pagosController.auxiliarrequerimiento.descripcion}" />
                                 </p:panelGrid>
                             </p:fieldset>
-                            <p:fieldset styleClass="ui-custompanelgrid" legend="Datos Compra" >
+                            <p:fieldset legend="Datos Compra" >
                                 <p:panelGrid styleClass="ui-custompanelgrid" columns="2">
                                     <p:outputLabel for="numeroc" value="Compra" styleClass="text-ouput" />
                                     <p:outputLabel id="numeroc" value="CMP- #{pagosController.compra.idcompra}" styleClass="optionalLbl"/>
@@ -66,10 +66,24 @@
                                     </p:outputLabel>
                                     <p:outputLabel for="observa" value="Observaciones" styleClass="text-ouput"/>
                                     <p:outputLabel id="observa" value="#{pagosController.compra.observacionescompra}" />
+                                    <p:separator/>
+                                    <p:separator/>
+                                    <p:outputLabel value="AUTORIZACION" styleClass="text-ouputfact"/>
+                                    <br></br>
+                                    <p:outputLabel for="autor" value="Autorizado" styleClass="text-ouput"/>
+                                    <p:outputLabel id="autor" value="#{pagosController.autoriza.idusuario.nombre}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="fechaauto" value="Fecha" styleClass="text-ouput"/>
+                                    <p:outputLabel id="fechaauto" value="#{pagosController.autoriza.fechaautorizacion}" styleClass="optionalLbl">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                    <p:outputLabel for="hora" value="Hora" styleClass="text-ouput"/>
+                                    <p:outputLabel id="hora" value="#{pagosController.autoriza.hora}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="observaauto" value="Observaciones" styleClass="text-ouput"/>
+                                    <p:outputLabel id="observaauto" value="#{pagosController.autoriza.observaciones}" styleClass="optionalLbl"/>
                                 </p:panelGrid>                                
                             </p:fieldset>
-                            <p:fieldset styleClass="ui-custompanelgrid2" legend="Datos del Pago" >
-                                <p:panelGrid columns="4">
+                            <p:fieldset  legend="Datos del Pago" >
+                                <p:panelGrid styleClass="ui-custompanelgrid2" columns="4">
                                     <p:outputLabel for="usua1" value="USUARIO" styleClass="text-ouput"/>
                                     <p:outputLabel id="usua1" value="#{pagosController.usuario.nombre}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="numerofact" value="Numero Factura" styleClass="text-ouput"/>
