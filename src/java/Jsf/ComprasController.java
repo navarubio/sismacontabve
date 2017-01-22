@@ -70,6 +70,8 @@ public class ComprasController implements Serializable {
     @Inject
     private Detallecompra detallecompra;
 
+    
+
     public Compra getCompra() {
         return compra;
     }
@@ -82,7 +84,6 @@ public class ComprasController implements Serializable {
         this.compraautorizada = compraautorizada;
     }
 
-    
     public void setCompra(Compra compra) {
         this.compra = compra;
     }
@@ -216,7 +217,6 @@ public class ComprasController implements Serializable {
     public void setCompraspagadas(List<Compra> compraspagadas) {
         this.compraspagadas = compraspagadas;
     }
-    
 
     @PostConstruct
     public void init() {
@@ -230,13 +230,13 @@ public class ComprasController implements Serializable {
 
 //        this.auxiliarrequerimiento=requerimientosController.getAuxrequer();
     }
-    
-    public List<Proveedor> listarproveedores(){
-        List<Proveedor> lista= null;
-        lista=proveedorEJB.findAll();
+
+    public List<Proveedor> listarproveedores() {
+        List<Proveedor> lista = null;
+        lista = proveedorEJB.findAll();
         return lista;
     }
-       
+
     public void asignar(Auxiliarrequerimiento aux) {
         this.auxiliarrequerimiento = aux;
         this.idAuxiliar = aux.getIdauxiliarrequerimiento();
@@ -252,10 +252,10 @@ public class ComprasController implements Serializable {
     }
 
     /*    public List<Detallecompra> buscardetallecompra() {
-        List<Detallecompra> listado = null;
-        listado = detallecompraEJB.buscardetalle(compra);
-        return listado;
-    }*/
+     List<Detallecompra> listado = null;
+     listado = detallecompraEJB.buscardetalle(compra);
+     return listado;
+     }*/
     public List<Requerimiento> requerimientosAuxiliar() {
         List<Requerimiento> listado = null;
         listado = requerimientoEJB.requerimientosAuxiliar(idAuxiliar);
@@ -301,6 +301,9 @@ public class ComprasController implements Serializable {
     }
 
     public void autorizar() {
+        Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        compra.setIdusuario(us);
+
         Estatusfactura statusfactu = null;
         int tipo = 2;
         statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
@@ -312,19 +315,19 @@ public class ComprasController implements Serializable {
     public void asignarRequerimiento(Requerimiento requeri) {
         requerimiento = requeri;
     }
+
     public void asignarCompra(Compra compraselec) {
         compra = compraselec;
     }
-    
-    public void asignarCompraAutorizada(Compra compraselec ){
+
+    public void asignarCompraAutorizada(Compra compraselec) {
         this.idAuxiliar = compraselec.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento();
         this.auxiliar = compraselec.getIdauxiliarrequerimiento();
         requerimientosFiltrados = requerimientosAuxiliar();
-        compraautorizada=compraselec;      
-        
-        
+        compraautorizada = compraselec;
+
     }
-    
+
     public List<Requerimiento> solicitarRequerimientosFiltro() {
         return requerimientosFiltrados;
     }
@@ -381,12 +384,12 @@ public class ComprasController implements Serializable {
                 detallecompra.setTotalapagar(rq.getTotal());
                 detallecompraEJB.create(detallecompra);
             }
-            if (tipo==1){
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Requerimiento fue enviado para Autorizacion con el Nro " + numerocompra ));                
-            }else{    
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Requerimiento fue Almacenado con el Nro " + numerocompra ));
+            if (tipo == 1) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Requerimiento fue enviado para Autorizacion con el Nro " + numerocompra));
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Requerimiento fue Almacenado con el Nro " + numerocompra));
             }
-            } catch (Exception e) {
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Requerimiento"));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
@@ -425,7 +428,8 @@ public class ComprasController implements Serializable {
         comprasporpagar = compraEJB.buscarcomprasporPagar();
         return comprasporpagar;
     }
-        public List<Compra> buscarComprasPagadas() {
+
+    public List<Compra> buscarComprasPagadas() {
         compraspagadas = compraEJB.buscarcomprasPagadas();
         return comprasporpagar;
     }

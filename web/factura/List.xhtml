@@ -39,10 +39,10 @@
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_numerofact}"/>
                             </f:facet>
                             <h:outputText value="#{item.numerofact}">
-                                <f:convertNumber pattern="00000" type="number"/>
+                                <f:convertNumber pattern="00000000" type="number"/>
                             </h:outputText>
                         </p:column>
-                        <p:column style="text-align: center" filterBy="#{item.numerocontrol}" sortBy="#{item.numerocontrol}" filterMatchMode="contains">
+                        <p:column style="text-align: center" filterBy="#{item.numerocontrol}" sortBy="#{item.numerocontrol}" filterMatchMode="contains" width="80">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_numerocontrol}"/>
                             </f:facet>

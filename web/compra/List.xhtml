@@ -132,7 +132,7 @@
                             </f:facet>
                             <h:outputText value=".{item.observacionespago}"/>
                         </p:column-->
-                        <p:column width="100" filterBy="#{item.idestatusfactura.estatusfactura}" headerText="Estatus" filterMatchMode="exact" filterValue="" style="text-align: center" >
+                        <p:column width="100" filterBy="#{item.idestatusfactura.estatusfactura}" headerText="Estatus" filterMatchMode="exact" style="text-align: center" >
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('compras').filter()" >
                                     <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
