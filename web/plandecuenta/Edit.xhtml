@@ -12,6 +12,7 @@
             <h:form id="PlandecuentaEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{plandecuentaController.selected != null}">
+                        <p:outputLabel value="#{bundlecontable.EditPlandecuentaLabel_grupocontable}" for="grupocontable" />
                         <p:selectOneMenu id="grupocontable" value="#{plandecuentaController.selected.idgrupocontable}" required="true" requiredMessage="#{bundlecontable.EditPlandecuentaRequiredMessage_grupocontable}">
                             <f:selectItem itemLabel="#{bundlecontable.SelectOneMessage}"/>
                             <f:selectItems value="#{grupocontableController.itemsAvailableSelectOne}"
@@ -49,7 +50,6 @@
                         <p:inputText id="saldogeneral" value="#{plandecuentaController.selected.saldogeneral}" title="#{bundlecontable.EditPlandecuentaTitle_saldogeneral}" />
                         <p:outputLabel value="#{bundlecontable.EditPlandecuentaLabel_fujodeefectivo}" for="fujodeefectivo" />
                         <p:inputText id="fujodeefectivo" value="#{plandecuentaController.selected.fujodeefectivo}" title="#{bundlecontable.EditPlandecuentaTitle_fujodeefectivo}" />
-                        <p:outputLabel value="#{bundlecontable.EditPlandecuentaLabel_grupocontable}" for="grupocontable" />
 
                         <p:outputLabel value="#{bundlecontable.EditPlandecuentaLabel_idtipocuentacontable}" for="idtipocuentacontable" />
                         <p:selectOneMenu id="idtipocuentacontable" value="#{plandecuentaController.selected.idtipocuentacontable}" >

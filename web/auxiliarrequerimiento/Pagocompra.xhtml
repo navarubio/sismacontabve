@@ -84,11 +84,11 @@
                             </p:fieldset>
                             <p:fieldset  legend="Datos del Pago" >
                                 <p:panelGrid styleClass="ui-custompanelgrid2" columns="4">
-                                    <p:outputLabel for="usua1" value="USUARIO" styleClass="text-ouput"/>
+                                    <p:outputLabel for="usua1" value="Usuario" styleClass="text-ouput"/>
                                     <p:outputLabel id="usua1" value="#{pagosController.usuario.nombre}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="numerofact" value="Numero Factura" styleClass="text-ouput"/>
                                     <p:inputText id="numerofact" label="Numero de Factura" size ="10" value="#{pagosController.compra.numerofactura}" required="true" />
-                                    <p:outputLabel for="depto1" value="DEPARTAMENTO" styleClass="text-ouput"/>
+                                    <p:outputLabel for="depto1" value="Departamento" styleClass="text-ouput"/>
                                     <p:outputLabel id="depto1" value="#{pagosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="numerocontrol" value="Numero Control" styleClass="text-ouput"/>
                                     <p:inputText id="numerocontrol" label="Numero de Control" size ="10" value="#{pagosController.compra.controlfactura}" />

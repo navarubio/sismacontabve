@@ -6,9 +6,11 @@
 package Jpa;
 
 import Modelo.Autorizacion;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,5 +29,22 @@ public class AutorizacionFacade extends AbstractFacade<Autorizacion> implements 
     public AutorizacionFacade() {
         super(Autorizacion.class);
     }
-    
+    @Override
+    public Autorizacion buscarAutorizacion (int idcompra) {
+        Autorizacion autorizacion = null;
+        String consulta;
+        try {
+            consulta = "From Autorizacion a where a.idcompra.idcompra = ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, idcompra);
+
+            List<Autorizacion> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                autorizacion = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return autorizacion;
+    }
 }

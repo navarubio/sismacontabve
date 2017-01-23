@@ -16,36 +16,36 @@
         <ui:define name="body">
             <h:form id="SubgrupocontableListForm">
                 <p:panel header="#{bundlecontable.ListSubgrupoContableTitle}">
-                    <p:dataTable id="datalist" value="#{subgrupocontableController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{subgrupocontableController.items}" var="item" style="width:500px"
                                  selectionMode="single" selection="#{subgrupocontableController.selected}"
                                  paginator="true"
                                  rowKey="#{item.codigocuenta}"
-                                 rows="10"
+                                 rows="20"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column style="text-align: center" width="80">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontable.ListSubgrupoContableTitle_codigocuenta}"/>
                             </f:facet>
                             <h:outputText value="#{item.codigocuenta}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontable.ListSubgrupoContableTitle_idgrupocontable}"/>
                             </f:facet>
                             <h:outputText value="#{item.idgrupocontable}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontable.ListSubgrupoContableTitle_idsubgrupocontable}"/>
                             </f:facet>
                             <h:outputText value="#{item.idsubgrupocontable}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="220">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontable.ListSubgrupoContableTitle_subgrupocontable}"/>
                             </f:facet>

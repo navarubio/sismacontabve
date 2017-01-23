@@ -16,7 +16,7 @@
         <ui:define name="body">
             <h:form id="TipocuentacontableListForm">
                 <p:panel header="#{bundle.ListTipocuentacontableTitle}">
-                    <p:dataTable id="datalist" value="#{tipocuentacontableController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{tipocuentacontableController.items}" var="item" style="width:500px"
                                  selectionMode="single" selection="#{tipocuentacontableController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idtipocuentacontable}"
@@ -27,13 +27,13 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListTipocuentacontableTitle_idtipocuentacontable}"/>
                             </f:facet>
                             <h:outputText value="#{item.idtipocuentacontable}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListTipocuentacontableTitle_tipocuentacontable}"/>
                             </f:facet>

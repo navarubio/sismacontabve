@@ -3,8 +3,7 @@ package Jsf;
 import Modelo.Tipopartidacontable;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
-import Jpa.TipopartidacontableFacade;
-
+import Jpa.TipopartidacontableFacadeLocal;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,7 +23,7 @@ import javax.faces.convert.FacesConverter;
 public class TipopartidacontableController implements Serializable {
 
     @EJB
-    private Jpa.TipopartidacontableFacade ejbFacade;
+    private Jpa.TipopartidacontableFacadeLocal ejbFacade;
     private List<Tipopartidacontable> items = null;
     private Tipopartidacontable selected;
 
@@ -45,7 +44,7 @@ public class TipopartidacontableController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private TipopartidacontableFacade getFacade() {
+    private TipopartidacontableFacadeLocal getFacade() {
         return ejbFacade;
     }
 

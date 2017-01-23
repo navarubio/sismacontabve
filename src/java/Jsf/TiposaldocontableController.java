@@ -3,8 +3,7 @@ package Jsf;
 import Modelo.Tiposaldocontable;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
-import Jpa.TiposaldocontableFacade;
-
+import Jpa.TiposaldocontableFacadeLocal;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,7 +23,7 @@ import javax.faces.convert.FacesConverter;
 public class TiposaldocontableController implements Serializable {
 
     @EJB
-    private Jpa.TiposaldocontableFacade ejbFacade;
+    private Jpa.TiposaldocontableFacadeLocal ejbFacade;
     private List<Tiposaldocontable> items = null;
     private Tiposaldocontable selected;
 
@@ -45,7 +44,7 @@ public class TiposaldocontableController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private TiposaldocontableFacade getFacade() {
+    private TiposaldocontableFacadeLocal getFacade() {
         return ejbFacade;
     }
 

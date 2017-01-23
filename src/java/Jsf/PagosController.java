@@ -291,7 +291,7 @@ public class PagosController implements Serializable {
     public void asignar(Compra compr) {
         this.compra = compr;
         this.idCompra = compr.getIdcompra();
-        this.autoriza = autorizacionEJB.find(compra.getIdcompra());
+        this.autoriza = autorizacionEJB.buscarAutorizacion(idCompra);
         this.auxiliarrequerimiento = compr.getIdauxiliarrequerimiento();
 //        this.auxiliar = aux;
         detallecompraFiltrados = detallecompraAuxiliar();

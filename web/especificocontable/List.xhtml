@@ -16,42 +16,42 @@
         <ui:define name="body">
             <h:form id="EspecificocontableListForm">
                 <p:panel header="#{bundlecontable.ListEspecificoTitle}">
-                    <p:dataTable id="datalist" value="#{especificocontableController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{especificocontableController.items}" var="item" style="width:600px"
                                  selectionMode="single" selection="#{especificocontableController.selected}"
                                  paginator="true"
                                  rowKey="#{item.codigocuenta}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="25"
+                                 rowsPerPageTemplate="25,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column style="text-align: center" width="70">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontable.ListEspecificoTitle_codigocuenta}"/>
                             </f:facet>
                             <h:outputText value="#{item.codigocuenta}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center"> 
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontable.ListEspecificoTitle_idgrupocontable}"/>
                             </f:facet>
                             <h:outputText value="#{item.idgrupocontable}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontable.ListEspecificoTitle_idsubgrupocontable}"/>
                             </f:facet>
                             <h:outputText value="#{item.idsubgrupocontable}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontable.ListEspecificoTitle_idespecificocontable}"/>
                             </f:facet>
                             <h:outputText value="#{item.idespecificocontable}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="300">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontable.ListEspecificoTitle_especificocontable}"/>
                             </f:facet>

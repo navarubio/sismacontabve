@@ -30,7 +30,8 @@ public interface AutorizacionFacadeLocal {
     List<Autorizacion> findRange(int[] range);
     
     int count();
-   
+    
+    Autorizacion buscarAutorizacion (int idcompra);
 
 }    
 
