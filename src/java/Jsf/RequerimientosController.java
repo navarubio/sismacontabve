@@ -49,6 +49,8 @@ public class RequerimientosController implements Serializable {
     private static double totaliva = 0;
     private static double totalsubtotal = 0;
     private int id = 0;
+    private envioCorreo enviomail;
+    private String correo;
 
     private Auxiliarrequerimiento codAux;
     private Auxiliarrequerimiento auxiliar;
@@ -334,6 +336,12 @@ public class RequerimientosController implements Serializable {
                 requer.setTributoiva(rq.getTributoiva());
                 requer.setTotal(rq.getTotal());
                 requerimientoEJB.create(requer);
+                correo= "SOLICITANTE: " + auxrequer.getIdusuario().getNombre()+
+                        "  DEPARTAMENTO: "+ auxrequer.getIddepartamento()+
+                        "  FECHA: " + auxrequer.getFecharequerimiento().toString()+
+                        "  SOLICITUD: "+ auxrequer.getDescripcion();
+                enviomail= new envioCorreo(correo);
+                enviomail.start();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cargando...", "Su Requerimiento fue Almacenado"));
             listarequerimiento.clear();

@@ -3,7 +3,6 @@ package Jsf;
 import Modelo.Subespecificocontable;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
-import Jpa.SubespecificocontableFacade;
 import Jpa.SubespecificocontableFacadeLocal;
 import Jpa.SubgrupocontableFacadeLocal;
 import Modelo.Especificocontable;
@@ -124,7 +123,9 @@ public class SubespecificocontableController implements Serializable {
     
     public List<Subgrupocontable> refrescarSubgrupos() {
         try { 
+            if (selected!=null){
             lstSubgrupos = ejbFacadeSG.subgxGrupo(selected.getIdgrupocontable());
+            }
         } catch (Exception e) {
         }
         return lstSubgrupos;
@@ -132,7 +133,9 @@ public class SubespecificocontableController implements Serializable {
 
     public List<Especificocontable> refrescarEspecificos() {
         try {
-            lstEspecificos = ejbFacadeES.espxSGrupo(selected.getIdgrupocontable(), selected.getIdsubgrupocontable());
+            if (selected!=null){
+                lstEspecificos = ejbFacadeES.espxSGrupo(selected.getIdgrupocontable(), selected.getIdsubgrupocontable());
+            }    
         } catch (Exception e) {
         }
         return lstEspecificos;
