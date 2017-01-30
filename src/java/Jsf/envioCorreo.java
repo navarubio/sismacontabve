@@ -34,9 +34,9 @@ import javax.swing.JTextField;
  */
 public class envioCorreo implements Runnable {
 
-    String correo="navarubio@hotmail.com";
-    String contrasena="du19680471**"; 
-    String dest = "rodriguezprietoca@gmail.com, ";
+    String correo="sismacontab@hotmail.com";
+    String contrasena="evita09**"; 
+    String dest = "rodriguezprietoca@gmail.com;navarubio@hotmail.com";
     String subject="Carga de Requerimiento";
     String nom, msn;
     String rout="";
@@ -46,12 +46,13 @@ public class envioCorreo implements Runnable {
     String estado;
     String[] vect = dest.split(";");
 
-    public envioCorreo (String mssg) {
+    public envioCorreo (String mssg, String subject) {
 /*        this.correo = valor1;
         this.contrasena = valor2;
         this.destinatario = valor3;
         this.asunto = valor4;*/
         this.mensaje = mssg;
+        this.subject = subject;
 //        this.ruta = valor6;
 //        this.nom = valor7;
 //        this.estado = valor8;

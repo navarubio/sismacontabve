@@ -12,7 +12,9 @@ import Modelo.Proveedor;
 import Modelo.Requerimiento;
 import Modelo.Usuario;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -51,6 +53,8 @@ public class RequerimientosController implements Serializable {
     private int id = 0;
     private envioCorreo enviomail;
     private String correo;
+    private Date fechaactual = new Date();
+    SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
 
     private Auxiliarrequerimiento codAux;
     private Auxiliarrequerimiento auxiliar;
@@ -169,6 +173,7 @@ public class RequerimientosController implements Serializable {
     @PostConstruct
     public void init() {
         articulos = articuloEJB.findAll();
+        auxrequer.setFecharequerimiento(fechaactual);
     }
 
     @Inject
@@ -220,6 +225,7 @@ public class RequerimientosController implements Serializable {
 
     public void buscarArticulo() {
         articulo = requer.getCodigo();
+        pcosto = requer.getCodigo().getPcosto();
     }
 
     public void buscarProveedor() {
@@ -227,24 +233,32 @@ public class RequerimientosController implements Serializable {
     }
 
     public void anexar() {
-        double alicuota = 0;
-        double iva = 0;
-        double total = 0;
-        Requerimiento reque = new Requerimiento();
-        reque.setCodigo(requer.getCodigo());
-        reque.setCantidad(cantidad);
-        reque.setPcosto(pcosto);
-        subtotal = cantidad * pcosto;
-        reque.setSubtotal(subtotal);
-        alicuota = reque.getCodigo().getIdgravamen().getAlicuota();
-        iva = (subtotal * alicuota) / 100;
-        total = subtotal + iva;
-        reque.setTributoiva(iva);
-        reque.setTotal(total);
-        reque.setIdrequerimiento(id);
-        this.listarequerimiento.add(reque);
-        id++;
-        requerimientos = requerimientoEJB.findAll();
+        if (cantidad != 0) {
+            double alicuota = 0;
+            double iva = 0;
+            double total = 0;
+            Requerimiento reque = new Requerimiento();
+            reque.setCodigo(requer.getCodigo());
+            reque.setCantidad(cantidad);
+//            pcosto = reque.getCodigo().getPcosto();
+            reque.setPcosto(pcosto);
+            subtotal = cantidad * pcosto;
+            reque.setSubtotal(subtotal);
+            alicuota = reque.getCodigo().getIdgravamen().getAlicuota();
+            iva = (subtotal * alicuota) / 100;
+            total = subtotal + iva;
+            reque.setTributoiva(iva);
+            reque.setTotal(total);
+            reque.setIdrequerimiento(id);
+            this.listarequerimiento.add(reque);
+            id++;
+            requerimientos = requerimientoEJB.findAll();
+            pcosto = 0;
+            cantidad = 0;
+//            requer.setCodigo(null);
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Cantidad en 0.0"));
+        }
     }
 
     public void eliminar(Requerimiento requerim) {
@@ -325,7 +339,7 @@ public class RequerimientosController implements Serializable {
             auxiliarrequerimientoEJB.create(auxrequer);
 
             codAux = requerimientoEJB.ultimoInsertado();
-
+            String subject;
             for (Requerimiento rq : listarequerimiento) {
                 Articulo arti = rq.getCodigo();
                 requer.setIdauxiliarrequerimiento(codAux);
@@ -336,14 +350,17 @@ public class RequerimientosController implements Serializable {
                 requer.setTributoiva(rq.getTributoiva());
                 requer.setTotal(rq.getTotal());
                 requerimientoEJB.create(requer);
-                correo= "SOLICITANTE: " + auxrequer.getIdusuario().getNombre()+
-                        "  DEPARTAMENTO: "+ auxrequer.getIddepartamento()+
-                        "  FECHA: " + auxrequer.getFecharequerimiento().toString()+
-                        "  SOLICITUD: "+ auxrequer.getDescripcion();
-                enviomail= new envioCorreo(correo);
-                enviomail.start();
             }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cargando...", "Su Requerimiento fue Almacenado"));
+            String fechareque= formateador.format(auxrequer.getFecharequerimiento());
+            correo = "CODIGO: REQ-" + auxrequer.getIdauxiliarrequerimiento()
+                    + "  SOLICITANTE: " + auxrequer.getIdusuario().getNombre()
+                    + "  DEPARTAMENTO: " + auxrequer.getIddepartamento()
+                    + "  FECHA: " + fechareque
+                    + "  SOLICITUD: " + auxrequer.getDescripcion();
+            subject = "Carga de Requerimiento REQ-" + requer.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento();
+            enviomail = new envioCorreo(correo, subject);
+            enviomail.start();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Requerimiento fue Almacenado Codigo " + requer.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento(), ""));
             listarequerimiento.clear();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Requerimiento"));
