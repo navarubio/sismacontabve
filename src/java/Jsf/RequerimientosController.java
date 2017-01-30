@@ -255,6 +255,7 @@ public class RequerimientosController implements Serializable {
             requerimientos = requerimientoEJB.findAll();
             pcosto = 0;
             cantidad = 0;
+            requer.setCodigo(null);
 //            requer.setCodigo(null);
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Cantidad en 0.0"));
