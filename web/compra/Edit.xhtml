@@ -44,13 +44,26 @@
                                            var="idusuarioItem"
                                            itemValue="#{idusuarioItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditCompraLabel_rifproveedor}" for="rifproveedor" />
-                        <p:selectOneMenu id="rifproveedor" value="#{compraController.selected.rifproveedor}" >
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{proveedorController.itemsAvailableSelectOne}"
-                                           var="rifproveedorItem"
-                                           itemValue="#{rifproveedorItem}"/>
+                        <p:outputLabel value="#{bundle.EditCompraLabel_rifproveedor}" for="provee" />
+                        <p:selectOneMenu id="provee" value="#{compraController.selected.rifproveedor}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
+                            <!--p:ajax event="change" update="rif, telef"/-->                              
+                            <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
+                            <f:selectItems value="#{comprasController.listarproveedores()}" 
+                                           var="idarticuloItem"
+                                           itemLabel="#{idarticuloItem.razonsocial}"  itemValue="#{idarticuloItem}" /> 
                         </p:selectOneMenu>
+                        <!--p:outputLabel for="rif" value="R.I.F." styleClass="optionalLbl"/>
+                        <p:outputLabel id="rif" value=".{comprasController.provee.rifproveedor}" styleClass="optionalLbl"/>
+                        <p:outputLabel for="telef" value="Telefono" styleClass="optionalLbl"/>
+                        <p:outputLabel id="telef" value=".{comprasController.provee.telefonos}" styleClass="optionalLbl"/>
+
+                        <p:outputLabel value=".{bundle.EditCompraLabel_rifproveedor}" for="rifproveedor" />
+                        <p:selectOneMenu id="rifproveedor" value=".{compraController.selected.rifproveedor}" >
+                            <f:selectItem itemLabel=".{bundle.SelectOneMessage}"/>
+                            <f:selectItems value=".{proveedorController.itemsAvailableSelectOne}"
+                                           var="rifproveedorItem"
+                                           itemValue=".{rifproveedorItem}"/>
+                        </p:selectOneMenu-->
                         <p:outputLabel value="#{bundle.EditCompraLabel_idestatusfactura}" for="idestatusfactura" />
                         <p:selectOneMenu id="idestatusfactura" value="#{compraController.selected.idestatusfactura}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>

@@ -29,103 +29,152 @@ import net.sf.jasperreports.engine.util.JRLoader;
 public class reporteArticulo {
 
     public void getReporte(String ruta) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
-        if (ruta!=null){
-            
-        
-        Connection conexion;
-        Class.forName("com.mysql.jdbc.Driver").newInstance();
-        conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/inpeca", "root", "091095");
+        if (ruta != null) {
 
-        //Se definen los parametros si es que el reporte necesita
-        Map parameter = new HashMap();
+            Connection conexion;
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/inpeca", "root", "091095");
 
-        try {
-            File file = new File(ruta);
+            //Se definen los parametros si es que el reporte necesita
+            Map parameter = new HashMap();
 
-            HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            try {
+                File file = new File(ruta);
 
-            httpServletResponse.setContentType("application/pdf");
-            httpServletResponse.addHeader("Content-Type", "application/pdf");
+                HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 
-            JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(file.getPath());
+                httpServletResponse.setContentType("application/pdf");
+                httpServletResponse.addHeader("Content-Type", "application/pdf");
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameter, conexion);
+                JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(file.getPath());
 
-            JRExporter jrExporter = null;
-            jrExporter = new JRPdfExporter();
-            jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-            jrExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, httpServletResponse.getOutputStream());
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameter, conexion);
 
-            if (jrExporter != null) {
-                try {
-                    jrExporter.exportReport();
-                } catch (JRException e) {
-                    e.printStackTrace();
+                JRExporter jrExporter = null;
+                jrExporter = new JRPdfExporter();
+                jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                jrExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, httpServletResponse.getOutputStream());
+
+                if (jrExporter != null) {
+                    try {
+                        jrExporter.exportReport();
+                    } catch (JRException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (conexion != null) {
+                    try {
+                        conexion.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (conexion != null) {
-                try {
-                    conexion.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         }
     }
-    
+
     public void getFactura(String ruta, int numerofact) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
-        if (ruta!=null){
-            
-        
-        Connection conexion;
-        Class.forName("com.mysql.jdbc.Driver").newInstance();
-        conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/inpeca", "root", "091095");
+        if (ruta != null) {
 
-        //Se definen los parametros si es que el reporte necesita
-        Map parameter = new HashMap();
-        parameter.put("numfactura", numerofact);
+            Connection conexion;
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/inpeca", "root", "091095");
 
-        try {
-            File file = new File(ruta);
+            //Se definen los parametros si es que el reporte necesita
+            Map parameter = new HashMap();
+            parameter.put("numfactura", numerofact);
 
-            HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            try {
+                File file = new File(ruta);
 
-            httpServletResponse.setContentType("application/pdf");
-            httpServletResponse.addHeader("Content-Type", "application/pdf");
+                HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 
-            JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(file.getPath());
+                httpServletResponse.setContentType("application/pdf");
+                httpServletResponse.addHeader("Content-Type", "application/pdf");
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameter, conexion);
+                JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(file.getPath());
 
-            JRExporter jrExporter = null;
-            jrExporter = new JRPdfExporter();
-            jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-            jrExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, httpServletResponse.getOutputStream());
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameter, conexion);
 
-            if (jrExporter != null) {
-                try {
-                    jrExporter.exportReport();
-                } catch (JRException e) {
-                    e.printStackTrace();
+                JRExporter jrExporter = null;
+                jrExporter = new JRPdfExporter();
+                jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                jrExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, httpServletResponse.getOutputStream());
+
+                if (jrExporter != null) {
+                    try {
+                        jrExporter.exportReport();
+                    } catch (JRException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (conexion != null) {
+                    try {
+                        conexion.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (conexion != null) {
-                try {
-                    conexion.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         }
     }
+
+    public void getOrdendeCompra(String ruta, int numeroorden) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
+        if (ruta != null) {
+
+            Connection conexion;
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/inpeca", "root", "091095");
+
+            //Se definen los parametros si es que el reporte necesita
+            Map parameter = new HashMap();
+            parameter.put("numordenc", numeroorden);
+
+            try {
+                File file = new File(ruta);
+
+                HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+
+                httpServletResponse.setContentType("application/pdf");
+                httpServletResponse.addHeader("Content-Type", "application/pdf");
+
+                JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(file.getPath());
+
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameter, conexion);
+
+                JRExporter jrExporter = null;
+                jrExporter = new JRPdfExporter();
+                jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                jrExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, httpServletResponse.getOutputStream());
+
+                if (jrExporter != null) {
+                    try {
+                        jrExporter.exportReport();
+                    } catch (JRException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (conexion != null) {
+                    try {
+                        conexion.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
 }

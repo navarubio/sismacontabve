@@ -121,6 +121,7 @@ public class ComprasController implements Serializable {
     private List<Compra> comprasporautorizar = null;
     private List<Compra> comprasporpagar = null;
     private List<Compra> compraspagadas = null;
+    private Date fechaactual= new Date();
 
     public int getIdAuxiliar() {
         return idAuxiliar;
@@ -241,6 +242,7 @@ public class ComprasController implements Serializable {
         comprasporautorizar = compraEJB.buscarcomprasporAutorizar();
         comprasporpagar = compraEJB.buscarcomprasporPagar();
         compraspagadas = compraEJB.buscarcomprasPagadas();
+        compra.setFechaorden(fechaactual);
 
 //        this.auxiliarrequerimiento=requerimientosController.getAuxrequer();
     }
