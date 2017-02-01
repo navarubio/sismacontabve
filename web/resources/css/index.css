@@ -57,6 +57,42 @@
     
 }
 
+.ui-datatable-even{
+    background: white
+}
+
+.uidatatable-odd{
+    background: red;
+}
+
+.requerimientoactivo {
+    background-color: #FFEFFF;
+    color: black;
+    font-weight: normal;
+}
+.facturaabonada{
+    background: gold ;
+    color: black;
+    font-weight: normal;
+}
+
+.facturacobrada{
+    background: #E5FFEA ;
+    color: black;
+    font-weight: normal;  
+}
+.facturaporcobrar{
+    background: #FFEFFF    ;
+    color: black;
+    font-weight: normal;  
+}
+.facturaabonadaporcobrar{
+    border: 2px solid black ;
+    background: darkseagreen;
+    color: black ;
+    font-weight: bolder;
+}
+
 #CompraListForm datatable{
     background: none repeat scroll 0 0 #F2F5F9;
 }

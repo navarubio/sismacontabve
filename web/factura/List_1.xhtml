@@ -29,7 +29,8 @@
                                  paginator="true"
                                  rowKey="#{item.numerofact}"
                                  rows="20"
-                                 rowsPerPageTemplate="10,20,30,40,50" rowStyleClass="#{item.numerofact le 10 ? 'old' : null}">
+                                 rowsPerPageTemplate="10,20,30,40,50" 
+                                 rowStyleClass="#{item.idestatusfacturaventa.idestatusfacturaventa == 3 ? 'facturaabonada' : null} #{item.idestatusfacturaventa.idestatusfacturaventa == 1 ? 'facturacobrada' : null} #{item.idestatusfacturaventa.idestatusfacturaventa == 2 ? 'facturaporcobrar' : null}"> 
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>

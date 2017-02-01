@@ -30,6 +30,7 @@
                                  rowKey="#{item.idcompra}"
                                  rows="15"
                                  rowsPerPageTemplate="20,30,40,50,60"
+                                 rowStyleClass="#{item.idestatusfactura.idestatusfactura== 4 ? 'facturaabonada' : null} #{item.idestatusfactura.idestatusfactura== 2 ? 'facturacobrada' : null} #{item.idestatusfactura.idestatusfactura== 0 ? 'facturaporcobrar' : null}"> 
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton printButtom"/>
