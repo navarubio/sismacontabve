@@ -74,6 +74,7 @@ public class FacturasController implements Serializable {
     private List<Articulo> articulos;
     private Factura codfactura;
     private int number;
+    private Date fechaactual = new Date();
 
     @Inject
     private Factura factura;
@@ -148,6 +149,7 @@ public class FacturasController implements Serializable {
     public void init() {
         clientes = clienteEJB.findAll();
         articulos = articuloEJB.findAll();
+        factura.setFecha(fechaactual);
     }
 
     public void registrarventa() {

@@ -46,6 +46,7 @@ public class RequerimientosController implements Serializable {
     private String descripcion = null;
     private double cantidad = 0;
     private double pcosto = 0;
+    private double pventa = 0;
     private double subtotal = 0;
     private static double totalgeneral = 0;
     private static double totaliva = 0;
@@ -83,6 +84,14 @@ public class RequerimientosController implements Serializable {
         this.subtotal = subtotal;
     }
 
+    public double getPventa() {
+        return pventa;
+    }
+
+    public void setPventa(double pventa) {
+        this.pventa = pventa;
+    }
+    
     public double getTotalgeneral() {
         return totalgeneral;
     }
@@ -226,10 +235,10 @@ public class RequerimientosController implements Serializable {
     public void buscarArticulo() {
         articulo = requer.getCodigo();
         pcosto = requer.getCodigo().getPcosto();
+        pventa = articulo.getPventa();
     }
 
     public void buscarProveedor() {
-
     }
 
     public void anexar() {
@@ -254,6 +263,37 @@ public class RequerimientosController implements Serializable {
             id++;
             requerimientos = requerimientoEJB.findAll();
             pcosto = 0;
+            pventa =0;
+            cantidad = 0;
+            requer.setCodigo(null);
+//            requer.setCodigo(null);
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Cantidad en 0.0"));
+        }
+    }
+        public void anexarafactura() {
+        if (cantidad != 0) {
+            double alicuota = 0;
+            double iva = 0;
+            double total = 0;
+            Requerimiento reque = new Requerimiento();
+            reque.setCodigo(requer.getCodigo());
+            reque.setCantidad(cantidad);
+//            pcosto = reque.getCodigo().getPcosto();
+            reque.setPcosto(pventa);
+            subtotal = cantidad * pventa;
+            reque.setSubtotal(subtotal);
+            alicuota = reque.getCodigo().getIdgravamen().getAlicuota();
+            iva = (subtotal * alicuota) / 100;
+            total = subtotal + iva;
+            reque.setTributoiva(iva);
+            reque.setTotal(total);
+            reque.setIdrequerimiento(id);
+            this.listarequerimiento.add(reque);
+            id++;
+            requerimientos = requerimientoEJB.findAll();
+            pcosto = 0;
+            pventa =0;
             cantidad = 0;
             requer.setCodigo(null);
 //            requer.setCodigo(null);
