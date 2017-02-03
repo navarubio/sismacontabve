@@ -417,7 +417,7 @@ WHERE
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="-1" y="112" width="88" height="14" uuid="1fa63252-9195-420d-911e-60c20f265553"/>
+				<reportElement x="-1" y="112" width="88" height="25" uuid="1fa63252-9195-420d-911e-60c20f265553"/>
 				<textElement textAlignment="Center">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -460,6 +460,13 @@ WHERE
 				<reportElement x="455" y="2" width="88" height="15" uuid="80ce43b6-cd9c-490a-a179-9961e25a46b6"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{compra_subtotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="87" y="31" width="262" height="20" uuid="ff7c96a5-9a1e-4787-93c6-8a6e4a5d12cf"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compra_observacionescompra}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

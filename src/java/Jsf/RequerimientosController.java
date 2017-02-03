@@ -183,6 +183,7 @@ public class RequerimientosController implements Serializable {
     public void init() {
         articulos = articuloEJB.findAll();
         auxrequer.setFecharequerimiento(fechaactual);
+        listarequerimiento.clear();
     }
 
     @Inject

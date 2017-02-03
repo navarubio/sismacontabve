@@ -261,7 +261,7 @@
                         </h:panelGrid>
 
                         <p:panelGrid columns="2">
-                            <p:commandButton value="Autorizar Compra" icon="ui-icon-key" actionListener="#{comprasController.autorizar()}"  oncomplete="PF('wdialogo').hide();" update="display,:CompraListForm:datalist,:growl" />                             
+                            <p:commandButton value="Autorizar Compra" icon="ui-icon-key" actionListener="#{comprasController.autorizar()}"  oncomplete="PF('wdialogo').hide().;" update="display,:CompraListForm:datalist,:growl" />                             
                             <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
                         </p:panelGrid>
                     </h:form>

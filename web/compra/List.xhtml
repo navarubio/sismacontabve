@@ -33,16 +33,16 @@
                                  rowStyleClass="#{item.idestatusfactura.idestatusfactura== 4 ? 'facturaabonada' : null} #{item.idestatusfactura.idestatusfactura== 2 ? 'facturacobrada' : null} #{item.idestatusfactura.idestatusfactura== 0 ? 'facturaporcobrar' : null}"> 
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton printButtom"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton printButtom"/>
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton printButtom"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton printButtom"/>
 
-                        <p:column style="text-align: center" width="60" filterBy="#{item.idcompra}" sortBy="#{item.idcompra}" filterMatchMode="exact" >
+                        <p:column style="text-align: center" width="60" filterBy="#{item.idcompra}" sortBy="#{item.idcompra}" filterMatchMode="exact" filterStyle="width:50px;" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCompraTitle_idcompra}"/>
                             </f:facet>
                             <h:outputText value="CMP-#{item.idcompra}"/>
                         </p:column>
-                        <p:column width="60" style="text-align: center" filterBy="#{item.idauxiliarrequerimiento.idauxiliarrequerimiento}" sortBy="#{item.idauxiliarrequerimiento.idauxiliarrequerimiento}" filterMatchMode="exact">
+                        <p:column width="60" style="text-align: center" filterBy="#{item.idauxiliarrequerimiento.idauxiliarrequerimiento}" sortBy="#{item.idauxiliarrequerimiento.idauxiliarrequerimiento}" filterMatchMode="exact" filterStyle="width:50px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCompraTitle_idauxiliarrequerimiento}"/>
                             </f:facet>
@@ -151,7 +151,7 @@
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{compraController.prepareCreate}" update=":CompraCreateForm" oncomplete="PF('CompraCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CompraViewForm" oncomplete="PF('CompraViewDialog').show()" disabled="#{empty compraController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CompraEditForm" oncomplete="PF('CompraEditDialog').show()" disabled="#{empty compraController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{compraController.destroy}" update=":growl,datalist" disabled="#{empty compraController.selected}"/>
+                            <!--p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener=".{compraController.destroy}" update=":growl,datalist" disabled=".{empty compraController.selected}"/-->
                             <p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value="#{bundle.Imprimir}" actionListener="#{compraController.verOrdendeCompra()}"  ajax="false" onclick="form.target = '_blank'" disabled="#{empty compraController.selected}"/>                            
                         </f:facet>
                     </p:dataTable>
