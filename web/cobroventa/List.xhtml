@@ -22,9 +22,9 @@
                 </div>     
                 <img src="../resources/images/List manager.png" width="70" height="70" alt="Solicitudes" align="right" />
 
-                
+
                 <p:panel header="#{bundlecobro.ListCobroventaTitle}">
-                    <p:dataTable id="datalist" value="#{cobroventaController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{cobroventaController.items}" var="item" widgetVar="facturas"
                                  selectionMode="single" selection="#{cobroventaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idcobroventa}"
@@ -41,7 +41,7 @@
                             </f:facet>
                             <h:outputText value="COB-#{item.idcobroventa}"/>
                         </p:column>
-                        <p:column style="text-align: center" width="80" filterBy="#{item.numerofact.numerofact}" filterMatchMode="exact" >
+                        <p:column style="text-align: center" width="80" filterBy="#{item.numerofact.numerofact}" filterMatchMode="exact" filterStyle="width:50px;" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecobro.ListCobroventaTitle_numerofact}"/>
                             </f:facet>
@@ -61,7 +61,7 @@
                                 <h:outputText value="#{bundlecobro.ListCobroventaTitle_fechacobro}"/>
                             </f:facet>
                             <h:outputText value="#{item.fechacobro}">
-                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                <f:convertDateTime pattern="dd/MM/yyyy" locale="es" />
                             </h:outputText>
                         </p:column>
 
@@ -81,11 +81,14 @@
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>
                         </p:column>
-                        <p:column style="text-align: center"  >
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecobro.ListCobroventaTitle_banco}"/>
+                        <p:column width="120" filterBy="#{item.idcuentabancaria.idbanco.nombrebanco}" headerText="BANCO" filterMatchMode="exact" style="text-align: center">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('facturas').filter()" >
+                                    <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{bancoController.items}" />
+                                </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="#{item.idcuentabancaria.idbanco.nombrebanco}"/>
+                            <h:outputText value="#{item.idcuentabancaria.idbanco.nombrebanco}" />
                         </p:column>
                         <p:column style="text-align: center" width="100">
                             <f:facet name="header">
@@ -114,7 +117,7 @@
                     </p:dataTable>
                 </p:panel>
             </h:form>
-
+            <h:outputScript library="js" name="spanishLocale.js"/>
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>

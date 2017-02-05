@@ -19,21 +19,23 @@
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_numerocontrol}" for="numerocontrol" />
                         <p:inputText id="numerocontrol" value="#{facturaController.selected.numerocontrol}" title="#{bundlefactura.EditFacturaTitle_numerocontrol}" />
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_fecha}" for="fecha" />
-                        <p:calendar id="fecha" pattern="dd/MM/yyyy" value="#{facturaController.selected.fecha}" title="#{bundlefactura.EditFacturaTitle_fecha}"  showOn="button"/>
+                        <p:calendar id="fecha" pattern="dd/MM/yyyy" value="#{facturaController.selected.fecha}" title="#{bundlefactura.EditFacturaTitle_fecha}"  showOn="button" locale="es"/>
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_hora}" for="hora" />
                         <p:inputText id="hora" value="#{facturaController.selected.hora}" title="#{bundlefactura.EditFacturaTitle_hora}" />
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_observacionesfact}" for="observacionesfact" />
-                        <p:inputText id="observacionesfact" value="#{facturaController.selected.observacionesfact}" title="#{bundlefactura.EditFacturaTitle_observacionesfact}" />
+                        <p:inputTextarea id="observacionesfact" rows="3" cols="50" value="#{facturaController.selected.observacionesfact}" title="#{bundlefactura.EditFacturaTitle_observacionesfact}" />
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_bimponiblefact}" for="bimponiblefact" />
-                        <p:inputText id="bimponiblefact" value="#{facturaController.selected.bimponiblefact}" title="#{bundlefactura.EditFacturaTitle_bimponiblefact}" >
+                        <p:outputLabel id="bimponiblefact" value="#{facturaController.selected.bimponiblefact}" title="#{bundlefactura.EditFacturaTitle_bimponiblefact}" style="text-align: right" >
                             <f:convertNumber type="currency" currencySymbol=" "/>
-                        </p:inputText>
+                        </p:outputLabel>
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_ivafact}" for="ivafact" />
-                        <p:inputText id="ivafact" value="#{facturaController.selected.ivafact}" title="#{bundlefactura.EditFacturaTitle_ivafact}" />
+                        <p:outputLabel id="ivafact" value="#{facturaController.selected.ivafact}" title="#{bundlefactura.EditFacturaTitle_ivafact}" style="text-align: right"  >
+                            <f:convertNumber type="currency" currencySymbol=" "/>
+                        </p:outputLabel>    
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_totalgeneral}" for="totalgeneral" />
-                        <p:inputText id="totalgeneral" value="#{facturaController.selected.totalgeneral}" title="#{bundlefactura.EditFacturaTitle_totalgeneral}" />
-                        <p:outputLabel value="#{bundlefactura.EditFacturaLabel_cantidadenletras}" for="cantidadenletras" />
-                        <p:inputText id="cantidadenletras" value="#{facturaController.selected.cantidadenletras}" title="#{bundlefactura.EditFacturaTitle_cantidadenletras}" />
+                        <p:outputLabel id="totalgeneral" value="#{facturaController.selected.totalgeneral}" title="#{bundlefactura.EditFacturaTitle_totalgeneral}" style="text-align: right"  >
+                            <f:convertNumber type="currency" currencySymbol=" "/>
+                        </p:outputLabel>
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_idcaja}" for="idcaja" />
                         <p:selectOneMenu id="idcaja" value="#{facturaController.selected.idcaja}" >
                             <f:selectItem itemLabel="#{bundlefactura.SelectOneMessage}"/>
@@ -49,18 +51,11 @@
                                            itemValue="#{idusuarioItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_rifcliente}" for="rifcliente" />
-                        <p:selectOneMenu id="rifcliente" value="#{facturaController.selected.rifcliente.rifcliente}" >
+                        <p:selectOneMenu id="rifcliente" value="#{facturaController.selected.rifcliente}" converter="omnifaces.SelectItemsConverter"  >
                             <f:selectItem itemLabel="#{bundlefactura.SelectOneMessage}"/>
                             <f:selectItems value="#{clienteController.itemsAvailableSelectOne}"
                                            var="rifclienteItem"
-                                           itemValue="#{rifclienteItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundlefactura.EditFacturaLabel_idestatusfacturaventa}" for="idestatusfacturaventa" />
-                        <p:selectOneMenu id="idestatusfacturaventa" value="#{facturaController.selected.idestatusfacturaventa}" >
-                            <f:selectItem itemLabel="#{bundlefactura.SelectOneMessage}"/>
-                            <f:selectItems value="#{estatusfacturaventaController.itemsAvailableSelectOne}"
-                                           var="idestatusfacturaventaItem"
-                                           itemValue="#{idestatusfacturaventaItem}"/>
+                                           itemLabel="#{rifclienteItem.razonsocial}" itemValue="#{rifclienteItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundlefactura.EditFacturaLabel_idestatuscontable}" for="idestatuscontable" />
                         <p:selectOneMenu id="idestatuscontable" value="#{facturaController.selected.idestatuscontable}" >
@@ -74,6 +69,7 @@
                     <p:commandButton value="#{bundlefactura.Cancel}" onclick="FacturaEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
+            <h:outputScript library="js" name="spanishLocale.js"/>
         </p:dialog>
 
     </ui:composition>

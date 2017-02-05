@@ -21,20 +21,13 @@
                         <p:outputLabel value="#{bundle.EditAuxiliarrequerimientoLabel_descripcion}" for="descripcion" />
                         <p:inputTextarea id="descripcion" rows="3" cols="50" value="#{auxiliarrequerimientoController.selected.descripcion}" title="#{bundle.EditAuxiliarrequerimientoTitle_descripcion}" />
                         <p:outputLabel value="#{bundle.EditAuxiliarrequerimientoLabel_fecharequerimiento}" for="fecharequerimiento" />
-                        <p:calendar id="fecharequerimiento" pattern="MM/dd/yyyy" value="#{auxiliarrequerimientoController.selected.fecharequerimiento}" title="#{bundle.EditAuxiliarrequerimientoTitle_fecharequerimiento}"  showOn="button"/>
+                        <p:calendar id="fecharequerimiento" pattern="dd/MM/yyyy" value="#{auxiliarrequerimientoController.selected.fecharequerimiento}" title="#{bundle.EditAuxiliarrequerimientoTitle_fecharequerimiento}"  showOn="button" locale="es"/>
                         <p:outputLabel value="#{bundle.EditAuxiliarrequerimientoLabel_idusuario}" for="idusuario" />
                         <p:selectOneMenu id="idusuario" value="#{auxiliarrequerimientoController.selected.idusuario}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
                                            var="idusuarioItem"
                                            itemValue="#{idusuarioItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditAuxiliarrequerimientoLabel_idestatusrequerimiento}" for="idestatusrequerimiento" />
-                        <p:selectOneMenu id="idestatusrequerimiento" value="#{auxiliarrequerimientoController.selected.idestatusrequerimiento}" >
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{estatusrequerimientoController.itemsAvailableSelectOne}"
-                                           var="idestatusrequerimientoItem"
-                                           itemValue="#{idestatusrequerimientoItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditAuxiliarrequerimientoLabel_iddepartamento}" for="iddepartamento" />
                         <p:selectOneMenu id="iddepartamento" value="#{auxiliarrequerimientoController.selected.iddepartamento}" >
@@ -48,7 +41,15 @@
                     <p:commandButton value="#{bundle.Cancel}" onclick="AuxiliarrequerimientoEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
+            <h:outputScript library="js" name="spanishLocale.js"/>
         </p:dialog>
 
     </ui:composition>
 </html>
+                        <!--p:outputLabel value=".{bundle.EditAuxiliarrequerimientoLabel_idestatusrequerimiento}" for="idestatusrequerimiento" />
+                        <p:selectOneMenu id="idestatusrequerimiento" value=".{auxiliarrequerimientoController.selected.idestatusrequerimiento}" >
+                            <f:selectItem itemLabel=".{bundle.SelectOneMessage}"/>
+                            <f:selectItems value=".{estatusrequerimientoController.itemsAvailableSelectOne}"
+                                           var="idestatusrequerimientoItem"
+                                           itemValue=".{idestatusrequerimientoItem}"/>
+                        </p:selectOneMenu-->

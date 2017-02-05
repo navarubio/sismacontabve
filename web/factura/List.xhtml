@@ -35,15 +35,15 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton printButtom"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton printButtom"/>
 
-                        <p:column style="text-align: center" width="80" filterBy="#{item.numerofact}" sortBy="#{item.numerofact}" filterMatchMode="contains"> 
+                        <p:column style="text-align: center" width="80" filterBy="#{item.numerofact}" sortBy="#{item.numerofact}" filterMatchMode="contains" filterStyle="width:50px;"> 
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_numerofact}"/>
                             </f:facet>
                             <h:outputText value="#{item.numerofact}">
-                                <f:convertNumber pattern="00000000" type="number"/>
+                                <f:convertNumber pattern="00000" type="number"/>
                             </h:outputText>
                         </p:column>
-                        <p:column style="text-align: center" filterBy="#{item.numerocontrol}" sortBy="#{item.numerocontrol}" filterMatchMode="contains" width="80">
+                        <p:column style="text-align: center" filterBy="#{item.numerocontrol}" sortBy="#{item.numerocontrol}" filterMatchMode="contains" width="80" filterStyle="width:50px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListFacturaTitle_numerocontrol}"/>
                             </f:facet>
