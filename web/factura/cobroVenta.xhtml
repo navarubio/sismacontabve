@@ -105,7 +105,9 @@
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </h:outputText>
                                     <p:outputLabel for="aprobacion" value="Nro. Aprobacion" styleClass="text-ouput"/>
-                                    <p:inputText id="aprobacion" value="#{cobroventasController.cobro.aprobacion}" />        
+                                    <p:inputText id="aprobacion" value="#{cobroventasController.cobro.aprobacion}" /> 
+                                    <p:outputLabel for="observaciones" value="Observaciones" styleClass="text-ouput"/>
+                                    <p:inputTextarea id="observaciones" value="#{cobroventasController.cobro.observacionescobro}" rows="2" cols="30" /> 
                                 </p:panelGrid>                                
                             </p:fieldset>
                         </p:panelGrid>

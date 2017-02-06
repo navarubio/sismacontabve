@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pagocompra.findByCuentareceptora", query = "SELECT p FROM Pagocompra p WHERE p.cuentareceptora = :cuentareceptora"),
     @NamedQuery(name = "Pagocompra.findByTotalpago", query = "SELECT p FROM Pagocompra p WHERE p.totalpago = :totalpago"),
     @NamedQuery(name = "Pagocompra.findByAprobacion", query = "SELECT p FROM Pagocompra p WHERE p.aprobacion = :aprobacion"),
-    @NamedQuery(name = "Pagocompra.findByObservacionespago", query = "SELECT c FROM Pagocompra c WHERE c.observacionespago= :observacionespago"),
+    @NamedQuery(name = "Pagocompra.findByObservacionespago", query = "SELECT p FROM Pagocompra p WHERE p.observacionespago= :observacionespago"),
     @NamedQuery(name = "Pagocompra.findByFechapago", query = "SELECT p FROM Pagocompra p WHERE p.fechapago = :fechapago")})
 public class Pagocompra implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -130,7 +130,7 @@ public class Pagocompra implements Serializable {
         return observacionespago;
     }
 
-    public void setObservacionescompra(String observacionespago) {
+    public void setObservacionespago(String observacionespago) {
         this.observacionespago = observacionespago;
     }
 

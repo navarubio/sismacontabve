@@ -71,6 +71,9 @@ public class Cobroventa implements Serializable {
     @JoinColumn(name = "idestatuscontable", referencedColumnName = "idestatuscontable")
     @ManyToOne
     private Estatuscontable idestatuscontable;
+    @Size(max = 255)
+    @Column(name = "observacionescobro")
+    private String observacionescobro;
 
     public Cobroventa() {
     }
@@ -157,6 +160,14 @@ public class Cobroventa implements Serializable {
 
     public void setIdestatuscontable(Estatuscontable idestatuscontable) {
         this.idestatuscontable = idestatuscontable;
+    }
+
+    public String getObservacionescobro() {
+        return observacionescobro;
+    }
+
+    public void setObservacionescobro(String observacionescobro) {
+        this.observacionescobro = observacionescobro;
     }
 
     @Override
