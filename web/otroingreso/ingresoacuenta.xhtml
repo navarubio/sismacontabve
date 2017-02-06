@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"> 
+
+    <body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="title">
+                Ingreso a Cuenta Bancaria
+                <h:outputStylesheet library="css" name="index.css" />    
+            </ui:define>
+
+            <ui:define name="body">
+                <p:growl id="msgs" showDetail="true" autoUpdate="true" showSummary="false" /> 
+
+                <h:form id="formulario" >
+                    <div id="imag2">
+                        <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca"/>
+                    </div>      
+                    <img src="../resources/images/monedasbilletes.png" width="70" height="70" alt="Clientes" align="right" />
+
+                    <p:panel id="panel1" header="INGRESOS A LAS CUENTAS BANCARIAS">
+                        <p:panelGrid columns="2">
+                            <p:fieldset styleClass="ui-custompanelgrid1" legend="Datos del Ingreso" >
+                                <p:panelGrid columns="4">
+                                    <p:outputLabel for="usuario" value="USUARIO" style="font-weight:bold"  styleClass="optionalLbl"/>
+                                    <p:outputLabel id="usuario" value="#{requerimientosController.usuario.nombre}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="departamento" style="font-weight:bold"  value="DEPARTAMENTO" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="departamento" value="#{requerimientosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="fechacobro" value="Fecha Ingreso" styleClass="text-ouput" />
+                                    <p:calendar size="15" id="fechacobro" locale="es" pattern="dd/MM/yyyy" value="#{otroingresoController.ingreso.fechaingreso}" showOn="button" navigator="true" required="true"/>                                      
+                                    <p:outputLabel for="montofact" value="MONTO A INGRESAR" styleClass="text-ouput"/>
+                                    <p:inputText id="montofact" size="15" value="#{otroingresoController.montoingreso}" styleClass="text-ouputcxc" style="text-align: right" required="true" />
+                                    <p:outputLabel for="tipopago" value="Forma de Pago" styleClass="text-ouput"/>
+                                    <p:selectOneMenu id="tipopago" value="#{otroingresoController.ingreso.idtipopago}" converter="omnifaces.SelectItemsConverter" > 
+                                        <!--f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/-->
+                                        <f:selectItems value="#{tipopagoController.items}"
+                                                       var="idtpagoItem"
+                                                       itemLabel="#{idtpagoItem.tipopago}"  itemValue="#{idtpagoItem}" /> 
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel for="tipoingreso" value="Tipo Ingreso" styleClass="text-ouput"/>
+                                    <p:selectOneMenu id="tipoingreso" value="#{otroingresoController.ingreso.idtipoingreso}" converter="omnifaces.SelectItemsConverter" > 
+                                        <!--f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/-->
+                                        <f:selectItems value="#{tipoingresoController.items}"
+                                                       var="idtpagoItem"
+                                                       itemLabel="#{idtpagoItem.tipoingreso}"  itemValue="#{idtpagoItem}" /> 
+                                    </p:selectOneMenu>
+                                    <p:outputLabel for="banco" value="Banco" style="text-align: right" styleClass="text-ouput"/>
+                                    <p:selectOneMenu id="banco" value="#{cobroventasController.banco}" converter="omnifaces.SelectItemsConverter"  >  
+                                        <p:ajax event="valueChange" listener="#{cobroventasController.refrescarCuentasBancarias()}" update="cuentabanco, saldocuenta"/>
+                                        <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
+                                        <f:selectItems value="#{cobroventasController.bancos}"
+                                                       var="idbancoItem"
+                                                       itemLabel="#{idbancoItem.nombrebanco}"  itemValue="#{idbancoItem}" /> 
+                                    </p:selectOneMenu>
+                                    <p:outputLabel for="cuentabanco" style="text-align: right" value="Cuenta Bancaria" styleClass="text-ouput"/>
+                                    <p:selectOneMenu id="cuentabanco" value="#{otroingresoController.ingreso.idcuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
+                                        <p:ajax event="change" update="saldocuenta"/>                              
+                                        <f:selectItems value="#{cobroventasController.lstCuentasSelecc}"
+                                                       var="cuentaporbancoItem"
+                                                       itemLabel="#{cuentaporbancoItem.numerocuenta}" itemValue="#{cuentaporbancoItem}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel for="saldocuenta" value="Saldo en Cuenta" styleClass="text-ouput"/>
+                                    <h:outputText id="saldocuenta" value="#{cobroventasController.cobro.idcuentabancaria.saldo}" styleClass="text-ouputsaldo">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                    <p:outputLabel for="observaciones" value="Observaciones" styleClass="text-ouput"/>
+                                    <p:inputTextarea id="observaciones" value="#{otroingresoController.ingreso.observaciones}" rows="2" cols="30" /> 
+                                </p:panelGrid>                                
+                            </p:fieldset>
+                        </p:panelGrid>
+                    </p:panel>
+                    <p:panel id="panelart"  >
+                        <p:commandButton value="Registrar" actionListener="#{otroingresoController.registrar()}" update=":msgs" action="/otroingreso/List?faces-redirect=true"/>
+                        <p:commandButton value="Cancelar" />
+                    </p:panel>
+                </h:form>
+                <h:outputScript library="js" name="spanishLocale.js"/>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

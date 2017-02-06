@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="OtroingresoCreateDlg" widgetVar="OtroingresoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleingreso.CreateOtroingresoTitle}">
+            <h:form id="OtroingresoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{otroingresoController.selected != null}">
+                        <p:outputLabel value="#{bundleingreso.CreateOtroingresoLabel_idotroingreso}" for="idotroingreso" />
+                        <p:inputText id="idotroingreso" value="#{otroingresoController.selected.idotroingreso}" title="#{bundleingreso.CreateOtroingresoTitle_idotroingreso}" required="true" requiredMessage="#{bundleingreso.CreateOtroingresoRequiredMessage_idotroingreso}"/>
+                        <p:outputLabel value="#{bundleingreso.CreateOtroingresoLabel_montoingresado}" for="montoingresado" />
+                        <p:inputText id="montoingresado" value="#{otroingresoController.selected.montoingresado}" title="#{bundleingreso.CreateOtroingresoTitle_montoingresado}" />
+                        <p:outputLabel value="#{bundleingreso.CreateOtroingresoLabel_fechaingreso}" for="fechaingreso" />
+                        <p:calendar id="fechaingreso" pattern="MM/dd/yyyy" value="#{otroingresoController.selected.fechaingreso}" title="#{bundleingreso.EditOtroingresoTitle_fechaingreso}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleingreso.CreateOtroingresoLabel_observaciones}" for="observaciones" />
+                        <p:inputText id="observaciones" value="#{otroingresoController.selected.observaciones}" title="#{bundleingreso.CreateOtroingresoTitle_observaciones}" />
+                        <p:outputLabel value="#{bundleingreso.CreateOtroingresoLabel_idusuario}" for="idusuario" />
+                        <p:selectOneMenu id="idusuario" value="#{otroingresoController.selected.idusuario}" >
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="idusuarioItem"
+                                           itemValue="#{idusuarioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleingreso.CreateOtroingresoLabel_idtipopago}" for="idtipopago" />
+                        <p:selectOneMenu id="idtipopago" value="#{otroingresoController.selected.idtipopago}" >
+                            <f:selectItems value="#{tipopagoController.itemsAvailableSelectOne}"
+                                           var="idtipopagoItem"
+                                           itemValue="#{idtipopagoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleingreso.CreateOtroingresoLabel_idcuentabancaria}" for="idcuentabancaria" />
+                        <p:selectOneMenu id="idcuentabancaria" value="#{otroingresoController.selected.idcuentabancaria}" >
+                            <f:selectItems value="#{cuentabancariaController.itemsAvailableSelectOne}"
+                                           var="idcuentabancariaItem"
+                                           itemValue="#{idcuentabancariaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleingreso.CreateOtroingresoLabel_idtipoingreso}" for="idtipoingreso" />
+                        <p:selectOneMenu id="idtipoingreso" value="#{otroingresoController.selected.idtipoingreso}" >
+                            <f:selectItems value="#{tipoingresoController.itemsAvailableSelectOne}"
+                                           var="idtipoingresoItem"
+                                           itemValue="#{idtipoingresoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{otroingresoController.create}" value="#{bundleingreso.Save}" update="display,:OtroingresoListForm:datalist,:growl" oncomplete="handleSubmit(args,'OtroingresoCreateDialog');"/>
+                    <p:commandButton value="#{bundleingreso.Cancel}" onclick="OtroingresoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoingresoCreateDlg" widgetVar="TipoingresoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleingreso.CreateTipoingresoTitle}">
+            <h:form id="TipoingresoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tipoingresoController.selected != null}">
+                        <p:outputLabel value="#{bundleingreso.CreateTipoingresoLabel_idtipoingreso}" for="idtipoingreso" />
+                        <p:inputText id="idtipoingreso" value="#{tipoingresoController.selected.idtipoingreso}" title="#{bundleingreso.CreateTipoingresoTitle_idtipoingreso}" required="true" requiredMessage="#{bundleingreso.CreateTipoingresoRequiredMessage_idtipoingreso}"/>
+                        <p:outputLabel value="#{bundleingreso.CreateTipoingresoLabel_tipoingreso}" for="tipoingreso" />
+                        <p:inputText id="tipoingreso" value="#{tipoingresoController.selected.tipoingreso}" title="#{bundleingreso.CreateTipoingresoTitle_tipoingreso}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoingresoController.create}" value="#{bundleingreso.Save}" update="display,:TipoingresoListForm:datalist,:growl" oncomplete="handleSubmit(args,'TipoingresoCreateDialog');"/>
+                    <p:commandButton value="#{bundleingreso.Cancel}" onclick="TipoingresoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

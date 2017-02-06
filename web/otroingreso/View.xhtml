@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="OtroingresoViewDlg" widgetVar="OtroingresoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleingreso.ViewOtroingresoTitle}">
+            <h:form id="OtroingresoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{otroingresoController.selected != null}">
+                        <h:outputText value="#{bundleingreso.ViewOtroingresoLabel_idotroingreso}"/>
+                        <h:outputText value="#{otroingresoController.selected.idotroingreso}" title="#{bundleingreso.ViewOtroingresoTitle_idotroingreso}"/>
+                        <h:outputText value="#{bundleingreso.ViewOtroingresoLabel_montoingresado}"/>
+                        <h:outputText value="#{otroingresoController.selected.montoingresado}" title="#{bundleingreso.ViewOtroingresoTitle_montoingresado}">
+                            <f:convertNumber type="currency" currencySymbol=" " />
+                        </h:outputText>    
+                        <h:outputText value="#{bundleingreso.ViewOtroingresoLabel_fechaingreso}"/>
+                        <h:outputText value="#{otroingresoController.selected.fechaingreso}" title="#{bundleingreso.ViewOtroingresoTitle_fechaingreso}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleingreso.ViewOtroingresoLabel_observaciones}"/>
+                        <h:outputText value="#{otroingresoController.selected.observaciones}" title="#{bundleingreso.ViewOtroingresoTitle_observaciones}"/>
+                        <h:outputText value="#{bundleingreso.ViewOtroingresoLabel_idusuario}"/>
+                        <h:outputText value="#{otroingresoController.selected.idusuario.nombre}" title="#{bundleingreso.ViewOtroingresoTitle_idusuario}"/>
+                        <h:outputText value="#{bundleingreso.ViewOtroingresoLabel_idtipopago}"/>
+                        <h:outputText value="#{otroingresoController.selected.idtipopago.tipopago}" title="#{bundleingreso.ViewOtroingresoTitle_idtipopago}"/>
+                        <h:outputText value="#{bundleingreso.ViewOtroingresoLabel_idbanco}"/>
+                        <h:outputText value="#{otroingresoController.selected.idcuentabancaria.idbanco.nombrebanco}" title="#{bundleingreso.ViewOtroingresoTitle_idcuentabancaria}"/>
+                        <h:outputText value="#{bundleingreso.ViewOtroingresoLabel_idcuentabancaria}"/>
+                        <h:outputText value="#{otroingresoController.selected.idcuentabancaria.numerocuenta}" title="#{bundleingreso.ViewOtroingresoTitle_idcuentabancaria}"/>
+                        <h:outputText value="#{bundleingreso.ViewOtroingresoLabel_idtipoingreso}"/>
+                        <h:outputText value="#{otroingresoController.selected.idtipoingreso.tipoingreso}" title="#{bundleingreso.ViewOtroingresoTitle_idtipoingreso}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleingreso.Close}" onclick="OtroingresoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

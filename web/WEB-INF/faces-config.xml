@@ -40,5 +40,9 @@
             <base-name>/BundleAutorizacion</base-name>
             <var>bundleAutorizacion</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/Bundleingreso</base-name>
+            <var>bundleingreso</var>
+        </resource-bundle>
     </application>
 </faces-config>
