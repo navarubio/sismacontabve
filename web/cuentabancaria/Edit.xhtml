@@ -17,7 +17,7 @@
                         <p:outputLabel value="#{bundlebanco.EditCuentabancariaLabel_numerocuenta}" for="numerocuenta" />
                         <p:inputText id="numerocuenta" value="#{cuentabancariaController.selected.numerocuenta}" title="#{bundlebanco.EditCuentabancariaTitle_numerocuenta}" />
                         <p:outputLabel value="#{bundlebanco.EditCuentabancariaLabel_saldo}" for="saldo" />
-                        <p:inputText id="saldo" value="#{cuentabancariaController.selected.saldo}" title="#{bundlebanco.EditCuentabancariaTitle_saldo}" />
+                        <p:outputLabel id="saldo" value="#{cuentabancariaController.selected.saldo}" title="#{bundlebanco.EditCuentabancariaTitle_saldo}" />
                         <p:outputLabel value="#{bundlebanco.EditCuentabancariaLabel_idbanco}" for="idbanco" />
                         <p:selectOneMenu id="idbanco" value="#{cuentabancariaController.selected.idbanco}" >
                             <f:selectItem itemLabel="#{bundlebanco.SelectOneMessage}"/>

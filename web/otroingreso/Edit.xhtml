@@ -13,13 +13,18 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{otroingresoController.selected != null}">
                         <p:outputLabel value="#{bundleingreso.EditOtroingresoLabel_idotroingreso}" for="idotroingreso" />
-                        <p:inputText id="idotroingreso" value="#{otroingresoController.selected.idotroingreso}" title="#{bundleingreso.EditOtroingresoTitle_idotroingreso}" required="true" requiredMessage="#{bundleingreso.EditOtroingresoRequiredMessage_idotroingreso}"/>
+                        <p:outputLabel id="idotroingreso" value="#{otroingresoController.selected.idotroingreso}" title="#{bundleingreso.EditOtroingresoTitle_idotroingreso}" >
+                            <f:convertNumber type="currency" currencySymbol=" " />
+                        </p:outputLabel>
                         <p:outputLabel value="#{bundleingreso.EditOtroingresoLabel_montoingresado}" for="montoingresado" />
-                        <p:inputText id="montoingresado" value="#{otroingresoController.selected.montoingresado}" title="#{bundleingreso.EditOtroingresoTitle_montoingresado}" />
+                        <p:outputLabel id="montoingresado" value="#{otroingresoController.selected.montoingresado}" title="#{bundleingreso.EditOtroingresoTitle_montoingresado}" />
                         <p:outputLabel value="#{bundleingreso.EditOtroingresoLabel_fechaingreso}" for="fechaingreso" />
-                        <p:calendar id="fechaingreso" pattern="MM/dd/yyyy" value="#{otroingresoController.selected.fechaingreso}" title="#{bundleingreso.EditOtroingresoTitle_fechaingreso}"  showOn="button"/>
+                        <p:calendar id="fechaingreso" pattern="dd/MM/yyyy" value="#{otroingresoController.selected.fechaingreso}" title="#{bundleingreso.EditOtroingresoTitle_fechaingreso}"  showOn="button" />
                         <p:outputLabel value="#{bundleingreso.EditOtroingresoLabel_observaciones}" for="observaciones" />
-                        <p:inputText id="observaciones" value="#{otroingresoController.selected.observaciones}" title="#{bundleingreso.EditOtroingresoTitle_observaciones}" />
+                        <p:inputTextarea id="observaciones" rows="2" cols="50" value="#{otroingresoController.selected.observaciones}" title="#{bundleingreso.EditOtroingresoTitle_observaciones}" />
+                        <p:outputLabel value="#{bundleingreso.EditOtroingresoLabel_idcuentabancaria}" for="idcuentabancaria" />
+                        <p:outputLabel id="idcuentabancaria" value="#{otroingresoController.selected.idcuentabancaria.numerocuenta}" title="#{bundleingreso.EditOtroingresoTitle_montoingresado}" />
+
                         <p:outputLabel value="#{bundleingreso.EditOtroingresoLabel_idusuario}" for="idusuario" />
                         <p:selectOneMenu id="idusuario" value="#{otroingresoController.selected.idusuario}" >
                             <f:selectItem itemLabel="#{bundleingreso.SelectOneMessage}"/>
@@ -32,21 +37,14 @@
                             <f:selectItem itemLabel="#{bundleingreso.SelectOneMessage}"/>
                             <f:selectItems value="#{tipopagoController.itemsAvailableSelectOne}"
                                            var="idtipopagoItem"
-                                           itemValue="#{idtipopagoItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundleingreso.EditOtroingresoLabel_idcuentabancaria}" for="idcuentabancaria" />
-                        <p:selectOneMenu id="idcuentabancaria" value="#{otroingresoController.selected.idcuentabancaria}" >
-                            <f:selectItem itemLabel="#{bundleingreso.SelectOneMessage}"/>
-                            <f:selectItems value="#{cuentabancariaController.itemsAvailableSelectOne}"
-                                           var="idcuentabancariaItem"
-                                           itemValue="#{idcuentabancariaItem}"/>
+                                           itemLabel="#{idtipopagoItem.tipopago}" itemValue="#{idtipopagoItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundleingreso.EditOtroingresoLabel_idtipoingreso}" for="idtipoingreso" />
                         <p:selectOneMenu id="idtipoingreso" value="#{otroingresoController.selected.idtipoingreso}" >
                             <f:selectItem itemLabel="#{bundleingreso.SelectOneMessage}"/>
                             <f:selectItems value="#{tipoingresoController.itemsAvailableSelectOne}"
                                            var="idtipoingresoItem"
-                                           itemValue="#{idtipoingresoItem}"/>
+                                           itemLabel="#{idtipoingresoItem.tipoingreso}" itemValue="#{idtipoingresoItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{otroingresoController.update}" value="#{bundleingreso.Save}" update="display,:OtroingresoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'OtroingresoEditDialog');"/>
