@@ -61,13 +61,13 @@ public class CobroventasController implements Serializable {
 
     private Factura factura;
     private int numeroFact = 0;
-    private Cobroventa cobro;
-    private Cuentabancaria cuentabancaria;
+    static Cobroventa cobro;
+    static Cuentabancaria cuentabancaria;
     private Detallefactura detallefact;
     private Estatusfacturaventa statusfactu = null;
     private Estatuscontable estatuscontab = null;
     private int formacobro = 0;
-    private Banco banco;
+    static Banco banco;
     private int idbanco;
     private List<Detallefactura> detallesfactura;
     private List<Detallefactura> detallesfacturafiltrados;
@@ -184,7 +184,7 @@ public class CobroventasController implements Serializable {
         this.formacobro = formacobro;
     }
 
-    public Cuentabancaria getCuentabancaria() {
+    public static Cuentabancaria getCuentabancaria() {
         return cuentabancaria;
     }
 

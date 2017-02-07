@@ -17,23 +17,27 @@
                         <h:outputText value="#{bundlecobro.ViewCobroventaLabel_cuentaoriginadora}"/>
                         <h:outputText value="#{cobroventaController.selected.cuentaoriginadora}" title="#{bundlecobro.ViewCobroventaTitle_cuentaoriginadora}"/>
                         <h:outputText value="#{bundlecobro.ViewCobroventaLabel_montocobrado}"/>
-                        <h:outputText value="#{cobroventaController.selected.montocobrado}" title="#{bundlecobro.ViewCobroventaTitle_montocobrado}"/>
+                        <h:outputText value="#{cobroventaController.selected.montocobrado}" title="#{bundlecobro.ViewCobroventaTitle_montocobrado}">
+                            <f:convertNumber type="currency" currencySymbol=" " />
+                        </h:outputText>
                         <h:outputText value="#{bundlecobro.ViewCobroventaLabel_aprobacion}"/>
                         <h:outputText value="#{cobroventaController.selected.aprobacion}" title="#{bundlecobro.ViewCobroventaTitle_aprobacion}"/>
                         <h:outputText value="#{bundlecobro.ViewCobroventaLabel_fechacobro}"/>
                         <h:outputText value="#{cobroventaController.selected.fechacobro}" title="#{bundlecobro.ViewCobroventaTitle_fechacobro}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
                         <h:outputText value="#{bundlecobro.ViewCobroventaLabel_montopendiente}"/>
-                        <h:outputText value="#{cobroventaController.selected.montopendiente}" title="#{bundlecobro.ViewCobroventaTitle_montopendiente}"/>
+                        <h:outputText value="#{cobroventaController.selected.montopendiente}" title="#{bundlecobro.ViewCobroventaTitle_montopendiente}">
+                            <f:convertNumber type="currency" currencySymbol=" " />
+                        </h:outputText>
                         <h:outputText value="#{bundlecobro.ViewCobroventaLabel_numerofact}"/>
                         <h:outputText value="#{cobroventaController.selected.numerofact}" title="#{bundlecobro.ViewCobroventaTitle_numerofact}"/>
                         <h:outputText value="#{bundlecobro.ViewCobroventaLabel_idtipopago}"/>
-                        <h:outputText value="#{cobroventaController.selected.idtipopago}" title="#{bundlecobro.ViewCobroventaTitle_idtipopago}"/>
+                        <h:outputText value="#{cobroventaController.selected.idtipopago.tipopago}" title="#{bundlecobro.ViewCobroventaTitle_idtipopago}"/>
                         <h:outputText value="#{bundlecobro.ViewCobroventaLabel_idcuentabancaria}"/>
-                        <h:outputText value="#{cobroventaController.selected.idcuentabancaria}" title="#{bundlecobro.ViewCobroventaTitle_idcuentabancaria}"/>
+                        <h:outputText value="#{cobroventaController.selected.idcuentabancaria.numerocuenta}" title="#{bundlecobro.ViewCobroventaTitle_idcuentabancaria}"/>
                         <h:outputText value="#{bundlecobro.ViewCobroventaLabel_idestatuscontable}"/>
-                        <h:outputText value="#{cobroventaController.selected.idestatuscontable}" title="#{bundlecobro.ViewCobroventaTitle_idestatuscontable}"/>
+                        <h:outputText value="#{cobroventaController.selected.idestatuscontable.estatuscontable}" title="#{bundlecobro.ViewCobroventaTitle_idestatuscontable}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundlecobro.Close}" onclick="CobroventaViewDialog.hide()"/>
                 </h:panelGroup>

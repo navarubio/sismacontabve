@@ -31,8 +31,8 @@
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton "/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton "/>
 
                         <!--p:column style="text-align: center">
                             <f:facet name="header">
@@ -100,10 +100,10 @@
                             </h:outputText>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlefactura.Create}" actionListener="#{detallefacturaController.prepareCreate}" update=":DetallefacturaCreateForm" oncomplete="PF('DetallefacturaCreateDialog').show()"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlefactura.Create}" actionListener="#{detallefacturaController.prepareCreate}" update=":DetallefacturaCreateForm" oncomplete="PF('DetallefacturaCreateDialog').show()" disabled="true"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlefactura.View}" update=":DetallefacturaViewForm" oncomplete="PF('DetallefacturaViewDialog').show()" disabled="#{empty detallefacturaController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundlefactura.Edit}" update=":DetallefacturaEditForm" oncomplete="PF('DetallefacturaEditDialog').show()" disabled="#{empty detallefacturaController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundlefactura.Delete}" actionListener="#{detallefacturaController.destroy}" update=":growl,datalist" disabled="#{empty detallefacturaController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundlefactura.Edit}" update=":DetallefacturaEditForm" oncomplete="PF('DetallefacturaEditDialog').show()" disabled="#{empty detallefacturaController.selected}" />
+                            <!--p:commandButton id="deleteButton" icon="ui-icon-trash"  value=".{bundlefactura.Delete}" actionListener=".{detallefacturaController.destroy}" update=":growl,datalist" disabled=".{empty detallefacturaController.selected}" /-->
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

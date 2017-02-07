@@ -39,10 +39,10 @@ public class OtroingresoController implements Serializable {
     private Otroingreso selected;
     private Cuentabancaria cuentabancaria;
     private double montoingreso;
-    private Otroingreso ingreso= new Otroingreso();
+    private Otroingreso ingreso = new Otroingreso();
     private Date fechaactual = new Date();
     private Usuario usa;
-    private CobroventasController cobro= new CobroventasController();
+    private RequerimientosController requer = new RequerimientosController();
 
     public OtroingresoController() {
     }
@@ -53,14 +53,6 @@ public class OtroingresoController implements Serializable {
 
     public Otroingreso getIngreso() {
         return ingreso;
-    }
-
-    public CobroventasController getCobro() {
-        return cobro;
-    }
-
-    public void setCobro(CobroventasController cobro) {
-        this.cobro = cobro;
     }
 
     public void setIngreso(Otroingreso ingreso) {
@@ -88,11 +80,13 @@ public class OtroingresoController implements Serializable {
     private OtroingresoFacadeLocal getFacade() {
         return ejbFacade;
     }
-@PostConstruct
+
+    @PostConstruct
     public void init() {
         ingreso.setFechaingreso(fechaactual);
-        
+
     }
+
     public Otroingreso prepareCreate() {
         selected = new Otroingreso();
         initializeEmbeddableKey();
@@ -212,12 +206,15 @@ public class OtroingresoController implements Serializable {
             }
         }
     }
-        public void registrar() {
-        try {            
-            cuentabancaria=ingreso.getIdcuentabancaria();
+
+    public void registrar() {
+        try {
+            cuentabancaria = CobroventasController.cobro.getIdcuentabancaria();
+            ingreso.setIdcuentabancaria(cuentabancaria);
+            usa = requer.getUsuario();
             ingreso.setIdusuario(usa);
             double saldoactualbanco = 0;
-            saldoactualbanco = montoingreso + ingreso.getIdcuentabancaria().getSaldo();
+            saldoactualbanco = montoingreso + cuentabancaria.getSaldo();
             cuentabancaria.setSaldo(saldoactualbanco);
             ingreso.setMontoingresado(montoingreso);
             ejbFacade.create(ingreso);
@@ -229,5 +226,5 @@ public class OtroingresoController implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
     }
-    
+
 }

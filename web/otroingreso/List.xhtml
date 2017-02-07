@@ -80,7 +80,7 @@
                             <h:outputText value="#{item.observaciones}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleingreso.Create}" actionListener="#{otroingresoController.prepareCreate}" update=":OtroingresoCreateForm" oncomplete="PF('OtroingresoCreateDialog').show()"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleingreso.Create}" actionListener="#{otroingresoController.prepareCreate}" update=":OtroingresoCreateForm" oncomplete="PF('OtroingresoCreateDialog').show()" disabled="true"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundleingreso.View}" update=":OtroingresoViewForm" oncomplete="PF('OtroingresoViewDialog').show()" disabled="#{empty otroingresoController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundleingreso.Edit}" update=":OtroingresoEditForm" oncomplete="PF('OtroingresoEditDialog').show()" disabled="#{empty otroingresoController.selected}"/>
                             <!--p:commandButton id="deleteButton" icon="ui-icon-trash"  value=".{bundleingreso.Delete}" actionListener=".{otroingresoController.destroy}" update=":growl,datalist" disabled=".{empty otroingresoController.selected}"/-->

@@ -62,7 +62,7 @@
                             <f:selectItem itemLabel="#{bundlefactura.SelectOneMessage}"/>
                             <f:selectItems value="#{estatuscontableController.itemsAvailableSelectOne}"
                                            var="idestatuscontableItem"
-                                           itemValue="#{idestatuscontableItem}"/>
+                                           itemLabel="#{idestatuscontableItem.estatuscontable}" itemValue="#{idestatuscontableItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{facturaController.update}" value="#{bundlefactura.Save}" update="display,:FacturaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'FacturaEditDialog');"/>
