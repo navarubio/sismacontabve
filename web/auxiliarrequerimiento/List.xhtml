@@ -99,7 +99,7 @@
                             </h:commandLink>      
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{auxiliarrequerimientoController.prepareCreate}" update=":AuxiliarrequerimientoCreateForm" oncomplete="PF('AuxiliarrequerimientoCreateDialog').show()"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{auxiliarrequerimientoController.prepareCreate}" update=":AuxiliarrequerimientoCreateForm" action="/requerimiento/newRequerimiento.xhtml" />
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AuxiliarrequerimientoViewForm" oncomplete="PF('AuxiliarrequerimientoViewDialog').show()" disabled="#{empty auxiliarrequerimientoController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":AuxiliarrequerimientoEditForm" oncomplete="PF('AuxiliarrequerimientoEditDialog').show()" disabled="#{empty auxiliarrequerimientoController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{auxiliarrequerimientoController}" update=":growl,datalist" disabled="#{empty auxiliarrequerimientoController.selected}"/>

@@ -40,7 +40,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 
-
 /**
  * @author sofimar
  */
@@ -63,7 +62,6 @@ public class FacturasController implements Serializable {
     private EstatuscontableFacadeLocal estatuscontableEJB;
     @EJB
     private EstatusfacturaventaFacadeLocal estatusfacturaventaEJB;
-    
 
     private Detallefactura detallefactura;
     private RequerimientosController reque = new RequerimientosController();
@@ -75,6 +73,10 @@ public class FacturasController implements Serializable {
     private Factura codfactura;
     private int number;
     private Date fechaactual = new Date();
+    SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
+    private String correo;
+    private envioCorreo enviomail;
 
     @Inject
     private Factura factura;
@@ -82,13 +84,12 @@ public class FacturasController implements Serializable {
     private Cliente cliente;
     @Inject
     private Detallefactura detalle;
-    
-    Numeroaletras numletras= new Numeroaletras();
-    
+
+    Numeroaletras numletras = new Numeroaletras();
+
     String numero = "";
-    String cantidadenletras="";
-    
-    
+    String cantidadenletras = "";
+
     public Detallefactura getDetallefactura() {
         return detallefactura;
     }
@@ -168,7 +169,7 @@ public class FacturasController implements Serializable {
             numero = numformat.format(factura.getTotalgeneral());
             cantidadenletras = numletras.Convertir(numero, true);
             factura.setCantidadenletras(cantidadenletras);
-            factura.setSaldopendiente(reque.getTotalgeneral());            
+            factura.setSaldopendiente(reque.getTotalgeneral());
             factura.setHora(fechaCadena);
             factura.setIdcaja(cajaEJB.ubicarCaja());
             factura.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
@@ -187,9 +188,27 @@ public class FacturasController implements Serializable {
                 detalle.setSubtotal(rq.getSubtotal());
                 detalle.setTributoiva(rq.getTributoiva());
                 detalle.setTotal(rq.getTotal());
-                detallefacturaEJB.create(detalle);               
+                detallefacturaEJB.create(detalle);
             }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "La Factura se registro exitosamente con el numero " + facturaEJB.ultimafacturaformat() ));
+            String subject;
+            String ultimafactura= facturaEJB.ultimafacturaformat();
+            String fechafactu = formateador.format(factura.getFecha());
+            correo = "FACTURA NRO: " + ultimafactura
+                    + "  CONTROL: " + factura.getNumerocontrol()
+                    + "  USUARIO: " + factura.getIdusuario().getNombre()
+                    + "  DEPARTAMENTO: " + factura.getIdusuario().getIddepartamento().getDepartamento()
+                    + "  FECHA: " + fechafactu
+                    + "  CLIENTE: " + factura.getRifcliente().getRazonsocial()
+                    + "  RIF: " + factura.getRifcliente().getRifcliente()
+                    + "  SUBTOTAL: " + formatearnumero.format(factura.getBimponiblefact())
+                    + "  IVA: " + formatearnumero.format(factura.getIvafact())
+                    + "  TOTAL: " + formatearnumero.format(factura.getTotalgeneral())
+                    + "  OBSERVACIONES: " + factura.getObservacionesfact();
+
+                    subject = "Emisión de Factura N° " +ultimafactura;
+            enviomail = new envioCorreo(correo, subject);
+            enviomail.start();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "La Factura se registro exitosamente con el numero " + facturaEJB.ultimafacturaformat()));
             reque.limpiarListaArreglo();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar esta Factura"));
@@ -203,6 +222,5 @@ public class FacturasController implements Serializable {
         siguiente = facturaEJB.siguientefacturaformat();
         return siguiente;
     }
-    
-    
+
 }

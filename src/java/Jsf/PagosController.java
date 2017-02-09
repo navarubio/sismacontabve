@@ -31,6 +31,8 @@ import Modelo.Requerimiento;
 import Modelo.Tipopago;
 import Modelo.Usuario;
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -100,6 +102,11 @@ public class PagosController implements Serializable {
     private List<Pagocompra> pagoespecifico;
     private String mensaje;
     private Date fechaactual = new Date();
+    SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
+    private String correo;
+    private envioCorreo enviomail;
+
 
     @Inject
     private Auxiliarrequerimiento auxiliar;
@@ -391,7 +398,20 @@ public class PagosController implements Serializable {
             saldoactualbanco = (pagocompra.getIdcuentabancaria().getSaldo() - pagocompra.getTotalpago());
             cuentabanco.setSaldo(saldoactualbanco);
             cuentabancariaEJB.edit(cuentabanco);
-            
+            String subject;
+            String fechapag = formateador.format(pagocompra.getFechapago());
+            correo = "COMPRA NRO: " + compra.getIdcompra()
+                    + "  FECHA: " + fechapag
+                    + "  PROVEEDOR: " + compra.getRifproveedor().getRazonsocial()
+                    + "  RIF: " + compra.getRifproveedor().getRifproveedor()
+                    + "  TIPO PAGO: " + pagocompra.getIdtipopago().getTipopago()
+                    + "  BANCO: " + pagocompra.getIdcuentabancaria().getIdbanco().getNombrebanco()
+                    + "  TOTAL: " + formatearnumero.format(pagocompra.getTotalpago())
+                    + "  OBSERVACIONES: " + pagocompra.getObservacionespago();
+
+                    subject = "Emisión de Pago N° " + pagocompra.getIdpagocompra();
+            enviomail = new envioCorreo(correo, subject);
+            enviomail.start();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Pago fue Almacenado"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Pago"));

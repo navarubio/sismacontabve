@@ -22,6 +22,8 @@ import Modelo.Estatusfacturaventa;
 import Modelo.Factura;
 import Modelo.Tipopago;
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -79,6 +81,11 @@ public class CobroventasController implements Serializable {
     private List<Banco> bancos;
     private int edad = 0;
     private String mensaje;
+    SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
+    private String correo;
+    private envioCorreo enviomail;
+
 
     public double getSaldocuenta() {
         return saldocuenta;
@@ -263,11 +270,29 @@ public class CobroventasController implements Serializable {
             saldoactualbanco = cobro.getMontocobrado() + cobro.getIdcuentabancaria().getSaldo();
             cuentabancaria.setSaldo(saldoactualbanco);
             cuentabancariaEJB.edit(cuentabancaria);
+            
             if (factura.getSaldopendiente() < 1) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Pago fue Almacenado"));
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Abono fue Almacenado"));
             }
+            String subject;
+            String ultimafactura= ""+factura.getNumerofact();
+            String fechafactu = formateador.format(cobro.getFechacobro());
+            correo = "FACTURA NRO: " + ultimafactura
+                    + "  CONTROL: " + factura.getNumerocontrol()
+                    + "  FECHA COBRO: " + fechafactu
+                    + "  CLIENTE: " + factura.getRifcliente().getRazonsocial()
+                    + "  RIF: " + factura.getRifcliente().getRifcliente()
+                    + "  FORMA PAGO: " + cobro.getIdtipopago().getTipopago()
+                    + "  BANCO: " + cobro.getIdcuentabancaria().getIdbanco().getNombrebanco()
+                    + "  MONTO COBRADO: " + formatearnumero.format( cobro.getMontocobrado())
+                    + "  MONTO PENDIENTE: " + formatearnumero.format(cobro.getMontopendiente())
+                    + "  OBSERVACIONES: " + cobro.getObservacionescobro();
+
+                    subject = "Cobro N° " +cobro.getIdcobroventa();
+            enviomail = new envioCorreo(correo, subject);
+            enviomail.start();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Pago"));
         } finally {
