@@ -5,6 +5,7 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.PagocompraFacadeLocal;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,9 +19,11 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
+import javax.servlet.ServletContext;
 
 @ManagedBean(name ="pagocompraController")
-@SessionScoped
+@ViewScoped
 public class PagocompraController implements Serializable {
 
     @EJB
@@ -30,6 +33,8 @@ public class PagocompraController implements Serializable {
     private Pagocompra selected;
     private List<Pagocompra> pagosefectuados;
     private List<Pagocompra> pagosporcompra;
+    private Pagocompra pagocompra;
+    private List<Pagocompra> pagocomprasactivas=null;
     
 
     public PagocompraController() {
@@ -52,7 +57,7 @@ public class PagocompraController implements Serializable {
     private PagocompraFacadeLocal getFacade() {
         return ejbFacade;
     }
-
+        
     public Pagocompra prepareCreate() {
         selected = new Pagocompra();
         initializeEmbeddableKey();
@@ -96,9 +101,21 @@ public class PagocompraController implements Serializable {
     @PostConstruct
     public void init() {
         pagosefectuados = ejbFacade.buscarPagosefectuados();
-        
+        pagocomprasactivas=ejbFacade.buscarPagosefectuados();
+    }
+    public List<Pagocompra> buscarPagoComprasActivas() {
+        pagocomprasactivas = ejbFacade.buscarPagosefectuados();
+        return pagocomprasactivas;
     }
 
+    public List<Pagocompra> getPagocomprasactivas() {
+        return pagocomprasactivas;
+    }
+
+    public void setPagocomprasactivas(List<Pagocompra> pagocomprasactivas) {
+        this.pagocomprasactivas = pagocomprasactivas;
+    }
+    
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
@@ -178,6 +195,22 @@ public class PagocompraController implements Serializable {
             }
         }
 
+    }
+    public void asignar(Pagocompra pagocompra) {
+        this.pagocompra = pagocompra;
+    }
+    public void verOrdendePago(Pagocompra item) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        //Instancia hacia la clase reporteClientes        
+        reporteArticulo rArticulo = new reporteArticulo();
+
+        int codigopagocompra = item.getIdpagocompra();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("/resources/reportes/ordendepago.jasper");
+
+        rArticulo.getOrdendePago(ruta, codigopagocompra);
+        FacesContext.getCurrentInstance().responseComplete();
     }
 
 }

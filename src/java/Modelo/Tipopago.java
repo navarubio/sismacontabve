@@ -96,7 +96,7 @@ public class Tipopago implements Serializable {
 
     @Override
     public String toString() {
-        return "Modelo.Tipopago[ idtipopago=" + idtipopago + " ]";
+        return tipopago;
     }
 
     @XmlTransient
@@ -125,4 +125,5 @@ public class Tipopago implements Serializable {
     public void setOtroingresoCollection(Collection<Otroingreso> otroingresoCollection) {
         this.otroingresoCollection = otroingresoCollection;
     }
+
 }

@@ -148,7 +148,7 @@
                                         <f:convertNumber type="currency" currencySymbol=" "   />
                                     </h:outputText>
                                     <p:outputLabel for="ctareceptora" value="Cta. Receptora" styleClass="text-ouput"/>
-                                    <p:inputText id="ctareceptora" label="Cta. Receptora" size ="25" value="#{pagosController.pagocompra.cuentareceptora}" />                                    
+                                    <p:inputMask id="ctareceptora" label="Cta. Receptora" mask="9999-9999-99-9999999999" size ="25" value="#{pagosController.pagocompra.cuentareceptora}" />                                    
                                     <p:outputLabel for="aprobacion" value="Nro. Aprobacion" styleClass="text-ouput"/>
                                     <p:inputText id="aprobacion" label="Nro. Aprobacion " size ="15" value="#{pagosController.pagocompra.aprobacion}" />
                                     <p:outputLabel for="observa2" value="Observaciones" styleClass="text-ouput"/>

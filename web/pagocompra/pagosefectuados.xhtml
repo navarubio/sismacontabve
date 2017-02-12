@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <f:event type="preRenderView" listener="#{pagocompraController.pagosefectuados}"/>
+        <f:event type="preRenderView" listener="#{pagocompraController.buscarPagoComprasActivas()}"/>
 
         <ui:define name="title">
             <h:outputText value="#{bundle.ListPagoCompraTitle}"></h:outputText>
@@ -24,32 +24,23 @@
 
                 <p:panel header="#{bundle.ListPagoCompraTitle_cabecera}">
                     <p:dataTable id="datalist" value="#{pagocompraController.pagosefectuados}" var="item" widgetVar="pagos"
-                                 selectionMode="single" selection="#{compraController.selected}"
+                                 selectionMode="single" selection="#{pagocompraController.selected}"
                                  paginator="true"
-                                 rowKey="#{item.idcompra}"
+                                 rowKey="#{item.idpagocompra}"
                                  rows="20"
                                  rowsPerPageTemplate="20,30,40,50,60"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowSelect"   update="createButton "/>
+                        <p:ajax event="rowUnselect" update="createButton "/>
 
-                        <p:column filterBy="#{item.idpagocompra}"  filterMatchMode="exact" width="70" >
+                        <p:column filterBy="#{item.idpagocompra}"  filterMatchMode="exact" width="70" filterStyle="width:50px;" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_idpago}"/>
                             </f:facet>
                             <h:outputText value="PGC-#{item.idpagocompra}"/>
                         </p:column>
-                        <p:column width="150" filterBy="#{item.idcompra.idauxiliarrequerimiento.iddepartamento.departamento}" headerText="Estatus" filterMatchMode="exact" style="text-align: center">
-                            <f:facet name="filter">
-                                <p:selectOneMenu onchange="PF('pagos').filter()" >
-                                    <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
-                                    <f:selectItems value="#{departamentoController.items}" />
-                                </p:selectOneMenu>
-                            </f:facet>
-                            <h:outputText value="#{item.idcompra.idauxiliarrequerimiento.iddepartamento.departamento}" />
-                        </p:column>
-                        <p:column width="80" style="text-align: center" filterBy="#{item.idcompra.idcompra}" filterMatchMode="exact" >
+                        <p:column width="80" style="text-align: center" filterBy="#{item.idcompra.idcompra}" filterMatchMode="exact" filterStyle="width:50px;" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_idrequerimiento}"/>
                             </f:facet>
@@ -69,9 +60,12 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column width="100" style="text-align: center" >
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPagoCompraTitle_tipopago}"/>
+                        <p:column width="150"  headerText="Tipo Pago" filterBy="#{item.idtipopago.tipopago}" filterMatchMode="exact"  style="text-align: center" >
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('pagos').filter()" >
+                                    <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{tipopagoController.items}" />
+                                </p:selectOneMenu>
                             </f:facet>
                             <h:outputText value="#{item.idtipopago.tipopago}"/>
                         </p:column>
@@ -98,48 +92,24 @@
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>
                         </p:column>
-                        <!--p:column>
+                        <p:column width="80" style="text-align: right" >
                             <f:facet name="header">
-                                <h:outputText value=".{bundle.ListCompraTitle_numerofactura}"/>
+                                <h:outputText value="#{bundle.ListPagoCompraTitle_totalpendiente}"/>
                             </f:facet>
-                            <h:outputText value=".{item.numerofactura}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value=".{bundle.ListCompraTitle_controlfactura}"/>
-                            </f:facet>
-                            <h:outputText value=".{item.controlfactura}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value=".{bundle.ListCompraTitle_fechafactura}"/>
-                            </f:facet>
-                            <h:outputText value=".{item.fechafactura}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <h:outputText value="#{item.saldopendiente}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value=".{bundle.ListCompraTitle_observacionespago}"/>
-                            </f:facet>
-                            <h:outputText value=".{item.observacionespago}"/>
-                        </p:column-->
-                        <p:column width="80" style="text-align: center" >
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPagoCompraTitle_aprobacion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.aprobacion}"/>
                         </p:column>                        
-                        <!--p:column style="text-align: center" headerText="Pagar">
-                            <h:commandLink action="/auxiliarrequerimiento/Pagocompra.xhtml" actionListener="#{pagosController.asignar(item)}" > 
-                                <h:graphicImage library="images" name="Dollar.png" width="30" height="30" alt="Pagar Compra"/>
+                        <p:column style="text-align: center" headerText="Orden de Pago">
+                            <h:commandLink actionListener="#{pagocompraController.verOrdendePago(item)}" target = "_blank"  > 
+                                <h:graphicImage library="images" name="imprimir.png" width="30" height="30" alt="Pagar Compra"/>
                             </h:commandLink>      
-                        </p:column-->
+                        </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{compraController.prepareCreate}" update=":CompraCreateForm" oncomplete="PF('CompraCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CompraViewForm" oncomplete="PF('CompraViewDialog').show()" disabled="#{empty compraController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CompraEditForm" oncomplete="PF('CompraEditDialog').show()" disabled="#{empty compraController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{compraController.destroy}" update=":growl,datalist" disabled="#{empty compraController.selected}"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{pagocompraController.prepareCreate}" update=":CompraCreateForm" oncomplete="PF('CompraCreateDialog').show()" disabled="true"/>
+                            <!--p:commandButton id="viewButton"   icon="ui-icon-search" value=".{bundle.View}" update=":CompraViewForm" oncomplete="PF('CompraViewDialog').show()" disabled=".{empty pagocompraController.selected}" />
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value=".{bundle.Edit}" update=":CompraEditForm" oncomplete="PF('CompraEditDialog').show()" disabled=".{empty pagocompraController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value=".{bundle.Delete}" actionListener=".{pagocompraController.destroy}" update=":growl,datalist" disabled=".{empty pagocompraController.selected}"/-->
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

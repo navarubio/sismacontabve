@@ -298,7 +298,7 @@ public class CompraController implements Serializable {
         FacesContext.getCurrentInstance().responseComplete();
     }
     
-        public void verOrdendeCompra() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public void verOrdendeCompra() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 
         //Instancia hacia la clase reporteClientes        
         reporteArticulo rArticulo = new reporteArticulo();

@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7c84cd74-2f43-40af-a87d-8979663c88b5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="114"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="d25f7c34-6c1f-4180-af27-5c4c9d5da8a0"/>
+	<parameter name="numeroordenpago" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     compra.`idcompra` AS compra_idcompra,
+     compra.`idauxiliarrequerimiento` AS compra_idauxiliarrequerimiento,
+     compra.`idusuario` AS compra_idusuario,
+     compra.`rifproveedor` AS compra_rifproveedor,
+     compra.`fechaorden` AS compra_fechaorden,
+     compra.`subtotal` AS compra_subtotal,
+     compra.`iva` AS compra_iva,
+     compra.`total` AS compra_total,
+     compra.`observacionescompra` AS compra_observacionescompra,
+     compra.`numerofactura` AS compra_numerofactura,
+     compra.`controlfactura` AS compra_controlfactura,
+     compra.`fechafactura` AS compra_fechafactura,
+     compra.`idestatusfactura` AS compra_idestatusfactura,
+     compra.`montopendiente` AS compra_montopendiente,
+     detallecompra.`iddetallecompra` AS detallecompra_iddetallecompra,
+     detallecompra.`idcompra` AS detallecompra_idcompra,
+     detallecompra.`codigo` AS detallecompra_codigo,
+     detallecompra.`cantidad` AS detallecompra_cantidad,
+     detallecompra.`pcosto` AS detallecompra_pcosto,
+     detallecompra.`subtotal` AS detallecompra_subtotal,
+     detallecompra.`tributoiva` AS detallecompra_tributoiva,
+     detallecompra.`totalapagar` AS detallecompra_totalapagar,
+     detallecompra.`idestatuscontable` AS detallecompra_idestatuscontable,
+     detallecompra.`idplandecuenta` AS detallecompra_idplandecuenta,
+     articulo.`codigo` AS articulo_codigo,
+     articulo.`descripcion` AS articulo_descripcion,
+     articulo.`idmedida` AS articulo_idmedida,
+     articulo.`idgravamen` AS articulo_idgravamen,
+     articulo.`idgrupo` AS articulo_idgrupo,
+     articulo.`idsubgrupo` AS articulo_idsubgrupo,
+     articulo.`minimo` AS articulo_minimo,
+     articulo.`maximo` AS articulo_maximo,
+     articulo.`pcosto` AS articulo_pcosto,
+     articulo.`pventa` AS articulo_pventa,
+     articulo.`idusuario` AS articulo_idusuario,
+     articulo.`idplandecuenta` AS articulo_idplandecuenta,
+     proveedor.`rifproveedor` AS proveedor_rifproveedor,
+     proveedor.`razonsocial` AS proveedor_razonsocial,
+     proveedor.`direccionfiscal` AS proveedor_direccionfiscal,
+     proveedor.`telefonos` AS proveedor_telefonos,
+     proveedor.`correo` AS proveedor_correo,
+     proveedor.`fechainscripcion` AS proveedor_fechainscripcion,
+     proveedor.`personacontacto` AS proveedor_personacontacto,
+     proveedor.`telefonocontacto` AS proveedor_telefonocontacto,
+     proveedor.`idtipoproveedor` AS proveedor_idtipoproveedor,
+     proveedor.`idpersonalidad` AS proveedor_idpersonalidad,
+     proveedor.`idusuario` AS proveedor_idusuario,
+     pagocompra.`idpagocompra` AS pagocompra_idpagocompra,
+     pagocompra.`idcompra` AS pagocompra_idcompra,
+     pagocompra.`idtipopago` AS pagocompra_idtipopago,
+     pagocompra.`idcuentabancaria` AS pagocompra_idcuentabancaria,
+     pagocompra.`idbanco` AS pagocompra_idbanco,
+     pagocompra.`cuentareceptora` AS pagocompra_cuentareceptora,
+     pagocompra.`totalpago` AS pagocompra_totalpago,
+     pagocompra.`aprobacion` AS pagocompra_aprobacion,
+     pagocompra.`fechapago` AS pagocompra_fechapago,
+     pagocompra.`idplandecuenta` AS pagocompra_idplandecuenta,
+     pagocompra.`saldopendiente` AS pagocompra_saldopendiente,
+     pagocompra.`observacionespago` AS pagocompra_observacionespago,
+     tipopago.`idtipopago` AS tipopago_idtipopago,
+     tipopago.`tipopago` AS tipopago_tipopago,
+     banco.`idbanco` AS banco_idbanco,
+     banco.`nombrebanco` AS banco_nombrebanco,
+     banco.`telefonos` AS banco_telefonos,
+     cuentabancaria.`idcuentabancaria` AS cuentabancaria_idcuentabancaria,
+     cuentabancaria.`idbanco` AS cuentabancaria_idbanco,
+     cuentabancaria.`numerocuenta` AS cuentabancaria_numerocuenta,
+     cuentabancaria.`saldo` AS cuentabancaria_saldo,
+     cuentabancaria.`idplandecuenta` AS cuentabancaria_idplandecuenta
+FROM
+     `compra` compra INNER JOIN `detallecompra` detallecompra ON compra.`idcompra` = detallecompra.`idcompra`
+     INNER JOIN `articulo` articulo ON detallecompra.`codigo` = articulo.`codigo`
+     INNER JOIN `proveedor` proveedor ON compra.`rifproveedor` = proveedor.`rifproveedor`
+     INNER JOIN `pagocompra` pagocompra ON compra.`idcompra` = pagocompra.`idcompra`
+     INNER JOIN `tipopago` tipopago ON pagocompra.`idtipopago` = tipopago.`idtipopago`
+     INNER JOIN `banco` banco ON pagocompra.`idbanco` = banco.`idbanco`
+     INNER JOIN `cuentabancaria` cuentabancaria ON pagocompra.`idcuentabancaria` = cuentabancaria.`idcuentabancaria`
+     AND banco.`idbanco` = cuentabancaria.`idbanco`
+WHERE
+     pagocompra.`idpagocompra` = $P{numeroordenpago}]]>
+	</queryString>
+	<field name="compra_idcompra" class="java.lang.Integer"/>
+	<field name="compra_idauxiliarrequerimiento" class="java.lang.Integer"/>
+	<field name="compra_idusuario" class="java.lang.Integer"/>
+	<field name="compra_rifproveedor" class="java.lang.String"/>
+	<field name="compra_fechaorden" class="java.sql.Date"/>
+	<field name="compra_subtotal" class="java.lang.Double"/>
+	<field name="compra_iva" class="java.lang.Double"/>
+	<field name="compra_total" class="java.lang.Double"/>
+	<field name="compra_observacionescompra" class="java.lang.String"/>
+	<field name="compra_numerofactura" class="java.lang.String"/>
+	<field name="compra_controlfactura" class="java.lang.String"/>
+	<field name="compra_fechafactura" class="java.sql.Date"/>
+	<field name="compra_idestatusfactura" class="java.lang.Integer"/>
+	<field name="compra_montopendiente" class="java.lang.Double"/>
+	<field name="detallecompra_iddetallecompra" class="java.lang.Integer"/>
+	<field name="detallecompra_idcompra" class="java.lang.Integer"/>
+	<field name="detallecompra_codigo" class="java.lang.String"/>
+	<field name="detallecompra_cantidad" class="java.lang.Double"/>
+	<field name="detallecompra_pcosto" class="java.lang.Double"/>
+	<field name="detallecompra_subtotal" class="java.lang.Double"/>
+	<field name="detallecompra_tributoiva" class="java.lang.Double"/>
+	<field name="detallecompra_totalapagar" class="java.lang.Double"/>
+	<field name="detallecompra_idestatuscontable" class="java.lang.Integer"/>
+	<field name="detallecompra_idplandecuenta" class="java.lang.Integer"/>
+	<field name="articulo_codigo" class="java.lang.String"/>
+	<field name="articulo_descripcion" class="java.lang.String"/>
+	<field name="articulo_idmedida" class="java.lang.Integer"/>
+	<field name="articulo_idgravamen" class="java.lang.Integer"/>
+	<field name="articulo_idgrupo" class="java.lang.Integer"/>
+	<field name="articulo_idsubgrupo" class="java.lang.Integer"/>
+	<field name="articulo_minimo" class="java.lang.Integer"/>
+	<field name="articulo_maximo" class="java.lang.Integer"/>
+	<field name="articulo_pcosto" class="java.lang.Double"/>
+	<field name="articulo_pventa" class="java.lang.Double"/>
+	<field name="articulo_idusuario" class="java.lang.Integer"/>
+	<field name="articulo_idplandecuenta" class="java.lang.Integer"/>
+	<field name="proveedor_rifproveedor" class="java.lang.String"/>
+	<field name="proveedor_razonsocial" class="java.lang.String"/>
+	<field name="proveedor_direccionfiscal" class="java.lang.String"/>
+	<field name="proveedor_telefonos" class="java.lang.String"/>
+	<field name="proveedor_correo" class="java.lang.String"/>
+	<field name="proveedor_fechainscripcion" class="java.sql.Date"/>
+	<field name="proveedor_personacontacto" class="java.lang.String"/>
+	<field name="proveedor_telefonocontacto" class="java.lang.String"/>
+	<field name="proveedor_idtipoproveedor" class="java.lang.Integer"/>
+	<field name="proveedor_idpersonalidad" class="java.lang.Integer"/>
+	<field name="proveedor_idusuario" class="java.lang.Integer"/>
+	<field name="pagocompra_idpagocompra" class="java.lang.Integer"/>
+	<field name="pagocompra_idcompra" class="java.lang.Integer"/>
+	<field name="pagocompra_idtipopago" class="java.lang.Integer"/>
+	<field name="pagocompra_idcuentabancaria" class="java.lang.Integer"/>
+	<field name="pagocompra_idbanco" class="java.lang.Integer"/>
+	<field name="pagocompra_cuentareceptora" class="java.lang.String"/>
+	<field name="pagocompra_totalpago" class="java.lang.Double"/>
+	<field name="pagocompra_aprobacion" class="java.lang.String"/>
+	<field name="pagocompra_fechapago" class="java.sql.Date"/>
+	<field name="pagocompra_idplandecuenta" class="java.lang.Integer"/>
+	<field name="pagocompra_saldopendiente" class="java.lang.Double"/>
+	<field name="pagocompra_observacionespago" class="java.lang.String"/>
+	<field name="tipopago_idtipopago" class="java.lang.Integer"/>
+	<field name="tipopago_tipopago" class="java.lang.String"/>
+	<field name="banco_idbanco" class="java.lang.Integer"/>
+	<field name="banco_nombrebanco" class="java.lang.String"/>
+	<field name="banco_telefonos" class="java.lang.String"/>
+	<field name="cuentabancaria_idcuentabancaria" class="java.lang.Integer"/>
+	<field name="cuentabancaria_idbanco" class="java.lang.Integer"/>
+	<field name="cuentabancaria_numerocuenta" class="java.lang.String"/>
+	<field name="cuentabancaria_saldo" class="java.lang.Double"/>
+	<field name="cuentabancaria_idplandecuenta" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="453" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="97" width="64" height="14" uuid="e9693260-eb01-4f3f-9a21-685b74396ed6"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SEÑORES :  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="125" width="64" height="14" uuid="3236db1a-6c9a-4703-be60-dc59ef43f289"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCION :  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="0" width="202" height="22" uuid="82809471-e4a2-4bfa-8862-79c66df7252c"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORDEN DE PAGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="448" y="48" width="50" height="14" uuid="ed2b7264-5f8b-4b83-a356-5b0cfa072fbe"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="111" width="64" height="14" uuid="8146fbf1-e95d-4159-93e3-a7e8116f46b7"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R.I.F :  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="154" y="111" width="50" height="14" uuid="fa5fd07f-4a46-47c5-8656-a7ea71bf0712"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TELEFONO :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="22" width="100" height="12" uuid="ac2ba78b-9f00-46d0-9a67-f8e2afeb34ee"/>
+				<textElement>
+					<font size="9" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[RIF J-26720565-9]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="34" width="251" height="42" uuid="eb21a66f-5b54-444a-acea-846a55d00e1b"/>
+				<textElement textAlignment="Justified">
+					<font size="9" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[AV. 3H Entre calles 78 y 79 Residencias Republica PB Local 01 Maracaibo Estado Zulia. Telefono  0261-7934104 correo inpeca7@gmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="0" width="235" height="22" uuid="26605f85-cb9e-4b6c-bc94-7bee9177a6d8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INVERSIONES PEDREAÑEZ, C.A.]]></text>
+			</staticText>
+			<image>
+				<reportElement x="-1" y="10" width="131" height="76" uuid="e0ae1978-eb44-4a7d-8161-89ab7ff9a4ee"/>
+				<imageExpression><![CDATA["D:\\APLICACIONES JAVA SE - EE\\SistemaINPECA\\Inpeca\\web\\resources\\images\\LogoInpeca.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="4" y="152" width="489" height="24" uuid="8f15c02a-57b2-4a7c-bd41-565f96cf3d35"/>
+				<textElement textAlignment="Justified">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[POR MEDIO DE LA PRESENTE, SE DESCRIBE LA TRANSACCION DE PAGO QUE EFECTUAMOS  PARA NUESTRO COMPROMISO POR LA EMISION DE FACTURA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="448" y="34" width="50" height="14" uuid="65c4ba48-47e2-4614-8ed6-5a18b5394823"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NUMERO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="69" y="97" width="424" height="14" uuid="7f4721ef-f37a-4d6a-ae82-39b491cbe8a3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proveedor_razonsocial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="69" y="111" width="84" height="14" uuid="1cb4175f-e5fc-478f-b2ad-01b30268c174"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proveedor_rifproveedor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="111" width="149" height="14" uuid="71989ed8-b975-47ea-b533-d41395fcb453"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proveedor_telefonos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="69" y="125" width="424" height="27" uuid="f83da735-bcad-4ddb-a41e-29082c98da65"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proveedor_direccionfiscal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="93" y="196" width="66" height="14" uuid="168e7e99-6c7a-45e2-964e-774f589e2ea2"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compra_numerofactura}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="24" y="196" width="64" height="14" uuid="3aff7aac-3f60-430c-bc52-6f1a7468b2fd"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FACTURA N° :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="33" y="210" width="55" height="14" uuid="887c44c0-63f3-45c2-b62b-73601751140f"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONTROL :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="93" y="210" width="66" height="14" uuid="9484dafe-4264-413c-996a-4dd390c93af2"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compra_controlfactura}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="44" y="224" width="44" height="14" uuid="36c7553a-ed51-4538-8301-abdf3e2d9173"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="93" y="224" width="90" height="14" uuid="e5b1c189-470e-4ca7-904d-350b28b16bc5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compra_fechafactura}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="498" y="48" width="74" height="14" uuid="f342e194-1a3e-4c6a-af0d-bc37faeaec2f"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pagocompra_fechapago}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="390" width="82" height="14" uuid="9cc416c8-6e23-4e85-8116-2e0cd9c1c48b"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMA DE PAGO :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="88" y="390" width="117" height="14" uuid="eb94513f-ed40-481f-80ec-d7038117a93a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipopago_tipopago}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="404" width="82" height="14" uuid="3c66ee6b-0607-4e7e-90d9-92733aa30e82"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BANCO :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="88" y="404" width="166" height="14" uuid="47b1a610-44c6-49fa-b1a0-e20be99d5d51"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{banco_nombrebanco}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="418" width="82" height="14" uuid="c284d5d1-6bea-4b5c-b1ba-8996686e25d1"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CUENTA EMISORA :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="88" y="418" width="166" height="14" uuid="8626019b-4868-4c15-b7a6-ac7bec556e9b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cuentabancaria_numerocuenta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="432" width="82" height="14" uuid="e1384eec-a8db-4287-bde8-7d409827ca61"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° APROBACION :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="88" y="432" width="101" height="14" uuid="0f2026fa-349b-4c2b-bd2e-dc6d57c66090"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pagocompra_aprobacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="265" y="390" width="95" height="14" uuid="bcc47d9f-2ec7-446e-9454-68628a75cbbb"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL PAGADO :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="265" y="418" width="95" height="14" uuid="b5898c4e-7b5a-43db-b85b-94943a27cdd4"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CUENTA RECEPTORA:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="365" y="384" width="132" height="20" uuid="30ee246d-2aee-416a-9272-52996fc7da5f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pagocompra_totalpago}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="418" width="132" height="14" uuid="56e05510-faf6-4671-bf89-17a7b2abd123"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pagocompra_cuentareceptora}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="432" width="82" height="14" uuid="c75bb8a0-6027-4680-9e97-d6fb53491f77"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDO PENDIENTE:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="365" y="432" width="100" height="14" uuid="5ef77581-9e12-4bf8-9272-382f8de75514"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pagocompra_saldopendiente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="237" y="196" width="57" height="14" uuid="0777b0cf-d4ab-45ed-b23b-3f29d0f9a664"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUBTOTAL :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="236" y="210" width="57" height="14" uuid="e965845e-0e62-440b-a35f-e3e1f0bca1e3"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IVA :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="218" y="224" width="76" height="14" uuid="1d4b7161-3d85-45c6-9931-568c7171b60b"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL GENERAL :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="176" width="170" height="20" uuid="44761f58-1b06-4695-a05d-21673c49d80d"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DATOS DE FACTURACION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="254" width="170" height="20" uuid="2a28b3bb-787a-477b-a54d-9e48c6ed49cf"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DATOS DE RETENCIÓN:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="298" y="196" width="88" height="14" uuid="ecac8020-d29d-41ca-9a6d-446cbbaf5827"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compra_subtotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="298" y="210" width="88" height="14" uuid="14e316c2-3b25-4b21-9ad8-2f5110833822"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compra_iva}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="298" y="224" width="88" height="14" uuid="7dd4cff2-e60d-4e6b-9a5a-c7ded3031d0c"/>
+				<box>
+					<pen lineStyle="Double"/>
+					<topPen lineStyle="Double"/>
+					<leftPen lineStyle="Double"/>
+					<bottomPen lineWidth="3.0" lineStyle="Double"/>
+					<rightPen lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compra_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="212" y="285" width="82" height="14" uuid="13c3b469-ce41-46f6-8cc3-ad2822a054e1"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RETENCION ISLR :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="299" width="82" height="14" uuid="580078f0-24b3-410f-b5d2-a13cbac25f08"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RETENCION IVA :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="323" width="99" height="14" uuid="1b90b0f1-a2e6-46dd-8b93-cc5e7960030e"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL RETENCIONES:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="285" width="82" height="14" uuid="5335a372-2f0a-4f40-aab5-95a0a1525e62"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPROBANTE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="299" width="82" height="14" uuid="828f1399-4cb0-439c-8967-5a5b6470e880"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPROBANTE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="360" width="170" height="20" uuid="c2fd8ac6-3de2-404c-9267-b0ba7497bef3"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DATOS DEL PAGO:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="193" y="349" width="362" height="1" uuid="f2938ad5-3153-4d8b-9f27-9ff4445a6761"/>
+			</line>
+			<textField>
+				<reportElement x="498" y="34" width="74" height="14" uuid="e5832318-a231-4c13-a43b-ece6c0864c89"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{numeroordenpago}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="186" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="-1" y="12" width="556" height="66" uuid="94beda27-8fb9-4eae-96e9-0d900d0557c8"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="51" width="84" height="15" uuid="ffcc7ce8-6df5-4f65-8eff-db6acf81f1aa"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBERVACIONES:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="14" width="345" height="30" uuid="d446398e-4eaf-431c-a08c-8d9bdf13be6d"/>
+				<textElement textAlignment="Justified">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PARA LOS CASOS EN LOS QUE APLIQUE LE SERA ENTREGADO ANEXO LOS COMPROBANTES DE RETENCION DE ISLR /  IVA RESPECTIVAMENTE.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="360" y="12" width="1" height="66" uuid="6c0e3f19-979b-421f-92e5-21ebadf64d4e"/>
+			</line>
+			<staticText>
+				<reportElement x="365" y="36" width="71" height="15" uuid="171f72ae-3da9-43af-b0d3-469f7063511a"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL PAGO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="467" y="177" width="100" height="9" uuid="659daac8-e428-406a-9f0d-4e703ba60935"/>
+				<textElement textAlignment="Center">
+					<font fontName="Poor Richard" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISMACONTAB WEB ]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="5" y="177" width="100" height="9" uuid="399c6ae1-3fe7-43a9-b1c6-0d69cf5d3d73"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="120" width="88" height="25" uuid="1fa63252-9195-420d-911e-60c20f265553"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROCESADO POR: ADMINISTRACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="147" y="120" width="88" height="25" uuid="0b037a00-d7c4-427a-b827-e75332c6b27b"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REVISADO POR: CONTABILDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="120" width="88" height="25" uuid="a76d2f5e-012c-48f7-b2d0-7a554ff64267"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AUTORIZADO POR: GERENCIA GENERAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="120" width="88" height="25" uuid="046cf7a3-0068-4cb0-a3a6-b76cf6ca12d3"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECIBIDA POR: PROVEEDOR]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="436" y="31" width="117" height="20" uuid="03b5f677-853e-4d45-b8af-719178276c81"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pagocompra_totalpago}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="87" y="44" width="262" height="34" uuid="39beb742-f5b3-42a0-a02e-9b30c8219c3d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pagocompra_observacionespago}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="44" width="361" height="1" uuid="3ce803ba-edda-47f5-8ad6-bbe5a02841f3"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>
