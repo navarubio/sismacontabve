@@ -15,34 +15,34 @@
                         <p:outputLabel value="#{bundle.EditArticuloLabel_codigo}" for="codigo" />
                         <p:inputText id="codigo" value="#{articuloController.selected.codigo}" title="#{bundle.EditArticuloTitle_codigo}" required="true" requiredMessage="#{bundle.EditArticuloRequiredMessage_codigo}"/>
                         <p:outputLabel value="#{bundle.EditArticuloLabel_descripcion}" for="descripcion" />
-                        <p:inputText size="50" id="descripcion" value="#{articuloController.selected.descripcion}" title="#{bundle.EditArticuloTitle_descripcion}" />
+                        <p:inputText size="50" id="descripcion" value="#{articuloController.selected.descripcion}" title="#{bundle.EditArticuloTitle_descripcion}" required="true" />
                         <p:outputLabel value="#{bundle.EditArticuloLabel_pcosto}" for="pcosto" />
                         <p:inputText id="pcosto" value="#{articuloController.selected.pcosto}" title="#{bundle.EditArticuloTitle_pcosto}" />
                         <p:outputLabel value="#{bundle.EditArticuloLabel_pventa}" for="pventa" />
                         <p:inputText id="pventa" label="0,00" value="#{articuloController.selected.pventa}" title="#{bundle.EditArticuloTitle_pventa}" />
                         <p:outputLabel value="#{bundle.EditArticuloLabel_idmedida}" for="idmedida" />
-                        <p:selectOneMenu id="idmedida" value="#{articuloController.selected.idmedida}" >
+                        <p:selectOneMenu id="idmedida" value="#{articuloController.selected.idmedida}" required="true" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{medidaController.itemsAvailableSelectOne}"
                                            var="idmedidaItem"
                                            itemValue="#{idmedidaItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditArticuloLabel_idgrupo}" for="idgrupo" />
-                        <p:selectOneMenu id="idgrupo" value="#{articuloController.selected.idgrupo}" >
+                        <p:outputLabel value="#{bundle.EditArticuloLabel_idgrupo}" for="idgrupo"  />
+                        <p:selectOneMenu id="idgrupo" value="#{articuloController.selected.idgrupo}" required="true" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{grupoController.itemsAvailableSelectOne}"
                                            var="idgrupoItem"
                                            itemValue="#{idgrupoItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditArticuloLabel_idsubgrupo}" for="idsubgrupo" />
-                        <p:selectOneMenu id="idsubgrupo" value="#{articuloController.selected.idsubgrupo}" >
+                        <p:selectOneMenu id="idsubgrupo" value="#{articuloController.selected.idsubgrupo}" required="true" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{subgrupoController.itemsAvailableSelectOne}"
                                            var="idsubgrupoItem"
                                            itemValue="#{idsubgrupoItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditArticuloLabel_idgravamen}" for="idgravamen" />
-                        <p:selectOneMenu id="idgravamen" value="#{articuloController.selected.idgravamen}" >
+                        <p:selectOneMenu id="idgravamen" value="#{articuloController.selected.idgravamen}" required="true" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{gravamenController.itemsAvailableSelectOne}"
                                            var="idgravamenItem"

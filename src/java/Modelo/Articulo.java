@@ -59,8 +59,10 @@ public class Articulo implements Serializable {
     @Column(name = "maximo")
     private Integer maximo;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @NotNull
     @Column(name = "pcosto")
     private Double pcosto;
+    @NotNull
     @Column(name = "pventa")
     private Double pventa;
     @JoinColumn(name = "idgrupo", referencedColumnName = "idgrupo")

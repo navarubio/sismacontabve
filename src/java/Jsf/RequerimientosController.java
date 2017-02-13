@@ -235,7 +235,7 @@ public class RequerimientosController implements Serializable {
 
     public void buscarArticulo() {
         articulo = requer.getCodigo();
-        pcosto = requer.getCodigo().getPcosto();
+        pcosto = articulo.getPcosto();
         pventa = articulo.getPventa();
     }
 

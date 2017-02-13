@@ -65,7 +65,7 @@
                                                    itemLabel="#{idarticuloItem.descripcion}"  itemValue="#{idarticuloItem}" /> 
                                 </p:selectOneMenu>
                                 <p:outputLabel for="cantidad" styleClass="text-ouput" value="Cantidad" />
-                                <p:inputText id="cantidad" value="#{requerimientosController.cantidad}" style="text-align:right" size="5" required="true"/>
+                                <p:inputText id="cantidad" value="#{requerimientosController.cantidad}" style="text-align:right" size="5" required="true" />
                                 <p:outputLabel for="precio"  styleClass="text-ouput" value="Precio sin IVA" />
                                 <p:inputText id="precio"   label="#{requerimientosController.articulo.pcosto}"  size="10" value="#{requerimientosController.pventa}" style="text-align:right" />
                                 <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{requerimientosController.anexarafactura()}" update="listado,datosarticulo"/>   

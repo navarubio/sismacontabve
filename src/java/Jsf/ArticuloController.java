@@ -30,6 +30,8 @@ public class ArticuloController implements Serializable {
     @EJB
     private ArticuloFacadeLocal ejbFacade;
     private List<Articulo> items = null;
+    private double pcosto=0;
+    private double pventa=0;
     private Articulo selected;
     @Inject
     private Usuario usa;
@@ -57,6 +59,8 @@ public class ArticuloController implements Serializable {
 
     public Articulo prepareCreate() {
         selected = new Articulo();
+        selected.setPcosto(pcosto);
+        selected.setPventa(pventa);
         initializeEmbeddableKey();
         usa=getUsuario();
         selected.setIdusuario(usa);
