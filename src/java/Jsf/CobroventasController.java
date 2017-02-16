@@ -24,6 +24,7 @@ import Modelo.Tipopago;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -81,6 +82,7 @@ public class CobroventasController implements Serializable {
     private List<Banco> bancos;
     private int edad = 0;
     private String mensaje;
+    private Date  fechaactual= new Date();
     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     private String correo;
@@ -207,6 +209,7 @@ public class CobroventasController implements Serializable {
         cobrosefectuados = cobroventaEJB.findAll();
         bancos = bancoEJB.findAll();
         cobro = new Cobroventa();
+        cobro.setFechacobro(fechaactual);
     }
 
     public List<Cuentabancaria> refrescarCuentasBancarias() {
@@ -272,9 +275,9 @@ public class CobroventasController implements Serializable {
             cuentabancariaEJB.edit(cuentabancaria);
             
             if (factura.getSaldopendiente() < 1) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Pago fue Almacenado"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cobro fue Almacenado"));
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Abono fue Almacenado"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El Abono recibido fue Almacenado"));
             }
             String subject;
             String ultimafactura= ""+factura.getNumerofact();
@@ -294,7 +297,7 @@ public class CobroventasController implements Serializable {
             enviomail = new envioCorreo(correo, subject);
             enviomail.start();
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Pago"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Cobro"));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
