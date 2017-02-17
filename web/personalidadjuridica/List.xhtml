@@ -16,7 +16,7 @@
         <ui:define name="body">
             <h:form id="PersonalidadjuridicaListForm">
                 <p:panel header="#{bundle.ListPersonalidadjuridicaTitle}">
-                    <p:dataTable id="datalist" value="#{personalidadjuridicaController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{personalidadjuridicaController.items}" var="item" style="width:500px"
                                  selectionMode="single" selection="#{personalidadjuridicaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idpersonalidad}"

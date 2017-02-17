@@ -16,7 +16,7 @@
         <ui:define name="body">
             <h:form id="CajaListForm">
                 <p:panel header="#{bundlefactura.ListCajaTitle}">
-                    <p:dataTable id="datalist" value="#{cajaController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{cajaController.items}" var="item" style="width:800px"
                                  selectionMode="single" selection="#{cajaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idcaja}"

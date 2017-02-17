@@ -13,15 +13,15 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{subgrupoController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateSubgrupoLabel_idsubgrupo}" for="idsubgrupo" />
-                        <p:inputText id="idsubgrupo" value="#{subgrupoController.selected.idsubgrupo}" title="#{bundle.CreateSubgrupoTitle_idsubgrupo}" required="true" requiredMessage="#{bundle.CreateSubgrupoRequiredMessage_idsubgrupo}"/>
-                        <p:outputLabel value="#{bundle.CreateSubgrupoLabel_subgrupo}" for="subgrupo" />
-                        <p:inputText id="subgrupo" value="#{subgrupoController.selected.subgrupo}" title="#{bundle.CreateSubgrupoTitle_subgrupo}" />
+                        <p:inputText id="idsubgrupo" size="10" value="#{subgrupoController.selected.idsubgrupo}" title="#{bundle.CreateSubgrupoTitle_idsubgrupo}" required="true" requiredMessage="#{bundle.CreateSubgrupoRequiredMessage_idsubgrupo}"/>
                         <p:outputLabel value="#{bundle.CreateSubgrupoLabel_idgrupo}" for="idgrupo" />
                         <p:selectOneMenu id="idgrupo" value="#{subgrupoController.selected.idgrupo}" >
                             <f:selectItems value="#{grupoController.itemsAvailableSelectOne}"
                                            var="idgrupoItem"
                                            itemValue="#{idgrupoItem}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateSubgrupoLabel_subgrupo}" for="subgrupo" />
+                        <p:inputText id="subgrupo" value="#{subgrupoController.selected.subgrupo}" title="#{bundle.CreateSubgrupoTitle_subgrupo}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{subgrupoController.create}" value="#{bundle.Save}" update="display,:SubgrupoListForm:datalist,:growl" oncomplete="handleSubmit(args,'SubgrupoCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="SubgrupoCreateDialog.hide()"/>

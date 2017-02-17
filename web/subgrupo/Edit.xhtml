@@ -14,8 +14,6 @@
                     <p:panelGrid columns="2" rendered="#{subgrupoController.selected != null}">
                         <p:outputLabel value="#{bundle.EditSubgrupoLabel_idsubgrupo}" for="idsubgrupo" />
                         <p:inputText id="idsubgrupo" value="#{subgrupoController.selected.idsubgrupo}" title="#{bundle.EditSubgrupoTitle_idsubgrupo}" required="true" requiredMessage="#{bundle.EditSubgrupoRequiredMessage_idsubgrupo}"/>
-                        <p:outputLabel value="#{bundle.EditSubgrupoLabel_subgrupo}" for="subgrupo" />
-                        <p:inputText id="subgrupo" value="#{subgrupoController.selected.subgrupo}" title="#{bundle.EditSubgrupoTitle_subgrupo}" />
                         <p:outputLabel value="#{bundle.EditSubgrupoLabel_idgrupo}" for="idgrupo" />
                         <p:selectOneMenu id="idgrupo" value="#{subgrupoController.selected.idgrupo}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
@@ -23,6 +21,8 @@
                                            var="idgrupoItem"
                                            itemValue="#{idgrupoItem}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditSubgrupoLabel_subgrupo}" for="subgrupo" />
+                        <p:inputText id="subgrupo" value="#{subgrupoController.selected.subgrupo}" title="#{bundle.EditSubgrupoTitle_subgrupo}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{subgrupoController.update}" value="#{bundle.Save}" update="display,:SubgrupoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SubgrupoEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="SubgrupoEditDialog.hide()"/>
