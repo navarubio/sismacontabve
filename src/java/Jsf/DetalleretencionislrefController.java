@@ -3,8 +3,7 @@ package Jsf;
 import Modelo.Detalleretencionislref;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
-import Jpa.DetalleretencionislrefFacade;
-
+import Jpa.DetalleretencionislrefFacadeLocal;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,7 +23,7 @@ import javax.faces.convert.FacesConverter;
 public class DetalleretencionislrefController implements Serializable {
 
     @EJB
-    private Jpa.DetalleretencionislrefFacade ejbFacade;
+    private Jpa.DetalleretencionislrefFacadeLocal ejbFacade;
     private List<Detalleretencionislref> items = null;
     private Detalleretencionislref selected;
 
@@ -45,7 +44,7 @@ public class DetalleretencionislrefController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private DetalleretencionislrefFacade getFacade() {
+    private DetalleretencionislrefFacadeLocal getFacade() {
         return ejbFacade;
     }
 

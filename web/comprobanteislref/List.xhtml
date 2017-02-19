@@ -44,20 +44,8 @@
                                 <h:outputText value="#{bundletributos.ListComprobanteislrefTitle_fecha}"/>
                             </f:facet>
                             <h:outputText value="#{item.fecha}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundletributos.ListComprobanteislrefTitle_anio}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.anio}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundletributos.ListComprobanteislrefTitle_mes}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.mes}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">

@@ -207,6 +207,12 @@
                                     <f:convertNumber type="currency" currencySymbol=" " />
                                 </h:outputText>
                             </p:column>
+                            <p:column style="text-align: center" headerText="Retenciones">                                
+                                <p:commandLink actionListener="#{comprasController.asignarRequerimiento(req)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
+                                    <h:graphicImage library="images" name="balanzapago.png" width="30" height="30" alt="Editar Articulo" 
+                                                    rendered="#{req.codigo.idgrupo.idgrupo>= 2 ? true:false}"/> 
+                                </p:commandLink>
+                            </p:column>
 
                             <!--p:column style="width:10%" headerText="Editar">
                                 <p:commandLink actionListener=".{comprasController.asignarRequerimiento(req)}" value="Editar" update="listado" oncomplete="PF('wdialogo').show();" >
@@ -226,7 +232,7 @@
                         <p:commandButton value="Cancelar" />
                     </p:panel>
                 </h:form>
-                <p:dialog id="dialogo" widgetVar="wdialogo" header="Modificar cantidad y precio del Articulo" modal="true" closeOnEscape="true" 
+                <p:dialog id="dialogo" widgetVar="wdialogo" header="Retenciones de Ley sobre compras" modal="true" closeOnEscape="true" 
                           resizable="false" showEffect="explode" appendTo="@(body)"  >
                     <h:form>
                         <h:panelGrid  id="display" columns="4">

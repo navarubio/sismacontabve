@@ -38,8 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Comprobanteislref.findByIdcomprobanteislref", query = "SELECT c FROM Comprobanteislref c WHERE c.idcomprobanteislref = :idcomprobanteislref"),
     @NamedQuery(name = "Comprobanteislref.findByComprobante", query = "SELECT c FROM Comprobanteislref c WHERE c.comprobante = :comprobante"),
     @NamedQuery(name = "Comprobanteislref.findByFecha", query = "SELECT c FROM Comprobanteislref c WHERE c.fecha = :fecha"),
-    @NamedQuery(name = "Comprobanteislref.findByAnio", query = "SELECT c FROM Comprobanteislref c WHERE c.anio = :anio"),
-    @NamedQuery(name = "Comprobanteislref.findByMes", query = "SELECT c FROM Comprobanteislref c WHERE c.mes = :mes"),
     @NamedQuery(name = "Comprobanteislref.findByTotalgeneral", query = "SELECT c FROM Comprobanteislref c WHERE c.totalgeneral = :totalgeneral"),
     @NamedQuery(name = "Comprobanteislref.findByTotalbimponible", query = "SELECT c FROM Comprobanteislref c WHERE c.totalbimponible = :totalbimponible"),
     @NamedQuery(name = "Comprobanteislref.findByTotalislrretenido", query = "SELECT c FROM Comprobanteislref c WHERE c.totalislrretenido = :totalislrretenido")})
@@ -56,10 +54,6 @@ public class Comprobanteislref implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Column(name = "anio")
-    private Integer anio;
-    @Column(name = "mes")
-    private Integer mes;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "totalgeneral")
     private Double totalgeneral;
@@ -105,22 +99,6 @@ public class Comprobanteislref implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    public Integer getAnio() {
-        return anio;
-    }
-
-    public void setAnio(Integer anio) {
-        this.anio = anio;
-    }
-
-    public Integer getMes() {
-        return mes;
-    }
-
-    public void setMes(Integer mes) {
-        this.mes = mes;
     }
 
     public Double getTotalgeneral() {
