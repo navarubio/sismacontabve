@@ -44,5 +44,9 @@
             <base-name>/Bundleingreso</base-name>
             <var>bundleingreso</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/Bundletributos</base-name>
+            <var>bundletributos</var>
+        </resource-bundle>
     </application>
 </faces-config>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalleretencionislrefCreateDlg" widgetVar="DetalleretencionislrefCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundletributos.CreateDetalleretencionislrefTitle}">
+            <h:form id="DetalleretencionislrefCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detalleretencionislrefController.selected != null}">
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionislrefLabel_iddetalleretencionislref}" for="iddetalleretencionislref" />
+                        <p:inputText id="iddetalleretencionislref" value="#{detalleretencionislrefController.selected.iddetalleretencionislref}" title="#{bundletributos.CreateDetalleretencionislrefTitle_iddetalleretencionislref}" required="true" requiredMessage="#{bundletributos.CreateDetalleretencionislrefRequiredMessage_iddetalleretencionislref}"/>
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionislrefLabel_totalcompra}" for="totalcompra" />
+                        <p:inputText id="totalcompra" value="#{detalleretencionislrefController.selected.totalcompra}" title="#{bundletributos.CreateDetalleretencionislrefTitle_totalcompra}" />
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionislrefLabel_bimponible}" for="bimponible" />
+                        <p:inputText id="bimponible" value="#{detalleretencionislrefController.selected.bimponible}" title="#{bundletributos.CreateDetalleretencionislrefTitle_bimponible}" />
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionislrefLabel_procentajeretencion}" for="procentajeretencion" />
+                        <p:inputText id="procentajeretencion" value="#{detalleretencionislrefController.selected.procentajeretencion}" title="#{bundletributos.CreateDetalleretencionislrefTitle_procentajeretencion}" />
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionislrefLabel_sustraendo}" for="sustraendo" />
+                        <p:inputText id="sustraendo" value="#{detalleretencionislrefController.selected.sustraendo}" title="#{bundletributos.CreateDetalleretencionislrefTitle_sustraendo}" />
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionislrefLabel_totalislrretenido}" for="totalislrretenido" />
+                        <p:inputText id="totalislrretenido" value="#{detalleretencionislrefController.selected.totalislrretenido}" title="#{bundletributos.CreateDetalleretencionislrefTitle_totalislrretenido}" />
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionislrefLabel_idcomprobanteislref}" for="idcomprobanteislref" />
+                        <p:selectOneMenu id="idcomprobanteislref" value="#{detalleretencionislrefController.selected.idcomprobanteislref}" >
+                            <f:selectItems value="#{comprobanteislrefController.itemsAvailableSelectOne}"
+                                           var="idcomprobanteislrefItem"
+                                           itemValue="#{idcomprobanteislrefItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionislrefLabel_idtiporetencionislr}" for="idtiporetencionislr" />
+                        <p:selectOneMenu id="idtiporetencionislr" value="#{detalleretencionislrefController.selected.idtiporetencionislr}" >
+                            <f:selectItems value="#{tiporetencionislrController.itemsAvailableSelectOne}"
+                                           var="idtiporetencionislrItem"
+                                           itemValue="#{idtiporetencionislrItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionislrefLabel_idcompra}" for="idcompra" />
+                        <p:selectOneMenu id="idcompra" value="#{detalleretencionislrefController.selected.idcompra}" >
+                            <f:selectItems value="#{compraController.itemsAvailableSelectOne}"
+                                           var="idcompraItem"
+                                           itemValue="#{idcompraItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detalleretencionislrefController.create}" value="#{bundletributos.Save}" update="display,:DetalleretencionislrefListForm:datalist,:growl" oncomplete="handleSubmit(args,'DetalleretencionislrefCreateDialog');"/>
+                    <p:commandButton value="#{bundletributos.Cancel}" onclick="DetalleretencionislrefCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

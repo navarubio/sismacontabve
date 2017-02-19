@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalleretencionivaefCreateDlg" widgetVar="DetalleretencionivaefCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundletributos.CreateDetalleretencionivaefTitle}">
+            <h:form id="DetalleretencionivaefCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detalleretencionivaefController.selected != null}">
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionivaefLabel_iddetalleretencionivaef}" for="iddetalleretencionivaef" />
+                        <p:inputText id="iddetalleretencionivaef" value="#{detalleretencionivaefController.selected.iddetalleretencionivaef}" title="#{bundletributos.CreateDetalleretencionivaefTitle_iddetalleretencionivaef}" required="true" requiredMessage="#{bundletributos.CreateDetalleretencionivaefRequiredMessage_iddetalleretencionivaef}"/>
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionivaefLabel_totalcompra}" for="totalcompra" />
+                        <p:inputText id="totalcompra" value="#{detalleretencionivaefController.selected.totalcompra}" title="#{bundletributos.CreateDetalleretencionivaefTitle_totalcompra}" />
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionivaefLabel_bimponible}" for="bimponible" />
+                        <p:inputText id="bimponible" value="#{detalleretencionivaefController.selected.bimponible}" title="#{bundletributos.CreateDetalleretencionivaefTitle_bimponible}" />
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionivaefLabel_totalivaretenido}" for="totalivaretenido" />
+                        <p:inputText id="totalivaretenido" value="#{detalleretencionivaefController.selected.totalivaretenido}" title="#{bundletributos.CreateDetalleretencionivaefTitle_totalivaretenido}" />
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionivaefLabel_idcomprobanteivaef}" for="idcomprobanteivaef" />
+                        <p:selectOneMenu id="idcomprobanteivaef" value="#{detalleretencionivaefController.selected.idcomprobanteivaef}" >
+                            <f:selectItems value="#{comprobanteivaefController.itemsAvailableSelectOne}"
+                                           var="idcomprobanteivaefItem"
+                                           itemValue="#{idcomprobanteivaefItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionivaefLabel_idtiporetencioniva}" for="idtiporetencioniva" />
+                        <p:selectOneMenu id="idtiporetencioniva" value="#{detalleretencionivaefController.selected.idtiporetencioniva}" >
+                            <f:selectItems value="#{tiporetencionivaController.itemsAvailableSelectOne}"
+                                           var="idtiporetencionivaItem"
+                                           itemValue="#{idtiporetencionivaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundletributos.CreateDetalleretencionivaefLabel_idcompra}" for="idcompra" />
+                        <p:selectOneMenu id="idcompra" value="#{detalleretencionivaefController.selected.idcompra}" >
+                            <f:selectItems value="#{compraController.itemsAvailableSelectOne}"
+                                           var="idcompraItem"
+                                           itemValue="#{idcompraItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detalleretencionivaefController.create}" value="#{bundletributos.Save}" update="display,:DetalleretencionivaefListForm:datalist,:growl" oncomplete="handleSubmit(args,'DetalleretencionivaefCreateDialog');"/>
+                    <p:commandButton value="#{bundletributos.Cancel}" onclick="DetalleretencionivaefCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

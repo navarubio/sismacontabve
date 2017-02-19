@@ -44,6 +44,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cliente.findByTelefonocontacto", query = "SELECT c FROM Cliente c WHERE c.telefonocontacto = :telefonocontacto")})
 public class Cliente implements Serializable {
     @OneToMany(mappedBy = "rifcliente")
+    private Collection<Comprobanteislrsp> comprobanteislrspCollection;
+    @OneToMany(mappedBy = "rifcliente")
+    private Collection<Comprobanteivasp> comprobanteivaspCollection;
+    @OneToMany(mappedBy = "rifcliente")
     private Collection<Factura> facturaCollection;
     private static final long serialVersionUID = 1L;
     @Id
@@ -210,6 +214,24 @@ public class Cliente implements Serializable {
 
     public void setFacturaCollection(Collection<Factura> facturaCollection) {
         this.facturaCollection = facturaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Comprobanteislrsp> getComprobanteislrspCollection() {
+        return comprobanteislrspCollection;
+    }
+
+    public void setComprobanteislrspCollection(Collection<Comprobanteislrsp> comprobanteislrspCollection) {
+        this.comprobanteislrspCollection = comprobanteislrspCollection;
+    }
+
+    @XmlTransient
+    public Collection<Comprobanteivasp> getComprobanteivaspCollection() {
+        return comprobanteivaspCollection;
+    }
+
+    public void setComprobanteivaspCollection(Collection<Comprobanteivasp> comprobanteivaspCollection) {
+        this.comprobanteivaspCollection = comprobanteivaspCollection;
     }
     
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DatatributariaEditDlg" widgetVar="DatatributariaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundletributos.EditDatatributariaTitle}">
+            <h:form id="DatatributariaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{datatributariaController.selected != null}">
+                        <p:outputLabel value="#{bundletributos.EditDatatributariaLabel_iddatatributaria}" for="iddatatributaria" />
+                        <p:inputText id="iddatatributaria" value="#{datatributariaController.selected.iddatatributaria}" title="#{bundletributos.EditDatatributariaTitle_iddatatributaria}" required="true" requiredMessage="#{bundletributos.EditDatatributariaRequiredMessage_iddatatributaria}"/>
+                        <p:outputLabel value="#{bundletributos.EditDatatributariaLabel_aniofiscal}" for="aniofiscal" />
+                        <p:calendar id="aniofiscal" pattern="MM/dd/yyyy" value="#{datatributariaController.selected.aniofiscal}" title="#{bundletributos.EditDatatributariaTitle_aniofiscal}"  showOn="button"/>
+                        <p:outputLabel value="#{bundletributos.EditDatatributariaLabel_unidadtributaria}" for="unidadtributaria" />
+                        <p:inputText id="unidadtributaria" value="#{datatributariaController.selected.unidadtributaria}" title="#{bundletributos.EditDatatributariaTitle_unidadtributaria}" />
+                        <p:outputLabel value="#{bundletributos.EditDatatributariaLabel_factorderetencion}" for="factorderetencion" />
+                        <p:inputText id="factorderetencion" value="#{datatributariaController.selected.factorderetencion}" title="#{bundletributos.EditDatatributariaTitle_factorderetencion}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{datatributariaController.update}" value="#{bundletributos.Save}" update="display,:DatatributariaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DatatributariaEditDialog');"/>
+                    <p:commandButton value="#{bundletributos.Cancel}" onclick="DatatributariaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

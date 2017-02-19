@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EstatuscomprobanteretencionCreateDlg" widgetVar="EstatuscomprobanteretencionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundletributos.CreateEstatuscomprobanteretencionTitle}">
+            <h:form id="EstatuscomprobanteretencionCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{estatuscomprobanteretencionController.selected != null}">
+                        <p:outputLabel value="#{bundletributos.CreateEstatuscomprobanteretencionLabel_idestatuscomprobante}" for="idestatuscomprobante" />
+                        <p:inputText id="idestatuscomprobante" value="#{estatuscomprobanteretencionController.selected.idestatuscomprobante}" title="#{bundletributos.CreateEstatuscomprobanteretencionTitle_idestatuscomprobante}" required="true" requiredMessage="#{bundletributos.CreateEstatuscomprobanteretencionRequiredMessage_idestatuscomprobante}"/>
+                        <p:outputLabel value="#{bundletributos.CreateEstatuscomprobanteretencionLabel_estatuscomprobante}" for="estatuscomprobante" />
+                        <p:inputText id="estatuscomprobante" value="#{estatuscomprobanteretencionController.selected.estatuscomprobante}" title="#{bundletributos.CreateEstatuscomprobanteretencionTitle_estatuscomprobante}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{estatuscomprobanteretencionController.create}" value="#{bundletributos.Save}" update="display,:EstatuscomprobanteretencionListForm:datalist,:growl" oncomplete="handleSubmit(args,'EstatuscomprobanteretencionCreateDialog');"/>
+                    <p:commandButton value="#{bundletributos.Cancel}" onclick="EstatuscomprobanteretencionCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

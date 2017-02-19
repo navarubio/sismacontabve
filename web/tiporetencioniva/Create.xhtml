@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TiporetencionivaCreateDlg" widgetVar="TiporetencionivaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundletributos.CreateTiporetencionivaTitle}">
+            <h:form id="TiporetencionivaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tiporetencionivaController.selected != null}">
+                        <p:outputLabel value="#{bundletributos.CreateTiporetencionivaLabel_idtiporetencioniva}" for="idtiporetencioniva" />
+                        <p:inputText id="idtiporetencioniva" value="#{tiporetencionivaController.selected.idtiporetencioniva}" title="#{bundletributos.CreateTiporetencionivaTitle_idtiporetencioniva}" required="true" requiredMessage="#{bundletributos.CreateTiporetencionivaRequiredMessage_idtiporetencioniva}"/>
+                        <p:outputLabel value="#{bundletributos.CreateTiporetencionivaLabel_porcentajeiva}" for="porcentajeiva" />
+                        <p:inputText id="porcentajeiva" value="#{tiporetencionivaController.selected.porcentajeiva}" title="#{bundletributos.CreateTiporetencionivaTitle_porcentajeiva}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tiporetencionivaController.create}" value="#{bundletributos.Save}" update="display,:TiporetencionivaListForm:datalist,:growl" oncomplete="handleSubmit(args,'TiporetencionivaCreateDialog');"/>
+                    <p:commandButton value="#{bundletributos.Cancel}" onclick="TiporetencionivaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

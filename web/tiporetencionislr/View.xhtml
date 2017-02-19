@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TiporetencionislrViewDlg" widgetVar="TiporetencionislrViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundletributos.ViewTiporetencionislrTitle}">
+            <h:form id="TiporetencionislrViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tiporetencionislrController.selected != null}">
+                        <h:outputText value="#{bundletributos.ViewTiporetencionislrLabel_idtiporetencionislr}"/>
+                        <h:outputText value="#{tiporetencionislrController.selected.idtiporetencionislr}" title="#{bundletributos.ViewTiporetencionislrTitle_idtiporetencionislr}"/>
+                        <h:outputText value="#{bundletributos.ViewTiporetencionislrLabel_idsubgrupo}"/>
+                        <h:outputText value="#{tiporetencionislrController.selected.idsubgrupo.subgrupo}" title="#{bundletributos.ViewTiporetencionislrTitle_idsubgrupo}"/>
+                        <h:outputText value="#{bundletributos.ViewTiporetencionislrLabel_descripcionservicio}"/>
+                        <h:outputText value="#{tiporetencionislrController.selected.descripcionservicio}" title="#{bundletributos.ViewTiporetencionislrTitle_descripcionservicio}"/>
+                        <h:outputText value="#{bundletributos.ViewTiporetencionislrLabel_idpersonalidad}"/>
+                        <h:outputText value="#{tiporetencionislrController.selected.idpersonalidad.personalidad}" title="#{bundletributos.ViewTiporetencionislrTitle_idpersonalidad}"/>
+                        <h:outputText value="#{bundletributos.ViewTiporetencionislrLabel_idresidencia}"/>
+                        <h:outputText value="#{tiporetencionislrController.selected.idresidencia.residencia}" title="#{bundletributos.ViewTiporetencionislrTitle_idresidencia}"/>
+                        <h:outputText value="#{bundletributos.ViewTiporetencionislrLabel_porcentajebimponible} "/>
+                        <h:outputText value="#{tiporetencionislrController.selected.porcentajebimponible} %" title="#{bundletributos.ViewTiporetencionislrTitle_porcentajebimponible}"/>
+                        <h:outputText value="#{bundletributos.ViewTiporetencionislrLabel_porcentajeretencion}"/>
+                        <h:outputText value="#{tiporetencionislrController.selected.porcentajeretencion} %" title="#{bundletributos.ViewTiporetencionislrTitle_porcentajeretencion}"/>
+                        <h:outputText value="#{bundletributos.ViewTiporetencionislrLabel_sustraendo}"/>
+                        <h:outputText value="#{tiporetencionislrController.selected.sustraendo}" title="#{bundletributos.ViewTiporetencionislrTitle_sustraendo}"/>
+                        <h:outputText value="#{bundletributos.ViewTiporetencionislrLabel_pisogravable}"/>
+                        <h:outputText value="#{tiporetencionislrController.selected.pisogravable}" title="#{bundletributos.ViewTiporetencionislrTitle_pisogravable}"/>
+                        <h:outputText value="#{bundletributos.ViewTiporetencionislrLabel_codigoxml}"/>
+                        <h:outputText value="#{tiporetencionislrController.selected.codigoxml}" title="#{bundletributos.ViewTiporetencionislrTitle_codigoxml}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundletributos.Close}" onclick="TiporetencionislrViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

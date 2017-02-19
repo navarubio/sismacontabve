@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ComprobanteivaefCreateDlg" widgetVar="ComprobanteivaefCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundletributos.CreateComprobanteivaefTitle}">
+            <h:form id="ComprobanteivaefCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{comprobanteivaefController.selected != null}">
+                        <p:outputLabel value="#{bundletributos.CreateComprobanteivaefLabel_idcomprobanteivaef}" for="idcomprobanteivaef" />
+                        <p:inputText id="idcomprobanteivaef" value="#{comprobanteivaefController.selected.idcomprobanteivaef}" title="#{bundletributos.CreateComprobanteivaefTitle_idcomprobanteivaef}" required="true" requiredMessage="#{bundletributos.CreateComprobanteivaefRequiredMessage_idcomprobanteivaef}"/>
+                        <p:outputLabel value="#{bundletributos.CreateComprobanteivaefLabel_comprobante}" for="comprobante" />
+                        <p:inputText id="comprobante" value="#{comprobanteivaefController.selected.comprobante}" title="#{bundletributos.CreateComprobanteivaefTitle_comprobante}" />
+                        <p:outputLabel value="#{bundletributos.CreateComprobanteivaefLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{comprobanteivaefController.selected.fecha}" title="#{bundletributos.EditComprobanteivaefTitle_fecha}"  showOn="button"/>
+                        <p:outputLabel value="#{bundletributos.CreateComprobanteivaefLabel_anio}" for="anio" />
+                        <p:inputText id="anio" value="#{comprobanteivaefController.selected.anio}" title="#{bundletributos.CreateComprobanteivaefTitle_anio}" />
+                        <p:outputLabel value="#{bundletributos.CreateComprobanteivaefLabel_mes}" for="mes" />
+                        <p:inputText id="mes" value="#{comprobanteivaefController.selected.mes}" title="#{bundletributos.CreateComprobanteivaefTitle_mes}" />
+                        <p:outputLabel value="#{bundletributos.CreateComprobanteivaefLabel_totalgeneral}" for="totalgeneral" />
+                        <p:inputText id="totalgeneral" value="#{comprobanteivaefController.selected.totalgeneral}" title="#{bundletributos.CreateComprobanteivaefTitle_totalgeneral}" />
+                        <p:outputLabel value="#{bundletributos.CreateComprobanteivaefLabel_totalbimponible}" for="totalbimponible" />
+                        <p:inputText id="totalbimponible" value="#{comprobanteivaefController.selected.totalbimponible}" title="#{bundletributos.CreateComprobanteivaefTitle_totalbimponible}" />
+                        <p:outputLabel value="#{bundletributos.CreateComprobanteivaefLabel_totaliva}" for="totaliva" />
+                        <p:inputText id="totaliva" value="#{comprobanteivaefController.selected.totaliva}" title="#{bundletributos.CreateComprobanteivaefTitle_totaliva}" />
+                        <p:outputLabel value="#{bundletributos.CreateComprobanteivaefLabel_totalivaretenido}" for="totalivaretenido" />
+                        <p:inputText id="totalivaretenido" value="#{comprobanteivaefController.selected.totalivaretenido}" title="#{bundletributos.CreateComprobanteivaefTitle_totalivaretenido}" />
+                        <p:outputLabel value="#{bundletributos.CreateComprobanteivaefLabel_idestatuscomprobante}" for="idestatuscomprobante" />
+                        <p:selectOneMenu id="idestatuscomprobante" value="#{comprobanteivaefController.selected.idestatuscomprobante}" >
+                            <f:selectItems value="#{estatuscomprobanteretencionController.itemsAvailableSelectOne}"
+                                           var="idestatuscomprobanteItem"
+                                           itemValue="#{idestatuscomprobanteItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundletributos.CreateComprobanteivaefLabel_rifproveedor}" for="rifproveedor" />
+                        <p:selectOneMenu id="rifproveedor" value="#{comprobanteivaefController.selected.rifproveedor}" >
+                            <f:selectItems value="#{proveedorController.itemsAvailableSelectOne}"
+                                           var="rifproveedorItem"
+                                           itemValue="#{rifproveedorItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{comprobanteivaefController.create}" value="#{bundletributos.Save}" update="display,:ComprobanteivaefListForm:datalist,:growl" oncomplete="handleSubmit(args,'ComprobanteivaefCreateDialog');"/>
+                    <p:commandButton value="#{bundletributos.Cancel}" onclick="ComprobanteivaefCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

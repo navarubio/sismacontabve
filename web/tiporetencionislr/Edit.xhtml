@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TiporetencionislrEditDlg" widgetVar="TiporetencionislrEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundletributos.EditTiporetencionislrTitle}">
+            <h:form id="TiporetencionislrEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tiporetencionislrController.selected != null}">
+                        <p:outputLabel value="#{bundletributos.EditTiporetencionislrLabel_idtiporetencionislr}" for="idtiporetencionislr" />
+                        <p:inputText id="idtiporetencionislr" value="#{tiporetencionislrController.selected.idtiporetencionislr}" title="#{bundletributos.EditTiporetencionislrTitle_idtiporetencionislr}" required="true" requiredMessage="#{bundletributos.EditTiporetencionislrRequiredMessage_idtiporetencionislr}"/>
+                        <p:outputLabel value="#{bundletributos.EditTiporetencionislrLabel_idsubgrupo}" for="idsubgrupo" />
+                        <p:selectOneMenu id="idsubgrupo" value="#{tiporetencionislrController.selected.idsubgrupo}" >
+                            <f:selectItem itemLabel="#{bundletributos.SelectOneMessage}"/>
+                            <f:selectItems value="#{subgrupoController.itemsAvailableSelectOne}"
+                                           var="idsubgrupoItem"
+                                           itemValue="#{idsubgrupoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundletributos.EditTiporetencionislrLabel_descripcionservicio}" for="descripcionservicio" />
+                        <p:inputTextarea id="descripcionservicio" value="#{tiporetencionislrController.selected.descripcionservicio}" title="#{bundletributos.EditTiporetencionislrTitle_descripcionservicio}" cols="50" rows="3" />
+                        <p:outputLabel value="#{bundletributos.EditTiporetencionislrLabel_idpersonalidad}" for="idpersonalidad" />
+                        <p:selectOneMenu id="idpersonalidad" value="#{tiporetencionislrController.selected.idpersonalidad}" >
+                            <f:selectItem itemLabel="#{bundletributos.SelectOneMessage}"/>
+                            <f:selectItems value="#{personalidadjuridicaController.itemsAvailableSelectOne}"
+                                           var="idpersonalidadItem"
+                                           itemValue="#{idpersonalidadItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundletributos.EditTiporetencionislrLabel_idresidencia}" for="idresidencia" />
+                        <p:selectOneMenu id="idresidencia" value="#{tiporetencionislrController.selected.idresidencia}" >
+                            <f:selectItem itemLabel="#{bundletributos.SelectOneMessage}"/>
+                            <f:selectItems value="#{residenciajuridicaController.itemsAvailableSelectOne}"
+                                           var="idresidenciaItem"
+                                           itemLabel="#{idresidenciaItem.residencia}" itemValue="#{idresidenciaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundletributos.EditTiporetencionislrLabel_porcentajebimponible}" for="porcentajebimponible" />
+                        <p:inputText id="porcentajebimponible" value="#{tiporetencionislrController.selected.porcentajebimponible}" title="#{bundletributos.EditTiporetencionislrTitle_porcentajebimponible}" />
+                        <p:outputLabel value="#{bundletributos.EditTiporetencionislrLabel_porcentajeretencion}" for="porcentajeretencion" />
+                        <p:inputText id="porcentajeretencion" value="#{tiporetencionislrController.selected.porcentajeretencion}" title="#{bundletributos.EditTiporetencionislrTitle_porcentajeretencion}" />
+                        <p:outputLabel value="#{bundletributos.EditTiporetencionislrLabel_sustraendo}" for="sustraendo" />
+                        <p:inputText id="sustraendo" value="#{tiporetencionislrController.selected.sustraendo}" title="#{bundletributos.EditTiporetencionislrTitle_sustraendo}" />
+                        <p:outputLabel value="#{bundletributos.EditTiporetencionislrLabel_pisogravable}" for="pisogravable" />
+                        <p:inputText id="pisogravable" value="#{tiporetencionislrController.selected.pisogravable}" title="#{bundletributos.EditTiporetencionislrTitle_pisogravable}" />
+                        <p:outputLabel value="#{bundletributos.EditTiporetencionislrLabel_codigoxml}" for="codigoxml" />
+                        <p:inputText id="codigoxml" value="#{tiporetencionislrController.selected.codigoxml}" title="#{bundletributos.EditTiporetencionislrTitle_codigoxml}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tiporetencionislrController.update}" value="#{bundletributos.Save}" update="display,:TiporetencionislrListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TiporetencionislrEditDialog');"/>
+                    <p:commandButton value="#{bundletributos.Cancel}" onclick="TiporetencionislrEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -52,20 +52,30 @@
                                 <p:menuitem value="Otros Ingresos" outcome="/otroingreso/List.xhtml"/>
                             </p:submenu> 
                         </p:submenu>
-                            <p:submenu label="#{bundle.Opera}" icon="ui-icon-cart">
-                                <p:menuitem value="Inventario Materia Prima" outcome="/articulo/List.xhtml" />
-                                <p:menuitem value="Inventario Insumos" outcome="/articulo/List.xhtml" />   
-                                <p:menuitem value="Despachos" outcome="/articulo/List.xhtml" />  
-                                <p:menuitem value="Calculos Resistencia" outcome="/articulo/List.xhtml" />  
-                                <p:menuitem value="Nominas" outcome="/auxiliarrequerimiento/List.xhtml" />  
-                            </p:submenu>    
-                            <p:submenu label="#{bundle.OperaPica}" icon="ui-icon-bookmark">
-                                <p:menuitem value="Inventario Materia Prima" outcome="/articulo/List.xhtml" />
-                                <p:menuitem value="Inventario Insumos" outcome="/articulo/List.xhtml" />   
-                                <p:menuitem value="Despachos" outcome="/articulo/List.xhtml" />  
-                                <p:menuitem value="Calculos Triturado" outcome="/articulo/List.xhtml" />  
-                                <p:menuitem value="Nominas" outcome="/login.xhtml" />  
-                            </p:submenu>                            
+                        <p:submenu label="#{bundle.Opera}" icon="ui-icon-cart">
+                            <p:menuitem value="Inventario Materia Prima" outcome="/articulo/List.xhtml" />
+                            <p:menuitem value="Inventario Insumos" outcome="/articulo/List.xhtml" />   
+                            <p:menuitem value="Despachos" outcome="/articulo/List.xhtml" />  
+                            <p:menuitem value="Calculos Resistencia" outcome="/articulo/List.xhtml" />  
+                            <p:menuitem value="Nominas" outcome="/auxiliarrequerimiento/List.xhtml" />  
+                        </p:submenu>    
+                        <p:submenu label="#{bundle.OperaPica}" icon="ui-icon-bookmark">
+                            <p:menuitem value="Inventario Materia Prima" outcome="/articulo/List.xhtml" />
+                            <p:menuitem value="Inventario Insumos" outcome="/articulo/List.xhtml" />   
+                            <p:menuitem value="Despachos" outcome="/articulo/List.xhtml" />  
+                            <p:menuitem value="Calculos Triturado" outcome="/articulo/List.xhtml" />  
+                            <p:menuitem value="Nominas" outcome="/login.xhtml" />  
+                        </p:submenu>                            
+                        <p:submenu label="#{bundle.Contab}" icon="ui-icon-calculator">
+                            <p:submenu label="#{bundletributos.Tributos}" icon="ui-icon-document">
+                                <p:menuitem value="Datos Trubutarios" outcome="/datatributaria/List.xhtml" />
+                                <p:menuitem value="Comprobantes IVA" outcome="/comprobanteivaef/List.xhtml"/>
+                                <p:menuitem value="Comprobantes ISLR" outcome="/comprobanteislref/List.xhtml"/>                            
+                                <p:menuitem value="Estatus Comprobantes Retencion" outcome="/estatuscomprobanteretencion/List.xhtml"/>                            
+                                <p:menuitem value="Residencia Juridica" outcome="/residenciajuridica/List.xhtml"/>                                                        
+                                <p:menuitem value="Tipo de Retencion IVA" outcome="/tiporetencioniva/List.xhtml"/>
+                                <p:menuitem value="Tipo de Retencion ISLR" outcome="/tiporetencionislr/List.xhtml"/>
+                            </p:submenu>
                             <p:submenu label="#{bundle.Contab}" icon="ui-icon-calculator">
                                 <p:menuitem value="Ingresos" outcome="/cliente/List.xhtml" />
                                 <p:menuitem value="Contabilizar Ingresos" outcome="/compra/List.xhtml" />
@@ -79,31 +89,32 @@
                                 <p:menuitem value="Tipo Saldo Contable" outcome="/tiposaldocontable/List.xhtml" />
                                 <p:menuitem value="Tipo Partida Contable" outcome="/tipopartidacontable/List.xhtml" />
                                 <p:menuitem value="Centro de Activos" outcome="/articulo/List.xhtml" />   
-                                <p:menuitem value="Centro Contable" outcome="/articulo/List.xhtml" />  
-                            </p:submenu>    
-                            <p:submenu label="#{bundle.Gerencia}" icon="ui-icon-person">
-                                <p:menuitem value="Autorizar Compras" outcome="/compra/Porautorizar.xhtml" />
+                                <p:menuitem value="Centro Contable" outcome="/articulo/List.xhtml" /> 
                             </p:submenu>
-                            <p:submenu label="#{bundle.Maintenance}" icon="ui-icon-wrench">
-                                <p:menuitem value="Condicionfactura" outcome="/condicionfactura/List.xhtml" />
-                                <p:menuitem value="Contribuyente" outcome="/contribuyente/List.xhtml" />
-                                <p:menuitem value="Departamento" outcome="/departamento/List.xhtml" />
-                                <p:menuitem value="Deposito" outcome="/deposito/List.xhtml" />
-                                <p:menuitem value="Gravamen" outcome="/gravamen/List.xhtml" />
-                                <p:menuitem value="Grupo" outcome="/grupo/List.xhtml" />
-                                <p:menuitem value="Subgrupo" outcome="/subgrupo/List.xhtml" />
-                                <p:menuitem value="Medida" outcome="/medida/List.xhtml" />
-                                <p:menuitem value="Personalidadjuridica" outcome="/personalidadjuridica/List.xhtml" />
-                                <p:menuitem value="Tipopago" outcome="/tipopago/List.xhtml" />
-                                <p:menuitem value="Tipoproveedor" outcome="/tipoproveedor/List.xhtml" />
-                                <p:menuitem value="Estatus Contable" outcome="/estatuscontable/List.xhtml" />
-                                <p:menuitem value="Estatus Requerimiento" outcome="/estatusrequerimiento/List.xhtml" />                            
-                                <p:menuitem value="Usuario" outcome="/usuario/List.xhtml" />
-                                <p:menuitem value="Caja Facturacion" outcome="/caja/List.xhtml" />                            
-                                <p:menuitem value="Estatus Caja" outcome="/estatuscaja/List.xhtml"/>
-                                <p:menuitem value="Estatus Factura Venta" outcome="/estatusfacturaventa/List.xhtml"/>
-                                <p:menuitem value="Tipo Ingreso" outcome="/tipoingreso/List.xhtml"/>                                
-                            </p:submenu>                    
+                        </p:submenu>    
+                        <p:submenu label="#{bundle.Gerencia}" icon="ui-icon-person">
+                            <p:menuitem value="Autorizar Compras" outcome="/compra/Porautorizar.xhtml" />
+                        </p:submenu>
+                        <p:submenu label="#{bundle.Maintenance}" icon="ui-icon-wrench">
+                            <p:menuitem value="Condicionfactura" outcome="/condicionfactura/List.xhtml" />
+                            <p:menuitem value="Contribuyente" outcome="/contribuyente/List.xhtml" />
+                            <p:menuitem value="Departamento" outcome="/departamento/List.xhtml" />
+                            <p:menuitem value="Deposito" outcome="/deposito/List.xhtml" />
+                            <p:menuitem value="Gravamen" outcome="/gravamen/List.xhtml" />
+                            <p:menuitem value="Grupo" outcome="/grupo/List.xhtml" />
+                            <p:menuitem value="Subgrupo" outcome="/subgrupo/List.xhtml" />
+                            <p:menuitem value="Medida" outcome="/medida/List.xhtml" />
+                            <p:menuitem value="Personalidadjuridica" outcome="/personalidadjuridica/List.xhtml" />
+                            <p:menuitem value="Tipopago" outcome="/tipopago/List.xhtml" />
+                            <p:menuitem value="Tipoproveedor" outcome="/tipoproveedor/List.xhtml" />
+                            <p:menuitem value="Estatus Contable" outcome="/estatuscontable/List.xhtml" />
+                            <p:menuitem value="Estatus Requerimiento" outcome="/estatusrequerimiento/List.xhtml" />                            
+                            <p:menuitem value="Usuario" outcome="/usuario/List.xhtml" />
+                            <p:menuitem value="Caja Facturacion" outcome="/caja/List.xhtml" />                            
+                            <p:menuitem value="Estatus Caja" outcome="/estatuscaja/List.xhtml"/>
+                            <p:menuitem value="Estatus Factura Venta" outcome="/estatusfacturaventa/List.xhtml"/>
+                            <p:menuitem value="Tipo Ingreso" outcome="/tipoingreso/List.xhtml"/>                                
+                        </p:submenu>                    
                     </p:menubar>
                 </h:form>
             </p:layoutUnit>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalleretencionislrefViewDlg" widgetVar="DetalleretencionislrefViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundletributos.ViewDetalleretencionislrefTitle}">
+            <h:form id="DetalleretencionislrefViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detalleretencionislrefController.selected != null}">
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionislrefLabel_iddetalleretencionislref}"/>
+                        <h:outputText value="#{detalleretencionislrefController.selected.iddetalleretencionislref}" title="#{bundletributos.ViewDetalleretencionislrefTitle_iddetalleretencionislref}"/>
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionislrefLabel_totalcompra}"/>
+                        <h:outputText value="#{detalleretencionislrefController.selected.totalcompra}" title="#{bundletributos.ViewDetalleretencionislrefTitle_totalcompra}"/>
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionislrefLabel_bimponible}"/>
+                        <h:outputText value="#{detalleretencionislrefController.selected.bimponible}" title="#{bundletributos.ViewDetalleretencionislrefTitle_bimponible}"/>
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionislrefLabel_procentajeretencion}"/>
+                        <h:outputText value="#{detalleretencionislrefController.selected.procentajeretencion}" title="#{bundletributos.ViewDetalleretencionislrefTitle_procentajeretencion}"/>
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionislrefLabel_sustraendo}"/>
+                        <h:outputText value="#{detalleretencionislrefController.selected.sustraendo}" title="#{bundletributos.ViewDetalleretencionislrefTitle_sustraendo}"/>
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionislrefLabel_totalislrretenido}"/>
+                        <h:outputText value="#{detalleretencionislrefController.selected.totalislrretenido}" title="#{bundletributos.ViewDetalleretencionislrefTitle_totalislrretenido}"/>
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionislrefLabel_idcomprobanteislref}"/>
+                        <h:outputText value="#{detalleretencionislrefController.selected.idcomprobanteislref}" title="#{bundletributos.ViewDetalleretencionislrefTitle_idcomprobanteislref}"/>
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionislrefLabel_idtiporetencionislr}"/>
+                        <h:outputText value="#{detalleretencionislrefController.selected.idtiporetencionislr}" title="#{bundletributos.ViewDetalleretencionislrefTitle_idtiporetencionislr}"/>
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionislrefLabel_idcompra}"/>
+                        <h:outputText value="#{detalleretencionislrefController.selected.idcompra}" title="#{bundletributos.ViewDetalleretencionislrefTitle_idcompra}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundletributos.Close}" onclick="DetalleretencionislrefViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

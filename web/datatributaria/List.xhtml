@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundletributos.ListDatatributariaTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="DatatributariaListForm">
+                <p:panel header="#{bundletributos.ListDatatributariaTitle}">
+                    <p:dataTable id="datalist" value="#{datatributariaController.items}" var="item" style="width:800px"
+                                 selectionMode="single" selection="#{datatributariaController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.iddatatributaria}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListDatatributariaTitle_iddatatributaria}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.iddatatributaria}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListDatatributariaTitle_aniofiscal}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.aniofiscal}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListDatatributariaTitle_unidadtributaria}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.unidadtributaria}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListDatatributariaTitle_factorderetencion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.factorderetencion}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundletributos.Create}" actionListener="#{datatributariaController.prepareCreate}" update=":DatatributariaCreateForm" oncomplete="PF('DatatributariaCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundletributos.View}" update=":DatatributariaViewForm" oncomplete="PF('DatatributariaViewDialog').show()" disabled="#{empty datatributariaController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundletributos.Edit}" update=":DatatributariaEditForm" oncomplete="PF('DatatributariaEditDialog').show()" disabled="#{empty datatributariaController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundletributos.Delete}" actionListener="#{datatributariaController.destroy}" update=":growl,datalist" disabled="#{empty datatributariaController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundletributos.ListTiporetencionislrTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="TiporetencionislrListForm">
+                <p:panel header="#{bundletributos.ListTiporetencionislrTitle}">
+                    <p:dataTable id="datalist" value="#{tiporetencionislrController.items}" var="item" 
+                                 selectionMode="single" selection="#{tiporetencionislrController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idtiporetencionislr}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListTiporetencionislrTitle_idtiporetencionislr}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idtiporetencionislr}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListTiporetencionislrTitle_idsubgrupo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idsubgrupo.subgrupo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListTiporetencionislrTitle_descripcionservicio}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcionservicio}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListTiporetencionislrTitle_idpersonalidad}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idpersonalidad.personalidad}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListTiporetencionislrTitle_idresidencia}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idresidencia.residencia}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListTiporetencionislrTitle_porcentajebimponible}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.porcentajebimponible} %"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListTiporetencionislrTitle_porcentajeretencion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.porcentajeretencion} %"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListTiporetencionislrTitle_sustraendo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sustraendo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListTiporetencionislrTitle_pisogravable}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.pisogravable}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListTiporetencionislrTitle_codigoxml}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codigoxml}"/>
+                        </p:column>
+
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundletributos.Create}" actionListener="#{tiporetencionislrController.prepareCreate}" update=":TiporetencionislrCreateForm" oncomplete="PF('TiporetencionislrCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundletributos.View}" update=":TiporetencionislrViewForm" oncomplete="PF('TiporetencionislrViewDialog').show()" disabled="#{empty tiporetencionislrController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundletributos.Edit}" update=":TiporetencionislrEditForm" oncomplete="PF('TiporetencionislrEditDialog').show()" disabled="#{empty tiporetencionislrController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundletributos.Delete}" actionListener="#{tiporetencionislrController.destroy}" update=":growl,datalist" disabled="#{empty tiporetencionislrController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

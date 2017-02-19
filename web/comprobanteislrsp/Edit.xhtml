@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ComprobanteislrspEditDlg" widgetVar="ComprobanteislrspEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundletributos.EditComprobanteislrspTitle}">
+            <h:form id="ComprobanteislrspEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{comprobanteislrspController.selected != null}">
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrspLabel_idcomprobanteislrsp}" for="idcomprobanteislrsp" />
+                        <p:inputText id="idcomprobanteislrsp" value="#{comprobanteislrspController.selected.idcomprobanteislrsp}" title="#{bundletributos.EditComprobanteislrspTitle_idcomprobanteislrsp}" required="true" requiredMessage="#{bundletributos.EditComprobanteislrspRequiredMessage_idcomprobanteislrsp}"/>
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrspLabel_comprobante}" for="comprobante" />
+                        <p:inputText id="comprobante" value="#{comprobanteislrspController.selected.comprobante}" title="#{bundletributos.EditComprobanteislrspTitle_comprobante}" />
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrspLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{comprobanteislrspController.selected.fecha}" title="#{bundletributos.EditComprobanteislrspTitle_fecha}"  showOn="button"/>
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrspLabel_totalgeneral}" for="totalgeneral" />
+                        <p:inputText id="totalgeneral" value="#{comprobanteislrspController.selected.totalgeneral}" title="#{bundletributos.EditComprobanteislrspTitle_totalgeneral}" />
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrspLabel_totalbimponible}" for="totalbimponible" />
+                        <p:inputText id="totalbimponible" value="#{comprobanteislrspController.selected.totalbimponible}" title="#{bundletributos.EditComprobanteislrspTitle_totalbimponible}" />
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrspLabel_totalislrretenido}" for="totalislrretenido" />
+                        <p:inputText id="totalislrretenido" value="#{comprobanteislrspController.selected.totalislrretenido}" title="#{bundletributos.EditComprobanteislrspTitle_totalislrretenido}" />
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrspLabel_idestatuscomprobante}" for="idestatuscomprobante" />
+                        <p:selectOneMenu id="idestatuscomprobante" value="#{comprobanteislrspController.selected.idestatuscomprobante}" >
+                            <f:selectItem itemLabel="#{bundletributos.SelectOneMessage}"/>
+                            <f:selectItems value="#{estatuscomprobanteretencionController.itemsAvailableSelectOne}"
+                                           var="idestatuscomprobanteItem"
+                                           itemValue="#{idestatuscomprobanteItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrspLabel_rifcliente}" for="rifcliente" />
+                        <p:selectOneMenu id="rifcliente" value="#{comprobanteislrspController.selected.rifcliente}" >
+                            <f:selectItem itemLabel="#{bundletributos.SelectOneMessage}"/>
+                            <f:selectItems value="#{clienteController.itemsAvailableSelectOne}"
+                                           var="rifclienteItem"
+                                           itemValue="#{rifclienteItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{comprobanteislrspController.update}" value="#{bundletributos.Save}" update="display,:ComprobanteislrspListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ComprobanteislrspEditDialog');"/>
+                    <p:commandButton value="#{bundletributos.Cancel}" onclick="ComprobanteislrspEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ComprobanteislrefEditDlg" widgetVar="ComprobanteislrefEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundletributos.EditComprobanteislrefTitle}">
+            <h:form id="ComprobanteislrefEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{comprobanteislrefController.selected != null}">
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrefLabel_idcomprobanteislref}" for="idcomprobanteislref" />
+                        <p:inputText id="idcomprobanteislref" value="#{comprobanteislrefController.selected.idcomprobanteislref}" title="#{bundletributos.EditComprobanteislrefTitle_idcomprobanteislref}" required="true" requiredMessage="#{bundletributos.EditComprobanteislrefRequiredMessage_idcomprobanteislref}"/>
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrefLabel_comprobante}" for="comprobante" />
+                        <p:inputText id="comprobante" value="#{comprobanteislrefController.selected.comprobante}" title="#{bundletributos.EditComprobanteislrefTitle_comprobante}" />
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrefLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{comprobanteislrefController.selected.fecha}" title="#{bundletributos.EditComprobanteislrefTitle_fecha}"  showOn="button"/>
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrefLabel_anio}" for="anio" />
+                        <p:inputText id="anio" value="#{comprobanteislrefController.selected.anio}" title="#{bundletributos.EditComprobanteislrefTitle_anio}" />
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrefLabel_mes}" for="mes" />
+                        <p:inputText id="mes" value="#{comprobanteislrefController.selected.mes}" title="#{bundletributos.EditComprobanteislrefTitle_mes}" />
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrefLabel_totalgeneral}" for="totalgeneral" />
+                        <p:inputText id="totalgeneral" value="#{comprobanteislrefController.selected.totalgeneral}" title="#{bundletributos.EditComprobanteislrefTitle_totalgeneral}" />
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrefLabel_totalbimponible}" for="totalbimponible" />
+                        <p:inputText id="totalbimponible" value="#{comprobanteislrefController.selected.totalbimponible}" title="#{bundletributos.EditComprobanteislrefTitle_totalbimponible}" />
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrefLabel_totalislrretenido}" for="totalislrretenido" />
+                        <p:inputText id="totalislrretenido" value="#{comprobanteislrefController.selected.totalislrretenido}" title="#{bundletributos.EditComprobanteislrefTitle_totalislrretenido}" />
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrefLabel_idestatuscomprobante}" for="idestatuscomprobante" />
+                        <p:selectOneMenu id="idestatuscomprobante" value="#{comprobanteislrefController.selected.idestatuscomprobante}" >
+                            <f:selectItem itemLabel="#{bundletributos.SelectOneMessage}"/>
+                            <f:selectItems value="#{estatuscomprobanteretencionController.itemsAvailableSelectOne}"
+                                           var="idestatuscomprobanteItem"
+                                           itemValue="#{idestatuscomprobanteItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundletributos.EditComprobanteislrefLabel_rifproveedor}" for="rifproveedor" />
+                        <p:selectOneMenu id="rifproveedor" value="#{comprobanteislrefController.selected.rifproveedor}" >
+                            <f:selectItem itemLabel="#{bundletributos.SelectOneMessage}"/>
+                            <f:selectItems value="#{proveedorController.itemsAvailableSelectOne}"
+                                           var="rifproveedorItem"
+                                           itemValue="#{rifproveedorItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{comprobanteislrefController.update}" value="#{bundletributos.Save}" update="display,:ComprobanteislrefListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ComprobanteislrefEditDialog');"/>
+                    <p:commandButton value="#{bundletributos.Cancel}" onclick="ComprobanteislrefEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

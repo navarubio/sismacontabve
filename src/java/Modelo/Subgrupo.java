@@ -35,6 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Subgrupo.findByIdsubgrupo", query = "SELECT s FROM Subgrupo s WHERE s.idsubgrupo = :idsubgrupo"),
     @NamedQuery(name = "Subgrupo.findBySubgrupo", query = "SELECT s FROM Subgrupo s WHERE s.subgrupo = :subgrupo")})
 public class Subgrupo implements Serializable {
+    @OneToMany(mappedBy = "idsubgrupo")
+    private Collection<Tiporetencionislr> tiporetencionislrCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -113,6 +115,15 @@ public class Subgrupo implements Serializable {
     @Override
     public String toString() {
         return subgrupo;
+    }
+
+    @XmlTransient
+    public Collection<Tiporetencionislr> getTiporetencionislrCollection() {
+        return tiporetencionislrCollection;
+    }
+
+    public void setTiporetencionislrCollection(Collection<Tiporetencionislr> tiporetencionislrCollection) {
+        this.tiporetencionislrCollection = tiporetencionislrCollection;
     }
     
 }

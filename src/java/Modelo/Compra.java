@@ -46,6 +46,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Compra.findByFechafactura", query = "SELECT c FROM Compra c WHERE c.fechafactura = :fechafactura")})
 public class Compra implements Serializable {
     @OneToMany(mappedBy = "idcompra")
+    private Collection<Detalleretencionivaef> detalleretencionivaefCollection;
+    @OneToMany(mappedBy = "idcompra")
+    private Collection<Detalleretencionislref> detalleretencionislrefCollection;
+    @OneToMany(mappedBy = "idcompra")
     private Collection<Autorizacion> autorizacionCollection;
     @OneToMany(mappedBy = "idcompra")
     private Collection<Pagocompra> pagocompraCollection;
@@ -263,6 +267,24 @@ public class Compra implements Serializable {
 
     public void setAutorizacionCollection(Collection<Autorizacion> autorizacionCollection) {
         this.autorizacionCollection = autorizacionCollection;
+    }
+
+    @XmlTransient
+    public Collection<Detalleretencionivaef> getDetalleretencionivaefCollection() {
+        return detalleretencionivaefCollection;
+    }
+
+    public void setDetalleretencionivaefCollection(Collection<Detalleretencionivaef> detalleretencionivaefCollection) {
+        this.detalleretencionivaefCollection = detalleretencionivaefCollection;
+    }
+
+    @XmlTransient
+    public Collection<Detalleretencionislref> getDetalleretencionislrefCollection() {
+        return detalleretencionislrefCollection;
+    }
+
+    public void setDetalleretencionislrefCollection(Collection<Detalleretencionislref> detalleretencionislrefCollection) {
+        this.detalleretencionislrefCollection = detalleretencionislrefCollection;
     }
     
 }

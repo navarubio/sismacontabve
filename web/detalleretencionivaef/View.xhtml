@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalleretencionivaefViewDlg" widgetVar="DetalleretencionivaefViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundletributos.ViewDetalleretencionivaefTitle}">
+            <h:form id="DetalleretencionivaefViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detalleretencionivaefController.selected != null}">
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionivaefLabel_iddetalleretencionivaef}"/>
+                        <h:outputText value="#{detalleretencionivaefController.selected.iddetalleretencionivaef}" title="#{bundletributos.ViewDetalleretencionivaefTitle_iddetalleretencionivaef}"/>
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionivaefLabel_totalcompra}"/>
+                        <h:outputText value="#{detalleretencionivaefController.selected.totalcompra}" title="#{bundletributos.ViewDetalleretencionivaefTitle_totalcompra}"/>
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionivaefLabel_bimponible}"/>
+                        <h:outputText value="#{detalleretencionivaefController.selected.bimponible}" title="#{bundletributos.ViewDetalleretencionivaefTitle_bimponible}"/>
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionivaefLabel_totalivaretenido}"/>
+                        <h:outputText value="#{detalleretencionivaefController.selected.totalivaretenido}" title="#{bundletributos.ViewDetalleretencionivaefTitle_totalivaretenido}"/>
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionivaefLabel_idcomprobanteivaef}"/>
+                        <h:outputText value="#{detalleretencionivaefController.selected.idcomprobanteivaef}" title="#{bundletributos.ViewDetalleretencionivaefTitle_idcomprobanteivaef}"/>
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionivaefLabel_idtiporetencioniva}"/>
+                        <h:outputText value="#{detalleretencionivaefController.selected.idtiporetencioniva}" title="#{bundletributos.ViewDetalleretencionivaefTitle_idtiporetencioniva}"/>
+                        <h:outputText value="#{bundletributos.ViewDetalleretencionivaefLabel_idcompra}"/>
+                        <h:outputText value="#{detalleretencionivaefController.selected.idcompra}" title="#{bundletributos.ViewDetalleretencionivaefTitle_idcompra}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundletributos.Close}" onclick="DetalleretencionivaefViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

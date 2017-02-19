@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ResidenciajuridicaCreateDlg" widgetVar="ResidenciajuridicaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundletributos.CreateResidenciajuridicaTitle}">
+            <h:form id="ResidenciajuridicaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{residenciajuridicaController.selected != null}">
+                        <p:outputLabel value="#{bundletributos.CreateResidenciajuridicaLabel_idresidencia}" for="idresidencia" />
+                        <p:inputText id="idresidencia" value="#{residenciajuridicaController.selected.idresidencia}" title="#{bundletributos.CreateResidenciajuridicaTitle_idresidencia}" required="true" requiredMessage="#{bundletributos.CreateResidenciajuridicaRequiredMessage_idresidencia}"/>
+                        <p:outputLabel value="#{bundletributos.CreateResidenciajuridicaLabel_residencia}" for="residencia" />
+                        <p:inputText id="residencia" value="#{residenciajuridicaController.selected.residencia}" title="#{bundletributos.CreateResidenciajuridicaTitle_residencia}" />
+                        <p:outputLabel value="#{bundletributos.CreateResidenciajuridicaLabel_abreviatura}" for="abreviatura" />
+                        <p:inputText id="abreviatura" value="#{residenciajuridicaController.selected.abreviatura}" title="#{bundletributos.CreateResidenciajuridicaTitle_abreviatura}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{residenciajuridicaController.create}" value="#{bundletributos.Save}" update="display,:ResidenciajuridicaListForm:datalist,:growl" oncomplete="handleSubmit(args,'ResidenciajuridicaCreateDialog');"/>
+                    <p:commandButton value="#{bundletributos.Cancel}" onclick="ResidenciajuridicaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

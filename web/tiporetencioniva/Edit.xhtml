@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TiporetencionivaEditDlg" widgetVar="TiporetencionivaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundletributos.EditTiporetencionivaTitle}">
+            <h:form id="TiporetencionivaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tiporetencionivaController.selected != null}">
+                        <p:outputLabel value="#{bundletributos.EditTiporetencionivaLabel_idtiporetencioniva}" for="idtiporetencioniva" />
+                        <p:inputText id="idtiporetencioniva" value="#{tiporetencionivaController.selected.idtiporetencioniva}" title="#{bundletributos.EditTiporetencionivaTitle_idtiporetencioniva}" required="true" requiredMessage="#{bundletributos.EditTiporetencionivaRequiredMessage_idtiporetencioniva}"/>
+                        <p:outputLabel value="#{bundletributos.EditTiporetencionivaLabel_porcentajeiva}" for="porcentajeiva" />
+                        <p:inputText id="porcentajeiva" value="#{tiporetencionivaController.selected.porcentajeiva}" title="#{bundletributos.EditTiporetencionivaTitle_porcentajeiva}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tiporetencionivaController.update}" value="#{bundletributos.Save}" update="display,:TiporetencionivaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TiporetencionivaEditDialog');"/>
+                    <p:commandButton value="#{bundletributos.Cancel}" onclick="TiporetencionivaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

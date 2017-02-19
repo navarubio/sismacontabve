@@ -46,6 +46,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Factura.findByCantidadenletras", query = "SELECT f FROM Factura f WHERE f.cantidadenletras = :cantidadenletras")})
 public class Factura implements Serializable {
     @OneToMany(mappedBy = "numerofact")
+    private Collection<Detalleretencionivasp> detalleretencionivaspCollection;
+    @OneToMany(mappedBy = "numerofact")
+    private Collection<Detalleretencionislrsp> detalleretencionislrspCollection;
+    @OneToMany(mappedBy = "numerofact")
     private Collection<Detallefactura> detallefacturaCollection;
     @OneToMany(mappedBy = "numerofact")
     private Collection<Cobroventa> cobroventaCollection;
@@ -264,6 +268,24 @@ public class Factura implements Serializable {
 
     public void setCobroventaCollection(Collection<Cobroventa> CobroventaCollection) {
         this.cobroventaCollection = CobroventaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Detalleretencionivasp> getDetalleretencionivaspCollection() {
+        return detalleretencionivaspCollection;
+    }
+
+    public void setDetalleretencionivaspCollection(Collection<Detalleretencionivasp> detalleretencionivaspCollection) {
+        this.detalleretencionivaspCollection = detalleretencionivaspCollection;
+    }
+
+    @XmlTransient
+    public Collection<Detalleretencionislrsp> getDetalleretencionislrspCollection() {
+        return detalleretencionislrspCollection;
+    }
+
+    public void setDetalleretencionislrspCollection(Collection<Detalleretencionislrsp> detalleretencionislrspCollection) {
+        this.detalleretencionislrspCollection = detalleretencionislrspCollection;
     }
     
 }

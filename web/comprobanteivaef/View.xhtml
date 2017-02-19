@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ComprobanteivaefViewDlg" widgetVar="ComprobanteivaefViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundletributos.ViewComprobanteivaefTitle}">
+            <h:form id="ComprobanteivaefViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{comprobanteivaefController.selected != null}">
+                        <h:outputText value="#{bundletributos.ViewComprobanteivaefLabel_idcomprobanteivaef}"/>
+                        <h:outputText value="#{comprobanteivaefController.selected.idcomprobanteivaef}" title="#{bundletributos.ViewComprobanteivaefTitle_idcomprobanteivaef}"/>
+                        <h:outputText value="#{bundletributos.ViewComprobanteivaefLabel_comprobante}"/>
+                        <h:outputText value="#{comprobanteivaefController.selected.comprobante}" title="#{bundletributos.ViewComprobanteivaefTitle_comprobante}"/>
+                        <h:outputText value="#{bundletributos.ViewComprobanteivaefLabel_fecha}"/>
+                        <h:outputText value="#{comprobanteivaefController.selected.fecha}" title="#{bundletributos.ViewComprobanteivaefTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundletributos.ViewComprobanteivaefLabel_anio}"/>
+                        <h:outputText value="#{comprobanteivaefController.selected.anio}" title="#{bundletributos.ViewComprobanteivaefTitle_anio}"/>
+                        <h:outputText value="#{bundletributos.ViewComprobanteivaefLabel_mes}"/>
+                        <h:outputText value="#{comprobanteivaefController.selected.mes}" title="#{bundletributos.ViewComprobanteivaefTitle_mes}"/>
+                        <h:outputText value="#{bundletributos.ViewComprobanteivaefLabel_totalgeneral}"/>
+                        <h:outputText value="#{comprobanteivaefController.selected.totalgeneral}" title="#{bundletributos.ViewComprobanteivaefTitle_totalgeneral}"/>
+                        <h:outputText value="#{bundletributos.ViewComprobanteivaefLabel_totalbimponible}"/>
+                        <h:outputText value="#{comprobanteivaefController.selected.totalbimponible}" title="#{bundletributos.ViewComprobanteivaefTitle_totalbimponible}"/>
+                        <h:outputText value="#{bundletributos.ViewComprobanteivaefLabel_totaliva}"/>
+                        <h:outputText value="#{comprobanteivaefController.selected.totaliva}" title="#{bundletributos.ViewComprobanteivaefTitle_totaliva}"/>
+                        <h:outputText value="#{bundletributos.ViewComprobanteivaefLabel_totalivaretenido}"/>
+                        <h:outputText value="#{comprobanteivaefController.selected.totalivaretenido}" title="#{bundletributos.ViewComprobanteivaefTitle_totalivaretenido}"/>
+                        <h:outputText value="#{bundletributos.ViewComprobanteivaefLabel_idestatuscomprobante}"/>
+                        <h:outputText value="#{comprobanteivaefController.selected.idestatuscomprobante}" title="#{bundletributos.ViewComprobanteivaefTitle_idestatuscomprobante}"/>
+                        <h:outputText value="#{bundletributos.ViewComprobanteivaefLabel_rifproveedor}"/>
+                        <h:outputText value="#{comprobanteivaefController.selected.rifproveedor}" title="#{bundletributos.ViewComprobanteivaefTitle_rifproveedor}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundletributos.Close}" onclick="ComprobanteivaefViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
