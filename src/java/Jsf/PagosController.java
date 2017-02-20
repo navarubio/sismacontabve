@@ -21,9 +21,11 @@ import Modelo.Autorizacion;
 import Modelo.Auxiliarrequerimiento;
 import Modelo.Banco;
 import Modelo.Compra;
+import Modelo.Comprobanteivaef;
 import Modelo.Cuentabancaria;
 import Modelo.Departamento;
 import Modelo.Detallecompra;
+import Modelo.Detalleretencionivaef;
 import Modelo.Estatuscontable;
 import Modelo.Estatusfactura;
 import Modelo.Pagocompra;
@@ -106,6 +108,9 @@ public class PagosController implements Serializable {
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     private String correo;
     private envioCorreo enviomail;
+    @Inject
+    private Detalleretencionivaef detalleretencionivaef;
+    private double ivaretenido;
 
 
     @Inject
@@ -125,6 +130,14 @@ public class PagosController implements Serializable {
         return lstCuentasSelecc;
     }
 
+    public double getIvaretenido() {
+        return ivaretenido;
+    }
+
+    public void setIvaretenido(double ivaretenido) {
+        this.ivaretenido = ivaretenido;
+    }
+
     public void setLstCuentasSelecc(List<Cuentabancaria> lstCuentasSelecc) {
         this.lstCuentasSelecc = lstCuentasSelecc;
     }
@@ -133,6 +146,15 @@ public class PagosController implements Serializable {
         return pagocompra;
     }
 
+    public Detalleretencionivaef getDetalleretencionivaef() {
+        return detalleretencionivaef;
+    }
+
+    public void setDetalleretencionivaef(Detalleretencionivaef detalleretencionivaef) {
+        this.detalleretencionivaef = detalleretencionivaef;
+    }
+
+    
     public int getFormapago() {
         return formapago;
     }
@@ -353,6 +375,15 @@ public class PagosController implements Serializable {
         }
         pagocompra.setIdcuentabancaria(lstCuentasSelecc.get(0));
         return lstCuentasSelecc;
+    }
+    public void calcularivaretrenido(){
+        double ivatotal= compra.getIva();
+        double porcent = detalleretencionivaef.getIdtiporetencioniva().getPorcentajeiva();
+        ivaretenido =  (ivatotal*porcent)/100;
+        detalleretencionivaef.setTotalivaretenido(ivaretenido);
+        ivaretenido=0;
+        ivatotal=0;
+        porcent=0;
     }
 
     public void registrar() {
