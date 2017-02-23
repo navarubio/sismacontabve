@@ -39,6 +39,12 @@
                             </f:facet>
                             <h:outputText value="#{item.personalidad}"/>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPersonalidadjuridicaTitle_abreviatura}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.abreviatura}"/>
+                        </p:column>                        
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{personalidadjuridicaController.prepareCreate}" update=":PersonalidadjuridicaCreateForm" oncomplete="PF('PersonalidadjuridicaCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PersonalidadjuridicaViewForm" oncomplete="PF('PersonalidadjuridicaViewDialog').show()" disabled="#{empty personalidadjuridicaController.selected}"/>

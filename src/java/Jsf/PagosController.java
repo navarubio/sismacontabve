@@ -17,6 +17,7 @@ import Jpa.EstatusfacturaFacadeLocal;
 import Jpa.PagocompraFacadeLocal;
 import Jpa.RequerimientoFacadeLocal;
 import Jpa.TipopagoFacadeLocal;
+import Jpa.TiporetencionislrFacadeLocal;
 import Modelo.Autorizacion;
 import Modelo.Auxiliarrequerimiento;
 import Modelo.Banco;
@@ -25,12 +26,14 @@ import Modelo.Comprobanteivaef;
 import Modelo.Cuentabancaria;
 import Modelo.Departamento;
 import Modelo.Detallecompra;
+import Modelo.Detalleretencionislref;
 import Modelo.Detalleretencionivaef;
 import Modelo.Estatuscontable;
 import Modelo.Estatusfactura;
 import Modelo.Pagocompra;
 import Modelo.Requerimiento;
 import Modelo.Tipopago;
+import Modelo.Tiporetencionislr;
 import Modelo.Usuario;
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -76,6 +79,8 @@ public class PagosController implements Serializable {
     private TipopagoFacadeLocal tipopagoEJB;
     @EJB
     private BancoFacadeLocal bancoEJB;
+    @EJB
+    private TiporetencionislrFacadeLocal tiporetencionislrEJB;
 
     private Auxiliarrequerimiento auxiliarrequerimiento;
     private Compra compra;
@@ -110,7 +115,10 @@ public class PagosController implements Serializable {
     private envioCorreo enviomail;
     @Inject
     private Detalleretencionivaef detalleretencionivaef;
+    @Inject
+    private Detalleretencionislref detalleretencionislref;
     private double ivaretenido;
+    private double islrretenido;
 
 
     @Inject
@@ -152,6 +160,22 @@ public class PagosController implements Serializable {
 
     public void setDetalleretencionivaef(Detalleretencionivaef detalleretencionivaef) {
         this.detalleretencionivaef = detalleretencionivaef;
+    }
+
+    public Detalleretencionislref getDetalleretencionislref() {
+        return detalleretencionislref;
+    }
+
+    public void setDetalleretencionislref(Detalleretencionislref detalleretencionislref) {
+        this.detalleretencionislref = detalleretencionislref;
+    }
+
+    public Requerimiento getRequerimiento() {
+        return requerimiento;
+    }
+
+    public void setRequerimiento(Requerimiento requerimiento) {
+        this.requerimiento = requerimiento;
     }
 
     
@@ -234,7 +258,10 @@ public class PagosController implements Serializable {
     public List<Detallecompra> getDetallecompraFiltrados() {
         return detallecompraFiltrados;
     }
-
+    
+    public void asignarRequerimiento(Requerimiento requeri) {
+        requerimiento = requeri;
+    }
     public void setDetallecompraFiltrados(List<Detallecompra> detallecompraFiltrados) {
         this.detallecompraFiltrados = detallecompraFiltrados;
     }
@@ -324,6 +351,7 @@ public class PagosController implements Serializable {
         this.auxiliarrequerimiento = compr.getIdauxiliarrequerimiento();
 //        this.auxiliar = aux;
         detallecompraFiltrados = detallecompraAuxiliar();
+        
 //        this.compra.setIdauxiliarrequerimiento(auxiliar);
     }
 
@@ -376,7 +404,7 @@ public class PagosController implements Serializable {
         pagocompra.setIdcuentabancaria(lstCuentasSelecc.get(0));
         return lstCuentasSelecc;
     }
-    public void calcularivaretrenido(){
+    public void calcularivaretenido(){
         double ivatotal= compra.getIva();
         double porcent = detalleretencionivaef.getIdtiporetencioniva().getPorcentajeiva();
         ivaretenido =  (ivatotal*porcent)/100;
@@ -384,6 +412,21 @@ public class PagosController implements Serializable {
         ivaretenido=0;
         ivatotal=0;
         porcent=0;
+    }
+    
+    public void calcularislrretenido(){
+        int personal=compra.getRifproveedor().getIdpersonalidad().getIdpersonalidad();
+        int residenc=compra.getRifproveedor().getIdresidencia().getIdresidencia();
+        int tiposervicio=detalleretencionislref.getIdtiporetencionislr().getIdsubgrupo().getIdsubgrupo();
+        Tiporetencionislr tiporetencion=tiporetencionislrEJB.retencionislrFiltrada(personal, residenc, tiposervicio);
+        double bimponibletotal = compra.getSubtotal();
+        double porcentbimponible = tiporetencion.getPorcentajebimponible();
+        double porcentislr = tiporetencion.getPorcentajeretencion();
+        double sustraendo =tiporetencion.getSustraendo();        
+        islrretenido= (((((porcentbimponible*bimponibletotal)/100) * porcentislr)/100)-sustraendo);
+        detalleretencionislref.setProcentajeretencion(porcentislr);
+        detalleretencionislref.setTotalislrretenido(islrretenido);
+        detalleretencionislref.setSustraendo(sustraendo);
     }
 
     public void registrar() {

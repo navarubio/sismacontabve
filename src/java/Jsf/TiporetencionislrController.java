@@ -3,7 +3,7 @@ package Jsf;
 import Modelo.Tiporetencionislr;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
-import Jpa.TiporetencionislrFacade;
+import Jpa.TiporetencionislrFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +24,7 @@ import javax.faces.convert.FacesConverter;
 public class TiporetencionislrController implements Serializable {
 
     @EJB
-    private Jpa.TiporetencionislrFacade ejbFacade;
+    private Jpa.TiporetencionislrFacadeLocal ejbFacade;
     private List<Tiporetencionislr> items = null;
     private Tiporetencionislr selected;
 
@@ -45,7 +45,7 @@ public class TiporetencionislrController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private TiporetencionislrFacade getFacade() {
+    private TiporetencionislrFacadeLocal getFacade() {
         return ejbFacade;
     }
 

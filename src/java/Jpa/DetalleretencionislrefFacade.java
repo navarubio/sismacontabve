@@ -28,4 +28,6 @@ public class DetalleretencionislrefFacade extends AbstractFacade<Detalleretencio
         super(Detalleretencionislref.class);
     }
     
+    
+    
 }

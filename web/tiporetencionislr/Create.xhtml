@@ -21,7 +21,7 @@
                                            itemValue="#{idsubgrupoItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundletributos.CreateTiporetencionislrLabel_descripcionservicio}" for="descripcionservicio" />
-                        <p:inputText id="descripcionservicio" value="#{tiporetencionislrController.selected.descripcionservicio}" title="#{bundletributos.CreateTiporetencionislrTitle_descripcionservicio}" />
+                        <p:inputTextarea id="descripcionservicio" value="#{tiporetencionislrController.selected.descripcionservicio}" title="#{bundletributos.CreateTiporetencionislrTitle_descripcionservicio}" cols="50" rows="2" />
                         <p:outputLabel value="#{bundletributos.CreateTiporetencionislrLabel_idpersonalidad}" for="idpersonalidad" />
                         <p:selectOneMenu id="idpersonalidad" value="#{tiporetencionislrController.selected.idpersonalidad}" >
                             <f:selectItems value="#{personalidadjuridicaController.itemsAvailableSelectOne}"

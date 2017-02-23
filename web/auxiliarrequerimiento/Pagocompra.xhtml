@@ -208,17 +208,11 @@
                                 </h:outputText>
                             </p:column>
                             <p:column style="text-align: center" headerText="Retenciones">                                
-                                <p:commandLink actionListener="#{comprasController.asignarRequerimiento(req)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
+                                <p:commandLink actionListener="#{pagosController.asignarRequerimiento(req)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
                                     <h:graphicImage library="images" name="balanzapago.png" width="30" height="30" alt="Editar Articulo" 
                                                     rendered="#{req.codigo.idgrupo.idgrupo>= 2 ? true:false}"/> 
                                 </p:commandLink>
                             </p:column>
-
-                            <!--p:column style="width:10%" headerText="Editar">
-                                <p:commandLink actionListener=".{comprasController.asignarRequerimiento(req)}" value="Editar" update="listado" oncomplete="PF('wdialogo').show();" >
-
-                                </p:commandLink>
-                            </p:column-->
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
@@ -252,7 +246,7 @@
                                     </p:inputText>
                                     <p:outputLabel for="tiporetencion" value="Porcentaje Retencion IVA" />
                                     <p:selectOneMenu id="tiporetencion" value="#{pagosController.detalleretencionivaef.idtiporetencioniva}" converter="omnifaces.SelectItemsConverter" style="text-align: right" > 
-                                        <p:ajax event="change" listener="#{pagosController.calcularivaretrenido()}" update="montoret,display"/>
+                                        <p:ajax event="change" listener="#{pagosController.calcularivaretenido()}" update="montoret,display"/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                                         <f:selectItems value="#{tiporetencionivaController.items}"
                                                        var="idtiporetencionItem"
@@ -275,17 +269,26 @@
                                         <f:convertNumber type="currency" currencySymbol=" "   />
                                     </p:inputText>
                                     <p:outputLabel for="tiposervicio"  value="Tipo de Servicio " styleClass="optionalLbl"/>
-                                    <p:inputText id="tiposervicio"  size="20" value="#{req.codigo.idsubgrupo.subgrupo}" style="text-align:right"/>
-                                    <p:outputLabel for="tiporetencionislr" value="Porcentaje Retencion IVA" />
-                                    <p:selectOneMenu id="tiporetencionislr" value="#{pagosController.detalleretencionivaef.idtiporetencioniva}" converter="omnifaces.SelectItemsConverter" style="text-align: right" > 
-                                        <p:ajax event="change" listener="#{pagosController.calcularivaretrenido()}" update="montoretencion,display"/>
+                                    <p:inputText id="tiposervicio"  size="20" value="#{pagosController.requerimiento.codigo.idsubgrupo.subgrupo}" style="text-align:right"/>
+                                    <p:outputLabel for="personalidad"  value="Personalidad Juridica" styleClass="optionalLbl"/>
+                                    <p:inputText id="personalidad"  size="20" value="#{pagosController.compra.rifproveedor.idpersonalidad.personalidad}" style="text-align:right"/>
+                                    <p:outputLabel for="residencia"  value="Tipo de Residencia" styleClass="optionalLbl"/>
+                                    <p:inputText id="residencia"  size="20" value="#{pagosController.compra.rifproveedor.idresidencia.residencia}" style="text-align:right"/>                                  
+                                    <p:outputLabel for="tiporetencionislr" value="Porcentaje Retencion ISLR" />
+                                    <p:selectOneMenu id="tiporetencionislr" value="#{pagosController.detalleretencionislref.idtiporetencionislr}" converter="omnifaces.SelectItemsConverter" style="text-align: right" > 
+                                        <p:ajax event="change" listener="#{pagosController.calcularislrretenido()}" update="islrretenido,sustraendo,display"/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                                         <f:selectItems value="#{tiporetencionislrController.items}"
                                                        var="idtiporetencionItem"
                                                        itemLabel="#{idtiporetencionItem.descripcionservicio}"  itemValue="#{idtiporetencionItem}" /> 
                                     </p:selectOneMenu>
-                                    <p:outputLabel for="montoretencion"  value="Monto Retenido" styleClass="optionalLbl"/>
-                                    <p:inputText id="montoretencion"  size="20" value="#{pagosController.detalleretencionivaef.totalivaretenido}" style="text-align:right">
+                                    <p:outputLabel for="sustraendo"  value="Sustraendo" styleClass="optionalLbl"/>
+                                    <p:inputText id="sustraendo"  size="20" value="#{pagosController.detalleretencionislref.sustraendo}" style="text-align:right">
+                                        <f:convertNumber type="currency" currencySymbol=" "   />
+                                    </p:inputText>
+                                    
+                                    <p:outputLabel for="islrretenido"  value="I.S.L.R. Retenido" styleClass="optionalLbl"/>
+                                    <p:inputText id="islrretenido"  size="20" value="#{pagosController.detalleretencionislref.totalislrretenido}" style="text-align:right">
                                         <f:convertNumber type="currency" currencySymbol=" "   />
                                     </p:inputText>
                                 </p:panelGrid>

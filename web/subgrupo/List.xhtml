@@ -16,12 +16,12 @@
         <ui:define name="body">
             <h:form id="SubgrupoListForm">
                 <p:panel header="#{bundle.ListSubgrupoTitle}">
-                    <p:dataTable id="datalist" value="#{subgrupoController.items}" var="item" style="width:500px"
+                    <p:dataTable id="datalist" value="#{subgrupoController.items}" var="item" style="width:700px"
                                  selectionMode="single" selection="#{subgrupoController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idsubgrupo}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="20"
+                                 rowsPerPageTemplate="20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -33,13 +33,13 @@
                             </f:facet>
                             <h:outputText value="#{item.idsubgrupo}"/>
                         </p:column>
-                        <p:column>
+                        <p:column >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListSubgrupoTitle_idgrupo}"/>
                             </f:facet>
                             <h:outputText value="#{item.idgrupo.grupo}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="400">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListSubgrupoTitle_subgrupo}"/>
                             </f:facet>

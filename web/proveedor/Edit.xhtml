@@ -42,6 +42,13 @@
                                            var="idpersonalidadItem"
                                            itemValue="#{idpersonalidadItem}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditProveedorLabel_idresidencia}" for="idresidencia" />
+                        <p:selectOneMenu id="idresidencia" value="#{proveedorController.selected.idresidencia}" >
+                            <f:selectItems value="#{residenciajuridicaController.itemsAvailableSelectOne}"
+                                           var="idresidenciaItem"
+                                           itemLabel="#{idresidenciaItem.residencia}" itemValue="#{idresidenciaItem}"/>
+                        </p:selectOneMenu>
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{proveedorController.update}" value="#{bundle.Save}" update="display,:ProveedorListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ProveedorEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ProveedorEditDialog.hide()"/>

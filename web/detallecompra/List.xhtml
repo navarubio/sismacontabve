@@ -59,7 +59,7 @@
                             </f:facet>
                             <h:outputText value="#{item.codigo}"/>
                         </p:column>
-                        <p:column width="350">
+                        <p:column width="350" filterBy="#{item.codigo.descripcion}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRequerimientoTitle_descripcion}"/>
                             </f:facet>

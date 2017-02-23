@@ -71,18 +71,6 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProveedorTitle_personacontacto}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.personacontacto}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProveedorTitle_telefonocontacto}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.telefonocontacto}"/>
-                        </p:column>
                         <p:column width="100" style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListProveedorTitle_idtipoproveedor}"/>
@@ -95,6 +83,12 @@
                             </f:facet>
                             <h:outputText value="#{item.idpersonalidad.personalidad}"/>
                         </p:column>
+                        <p:column width="80" style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProveedorTitle_idresidencia}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idresidencia.residencia}"/>
+                        </p:column>                        
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{proveedorController.prepareCreate}" update=":ProveedorCreateForm" oncomplete="PF('ProveedorCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ProveedorViewForm" oncomplete="PF('ProveedorViewDialog').show()" disabled="#{empty proveedorController.selected}"/>

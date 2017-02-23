@@ -16,6 +16,8 @@
                         <p:inputText id="idpersonalidad" value="#{personalidadjuridicaController.selected.idpersonalidad}" title="#{bundle.CreatePersonalidadjuridicaTitle_idpersonalidad}" required="true" requiredMessage="#{bundle.CreatePersonalidadjuridicaRequiredMessage_idpersonalidad}"/>
                         <p:outputLabel value="#{bundle.CreatePersonalidadjuridicaLabel_personalidad}" for="personalidad" />
                         <p:inputText id="personalidad" value="#{personalidadjuridicaController.selected.personalidad}" title="#{bundle.CreatePersonalidadjuridicaTitle_personalidad}" />
+                        <p:outputLabel value="#{bundle.CreatePersonalidadjuridicaLabel_personalidad}" for="abreviatura" />
+                        <p:inputText id="abreviatura" value="#{personalidadjuridicaController.selected.abreviatura}" title="#{bundle.CreatePersonalidadjuridicaTitle_abreviatura}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{personalidadjuridicaController.create}" value="#{bundle.Save}" update="display,:PersonalidadjuridicaListForm:datalist,:growl" oncomplete="handleSubmit(args,'PersonalidadjuridicaCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PersonalidadjuridicaCreateDialog.hide()"/>

@@ -44,6 +44,9 @@ public class Personalidadjuridica implements Serializable {
     @Size(max = 20)
     @Column(name = "personalidad")
     private String personalidad;
+    @Size(max = 3)
+    @Column(name = "abreviatura")
+    private String abreviatura;
     @OneToMany(mappedBy = "idpersonalidad")
     private Collection<Cliente> clienteCollection;
     @OneToMany(mappedBy = "idpersonalidad")
@@ -71,6 +74,14 @@ public class Personalidadjuridica implements Serializable {
     public void setPersonalidad(String personalidad) {
         this.personalidad = personalidad;
     }
+
+    public String getAbreviatura() {
+        return abreviatura;
+    }
+
+    public void setAbreviatura(String abreviatura) {
+        this.abreviatura = abreviatura;
+    } 
 
     @XmlTransient
     public Collection<Cliente> getClienteCollection() {

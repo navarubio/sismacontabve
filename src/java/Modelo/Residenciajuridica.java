@@ -48,6 +48,9 @@ public class Residenciajuridica implements Serializable {
     private String abreviatura;
     @OneToMany(mappedBy = "idresidencia")
     private Collection<Tiporetencionislr> tiporetencionislrCollection;
+    @OneToMany(mappedBy = "idresidencia")
+    private Collection<Proveedor> proveedorCollection;
+
 
     public Residenciajuridica() {
     }
@@ -87,6 +90,15 @@ public class Residenciajuridica implements Serializable {
 
     public void setTiporetencionislrCollection(Collection<Tiporetencionislr> tiporetencionislrCollection) {
         this.tiporetencionislrCollection = tiporetencionislrCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Proveedor> getProveedorCollection() {
+        return proveedorCollection;
+    }
+
+    public void setProveedorCollection(Collection<Proveedor> proveedorCollection) {
+        this.proveedorCollection = proveedorCollection;
     }
 
     @Override
