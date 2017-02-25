@@ -12,6 +12,9 @@ import Jpa.CompraFacadeLocal;
 import Jpa.CuentabancariaFacadeLocal;
 import Jpa.DepartamentoFacadeLocal;
 import Jpa.DetallecompraFacadeLocal;
+import Jpa.DetalleretencionislrefFacade;
+import Jpa.DetalleretencionislrefFacadeLocal;
+import Jpa.DetalleretencionivaefFacade;
 import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaFacadeLocal;
 import Jpa.PagocompraFacadeLocal;
@@ -81,6 +84,10 @@ public class PagosController implements Serializable {
     private BancoFacadeLocal bancoEJB;
     @EJB
     private TiporetencionislrFacadeLocal tiporetencionislrEJB;
+    @EJB
+    private DetalleretencionivaefFacade detalleretencionivaefEJB;
+    @EJB
+    private DetalleretencionislrefFacadeLocal detalleretencionislrefEJB;
 
     private Auxiliarrequerimiento auxiliarrequerimiento;
     private Compra compra;
@@ -120,10 +127,8 @@ public class PagosController implements Serializable {
     private double ivaretenido;
     private double islrretenido;
 
-
     @Inject
     private Auxiliarrequerimiento auxiliar;
-    @Inject
     private Requerimiento requerimiento;
     @Inject
     private Compra compras;
@@ -178,7 +183,6 @@ public class PagosController implements Serializable {
         this.requerimiento = requerimiento;
     }
 
-    
     public int getFormapago() {
         return formapago;
     }
@@ -258,10 +262,11 @@ public class PagosController implements Serializable {
     public List<Detallecompra> getDetallecompraFiltrados() {
         return detallecompraFiltrados;
     }
-    
-    public void asignarRequerimiento(Requerimiento requeri) {
-        requerimiento = requeri;
+
+    public void asignarDetalleCompra(Detallecompra detallecompra) {
+        this.detallecompra=detallecompra;
     }
+
     public void setDetallecompraFiltrados(List<Detallecompra> detallecompraFiltrados) {
         this.detallecompraFiltrados = detallecompraFiltrados;
     }
@@ -351,7 +356,7 @@ public class PagosController implements Serializable {
         this.auxiliarrequerimiento = compr.getIdauxiliarrequerimiento();
 //        this.auxiliar = aux;
         detallecompraFiltrados = detallecompraAuxiliar();
-        
+
 //        this.compra.setIdauxiliarrequerimiento(auxiliar);
     }
 
@@ -404,26 +409,26 @@ public class PagosController implements Serializable {
         pagocompra.setIdcuentabancaria(lstCuentasSelecc.get(0));
         return lstCuentasSelecc;
     }
-    public void calcularivaretenido(){
-        double ivatotal= compra.getIva();
+
+    public void calcularivaretenido() {
+        double ivatotal = compra.getIva();
         double porcent = detalleretencionivaef.getIdtiporetencioniva().getPorcentajeiva();
-        ivaretenido =  (ivatotal*porcent)/100;
+        ivaretenido = (ivatotal * porcent) / 100;
         detalleretencionivaef.setTotalivaretenido(ivaretenido);
-        ivaretenido=0;
-        ivatotal=0;
-        porcent=0;
+        ivatotal = 0;
+        porcent = 0;
     }
-    
-    public void calcularislrretenido(){
-        int personal=compra.getRifproveedor().getIdpersonalidad().getIdpersonalidad();
-        int residenc=compra.getRifproveedor().getIdresidencia().getIdresidencia();
-        int tiposervicio=detalleretencionislref.getIdtiporetencionislr().getIdsubgrupo().getIdsubgrupo();
-        Tiporetencionislr tiporetencion=tiporetencionislrEJB.retencionislrFiltrada(personal, residenc, tiposervicio);
+
+    public void calcularislrretenido() {
+        int personal = compra.getRifproveedor().getIdpersonalidad().getIdpersonalidad();
+        int residenc = compra.getRifproveedor().getIdresidencia().getIdresidencia();
+        int tiposervicio = detalleretencionislref.getIdtiporetencionislr().getIdsubgrupo().getIdsubgrupo();
+        Tiporetencionislr tiporetencion = tiporetencionislrEJB.retencionislrFiltrada(personal, residenc, tiposervicio);
         double bimponibletotal = compra.getSubtotal();
         double porcentbimponible = tiporetencion.getPorcentajebimponible();
         double porcentislr = tiporetencion.getPorcentajeretencion();
-        double sustraendo =tiporetencion.getSustraendo();        
-        islrretenido= (((((porcentbimponible*bimponibletotal)/100) * porcentislr)/100)-sustraendo);
+        double sustraendo = tiporetencion.getSustraendo();
+        islrretenido = (((((porcentbimponible * bimponibletotal) / 100) * porcentislr) / 100) - sustraendo);
         detalleretencionislref.setProcentajeretencion(porcentislr);
         detalleretencionislref.setTotalislrretenido(islrretenido);
         detalleretencionislref.setSustraendo(sustraendo);
@@ -467,7 +472,7 @@ public class PagosController implements Serializable {
 //            pagocompra.setTotalpago(compra.getTotal());
 //            pagocompra.setSaldopendiente(compra.getMontopendiente());
             pagocompraEJB.create(pagocompra);
-            
+
             double saldoactualbanco = 0;
             saldoactualbanco = (pagocompra.getIdcuentabancaria().getSaldo() - pagocompra.getTotalpago());
             cuentabanco.setSaldo(saldoactualbanco);
@@ -483,12 +488,34 @@ public class PagosController implements Serializable {
                     + "  TOTAL: " + formatearnumero.format(pagocompra.getTotalpago())
                     + "  OBSERVACIONES: " + pagocompra.getObservacionespago();
 
-                    subject = "Emisión de Pago N° " + pagocompra.getIdpagocompra();
+            subject = "Emisión de Pago N° " + pagocompra.getIdpagocompra();
             enviomail = new envioCorreo(correo, subject);
             enviomail.start();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Pago fue Almacenado"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Pago"));
+        } finally {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        }
+    }
+
+    public void grabarRetencion() {
+        try {
+            detalleretencionivaef.setIdcompra(compra);
+            detalleretencionivaef.setBimponible(compra.getSubtotal());
+            detalleretencionivaef.setTotalcompra(compra.getTotal());
+            detalleretencionivaef.setTotalivaretenido(ivaretenido);
+            detalleretencionivaef.setTotalivacompra(compra.getIva());
+            detalleretencionivaefEJB.create(detalleretencionivaef);
+            if (detallecompra.getCodigo().getIdgrupo().getIdgrupo()==2){
+                detalleretencionislref.setIdcompra(compra);
+                detalleretencionislref.setTotalcompra(compra.getTotal());
+                detalleretencionislref.setBimponible(compra.getSubtotal());
+                detalleretencionislrefEJB.create(detalleretencionislref);
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Retencion fue Almacenada", ""));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Retencion", ""));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }

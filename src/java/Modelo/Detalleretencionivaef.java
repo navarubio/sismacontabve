@@ -44,6 +44,8 @@ public class Detalleretencionivaef implements Serializable {
     private Double totalcompra;
     @Column(name = "bimponible")
     private Double bimponible;
+    @Column(name = "totalivacompra")
+    private Double totalivacompra;
     @Column(name = "totalivaretenido")
     private Double totalivaretenido;
     @JoinColumn(name = "idcomprobanteivaef", referencedColumnName = "idcomprobanteivaef")
@@ -87,6 +89,14 @@ public class Detalleretencionivaef implements Serializable {
         this.bimponible = bimponible;
     }
 
+    public Double getTotalivacompra() {
+        return totalivacompra;
+    }
+
+    public void setTotalivacompra(Double totalivacompra) {
+        this.totalivacompra = totalivacompra;
+    }
+    
     public Double getTotalivaretenido() {
         return totalivaretenido;
     }

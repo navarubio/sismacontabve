@@ -208,9 +208,9 @@
                                 </h:outputText>
                             </p:column>
                             <p:column style="text-align: center" headerText="Retenciones">                                
-                                <p:commandLink actionListener="#{pagosController.asignarRequerimiento(req)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
-                                    <h:graphicImage library="images" name="balanzapago.png" width="30" height="30" alt="Editar Articulo" 
-                                                    rendered="#{req.codigo.idgrupo.idgrupo>= 2 ? true:false}"/> 
+                                <p:commandLink actionListener="#{pagosController.asignarDetalleCompra(req)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
+                                    <h:graphicImage library="images" name="balanzapago.png" width="30" height="30" alt="Editar Articulo" />
+                                    <!--rendered=".{req.codigo.idgrupo.idgrupo>= 2 ? true:false}"/--> 
                                 </p:commandLink>
                             </p:column>
                             <p:columnGroup type="footer">
@@ -229,23 +229,35 @@
                 <p:dialog id="dialogo" widgetVar="wdialogo" header="Retenciones de Ley sobre compras" modal="true" closeOnEscape="true" 
                           resizable="false" showEffect="explode" appendTo="@(body)"  >
                     <h:form>
-                        <h:panelGrid  id="display" columns="1">
-                            <p:fieldset legend="Retencion I.V.A.">
+                        <h:panelGrid  id="display" columns="2">
+                            <p:fieldset legend="Retencion I.V.A." > 
                                 <p:panelGrid columns="2" styleClass="ui-custompanelgrid1">
+                                    <p:outputLabel value="DATOS DEL CONTRIBUYENTE" />
+                                    <p:outputLabel></p:outputLabel>
+                                    <p:outputLabel for="proveedorret" value="Razón Social :" />
+                                    <p:outputLabel id="proveedorret"  value="#{pagosController.compra.rifproveedor.razonsocial}" />
+                                    <p:outputLabel for="rifproveedorret" value="RIF :" />
+                                    <p:outputLabel id="rifproveedorret" value="#{pagosController.compra.rifproveedor.rifproveedor}"/>
+                                    <p:outputLabel for="personalidad"  value="Personalidad Juridica" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="personalidad"  value="#{pagosController.compra.rifproveedor.idpersonalidad.personalidad}" style="text-align:right"/>
+                                    <p:outputLabel for="residencia"  value="Tipo de Residencia" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="residencia"  value="#{pagosController.compra.rifproveedor.idresidencia.residencia}" style="text-align:right"/>                                  
+
                                     <p:outputLabel for="totalc" value="Total Compra" />
-                                    <p:inputText id="totalc" value="#{pagosController.compra.total}" style="text-align:right">
+                                    <p:outputLabel id="totalc" value="#{pagosController.compra.total}" style="text-align:right">
                                         <f:convertNumber type="currency" currencySymbol=" "   />
-                                    </p:inputText>
+                                    </p:outputLabel>
                                     <p:outputLabel for="bimponible"  value="Base Imponible" styleClass="optionalLbl"/>
-                                    <p:inputText id="bimponible"  size="20" value="#{pagosController.compra.subtotal}" style="text-align:right">
+                                    <p:outputLabel id="bimponible"   value="#{pagosController.compra.subtotal}" style="text-align:right">
                                         <f:convertNumber type="currency" currencySymbol=" "   />
-                                    </p:inputText>
+                                    </p:outputLabel>
                                     <p:outputLabel for="totaliva"  value="Iva " styleClass="optionalLbl"/>
-                                    <p:inputText id="totaliva"  size="20" value="#{pagosController.compra.iva}" style="text-align:right">
+                                    <p:outputLabel id="totaliva"  value="#{pagosController.compra.iva}" style="text-align:right">
                                         <f:convertNumber type="currency" currencySymbol=" "   />
-                                    </p:inputText>
+                                    </p:outputLabel>
                                     <p:outputLabel for="tiporetencion" value="Porcentaje Retencion IVA" />
-                                    <p:selectOneMenu id="tiporetencion" value="#{pagosController.detalleretencionivaef.idtiporetencioniva}" converter="omnifaces.SelectItemsConverter" style="text-align: right" > 
+                                    <p:selectOneMenu id="tiporetencion" value="#{pagosController.detalleretencionivaef.idtiporetencioniva}" converter="omnifaces.SelectItemsConverter" style="text-align: right"
+                                                     rendered="#{pagosController.compra.iva>=1  ? true:false}"> 
                                         <p:ajax event="change" listener="#{pagosController.calcularivaretenido()}" update="montoret,display"/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                                         <f:selectItems value="#{tiporetencionivaController.items}"
@@ -253,47 +265,40 @@
                                                        itemLabel="#{idtiporetencionItem.porcentajeiva}"  itemValue="#{idtiporetencionItem}" /> 
                                     </p:selectOneMenu>
                                     <p:outputLabel for="montoret"  value="Monto Retenido" styleClass="optionalLbl"/>
-                                    <p:inputText id="montoret"  size="20" value="#{pagosController.detalleretencionivaef.totalivaretenido}" style="text-align:right">
+                                    <p:outputLabel id="montoret"  styleClass="text-ouputfact" value="#{pagosController.detalleretencionivaef.totalivaretenido}" style="text-align:right" >
                                         <f:convertNumber type="currency" currencySymbol=" "   />
-                                    </p:inputText>
+                                    </p:outputLabel>
                                 </p:panelGrid>
                             </p:fieldset>
-                            <p:fieldset legend="Retencion I.S.L.R.">
+                            <p:fieldset legend="Retencion I.S.L.R."  >
                                 <p:panelGrid columns="2" styleClass="ui-custompanelgrid2" >
                                     <p:outputLabel for="totalcompra" value="Total Compra" />
                                     <p:inputText id="totalcompra" value="#{pagosController.compra.total}" style="text-align:right">
-                                        <f:convertNumber type="currency" currencySymbol=" "   />
                                     </p:inputText>
-                                    <p:outputLabel for="baseimponible"  value="Base Imponible" styleClass="optionalLbl"/>
-                                    <p:inputText id="baseimponible"  size="20" value="#{pagosController.compra.subtotal}" style="text-align:right">
-                                        <f:convertNumber type="currency" currencySymbol=" "   />
-                                    </p:inputText>
-                                    <p:outputLabel for="tiposervicio"  value="Tipo de Servicio " styleClass="optionalLbl"/>
-                                    <p:inputText id="tiposervicio"  size="20" value="#{pagosController.requerimiento.codigo.idsubgrupo.subgrupo}" style="text-align:right"/>
-                                    <p:outputLabel for="personalidad"  value="Personalidad Juridica" styleClass="optionalLbl"/>
-                                    <p:inputText id="personalidad"  size="20" value="#{pagosController.compra.rifproveedor.idpersonalidad.personalidad}" style="text-align:right"/>
-                                    <p:outputLabel for="residencia"  value="Tipo de Residencia" styleClass="optionalLbl"/>
-                                    <p:inputText id="residencia"  size="20" value="#{pagosController.compra.rifproveedor.idresidencia.residencia}" style="text-align:right"/>                                  
                                     <p:outputLabel for="tiporetencionislr" value="Porcentaje Retencion ISLR" />
-                                    <p:selectOneMenu id="tiporetencionislr" value="#{pagosController.detalleretencionislref.idtiporetencionislr}" converter="omnifaces.SelectItemsConverter" style="text-align: right" > 
+                                    <p:selectOneMenu id="tiporetencionislr" value="#{pagosController.detalleretencionislref.idtiporetencionislr}" converter="omnifaces.SelectItemsConverter" > 
                                         <p:ajax event="change" listener="#{pagosController.calcularislrretenido()}" update="islrretenido,sustraendo,display"/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                                         <f:selectItems value="#{tiporetencionislrController.items}"
                                                        var="idtiporetencionItem"
                                                        itemLabel="#{idtiporetencionItem.descripcionservicio}"  itemValue="#{idtiporetencionItem}" /> 
                                     </p:selectOneMenu>
+                                    <p:outputLabel for="baseimponible"  value="Base Imponible" styleClass="optionalLbl"/>
+                                    <p:inputText id="baseimponible"  size="20" value="#{pagosController.compra.subtotal}" style="text-align:right">
+                                    </p:inputText>
+                                    <p:outputLabel for="porcentajeretislr"  value="Porcenta Retencion: " styleClass="optionalLbl"/>
+                                    <p:inputText id="porcentajeretislr"  size="20" value="#{pagosController.detalleretencionislref.procentajeretencion}" style="text-align:right" />
                                     <p:outputLabel for="sustraendo"  value="Sustraendo" styleClass="optionalLbl"/>
                                     <p:inputText id="sustraendo"  size="20" value="#{pagosController.detalleretencionislref.sustraendo}" style="text-align:right">
-                                        <f:convertNumber type="currency" currencySymbol=" "   />
                                     </p:inputText>
-                                    
                                     <p:outputLabel for="islrretenido"  value="I.S.L.R. Retenido" styleClass="optionalLbl"/>
                                     <p:inputText id="islrretenido"  size="20" value="#{pagosController.detalleretencionislref.totalislrretenido}" style="text-align:right">
-                                        <f:convertNumber type="currency" currencySymbol=" "   />
                                     </p:inputText>
                                 </p:panelGrid>
                             </p:fieldset>
-                            <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{comprasController.modificar()}"  oncomplete="PF('wdialogo').hide();" update="display" />                             
+                        </h:panelGrid>
+                        <h:panelGrid id="botones" columns="10">
+                            <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{pagosController.grabarRetencion()}" oncomplete="PF('wdialogo').hide();" update="display,:formulario,:growl"/>
                             <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
                         </h:panelGrid>
                     </h:form>
