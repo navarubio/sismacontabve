@@ -96,6 +96,8 @@
                                     <p:outputLabel id="montop" value="#{pagosController.compra.montopendiente}" styleClass="text-ouputfact" >
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </p:outputLabel>
+
+
                                     <p:outputLabel value="Porción de Pago" styleClass="text-ouput"/>
                                     <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
                                         <p:outputLabel for="console" value="" />
@@ -210,7 +212,7 @@
                             <p:column style="text-align: center" headerText="Retenciones">                                
                                 <p:commandLink actionListener="#{pagosController.asignarDetalleCompra(req)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
                                     <h:graphicImage library="images" name="balanzapago.png" width="30" height="30" alt="Editar Articulo" />
-                                    <!--rendered=".{req.codigo.idgrupo.idgrupo>= 2 ? true:false}"/--> 
+                                    <!--rendered="{req.codigo.idgrupo.idgrupo>= 2 ? true:false}"/--> 
                                 </p:commandLink>
                             </p:column>
                             <p:columnGroup type="footer">
@@ -270,22 +272,23 @@
                                     </p:outputLabel>
                                 </p:panelGrid>
                             </p:fieldset>
-                            <p:fieldset legend="Retencion I.S.L.R."  >
-                                <p:panelGrid columns="2" styleClass="ui-custompanelgrid2" >
+                            <p:fieldset legend="Retencion I.S.L.R." > 
+                                 <p:panelGrid columns="2" styleClass="ui-custompanelgrid2" >
                                     <p:outputLabel for="totalcompra" value="Total Compra" />
                                     <p:inputText id="totalcompra" value="#{pagosController.compra.total}" style="text-align:right">
                                     </p:inputText>
-                                    <p:outputLabel for="tiporetencionislr" value="Porcentaje Retencion ISLR" />
-                                    <p:selectOneMenu id="tiporetencionislr" value="#{pagosController.detalleretencionislref.idtiporetencionislr}" converter="omnifaces.SelectItemsConverter" > 
-                                        <p:ajax event="change" listener="#{pagosController.calcularislrretenido()}" update="islrretenido,sustraendo,display"/>
-                                        <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
-                                        <f:selectItems value="#{tiporetencionislrController.items}"
-                                                       var="idtiporetencionItem"
-                                                       itemLabel="#{idtiporetencionItem.descripcionservicio}"  itemValue="#{idtiporetencionItem}" /> 
-                                    </p:selectOneMenu>
                                     <p:outputLabel for="baseimponible"  value="Base Imponible" styleClass="optionalLbl"/>
                                     <p:inputText id="baseimponible"  size="20" value="#{pagosController.compra.subtotal}" style="text-align:right">
                                     </p:inputText>
+                                    <p:outputLabel for="tiporetencionislr" value="Porcentaje Retencion ISLR" />
+                                    <p:selectOneMenu id="tiporetencionislr" value="#{pagosController.detalleretencionislref.idtiporetencionislr}" converter="omnifaces.SelectItemsConverter" >
+                                                     <!--rendered=".{pagosController.detallecompra.codigo.idgrupo.idgrupo==2  ? true:false}"-->  
+                                        <p:ajax event="change" listener="#{pagosController.calcularislrretenido()}" update="islrretenido,sustraendo,display"/>
+                                        <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                        <f:selectItems value="#{pagosController.tiporetencionesfiltradasPD}"
+                                                       var="idtiporetencionItem"
+                                                       itemLabel="#{idtiporetencionItem.descripcionservicio}"  itemValue="#{idtiporetencionItem}" /> 
+                                    </p:selectOneMenu>
                                     <p:outputLabel for="porcentajeretislr"  value="Porcenta Retencion: " styleClass="optionalLbl"/>
                                     <p:inputText id="porcentajeretislr"  size="20" value="#{pagosController.detalleretencionislref.procentajeretencion}" style="text-align:right" />
                                     <p:outputLabel for="sustraendo"  value="Sustraendo" styleClass="optionalLbl"/>

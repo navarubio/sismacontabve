@@ -20,54 +20,64 @@
                                  selectionMode="single" selection="#{detalleretencionivaefController.selected}"
                                  paginator="true"
                                  rowKey="#{item.iddetalleretencionivaef}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="20"
+                                 rowsPerPageTemplate="20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column width="80">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_iddetalleretencionivaef}"/>
                             </f:facet>
                             <h:outputText value="#{item.iddetalleretencionivaef}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="80">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_idcompra}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idcompra}"/>
+                        </p:column>
+                        <p:column width="250">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_proveedor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idcompra.rifproveedor.razonsocial}"/>
+                        </p:column>
+                        <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_totalcompra}"/>
                             </f:facet>
-                            <h:outputText value="#{item.totalcompra}"/>
+                            <h:outputText value="#{item.totalcompra}">
+                                <f:convertNumber type="currency" currencySymbol=" "   />
+                            </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_bimponible}"/>
                             </f:facet>
-                            <h:outputText value="#{item.bimponible}"/>
+                            <h:outputText value="#{item.bimponible}">
+                                <f:convertNumber type="currency" currencySymbol=" "   />
+                            </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_idtiporetencioniva}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idtiporetencioniva.porcentajeiva} %"/>
+                        </p:column>                     
+                        <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_totalivaretenido}"/>
                             </f:facet>
                             <h:outputText value="#{item.totalivaretenido}"/>
                         </p:column>
-                        <p:column>
+                        <p:column >
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_idcomprobanteivaef}"/>
                             </f:facet>
                             <h:outputText value="#{item.idcomprobanteivaef}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_idtiporetencioniva}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idtiporetencioniva}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_idcompra}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idcompra}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundletributos.Create}" actionListener="#{detalleretencionivaefController.prepareCreate}" update=":DetalleretencionivaefCreateForm" oncomplete="PF('DetalleretencionivaefCreateDialog').show()"/>

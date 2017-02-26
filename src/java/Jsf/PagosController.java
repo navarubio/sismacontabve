@@ -31,6 +31,7 @@ import Modelo.Departamento;
 import Modelo.Detallecompra;
 import Modelo.Detalleretencionislref;
 import Modelo.Detalleretencionivaef;
+import Modelo.Empresa;
 import Modelo.Estatuscontable;
 import Modelo.Estatusfactura;
 import Modelo.Pagocompra;
@@ -104,9 +105,11 @@ public class PagosController implements Serializable {
     private Usuario usa;
     private Departamento dpto;
     private Compra codCompra;
+    private Empresa empresa;
     private int idAuxiliar = 0;
     private int idCompra = 0;
     private List<Auxiliarrequerimiento> auxiliarrequerimientos;
+    private List<Tiporetencionislr> tiporetencionesfiltradasPD = null;
     private List<Cuentabancaria> cuentasbancarias;
     private List<Tipopago> tipopagos;
     private List<Detallecompra> detallecompraFiltrados;
@@ -185,6 +188,14 @@ public class PagosController implements Serializable {
 
     public int getFormapago() {
         return formapago;
+    }
+
+    public List<Tiporetencionislr> getTiporetencionesfiltradasPD() {
+        return tiporetencionesfiltradasPD;
+    }
+
+    public void setTiporetencionesfiltradasPD(List<Tiporetencionislr> tiporetencionesfiltradasPD) {
+        this.tiporetencionesfiltradasPD = tiporetencionesfiltradasPD;
     }
 
     public void setFormapago(int formapago) {
@@ -356,10 +367,17 @@ public class PagosController implements Serializable {
         this.auxiliarrequerimiento = compr.getIdauxiliarrequerimiento();
 //        this.auxiliar = aux;
         detallecompraFiltrados = detallecompraAuxiliar();
+        tiporetencionesfiltradasPD = tiporetencionislrEJB.tiporetfiltradaPJyD(compra.getRifproveedor().getIdpersonalidad(), compra.getRifproveedor().getIdresidencia());
+        
+        mostrarRetenciones();
 
 //        this.compra.setIdauxiliarrequerimiento(auxiliar);
     }
 
+    public void mostrarRetenciones(){
+        
+    }
+    
     public void asignarCompra(Compra compr) {
         this.compra = compr;
         this.idCompra = compr.getIdcompra();

@@ -5,6 +5,8 @@
  */
 package Jpa;
 
+import Modelo.Personalidadjuridica;
+import Modelo.Residenciajuridica;
 import Modelo.Tiporetencionislr;
 import java.util.List;
 import javax.ejb.Local;
@@ -31,4 +33,6 @@ public interface TiporetencionislrFacadeLocal {
     int count();
     
     Tiporetencionislr retencionislrFiltrada(int persona, int residen, int subg);
+    
+    List<Tiporetencionislr> tiporetfiltradaPJyD(Personalidadjuridica persona, Residenciajuridica residencia);
 }

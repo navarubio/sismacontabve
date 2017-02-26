@@ -5,6 +5,8 @@
  */
 package Jpa;
 
+import Modelo.Personalidadjuridica;
+import Modelo.Residenciajuridica;
 import Modelo.Tiporetencionislr;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -17,7 +19,7 @@ import javax.persistence.Query;
  * @author sofimar
  */
 @Stateless
-public class TiporetencionislrFacade extends AbstractFacade<Tiporetencionislr> implements TiporetencionislrFacadeLocal{
+public class TiporetencionislrFacade extends AbstractFacade<Tiporetencionislr> implements TiporetencionislrFacadeLocal {
 
     @PersistenceContext(unitName = "InpecaPU")
     private EntityManager em;
@@ -52,6 +54,24 @@ public class TiporetencionislrFacade extends AbstractFacade<Tiporetencionislr> i
             throw e;
         }
         return tiporetfiltrada;
+    }
+
+    @Override
+    public List<Tiporetencionislr> tiporetfiltradaPJyD(Personalidadjuridica persona, Residenciajuridica residencia) {
+        String consulta;
+        int idpersonalidad = persona.getIdpersonalidad();
+        int idresidencia= residencia.getIdresidencia();
+        List<Tiporetencionislr> lista = null;
+        try {
+            consulta = "From Tiporetencionislr t where t.idpersonalidad.idpersonalidad= ?1 and t.idresidencia.idresidencia= ?2 ";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, idpersonalidad);
+            query.setParameter(2, idresidencia);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
     }
 
 }
