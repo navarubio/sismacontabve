@@ -10,6 +10,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -63,7 +65,11 @@ public class Empresa implements Serializable {
     @Size(max = 150)
     @Column(name = "contador")
     private String contador;
-
+    @JoinColumn(name = "idcontribuyente", referencedColumnName = "idcontribuyente")
+    @ManyToOne
+    private Contribuyente idcontribuyente;
+ 
+    
     public Empresa() {
     }
 
@@ -135,6 +141,15 @@ public class Empresa implements Serializable {
         this.contador = contador;
     }
 
+    public Contribuyente getIdcontribuyente() {
+        return idcontribuyente;
+    }
+
+    public void setIdcontribuyente(Contribuyente idcontribuyente) {
+        this.idcontribuyente = idcontribuyente;
+    }
+
+  
     @Override
     public int hashCode() {
         int hash = 0;

@@ -15,6 +15,7 @@ import Jpa.DetallecompraFacadeLocal;
 import Jpa.DetalleretencionislrefFacade;
 import Jpa.DetalleretencionislrefFacadeLocal;
 import Jpa.DetalleretencionivaefFacade;
+import Jpa.EmpresaFacadeLocal;
 import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaFacadeLocal;
 import Jpa.PagocompraFacadeLocal;
@@ -42,7 +43,9 @@ import Modelo.Usuario;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -89,6 +92,8 @@ public class PagosController implements Serializable {
     private DetalleretencionivaefFacade detalleretencionivaefEJB;
     @EJB
     private DetalleretencionislrefFacadeLocal detalleretencionislrefEJB;
+    @EJB
+    private EmpresaFacadeLocal empresaEJB;
 
     private Auxiliarrequerimiento auxiliarrequerimiento;
     private Compra compra;
@@ -106,6 +111,10 @@ public class PagosController implements Serializable {
     private Departamento dpto;
     private Compra codCompra;
     private Empresa empresa;
+    private int visualizar = 0;
+    private int tipocompra = 0;
+    private double montoUT = 0;
+    private double montopisoretiva = 0;
     private int idAuxiliar = 0;
     private int idCompra = 0;
     private List<Auxiliarrequerimiento> auxiliarrequerimientos;
@@ -129,6 +138,7 @@ public class PagosController implements Serializable {
     private Detalleretencionislref detalleretencionislref;
     private double ivaretenido;
     private double islrretenido;
+    ArrayList<Detallecompra> lista = new ArrayList();
 
     @Inject
     private Auxiliarrequerimiento auxiliar;
@@ -275,7 +285,7 @@ public class PagosController implements Serializable {
     }
 
     public void asignarDetalleCompra(Detallecompra detallecompra) {
-        this.detallecompra=detallecompra;
+        this.detallecompra = detallecompra;
     }
 
     public void setDetallecompraFiltrados(List<Detallecompra> detallecompraFiltrados) {
@@ -346,8 +356,35 @@ public class PagosController implements Serializable {
         this.pagoespecifico = pagoespecifico;
     }
 
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public int getVisualizar() {
+        return visualizar;
+    }
+
+    public void setVisualizar(int visualizar) {
+        this.visualizar = visualizar;
+    }
+
+    public int getTipocompra() {
+        return tipocompra;
+    }
+
+    public void setTipocompra(int tipocompra) {
+        this.tipocompra = tipocompra;
+    }
+    
+    
+
     @PostConstruct
     public void init() {
+        visualizar = 0;
         auxiliarrequerimientos = auxiliarrequerimientoEJB.findAll();
         cuentasbancarias = cuentabancariaEJB.findAll();
         tipopagos = tipopagoEJB.findAll();
@@ -368,16 +405,28 @@ public class PagosController implements Serializable {
 //        this.auxiliar = aux;
         detallecompraFiltrados = detallecompraAuxiliar();
         tiporetencionesfiltradasPD = tiporetencionislrEJB.tiporetfiltradaPJyD(compra.getRifproveedor().getIdpersonalidad(), compra.getRifproveedor().getIdresidencia());
-        
-        mostrarRetenciones();
-
-//        this.compra.setIdauxiliarrequerimiento(auxiliar);
+        empresa = empresaEJB.devolverEmpresabase();
+        double montocompra = compra.getTotal();
+        montopisoretiva = (20 * 300);
+        if (empresa.getIdcontribuyente().getIdcontribuyente() == 2) {
+            if (montocompra >= montopisoretiva) {
+                visualizar = 1;
+            }
+        }
+        for (Detallecompra tipoc : detallecompraFiltrados) {
+            if (tipoc.getCodigo().getIdgrupo().getIdgrupo()==2) {
+                tipocompra=1;
+            }else{
+                tipocompra=2;
+            }
+        }
     }
 
-    public void mostrarRetenciones(){
-        
-    }
-    
+//    public void mostrarRetenciones(){
+//        if (empresa.getIdcontribuyente().getIdcontribuyente()==2){
+//            visualizarretencion=1;
+    //       }
+//    }
     public void asignarCompra(Compra compr) {
         this.compra = compr;
         this.idCompra = compr.getIdcompra();
@@ -525,7 +574,7 @@ public class PagosController implements Serializable {
             detalleretencionivaef.setTotalivaretenido(ivaretenido);
             detalleretencionivaef.setTotalivacompra(compra.getIva());
             detalleretencionivaefEJB.create(detalleretencionivaef);
-            if (detallecompra.getCodigo().getIdgrupo().getIdgrupo()==2){
+            if (detallecompra.getCodigo().getIdgrupo().getIdgrupo() == 2) {
                 detalleretencionislref.setIdcompra(compra);
                 detalleretencionislref.setTotalcompra(compra.getTotal());
                 detalleretencionislref.setBimponible(compra.getSubtotal());

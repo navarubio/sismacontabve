@@ -48,5 +48,9 @@
             <base-name>/Bundletributos</base-name>
             <var>bundletributos</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/BundleEmpresa</base-name>
+            <var>bundleEmpresa</var>
+        </resource-bundle>
     </application>
 </faces-config>

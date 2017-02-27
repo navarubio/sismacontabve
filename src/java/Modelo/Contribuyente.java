@@ -35,6 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Contribuyente implements Serializable {
     @OneToMany(mappedBy = "idcontribuyente")
     private Collection<Tiporetencionislr> tiporetencionislrCollection;
+    @OneToMany(mappedBy = "idcontribuyente")
+    private Collection<Empresa> empresaCollection;
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -113,4 +116,12 @@ public class Contribuyente implements Serializable {
         this.tiporetencionislrCollection = tiporetencionislrCollection;
     }
     
+    @XmlTransient
+    public Collection<Empresa> getEmpresaCollection() {
+        return empresaCollection;
+    }
+
+    public void setEmpresaCollection(Collection<Empresa> empresaCollection) {
+        this.empresaCollection = empresaCollection;
+    }
 }

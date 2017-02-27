@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpresaViewDlg" widgetVar="EmpresaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleEmpresa.ViewEmpresaTitle}">
+            <h:form id="EmpresaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{empresaController.selected != null}">
+                        <h:outputText value="#{bundleEmpresa.ViewEmpresaLabel_rif}"/>
+                        <h:outputText value="#{empresaController.selected.rif}" title="#{bundleEmpresa.ViewEmpresaTitle_rif}"/>
+                        <h:outputText value="#{bundleEmpresa.ViewEmpresaLabel_razonsocial}"/>
+                        <h:outputText value="#{empresaController.selected.razonsocial}" title="#{bundleEmpresa.ViewEmpresaTitle_razonsocial}"/>
+                        <h:outputText value="#{bundleEmpresa.ViewEmpresaLabel_nombrecomercial}"/>
+                        <h:outputText value="#{empresaController.selected.nombrecomercial}" title="#{bundleEmpresa.ViewEmpresaTitle_nombrecomercial}"/>
+                        <h:outputText value="#{bundleEmpresa.ViewEmpresaLabel_direccionfiscal}"/>
+                        <h:outputText value="#{empresaController.selected.direccionfiscal}" title="#{bundleEmpresa.ViewEmpresaTitle_direccionfiscal}"/>
+                        <h:outputText value="#{bundleEmpresa.ViewEmpresaLabel_telefonos}"/>
+                        <h:outputText value="#{empresaController.selected.telefonos}" title="#{bundleEmpresa.ViewEmpresaTitle_telefonos}"/>
+                        <h:outputText value="#{bundleEmpresa.ViewEmpresaLabel_presidente}"/>
+                        <h:outputText value="#{empresaController.selected.presidente}" title="#{bundleEmpresa.ViewEmpresaTitle_presidente}"/>
+                        <h:outputText value="#{bundleEmpresa.ViewEmpresaLabel_administrador}"/>
+                        <h:outputText value="#{empresaController.selected.administrador}" title="#{bundleEmpresa.ViewEmpresaTitle_administrador}"/>
+                        <h:outputText value="#{bundleEmpresa.ViewEmpresaLabel_contador}"/>
+                        <h:outputText value="#{empresaController.selected.contador}" title="#{bundleEmpresa.ViewEmpresaTitle_contador}"/>
+                        <h:outputText value="#{bundleEmpresa.ViewEmpresaLabel_idcontribuyente}"/>
+                        <h:outputText value="#{empresaController.selected.idcontribuyente}" title="#{bundleEmpresa.ViewEmpresaTitle_idcontribuyente}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleEmpresa.Close}" onclick="EmpresaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

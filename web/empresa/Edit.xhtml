@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpresaEditDlg" widgetVar="EmpresaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleEmpresa.EditEmpresaTitle}">
+            <h:form id="EmpresaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{empresaController.selected != null}">
+                        <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_rif}" for="rif" />
+                        <p:inputText id="rif" value="#{empresaController.selected.rif}" title="#{bundleEmpresa.EditEmpresaTitle_rif}" required="true" requiredMessage="#{bundleEmpresa.EditEmpresaRequiredMessage_rif}"/>
+                        <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_razonsocial}" for="razonsocial" />
+                        <p:inputText id="razonsocial" value="#{empresaController.selected.razonsocial}" title="#{bundleEmpresa.EditEmpresaTitle_razonsocial}" />
+                        <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_nombrecomercial}" for="nombrecomercial" />
+                        <p:inputText id="nombrecomercial" value="#{empresaController.selected.nombrecomercial}" title="#{bundleEmpresa.EditEmpresaTitle_nombrecomercial}" />
+                        <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_direccionfiscal}" for="direccionfiscal" />
+                        <p:inputText id="direccionfiscal" value="#{empresaController.selected.direccionfiscal}" title="#{bundleEmpresa.EditEmpresaTitle_direccionfiscal}" />
+                        <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_telefonos}" for="telefonos" />
+                        <p:inputText id="telefonos" value="#{empresaController.selected.telefonos}" title="#{bundleEmpresa.EditEmpresaTitle_telefonos}" />
+                        <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_presidente}" for="presidente" />
+                        <p:inputText id="presidente" value="#{empresaController.selected.presidente}" title="#{bundleEmpresa.EditEmpresaTitle_presidente}" />
+                        <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_administrador}" for="administrador" />
+                        <p:inputText id="administrador" value="#{empresaController.selected.administrador}" title="#{bundleEmpresa.EditEmpresaTitle_administrador}" />
+                        <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_contador}" for="contador" />
+                        <p:inputText id="contador" value="#{empresaController.selected.contador}" title="#{bundleEmpresa.EditEmpresaTitle_contador}" />
+                        <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_idcontribuyente}" for="idcontribuyente" />
+                        <p:selectOneMenu id="idcontribuyente" value="#{empresaController.selected.idcontribuyente}" >
+                            <f:selectItem itemLabel="#{bundleEmpresa.SelectOneMessage}"/>
+                            <f:selectItems value="#{contribuyenteController.itemsAvailableSelectOne}"
+                                           var="idcontribuyenteItem"
+                                           itemValue="#{idcontribuyenteItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{empresaController.update}" value="#{bundleEmpresa.Save}" update="display,:EmpresaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EmpresaEditDialog');"/>
+                    <p:commandButton value="#{bundleEmpresa.Cancel}" onclick="EmpresaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

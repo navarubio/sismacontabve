@@ -211,8 +211,8 @@
                             </p:column>
                             <p:column style="text-align: center" headerText="Retenciones">                                
                                 <p:commandLink actionListener="#{pagosController.asignarDetalleCompra(req)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
-                                    <h:graphicImage library="images" name="balanzapago.png" width="30" height="30" alt="Editar Articulo" />
-                                    <!--rendered="{req.codigo.idgrupo.idgrupo>= 2 ? true:false}"/--> 
+                                    <h:graphicImage library="images" name="balanzapago.png" width="30" height="30" alt="Editar Articulo" 
+                                                    rendered="#{pagosController.visualizar== 1 ? true:false}"/>  
                                 </p:commandLink>
                             </p:column>
                             <p:columnGroup type="footer">
@@ -272,7 +272,7 @@
                                     </p:outputLabel>
                                 </p:panelGrid>
                             </p:fieldset>
-                            <p:fieldset legend="Retencion I.S.L.R." > 
+                            <p:fieldset legend="Retencion I.S.L.R." rendered="#{pagosController.tipocompra== 1 ? true:false}"> 
                                  <p:panelGrid columns="2" styleClass="ui-custompanelgrid2" >
                                     <p:outputLabel for="totalcompra" value="Total Compra" />
                                     <p:inputText id="totalcompra" value="#{pagosController.compra.total}" style="text-align:right">
