@@ -51,7 +51,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -112,7 +115,7 @@ public class PagosController implements Serializable {
     private Compra codCompra;
     private Empresa empresa;
     private int visualizar = 0;
-    private int tipocompra = 0;
+    private int tipocompra = 1;
     private double montoUT = 0;
     private double montopisoretiva = 0;
     private int idAuxiliar = 0;
@@ -286,6 +289,7 @@ public class PagosController implements Serializable {
 
     public void asignarDetalleCompra(Detallecompra detallecompra) {
         this.detallecompra = detallecompra;
+
     }
 
     public void setDetallecompraFiltrados(List<Detallecompra> detallecompraFiltrados) {
@@ -379,8 +383,6 @@ public class PagosController implements Serializable {
     public void setTipocompra(int tipocompra) {
         this.tipocompra = tipocompra;
     }
-    
-    
 
     @PostConstruct
     public void init() {
@@ -398,35 +400,59 @@ public class PagosController implements Serializable {
     }
 
     public void asignar(Compra compr) {
+        this.tipocompra = 1;
+        this.visualizar=0;
         this.compra = compr;
         this.idCompra = compr.getIdcompra();
         this.autoriza = autorizacionEJB.buscarAutorizacion(idCompra);
         this.auxiliarrequerimiento = compr.getIdauxiliarrequerimiento();
+        detalleretencionivaef.setTotalivaretenido(0.0);
+        detalleretencionislref.setTotalislrretenido(0.0);
+        detalleretencionislref.setSustraendo(0.0);
+        detalleretencionislref.setProcentajeretencion(0.0);
+        detalleretencionivaef.setIdtiporetencioniva(null);
+        detalleretencionislref.setIdtiporetencionislr(null);
 //        this.auxiliar = aux;
         detallecompraFiltrados = detallecompraAuxiliar();
         tiporetencionesfiltradasPD = tiporetencionislrEJB.tiporetfiltradaPJyD(compra.getRifproveedor().getIdpersonalidad(), compra.getRifproveedor().getIdresidencia());
         empresa = empresaEJB.devolverEmpresabase();
         double montocompra = compra.getTotal();
         montopisoretiva = (20 * 300);
+        int tipo1;
+        for (Detallecompra tipoc : detallecompraFiltrados) {
+            tipo1 = tipoc.getCodigo().getIdgrupo().getIdgrupo();
+            if (tipo1 == 1 && tipocompra == 1) {
+                tipocompra = 1;
+            } else if (tipo1 == 2) {
+                tipocompra = 2;
+            } else if (tipo1 == 3) {
+                tipocompra = 3;
+            }
+        }
         if (empresa.getIdcontribuyente().getIdcontribuyente() == 2) {
             if (montocompra >= montopisoretiva) {
-                visualizar = 1;
+                if (tipocompra == 3) {
+                    visualizar = 5;
+                }else {
+                    visualizar = 1;
+                }
+            }else {
+                if (tipocompra == 2) {
+                    visualizar = 3;
+                }else if (tipocompra == 3) {
+                    visualizar = 5;
+                }
+            }
+        } else if (empresa.getIdcontribuyente().getIdcontribuyente() == 1 || empresa.getIdcontribuyente().getIdcontribuyente() == 3 ) {
+            if (tipocompra == 2) {
+                visualizar = 4;
+            }else if (tipocompra == 3){
+                visualizar = 5;
             }
         }
-        for (Detallecompra tipoc : detallecompraFiltrados) {
-            if (tipoc.getCodigo().getIdgrupo().getIdgrupo()==2) {
-                tipocompra=1;
-            }else{
-                tipocompra=2;
-            }
-        }
+
     }
 
-//    public void mostrarRetenciones(){
-//        if (empresa.getIdcontribuyente().getIdcontribuyente()==2){
-//            visualizarretencion=1;
-    //       }
-//    }
     public void asignarCompra(Compra compr) {
         this.compra = compr;
         this.idCompra = compr.getIdcompra();

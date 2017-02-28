@@ -52,6 +52,7 @@ public class CompraController implements Serializable {
     private List<Pagocompra> pagosporidcompra;
     private Compra selected;
     private Compra compraseleccionada;
+    private PagosController pagoscontroller;
 
     public CompraController() {
     }
