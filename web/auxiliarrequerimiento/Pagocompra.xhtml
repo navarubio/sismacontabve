@@ -135,7 +135,9 @@
                                     </h:panelGroup>
                                     <h:panelGroup id="contenedorComponente">
                                         <p:inputText value="#{pagosController.pagocompra.totalpago}" id="observacion" size="10"
-                                                     rendered="#{pagosController.formapago>= 2 ? true:false}"/>
+                                                     rendered="#{pagosController.formapago>= 2 ? true:false}" >
+                                            <f:validateLongRange minimum="0" maximum="#{pagosController.compra.montopendiente}"></f:validateLongRange>
+                                        </p:inputText>
                                     </h:panelGroup>
                                     <p:outputLabel for="fechapago" value="Fecha Pago" styleClass="text-ouput" />
                                     <p:calendar size="10" locale="es" id="fechapago" pattern="dd/MM/yyyy" value="#{pagosController.pagocompra.fechapago}" showOn="button" navigator="true" required="true"/>

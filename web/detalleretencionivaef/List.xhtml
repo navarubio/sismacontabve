@@ -39,11 +39,11 @@
                             </f:facet>
                             <h:outputText value="#{item.iddetalleretencionivaef}"/>
                         </p:column>
-                        <p:column width="80">
+                        <p:column width="80" filterBy="#{item.idcompra.idcompra}" filterMatchMode="exact" filterStyle="width:40px;" style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_idcompra}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idcompra}"/>
+                            <h:outputText value="#{item.idcompra.idcompra}"/>
                         </p:column>
                         <p:column width="250" filterBy="#{item.idcompra.rifproveedor.razonsocial}" filterMatchMode="contains">
                             <f:facet name="header">
