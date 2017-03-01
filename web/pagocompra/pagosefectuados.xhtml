@@ -92,14 +92,14 @@
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>
                         </p:column>
-                        <p:column width="80" style="text-align: right" >
+                        <p:column width="70" style="text-align: right">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPagoCompraTitle_totalpendiente}"/>
+                                <h:outputText value="#{bundle.ListPagoCompraTitle_retenciones}"/>
                             </f:facet>
-                            <h:outputText value="#{item.saldopendiente}">
+                            <h:outputText value="#{item.montoretenido}">
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>
-                        </p:column>                        
+                        </p:column>
                         <p:column style="text-align: center" headerText="Orden de Pago">
                             <h:commandLink actionListener="#{pagocompraController.verOrdendePago(item)}" target = "_blank"  > 
                                 <h:graphicImage library="images" name="imprimir.png" width="30" height="30" alt="Pagar Compra"/>

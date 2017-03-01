@@ -147,6 +147,14 @@
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>
                         </p:column>
+                        <p:column width="70" style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPagoCompraTitle_retenciones}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montoretenido}" styleClass="text-ouput">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
+                        </p:column>
                         <p:column width="70" style="text-align: right" styleClass="facturaabonadaporcobrar">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_totalpendiente}"/>

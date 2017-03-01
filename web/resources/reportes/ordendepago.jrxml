@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7c84cd74-2f43-40af-a87d-8979663c88b5">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="114"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -87,6 +87,7 @@
      pagocompra.`fechapago` AS pagocompra_fechapago,
      pagocompra.`idplandecuenta` AS pagocompra_idplandecuenta,
      pagocompra.`saldopendiente` AS pagocompra_saldopendiente,
+     pagocompra.`montoretenido` AS pagocompra_montoretenido,
      pagocompra.`observacionespago` AS pagocompra_observacionespago,
      tipopago.`idtipopago` AS tipopago_idtipopago,
      tipopago.`tipopago` AS tipopago_tipopago,
@@ -168,6 +169,7 @@ WHERE
 	<field name="pagocompra_fechapago" class="java.sql.Date"/>
 	<field name="pagocompra_idplandecuenta" class="java.lang.Integer"/>
 	<field name="pagocompra_saldopendiente" class="java.lang.Double"/>
+	<field name="pagocompra_montoretenido" class="java.lang.Double"/>
 	<field name="pagocompra_observacionespago" class="java.lang.String"/>
 	<field name="tipopago_idtipopago" class="java.lang.Integer"/>
 	<field name="tipopago_tipopago" class="java.lang.String"/>
@@ -511,14 +513,14 @@ WHERE
 				<textFieldExpression><![CDATA[$F{compra_total}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="212" y="285" width="82" height="14" uuid="13c3b469-ce41-46f6-8cc3-ad2822a054e1"/>
+				<reportElement x="211" y="303" width="82" height="14" uuid="13c3b469-ce41-46f6-8cc3-ad2822a054e1"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[RETENCION ISLR :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="212" y="299" width="82" height="14" uuid="580078f0-24b3-410f-b5d2-a13cbac25f08"/>
+				<reportElement x="210" y="285" width="83" height="14" uuid="580078f0-24b3-410f-b5d2-a13cbac25f08"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -561,6 +563,13 @@ WHERE
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{numeroordenpago}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="298" y="323" width="88" height="14" uuid="57172a20-b6a1-4826-b594-82ae3092d1f0"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pagocompra_montoretenido}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

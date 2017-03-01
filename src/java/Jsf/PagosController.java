@@ -141,6 +141,7 @@ public class PagosController implements Serializable {
     private Detalleretencionislref detalleretencionislref;
     private double ivaretenido;
     private double islrretenido;
+    private double montoapagar;
     ArrayList<Detallecompra> lista = new ArrayList();
 
     @Inject
@@ -401,8 +402,10 @@ public class PagosController implements Serializable {
 
     public void asignar(Compra compr) {
         this.tipocompra = 1;
-        this.visualizar=0;
+        this.visualizar = 0;
         this.compra = compr;
+        this.pagocompra.setTotalpago(compra.getTotal());
+        this.montoapagar = compra.getTotal();
         this.idCompra = compr.getIdcompra();
         this.autoriza = autorizacionEJB.buscarAutorizacion(idCompra);
         this.auxiliarrequerimiento = compr.getIdauxiliarrequerimiento();
@@ -433,24 +436,27 @@ public class PagosController implements Serializable {
             if (montocompra >= montopisoretiva) {
                 if (tipocompra == 3) {
                     visualizar = 5;
-                }else {
+                } else {
                     visualizar = 1;
                 }
-            }else {
+            } else {
                 if (tipocompra == 2) {
                     visualizar = 3;
-                }else if (tipocompra == 3) {
+                } else if (tipocompra == 3) {
                     visualizar = 5;
                 }
             }
-        } else if (empresa.getIdcontribuyente().getIdcontribuyente() == 1 || empresa.getIdcontribuyente().getIdcontribuyente() == 3 ) {
+        } else if (empresa.getIdcontribuyente().getIdcontribuyente() == 1 || empresa.getIdcontribuyente().getIdcontribuyente() == 3) {
             if (tipocompra == 2) {
                 visualizar = 4;
-            }else if (tipocompra == 3){
+            } else if (tipocompra == 3) {
                 visualizar = 5;
             }
         }
-
+        calcularMontoapagar();
+        if (compra.getTotal() > (compra.getMontopendiente())) {
+            visualizar = 6;
+        }
     }
 
     public void asignarCompra(Compra compr) {
@@ -540,14 +546,27 @@ public class PagosController implements Serializable {
             //estatuscontab = estatuscontableEJB.estatusContablePorRegistrar();
             if (formapago == 1) {
                 double saldo = 0;
-                pagocompra.setTotalpago(compra.getMontopendiente());
-                compra.setMontopendiente(saldo);
-                int tipo = 3;
-                statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
+                if (montoapagar == compra.getTotal()) {
+                    pagocompra.setTotalpago(montoapagar);
+                    compra.setMontopendiente(saldo);
+                    pagocompra.setMontoretenido(saldo);
+                    int tipo = 3;
+                    statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
+                } else {
+                    pagocompra.setTotalpago(montoapagar);
+                    compra.setMontopendiente(saldo);
+                    pagocompra.setMontoretenido(compra.getTotal() - montoapagar);
+                    int tipo = 3;
+                    statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
+                }
             } else {
                 int tipo = 0;
                 double saldop = 0;
-                saldop = compra.getMontopendiente() - pagocompra.getTotalpago();
+                if (visualizar == 6) {
+                    saldop = compra.getMontopendiente() - pagocompra.getTotalpago();
+                } else if (visualizar == 7) {
+                    saldop = ((compra.getMontopendiente() - pagocompra.getTotalpago()) - (compra.getMontopendiente() - montoapagar));
+                }
                 if (saldop < 1) {
                     tipo = 3;
                 } else {
@@ -561,6 +580,12 @@ public class PagosController implements Serializable {
             compraEJB.edit(compra);
             pagocompra.setIdcompra(compra);
             pagocompra.setIdbanco(banco);
+
+            if (visualizar == 6) {
+                pagocompra.setMontoretenido(0.0);
+            } else if (visualizar == 7) {
+                pagocompra.setMontoretenido((compra.getTotal() - montoapagar));
+            }
             cuentabanco = pagocompra.getIdcuentabancaria();
 //            pagocompra.setTotalpago(compra.getTotal());
 //            pagocompra.setSaldopendiente(compra.getMontopendiente());
@@ -594,23 +619,37 @@ public class PagosController implements Serializable {
 
     public void grabarRetencion() {
         try {
-            detalleretencionivaef.setIdcompra(compra);
-            detalleretencionivaef.setBimponible(compra.getSubtotal());
-            detalleretencionivaef.setTotalcompra(compra.getTotal());
-            detalleretencionivaef.setTotalivaretenido(ivaretenido);
-            detalleretencionivaef.setTotalivacompra(compra.getIva());
-            detalleretencionivaefEJB.create(detalleretencionivaef);
+            if (detalleretencionivaef.getTotalivaretenido() >= 1) {
+                detalleretencionivaef.setIdcompra(compra);
+                detalleretencionivaef.setBimponible(compra.getSubtotal());
+                detalleretencionivaef.setTotalcompra(compra.getTotal());
+                detalleretencionivaef.setTotalivaretenido(ivaretenido);
+                detalleretencionivaef.setTotalivacompra(compra.getIva());
+                detalleretencionivaefEJB.create(detalleretencionivaef);
+            }
             if (detallecompra.getCodigo().getIdgrupo().getIdgrupo() == 2) {
                 detalleretencionislref.setIdcompra(compra);
                 detalleretencionislref.setTotalcompra(compra.getTotal());
                 detalleretencionislref.setBimponible(compra.getSubtotal());
                 detalleretencionislrefEJB.create(detalleretencionislref);
             }
+            calcularMontoapagar();
+            visualizar = 7;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Retencion fue Almacenada", ""));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Retencion", ""));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        }
+    }
+
+    public void calcularMontoapagar() {
+        if (compra.getTotal() > (compra.getMontopendiente())) {
+            montoapagar = compra.getMontopendiente();
+            pagocompra.setTotalpago(montoapagar);
+        } else {
+            montoapagar = (compra.getTotal() - detalleretencionivaef.getTotalivaretenido() - detalleretencionislref.getTotalislrretenido());
+            pagocompra.setTotalpago(montoapagar);
         }
     }
 

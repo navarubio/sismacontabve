@@ -93,16 +93,32 @@
                                     <p:outputLabel id="depto1" value="#{pagosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="numerocontrol" value="Numero Control" styleClass="text-ouput"/>
                                     <p:inputText id="numerocontrol" label="Numero de Control" size ="10" value="#{pagosController.compra.controlfactura}" />
-                                    <p:outputLabel for="montop" value="Monto a Pagar" styleClass="text-ouput"/>
-                                    <p:outputLabel id="montop" value="#{pagosController.compra.montopendiente}" styleClass="text-ouputfact" >
+                                    <p:outputLabel for="montof" value="Monto Factura" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montof" value="#{pagosController.compra.total}" styleClass="text-ouputfact" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>                                        
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel for="montoretiva" value="IVA Retenido" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montoretiva" value="#{pagosController.detalleretencionivaef.totalivaretenido}" styleClass="text-ouputfact" >
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </p:outputLabel>
-
-
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel for="montoretislr" value="ISLR retenido" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montoretislr" value="#{pagosController.detalleretencionislref.totalislrretenido}" styleClass="text-ouputfact" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel for="montop" value="Monto a Pagar" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montop" value="#{pagosController.pagocompra.totalpago}" styleClass="text-ouputfact" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
                                     <p:outputLabel value="Porción de Pago" styleClass="text-ouput"/>
                                     <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
                                         <p:outputLabel for="console" value="" />
-                                        <p:selectOneRadio id="console" value="#{pagosController.mensaje}">
+                                        <p:selectOneRadio id="console" value="#{pagosController.mensaje}" required="true">
                                             <f:selectItem itemLabel="Total" itemValue="total"/>
                                             <f:selectItem itemLabel="Parcial" itemValue="parcial"/>
                                             <p:ajax event="valueChange" 
@@ -180,7 +196,8 @@
                     </p:panel>
                     <p:panel id="panelart"  >
                         <p:dataTable id="listado" value="#{pagosController.detallecompraFiltrados}"
-                                     var="req" emptyMessage="No hay articulos para mostrar" >
+                                     var="req" emptyMessage="No hay articulos para mostrar" 
+                                     rowStyleClass="#{pagosController.visualizar== 6 || pagosController.visualizar== 7 ? 'facturaabonadaporcobrar' : null}">
                             <p:column style="width:8%"  headerText="Codigo Articulo">
                                 <h:outputText value="#{req.codigo.codigo}" />
                             </p:column>

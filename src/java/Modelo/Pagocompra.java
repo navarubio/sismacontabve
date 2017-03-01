@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -56,6 +57,9 @@ public class Pagocompra implements Serializable {
     private Double totalpago;
     @Column(name = "saldopendiente")
     private Double saldopendiente;
+    @NotNull
+    @Column(name = "montoretenido")
+    private Double montoretenido;
     @Size(max = 15)
     @Column(name = "aprobacion")
     private String aprobacion;
@@ -124,6 +128,14 @@ public class Pagocompra implements Serializable {
 
     public void setSaldopendiente(Double saldopendiente) {
         this.saldopendiente = saldopendiente;
+    }
+
+    public Double getMontoretenido() {
+        return montoretenido;
+    }
+
+    public void setMontoretenido(Double montoretenido) {
+        this.montoretenido = montoretenido;
     }
 
     public String getObservacionespago() {
