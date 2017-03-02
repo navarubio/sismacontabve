@@ -562,7 +562,7 @@ public class PagosController implements Serializable {
             } else {
                 int tipo = 0;
                 double saldop = 0;
-                if (visualizar == 6) {
+                if (visualizar == 6 || visualizar == 5  ) {
                     saldop = compra.getMontopendiente() - pagocompra.getTotalpago();
                 } else if (visualizar == 7) {
                     saldop = ((compra.getMontopendiente() - pagocompra.getTotalpago()) - (compra.getMontopendiente() - montoapagar));
@@ -581,10 +581,12 @@ public class PagosController implements Serializable {
             pagocompra.setIdcompra(compra);
             pagocompra.setIdbanco(banco);
 
-            if (visualizar == 6) {
+            if (visualizar == 6 ) {
                 pagocompra.setMontoretenido(0.0);
             } else if (visualizar == 7) {
                 pagocompra.setMontoretenido((compra.getTotal() - montoapagar));
+            }else if (visualizar == 5) {
+                pagocompra.setMontoretenido(0.0);
             }
             cuentabanco = pagocompra.getIdcuentabancaria();
 //            pagocompra.setTotalpago(compra.getTotal());
