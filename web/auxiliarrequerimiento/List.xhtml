@@ -22,7 +22,7 @@
                 <img src="../resources/images/tablet.png" width="70" height="70" alt="Solicitudes" align="right" />
 
                 <p:panel header="#{bundle.ListAuxiliarrequerimientoTitle}">
-                    <p:dataTable id="datalist" value="#{auxiliarrequerimientoController.requerimientosactivos}" var="item"
+                    <p:dataTable id="datalist" value="#{auxiliarrequerimientoController.requerimientosactivos}" var="item" widgetVar="requerimientos"
                                  selectionMode="single" selection="#{auxiliarrequerimientoController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idauxiliarrequerimiento}"
@@ -74,25 +74,27 @@
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>
                         </p:column>
-
-                        <p:column style="text-align: center" filterBy="#{item.iddepartamento.departamento}" filterMatchMode="contains" >
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_iddepartamento}"/>
+                        <p:column width="150" filterBy="#{item.iddepartamento.departamento}" headerText="#{bundle.ListAuxiliarrequerimientoTitle_iddepartamento}" filterMatchMode="exact" style="text-align: center">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('requerimientos').filter()" >
+                                    <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{departamentoController.items}" />
+                                </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="#{item.iddepartamento.departamento}"/>
-                        </p:column>                        
-                        <p:column style="text-align: center"  filterBy="#{item.idusuario.nombre}" filterMatchMode="contains">
+                            <h:outputText value="#{item.iddepartamento.departamento}" />
+                        </p:column>                       
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_idusuario}"/>
                             </f:facet>
                             <h:outputText value="#{item.idusuario.nombre}"/>
                         </p:column>
-                        <p:column style="text-align: center">
+                        <!--p:column style="text-align: center">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_idestatusrequerimiento}"/>
+                                <h:outputText value=".{bundle.ListAuxiliarrequerimientoTitle_idestatusrequerimiento}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idestatusrequerimiento.estatusrequerimiento}"/>
-                        </p:column>
+                            <h:outputText value=".{item.idestatusrequerimiento.estatusrequerimiento}"/>
+                        </p:column-->
                         <p:column style="text-align: center" headerText="Procesar">
                             <h:commandLink action="compra.xhtml" actionListener="#{comprasController.asignar(item)}">       
                                 <h:graphicImage library="images" name="procesarffinal.png" width="30" height="30" alt="Procesar"/>

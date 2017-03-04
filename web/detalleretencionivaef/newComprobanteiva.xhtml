@@ -9,7 +9,7 @@
     <body>
         <ui:composition template="./../template.xhtml">
             <ui:define name="title">
-                Nueva Factura
+                Retenciones IVA
                 <h:outputStylesheet library="css" name="index.css" />   
             </ui:define>
             <ui:define name="body">
@@ -19,41 +19,33 @@
                     <div id="imag2">
                         <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca"/>
                     </div>      
-                    <img src="../resources/images/kexi.png" width="70" height="70" alt="Facturacion" align="right" />
+                    <img src="../resources/images/vcalendar.png" width="70" height="70" alt="Facturacion" align="right" />
 
-                    <p:panel header="FACTURACION">
-                        <p:fieldset style="width: 67%"  legend="Datos Vendedor y Cliente" >
+                    <p:panel header="COMPROBANTE DE RETENCION DE IVA">
+                        <p:fieldset style="width: 68%"  legend="Datos del Contribuyente" >
                             <p:panelGrid columns="4" styleClass="ui-custompanelgrid1">
-                                <p:outputLabel for="razonsocial" styleClass="text-ouput" value=""/>
-                                <p:outputLabel id="razonsocial"  value="#{comprobantesivaController.}"/>
-                                <p:outputLabel for="numero" styleClass="text-ouput" value="Nro. Factura" />                                 
+                                <p:outputLabel for="razonsocial" styleClass="text-ouput" value="USUARIO"/>
+                                <p:outputLabel id="razonsocial"  value="#{comprobantesivaController.detalleretencionivaef.idcompra.rifproveedor.razonsocial}"/>
+                                <p:outputLabel for="numero" styleClass="text-ouput" value="Serial Comprobante" />                                 
                                 <p:outputLabel id="numero" styleClass="text-ouputfact" value="#{facturasController.devolversiguientefactura()}" title="#{bundle.CreateFacturaTitle_numerofactura}" />
-                                <p:outputLabel for="departamento" styleClass="text-ouput" value="DEPARTAMENTO" />
-                                <p:outputLabel id="departamento" value="#{requerimientosController.buscarDepartamento().departamento}" />
-                                <p:outputLabel for="control" styleClass="text-ouput" value="Nro. Control" />
-                                <p:inputMask id="control" mask="99-99999999" value="#{facturasController.factura.numerocontrol}" title="#{bundle.CreateFacturaTitle_controlfactura}" required="true"/>
-                                <p:outputLabel for="client" styleClass="text-ouput" value="Cliente"/>
-                                <p:selectOneMenu id="client" value="#{facturasController.cliente}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" required="true"> 
-                                    <p:ajax event="change" update="rif, direccioncliente, telefono"/>                              
-                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
-                                    <f:selectItems value="#{facturasController.clientes}"
-                                                   var="idarticuloItem"
-                                                   itemLabel="#{idarticuloItem.razonsocial}"  itemValue="#{idarticuloItem}"/> 
-                                </p:selectOneMenu>
-
                                 <p:outputLabel for="rif" styleClass="text-ouput" value="R.I.F." />
-                                <p:outputLabel id="rif" value="#{facturasController.cliente.rifcliente}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="direccioncliente" styleClass="text-ouput"  value="Direccion Fiscal" />
-                                <p:outputLabel id="direccioncliente" value="#{facturasController.cliente.direccionfiscal}"/>
-                                <p:outputLabel for="telefono" styleClass="text-ouput" value="Telefonos" />
-                                <p:outputLabel id="telefono" value="#{facturasController.cliente.telefonos}" />
-                                <p:outputLabel for="fechaventa" styleClass="text-ouput"  value="Fecha Venta"  />
+                                <p:outputLabel id="rif" value="#{comprobantesivaController.detalleretencionivaef.idcompra.rifproveedor.rifproveedor}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="fechaventa" styleClass="text-ouput"  value="Fecha Comprobante"  />
                                 <p:calendar id="fechaventa" pattern="dd/MM/yyyy" locale="es" value="#{facturasController.factura.fecha}" showOn="button" navigator="true" required="true" size="10"/>
+                                <p:outputLabel for="direccioncliente" styleClass="text-ouput"  value="Direccion Fiscal" />
+                                <p:outputLabel id="direccioncliente" value="#{comprobantesivaController.detalleretencionivaef.idcompra.rifproveedor.direccionfiscal}"/>
+                                <p:outputLabel for="periodofiscal" styleClass="text-ouput" value="AÑO :"  />
+                                <p:inputText id="periodofiscal" value="#{facturasController.factura.numerocontrol}" title="#{bundle.CreateFacturaTitle_controlfactura}" required="true"/>
+                                <p:outputLabel for="telefono" styleClass="text-ouput" value="Telefonos" />
+                                <p:outputLabel id="telefono" value="#{comprobantesivaController.detalleretencionivaef.idcompra.rifproveedor.telefonos}" />
+                                <p:outputLabel for="mes" styleClass="text-ouput" value="MES" />
+                                <p:outputLabel id="mes" value="#{null}" />
+
                                 <p:outputLabel for="observa" styleClass="text-ouput"  value="Observaciones" />
                                 <p:inputTextarea id="observa"  rows="2" cols="50" label="Observaciones" value="#{facturasController.factura.observacionesfact}" required="true"/>
                             </p:panelGrid>
                         </p:fieldset>
-                        <p:fieldset styleClass="ui-custompanelgrid2" legend="Datos de Articulos">
+                        <p:fieldset styleClass="ui-custompanelgrid2" legend="Datos de Facturación">
                             <p:panelGrid id= "datosarticulo" columns="7">
                                 <p:outputLabel value="Articulo" styleClass="text-ouput" for="idrequerimiento"  />
                                 <p:selectOneMenu id="idrequerimiento" value="#{requerimientosController.requer.codigo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" >

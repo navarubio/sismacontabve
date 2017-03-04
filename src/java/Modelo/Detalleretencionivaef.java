@@ -46,17 +46,24 @@ public class Detalleretencionivaef implements Serializable {
     private Double bimponible;
     @Column(name = "totalivacompra")
     private Double totalivacompra;
-    @Column(name = "totalivaretenido")
+    @Column(name = "totalivaretenido")   
     private Double totalivaretenido;
+
     @JoinColumn(name = "idcomprobanteivaef", referencedColumnName = "idcomprobanteivaef")
     @ManyToOne
     private Comprobanteivaef idcomprobanteivaef;
+    
     @JoinColumn(name = "idtiporetencioniva", referencedColumnName = "idtiporetencioniva")
     @ManyToOne
     private Tiporetencioniva idtiporetencioniva;
+    
     @JoinColumn(name = "idcompra", referencedColumnName = "idcompra")
     @ManyToOne
     private Compra idcompra;
+
+    @JoinColumn(name = "idpagocompra", referencedColumnName = "idpagocompra")
+    @ManyToOne
+    private Pagocompra idpagocompra;
 
     public Detalleretencionivaef() {
     }
@@ -129,6 +136,15 @@ public class Detalleretencionivaef implements Serializable {
         this.idcompra = idcompra;
     }
 
+    public Pagocompra getIdpagocompra() {
+        return idpagocompra;
+    }
+
+    public void setIdpagocompra(Pagocompra idpagocompra) {
+        this.idpagocompra = idpagocompra;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;
