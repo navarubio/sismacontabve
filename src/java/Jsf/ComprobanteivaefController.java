@@ -4,6 +4,7 @@ import Modelo.Comprobanteivaef;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.ComprobanteivaefFacade;
+import Jpa.ComprobanteivaefFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +25,7 @@ import javax.faces.convert.FacesConverter;
 public class ComprobanteivaefController implements Serializable {
 
     @EJB
-    private Jpa.ComprobanteivaefFacade ejbFacade;
+    private Jpa.ComprobanteivaefFacadeLocal ejbFacade;
     private List<Comprobanteivaef> items = null;
     private Comprobanteivaef selected;
 
@@ -45,7 +46,7 @@ public class ComprobanteivaefController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private ComprobanteivaefFacade getFacade() {
+    private ComprobanteivaefFacadeLocal getFacade() {
         return ejbFacade;
     }
 

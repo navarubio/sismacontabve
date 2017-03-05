@@ -16,6 +16,7 @@ import Modelo.Comprobanteivaef;
 import Modelo.Cuentabancaria;
 import Modelo.Detallefactura;
 import Modelo.Detalleretencionivaef;
+import Modelo.Estatuscomprobanteretencion;
 import Modelo.Estatuscontable;
 import Modelo.Estatusfacturaventa;
 import Modelo.Factura;
@@ -23,6 +24,7 @@ import Modelo.Tipopago;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +34,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.jboss.weld.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -60,13 +63,14 @@ public class ComprobantesivaController implements Serializable {
     private String mesfiscal;
     private String serialcomprobante;
     private Date fechacomprobante;
-    List<Detalleretencionivaef> detalleretivafiltrados;
+    private List<Detalleretencionivaef> detalleretivafiltrados = new ArrayList();
     private double totalgeneral;
     private double totalbaseimponible;
     private double totaliva;
     private double totalivaretenido;
     private int id=0;
-    
+    @Inject
+    private Estatuscomprobanteretencion estatuscomprobanteretencion;
     
 
     ///////////////////////////////////////////
@@ -256,21 +260,44 @@ public class ComprobantesivaController implements Serializable {
     
     public void asignar(Detalleretencionivaef detalleretivaef) {
         this.detalleretencionivaef = detalleretivaef;
-        this.detalleretivafiltrados=detalleretencionivaefEJB.buscarretencionesporPreveedor(detalleretivaef.getIdcompra().getRifproveedor().getRifproveedor());
+        this.detalleretivafiltrados=detalleretencionivaefEJB.buscarretencionesporPreveedor(detalleretivaef.getIdcompra().getRifproveedor().getRifproveedor()); 
         obtenertotaltotales();
     }
     public void eliminar(Detalleretencionivaef detalleaeliminar) {
-        detalleretivafiltrados.remove(detalleaeliminar.hashCode());
-        int indice = 0;
-        for (Detalleretencionivaef detalleretiva : detalleretivafiltrados) {
-            detalleretiva.setIddetalleretencionivaef(indice);
-            indice++;
-            id = indice;
-        }
-        if (detalleaeliminar.hashCode() == 0) {
-            id = 0;
-        }
+        int indc= detalleretivafiltrados.indexOf(detalleaeliminar);
+        detalleretivafiltrados.remove(indc);
+//        int indice = 0;
+//        for (Detalleretencionivaef detalleretiva : detalleretivafiltrados) {
+//            detalleretiva.setIddetalleretencionivaef(indice);
+//            indice++;
+//            id = indice;
+//        }
+//        if (detalleaeliminar.hashCode() == 0) {
+//            id = 0;
+//        }
+        obtenertotaltotales();
 
+    }
+    public void registrar() {
+        try {
+//            estatuscomprobanteretencion.setIdestatuscomprobante(1);
+            comprobanteivaef.setComprobante(serialcomprobante);
+            comprobanteivaef.setFecha(fechacomprobante);
+            comprobanteivaef.setAnio(anio);
+            comprobanteivaef.setMes(mes);
+            comprobanteivaef.setRifproveedor(detalleretencionivaef.getIdcompra().getRifproveedor());
+            comprobanteivaef.setTotalgeneral(totalgeneral);
+            comprobanteivaef.setTotalbimponible(totalbaseimponible);
+            comprobanteivaef.setTotaliva(totaliva);
+            comprobanteivaef.setTotalivaretenido(totalivaretenido);
+//            comprobanteivaef.setIdestatuscomprobante(estatuscomprobanteretencion);
+            comprobanteivaefEJB.create(comprobanteivaef);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Fue generado el Comprobante de Retencion de Iva "));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Generar el Comprobante de Retencion de IVA"));
+        } finally {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        }
     }
 ///////////////////////////////////    
     
@@ -417,71 +444,8 @@ public class ComprobantesivaController implements Serializable {
         return listado;
     }
 
-    public void registrar() {
-        try {
-            estatuscontab = estatuscontableEJB.estatusContablePorRegistrar();
-            if (formacobro == 1) {
-                double saldo = 0;
-                cobro.setMontocobrado(factura.getSaldopendiente());
-                factura.setSaldopendiente(saldo);
-                int tipo = 1;
-                statusfactu = estatusfacturaventaEJB.estatusfacturaPagada(tipo);
-            } else {
-                int tipo = 0;
-                double saldop = 0;
-                saldop = factura.getSaldopendiente() - cobro.getMontocobrado();
-                if (saldop < 1) {
-                    tipo = 1;
-                } else {
-                    tipo = 3;
-                }
-
-                factura.setSaldopendiente(saldop);
-                statusfactu = estatusfacturaventaEJB.estatusfacturaAbonada(tipo);
-            }
-            factura.setIdestatusfacturaventa(statusfactu);
-            facturaEJB.edit(factura);
-            //codCompra = compraEJB.ultimacompraInsertada();
-
-            cobro.setNumerofact(factura);
-            cobro.setIdestatuscontable(estatuscontab);
-            cuentabancaria = cobro.getIdcuentabancaria();
-            cobro.setMontopendiente(factura.getSaldopendiente());
-            cobroventaEJB.create(cobro);
-
-            double saldoactualbanco = 0;
-            saldoactualbanco = cobro.getMontocobrado() + cobro.getIdcuentabancaria().getSaldo();
-            cuentabancaria.setSaldo(saldoactualbanco);
-            cuentabancariaEJB.edit(cuentabancaria);
-
-            if (factura.getSaldopendiente() < 1) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cobro fue Almacenado"));
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El Abono recibido fue Almacenado"));
-            }
-            String subject;
-            String ultimafactura = "" + factura.getNumerofact();
-            String fechafactu = formateador.format(cobro.getFechacobro());
-            correo = "FACTURA NRO: " + ultimafactura
-                    + "  CONTROL: " + factura.getNumerocontrol()
-                    + "  FECHA COBRO: " + fechafactu
-                    + "  CLIENTE: " + factura.getRifcliente().getRazonsocial()
-                    + "  RIF: " + factura.getRifcliente().getRifcliente()
-                    + "  FORMA PAGO: " + cobro.getIdtipopago().getTipopago()
-                    + "  BANCO: " + cobro.getIdcuentabancaria().getIdbanco().getNombrebanco()
-                    + "  MONTO COBRADO: " + formatearnumero.format(cobro.getMontocobrado())
-                    + "  MONTO PENDIENTE: " + formatearnumero.format(cobro.getMontopendiente())
-                    + "  OBSERVACIONES: " + cobro.getObservacionescobro();
-
-            subject = "Cobro N° " + cobro.getIdcobroventa();
-            enviomail = new envioCorreo(correo, subject);
-            enviomail.start();
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Cobro"));
-        } finally {
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-        }
-    }
+    
+    
 
     public void seleccionpagofraccionado() {
         if (mensaje.equals("total")) {

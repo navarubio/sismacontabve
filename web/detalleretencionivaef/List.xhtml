@@ -81,6 +81,14 @@
                                 <f:convertNumber type="currency" currencySymbol=" "   />
                             </h:outputText>
                         </p:column>
+                        <p:column style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_ivacompra}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.totalivacompra}">
+                                <f:convertNumber type="currency" currencySymbol=" "   />
+                            </h:outputText>
+                        </p:column>
                         <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_idtiporetencioniva}"/>

@@ -15,6 +15,7 @@ import Jpa.DetallecompraFacadeLocal;
 import Jpa.DetalleretencionislrefFacade;
 import Jpa.DetalleretencionislrefFacadeLocal;
 import Jpa.DetalleretencionivaefFacade;
+import Jpa.DetalleretencionivaefFacadeLocal;
 import Jpa.EmpresaFacadeLocal;
 import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaFacadeLocal;
@@ -92,7 +93,7 @@ public class PagosController implements Serializable {
     @EJB
     private TiporetencionislrFacadeLocal tiporetencionislrEJB;
     @EJB
-    private DetalleretencionivaefFacade detalleretencionivaefEJB;
+    private DetalleretencionivaefFacadeLocal detalleretencionivaefEJB;
     @EJB
     private DetalleretencionislrefFacadeLocal detalleretencionislrefEJB;
     @EJB
