@@ -2,14 +2,17 @@ package Jsf;
 
 import Jpa.BancoFacadeLocal;
 import Jpa.CobroventaFacadeLocal;
+import Jpa.ComprobanteivaefFacadeLocal;
 import Jpa.CuentabancariaFacadeLocal;
 import Jpa.DetallefacturaFacadeLocal;
+import Jpa.DetalleretencionivaefFacadeLocal;
 import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaventaFacadeLocal;
 import Jpa.FacturaFacadeLocal;
 import Jpa.TipopagoFacadeLocal;
 import Modelo.Banco;
 import Modelo.Cobroventa;
+import Modelo.Comprobanteivaef;
 import Modelo.Cuentabancaria;
 import Modelo.Detallefactura;
 import Modelo.Detalleretencionivaef;
@@ -20,6 +23,7 @@ import Modelo.Tipopago;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -29,6 +33,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import org.jboss.weld.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -39,16 +45,32 @@ import javax.inject.Named;
 
 public class ComprobantesivaController implements Serializable {
 
-
+    @EJB
+    private ComprobanteivaefFacadeLocal comprobanteivaefEJB;
+    @EJB
+    private DetalleretencionivaefFacadeLocal detalleretencionivaefEJB;
+            
     private Detalleretencionivaef detalleretencionivaef;
     private int numeroDetalle = 0;
+    private Comprobanteivaef comprobanteivaef;
     private Factura factura;
+    private String correlativo;
+    private int anio;
+    private int mes;
+    private String mesfiscal;
+    private String serialcomprobante;
+    private Date fechacomprobante;
+    List<Detalleretencionivaef> detalleretivafiltrados;
+    private double totalgeneral;
+    private double totalbaseimponible;
+    private double totaliva;
+    private double totalivaretenido;
+    private int id=0;
     
+    
+
     ///////////////////////////////////////////
 
-    
-    
-    
     @EJB
     private DetallefacturaFacadeLocal detallefacturaEJB;
     @EJB
@@ -67,8 +89,7 @@ public class ComprobantesivaController implements Serializable {
     private BancoFacadeLocal bancoEJB;
     @EJB
     private EstatuscontableFacadeLocal estatuscontableEJB;
-    
-    
+
     static Cobroventa cobro;
     static Cuentabancaria cuentabancaria;
     private Detallefactura detallefact;
@@ -87,7 +108,7 @@ public class ComprobantesivaController implements Serializable {
     private List<Banco> bancos;
     private int edad = 0;
     private String mensaje;
-    private Date  fechaactual= new Date();
+    private Date fechaactual = new Date();
     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     private String correo;
@@ -101,7 +122,158 @@ public class ComprobantesivaController implements Serializable {
         this.detalleretencionivaef = detalleretencionivaef;
     }
 
+    public Comprobanteivaef getComprobanteivaef() {
+        return comprobanteivaef;
+    }
 
+    public void setComprobanteivaef(Comprobanteivaef comprobanteivaef) {
+        this.comprobanteivaef = comprobanteivaef;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public String getMesfiscal() {
+        return mesfiscal;
+    }
+
+    public void setMesfiscal(String mesfiscal) {
+        this.mesfiscal = mesfiscal;
+    }
+    
+    public String getSerialcomprobante() {
+        return serialcomprobante;
+    }
+
+    public void setSerialcomprobante(String serialcomprobante) {
+        this.serialcomprobante = serialcomprobante;
+    }
+
+    public Date getFechacomprobante() {
+        return fechacomprobante;
+    }
+
+    public void setFechacomprobante(Date fechacomprobante) {
+        this.fechacomprobante = fechacomprobante;
+    }
+
+    public List<Detalleretencionivaef> getDetalleretivafiltrados() {
+        return detalleretivafiltrados;
+    }
+
+    public void setDetalleretivafiltrados(List<Detalleretencionivaef> detalleretivafiltrados) {
+        this.detalleretivafiltrados = detalleretivafiltrados;
+    }
+
+    public double getTotalgeneral() {
+        return totalgeneral;
+    }
+
+    public void setTotalgeneral(double totalgeneral) {
+        this.totalgeneral = totalgeneral;
+    }
+
+    public double getTotalbaseimponible() {
+        return totalbaseimponible;
+    }
+
+    public void setTotalbaseimponible(double totalbaseimponible) {
+        this.totalbaseimponible = totalbaseimponible;
+    }
+
+    public double getTotaliva() {
+        return totaliva;
+    }
+
+    public void setTotaliva(double totaliva) {
+        this.totaliva = totaliva;
+    }
+
+    public double getTotalivaretenido() {
+        return totalivaretenido;
+    }
+
+    public void setTotalivaretenido(double totalivaretenido) {
+        this.totalivaretenido = totalivaretenido;
+    }
+    
+    
+
+    
+    public String devolversiguientecomprobante() {
+        String siguiente;
+        siguiente = comprobanteivaefEJB.siguientecomprobanteformat();
+        correlativo=siguiente;
+        return siguiente;
+    }
+    
+    public void separarperiodofiscal(){
+        //fechacomprobante=comprobanteivaef.getFecha();
+        mes=0;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fechacomprobante);
+        anio = cal.get(Calendar.YEAR);
+        mes = cal.get(Calendar.MONTH)+1;
+        String year= Integer.toString(anio);
+        String month= String.format("%02d",mes);
+        mesfiscal=month;        
+        serialcomprobante=year + month + correlativo;
+    }    
+
+    public void onDateSelect(SelectEvent event) {    
+        separarperiodofiscal();
+    }
+    
+    public void obtenertotaltotales() {
+        double montotgeneral = 0;
+        double montotiva = 0;
+        double montotsubtotal = 0;
+        double montoretenido=0;
+        for (Detalleretencionivaef detalleretiva : detalleretivafiltrados) {
+            montotgeneral += detalleretiva.getTotalcompra();
+            montotiva += detalleretiva.getTotalivacompra();
+            montotsubtotal += detalleretiva.getBimponible();
+            montoretenido  += detalleretiva.getTotalivaretenido();
+        }
+        totalgeneral = montotgeneral;
+        totaliva = montotiva;
+        totalbaseimponible = montotsubtotal;
+        totalivaretenido = montoretenido;
+    }
+    
+    public void asignar(Detalleretencionivaef detalleretivaef) {
+        this.detalleretencionivaef = detalleretivaef;
+        this.detalleretivafiltrados=detalleretencionivaefEJB.buscarretencionesporPreveedor(detalleretivaef.getIdcompra().getRifproveedor().getRifproveedor());
+        obtenertotaltotales();
+    }
+    public void eliminar(Detalleretencionivaef detalleaeliminar) {
+        detalleretivafiltrados.remove(detalleaeliminar.hashCode());
+        int indice = 0;
+        for (Detalleretencionivaef detalleretiva : detalleretivafiltrados) {
+            detalleretiva.setIddetalleretencionivaef(indice);
+            indice++;
+            id = indice;
+        }
+        if (detalleaeliminar.hashCode() == 0) {
+            id = 0;
+        }
+
+    }
+///////////////////////////////////    
+    
     
     
     public double getSaldocuenta() {
@@ -112,7 +284,7 @@ public class ComprobantesivaController implements Serializable {
         this.saldocuenta = saldocuenta;
     }
 
-     public int getEdad() {
+    public int getEdad() {
         return edad;
     }
 
@@ -128,7 +300,6 @@ public class ComprobantesivaController implements Serializable {
         this.mensaje = mensaje;
     }
 
- 
     public List<Tipopago> getTipopagos() {
         return tipopagos;
     }
@@ -211,13 +382,13 @@ public class ComprobantesivaController implements Serializable {
 
     @PostConstruct
     public void init() {
-        detallesfactura = detallefacturaEJB.findAll();
-        cuentasbancarias = cuentabancariaEJB.findAll();
-        tipopagos = tipopagoEJB.findAll();
-        cobrosefectuados = cobroventaEJB.findAll();
-        bancos = bancoEJB.findAll();
-        cobro = new Cobroventa();
-        cobro.setFechacobro(fechaactual);
+//        detallesfactura = detallefacturaEJB.findAll();
+//        cuentasbancarias = cuentabancariaEJB.findAll();
+//        tipopagos = tipopagoEJB.findAll();
+//        cobrosefectuados = cobroventaEJB.findAll();
+///        bancos = bancoEJB.findAll();
+//        cobro = new Cobroventa();
+//        cobro.setFechacobro(fechaactual);
     }
 
     public List<Cuentabancaria> refrescarCuentasBancarias() {
@@ -233,12 +404,13 @@ public class ComprobantesivaController implements Serializable {
         saldocuenta = cuentabancariaEJB.saldoencuenta(lstCuentasSelecc);
     }
 
-    public void asignar(Detalleretencionivaef detalleretivaef) {
-        this.detalleretencionivaef = detalleretivaef;
-//        this.numeroDetalle =detalleretencionivaef. factura.getNumerofact();
-//        detallesfacturafiltrados = detallesenfacturaEJB.buscardetallefactura(factura);
-    }
+    
 
+    
+    
+    
+    
+    
     public List<Detallefactura> detallefacturaAuxiliar() {
         List<Detallefactura> listado = null;
         listado = detallesenfacturaEJB.buscardetallefactura(factura);
@@ -273,7 +445,7 @@ public class ComprobantesivaController implements Serializable {
 
             cobro.setNumerofact(factura);
             cobro.setIdestatuscontable(estatuscontab);
-            cuentabancaria=cobro.getIdcuentabancaria();
+            cuentabancaria = cobro.getIdcuentabancaria();
             cobro.setMontopendiente(factura.getSaldopendiente());
             cobroventaEJB.create(cobro);
 
@@ -281,14 +453,14 @@ public class ComprobantesivaController implements Serializable {
             saldoactualbanco = cobro.getMontocobrado() + cobro.getIdcuentabancaria().getSaldo();
             cuentabancaria.setSaldo(saldoactualbanco);
             cuentabancariaEJB.edit(cuentabancaria);
-            
+
             if (factura.getSaldopendiente() < 1) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cobro fue Almacenado"));
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El Abono recibido fue Almacenado"));
             }
             String subject;
-            String ultimafactura= ""+factura.getNumerofact();
+            String ultimafactura = "" + factura.getNumerofact();
             String fechafactu = formateador.format(cobro.getFechacobro());
             correo = "FACTURA NRO: " + ultimafactura
                     + "  CONTROL: " + factura.getNumerocontrol()
@@ -297,11 +469,11 @@ public class ComprobantesivaController implements Serializable {
                     + "  RIF: " + factura.getRifcliente().getRifcliente()
                     + "  FORMA PAGO: " + cobro.getIdtipopago().getTipopago()
                     + "  BANCO: " + cobro.getIdcuentabancaria().getIdbanco().getNombrebanco()
-                    + "  MONTO COBRADO: " + formatearnumero.format( cobro.getMontocobrado())
+                    + "  MONTO COBRADO: " + formatearnumero.format(cobro.getMontocobrado())
                     + "  MONTO PENDIENTE: " + formatearnumero.format(cobro.getMontopendiente())
                     + "  OBSERVACIONES: " + cobro.getObservacionescobro();
 
-                    subject = "Cobro N° " +cobro.getIdcobroventa();
+            subject = "Cobro N° " + cobro.getIdcobroventa();
             enviomail = new envioCorreo(correo, subject);
             enviomail.start();
         } catch (Exception e) {
