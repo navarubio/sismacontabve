@@ -19,9 +19,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
 
 @Named("detalleretencionivaefController")
-@SessionScoped
+@ViewScoped
 public class DetalleretencionivaefController implements Serializable {
 
     @EJB

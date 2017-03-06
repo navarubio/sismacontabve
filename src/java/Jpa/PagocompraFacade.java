@@ -80,5 +80,25 @@ public class PagocompraFacade extends AbstractFacade<Pagocompra> implements Pago
         }
         return pago;
     }
+    @Override
+    public int  ultimopago() {
+        String consulta = null;
+        Pagocompra ultima = new Pagocompra();
+        int numeracion;
+//        DecimalFormat myFormatter = new DecimalFormat("00000000"); 
+        //formatear la cantidad 
+        try {
+            consulta = "Select p From Pagocompra p Order By p.idpagocompra Desc";
+            Query query = em.createQuery(consulta);
+            List<Pagocompra> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                ultima = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        numeracion = ultima.getIdpagocompra();
+        return numeracion;
+    }
 
 }

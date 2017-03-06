@@ -37,4 +37,6 @@ public interface PagocompraFacadeLocal {
     
     public Pagocompra buscarpagototal(Compra compr);
     
+    int ultimopago();
+    
 }

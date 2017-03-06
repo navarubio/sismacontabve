@@ -593,6 +593,13 @@ public class PagosController implements Serializable {
 //            pagocompra.setTotalpago(compra.getTotal());
 //            pagocompra.setSaldopendiente(compra.getMontopendiente());
             pagocompraEJB.create(pagocompra);
+            
+            if (visualizar==7){
+                pagocompra.setIdpagocompra(pagocompraEJB.ultimopago());
+                detalleretencionivaef.setIdpagocompra(pagocompra);
+                detalleretencionivaefEJB.edit(detalleretencionivaef);
+                visualizar=0;
+            }
 
             double saldoactualbanco = 0;
             saldoactualbanco = (pagocompra.getIdcuentabancaria().getSaldo() - pagocompra.getTotalpago());
