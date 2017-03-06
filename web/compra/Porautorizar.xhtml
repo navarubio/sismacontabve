@@ -49,20 +49,13 @@
                                 </f:facet>
                                 <h:outputText value="#{item.idusuario.iddepartamento.departamento}"/>
                             </p:column>
-
                             <p:column width="60" style="text-align: center" filterBy="#{item.idauxiliarrequerimiento.idauxiliarrequerimiento}" sortBy="#{item.idauxiliarrequerimiento.idauxiliarrequerimiento}" filterMatchMode="exact" filterStyle="width: 60px;" >
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListCompraTitle_idauxiliarrequerimiento}"/>
                                 </f:facet>
                                 <h:outputText value="REQ-#{item.idauxiliarrequerimiento.idauxiliarrequerimiento}"/>
                             </p:column>
-                            <!--p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="#{bundle.ListCompraTitle_rifproveedor}"/>
-                                </f:facet>
-                                <h:outputText value="#{item.rifproveedor}"/>
-                            </p:column-->                     
-                            <p:column style="width:20%">
+                            <p:column style="width:20%" filterBy="#{item.rifproveedor.razonsocial}" filterMatchMode="contains" filterStyle="width:150px;">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListCompraTitle_razonsocial}"/>
                                 </f:facet>

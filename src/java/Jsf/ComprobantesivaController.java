@@ -7,6 +7,7 @@ import Modelo.Detalleretencionivaef;
 import Modelo.Estatuscomprobanteretencion;
 import Modelo.Factura;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
 import org.jboss.weld.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
@@ -248,6 +250,21 @@ public class ComprobantesivaController implements Serializable {
     public void init() {
         detalleretivafiltrados.clear();
     }
+    
+    public void verComprobanteretiva(Comprobanteivaef item) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        //Instancia hacia la clase reporteClientes        
+        reporteArticulo rArticulo = new reporteArticulo();
+
+        int codigocomprobante = item.getIdcomprobanteivaef();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("/resources/reportes/comprobanteretiva.jasper");
+
+        rArticulo.getComprobanteRetIva(ruta, codigocomprobante);
+        FacesContext.getCurrentInstance().responseComplete();
+    }
+    
 ///////////////////////////////////    
     
     

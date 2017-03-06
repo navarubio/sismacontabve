@@ -54,14 +54,7 @@
                             </f:facet>
                             <h:outputText value="#{item.idusuario.iddepartamento.departamento}"/>
                         </p:column>
-
-                        <!--p:column width="100" >
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCompraTitle_rifproveedor}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.rifproveedor}"/>
-                        </p:column-->                     
-                        <p:column style="width:18%">
+                        <p:column style="width:18%" filterBy="#{item.rifproveedor.razonsocial}" filterMatchMode="contains" filterStyle="width:120px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCompraTitle_razonsocial}"/>
                             </f:facet>
