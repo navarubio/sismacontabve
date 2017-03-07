@@ -6,9 +6,11 @@
 package Jpa;
 
 import Modelo.Detalleretencionislref;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,6 +30,21 @@ public class DetalleretencionislrefFacade extends AbstractFacade<Detalleretencio
         super(Detalleretencionislref.class);
     }
     
+    @Override
+    public List<Detalleretencionislref> buscarretencionesporPreveedor(String rif) {
+        String consulta;
+        String rifprovee = rif;
+        List<Detalleretencionislref> lista = null;
+        try {
+            consulta = "From Detalleretencionislref d where d.idcompra.rifproveedor.rifproveedor= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, rifprovee);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
     
     
 }

@@ -535,95 +535,101 @@ public class PagosController implements Serializable {
     }
 
     public void registrar() {
-        try {
-            /**
-             * compra.setRifproveedor(provee);
-             * compra.setSubtotal(auxiliar.getSubtotal());
-             * compra.setIva(auxiliar.getMontoiva());
-             * compra.setTotal(auxiliar.getMontototal()); Usuario us = (Usuario)
-             * FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-             * compra.setIdusuario(us);*
-             */
-            //estatuscontab = estatuscontableEJB.estatusContablePorRegistrar();
-            if (formapago == 1) {
-                double saldo = 0;
-                if (montoapagar == compra.getTotal()) {
-                    pagocompra.setTotalpago(montoapagar);
-                    compra.setMontopendiente(saldo);
-                    pagocompra.setMontoretenido(saldo);
-                    int tipo = 3;
-                    statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
-                } else {
-                    pagocompra.setTotalpago(montoapagar);
-                    compra.setMontopendiente(saldo);
-                    pagocompra.setMontoretenido(compra.getTotal() - montoapagar);
-                    int tipo = 3;
-                    statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
-                }
-            } else {
-                int tipo = 0;
-                double saldop = 0;
-                if (visualizar == 6 || visualizar == 5  ) {
-                    saldop = compra.getMontopendiente() - pagocompra.getTotalpago();
-                } else if (visualizar == 7) {
-                    saldop = ((compra.getMontopendiente() - pagocompra.getTotalpago()) - (compra.getMontopendiente() - montoapagar));
-                }
-                if (saldop < 1) {
-                    tipo = 3;
-                } else {
-                    tipo = 4;
-                }
-                compra.setMontopendiente(saldop);
-                statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
-            }
-            pagocompra.setSaldopendiente(compra.getMontopendiente());
-            compra.setIdestatusfactura(statusfactu);
-            compraEJB.edit(compra);
-            pagocompra.setIdcompra(compra);
-            pagocompra.setIdbanco(banco);
+        if (visualizar == 7 || visualizar == 6 || visualizar == 5) {
+            try {
+                /**
+                 * compra.setRifproveedor(provee);
+                 * compra.setSubtotal(auxiliar.getSubtotal());
+                 * compra.setIva(auxiliar.getMontoiva());
+                 * compra.setTotal(auxiliar.getMontototal()); Usuario us =
+                 * (Usuario)
+                 * FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+                 * compra.setIdusuario(us);*
+                 */
+                //estatuscontab = estatuscontableEJB.estatusContablePorRegistrar();
 
-            if (visualizar == 6 ) {
-                pagocompra.setMontoretenido(0.0);
-            } else if (visualizar == 7) {
-                pagocompra.setMontoretenido((compra.getTotal() - montoapagar));
-            }else if (visualizar == 5) {
-                pagocompra.setMontoretenido(0.0);
-            }
-            cuentabanco = pagocompra.getIdcuentabancaria();
+                if (formapago == 1) {
+                    double saldo = 0;
+                    if (montoapagar == compra.getTotal()) {
+                        pagocompra.setTotalpago(montoapagar);
+                        compra.setMontopendiente(saldo);
+                        pagocompra.setMontoretenido(saldo);
+                        int tipo = 3;
+                        statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
+                    } else {
+                        pagocompra.setTotalpago(montoapagar);
+                        compra.setMontopendiente(saldo);
+                        pagocompra.setMontoretenido(compra.getTotal() - montoapagar);
+                        int tipo = 3;
+                        statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
+                    }
+                } else {
+                    int tipo = 0;
+                    double saldop = 0;
+                    if (visualizar == 6 || visualizar == 5) {
+                        saldop = compra.getMontopendiente() - pagocompra.getTotalpago();
+                    } else if (visualizar == 7) {
+                        saldop = ((compra.getMontopendiente() - pagocompra.getTotalpago()) - (compra.getMontopendiente() - montoapagar));
+                    }
+                    if (saldop < 1) {
+                        tipo = 3;
+                    } else {
+                        tipo = 4;
+                    }
+                    compra.setMontopendiente(saldop);
+                    statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
+                }
+                pagocompra.setSaldopendiente(compra.getMontopendiente());
+                compra.setIdestatusfactura(statusfactu);
+                compraEJB.edit(compra);
+                pagocompra.setIdcompra(compra);
+                pagocompra.setIdbanco(banco);
+
+                if (visualizar == 6) {
+                    pagocompra.setMontoretenido(0.0);
+                } else if (visualizar == 7) {
+                    pagocompra.setMontoretenido((compra.getTotal() - montoapagar));
+                } else if (visualizar == 5) {
+                    pagocompra.setMontoretenido(0.0);
+                }
+                cuentabanco = pagocompra.getIdcuentabancaria();
 //            pagocompra.setTotalpago(compra.getTotal());
 //            pagocompra.setSaldopendiente(compra.getMontopendiente());
-            pagocompraEJB.create(pagocompra);
-            
-            if (visualizar==7){
-                pagocompra.setIdpagocompra(pagocompraEJB.ultimopago());
-                detalleretencionivaef.setIdpagocompra(pagocompra);
-                detalleretencionivaefEJB.edit(detalleretencionivaef);
-                visualizar=0;
+                pagocompraEJB.create(pagocompra);
+
+                if (visualizar == 7) {
+                    pagocompra.setIdpagocompra(pagocompraEJB.ultimopago());
+                    detalleretencionivaef.setIdpagocompra(pagocompra);
+                    detalleretencionivaefEJB.edit(detalleretencionivaef);
+                    visualizar = 0;
+                }
+
+                double saldoactualbanco = 0;
+                saldoactualbanco = (pagocompra.getIdcuentabancaria().getSaldo() - pagocompra.getTotalpago());
+                cuentabanco.setSaldo(saldoactualbanco);
+                cuentabancariaEJB.edit(cuentabanco);
+                String subject;
+                String fechapag = formateador.format(pagocompra.getFechapago());
+                correo = "COMPRA NRO: " + compra.getIdcompra()
+                        + "  FECHA: " + fechapag
+                        + "  PROVEEDOR: " + compra.getRifproveedor().getRazonsocial()
+                        + "  RIF: " + compra.getRifproveedor().getRifproveedor()
+                        + "  TIPO PAGO: " + pagocompra.getIdtipopago().getTipopago()
+                        + "  BANCO: " + pagocompra.getIdcuentabancaria().getIdbanco().getNombrebanco()
+                        + "  TOTAL: " + formatearnumero.format(pagocompra.getTotalpago())
+                        + "  OBSERVACIONES: " + pagocompra.getObservacionespago();
+
+                subject = "Emisión de Pago N° " + pagocompra.getIdpagocompra();
+                enviomail = new envioCorreo(correo, subject);
+                enviomail.start();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Pago fue Almacenado"));
+            } catch (Exception e) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Pago"));
+            } finally {
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             }
-
-            double saldoactualbanco = 0;
-            saldoactualbanco = (pagocompra.getIdcuentabancaria().getSaldo() - pagocompra.getTotalpago());
-            cuentabanco.setSaldo(saldoactualbanco);
-            cuentabancariaEJB.edit(cuentabanco);
-            String subject;
-            String fechapag = formateador.format(pagocompra.getFechapago());
-            correo = "COMPRA NRO: " + compra.getIdcompra()
-                    + "  FECHA: " + fechapag
-                    + "  PROVEEDOR: " + compra.getRifproveedor().getRazonsocial()
-                    + "  RIF: " + compra.getRifproveedor().getRifproveedor()
-                    + "  TIPO PAGO: " + pagocompra.getIdtipopago().getTipopago()
-                    + "  BANCO: " + pagocompra.getIdcuentabancaria().getIdbanco().getNombrebanco()
-                    + "  TOTAL: " + formatearnumero.format(pagocompra.getTotalpago())
-                    + "  OBSERVACIONES: " + pagocompra.getObservacionespago();
-
-            subject = "Emisión de Pago N° " + pagocompra.getIdpagocompra();
-            enviomail = new envioCorreo(correo, subject);
-            enviomail.start();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Pago fue Almacenado"));
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Pago"));
-        } finally {
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Debe efectuar la retención sobre el pago", "Aviso"));
         }
     }
 

@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+        <ui:composition template="./../template.xhtml">
+            <ui:define name="title">
+                Retenciones I.S.L.R.
+                <h:outputStylesheet library="css" name="index.css" />   
+            </ui:define>
+            <ui:define name="body">
+                <p:growl id="msgs" showDetail="true" autoUpdate="true" showSummary="false" />
+
+                <h:form id ="formulario">
+                    <div id="imag2">
+                        <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca"/>
+                    </div>      
+                    <img src="../resources/images/vcalendar.png" width="70" height="70" alt="Facturacion" align="right" />
+
+                    <p:panel header="COMPROBANTE DE RETENCION DE I.S.L.R.">
+                        <p:fieldset style="width: 68%"  legend="Datos del Contribuyente" >
+                            <p:panelGrid columns="4" styleClass="ui-custompanelgrid2" id="datoscontribuyente">
+                                <p:outputLabel for="razonsocial" style="float:right" styleClass="text-ouput" value="Razon Social :"/>
+                                <p:outputLabel id="razonsocial"  styleClass="text-ouput" value="#{comprobantesislrController.detalleretencionislref.idcompra.rifproveedor.razonsocial}"/>
+                                <p:outputLabel for="numero" style="float:right" styleClass="text-ouput" value="Correlativo:" />                                 
+                                <p:outputLabel id="numero" styleClass="text-ouputfact" value="#{comprobantesislrController.devolversiguientecomprobante()}" title="#{bundle.CreateFacturaTitle_numerofactura}" />
+                                <p:outputLabel for="rif" style="float:right" styleClass="text-ouput" value="R.I.F. :" />
+                                <p:outputLabel id="rif" value="#{comprobantesislrController.detalleretencionislref.idcompra.rifproveedor.rifproveedor}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="fechacomprob" style="float:right" styleClass="text-ouput"  value="Fecha Comprobante :"  />
+                                <p:calendar id="fechacomprob" locale="es" value="#{comprobantesislrController.fechacomprobante}"  pattern="dd/MM/yyyy" size="10" required="true" showOn="button" navigator="true" style="size: 10px"  />
+                                <p:outputLabel for="direccioncliente" style="float:right" styleClass="text-ouput"  value="Direccion Fiscal :" />
+                                <p:outputLabel id="direccioncliente" value="#{comprobantesislrController.detalleretencionislref.idcompra.rifproveedor.direccionfiscal}"/>
+                                <p:outputLabel></p:outputLabel>  
+                                <p:outputLabel></p:outputLabel>                                  
+                                <p:outputLabel for="telefono" style="float:right" styleClass="text-ouput" value="Telefonos" />
+                                <p:outputLabel id="telefono" value="#{comprobantesislrController.detalleretencionislref.idcompra.rifproveedor.telefonos}" />
+                            </p:panelGrid>
+                        </p:fieldset>
+                        <p:panel>
+                            <p:fieldset legend="DATOS DE LA RETENCION">
+                                <p:dataTable id="listado" value="#{comprobantesislrController.detalleretislrfiltrados}" 
+                                             var="ret" emptyMessage="No hay retenciones para mostrar" rowKey="#{ret.idcompra.idcompra}"
+                                             >
+                                    <p:column width="50" style="text-align: center">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_idcompra}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{ret.idcompra.idcompra}"/> 
+                                    </p:column>
+                                    <p:column width="80" style="text-align: center" sortBy="#{item.idpagocompra.fechapago}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_fechapago}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{ret.idcompra.fechafactura}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText> 
+                                    </p:column>
+                                    <p:column width="50" style="text-align: center" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_numerofact}" />
+                                        </f:facet>
+                                        <h:outputText value="#{ret.idcompra.numerofactura}"/>
+                                    </p:column>
+                                    <p:column width="200" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_proveedor}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{ret.idcompra.rifproveedor.razonsocial}"/>
+                                    </p:column>
+                                    <p:column width="170" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle_concepto}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{ret.idtiporetencionislr.descripcionservicio}"/>
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle_totalcompra}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{ret.totalcompra}">
+                                            <f:convertNumber type="currency" currencySymbol=" "   />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle_bimponible}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{ret.bimponible}">
+                                            <f:convertNumber type="currency" currencySymbol=" "   />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: center">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle_procentajeretencion}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{ret.procentajeretencion} %"/>
+                                    </p:column>   
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle_sustraendo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{ret.sustraendo}"/>
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle_totalislrretenido}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{ret.totalislrretenido}">
+                                            <f:convertNumber type="currency" currencySymbol=" "   />
+                                        </h:outputText>                                
+                                    </p:column>
+                                    <p:column style="width:5%" headerText="Eliminar">
+                                        <p:commandLink value="Eliminar" actionListener="#{comprobantesislrController.eliminar(ret)}" update="listado" 
+                                                       rendered="#{comprobantesislrController.detalleretislrfiltrados.size()>1? true:false}"/> 
+
+                                    </p:column>
+                                    <p:columnGroup type="footer">
+                                        <p:row>
+                                            <p:column colspan="4" style="text-align:right" footerText="TOTALES GENERALES" />
+                                            <p:column style="text-align: right"  footerText="#{comprobantesislrController.totalgeneral}"/> 
+                                            <p:column style="text-align: right"  footerText="#{comprobantesislrController.totalbaseimponible}" />
+                                            <p:column style="text-align: right"  footerText="#{null}" />
+                                            <p:column style="text-align: right"  footerText="#{null}" />
+                                            <p:column style="text-align: right"  footerText="#{comprobantesislrController.totalislrretenido}" /> 
+                                        </p:row>
+                                    </p:columnGroup>                            
+                                </p:dataTable>
+                            </p:fieldset>
+                            <p:commandButton value="Registrar" actionListener="#{comprobantesivaController.registrar()}"  update=":formulario,:growl" action="/comprobanteivaef/List?faces-redirect=true" />
+                            <!--p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value=".{bundle.Imprimir}" actionListener=".{facturasController.verReporte()}" ajax="false" onclick="form.target = '_blank'"/-->                            
+                        </p:panel>
+                    </p:panel>
+                </h:form>
+                <h:outputScript library="js" name="spanishLocale.js"/>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
+
+<!-- :formulario, action="/factura/List?faces-redirect=true"-->

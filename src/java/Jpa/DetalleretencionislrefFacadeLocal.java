@@ -32,4 +32,6 @@ public interface DetalleretencionislrefFacadeLocal {
 
     int count();
     
+    List<Detalleretencionislref> buscarretencionesporPreveedor(String rif);
+    
 }

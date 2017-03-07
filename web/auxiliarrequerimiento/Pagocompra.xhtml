@@ -244,7 +244,8 @@
                                 </p:row>
                             </p:columnGroup>       
                         </p:dataTable> 
-                        <p:commandButton value="Registrar" actionListener="#{pagosController.registrar()}" update=":msgs" action="/compra/List?faces-redirect=true"/>
+                        <p:commandButton value="Registrar" actionListener="#{pagosController.registrar()}" update=":msgs" action="/compra/List?faces-redirect=true"
+                            rendered  ="#{pagosController.visualizar== 7 || pagosController.visualizar== 5 || pagosController.visualizar== 6? true:false}"/> 
                         <p:commandButton value="Cancelar" />
                     </p:panel>
                 </h:form>

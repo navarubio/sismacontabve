@@ -11,10 +11,16 @@
 
         <ui:define name="title">
             <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle}"></h:outputText>
+            <h:outputStylesheet library="css" name="index.css" />  
         </ui:define>
 
         <ui:define name="body">
             <h:form id="DetalleretencionislrefListForm">
+                <div id="imag2">
+                    <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
+                </div>     
+                <img src="../resources/images/seniat.png" width="70" height="70" alt="Comprobantes" align="right" />
+
                 <p:panel header="#{bundletributos.ListDetalleretencionislrefTitle}">
                     <p:dataTable id="datalist" value="#{detalleretencionislrefController.items}" var="item"
                                  selectionMode="single" selection="#{detalleretencionislrefController.selected}"
@@ -27,19 +33,27 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column width="50">
-                            <f:facet name="header">
-                                <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle_iddetalleretencionislref}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.iddetalleretencionislref}"/>
-                        </p:column>
-                        <p:column width="80">
+                        <p:column width="80" style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle_idcompra}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idcompra}"/>
+                            <h:outputText value="#{item.idcompra.idcompra}"/>
                         </p:column>
-                        <p:column width="150">
+                        <p:column width="80" style="text-align: center" sortBy="#{item.idpagocompra.fechapago}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_fechapago}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idcompra.fechafactura}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText> 
+                        </p:column>
+                        <p:column width="80" style="text-align: center" filterBy="#{item.idcompra.numerofactura}" filterMatchMode="contains" filterStyle="width:40px;" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_numerofact}" />
+                            </f:facet>
+                            <h:outputText value="#{item.idcompra.numerofactura}"/>
+                        </p:column>
+                        <p:column width="150" filterBy="#{item.idcompra.rifproveedor.razonsocial}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle_proveedor}"/>
                             </f:facet>
@@ -71,7 +85,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle_procentajeretencion}"/>
                             </f:facet>
-                            <h:outputText value="#{item.procentajeretencion}"/>
+                            <h:outputText value="#{item.procentajeretencion} %"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -87,11 +101,10 @@
                                 <f:convertNumber type="currency" currencySymbol=" "   />
                             </h:outputText>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle_idcomprobanteislref}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idcomprobanteislref}"/>
+                        <p:column style="text-align: center" headerText="Comprobante">
+                            <h:commandLink action="/detalleretencionislref/newComprobanteislr.xhtml" actionListener="#{comprobantesislrController.asignar(item)}" > 
+                                <h:graphicImage library="images" name="comprobanteret.png" width="30" height="30" alt="Pagar Compra"/>
+                            </h:commandLink>      
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundletributos.Create}" actionListener="#{detalleretencionislrefController.prepareCreate}" update=":DetalleretencionislrefCreateForm" oncomplete="PF('DetalleretencionislrefCreateDialog').show()"/>
