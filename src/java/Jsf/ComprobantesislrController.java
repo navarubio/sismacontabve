@@ -217,34 +217,31 @@ public class ComprobantesislrController implements Serializable {
         obtenertotaltotales();
     }
     public void registrar() {
-/*        try {
+        try {
             estatuscomprobanteretencion.setIdestatuscomprobante(1);
-            comprobanteivaef.setComprobante(serialcomprobante);
-            comprobanteivaef.setFecha(fechacomprobante);
-            comprobanteivaef.setAnio(anio);
-            comprobanteivaef.setMes(mes);
-            comprobanteivaef.setRifproveedor(detalleretencionivaef.getIdcompra().getRifproveedor());
+            comprobanteislref.setComprobante(correlativo);
+            comprobanteislref.setFecha(fechacomprobante);
+            comprobanteislref.setRifproveedor(detalleretencionislref.getIdcompra().getRifproveedor());
             
-            comprobanteivaef.setTotalgeneral(totalgeneral);
-            comprobanteivaef.setTotalbimponible(totalbaseimponible);
-            comprobanteivaef.setTotaliva(totaliva);
-            comprobanteivaef.setTotalivaretenido(totalivaretenido);
-            comprobanteivaef.setIdestatuscomprobante(estatuscomprobanteretencion);
-            comprobanteivaefEJB.create(comprobanteivaef);
+            comprobanteislref.setTotalgeneral(totalgeneral);
+            comprobanteislref.setTotalbimponible(totalbaseimponible);
+            comprobanteislref.setTotalislrretenido(totalislrretenido);
+            comprobanteislref.setIdestatuscomprobante(estatuscomprobanteretencion);
+            comprobanteislrefEJB.create(comprobanteislref);
             
 
-            idcomprobanteretiva = Integer.parseInt(comprobanteivaefEJB.siguientecomprobanteformat());
-            comprobanteivaef.setIdcomprobanteivaef(idcomprobanteretiva-1);
-            for (Detalleretencionivaef detalle : detalleretivafiltrados) {
-                detalle.setIdcomprobanteivaef(comprobanteivaef);
-                detalleretencionivaefEJB.edit(detalle);
+            idcomprobanteretislr = Integer.parseInt(comprobanteislrefEJB.siguientecomprobanteformat());
+            comprobanteislref.setIdcomprobanteislref(idcomprobanteretislr-1);
+            for (Detalleretencionislref detalle : detalleretislrfiltrados) {
+                detalle.setIdcomprobanteislref(comprobanteislref);
+                detalleretencionislrefEJB.edit(detalle);
             }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Fue generado el Comprobante de Retencion de Iva "));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Fue generado el Comprobante de Retencion de ISLR", "Aviso"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Generar el Comprobante de Retencion de IVA"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Generar el Comprobante de Retencion de ISLR", "Aviso"));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-        }*/
+        }
     }
     
     @PostConstruct
@@ -252,12 +249,12 @@ public class ComprobantesislrController implements Serializable {
         detalleretislrfiltrados.clear();
     }
     
-    public void verComprobanteretiva(Comprobanteivaef item) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public void verComprobanteretislr(Comprobanteislref item) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 
         //Instancia hacia la clase reporteClientes        
         reporteArticulo rArticulo = new reporteArticulo();
 
-        int codigocomprobante = item.getIdcomprobanteivaef();
+        int codigocomprobante = item.getIdcomprobanteislref();
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
         String ruta = servletContext.getRealPath("/resources/reportes/comprobanteretiva.jasper");

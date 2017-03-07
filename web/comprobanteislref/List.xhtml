@@ -26,20 +26,25 @@
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
-                        <p:column>
+                        <p:column width="300" filterBy="#{item.rifproveedor.razonsocial}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundletributos.ListComprobanteislrefTitle_rifproveedor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.rifproveedor.razonsocial}"/>
+                        </p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListComprobanteislrefTitle_idcomprobanteislref}"/>
                             </f:facet>
                             <h:outputText value="#{item.idcomprobanteislref}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListComprobanteislrefTitle_comprobante}"/>
                             </f:facet>
                             <h:outputText value="#{item.comprobante}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListComprobanteislrefTitle_fecha}"/>
                             </f:facet>
@@ -47,35 +52,40 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListComprobanteislrefTitle_totalgeneral}"/>
                             </f:facet>
-                            <h:outputText value="#{item.totalgeneral}"/>
+                            <h:outputText value="#{item.totalgeneral}">
+                                <f:convertNumber type="currency" currencySymbol=" "   />
+                            </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListComprobanteislrefTitle_totalbimponible}"/>
                             </f:facet>
-                            <h:outputText value="#{item.totalbimponible}"/>
+                            <h:outputText value="#{item.totalbimponible}">
+                                <f:convertNumber type="currency" currencySymbol=" "   />
+                            </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListComprobanteislrefTitle_totalislrretenido}"/>
                             </f:facet>
-                            <h:outputText value="#{item.totalislrretenido}"/>
+                            <h:outputText value="#{item.totalislrretenido}">
+                                <f:convertNumber type="currency" currencySymbol=" "   />
+                            </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListComprobanteislrefTitle_idestatuscomprobante}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idestatuscomprobante}"/>
+                            <h:outputText value="#{item.idestatuscomprobante.estatuscomprobante}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundletributos.ListComprobanteislrefTitle_rifproveedor}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.rifproveedor}"/>
+                        <p:column style="text-align: center" headerText="Retencion ISLR">
+                            <h:commandLink actionListener="#{comprobantesislrController.verComprobanteretislr(item) }" target = "_blank"  > 
+                                <h:graphicImage library="images" name="imprimir.png" width="30" height="30" alt="Pagar Compra"/>
+                            </h:commandLink>      
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundletributos.Create}" actionListener="#{comprobanteislrefController.prepareCreate}" update=":ComprobanteislrefCreateForm" oncomplete="PF('ComprobanteislrefCreateDialog').show()"/>

@@ -27,7 +27,7 @@
                                  paginator="true"
                                  rowKey="#{item.iddetalleretencionislref}"
                                  rows="20"
-                                 rowsPerPageTemplate="20,30,40,50"
+                                 rowsPerPageTemplate="20,30,40,50" emptyMessage="No existen retenciones de ISLR para esta seleccion"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -103,7 +103,7 @@
                         </p:column>
                         <p:column style="text-align: center" headerText="Comprobante">
                             <h:commandLink action="/detalleretencionislref/newComprobanteislr.xhtml" actionListener="#{comprobantesislrController.asignar(item)}" > 
-                                <h:graphicImage library="images" name="comprobanteret.png" width="30" height="30" alt="Pagar Compra"/>
+                                <h:graphicImage library="images" name="comprobanteretISLR.png" width="30" height="30" alt="Pagar Compra"/>
                             </h:commandLink>      
                         </p:column>
                         <f:facet name="footer">

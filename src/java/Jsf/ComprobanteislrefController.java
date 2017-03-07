@@ -4,6 +4,7 @@ import Modelo.Comprobanteislref;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.ComprobanteislrefFacade;
+import Jpa.ComprobanteislrefFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +25,7 @@ import javax.faces.convert.FacesConverter;
 public class ComprobanteislrefController implements Serializable {
 
     @EJB
-    private Jpa.ComprobanteislrefFacade ejbFacade;
+    private Jpa.ComprobanteislrefFacadeLocal ejbFacade;
     private List<Comprobanteislref> items = null;
     private Comprobanteislref selected;
 
@@ -45,7 +46,7 @@ public class ComprobanteislrefController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private ComprobanteislrefFacade getFacade() {
+    private ComprobanteislrefFacadeLocal getFacade() {
         return ejbFacade;
     }
 
