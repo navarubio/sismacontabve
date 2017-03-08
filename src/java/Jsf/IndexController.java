@@ -45,9 +45,10 @@ public class IndexController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error!"));
         }
         return redireccion;
-    } 
-    public String enviarConfirmacion(){
+    }
+
+    public String enviarConfirmacion() {
         String redi = "/productor/Confirmacion?faces-redirect=true";
         return redi;
     }
-}
+    }

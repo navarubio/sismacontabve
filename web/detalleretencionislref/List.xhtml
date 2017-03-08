@@ -22,7 +22,7 @@
                 <img src="../resources/images/seniat.png" width="70" height="70" alt="Comprobantes" align="right" />
 
                 <p:panel header="#{bundletributos.ListDetalleretencionislrefTitle}">
-                    <p:dataTable id="datalist" value="#{detalleretencionislrefController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{detalleretencionislrefController.buscarlistaactiva()}" var="item"
                                  selectionMode="single" selection="#{detalleretencionislrefController.selected}"
                                  paginator="true"
                                  rowKey="#{item.iddetalleretencionislref}"
@@ -33,7 +33,7 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column width="80" style="text-align: right">
+                        <p:column width="80" style="text-align: center" filterBy="#{item.idcompra.idcompra}" filterMatchMode="exact" filterStyle="width:50px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle_idcompra}"/>
                             </f:facet>
@@ -41,7 +41,7 @@
                         </p:column>
                         <p:column width="80" style="text-align: center" sortBy="#{item.idpagocompra.fechapago}">
                             <f:facet name="header">
-                                <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_fechapago}"/>
+                                <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_fechafactura}"/>
                             </f:facet>
                             <h:outputText value="#{item.idcompra.fechafactura}">
                                 <f:convertDateTime pattern="dd/MM/yyyy" />

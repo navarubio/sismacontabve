@@ -29,6 +29,7 @@ public class DetalleretencionivaefController implements Serializable {
     private Jpa.DetalleretencionivaefFacadeLocal ejbFacade;
     private List<Detalleretencionivaef> items = null;
     private Detalleretencionivaef selected;
+    private List<Detalleretencionivaef> listaactiva = null;
 
     public DetalleretencionivaefController() {
     }
@@ -81,6 +82,11 @@ public class DetalleretencionivaefController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
+    }
+
+    public List<Detalleretencionivaef> buscarlistaactiva() {
+        listaactiva = ejbFacade.buscarretencionesActivas();
+        return listaactiva;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

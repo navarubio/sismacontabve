@@ -21,7 +21,7 @@
                 <img src="../resources/images/seniat.png" width="70" height="70" alt="Comprobantes" align="right" />
 
                 <p:panel header="#{bundletributos.ListDetalleretencionivaefTitle}">
-                    <p:dataTable id="datalist" value="#{detalleretencionivaefController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{detalleretencionivaefController.buscarlistaactiva()}" var="item"
                                  selectionMode="single" selection="#{detalleretencionivaefController.selected}"
                                  paginator="true"
                                  rowKey="#{item.iddetalleretencionivaef}"

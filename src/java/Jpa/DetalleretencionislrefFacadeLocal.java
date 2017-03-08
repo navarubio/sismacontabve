@@ -34,4 +34,6 @@ public interface DetalleretencionislrefFacadeLocal {
     
     List<Detalleretencionislref> buscarretencionesporPreveedor(String rif);
     
+    List<Detalleretencionislref> buscarretencionesActivas(); 
+    
 }

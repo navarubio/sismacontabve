@@ -11,10 +11,16 @@
 
         <ui:define name="title">
             <h:outputText value="#{bundletributos.ListComprobanteislrefTitle}"></h:outputText>
+            <h:outputStylesheet library="css" name="index.css" />  
         </ui:define>
 
         <ui:define name="body">
             <h:form id="ComprobanteislrefListForm">
+                <div id="imag2">
+                    <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
+                </div>     
+                <img src="../resources/images/seniat.png" width="70" height="70" alt="Comprobantes" align="right" />
+
                 <p:panel header="#{bundletributos.ListComprobanteislrefTitle}">
                     <p:dataTable id="datalist" value="#{comprobanteislrefController.items}" var="item"
                                  selectionMode="single" selection="#{comprobanteislrefController.selected}"
@@ -32,13 +38,7 @@
                             </f:facet>
                             <h:outputText value="#{item.rifproveedor.razonsocial}"/>
                         </p:column>
-                        <p:column style="text-align: center">
-                            <f:facet name="header">
-                                <h:outputText value="#{bundletributos.ListComprobanteislrefTitle_idcomprobanteislref}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idcomprobanteislref}"/>
-                        </p:column>
-                        <p:column style="text-align: center">
+                        <p:column style="text-align: center" filterBy="#{item.comprobante}" filterMatchMode="exact" filterStyle="width:50px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListComprobanteislrefTitle_comprobante}"/>
                             </f:facet>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7c84cd74-2f43-40af-a87d-8979663c88b5">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="102"/>
+	<property name="ireport.x" value="14"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
@@ -273,6 +273,12 @@ WHERE
 	</background>
 	<pageHeader>
 		<band height="277" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="407" y="156" width="345" height="76" uuid="265c8678-811f-48e9-bab7-a97bd611f761"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="1" y="156" width="389" height="76" uuid="4bdbd743-cbc3-4aa4-9712-35a74f78cde9"/>
+			</rectangle>
 			<staticText>
 				<reportElement x="8" y="111" width="64" height="14" uuid="e9693260-eb01-4f3f-9a21-685b74396ed6"/>
 				<textElement textAlignment="Right">
@@ -281,8 +287,8 @@ WHERE
 				<text><![CDATA[CIUDAD :  ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="147" y="34" width="533" height="22" uuid="82809471-e4a2-4bfa-8862-79c66df7252c"/>
-				<textElement textAlignment="Center">
+				<reportElement x="8" y="44" width="744" height="22" uuid="82809471-e4a2-4bfa-8862-79c66df7252c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[COMPROBANTE DE RETENCION DEL IMPUESTO AL VALOR AGREGADO]]></text>
@@ -300,20 +306,6 @@ WHERE
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FECHA :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="147" y="22" width="533" height="12" uuid="ac2ba78b-9f00-46d0-9a67-f8e2afeb34ee"/>
-				<textElement textAlignment="Center">
-					<font size="9" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[RIF J-26720565-9]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="147" y="0" width="533" height="22" uuid="26605f85-cb9e-4b6c-bc94-7bee9177a6d8"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[INVERSIONES PEDREAÑEZ, C.A.]]></text>
 			</staticText>
 			<image>
 				<reportElement x="-1" y="0" width="131" height="76" uuid="e0ae1978-eb44-4a7d-8161-89ab7ff9a4ee"/>
@@ -348,16 +340,16 @@ WHERE
 				<text><![CDATA[DIRECCION FISCAL :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="8" y="156" width="258" height="20" uuid="44761f58-1b06-4695-a05d-21673c49d80d"/>
+				<reportElement x="8" y="156" width="280" height="20" uuid="44761f58-1b06-4695-a05d-21673c49d80d"/>
 				<textElement textAlignment="Center">
-					<font size="12" isBold="true" isItalic="true" isUnderline="true"/>
+					<font size="12" isBold="true" isItalic="false" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[DATOS DEL AGENTE DE RETENCION:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="28" y="248" width="170" height="20" uuid="2a28b3bb-787a-477b-a54d-9e48c6ed49cf"/>
+				<reportElement x="28" y="257" width="170" height="20" uuid="2a28b3bb-787a-477b-a54d-9e48c6ed49cf"/>
 				<textElement textAlignment="Center">
-					<font size="12" isBold="true" isItalic="true" isUnderline="true"/>
+					<font size="10" isBold="true" isItalic="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[DATOS DE LA RETENCIÓN:]]></text>
 			</staticText>
@@ -376,7 +368,7 @@ WHERE
 				<text><![CDATA[MARACAIBO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="455" y="132" width="100" height="14" uuid="3c11c335-2b37-4351-a875-870964365fe9"/>
+				<reportElement x="455" y="132" width="108" height="14" uuid="3c11c335-2b37-4351-a875-870964365fe9"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -391,8 +383,8 @@ WHERE
 			</staticText>
 			<staticText>
 				<reportElement x="446" y="156" width="258" height="20" uuid="9fe7b576-3c07-4279-80de-bb67a1117930"/>
-				<textElement textAlignment="Center">
-					<font size="12" isBold="true" isItalic="true" isUnderline="true"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="false" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[DATOS DEL BENEFICIARIO:]]></text>
 			</staticText>
@@ -432,9 +424,9 @@ WHERE
 				<text><![CDATA[RAZON SOCIAL :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="483" y="248" width="257" height="20" uuid="c66499da-886e-4219-b925-cd16790c5a93"/>
+				<reportElement x="483" y="257" width="257" height="20" uuid="c66499da-886e-4219-b925-cd16790c5a93"/>
 				<textElement textAlignment="Center">
-					<font size="12" isBold="true" isItalic="true" isUnderline="true"/>
+					<font size="10" isBold="true" isItalic="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[COMPRAS INTERNAS O IMPORTACIONES]]></text>
 			</staticText>
@@ -521,6 +513,20 @@ WHERE
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{comprobanteivaef_mes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="2" width="753" height="20" uuid="002d0512-6402-4b79-a42e-df57144ae30c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_A_razonsocial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="22" width="753" height="22" uuid="238b809c-9b1f-4f0c-a10b-bc22f219d8c6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_A_rif}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -620,58 +626,58 @@ WHERE
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="18" splitType="Stretch">
+		<band height="19">
 			<textField>
-				<reportElement x="48" y="0" width="49" height="18" uuid="d12a2c69-1d24-4f93-a5d2-475ec60aa3f9"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="48" y="0" width="49" height="18" uuid="d12a2c69-1d24-4f93-a5d2-475ec60aa3f9"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{compra_numerofactura}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="0" y="0" width="48" height="18" uuid="a273f498-921a-43b2-9717-397e9be6619b"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="48" height="18" isRemoveLineWhenBlank="true" uuid="a273f498-921a-43b2-9717-397e9be6619b"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{compra_fechafactura}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="98" y="0" width="65" height="18" uuid="ee400ac4-cf40-42bd-af37-a2b5ea53f3f9"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="98" y="0" width="65" height="18" uuid="ee400ac4-cf40-42bd-af37-a2b5ea53f3f9"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{compra_controlfactura}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="377" y="0" width="69" height="18" uuid="153e0749-f502-4250-bc19-e7049a285e98"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="377" y="0" width="69" height="18" uuid="153e0749-f502-4250-bc19-e7049a285e98"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalleretencionivaef_totalcompra}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="513" y="0" width="67" height="18" uuid="497bab61-6dd4-44c7-a5f9-0e3a644447d2"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="513" y="0" width="67" height="18" uuid="497bab61-6dd4-44c7-a5f9-0e3a644447d2"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalleretencionivaef_bimponible}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="613" y="0" width="67" height="18" uuid="69e03c63-f17c-445c-8f52-547ecfe110b5"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="613" y="0" width="67" height="18" uuid="69e03c63-f17c-445c-8f52-547ecfe110b5"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalleretencionivaef_totalivacompra}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="685" y="0" width="67" height="18" uuid="de3bd6bd-1a75-4e30-a86d-0e013c425f28"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="685" y="0" width="67" height="18" uuid="de3bd6bd-1a75-4e30-a86d-0e013c425f28"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalleretencionivaef_totalivaretenido}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="586" y="0" width="27" height="18" uuid="b69977ac-0503-4de1-9bfa-68843da11206"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="586" y="0" width="27" height="18" uuid="b69977ac-0503-4de1-9bfa-68843da11206"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
@@ -699,18 +705,18 @@ WHERE
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="354" y="68" width="185" height="21" uuid="1fa63252-9195-420d-911e-60c20f265553"/>
-				<textElement textAlignment="Center">
+				<reportElement x="311" y="114" width="202" height="21" uuid="1fa63252-9195-420d-911e-60c20f265553"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FIRMA Y SELLO AGENTE DE RETENCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="354" y="89" width="88" height="15" uuid="0b037a00-d7c4-427a-b827-e75332c6b27b"/>
-				<textElement textAlignment="Center">
+				<reportElement x="311" y="135" width="79" height="15" uuid="0b037a00-d7c4-427a-b827-e75332c6b27b"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[R.I.F:]]></text>
+				<text><![CDATA[R.I.F :]]></text>
 			</staticText>
 			<line>
 				<reportElement x="377" y="2" width="375" height="1" uuid="81fc6e31-b096-4760-a97f-1758cb1fb702"/>
@@ -744,9 +750,9 @@ WHERE
 				<textFieldExpression><![CDATA[$F{comprobanteivaef_totaliva}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="442" y="89" width="97" height="15" uuid="f23ba568-82fb-4828-9b99-b5ec88ddca24"/>
+				<reportElement x="390" y="135" width="109" height="15" uuid="f23ba568-82fb-4828-9b99-b5ec88ddca24"/>
 				<textElement>
-					<font isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{empresa_rif}]]></textFieldExpression>
 			</textField>

@@ -46,4 +46,18 @@ public class DetalleretencionivaefFacade extends AbstractFacade<Detalleretencion
         }
         return lista;
     }
+    
+    @Override
+    public List<Detalleretencionivaef> buscarretencionesActivas() {
+        String consulta;
+        List<Detalleretencionivaef> lista = null;
+        try {
+            consulta = "From Detalleretencionivaef d where d.idcomprobanteivaef= null";
+            Query query = em.createQuery(consulta);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
 }

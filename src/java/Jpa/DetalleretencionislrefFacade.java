@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Comprobanteislref;
 import Modelo.Detalleretencionislref;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -39,6 +40,20 @@ public class DetalleretencionislrefFacade extends AbstractFacade<Detalleretencio
             consulta = "From Detalleretencionislref d where d.idcompra.rifproveedor.rifproveedor= ?1";
             Query query = em.createQuery(consulta);
             query.setParameter(1, rifprovee);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Detalleretencionislref> buscarretencionesActivas() {
+        String consulta;
+        List<Detalleretencionislref> lista = null;
+        try {
+            consulta = "From Detalleretencionislref d where d.idcomprobanteislref= null";
+            Query query = em.createQuery(consulta);
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

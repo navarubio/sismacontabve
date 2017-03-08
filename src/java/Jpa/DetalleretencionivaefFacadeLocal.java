@@ -34,5 +34,5 @@ public interface DetalleretencionivaefFacadeLocal {
     
     List<Detalleretencionivaef> buscarretencionesporPreveedor(String rif); 
     
-    
+    List<Detalleretencionivaef> buscarretencionesActivas();
 }

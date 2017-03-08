@@ -27,6 +27,7 @@ public class DetalleretencionislrefController implements Serializable {
     private Jpa.DetalleretencionislrefFacadeLocal ejbFacade;
     private List<Detalleretencionislref> items = null;
     private Detalleretencionislref selected;
+    private List<Detalleretencionislref> listaactiva = null;
 
     public DetalleretencionislrefController() {
     }
@@ -53,6 +54,11 @@ public class DetalleretencionislrefController implements Serializable {
         selected = new Detalleretencionislref();
         initializeEmbeddableKey();
         return selected;
+    }
+    
+    public List<Detalleretencionislref> buscarlistaactiva(){
+        listaactiva=ejbFacade.buscarretencionesActivas();
+        return listaactiva;
     }
 
     public void create() {
