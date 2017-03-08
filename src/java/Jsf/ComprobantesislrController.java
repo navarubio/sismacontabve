@@ -257,7 +257,7 @@ public class ComprobantesislrController implements Serializable {
         int codigocomprobante = item.getIdcomprobanteislref();
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-        String ruta = servletContext.getRealPath("/resources/reportes/comprobanteretiva.jasper");
+        String ruta = servletContext.getRealPath("/resources/reportes/comprobanteretislr.jasper");
 
         rArticulo.getComprobanteRetIva(ruta, codigocomprobante);
         FacesContext.getCurrentInstance().responseComplete();
