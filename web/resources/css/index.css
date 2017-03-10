@@ -54,7 +54,7 @@
 
 .ui-panelgrid > * > tr, .ui-panelgrid > * > tr > td.ui-panelgrid-cell {
     border: none;
-    
+
 }
 
 .ui-datatable-even{
@@ -150,4 +150,15 @@
     font-weight:  bold;
     text-align: right;
     color:black;
+}
+.calendario{
+    position: absolute;
+    top:  380px; 
+    left: 380px;
+    width: 400px;
+}
+.etiqueta1{
+    position: absolute;
+    top:  345px; 
+    left: 500px;
 }

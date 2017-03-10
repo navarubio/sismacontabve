@@ -5,7 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <body>
-        
+        <h:form>
         <ui:composition template="./../template.xhtml">
 
             <ui:define name="title">
@@ -30,8 +30,14 @@
                     <img src="../resources/images/FOTOPLANTA.jpg" width="310" height="438" alt="INPECA PLANTA" />
                 </div>
 
-            </ui:define>
+                <h:panelGrid columnClasses="value">
+                    <!--h3 id="etiqueta" styleclass="etiqueta1">Calendario de Contribuyentes Especiales 2017</h3-->
 
+                    <p:schedule id="schedule" value="#{scheduleView.eventModel}" allDaySlot="false" resizable="true" styleClass="calendario" />
+
+                </h:panelGrid>
+            </ui:define>
         </ui:composition>
+            </h:form>
     </body>
 </html>
