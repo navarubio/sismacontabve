@@ -98,26 +98,7 @@
      cuentabancaria.`idbanco` AS cuentabancaria_idbanco,
      cuentabancaria.`numerocuenta` AS cuentabancaria_numerocuenta,
      cuentabancaria.`saldo` AS cuentabancaria_saldo,
-     cuentabancaria.`idplandecuenta` AS cuentabancaria_idplandecuenta,
-     comprobanteislref.`idcomprobanteislref` AS comprobanteislref_idcomprobanteislref,
-     comprobanteislref.`comprobante` AS comprobanteislref_comprobante,
-     comprobanteislref.`fecha` AS comprobanteislref_fecha,
-     comprobanteislref.`rifproveedor` AS comprobanteislref_rifproveedor,
-     comprobanteislref.`totalgeneral` AS comprobanteislref_totalgeneral,
-     comprobanteislref.`totalbimponible` AS comprobanteislref_totalbimponible,
-     comprobanteislref.`totalislrretenido` AS comprobanteislref_totalislrretenido,
-     comprobanteislref.`idestatuscomprobante` AS comprobanteislref_idestatuscomprobante,
-     comprobanteivaef.`idcomprobanteivaef` AS comprobanteivaef_idcomprobanteivaef,
-     comprobanteivaef.`comprobante` AS comprobanteivaef_comprobante,
-     comprobanteivaef.`fecha` AS comprobanteivaef_fecha,
-     comprobanteivaef.`anio` AS comprobanteivaef_anio,
-     comprobanteivaef.`mes` AS comprobanteivaef_mes,
-     comprobanteivaef.`rifproveedor` AS comprobanteivaef_rifproveedor,
-     comprobanteivaef.`totalgeneral` AS comprobanteivaef_totalgeneral,
-     comprobanteivaef.`totalbimponible` AS comprobanteivaef_totalbimponible,
-     comprobanteivaef.`totaliva` AS comprobanteivaef_totaliva,
-     comprobanteivaef.`totalivaretenido` AS comprobanteivaef_totalivaretenido,
-     comprobanteivaef.`idestatuscomprobante` AS comprobanteivaef_idestatuscomprobante
+     cuentabancaria.`idplandecuenta` AS cuentabancaria_idplandecuenta
 FROM
      `compra` compra INNER JOIN `detallecompra` detallecompra ON compra.`idcompra` = detallecompra.`idcompra`
      INNER JOIN `articulo` articulo ON detallecompra.`codigo` = articulo.`codigo`
@@ -127,8 +108,6 @@ FROM
      INNER JOIN `banco` banco ON pagocompra.`idbanco` = banco.`idbanco`
      INNER JOIN `cuentabancaria` cuentabancaria ON pagocompra.`idcuentabancaria` = cuentabancaria.`idcuentabancaria`
      AND banco.`idbanco` = cuentabancaria.`idbanco`
-     INNER JOIN `comprobanteislref` comprobanteislref ON proveedor.`rifproveedor` = comprobanteislref.`rifproveedor`
-     INNER JOIN `comprobanteivaef` comprobanteivaef ON proveedor.`rifproveedor` = comprobanteivaef.`rifproveedor`
 WHERE
      pagocompra.`idpagocompra` = $P{numeroordenpago}]]>
 	</queryString>
@@ -202,25 +181,6 @@ WHERE
 	<field name="cuentabancaria_numerocuenta" class="java.lang.String"/>
 	<field name="cuentabancaria_saldo" class="java.lang.Double"/>
 	<field name="cuentabancaria_idplandecuenta" class="java.lang.Integer"/>
-	<field name="comprobanteislref_idcomprobanteislref" class="java.lang.Integer"/>
-	<field name="comprobanteislref_comprobante" class="java.lang.String"/>
-	<field name="comprobanteislref_fecha" class="java.sql.Date"/>
-	<field name="comprobanteislref_rifproveedor" class="java.lang.String"/>
-	<field name="comprobanteislref_totalgeneral" class="java.lang.Double"/>
-	<field name="comprobanteislref_totalbimponible" class="java.lang.Double"/>
-	<field name="comprobanteislref_totalislrretenido" class="java.lang.Double"/>
-	<field name="comprobanteislref_idestatuscomprobante" class="java.lang.Integer"/>
-	<field name="comprobanteivaef_idcomprobanteivaef" class="java.lang.Integer"/>
-	<field name="comprobanteivaef_comprobante" class="java.lang.String"/>
-	<field name="comprobanteivaef_fecha" class="java.sql.Date"/>
-	<field name="comprobanteivaef_anio" class="java.lang.Integer"/>
-	<field name="comprobanteivaef_mes" class="java.lang.Integer"/>
-	<field name="comprobanteivaef_rifproveedor" class="java.lang.String"/>
-	<field name="comprobanteivaef_totalgeneral" class="java.lang.Double"/>
-	<field name="comprobanteivaef_totalbimponible" class="java.lang.Double"/>
-	<field name="comprobanteivaef_totaliva" class="java.lang.Double"/>
-	<field name="comprobanteivaef_totalivaretenido" class="java.lang.Double"/>
-	<field name="comprobanteivaef_idestatuscomprobante" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -604,44 +564,16 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$P{numeroordenpago}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="298" y="323" width="88" height="14" uuid="57172a20-b6a1-4826-b594-82ae3092d1f0"/>
-				<textElement textAlignment="Right">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{pagocompra_montoretenido}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="298" y="285" width="88" height="14" uuid="7e05f773-3c7a-438f-bb2b-807fa31f65d6"/>
-				<textElement textAlignment="Right">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{comprobanteivaef_totalivaretenido}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement x="299" y="303" width="87" height="14" uuid="15ff4702-322f-4729-b339-78e0b722ee79"/>
-				<textElement textAlignment="Right">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{comprobanteislref_totalislrretenido}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="467" y="304" width="91" height="14" uuid="715ba7f5-07cf-4c86-b7b4-3e3e561e4a96"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{comprobanteislref_comprobante}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="467" y="285" width="91" height="14" uuid="a3dea587-1a98-4ad1-872a-a79b59925676"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{comprobanteivaef_comprobante}]]></textFieldExpression>
-			</textField>
 			<line>
 				<reportElement x="298" y="317" width="88" height="1" uuid="42316626-bac2-4b16-88ef-5536a9769285"/>
 			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="298" y="323" width="88" height="15" uuid="8c35a904-a5a8-45fc-a95c-214a96cf79a7"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pagocompra_montoretenido}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>

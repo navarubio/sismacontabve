@@ -15,7 +15,7 @@
                             <p:panelGrid columns="2" style="width: 600px" styleClass="ui-custompanelgrid1">
                                 <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_numerofact}" styleClass="text-ouput" />
                                 <h:outputText value="#{facturaController.selected.numerofact}" title="#{bundlefactura.ViewFacturaTitle_numerofact}" styleClass="text-ouputfact">
-                                    <f:convertNumber pattern="00000" type="number"/>
+                                    <f:convertNumber pattern="00000000" type="number"/>
                                 </h:outputText>                            
                                 <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_numerocontrol}" styleClass="text-ouput"/>
                                 <h:outputText value="#{facturaController.selected.numerocontrol}" title="#{bundlefactura.ViewFacturaTitle_numerocontrol}"/>

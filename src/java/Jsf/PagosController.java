@@ -119,6 +119,7 @@ public class PagosController implements Serializable {
     private int tipocompra = 1;
     private double montoUT = 0;
     private double montopisoretiva = 0;
+    private double montopisoretislr = 0;
     private int idAuxiliar = 0;
     private int idCompra = 0;
     private List<Auxiliarrequerimiento> auxiliarrequerimientos;
@@ -143,6 +144,7 @@ public class PagosController implements Serializable {
     private double ivaretenido;
     private double islrretenido;
     private double montoapagar;
+    private double totalretenido;
     ArrayList<Detallecompra> lista = new ArrayList();
 
     @Inject
@@ -277,6 +279,14 @@ public class PagosController implements Serializable {
         return pago;
     }
 
+    public double getTotalretenido() {
+        return totalretenido;
+    }
+
+    public void setTotalretenido(double totalretenido) {
+        this.totalretenido = totalretenido;
+    }
+
     public void setPago(Pagocompra pago) {
         this.pago = pago;
     }
@@ -404,6 +414,9 @@ public class PagosController implements Serializable {
     public void asignar(Compra compr) {
         this.tipocompra = 1;
         this.visualizar = 0;
+        this.totalretenido=0;
+        this.ivaretenido=0;
+        this.islrretenido=0;
         this.compra = compr;
         this.pagocompra.setTotalpago(compra.getTotal());
         this.montoapagar = compra.getTotal();
@@ -421,7 +434,15 @@ public class PagosController implements Serializable {
         tiporetencionesfiltradasPD = tiporetencionislrEJB.tiporetfiltradaPJyD(compra.getRifproveedor().getIdpersonalidad(), compra.getRifproveedor().getIdresidencia());
         empresa = empresaEJB.devolverEmpresabase();
         double montocompra = compra.getTotal();
+        double montoiva = compra.getIva();
+        
+        // OJO CON ESTAS VARIABLES PARA CUANDO CAMBIE LA UNIDAD TRIBUTARIA CAMBIARLAS
         montopisoretiva = (20 * 300);
+        montopisoretislr = 25000;
+        //////////////////////////////////////////////////////////////////////////////
+        
+        int personaj = compra.getRifproveedor().getIdpersonalidad().getIdpersonalidad();
+        int residencia = compra.getRifproveedor().getIdresidencia().getIdresidencia();
         int tipo1;
         for (Detallecompra tipoc : detallecompraFiltrados) {
             tipo1 = tipoc.getCodigo().getIdgrupo().getIdgrupo();
@@ -437,21 +458,61 @@ public class PagosController implements Serializable {
             if (montocompra >= montopisoretiva) {
                 if (tipocompra == 3) {
                     visualizar = 5;
-                } else {
-                    visualizar = 1;
+                }else if (tipocompra == 1) {
+                    if (montoiva > 0) {
+                        visualizar = 1;                    
+                    }else {
+                        visualizar=5;
+                    }
+                }else if ((tipocompra == 2) && (personaj == 2) && (residencia == 1)) {
+                    if (montocompra >= montopisoretislr) {
+                        if (montoiva > 0) {
+                            visualizar=2;
+                        }else{
+                            visualizar=3;
+                        }
+                    }else {
+                        if (montoiva > 0) {
+                            visualizar=1;
+                        }else{
+                            visualizar=5;
+                        }
+                    }
+                }else{
+                    if (montoiva > 0) {
+                        visualizar=2;
+                    }else{
+                        visualizar=3;
+                    }
                 }
-            } else {
+            }else {
                 if (tipocompra == 2) {
-                    visualizar = 3;
+                    if ((personaj == 2) && (residencia == 1)) {
+                        visualizar=5;
+                    }else{
+                        visualizar = 3;                    
+                    }
                 } else if (tipocompra == 3) {
                     visualizar = 5;
+                } else if (tipocompra ==1){
+                    visualizar=5;
                 }
             }
         } else if (empresa.getIdcontribuyente().getIdcontribuyente() == 1 || empresa.getIdcontribuyente().getIdcontribuyente() == 3) {
             if (tipocompra == 2) {
-                visualizar = 4;
-            } else if (tipocompra == 3) {
-                visualizar = 5;
+                if ((personaj == 2) && (residencia == 1)) {
+                    if (montocompra >= montopisoretislr) {
+                        visualizar = 4;
+                    } else {
+                        visualizar = 5;
+                    }
+                }else{
+                    visualizar=4;
+                }
+            }else if (tipocompra == 3) {
+                    visualizar = 5;
+            } else if (tipocompra ==1){
+                    visualizar=5;
             }
         }
         calcularMontoapagar();
@@ -650,6 +711,7 @@ public class PagosController implements Serializable {
                 detalleretencionislrefEJB.create(detalleretencionislref);
             }
             calcularMontoapagar();
+            totalretenido=ivaretenido+islrretenido;
             visualizar = 7;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Retencion fue Almacenada", ""));
         } catch (Exception e) {

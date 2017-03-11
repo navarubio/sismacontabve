@@ -153,12 +153,15 @@
 }
 .calendario{
     position: absolute;
-    top:  380px; 
-    left: 380px;
+    top:  390px; 
+    left: 350px;
     width: 400px;
 }
 .etiqueta1{
     position: absolute;
-    top:  345px; 
-    left: 500px;
+    top:  360px; 
+    left: 420px;
+    font-weight:  bold;
+    font-size: 15px;
+    color: red;
 }

@@ -61,6 +61,10 @@
                                     <p:outputLabel id="proveedor1" value="#{pagosController.compra.rifproveedor.razonsocial}"   /> 
                                     <p:outputLabel for="rif" value="R.I.F." styleClass="text-ouput"/>
                                     <p:outputLabel id="rif" value="#{pagosController.compra.rifproveedor.rifproveedor}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="personalidad" value="P. Juridica" styleClass="text-ouput"/>
+                                    <p:outputLabel id="personalidad" value="#{pagosController.compra.rifproveedor.idpersonalidad.personalidad}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="residencia" value="T. Residencia" styleClass="text-ouput"/>
+                                    <p:outputLabel id="residencia" value="#{pagosController.compra.rifproveedor.idresidencia.residencia}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="fechacompra" value="Fecha Orden Compra" styleClass="text-ouput" />
                                     <p:outputLabel id="fechacompra" value="#{pagosController.compra.fechaorden}" >
                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
@@ -136,7 +140,7 @@
                                     <h:panelGroup id="contenedorComponente">
                                         <p:inputText value="#{pagosController.pagocompra.totalpago}" id="observacion" size="10"
                                                      rendered="#{pagosController.formapago>= 2 ? true:false}" >
-                                            <f:validateLongRange minimum="0" maximum="#{pagosController.compra.montopendiente}"></f:validateLongRange>
+                                            <f:validateLongRange minimum="#{pagosController.totalretenido}" maximum="#{pagosController.compra.montopendiente}"></f:validateLongRange>
                                         </p:inputText>
                                     </h:panelGroup>
                                     <p:outputLabel for="fechapago" value="Fecha Pago" styleClass="text-ouput" />
@@ -232,7 +236,7 @@
                             <p:column style="text-align: center" headerText="Retenciones">                                
                                 <p:commandLink actionListener="#{pagosController.asignarDetalleCompra(req)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
                                     <h:graphicImage library="images" name="balanzapago.png" width="30" height="30" alt="Editar Articulo" 
-                                                    rendered="#{pagosController.visualizar== 1 || pagosController.visualizar== 3 || pagosController.visualizar== 4? true:false}"/>  
+                                                    rendered="#{pagosController.visualizar== 1 || pagosController.visualizar== 2 || pagosController.visualizar== 3 || pagosController.visualizar== 4? true:false}"/>  
                                 </p:commandLink>
                             </p:column>
                             <p:columnGroup type="footer">
@@ -253,7 +257,7 @@
                           resizable="false" showEffect="explode" appendTo="@(body)"  >
                     <h:form>
                         <h:panelGrid  id="display" columns="2">
-                            <p:fieldset legend="Retencion I.V.A." rendered="#{pagosController.visualizar== 1 || pagosController.visualizar== 3? true:false}">   
+                            <p:fieldset legend="Retencion I.V.A." rendered="#{pagosController.visualizar== 1 || pagosController.visualizar== 2? true:false}">   
                                 <p:panelGrid columns="2" styleClass="ui-custompanelgrid1">
                                     <p:outputLabel value="DATOS DEL CONTRIBUYENTE" />
                                     <p:outputLabel></p:outputLabel>
@@ -293,7 +297,7 @@
                                     </p:outputLabel>
                                 </p:panelGrid>
                             </p:fieldset>
-                            <p:fieldset legend="Retencion I.S.L.R." rendered="#{pagosController.tipocompra== 2? true:false}"> 
+                            <p:fieldset legend="Retencion I.S.L.R." rendered="#{pagosController.visualizar== 2 || pagosController.visualizar== 3 || pagosController.visualizar== 4 ? true:false}"> 
                                  <p:panelGrid columns="2" styleClass="ui-custompanelgrid2" >
                                     <p:outputLabel for="totalcompra" value="Total Compra" />
                                     <p:inputText id="totalcompra" value="#{pagosController.compra.total}" style="text-align:right">
