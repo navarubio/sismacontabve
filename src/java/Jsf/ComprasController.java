@@ -395,6 +395,8 @@ public class ComprasController implements Serializable {
             statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
             compra.setIdestatusfactura(statusfactu);
             compraEJB.create(compra);
+            
+            
 
             Estatusrequerimiento statusreque = null;
             statusreque = estatusrequerimientoEJB.cambiarestatusaProcesado();
