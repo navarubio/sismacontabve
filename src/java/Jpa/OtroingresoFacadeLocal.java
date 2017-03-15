@@ -30,4 +30,6 @@ public interface OtroingresoFacadeLocal {
 
     int count();
     
+    Otroingreso ultimoingreso(); 
+    
 }

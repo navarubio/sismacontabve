@@ -1,12 +1,17 @@
 package Jsf;
 
 import Jpa.CuentabancariaFacadeLocal;
+import Jpa.EstatuscontableFacadeLocal;
+import Jpa.MaestromovimientoFacadeLocal;
 import Modelo.Otroingreso;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.OtroingresoFacade;
 import Jpa.OtroingresoFacadeLocal;
+import Jpa.TipoconjuntoFacadeLocal;
 import Modelo.Cuentabancaria;
+import Modelo.Maestromovimiento;
+import Modelo.Tipoconjunto;
 import Modelo.Usuario;
 
 import java.io.Serializable;
@@ -26,6 +31,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named("otroingresoController")
 @ViewScoped
@@ -35,6 +41,12 @@ public class OtroingresoController implements Serializable {
     private Jpa.OtroingresoFacadeLocal ejbFacade;
     @EJB
     private CuentabancariaFacadeLocal cuentabancariaEJB;
+    @EJB
+    private MaestromovimientoFacadeLocal maestromovimientoEJB;  
+    @EJB
+    private TipoconjuntoFacadeLocal tipoconjuntoEJB;
+    @EJB
+    private EstatuscontableFacadeLocal estatuscontableEJB;
     private List<Otroingreso> items = null;
     private Otroingreso selected;
     private Cuentabancaria cuentabancaria;
@@ -43,6 +55,10 @@ public class OtroingresoController implements Serializable {
     private Date fechaactual = new Date();
     private Usuario usa;
     private RequerimientosController requer = new RequerimientosController();
+    private Tipoconjunto tipoconjunto = null;
+    
+    @Inject
+    private Maestromovimiento maestromovi;
 
     public OtroingresoController() {
     }
@@ -219,6 +235,15 @@ public class OtroingresoController implements Serializable {
             ingreso.setMontoingresado(montoingreso);
             ejbFacade.create(ingreso);
             cuentabancariaEJB.edit(cuentabancaria);
+
+            int tipoconj = 1;
+            tipoconjunto = tipoconjuntoEJB.cambiartipoConjunto(tipoconj);
+            maestromovi.setIdotroingreso(ejbFacade.ultimoingreso());
+            maestromovi.setFechamovimiento(ingreso.getFechaingreso());
+            maestromovi.setIdtipoconjunto(tipoconjunto);
+            maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
+            maestromovimientoEJB.create(maestromovi);
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Ingreso fue Almacenado", "Su Ingreso fue Almacenado"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Ingreso", "Error al Grabar Ingreso"));
