@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LibromayorCreateDlg" widgetVar="LibromayorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecontabilidad.CreateLibromayorTitle}">
+            <h:form id="LibromayorCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{libromayorController.selected != null}">
+                        <p:outputLabel value="#{bundlecontabilidad.CreateLibromayorLabel_idlibromayor}" for="idlibromayor" />
+                        <p:inputText id="idlibromayor" value="#{libromayorController.selected.idlibromayor}" title="#{bundlecontabilidad.CreateLibromayorTitle_idlibromayor}" required="true" requiredMessage="#{bundlecontabilidad.CreateLibromayorRequiredMessage_idlibromayor}"/>
+                        <p:outputLabel value="#{bundlecontabilidad.CreateLibromayorLabel_saldoanterior}" for="saldoanterior" />
+                        <p:inputText id="saldoanterior" value="#{libromayorController.selected.saldoanterior}" title="#{bundlecontabilidad.CreateLibromayorTitle_saldoanterior}" />
+                        <p:outputLabel value="#{bundlecontabilidad.CreateLibromayorLabel_debe}" for="debe" />
+                        <p:inputText id="debe" value="#{libromayorController.selected.debe}" title="#{bundlecontabilidad.CreateLibromayorTitle_debe}" />
+                        <p:outputLabel value="#{bundlecontabilidad.CreateLibromayorLabel_haber}" for="haber" />
+                        <p:inputText id="haber" value="#{libromayorController.selected.haber}" title="#{bundlecontabilidad.CreateLibromayorTitle_haber}" />
+                        <p:outputLabel value="#{bundlecontabilidad.CreateLibromayorLabel_saldoposterior}" for="saldoposterior" />
+                        <p:inputText id="saldoposterior" value="#{libromayorController.selected.saldoposterior}" title="#{bundlecontabilidad.CreateLibromayorTitle_saldoposterior}" />
+                        <p:outputLabel value="#{bundlecontabilidad.CreateLibromayorLabel_idlibrodiario}" for="idlibrodiario" />
+                        <p:selectOneMenu id="idlibrodiario" value="#{libromayorController.selected.idlibrodiario}" >
+                            <f:selectItems value="#{librodiarioController.itemsAvailableSelectOne}"
+                                           var="idlibrodiarioItem"
+                                           itemValue="#{idlibrodiarioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecontabilidad.CreateLibromayorLabel_idplandecuenta}" for="idplandecuenta" />
+                        <p:selectOneMenu id="idplandecuenta" value="#{libromayorController.selected.idplandecuenta}" >
+                            <f:selectItems value="#{plandecuentaController.itemsAvailableSelectOne}"
+                                           var="idplandecuentaItem"
+                                           itemValue="#{idplandecuentaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{libromayorController.create}" value="#{bundlecontabilidad.Save}" update="display,:LibromayorListForm:datalist,:growl" oncomplete="handleSubmit(args,'LibromayorCreateDialog');"/>
+                    <p:commandButton value="#{bundlecontabilidad.Cancel}" onclick="LibromayorCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

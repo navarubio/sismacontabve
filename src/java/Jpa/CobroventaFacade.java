@@ -48,5 +48,20 @@ public class CobroventaFacade extends AbstractFacade<Cobroventa> implements Cobr
         }
         return lista;
     }
-
+@Override
+    public Cobroventa ultimocobroInsertado() {
+        String consulta = null;
+        Cobroventa ultimo = new Cobroventa();
+        try {
+            consulta = "Select c From Cobroventa c Order By c.idcobroventa Desc";
+            Query query = em.createQuery(consulta);
+            List<Cobroventa> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                ultimo = lista.get(0);
+}
+        } catch (Exception e) {
+            throw e;
+        }
+        return ultimo;
+    }
 }

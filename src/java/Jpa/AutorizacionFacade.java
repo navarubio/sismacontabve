@@ -47,4 +47,21 @@ public class AutorizacionFacade extends AbstractFacade<Autorizacion> implements 
         }
         return autorizacion;
     }
+    
+    @Override
+    public Autorizacion ultimaautorizacionInsertada() {
+        String consulta = null;
+        Autorizacion ultimo = new Autorizacion();
+        try {
+            consulta = "Select a From Autorizacion a Order By a.idautorizacion Desc";
+            Query query = em.createQuery(consulta);
+            List<Autorizacion> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                ultimo = lista.get(0);
+}
+        } catch (Exception e) {
+            throw e;
+        }
+        return ultimo;
+    }
 }

@@ -8,6 +8,7 @@ package Modelo;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,6 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Estatuscontable.findByIdestatuscontable", query = "SELECT e FROM Estatuscontable e WHERE e.idestatuscontable = :idestatuscontable"),
     @NamedQuery(name = "Estatuscontable.findByEstatuscontable", query = "SELECT e FROM Estatuscontable e WHERE e.estatuscontable = :estatuscontable")})
 public class Estatuscontable implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idestatuscontable")
+    private Collection<Maestromovimiento> maestromovimientoCollection;
     @OneToMany(mappedBy = "idestatuscontable")
     private Collection<Factura> facturaCollection;
     @OneToMany(mappedBy = "idestatuscontable")
@@ -123,6 +126,15 @@ public class Estatuscontable implements Serializable {
 
     public void setCobroventaCollection(Collection<Cobroventa> cobroventaCollection) {
         this.cobroventaCollection = cobroventaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Maestromovimiento> getMaestromovimientoCollection() {
+        return maestromovimientoCollection;
+    }
+
+    public void setMaestromovimientoCollection(Collection<Maestromovimiento> maestromovimientoCollection) {
+        this.maestromovimientoCollection = maestromovimientoCollection;
     }
     
 }

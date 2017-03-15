@@ -6,10 +6,13 @@ import Jpa.AuxiliarrequerimientoFacadeLocal;
 import Jpa.CompraFacadeLocal;
 import Jpa.DepartamentoFacadeLocal;
 import Jpa.DetallecompraFacadeLocal;
+import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaFacadeLocal;
 import Jpa.EstatusrequerimientoFacadeLocal;
+import Jpa.MaestromovimientoFacadeLocal;
 import Jpa.ProveedorFacadeLocal;
 import Jpa.RequerimientoFacadeLocal;
+import Jpa.TipoconjuntoFacadeLocal;
 import Modelo.Articulo;
 import Modelo.Autorizacion;
 import Modelo.Auxiliarrequerimiento;
@@ -18,8 +21,10 @@ import Modelo.Compra;
 import Modelo.Departamento;
 import Modelo.Estatusfactura;
 import Modelo.Estatusrequerimiento;
+import Modelo.Maestromovimiento;
 import Modelo.Proveedor;
 import Modelo.Requerimiento;
+import Modelo.Tipoconjunto;
 import Modelo.Usuario;
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -60,12 +65,20 @@ public class ComprasController implements Serializable {
     private EstatusrequerimientoFacadeLocal estatusrequerimientoEJB;
     @EJB
     private EstatusfacturaFacadeLocal estatusfacturaEJB;
+    @EJB
+    private MaestromovimientoFacadeLocal maestromovimientoEJB;
+    @EJB
+    private TipoconjuntoFacadeLocal tipoconjuntoEJB;
+    @EJB
+    private EstatuscontableFacadeLocal estatuscontableEJB;
 
     private Auxiliarrequerimiento auxiliarrequerimiento;
     private Usuario usa;
     private Departamento dpto;
     private Compra codCompra;
+    private Autorizacion codAutoriza;
     private Compra compraautorizada;
+    private Tipoconjunto tipoconjunto = null;
 
     @Inject
     private Auxiliarrequerimiento auxiliar;
@@ -77,6 +90,8 @@ public class ComprasController implements Serializable {
     private Detallecompra detallecompra;
     @Inject
     private Autorizacion autorizacion;
+    @Inject
+    private Maestromovimiento maestromovi;
 
     public Compra getCompra() {
         return compra;
@@ -121,7 +136,7 @@ public class ComprasController implements Serializable {
     private List<Compra> comprasporautorizar = null;
     private List<Compra> comprasporpagar = null;
     private List<Compra> compraspagadas = null;
-    private Date fechaactual= new Date();
+    private Date fechaactual = new Date();
 
     public int getIdAuxiliar() {
         return idAuxiliar;
@@ -320,13 +335,13 @@ public class ComprasController implements Serializable {
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         Date fecha = new Date();
         DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
-        Date fechafinal=null;
+        Date fechafinal = null;
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String fechaFormateada = sdf.format(fecha);
-        try{  
-            fechafinal = sdf.parse(fechaFormateada);  
-        }catch(ParseException pe){  
-        }  
+        try {
+            fechafinal = sdf.parse(fechaFormateada);
+        } catch (ParseException pe) {
+        }
         String fechaCadena = hourFormat.format(fecha);
         autorizacion.setIdusuario(us);
         autorizacion.setHora(fechaCadena);
@@ -335,10 +350,20 @@ public class ComprasController implements Serializable {
         autorizacionEJB.create(autorizacion);
         autorizacion.setObservaciones(null);
         Estatusfactura statusfactu = null;
+        codAutoriza= autorizacionEJB.ultimaautorizacionInsertada();
         int tipo = 2;
         statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
         compraautorizada.setIdestatusfactura(statusfactu);
         compraEJB.edit(compraautorizada);
+
+        int tipoconj = 2;
+        tipoconjunto = tipoconjuntoEJB.cambiartipoConjunto(tipoconj);
+        maestromovi.setIdautorizacion(codAutoriza);
+        maestromovi.setFechamovimiento(autorizacion.getFechaautorizacion());
+        maestromovi.setIdtipoconjunto(tipoconjunto);
+        maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
+        maestromovimientoEJB.create(maestromovi);
+
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Compra Autorizada por Gerencia"));
     }
 
@@ -395,15 +420,23 @@ public class ComprasController implements Serializable {
             statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
             compra.setIdestatusfactura(statusfactu);
             compraEJB.create(compra);
-            
-            
 
             Estatusrequerimiento statusreque = null;
             statusreque = estatusrequerimientoEJB.cambiarestatusaProcesado();
             auxiliarrequerimiento.setIdestatusrequerimiento(statusreque);
             auxiliarrequerimientoEJB.edit(auxiliarrequerimiento);
-
             codCompra = compraEJB.ultimacompraInsertada();
+
+            if (tipo == 0) {
+                int tipoconj = 2;
+                tipoconjunto = tipoconjuntoEJB.cambiartipoConjunto(tipoconj);
+                maestromovi.setIdcompra(codCompra);
+                maestromovi.setFechamovimiento(compra.getFechaorden());
+                maestromovi.setIdtipoconjunto(tipoconjunto);
+                maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
+                maestromovimientoEJB.create(maestromovi);
+            }
+
             int numerocompra = codCompra.getIdcompra();
             for (Requerimiento rq : requerimientosFiltrados) {
                 Articulo arti = rq.getCodigo();

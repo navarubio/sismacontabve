@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MaestromovimientoCreateDlg" widgetVar="MaestromovimientoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecontabilidad.CreateMaestromovimientoTitle}">
+            <h:form id="MaestromovimientoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{maestromovimientoController.selected != null}">
+                        <p:outputLabel value="#{bundlecontabilidad.CreateMaestromovimientoLabel_idmaestro}" for="idmaestro" />
+                        <p:inputText id="idmaestro" value="#{maestromovimientoController.selected.idmaestro}" title="#{bundlecontabilidad.CreateMaestromovimientoTitle_idmaestro}" required="true" requiredMessage="#{bundlecontabilidad.CreateMaestromovimientoRequiredMessage_idmaestro}"/>
+                        <p:outputLabel value="#{bundlecontabilidad.CreateMaestromovimientoLabel_fechamovimiento}" for="fechamovimiento" />
+                        <p:calendar id="fechamovimiento" pattern="MM/dd/yyyy" value="#{maestromovimientoController.selected.fechamovimiento}" title="#{bundlecontabilidad.EditMaestromovimientoTitle_fechamovimiento}"  showOn="button"/>
+                        <p:outputLabel value="#{bundlecontabilidad.CreateMaestromovimientoLabel_idestatuscontable}" for="idestatuscontable" />
+                        <p:selectOneMenu id="idestatuscontable" value="#{maestromovimientoController.selected.idestatuscontable}" required="true" requiredMessage="#{bundlecontabilidad.EditMaestromovimientoRequiredMessage_idestatuscontable}">
+                            <f:selectItems value="#{estatuscontableController.itemsAvailableSelectOne}"
+                                           var="idestatuscontableItem"
+                                           itemValue="#{idestatuscontableItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecontabilidad.CreateMaestromovimientoLabel_idtipoconjunto}" for="idtipoconjunto" />
+                        <p:selectOneMenu id="idtipoconjunto" value="#{maestromovimientoController.selected.idtipoconjunto}" >
+                            <f:selectItems value="#{tipoconjuntoController.itemsAvailableSelectOne}"
+                                           var="idtipoconjuntoItem"
+                                           itemValue="#{idtipoconjuntoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecontabilidad.CreateMaestromovimientoLabel_idcompra}" for="idcompra" />
+                        <p:selectOneMenu id="idcompra" value="#{maestromovimientoController.selected.idcompra}" >
+                            <f:selectItems value="#{compraController.itemsAvailableSelectOne}"
+                                           var="idcompraItem"
+                                           itemValue="#{idcompraItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecontabilidad.CreateMaestromovimientoLabel_numerofact}" for="numerofact" />
+                        <p:selectOneMenu id="numerofact" value="#{maestromovimientoController.selected.numerofact}" >
+                            <f:selectItems value="#{facturaController.itemsAvailableSelectOne}"
+                                           var="numerofactItem"
+                                           itemValue="#{numerofactItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecontabilidad.CreateMaestromovimientoLabel_idlibrodiario}" for="idlibrodiario" />
+                        <p:selectOneMenu id="idlibrodiario" value="#{maestromovimientoController.selected.idlibrodiario}" >
+                            <f:selectItems value="#{librodiarioController.itemsAvailableSelectOne}"
+                                           var="idlibrodiarioItem"
+                                           itemValue="#{idlibrodiarioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecontabilidad.CreateMaestromovimientoLabel_idautorizacion}" for="idautorizacion" />
+                        <p:selectOneMenu id="idautorizacion" value="#{maestromovimientoController.selected.idautorizacion}" >
+                            <f:selectItems value="#{autorizacionController.itemsAvailableSelectOne}"
+                                           var="idautorizacionItem"
+                                           itemValue="#{idautorizacionItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecontabilidad.CreateMaestromovimientoLabel_idpagocompra}" for="idpagocompra" />
+                        <p:selectOneMenu id="idpagocompra" value="#{maestromovimientoController.selected.idpagocompra}" >
+                            <f:selectItems value="#{pagocompraController.itemsAvailableSelectOne}"
+                                           var="idpagocompraItem"
+                                           itemValue="#{idpagocompraItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecontabilidad.CreateMaestromovimientoLabel_idcobroventa}" for="idcobroventa" />
+                        <p:selectOneMenu id="idcobroventa" value="#{maestromovimientoController.selected.idcobroventa}" >
+                            <f:selectItems value="#{cobroventaController.itemsAvailableSelectOne}"
+                                           var="idcobroventaItem"
+                                           itemValue="#{idcobroventaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{maestromovimientoController.create}" value="#{bundlecontabilidad.Save}" update="display,:MaestromovimientoListForm:datalist,:growl" oncomplete="handleSubmit(args,'MaestromovimientoCreateDialog');"/>
+                    <p:commandButton value="#{bundlecontabilidad.Cancel}" onclick="MaestromovimientoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

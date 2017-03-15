@@ -33,5 +33,6 @@ public interface AutorizacionFacadeLocal {
     
     Autorizacion buscarAutorizacion (int idcompra);
 
+    Autorizacion ultimaautorizacionInsertada();
 }    
 

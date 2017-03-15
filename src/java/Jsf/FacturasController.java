@@ -13,14 +13,18 @@ import Jpa.EstatuscontableFacade;
 import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaventaFacadeLocal;
 import Jpa.FacturaFacadeLocal;
+import Jpa.MaestromovimientoFacadeLocal;
 import Jpa.Numeroaletras;
+import Jpa.TipoconjuntoFacadeLocal;
 import Modelo.Articulo;
 import Modelo.Caja;
 import Modelo.Cliente;
 import Modelo.Detallefactura;
 import Modelo.Estatuscontable;
 import Modelo.Factura;
+import Modelo.Maestromovimiento;
 import Modelo.Requerimiento;
+import Modelo.Tipoconjunto;
 import Modelo.Usuario;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -62,6 +66,10 @@ public class FacturasController implements Serializable {
     private EstatuscontableFacadeLocal estatuscontableEJB;
     @EJB
     private EstatusfacturaventaFacadeLocal estatusfacturaventaEJB;
+    @EJB
+    private MaestromovimientoFacadeLocal maestromovimientoEJB;
+    @EJB
+    private TipoconjuntoFacadeLocal tipoconjuntoEJB;
 
     private Detallefactura detallefactura;
     private RequerimientosController reque = new RequerimientosController();
@@ -77,6 +85,7 @@ public class FacturasController implements Serializable {
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     private String correo;
     private envioCorreo enviomail;
+    private Tipoconjunto tipoconjunto = null;
 
     @Inject
     private Factura factura;
@@ -84,6 +93,8 @@ public class FacturasController implements Serializable {
     private Cliente cliente;
     @Inject
     private Detallefactura detalle;
+    @Inject
+    private Maestromovimiento maestromovi;
 
     Numeroaletras numletras = new Numeroaletras();
 
@@ -178,6 +189,14 @@ public class FacturasController implements Serializable {
 
             codfactura = facturaEJB.ultimaInsertada();
             number = codfactura.getNumerofact();
+            
+            int tipoconj = 1;
+            tipoconjunto = tipoconjuntoEJB.cambiartipoConjunto(tipoconj);
+            maestromovi.setNumerofact(codfactura);
+            maestromovi.setFechamovimiento(factura.getFecha());
+            maestromovi.setIdtipoconjunto(tipoconjunto);
+            maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
+            maestromovimientoEJB.create(maestromovi);
 
             for (Requerimiento rq : reque.getListarequerimiento()) {
                 Articulo arti = rq.getCodigo();
@@ -191,7 +210,7 @@ public class FacturasController implements Serializable {
                 detallefacturaEJB.create(detalle);
             }
             String subject;
-            String ultimafactura= facturaEJB.ultimafacturaformat();
+            String ultimafactura = facturaEJB.ultimafacturaformat();
             String fechafactu = formateador.format(factura.getFecha());
             correo = "FACTURA NRO: " + ultimafactura
                     + "  CONTROL: " + factura.getNumerocontrol()
@@ -205,7 +224,7 @@ public class FacturasController implements Serializable {
                     + "  TOTAL: " + formatearnumero.format(factura.getTotalgeneral())
                     + "  OBSERVACIONES: " + factura.getObservacionesfact();
 
-                    subject = "Emisión de Factura N° " +ultimafactura;
+            subject = "Emisión de Factura N° " + ultimafactura;
             enviomail = new envioCorreo(correo, subject);
             enviomail.start();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "La Factura se registro exitosamente con el numero " + facturaEJB.ultimafacturaformat()));

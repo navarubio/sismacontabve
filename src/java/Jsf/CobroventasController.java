@@ -12,6 +12,8 @@ import Jpa.DetallefacturaFacadeLocal;
 import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaventaFacadeLocal;
 import Jpa.FacturaFacadeLocal;
+import Jpa.MaestromovimientoFacadeLocal;
+import Jpa.TipoconjuntoFacadeLocal;
 import Jpa.TipopagoFacadeLocal;
 import Modelo.Banco;
 import Modelo.Cobroventa;
@@ -20,6 +22,8 @@ import Modelo.Detallefactura;
 import Modelo.Estatuscontable;
 import Modelo.Estatusfacturaventa;
 import Modelo.Factura;
+import Modelo.Maestromovimiento;
+import Modelo.Tipoconjunto;
 import Modelo.Tipopago;
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -32,6 +36,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -61,6 +66,10 @@ public class CobroventasController implements Serializable {
     private BancoFacadeLocal bancoEJB;
     @EJB
     private EstatuscontableFacadeLocal estatuscontableEJB;
+    @EJB
+    private TipoconjuntoFacadeLocal tipoconjuntoEJB;
+    @EJB
+    private MaestromovimientoFacadeLocal maestromovimientoEJB;
 
     private Factura factura;
     private int numeroFact = 0;
@@ -82,12 +91,15 @@ public class CobroventasController implements Serializable {
     private List<Banco> bancos;
     private int edad = 0;
     private String mensaje;
-    private Date  fechaactual= new Date();
+    private Date fechaactual = new Date();
     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     private String correo;
     private envioCorreo enviomail;
-
+    private Tipoconjunto tipoconjunto = null;
+    
+    @Inject
+    private Maestromovimiento maestromovi;
 
     public double getSaldocuenta() {
         return saldocuenta;
@@ -265,22 +277,30 @@ public class CobroventasController implements Serializable {
 
             cobro.setNumerofact(factura);
             cobro.setIdestatuscontable(estatuscontab);
-            cuentabancaria=cobro.getIdcuentabancaria();
+            cuentabancaria = cobro.getIdcuentabancaria();
             cobro.setMontopendiente(factura.getSaldopendiente());
             cobroventaEJB.create(cobro);
+
+            int tipoconj = 1;
+            tipoconjunto = tipoconjuntoEJB.cambiartipoConjunto(tipoconj);
+            maestromovi.setIdcobroventa(cobroventaEJB.ultimocobroInsertado());
+            maestromovi.setFechamovimiento(cobro.getFechacobro());
+            maestromovi.setIdtipoconjunto(tipoconjunto);
+            maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
+            maestromovimientoEJB.create(maestromovi);
 
             double saldoactualbanco = 0;
             saldoactualbanco = cobro.getMontocobrado() + cobro.getIdcuentabancaria().getSaldo();
             cuentabancaria.setSaldo(saldoactualbanco);
             cuentabancariaEJB.edit(cuentabancaria);
-            
+
             if (factura.getSaldopendiente() < 1) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cobro fue Almacenado"));
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El Abono recibido fue Almacenado"));
             }
             String subject;
-            String ultimafactura= ""+factura.getNumerofact();
+            String ultimafactura = "" + factura.getNumerofact();
             String fechafactu = formateador.format(cobro.getFechacobro());
             correo = "FACTURA NRO: " + ultimafactura
                     + "  CONTROL: " + factura.getNumerocontrol()
@@ -289,11 +309,11 @@ public class CobroventasController implements Serializable {
                     + "  RIF: " + factura.getRifcliente().getRifcliente()
                     + "  FORMA PAGO: " + cobro.getIdtipopago().getTipopago()
                     + "  BANCO: " + cobro.getIdcuentabancaria().getIdbanco().getNombrebanco()
-                    + "  MONTO COBRADO: " + formatearnumero.format( cobro.getMontocobrado())
+                    + "  MONTO COBRADO: " + formatearnumero.format(cobro.getMontocobrado())
                     + "  MONTO PENDIENTE: " + formatearnumero.format(cobro.getMontopendiente())
                     + "  OBSERVACIONES: " + cobro.getObservacionescobro();
 
-                    subject = "Cobro N° " +cobro.getIdcobroventa();
+            subject = "Cobro N° " + cobro.getIdcobroventa();
             enviomail = new envioCorreo(correo, subject);
             enviomail.start();
         } catch (Exception e) {

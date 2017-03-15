@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LibrodiarioCreateDlg" widgetVar="LibrodiarioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecontabilidad.CreateLibrodiarioTitle}">
+            <h:form id="LibrodiarioCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{librodiarioController.selected != null}">
+                        <p:outputLabel value="#{bundlecontabilidad.CreateLibrodiarioLabel_idlibrodiario}" for="idlibrodiario" />
+                        <p:inputText id="idlibrodiario" value="#{librodiarioController.selected.idlibrodiario}" title="#{bundlecontabilidad.CreateLibrodiarioTitle_idlibrodiario}" required="true" requiredMessage="#{bundlecontabilidad.CreateLibrodiarioRequiredMessage_idlibrodiario}"/>
+                        <p:outputLabel value="#{bundlecontabilidad.CreateLibrodiarioLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{librodiarioController.selected.fecha}" title="#{bundlecontabilidad.EditLibrodiarioTitle_fecha}"  showOn="button"/>
+                        <p:outputLabel value="#{bundlecontabilidad.CreateLibrodiarioLabel_descripcionasiento}" for="descripcionasiento" />
+                        <p:inputText id="descripcionasiento" value="#{librodiarioController.selected.descripcionasiento}" title="#{bundlecontabilidad.CreateLibrodiarioTitle_descripcionasiento}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{librodiarioController.create}" value="#{bundlecontabilidad.Save}" update="display,:LibrodiarioListForm:datalist,:growl" oncomplete="handleSubmit(args,'LibrodiarioCreateDialog');"/>
+                    <p:commandButton value="#{bundlecontabilidad.Cancel}" onclick="LibrodiarioCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

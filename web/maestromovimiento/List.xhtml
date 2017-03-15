@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="MaestromovimientoListForm">
+                <p:panel header="#{bundlecontabilidad.ListMaestromovimientoTitle}">
+                    <p:dataTable id="datalist" value="#{maestromovimientoController.items}" var="item"
+                                 selectionMode="single" selection="#{maestromovimientoController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idmaestro}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idmaestro}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idmaestro}"/>
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_fechamovimiento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechamovimiento}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idestatuscontable}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idestatuscontable.estatuscontable}"/>
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idtipoconjunto}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idtipoconjunto.conjunto}"/>
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idcompra}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idcompra}"/>
+                            <h:commandLink action="/auxiliarrequerimiento/Pagocompraver.xhtml" actionListener="#{pagosController.asignarCompra(item.idcompra)}" > 
+                                <h:graphicImage library="images" name="contable.png" width="30" height="30" alt="Compras"
+                                                rendered="#{item.idcompra!= null? true:false}"/>  
+                            </h:commandLink>      
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_numerofact}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numerofact}"/>
+                            <h:commandLink action="/factura/cobroVenta.xhtml" actionListener="#{cobroventasController.asignar(item.numerofact)}" > 
+                                <h:graphicImage library="images" name="contable.png" width="30" height="30" alt="Facturas"
+                                                rendered="#{item.numerofact!= null? true:false}"/>  
+                            </h:commandLink>      
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idautorizacion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idautorizacion}"/>
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idpagocompra}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idpagocompra}"/>
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idcobroventa}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idcobroventa}"/>
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idlibrodiario}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idlibrodiario}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlecontabilidad.Create}" actionListener="#{maestromovimientoController.prepareCreate}" update=":MaestromovimientoCreateForm" oncomplete="PF('MaestromovimientoCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlecontabilidad.View}" update=":MaestromovimientoViewForm" oncomplete="PF('MaestromovimientoViewDialog').show()" disabled="#{empty maestromovimientoController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundlecontabilidad.Edit}" update=":MaestromovimientoEditForm" oncomplete="PF('MaestromovimientoEditDialog').show()" disabled="#{empty maestromovimientoController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundlecontabilidad.Delete}" actionListener="#{maestromovimientoController.destroy}" update=":growl,datalist" disabled="#{empty maestromovimientoController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -45,6 +45,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Compra.findByControlfactura", query = "SELECT c FROM Compra c WHERE c.controlfactura = :controlfactura"),
     @NamedQuery(name = "Compra.findByFechafactura", query = "SELECT c FROM Compra c WHERE c.fechafactura = :fechafactura")})
 public class Compra implements Serializable {
+    @JoinColumn(name = "idmaestro", referencedColumnName = "idmaestro")
+    @ManyToOne
+    private Maestromovimiento idmaestro;
+    @OneToMany(mappedBy = "idcompra")
+    private Collection<Maestromovimiento> maestromovimientoCollection;
     @OneToMany(mappedBy = "idcompra")
     private Collection<Detalleretencionivaef> detalleretencionivaefCollection;
     @OneToMany(mappedBy = "idcompra")
@@ -285,6 +290,23 @@ public class Compra implements Serializable {
 
     public void setDetalleretencionislrefCollection(Collection<Detalleretencionislref> detalleretencionislrefCollection) {
         this.detalleretencionislrefCollection = detalleretencionislrefCollection;
+    }
+
+    public Maestromovimiento getIdmaestro() {
+        return idmaestro;
+    }
+
+    public void setIdmaestro(Maestromovimiento idmaestro) {
+        this.idmaestro = idmaestro;
+    }
+
+    @XmlTransient
+    public Collection<Maestromovimiento> getMaestromovimientoCollection() {
+        return maestromovimientoCollection;
+    }
+
+    public void setMaestromovimientoCollection(Collection<Maestromovimiento> maestromovimientoCollection) {
+        this.maestromovimientoCollection = maestromovimientoCollection;
     }
     
 }

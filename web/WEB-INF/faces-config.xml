@@ -52,5 +52,9 @@
             <base-name>/BundleEmpresa</base-name>
             <var>bundleEmpresa</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/Bundlecontabilidad</base-name>
+            <var>bundlecontabilidad</var>
+        </resource-bundle>
     </application>
 </faces-config>

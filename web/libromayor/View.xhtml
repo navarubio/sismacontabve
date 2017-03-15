@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LibromayorViewDlg" widgetVar="LibromayorViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecontabilidad.ViewLibromayorTitle}">
+            <h:form id="LibromayorViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{libromayorController.selected != null}">
+                        <h:outputText value="#{bundlecontabilidad.ViewLibromayorLabel_idlibromayor}"/>
+                        <h:outputText value="#{libromayorController.selected.idlibromayor}" title="#{bundlecontabilidad.ViewLibromayorTitle_idlibromayor}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewLibromayorLabel_saldoanterior}"/>
+                        <h:outputText value="#{libromayorController.selected.saldoanterior}" title="#{bundlecontabilidad.ViewLibromayorTitle_saldoanterior}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewLibromayorLabel_debe}"/>
+                        <h:outputText value="#{libromayorController.selected.debe}" title="#{bundlecontabilidad.ViewLibromayorTitle_debe}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewLibromayorLabel_haber}"/>
+                        <h:outputText value="#{libromayorController.selected.haber}" title="#{bundlecontabilidad.ViewLibromayorTitle_haber}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewLibromayorLabel_saldoposterior}"/>
+                        <h:outputText value="#{libromayorController.selected.saldoposterior}" title="#{bundlecontabilidad.ViewLibromayorTitle_saldoposterior}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewLibromayorLabel_idlibrodiario}"/>
+                        <h:outputText value="#{libromayorController.selected.idlibrodiario}" title="#{bundlecontabilidad.ViewLibromayorTitle_idlibrodiario}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewLibromayorLabel_idplandecuenta}"/>
+                        <h:outputText value="#{libromayorController.selected.idplandecuenta}" title="#{bundlecontabilidad.ViewLibromayorTitle_idplandecuenta}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlecontabilidad.Close}" onclick="LibromayorViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

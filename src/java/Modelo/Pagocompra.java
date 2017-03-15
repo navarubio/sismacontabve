@@ -43,6 +43,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pagocompra.findByObservacionespago", query = "SELECT p FROM Pagocompra p WHERE p.observacionespago= :observacionespago"),
     @NamedQuery(name = "Pagocompra.findByFechapago", query = "SELECT p FROM Pagocompra p WHERE p.fechapago = :fechapago")})
 public class Pagocompra implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "montoretenido")
+    private double montoretenido;
+    @OneToMany(mappedBy = "idpagocompra")
+    private Collection<Maestromovimiento> maestromovimientoCollection;
+    @JoinColumn(name = "idmaestro", referencedColumnName = "idmaestro")
+    @ManyToOne
+    private Maestromovimiento idmaestro;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,9 +66,6 @@ public class Pagocompra implements Serializable {
     private Double totalpago;
     @Column(name = "saldopendiente")
     private Double saldopendiente;
-    @NotNull
-    @Column(name = "montoretenido")
-    private Double montoretenido;
     @Size(max = 15)
     @Column(name = "aprobacion")
     private String aprobacion;
@@ -132,13 +138,6 @@ public class Pagocompra implements Serializable {
         this.saldopendiente = saldopendiente;
     }
 
-    public Double getMontoretenido() {
-        return montoretenido;
-    }
-
-    public void setMontoretenido(Double montoretenido) {
-        this.montoretenido = montoretenido;
-    }
 
     public String getObservacionespago() {
         return observacionespago;
@@ -241,6 +240,31 @@ public class Pagocompra implements Serializable {
     @Override
     public String toString() {
         return "Modelo.Pagocompra[ idpagocompra=" + idpagocompra + " ]";
+    }
+
+    public double getMontoretenido() {
+        return montoretenido;
+    }
+
+    public void setMontoretenido(double montoretenido) {
+        this.montoretenido = montoretenido;
+    }
+
+    @XmlTransient
+    public Collection<Maestromovimiento> getMaestromovimientoCollection() {
+        return maestromovimientoCollection;
+    }
+
+    public void setMaestromovimientoCollection(Collection<Maestromovimiento> maestromovimientoCollection) {
+        this.maestromovimientoCollection = maestromovimientoCollection;
+    }
+
+    public Maestromovimiento getIdmaestro() {
+        return idmaestro;
+    }
+
+    public void setIdmaestro(Maestromovimiento idmaestro) {
+        this.idmaestro = idmaestro;
     }
     
 }

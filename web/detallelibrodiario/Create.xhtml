@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetallelibrodiarioCreateDlg" widgetVar="DetallelibrodiarioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecontabilidad.CreateDetallelibrodiarioTitle}">
+            <h:form id="DetallelibrodiarioCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detallelibrodiarioController.selected != null}">
+                        <p:outputLabel value="#{bundlecontabilidad.CreateDetallelibrodiarioLabel_iddetallelibrodiario}" for="iddetallelibrodiario" />
+                        <p:inputText id="iddetallelibrodiario" value="#{detallelibrodiarioController.selected.iddetallelibrodiario}" title="#{bundlecontabilidad.CreateDetallelibrodiarioTitle_iddetallelibrodiario}" required="true" requiredMessage="#{bundlecontabilidad.CreateDetallelibrodiarioRequiredMessage_iddetallelibrodiario}"/>
+                        <p:outputLabel value="#{bundlecontabilidad.CreateDetallelibrodiarioLabel_debe}" for="debe" />
+                        <p:inputText id="debe" value="#{detallelibrodiarioController.selected.debe}" title="#{bundlecontabilidad.CreateDetallelibrodiarioTitle_debe}" />
+                        <p:outputLabel value="#{bundlecontabilidad.CreateDetallelibrodiarioLabel_haber}" for="haber" />
+                        <p:inputText id="haber" value="#{detallelibrodiarioController.selected.haber}" title="#{bundlecontabilidad.CreateDetallelibrodiarioTitle_haber}" />
+                        <p:outputLabel value="#{bundlecontabilidad.CreateDetallelibrodiarioLabel_idlibrodiario}" for="idlibrodiario" />
+                        <p:selectOneMenu id="idlibrodiario" value="#{detallelibrodiarioController.selected.idlibrodiario}" >
+                            <f:selectItems value="#{librodiarioController.itemsAvailableSelectOne}"
+                                           var="idlibrodiarioItem"
+                                           itemValue="#{idlibrodiarioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecontabilidad.CreateDetallelibrodiarioLabel_idplandecuenta}" for="idplandecuenta" />
+                        <p:selectOneMenu id="idplandecuenta" value="#{detallelibrodiarioController.selected.idplandecuenta}" >
+                            <f:selectItems value="#{plandecuentaController.itemsAvailableSelectOne}"
+                                           var="idplandecuentaItem"
+                                           itemValue="#{idplandecuentaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detallelibrodiarioController.create}" value="#{bundlecontabilidad.Save}" update="display,:DetallelibrodiarioListForm:datalist,:growl" oncomplete="handleSubmit(args,'DetallelibrodiarioCreateDialog');"/>
+                    <p:commandButton value="#{bundlecontabilidad.Cancel}" onclick="DetallelibrodiarioCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

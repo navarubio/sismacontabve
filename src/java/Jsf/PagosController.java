@@ -19,8 +19,10 @@ import Jpa.DetalleretencionivaefFacadeLocal;
 import Jpa.EmpresaFacadeLocal;
 import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaFacadeLocal;
+import Jpa.MaestromovimientoFacadeLocal;
 import Jpa.PagocompraFacadeLocal;
 import Jpa.RequerimientoFacadeLocal;
+import Jpa.TipoconjuntoFacadeLocal;
 import Jpa.TipopagoFacadeLocal;
 import Jpa.TiporetencionislrFacadeLocal;
 import Modelo.Autorizacion;
@@ -36,8 +38,10 @@ import Modelo.Detalleretencionivaef;
 import Modelo.Empresa;
 import Modelo.Estatuscontable;
 import Modelo.Estatusfactura;
+import Modelo.Maestromovimiento;
 import Modelo.Pagocompra;
 import Modelo.Requerimiento;
+import Modelo.Tipoconjunto;
 import Modelo.Tipopago;
 import Modelo.Tiporetencionislr;
 import Modelo.Usuario;
@@ -98,6 +102,10 @@ public class PagosController implements Serializable {
     private DetalleretencionislrefFacadeLocal detalleretencionislrefEJB;
     @EJB
     private EmpresaFacadeLocal empresaEJB;
+    @EJB
+    private MaestromovimientoFacadeLocal maestromovimientoEJB;
+    @EJB
+    private TipoconjuntoFacadeLocal tipoconjuntoEJB;
 
     private Auxiliarrequerimiento auxiliarrequerimiento;
     private Compra compra;
@@ -146,6 +154,7 @@ public class PagosController implements Serializable {
     private double montoapagar;
     private double totalretenido;
     ArrayList<Detallecompra> lista = new ArrayList();
+     private Tipoconjunto tipoconjunto = null;
 
     @Inject
     private Auxiliarrequerimiento auxiliar;
@@ -158,6 +167,8 @@ public class PagosController implements Serializable {
     private Tipopago tipopago;
     @Inject
     private Cuentabancaria cuentabancaria;
+    @Inject
+    private Maestromovimiento maestromovi;
 
     public List<Cuentabancaria> getLstCuentasSelecc() {
         return lstCuentasSelecc;
@@ -654,9 +665,18 @@ public class PagosController implements Serializable {
                     pagocompra.setMontoretenido(0.0);
                 }
                 cuentabanco = pagocompra.getIdcuentabancaria();
-//            pagocompra.setTotalpago(compra.getTotal());
-//            pagocompra.setSaldopendiente(compra.getMontopendiente());
+//              pagocompra.setTotalpago(compra.getTotal());
+//              pagocompra.setSaldopendiente(compra.getMontopendiente());
                 pagocompraEJB.create(pagocompra);
+                
+                int tipoconj = 2;
+                tipoconjunto = tipoconjuntoEJB.cambiartipoConjunto(tipoconj);
+                pagocompra.setIdpagocompra(pagocompraEJB.ultimopago());
+                maestromovi.setIdpagocompra(pagocompra);
+                maestromovi.setFechamovimiento(pagocompra.getFechapago());
+                maestromovi.setIdtipoconjunto(tipoconjunto);
+                maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
+                maestromovimientoEJB.create(maestromovi);
 
                 if (visualizar == 7) {
                     pagocompra.setIdpagocompra(pagocompraEJB.ultimopago());

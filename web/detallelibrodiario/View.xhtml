@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetallelibrodiarioViewDlg" widgetVar="DetallelibrodiarioViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecontabilidad.ViewDetallelibrodiarioTitle}">
+            <h:form id="DetallelibrodiarioViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detallelibrodiarioController.selected != null}">
+                        <h:outputText value="#{bundlecontabilidad.ViewDetallelibrodiarioLabel_iddetallelibrodiario}"/>
+                        <h:outputText value="#{detallelibrodiarioController.selected.iddetallelibrodiario}" title="#{bundlecontabilidad.ViewDetallelibrodiarioTitle_iddetallelibrodiario}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewDetallelibrodiarioLabel_debe}"/>
+                        <h:outputText value="#{detallelibrodiarioController.selected.debe}" title="#{bundlecontabilidad.ViewDetallelibrodiarioTitle_debe}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewDetallelibrodiarioLabel_haber}"/>
+                        <h:outputText value="#{detallelibrodiarioController.selected.haber}" title="#{bundlecontabilidad.ViewDetallelibrodiarioTitle_haber}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewDetallelibrodiarioLabel_idlibrodiario}"/>
+                        <h:outputText value="#{detallelibrodiarioController.selected.idlibrodiario}" title="#{bundlecontabilidad.ViewDetallelibrodiarioTitle_idlibrodiario}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewDetallelibrodiarioLabel_idplandecuenta}"/>
+                        <h:outputText value="#{detallelibrodiarioController.selected.idplandecuenta}" title="#{bundlecontabilidad.ViewDetallelibrodiarioTitle_idplandecuenta}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlecontabilidad.Close}" onclick="DetallelibrodiarioViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

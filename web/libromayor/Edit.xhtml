@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LibromayorEditDlg" widgetVar="LibromayorEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecontabilidad.EditLibromayorTitle}">
+            <h:form id="LibromayorEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{libromayorController.selected != null}">
+                        <p:outputLabel value="#{bundlecontabilidad.EditLibromayorLabel_idlibromayor}" for="idlibromayor" />
+                        <p:inputText id="idlibromayor" value="#{libromayorController.selected.idlibromayor}" title="#{bundlecontabilidad.EditLibromayorTitle_idlibromayor}" required="true" requiredMessage="#{bundlecontabilidad.EditLibromayorRequiredMessage_idlibromayor}"/>
+                        <p:outputLabel value="#{bundlecontabilidad.EditLibromayorLabel_saldoanterior}" for="saldoanterior" />
+                        <p:inputText id="saldoanterior" value="#{libromayorController.selected.saldoanterior}" title="#{bundlecontabilidad.EditLibromayorTitle_saldoanterior}" />
+                        <p:outputLabel value="#{bundlecontabilidad.EditLibromayorLabel_debe}" for="debe" />
+                        <p:inputText id="debe" value="#{libromayorController.selected.debe}" title="#{bundlecontabilidad.EditLibromayorTitle_debe}" />
+                        <p:outputLabel value="#{bundlecontabilidad.EditLibromayorLabel_haber}" for="haber" />
+                        <p:inputText id="haber" value="#{libromayorController.selected.haber}" title="#{bundlecontabilidad.EditLibromayorTitle_haber}" />
+                        <p:outputLabel value="#{bundlecontabilidad.EditLibromayorLabel_saldoposterior}" for="saldoposterior" />
+                        <p:inputText id="saldoposterior" value="#{libromayorController.selected.saldoposterior}" title="#{bundlecontabilidad.EditLibromayorTitle_saldoposterior}" />
+                        <p:outputLabel value="#{bundlecontabilidad.EditLibromayorLabel_idlibrodiario}" for="idlibrodiario" />
+                        <p:selectOneMenu id="idlibrodiario" value="#{libromayorController.selected.idlibrodiario}" >
+                            <f:selectItem itemLabel="#{bundlecontabilidad.SelectOneMessage}"/>
+                            <f:selectItems value="#{librodiarioController.itemsAvailableSelectOne}"
+                                           var="idlibrodiarioItem"
+                                           itemValue="#{idlibrodiarioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecontabilidad.EditLibromayorLabel_idplandecuenta}" for="idplandecuenta" />
+                        <p:selectOneMenu id="idplandecuenta" value="#{libromayorController.selected.idplandecuenta}" >
+                            <f:selectItem itemLabel="#{bundlecontabilidad.SelectOneMessage}"/>
+                            <f:selectItems value="#{plandecuentaController.itemsAvailableSelectOne}"
+                                           var="idplandecuentaItem"
+                                           itemValue="#{idplandecuentaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{libromayorController.update}" value="#{bundlecontabilidad.Save}" update="display,:LibromayorListForm:datalist,:growl" oncomplete="handleSubmit(args, 'LibromayorEditDialog');"/>
+                    <p:commandButton value="#{bundlecontabilidad.Cancel}" onclick="LibromayorEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

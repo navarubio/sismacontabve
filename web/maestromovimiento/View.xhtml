@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MaestromovimientoViewDlg" widgetVar="MaestromovimientoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecontabilidad.ViewMaestromovimientoTitle}">
+            <h:form id="MaestromovimientoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{maestromovimientoController.selected != null}">
+                        <h:outputText value="#{bundlecontabilidad.ViewMaestromovimientoLabel_idmaestro}"/>
+                        <h:outputText value="#{maestromovimientoController.selected.idmaestro}" title="#{bundlecontabilidad.ViewMaestromovimientoTitle_idmaestro}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewMaestromovimientoLabel_fechamovimiento}"/>
+                        <h:outputText value="#{maestromovimientoController.selected.fechamovimiento}" title="#{bundlecontabilidad.ViewMaestromovimientoTitle_fechamovimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundlecontabilidad.ViewMaestromovimientoLabel_idestatuscontable}"/>
+                        <h:outputText value="#{maestromovimientoController.selected.idestatuscontable}" title="#{bundlecontabilidad.ViewMaestromovimientoTitle_idestatuscontable}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewMaestromovimientoLabel_idtipoconjunto}"/>
+                        <h:outputText value="#{maestromovimientoController.selected.idtipoconjunto}" title="#{bundlecontabilidad.ViewMaestromovimientoTitle_idtipoconjunto}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewMaestromovimientoLabel_idcompra}"/>
+                        <h:outputText value="#{maestromovimientoController.selected.idcompra}" title="#{bundlecontabilidad.ViewMaestromovimientoTitle_idcompra}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewMaestromovimientoLabel_numerofact}"/>
+                        <h:outputText value="#{maestromovimientoController.selected.numerofact}" title="#{bundlecontabilidad.ViewMaestromovimientoTitle_numerofact}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewMaestromovimientoLabel_idlibrodiario}"/>
+                        <h:outputText value="#{maestromovimientoController.selected.idlibrodiario}" title="#{bundlecontabilidad.ViewMaestromovimientoTitle_idlibrodiario}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewMaestromovimientoLabel_idautorizacion}"/>
+                        <h:outputText value="#{maestromovimientoController.selected.idautorizacion}" title="#{bundlecontabilidad.ViewMaestromovimientoTitle_idautorizacion}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewMaestromovimientoLabel_idpagocompra}"/>
+                        <h:outputText value="#{maestromovimientoController.selected.idpagocompra}" title="#{bundlecontabilidad.ViewMaestromovimientoTitle_idpagocompra}"/>
+                        <h:outputText value="#{bundlecontabilidad.ViewMaestromovimientoLabel_idcobroventa}"/>
+                        <h:outputText value="#{maestromovimientoController.selected.idcobroventa}" title="#{bundlecontabilidad.ViewMaestromovimientoTitle_idcobroventa}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlecontabilidad.Close}" onclick="MaestromovimientoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

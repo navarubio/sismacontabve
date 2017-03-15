@@ -45,6 +45,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Factura.findBySaldopendiente", query = "SELECT f FROM Factura f WHERE f.saldopendiente= :saldopendiente"),
     @NamedQuery(name = "Factura.findByCantidadenletras", query = "SELECT f FROM Factura f WHERE f.cantidadenletras = :cantidadenletras")})
 public class Factura implements Serializable {
+    @JoinColumn(name = "idmaestro", referencedColumnName = "idmaestro")
+    @ManyToOne
+    private Maestromovimiento idmaestro;
+    @OneToMany(mappedBy = "numerofact")
+    private Collection<Maestromovimiento> maestromovimientoCollection;
     @OneToMany(mappedBy = "numerofact")
     private Collection<Detalleretencionivasp> detalleretencionivaspCollection;
     @OneToMany(mappedBy = "numerofact")
@@ -286,6 +291,23 @@ public class Factura implements Serializable {
 
     public void setDetalleretencionislrspCollection(Collection<Detalleretencionislrsp> detalleretencionislrspCollection) {
         this.detalleretencionislrspCollection = detalleretencionislrspCollection;
+    }
+
+    public Maestromovimiento getIdmaestro() {
+        return idmaestro;
+    }
+
+    public void setIdmaestro(Maestromovimiento idmaestro) {
+        this.idmaestro = idmaestro;
+    }
+
+    @XmlTransient
+    public Collection<Maestromovimiento> getMaestromovimientoCollection() {
+        return maestromovimientoCollection;
+    }
+
+    public void setMaestromovimientoCollection(Collection<Maestromovimiento> maestromovimientoCollection) {
+        this.maestromovimientoCollection = maestromovimientoCollection;
     }
     
 }

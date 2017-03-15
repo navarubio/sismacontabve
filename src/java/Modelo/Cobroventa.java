@@ -6,6 +6,7 @@
 package Modelo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,11 +18,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -39,6 +42,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Cobroventa.findByFechacobro", query = "SELECT c FROM Cobroventa c WHERE c.fechacobro = :fechacobro"),
     @NamedQuery(name = "Cobroventa.findByMontopendiente", query = "SELECT c FROM Cobroventa c WHERE c.montopendiente = :montopendiente")})
 public class Cobroventa implements Serializable {
+    @OneToMany(mappedBy = "idcobroventa")
+    private Collection<Maestromovimiento> maestromovimientoCollection;
+    @JoinColumn(name = "idmaestro", referencedColumnName = "idmaestro")
+    @ManyToOne
+    private Maestromovimiento idmaestro;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -193,6 +201,23 @@ public class Cobroventa implements Serializable {
     @Override
     public String toString() {
         return "Modelo.Cobroventa[ idcobroventa=" + idcobroventa + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Maestromovimiento> getMaestromovimientoCollection() {
+        return maestromovimientoCollection;
+    }
+
+    public void setMaestromovimientoCollection(Collection<Maestromovimiento> maestromovimientoCollection) {
+        this.maestromovimientoCollection = maestromovimientoCollection;
+    }
+
+    public Maestromovimiento getIdmaestro() {
+        return idmaestro;
+    }
+
+    public void setIdmaestro(Maestromovimiento idmaestro) {
+        this.idmaestro = idmaestro;
     }
     
 }

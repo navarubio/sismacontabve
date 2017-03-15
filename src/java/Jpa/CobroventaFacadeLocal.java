@@ -34,4 +34,6 @@ public interface CobroventaFacadeLocal {
     int count();
     
     List<Cobroventa> buscarcobrosporfactura(int factu);
+    
+    Cobroventa ultimocobroInsertado();
 }
