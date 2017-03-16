@@ -19,6 +19,8 @@ import Modelo.Banco;
 import Modelo.Cobroventa;
 import Modelo.Cuentabancaria;
 import Modelo.Detallefactura;
+import Modelo.Detalleretencionislrsp;
+import Modelo.Detalleretencionivasp;
 import Modelo.Estatuscontable;
 import Modelo.Estatusfacturaventa;
 import Modelo.Factura;
@@ -73,7 +75,9 @@ public class CobroventasController implements Serializable {
 
     private Factura factura;
     private int numeroFact = 0;
+    private int visualizar = 0;
     static Cobroventa cobro;
+    private Cobroventa cobroventa = new Cobroventa();
     static Cuentabancaria cuentabancaria;
     private Detallefactura detallefact;
     private Estatusfacturaventa statusfactu = null;
@@ -97,9 +101,23 @@ public class CobroventasController implements Serializable {
     private String correo;
     private envioCorreo enviomail;
     private Tipoconjunto tipoconjunto = null;
-    
+    private int tipofactura = 1;
+    private double montoUT = 0;
+    private double montopisoretiva = 0;
+    private double montopisoretislr = 0;
+    private double ivaretenido;
+    private double islrretenido;
+    private double montoacobrar;
+    private double totalretenido;
+
     @Inject
     private Maestromovimiento maestromovi;
+    @Inject
+    private Detallefactura detallefactu;
+    @Inject
+    private Detalleretencionivasp detalleretencionivasp;
+    @Inject
+    private Detalleretencionislrsp detalleretencionislrsp;
 
     public double getSaldocuenta() {
         return saldocuenta;
@@ -133,6 +151,14 @@ public class CobroventasController implements Serializable {
         this.factura = factura;
     }
 
+    public int getVisualizar() {
+        return visualizar;
+    }
+
+    public void setVisualizar(int visualizar) {
+        this.visualizar = visualizar;
+    }
+
     public List<Tipopago> getTipopagos() {
         return tipopagos;
     }
@@ -163,6 +189,19 @@ public class CobroventasController implements Serializable {
 
     public void setCobro(Cobroventa cobro) {
         this.cobro = cobro;
+    }
+
+    public void asignarDetalleFactura(Detallefactura detallefactura) {
+        this.detallefactu = detallefactura;
+
+    }
+
+    public Detallefactura getDetallefactu() {
+        return detallefactu;
+    }
+
+    public void setDetallefactu(Detallefactura detallefactu) {
+        this.detallefactu = detallefactu;
     }
 
     public List<Cuentabancaria> getLstCuentasSelecc() {
@@ -222,6 +261,7 @@ public class CobroventasController implements Serializable {
         bancos = bancoEJB.findAll();
         cobro = new Cobroventa();
         cobro.setFechacobro(fechaactual);
+        visualizar = 0;
     }
 
     public List<Cuentabancaria> refrescarCuentasBancarias() {
@@ -238,9 +278,19 @@ public class CobroventasController implements Serializable {
     }
 
     public void asignar(Factura factura) {
+        visualizar = 0;
         this.factura = factura;
         this.numeroFact = factura.getNumerofact();
         detallesfacturafiltrados = detallesenfacturaEJB.buscardetallefactura(factura);
+
+        this.tipofactura = 1;
+        this.visualizar = 0;
+        this.totalretenido = 0;
+        this.ivaretenido = 0;
+        this.islrretenido = 0;
+    
+
+
     }
 
     public List<Detallefactura> detallefacturaAuxiliar() {
