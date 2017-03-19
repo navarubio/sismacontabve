@@ -84,7 +84,11 @@ public class FacturaFacade extends AbstractFacade<Factura> implements FacturaFac
         } catch (Exception e) {
             throw e;
         }
-        numeracion = ultima.getNumerofact()+1;
+        if (ultima.getNumerofact()!=null){
+            numeracion = ultima.getNumerofact()+1;
+        }else{
+            numeracion=1;
+        }
         String output = myFormatter.format(numeracion); 
 
         return output;
