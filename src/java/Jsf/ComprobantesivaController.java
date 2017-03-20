@@ -238,9 +238,9 @@ public class ComprobantesivaController implements Serializable {
                 detalle.setIdcomprobanteivaef(comprobanteivaef);
                 detalleretencionivaefEJB.edit(detalle);
             }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Fue generado el Comprobante de Retencion de Iva "));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Fue generado el Comprobante de Retencion de Iva ", "Aviso "));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Generar el Comprobante de Retencion de IVA"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Generar el Comprobante de Retencion de IVA", "Aviso"));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }

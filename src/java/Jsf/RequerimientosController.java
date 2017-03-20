@@ -41,16 +41,16 @@ public class RequerimientosController implements Serializable {
     private List<Articulo> articulos = null;
     private List<Requerimiento> requerimientos = null;
     private List<Requerimiento> requerimientosfiltrados;
-    private static List<Requerimiento> listarequerimiento = new ArrayList();
+    private List<Requerimiento> listarequerimiento = new ArrayList();
     private String codigo = null;
     private String descripcion = null;
     private double cantidad = 0;
     private double pcosto = 0;
     private double pventa = 0;
     private double subtotal = 0;
-    private static double totalgeneral = 0;
-    private static double totaliva = 0;
-    private static double totalsubtotal = 0;
+    private double totalgeneral = 0;
+    private double totaliva = 0;
+    private double totalsubtotal = 0;
     private int id = 0;
     private envioCorreo enviomail;
     private String correo;
@@ -379,6 +379,9 @@ public class RequerimientosController implements Serializable {
             auxrequer.setMontototal(totalgeneral);
 
             auxiliarrequerimientoEJB.create(auxrequer);
+            totalsubtotal=0;
+            totaliva=0;
+            totalgeneral=0;
 
             codAux = requerimientoEJB.ultimoInsertado();
             String subject;
@@ -405,7 +408,7 @@ public class RequerimientosController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Requerimiento fue Almacenado Codigo " + requer.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento(), ""));
             listarequerimiento.clear();
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Requerimiento"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Requerimiento", "Aviso"));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }

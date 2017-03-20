@@ -79,6 +79,7 @@ public class ComprasController implements Serializable {
     private Autorizacion codAutoriza;
     private Compra compraautorizada;
     private Tipoconjunto tipoconjunto = null;
+    private int varAutoriza=0;
 
     @Inject
     private Auxiliarrequerimiento auxiliar;
@@ -258,6 +259,7 @@ public class ComprasController implements Serializable {
         comprasporpagar = compraEJB.buscarcomprasporPagar();
         compraspagadas = compraEJB.buscarcomprasPagadas();
         compra.setFechaorden(fechaactual);
+        varAutoriza=0;
 
 //        this.auxiliarrequerimiento=requerimientosController.getAuxrequer();
     }
@@ -362,6 +364,7 @@ public class ComprasController implements Serializable {
         maestromovi.setFechamovimiento(autorizacion.getFechaautorizacion());
         maestromovi.setIdtipoconjunto(tipoconjunto);
         maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
+        maestromovi.setIdcompra(compraautorizada);
         maestromovimientoEJB.create(maestromovi);
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Compra Autorizada por Gerencia"));
@@ -378,9 +381,9 @@ public class ComprasController implements Serializable {
     public void asignarCompraAutorizada(Compra compraselec) {
         this.idAuxiliar = compraselec.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento();
         this.auxiliar = compraselec.getIdauxiliarrequerimiento();
+        auxiliarrequerimiento=auxiliar;
         requerimientosFiltrados = requerimientosAuxiliar();
         compraautorizada = compraselec;
-
     }
 
     public List<Requerimiento> solicitarRequerimientosFiltro() {
