@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author sofimar
  */
 @Stateless
-public class DetalleretencionislrspFacade extends AbstractFacade<Detalleretencionislrsp> {
+public class DetalleretencionislrspFacade extends AbstractFacade<Detalleretencionislrsp> implements DetalleretencionislrspFacadeLocal{
     @PersistenceContext(unitName = "InpecaPU")
     private EntityManager em;
 

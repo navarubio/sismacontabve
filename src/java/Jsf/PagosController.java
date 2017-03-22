@@ -521,9 +521,9 @@ public class PagosController implements Serializable {
                     visualizar=4;
                 }
             }else if (tipocompra == 3) {
-                    visualizar = 5;
+                visualizar = 5;
             } else if (tipocompra ==1){
-                    visualizar=5;
+                visualizar=5;
             }
         }
         calcularMontoapagar();

@@ -57,6 +57,25 @@
                                     <p:outputLabel id="montofact" value="#{cobroventasController.factura.saldopendiente}" styleClass="text-ouputcxc" >
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </p:outputLabel>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel for="montoretiva" value="IVA Retenido" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montoretiva" value="#{cobroventasController.detalleretencionivasp.totalivaretenido}" styleClass="text-ouputfact" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel for="montoretislr" value="ISLR retenido" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montoretislr" value="#{cobroventasController.detalleretencionislrsp.totalislrretenido}" styleClass="text-ouputfact" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel for="montop" value="Monto a Cobrar" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montop" value="#{cobroventasController.cobro.montocobrado}" styleClass="text-ouputfact" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+                                    
                                     <p:outputLabel value="Porción de Cobro" styleClass="text-ouput"/>
                                     <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
                                         <p:outputLabel for="console" value="" />
@@ -71,7 +90,7 @@
                                         </p:selectOneRadio>                                        
                                     </h:panelGrid>                             
                                     <h:panelGroup id="contenedorLabel" >
-                                        <p:outputLabel value="Cantidad ABONAR" for="observacion"
+                                        <p:outputLabel value="Cantidad ABONAR" for="observacion" styleClass="text-output"
                                                        rendered="#{cobroventasController.formacobro>=2 ? true:false}"/>
                                     </h:panelGroup>
                                     <h:panelGroup id="contenedorComponente">
@@ -146,8 +165,8 @@
                             </p:column>
                             <p:column style="text-align: center" headerText="Retenciones">                                
                                 <p:commandLink actionListener="#{cobroventasController.asignarDetalleFactura(req)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
-                                    <h:graphicImage library="images" name="balanzapago.png" width="30" height="30" alt="Editar Articulo" />
-<!--                                                    rendered="#{pagosController.visualizar== 1 || pagosController.visualizar== 2 || pagosController.visualizar== 3 || pagosController.visualizar== 4? true:false}"/-->  
+                                    <h:graphicImage library="images" name="balanzapago.png" width="30" height="30" alt="Editar Articulo" 
+                                                    rendered="#{cobroventasController.visualizar== 1 || cobroventasController.visualizar== 2 || cobroventasController.visualizar== 3 || cobroventasController.visualizar== 4? true:false}"/>  
                                 </p:commandLink>
                             </p:column>
                             
@@ -164,11 +183,11 @@
                         <p:commandButton value="Cancelar" />
                     </p:panel>
                 </h:form>
-                <p:dialog id="dialogo" widgetVar="wdialogo" header="Retenciones de Ley sobre compras" modal="true" closeOnEscape="true" 
+                <p:dialog id="dialogo" widgetVar="wdialogo" header="Retenciones de Ley Soportadas sobre Ventas" modal="true" closeOnEscape="true" 
                           resizable="false" showEffect="explode" appendTo="@(body)"  >
                     <h:form>
                         <h:panelGrid  id="display" columns="2">
-                            <p:fieldset legend="Retencion I.V.A." >   
+                            <p:fieldset legend="Retencion I.V.A." rendered="#{cobroventasController .visualizar== 1 || cobroventasController.visualizar== 2? true:false}">   
                                 <p:panelGrid columns="2" styleClass="ui-custompanelgrid1">
                                     <p:outputLabel value="DATOS DEL AGENTE DE RETENCION" />
                                     <p:outputLabel></p:outputLabel>
@@ -193,50 +212,50 @@
                                         <f:convertNumber type="currency" currencySymbol=" "   />
                                     </p:outputLabel>
                                     <p:outputLabel for="tiporetencion" value="Porcentaje Retencion IVA Aplicado" />
-                                    <p:selectOneMenu id="tiporetencion" value="#{pagosController.detalleretencionivaef.idtiporetencioniva}" converter="omnifaces.SelectItemsConverter" style="text-align: right"
-                                                     rendered="#{pagosController.compra.iva>=1  ? true:false}"> 
-                                        <p:ajax event="change" listener="#{pagosController.calcularivaretenido()}" update="montoret,display"/>
+                                    <p:selectOneMenu id="tiporetencion" value="#{cobroventasController.detalleretencionivasp.idtiporetencioniva}" converter="omnifaces.SelectItemsConverter" style="text-align: right"
+                                                     rendered="#{cobroventasController.factura.ivafact>=1  ? true:false}"> 
+                                        <p:ajax event="change" listener="#{cobroventasController.calcularivaretenido()}" update="montoret,display"/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                                         <f:selectItems value="#{tiporetencionivaController.items}"
                                                        var="idtiporetencionItem"
                                                        itemLabel="#{idtiporetencionItem.porcentajeiva}"  itemValue="#{idtiporetencionItem}" /> 
                                     </p:selectOneMenu>
                                     <p:outputLabel for="montoret"  value="Monto Retenido" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="montoret"  styleClass="text-ouputfact" value="#{pagosController.detalleretencionivaef.totalivaretenido}" style="text-align:right" >
+                                    <p:outputLabel id="montoret"  styleClass="text-ouputfact" value="#{cobroventasController.detalleretencionivasp.totalivaretenido}" style="text-align:right" >
                                         <f:convertNumber type="currency" currencySymbol=" "  />    
                                     </p:outputLabel>
                                 </p:panelGrid>
                             </p:fieldset>
-                            <p:fieldset legend="Retencion I.S.L.R." rendered="#{pagosController.visualizar== 2 || pagosController.visualizar== 3 || pagosController.visualizar== 4 ? true:false}"> 
+                            <p:fieldset legend="Retencion I.S.L.R." rendered="#{cobroventasController.visualizar== 2 || cobroventasController.visualizar== 3 || cobroventasController.visualizar== 4 ? true:false}"> 
                                  <p:panelGrid columns="2" styleClass="ui-custompanelgrid2" >
-                                    <p:outputLabel for="totalcompra" value="Total Compra" />
-                                    <p:inputText id="totalcompra" value="#{pagosController.compra.total}" style="text-align:right">
+                                    <p:outputLabel for="totalcompra" value="Total Factura" />
+                                    <p:inputText id="totalcompra" value="#{cobroventasController.factura.totalgeneral}" style="text-align:right">
                                     </p:inputText>
                                     <p:outputLabel for="baseimponible"  value="Base Imponible" styleClass="optionalLbl"/>
-                                    <p:inputText id="baseimponible"  size="20" value="#{pagosController.compra.subtotal}" style="text-align:right">
+                                    <p:inputText id="baseimponible"  size="20" value="#{cobroventasController.factura.bimponiblefact}" style="text-align:right">
                                     </p:inputText>
                                     <p:outputLabel for="tiporetencionislr" value="Porcentaje Retencion ISLR" />
-                                    <p:selectOneMenu id="tiporetencionislr" value="#{pagosController.detalleretencionislref.idtiporetencionislr}" converter="omnifaces.SelectItemsConverter" 
-                                        rendered="#{pagosController.tipocompra==2  ? true:false}">  
-                                        <p:ajax event="change" listener="#{pagosController.calcularislrretenido()}" update="islrretenido,sustraendo,display"/>
+                                    <p:selectOneMenu id="tiporetencionislr" value="#{cobroventasController.detalleretencionislrsp.idtiporetencionislr}" converter="omnifaces.SelectItemsConverter" 
+                                                     rendered="#{cobroventasController.tipocompra==2  ? true:false}">  
+                                        <p:ajax event="change" listener="#{cobroventasController.calcularislrretenido()}" update="islrretenido,sustraendo,display"/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
-                                        <f:selectItems value="#{pagosController.tiporetencionesfiltradasPD}"
+                                        <f:selectItems value="#{cobroventasController.tiporetencionesfiltradasPD}"
                                                      var="idtiporetencionItem"
                                                        itemLabel="#{idtiporetencionItem.descripcionservicio}"  itemValue="#{idtiporetencionItem}" /> 
                                     </p:selectOneMenu>
                                     <p:outputLabel for="porcentajeretislr"  value="Porcenta Retencion: " styleClass="optionalLbl"/>
-                                    <p:inputText id="porcentajeretislr"  size="20" value="#{pagosController.detalleretencionislref.procentajeretencion}" style="text-align:right" />
+                                    <p:inputText id="porcentajeretislr"  size="20" value="#{cobroventasController.detalleretencionislrsp.procentajeretencion}" style="text-align:right" />
                                     <p:outputLabel for="sustraendo"  value="Sustraendo" styleClass="optionalLbl"/>
-                                    <p:inputText id="sustraendo"  size="20" value="#{pagosController.detalleretencionislref.sustraendo}" style="text-align:right">
+                                    <p:inputText id="sustraendo"  size="20" value="#{cobroventasController.detalleretencionislrsp.sustraendo}" style="text-align:right">
                                     </p:inputText>
                                     <p:outputLabel for="islrretenido"  value="I.S.L.R. Retenido" styleClass="optionalLbl"/>
-                                    <p:inputText id="islrretenido"  size="20" value="#{pagosController.detalleretencionislref.totalislrretenido}" style="text-align:right">
+                                    <p:inputText id="islrretenido"  size="20" value="#{cobroventasController.detalleretencionislrsp.totalislrretenido}" style="text-align:right">
                                     </p:inputText>
                                 </p:panelGrid>
                             </p:fieldset>
                         </h:panelGrid>
                         <h:panelGrid id="botones" columns="10">
-                            <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{pagosController.grabarRetencion()}" oncomplete="PF('wdialogo').hide();" update="display,:formulario,:growl"/>
+                            <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{cobroventasController.grabarRetencion()}" oncomplete="PF('wdialogo').hide();" update="display,:formulario,:growl"/>
                             <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
                         </h:panelGrid>
                     </h:form>

@@ -9,12 +9,16 @@ import Jpa.BancoFacadeLocal;
 import Jpa.CobroventaFacadeLocal;
 import Jpa.CuentabancariaFacadeLocal;
 import Jpa.DetallefacturaFacadeLocal;
+import Jpa.DetalleretencionislrspFacadeLocal;
+import Jpa.DetalleretencionivaefFacadeLocal;
+import Jpa.DetalleretencionivaspFacadeLocal;
 import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaventaFacadeLocal;
 import Jpa.FacturaFacadeLocal;
 import Jpa.MaestromovimientoFacadeLocal;
 import Jpa.TipoconjuntoFacadeLocal;
 import Jpa.TipopagoFacadeLocal;
+import Jpa.TiporetencionislrFacadeLocal;
 import Modelo.Banco;
 import Modelo.Cobroventa;
 import Modelo.Cuentabancaria;
@@ -27,6 +31,7 @@ import Modelo.Factura;
 import Modelo.Maestromovimiento;
 import Modelo.Tipoconjunto;
 import Modelo.Tipopago;
+import Modelo.Tiporetencionislr;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -72,6 +77,12 @@ public class CobroventasController implements Serializable {
     private TipoconjuntoFacadeLocal tipoconjuntoEJB;
     @EJB
     private MaestromovimientoFacadeLocal maestromovimientoEJB;
+    @EJB
+    private TiporetencionislrFacadeLocal tiporetencionislrEJB;
+    @EJB
+    private DetalleretencionivaspFacadeLocal detalleretencionivaspEJB;
+    @EJB
+    private DetalleretencionislrspFacadeLocal detalleretencionislrefEJB;
 
     private Factura factura;
     private int numeroFact = 0;
@@ -109,6 +120,8 @@ public class CobroventasController implements Serializable {
     private double islrretenido;
     private double montoacobrar;
     private double totalretenido;
+    private int tipocompra = 1;
+    private List<Tiporetencionislr> tiporetencionesfiltradasPD = null;
 
     @Inject
     private Maestromovimiento maestromovi;
@@ -165,6 +178,14 @@ public class CobroventasController implements Serializable {
 
     public void setTipopagos(List<Tipopago> tipopagos) {
         this.tipopagos = tipopagos;
+    }
+
+    public List<Tiporetencionislr> getTiporetencionesfiltradasPD() {
+        return tiporetencionesfiltradasPD;
+    }
+
+    public void setTiporetencionesfiltradasPD(List<Tiporetencionislr> tiporetencionesfiltradasPD) {
+        this.tiporetencionesfiltradasPD = tiporetencionesfiltradasPD;
     }
 
     public List<Cobroventa> getCobrosefectuados() {
@@ -244,6 +265,16 @@ public class CobroventasController implements Serializable {
         this.formacobro = formacobro;
     }
 
+    public int getTipocompra() {
+        return tipocompra;
+    }
+
+    public void setTipocompra(int tipocompra) {
+        this.tipocompra = tipocompra;
+    }
+    
+    
+
     public static Cuentabancaria getCuentabancaria() {
         return cuentabancaria;
     }
@@ -251,6 +282,24 @@ public class CobroventasController implements Serializable {
     public void setCuentabancaria(Cuentabancaria cuentabancaria) {
         this.cuentabancaria = cuentabancaria;
     }
+
+    public Detalleretencionivasp getDetalleretencionivasp() {
+        return detalleretencionivasp;
+    }
+
+    public void setDetalleretencionivasp(Detalleretencionivasp detalleretencionivasp) {
+        this.detalleretencionivasp = detalleretencionivasp;
+    }
+
+    public Detalleretencionislrsp getDetalleretencionislrsp() {
+        return detalleretencionislrsp;
+    }
+
+    public void setDetalleretencionislrsp(Detalleretencionislrsp detalleretencionislrsp) {
+        this.detalleretencionislrsp = detalleretencionislrsp;
+    }
+    
+    
 
     @PostConstruct
     public void init() {
@@ -278,19 +327,91 @@ public class CobroventasController implements Serializable {
     }
 
     public void asignar(Factura factura) {
+        this.tipocompra = 1;        
         visualizar = 0;
         this.factura = factura;
         this.numeroFact = factura.getNumerofact();
         detallesfacturafiltrados = detallesenfacturaEJB.buscardetallefactura(factura);
-
+        double montoiva = factura.getIvafact();
         this.tipofactura = 1;
-        this.visualizar = 0;
         this.totalretenido = 0;
         this.ivaretenido = 0;
         this.islrretenido = 0;
-    
+        double totalfactu = factura.getTotalgeneral();
+        montopisoretiva = (20 * 300);
+        montopisoretislr = 0;
+        detalleretencionivasp.setTotalivaretenido(0.0);
+        detalleretencionislrsp.setTotalislrretenido(0.0);
+        detalleretencionislrsp.setSustraendo(0.0);
+        detalleretencionislrsp.setProcentajeretencion(0.0);
+        detalleretencionivasp.setIdtiporetencioniva(null);
+        detalleretencionislrsp.setIdtiporetencionislr(null);
+        tiporetencionesfiltradasPD = tiporetencionislrEJB.tiporetfiltradaPJD();
 
 
+        int tipo1;
+        for (Detallefactura tipoc : detallesfacturafiltrados) {
+            tipo1 = tipoc.getCodigo().getIdgrupo().getIdgrupo();
+            if (tipo1 == 1 && tipocompra == 1) {
+                tipocompra = 1;
+            } else if (tipo1 == 2) {
+                tipocompra = 2;
+            } else if (tipo1 == 3) {
+                tipocompra = 3;
+            }
+        }
+
+        if (factura.getRifcliente().getIdcontribuyente().getIdcontribuyente() == 2) {
+            if (totalfactu >= montopisoretiva) {
+                if (tipocompra == 3) {
+                    visualizar = 5;
+                }else if (tipocompra == 1) {
+                    if (montoiva > 0) {
+                        visualizar = 1;
+                    } else {
+                        visualizar = 5;
+                    }
+                }else if (tipocompra == 2) {
+                    if (totalfactu >= montopisoretislr) {
+                        if (montoiva > 0) {
+                            visualizar = 2;
+                        } else {
+                            visualizar = 3;
+                        }
+                    } else {
+                        if (montoiva > 0) {
+                            visualizar = 1;
+                        } else {
+                            visualizar = 5;
+                        }
+                    }
+                }
+            } else {
+                if (tipocompra == 2) {
+                    visualizar = 3;
+                } else if (tipocompra == 3) {
+                    visualizar = 5;
+                } else if (tipocompra == 1) {
+                    visualizar = 5;
+                }
+            }
+        } else if (factura.getRifcliente().getIdcontribuyente().getIdcontribuyente() == 1 || factura.getRifcliente().getIdcontribuyente().getIdcontribuyente() == 3) {
+            if (tipocompra == 2) {
+                if (totalfactu >= montopisoretislr) {
+                    visualizar = 4;
+                } else {
+                    visualizar = 5;
+                }
+            } else if (tipocompra == 3) {
+                visualizar = 5;
+            } else if (tipocompra == 1) {
+                visualizar = 5;
+            }
+        }
+        calcularMontoacobrar();
+        if (factura.getTotalgeneral() > (factura.getSaldopendiente())) {
+            visualizar = 6;
+        }
     }
 
     public List<Detallefactura> detallefacturaAuxiliar() {
@@ -382,5 +503,65 @@ public class CobroventasController implements Serializable {
             formacobro = 0;
         }
 
+    }
+
+    public void calcularMontoacobrar() {
+        
+        if (factura.getTotalgeneral() > (factura.getSaldopendiente())) {
+            montoacobrar = factura.getSaldopendiente();
+            cobro.setMontocobrado(montoacobrar);
+        } else {
+            montoacobrar = (factura.getTotalgeneral() - detalleretencionivasp.getTotalivaretenido() - detalleretencionislrsp.getTotalislrretenido());
+            cobro.setMontocobrado(montoacobrar);
+        }
+    }
+    
+    public void calcularivaretenido() {
+        double ivatotal = factura.getIvafact();
+        double porcent = detalleretencionivasp.getIdtiporetencioniva().getPorcentajeiva();
+        ivaretenido = (ivatotal * porcent) / 100;
+        detalleretencionivasp.setTotalivaretenido(ivaretenido);
+        ivatotal = 0;
+        porcent = 0;
+    }
+    public void calcularislrretenido() {
+        int personal = 1;
+        int residenc = 3;
+        int tiposervicio = detalleretencionislrsp.getIdtiporetencionislr().getIdsubgrupo().getIdsubgrupo();
+        Tiporetencionislr tiporetencion = tiporetencionislrEJB.retencionislrFiltrada(personal, residenc, tiposervicio);
+        double bimponibletotal = factura.getBimponiblefact();
+        double porcentbimponible = tiporetencion.getPorcentajebimponible();
+        double porcentislr = tiporetencion.getPorcentajeretencion();
+        double sustraendo = tiporetencion.getSustraendo();
+        islrretenido = (((((porcentbimponible * bimponibletotal) / 100) * porcentislr) / 100) - sustraendo);
+        detalleretencionislrsp.setProcentajeretencion(porcentislr);
+        detalleretencionislrsp.setTotalislrretenido(islrretenido);
+        detalleretencionislrsp.setSustraendo(sustraendo);
+    }
+    
+    public void grabarRetencion() {
+        try {
+            if (detalleretencionivasp.getTotalivaretenido() >= 1) {
+                detalleretencionivasp.setNumerofact(factura);
+                detalleretencionivasp.setBimponible(factura.getBimponiblefact());
+                detalleretencionivasp.setTotalventa(factura.getTotalgeneral());
+                detalleretencionivasp.setTotalivaretenido(ivaretenido);
+                detalleretencionivaspEJB.create(detalleretencionivasp);
+            }
+            if (detallefactu.getCodigo().getIdgrupo().getIdgrupo() == 2) {
+                detalleretencionislrsp.setNumerofact(factura);
+                detalleretencionislrsp.setTotalventa(factura.getTotalgeneral());
+                detalleretencionislrsp.setBimponible(factura.getBimponiblefact());
+                detalleretencionislrefEJB.create(detalleretencionislrsp);
+            }
+            calcularMontoacobrar();
+            totalretenido=ivaretenido+islrretenido;
+            visualizar = 7;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Retencion fue Almacenada", ""));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Retencion", ""));
+        } finally {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        }
     }
 }

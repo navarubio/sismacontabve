@@ -35,4 +35,6 @@ public interface TiporetencionislrFacadeLocal {
     Tiporetencionislr retencionislrFiltrada(int persona, int residen, int subg);
     
     List<Tiporetencionislr> tiporetfiltradaPJyD(Personalidadjuridica persona, Residenciajuridica residencia);
+
+    List<Tiporetencionislr> tiporetfiltradaPJD(); 
 }

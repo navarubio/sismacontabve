@@ -73,5 +73,24 @@ public class TiporetencionislrFacade extends AbstractFacade<Tiporetencionislr> i
         }
         return lista;
     }
+    
+    @Override
+    public List<Tiporetencionislr> tiporetfiltradaPJD() {
+        String consulta;
+        int idpersonalidad = 1;
+        int idresidencia= 3;
+        List<Tiporetencionislr> lista = null;
+        try {
+            consulta = "From Tiporetencionislr t where t.idpersonalidad.idpersonalidad= ?1 and t.idresidencia.idresidencia= ?2 ";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, idpersonalidad);
+            query.setParameter(2, idresidencia);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+
 
 }

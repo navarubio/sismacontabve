@@ -4,6 +4,7 @@ import Modelo.Detalleretencionivasp;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.DetalleretencionivaspFacade;
+import Jpa.DetalleretencionivaspFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +25,7 @@ import javax.faces.convert.FacesConverter;
 public class DetalleretencionivaspController implements Serializable {
 
     @EJB
-    private Jpa.DetalleretencionivaspFacade ejbFacade;
+    private Jpa.DetalleretencionivaspFacadeLocal ejbFacade;
     private List<Detalleretencionivasp> items = null;
     private Detalleretencionivasp selected;
 
@@ -45,7 +46,7 @@ public class DetalleretencionivaspController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private DetalleretencionivaspFacade getFacade() {
+    private DetalleretencionivaspFacadeLocal getFacade() {
         return ejbFacade;
     }
 
