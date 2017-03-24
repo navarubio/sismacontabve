@@ -421,11 +421,12 @@ public class CobroventasController implements Serializable {
     }
 
     public void registrar() {
+        if (visualizar == 7 || visualizar == 6 || visualizar == 5) {        
         try {
             estatuscontab = estatuscontableEJB.estatusContablePorRegistrar();
             if (formacobro == 1) {
                 double saldo = 0;
-                cobro.setMontocobrado(factura.getSaldopendiente());
+                cobro.setMontocobrado(montoacobrar);
                 factura.setSaldopendiente(saldo);
                 int tipo = 1;
                 statusfactu = estatusfacturaventaEJB.estatusfacturaPagada(tipo);
@@ -445,12 +446,21 @@ public class CobroventasController implements Serializable {
             factura.setIdestatusfacturaventa(statusfactu);
             facturaEJB.edit(factura);
             //codCompra = compraEJB.ultimacompraInsertada();
+    
+            if (visualizar == 6) {
+                cobro.setMontoretenido(0.0);
+            } else if (visualizar == 7) {
+                    cobro.setMontoretenido((detalleretencionivasp.getTotalivaretenido()+detalleretencionislrsp.getTotalislrretenido()));
+                    cobro.setMontocobrado(montoacobrar);
+            } else if (visualizar == 5) {
+                    cobro.setMontoretenido(0.0);
+            }
 
             cobro.setNumerofact(factura);
             cobro.setIdestatuscontable(estatuscontab);
             cuentabancaria = cobro.getIdcuentabancaria();
             cobro.setMontopendiente(factura.getSaldopendiente());
-            cobroventaEJB.create(cobro);
+            cobroventaEJB.create(cobro);  
 
             int tipoconj = 1;
             tipoconjunto = tipoconjuntoEJB.cambiartipoConjunto(tipoconj);
@@ -488,9 +498,12 @@ public class CobroventasController implements Serializable {
             enviomail = new envioCorreo(correo, subject);
             enviomail.start();
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Cobro"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Cobro","Aviso"));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        }
+        }else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Debe efectuar la retención sobre el pago", "Aviso"));
         }
     }
 

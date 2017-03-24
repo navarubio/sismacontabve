@@ -75,7 +75,7 @@
                                     <p:outputLabel id="montop" value="#{cobroventasController.cobro.montocobrado}" styleClass="text-ouputfact" >
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </p:outputLabel>
-                                    
+
                                     <p:outputLabel value="Porción de Cobro" styleClass="text-ouput"/>
                                     <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
                                         <p:outputLabel for="console" value="" />
@@ -133,7 +133,8 @@
                     </p:panel>
                     <p:panel id="panelart"  >
                         <p:dataTable id="listado" value="#{cobroventasController.detallesfacturafiltrados}"
-                                     var="req" emptyMessage="No hay articulos para mostrar" >
+                                     var="req" emptyMessage="No hay articulos para mostrar" 
+                                     rowStyleClass="#{cobroventasController.visualizar== 6 || cobroventasController.visualizar== 7 ? 'facturaabonadaporcobrar' : null}">
                             <p:column style="width:8%"  headerText="Codigo Articulo">
                                 <h:outputText value="#{req.codigo.codigo}" />
                             </p:column>
@@ -169,7 +170,7 @@
                                                     rendered="#{cobroventasController.visualizar== 1 || cobroventasController.visualizar== 2 || cobroventasController.visualizar== 3 || cobroventasController.visualizar== 4? true:false}"/>  
                                 </p:commandLink>
                             </p:column>
-                            
+
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
@@ -179,7 +180,8 @@
                                 </p:row>
                             </p:columnGroup>       
                         </p:dataTable>                                                                            
-                        <p:commandButton value="Registrar" actionListener="#{cobroventasController.registrar()}" update=":msgs" action="/factura/List?faces-redirect=true"/>
+                        <p:commandButton value="Registrar" actionListener="#{cobroventasController.registrar()}" update=":msgs" action="/factura/List?faces-redirect=true"
+                                         rendered  ="#{cobroventasController.visualizar== 7 || cobroventasController.visualizar== 5 || pagosController.visualizar== 6? true:false}"/> 
                         <p:commandButton value="Cancelar" />
                     </p:panel>
                 </h:form>
@@ -227,7 +229,7 @@
                                 </p:panelGrid>
                             </p:fieldset>
                             <p:fieldset legend="Retencion I.S.L.R." rendered="#{cobroventasController.visualizar== 2 || cobroventasController.visualizar== 3 || cobroventasController.visualizar== 4 ? true:false}"> 
-                                 <p:panelGrid columns="2" styleClass="ui-custompanelgrid2" >
+                                <p:panelGrid columns="2" styleClass="ui-custompanelgrid2" >
                                     <p:outputLabel for="totalcompra" value="Total Factura" />
                                     <p:inputText id="totalcompra" value="#{cobroventasController.factura.totalgeneral}" style="text-align:right">
                                     </p:inputText>
@@ -240,7 +242,7 @@
                                         <p:ajax event="change" listener="#{cobroventasController.calcularislrretenido()}" update="islrretenido,sustraendo,display"/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                                         <f:selectItems value="#{cobroventasController.tiporetencionesfiltradasPD}"
-                                                     var="idtiporetencionItem"
+                                                       var="idtiporetencionItem"
                                                        itemLabel="#{idtiporetencionItem.descripcionservicio}"  itemValue="#{idtiporetencionItem}" /> 
                                     </p:selectOneMenu>
                                     <p:outputLabel for="porcentajeretislr"  value="Porcenta Retencion: " styleClass="optionalLbl"/>

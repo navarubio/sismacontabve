@@ -199,6 +199,14 @@
                                     <f:convertNumber type="currency" currencySymbol=" " />
                                 </h:outputText>
                             </p:column>
+                            <p:column style="text-align: right" width="80" >
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundlecobro.ListCobroventaTitle_montoretenido}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.montoretenido}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
                             <p:column style="text-align: right"  styleClass="facturaabonadaporcobrar" >
                                 <f:facet name="header">
                                     <h:outputText value="#{bundlecobro.ListCobroventaTitle_montopendiente}"/>

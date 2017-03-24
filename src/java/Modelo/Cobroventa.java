@@ -59,6 +59,8 @@ public class Cobroventa implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "montocobrado")
     private Double montocobrado;
+    @Column(name = "montoretenido")
+    private Double montoretenido;
     @Size(max = 15)
     @Column(name = "aprobacion")
     private String aprobacion;
@@ -176,6 +178,14 @@ public class Cobroventa implements Serializable {
 
     public void setObservacionescobro(String observacionescobro) {
         this.observacionescobro = observacionescobro;
+    }
+
+    public Double getMontoretenido() {
+        return montoretenido;
+    }
+
+    public void setMontoretenido(Double montoretenido) {
+        this.montoretenido = montoretenido;
     }
 
     @Override
