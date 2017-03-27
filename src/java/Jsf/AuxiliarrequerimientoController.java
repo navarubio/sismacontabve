@@ -25,7 +25,7 @@ import javax.faces.view.ViewScoped;
 import javax.servlet.ServletContext;
 
 @ManagedBean(name = "auxiliarrequerimientoController")
-@ViewScoped
+@SessionScoped
 public class AuxiliarrequerimientoController implements Serializable {
 
     @EJB
