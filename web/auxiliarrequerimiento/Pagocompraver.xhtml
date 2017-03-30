@@ -53,9 +53,9 @@
                                     <p:outputLabel for="numeroc" value="Compra" styleClass="optionalLbl"/>
                                     <p:outputLabel id="numeroc" value="CMP- #{pagosController.compra.idcompra}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="usua" value="Usuario" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="usua" value="#{pagosController.usuario.nombre}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="usua" value="#{pagosController.compra.idusuario.nombre}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="depto" value="Departamento" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="depto" value="#{pagosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="depto" value="#{pagosController.compra.idusuario.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="proveedor1" value="Proveedor" styleClass="optionalLbl"/>
                                     <p:outputLabel id="proveedor1" value="#{pagosController.compra.rifproveedor.razonsocial}"   /> 
                                     <p:outputLabel for="rif" value="R.I.F." styleClass="optionalLbl"/>

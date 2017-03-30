@@ -120,6 +120,7 @@ public class CobroventasController implements Serializable {
     private double islrretenido;
     private double montoacobrar;
     private double totalretenido;
+    private double montocobrado;
     private int tipocompra = 1;
     private List<Tiporetencionislr> tiporetencionesfiltradasPD = null;
 
@@ -297,6 +298,15 @@ public class CobroventasController implements Serializable {
         this.detalleretencionislrsp = detalleretencionislrsp;
     }
 
+    public double getMontocobrado() {
+        return montocobrado;
+    }
+
+    public void setMontocobrado(double montocobrado) {
+        this.montocobrado = montocobrado;
+    }
+    
+
     @PostConstruct
     public void init() {
         detallesfactura = detallefacturaEJB.findAll();
@@ -331,6 +341,7 @@ public class CobroventasController implements Serializable {
         double montoiva = factura.getIvafact();
         this.tipofactura = 1;
         this.totalretenido = 0;
+        this.montocobrado =0;
         this.ivaretenido = 0;
         this.islrretenido = 0;
         double totalfactu = factura.getTotalgeneral();
@@ -428,11 +439,10 @@ public class CobroventasController implements Serializable {
                 } else {
                     int tipo = 0;
                     double saldop = 0;
-                    if (cobro.getMontoretenido() != null) {
-                        saldop = (factura.getSaldopendiente() - (cobro.getMontocobrado() + cobro.getMontoretenido()));
-
+                    if (totalretenido>0) {
+                        saldop = ((factura.getSaldopendiente()-totalretenido) - montocobrado);
                     }else{
-                        saldop = factura.getSaldopendiente() - cobro.getMontocobrado();
+                        saldop = factura.getSaldopendiente() - montocobrado;
                     }
                     if (saldop < 1) {
                         tipo = 1;
@@ -453,6 +463,8 @@ public class CobroventasController implements Serializable {
                     cobro.setMontoretenido((detalleretencionivasp.getTotalivaretenido() + detalleretencionislrsp.getTotalislrretenido()));
                     if (formacobro == 1) {
                         cobro.setMontocobrado(montoacobrar);
+                    }else if (formacobro == 2){
+                        cobro.setMontocobrado(montocobrado);                        
                     }
                 } else if (visualizar == 5) {
                     cobro.setMontoretenido(0.0);
@@ -473,7 +485,7 @@ public class CobroventasController implements Serializable {
                 maestromovimientoEJB.create(maestromovi);
 
                 double saldoactualbanco = 0;
-                saldoactualbanco = cobro.getMontocobrado() + cobro.getIdcuentabancaria().getSaldo();
+                saldoactualbanco = montocobrado + cobro.getIdcuentabancaria().getSaldo();
                 cuentabancaria.setSaldo(saldoactualbanco);
                 cuentabancariaEJB.edit(cuentabancaria);
 
@@ -572,10 +584,11 @@ public class CobroventasController implements Serializable {
             }
             calcularMontoacobrar();
             totalretenido = ivaretenido + islrretenido;
+            montocobrado = montoacobrar;
             visualizar = 7;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Retencion fue Almacenada", ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Retencion fue Almacenada", "Su Retencion fue Almacenada"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Retencion", ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Retencion", "Error al Grabar Retencion"));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
