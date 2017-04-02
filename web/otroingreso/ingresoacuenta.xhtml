@@ -23,7 +23,7 @@
                     <img src="../resources/images/monedasbilletes.png" width="70" height="70" alt="Clientes" align="right" />
 
                     <p:panel id="panel1" header="INGRESOS A LAS CUENTAS BANCARIAS">
-                        <p:panelGrid columns="2">
+                        <p:panelGrid columns="1">
                             <p:fieldset styleClass="ui-custompanelgrid1" legend="Datos del Ingreso" >
                                 <p:panelGrid columns="4">
                                     <p:outputLabel for="usuario" value="USUARIO" style="font-weight:bold"  styleClass="optionalLbl"/>
@@ -46,59 +46,66 @@
 
                                     <p:outputLabel for="tipoingreso" value="Tipo Ingreso" styleClass="text-ouput"/>
                                     <p:selectOneMenu id="tipoingreso" value="#{otroingresoController.ingreso.idtipoingreso}" converter="omnifaces.SelectItemsConverter" > 
+                                        <p:ajax event="valueChange" 
+                                                update="contenedorLabel" listener="#{otroingresoController.selecciontipoingreso()}" 
+                                                process="@this">
+                                        </p:ajax>
                                         <!--f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/-->
                                         <f:selectItems value="#{tipoingresoController.items}"
                                                        var="idtpagoItem"
                                                        itemLabel="#{idtpagoItem.tipoingreso}"  itemValue="#{idtpagoItem}" /> 
                                     </p:selectOneMenu>
-                                    <p:outputLabel for="banco" value="Banco" style="text-align: right" styleClass="text-ouput"/>
-                                    <p:selectOneMenu id="banco" value="#{cobroventasController.banco}" converter="omnifaces.SelectItemsConverter"  >  
-                                        <p:ajax event="valueChange" listener="#{cobroventasController.refrescarCuentasBancarias()}" update="cuentabanco, saldocuenta"/>
+
+                                    <p:outputLabel for="banco" value="Banco Receptor" style="text-align: right" styleClass="text-ouput"/>
+                                    <p:selectOneMenu id="banco" value="#{otroingresoController.banco}" converter="omnifaces.SelectItemsConverter"  >  
+                                        <p:ajax event="valueChange" listener="#{otroingresoController.refrescarCuentasBancarias()}" update="cuentabanco, saldocuenta"/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
-                                        <f:selectItems value="#{cobroventasController.bancos}"
+                                        <f:selectItems value="#{otroingresoController.bancos}"
                                                        var="idbancoItem"
                                                        itemLabel="#{idbancoItem.nombrebanco}"  itemValue="#{idbancoItem}" /> 
                                     </p:selectOneMenu>
-                                    <p:outputLabel for="cuentabanco" style="text-align: right" value="Cuenta Bancaria" styleClass="text-ouput"/>
-                                    <p:selectOneMenu id="cuentabanco" value="#{cobroventasController.cobro.idcuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
+                                    <p:outputLabel for="cuentabanco" style="text-align: right" value="Cuenta Receptora" styleClass="text-ouput"/>
+                                    <p:selectOneMenu id="cuentabanco" value="#{otroingresoController.cobro.idcuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
                                         <p:ajax event="change" update="saldocuenta"/>                              
-                                        <f:selectItems value="#{cobroventasController.lstCuentasSelecc}"
+                                        <f:selectItems value="#{otroingresoController.lstCuentasSelecc}"
                                                        var="cuentaporbancoItem"
                                                        itemLabel="#{cuentaporbancoItem.numerocuenta}" itemValue="#{cuentaporbancoItem}"/>
                                     </p:selectOneMenu>
                                     <p:outputLabel for="saldocuenta" value="Saldo en Cuenta" styleClass="text-ouput"/>
-                                    <h:outputText id="saldocuenta" value="#{cobroventasController.cobro.idcuentabancaria.saldo}" styleClass="text-ouputsaldo">
+                                    <h:outputText id="saldocuenta" value="#{otroingresoController.cobro.idcuentabancaria.saldo}" styleClass="text-ouputsaldo">
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </h:outputText>
                                     <p:outputLabel for="observaciones" value="Observaciones" styleClass="text-ouput"/>
                                     <p:inputTextarea id="observaciones" value="#{otroingresoController.ingreso.observaciones}" rows="2" cols="30" required="true" /> 
                                 </p:panelGrid>                                
                             </p:fieldset>
-                            <p:panelGrid columns="2">
-                                <p:fieldset styleClass="ui-custompanelgrid2" legend="Datos del Traspaso" >
-                                    <p:panelGrid columns="4">
-                                        <p:outputLabel for="bancoemisor" value="Banco Emisor" style="text-align: right" styleClass="text-ouput"/>
-                                        <p:selectOneMenu id="bancoemisor" value="#{cobroventasController.banco}" converter="omnifaces.SelectItemsConverter"  >  
-                                            <p:ajax event="valueChange" listener="#{cobroventasController.refrescarCuentasBancarias()}" update="cuentabancoemisor, saldocuentaemisora"/>
-                                            <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
-                                            <f:selectItems value="#{cobroventasController.bancos}"
-                                                           var="idbancoItem"
-                                                           itemLabel="#{idbancoItem.nombrebanco}"  itemValue="#{idbancoItem}" /> 
-                                        </p:selectOneMenu>
-                                        <p:outputLabel for="cuentabancoemisor" style="text-align: right" value="Cuenta Emisora" styleClass="text-ouput"/>
-                                        <p:selectOneMenu id="cuentabancoemisor" value="#{cobroventasController.cobro.idcuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
-                                            <p:ajax event="change" update="saldocuentaemisora"/>                              
-                                            <f:selectItems value="#{cobroventasController.lstCuentasSelecc}"
-                                                           var="cuentaporbancoItem"
-                                                           itemLabel="#{cuentaporbancoItem.numerocuenta}" itemValue="#{cuentaporbancoItem}"/>
-                                        </p:selectOneMenu>
-                                        <p:outputLabel for="saldocuentaemisora" value="Saldo en Cuenta" styleClass="text-ouput"/>
-                                        <h:outputText id="saldocuentaemisora" value="#{cobroventasController.cobro.idcuentabancaria.saldo}" styleClass="text-ouputsaldo">
-                                            <f:convertNumber type="currency" currencySymbol=" " />
-                                        </h:outputText>
-                                    </p:panelGrid>
-                                </p:fieldset>
-                            </p:panelGrid>
+                            <h:panelGroup id="contenedorLabel">
+                                <p:panelGrid columns="2" rendered="#{otroingresoController.visual>= 1 ? true:false}" >
+                                    <p:fieldset styleClass="ui-custompanelgrid2" legend="Datos del Traspaso" > 
+                                        <p:panelGrid columns="4">
+                                            <p:outputLabel for="bancoemisor" value="Banco Emisor" style="text-align: right" styleClass="text-ouput"/>
+                                            <p:selectOneMenu id="bancoemisor" value="#{otroingresoController.bancoemisor}" converter="omnifaces.SelectItemsConverter"  >  
+                                                <p:ajax event="valueChange" listener="#{otroingresoController.refrescarCuentasBancariasemisoras()}" update="cuentabancoemisor, saldocuentaemisora"/>
+                                                <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
+                                                <f:selectItems value="#{otroingresoController.bancos}"
+                                                               var="idbancoItem"
+                                                               itemLabel="#{idbancoItem.nombrebanco}"  itemValue="#{idbancoItem}" /> 
+                                            </p:selectOneMenu>
+                                            <p:outputLabel for="cuentabancoemisor" style="text-align: right" value="Cuenta Emisora" styleClass="text-ouput"/>
+                                            <p:selectOneMenu id="cuentabancoemisor" value="#{otroingresoController.cobroauxiliar.idcuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
+                                                <p:ajax event="change" update="saldocuentaemisora"/>                              
+                                                <f:selectItems value="#{otroingresoController.lstCuentasSelecc}"
+                                                               var="cuentaporbancoItem"
+                                                               itemLabel="#{cuentaporbancoItem.numerocuenta}" itemValue="#{cuentaporbancoItem}"/>
+                                            </p:selectOneMenu>
+                                            <p:outputLabel for="saldocuentaemisora" value="Saldo en Cuenta" styleClass="text-ouput"/>
+                                            <h:outputText id="saldocuentaemisora" value="#{otroingresoController.cuentaemisora.saldo}" styleClass="text-ouputsaldo">
+                                                <f:convertNumber type="currency" currencySymbol=" " />
+                                            </h:outputText>
+                                        </p:panelGrid>
+                                    </p:fieldset>
+                                </p:panelGrid>
+                            </h:panelGroup>
                         </p:panelGrid>
                     </p:panel>
                     <p:panel id="panelart"  >

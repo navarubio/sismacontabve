@@ -4,6 +4,7 @@ import Modelo.Tipoingreso;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.TipoingresoFacade;
+import Jpa.TipoingresoFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +25,7 @@ import javax.faces.convert.FacesConverter;
 public class TipoingresoController implements Serializable {
 
     @EJB
-    private Jpa.TipoingresoFacade ejbFacade;
+    private Jpa.TipoingresoFacadeLocal ejbFacade;
     private List<Tipoingreso> items = null;
     private Tipoingreso selected;
 
@@ -45,7 +46,7 @@ public class TipoingresoController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private TipoingresoFacade getFacade() {
+    private TipoingresoFacadeLocal getFacade() {
         return ejbFacade;
     }
 

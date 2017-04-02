@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author sofimar
  */
 @Stateless
-public class TipoingresoFacade extends AbstractFacade<Tipoingreso> {
+public class TipoingresoFacade extends AbstractFacade<Tipoingreso> implements TipoingresoFacadeLocal{
     @PersistenceContext(unitName = "InpecaPU")
     private EntityManager em;
 
