@@ -20,6 +20,7 @@ import Jpa.EmpresaFacadeLocal;
 import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaFacadeLocal;
 import Jpa.MaestromovimientoFacadeLocal;
+import Jpa.MovimientobancarioFacadeLocal;
 import Jpa.PagocompraFacadeLocal;
 import Jpa.RequerimientoFacadeLocal;
 import Jpa.TipoconjuntoFacadeLocal;
@@ -39,6 +40,7 @@ import Modelo.Empresa;
 import Modelo.Estatuscontable;
 import Modelo.Estatusfactura;
 import Modelo.Maestromovimiento;
+import Modelo.Movimientobancario;
 import Modelo.Pagocompra;
 import Modelo.Requerimiento;
 import Modelo.Tipoconjunto;
@@ -106,6 +108,8 @@ public class PagosController implements Serializable {
     private MaestromovimientoFacadeLocal maestromovimientoEJB;
     @EJB
     private TipoconjuntoFacadeLocal tipoconjuntoEJB;
+    @EJB
+    private MovimientobancarioFacadeLocal movimientoBancarioEJB;
 
     private Auxiliarrequerimiento auxiliarrequerimiento;
     private Compra compra;
@@ -149,6 +153,8 @@ public class PagosController implements Serializable {
     private Detalleretencionivaef detalleretencionivaef;
     @Inject
     private Detalleretencionislref detalleretencionislref;
+    @Inject
+    private Movimientobancario movimientobancario;
     private double ivaretenido;
     private double islrretenido;
     private double montoapagar;
@@ -686,9 +692,20 @@ public class PagosController implements Serializable {
                 }
 
                 double saldoactualbanco = 0;
+                double saldoanteriorbanco = 0;
+                saldoanteriorbanco = pagocompra.getIdcuentabancaria().getSaldo();
                 saldoactualbanco = (pagocompra.getIdcuentabancaria().getSaldo() - pagocompra.getTotalpago());
                 cuentabanco.setSaldo(saldoactualbanco);
                 cuentabancariaEJB.edit(cuentabanco);
+                
+                movimientobancario.setFecha(pagocompra.getFechapago());
+                movimientobancario.setIdcuentabancaria(cuentabanco);
+                movimientobancario.setSaldoanterior(saldoanteriorbanco);
+                movimientobancario.setDebito(pagocompra.getTotalpago());
+                movimientobancario.setSaldoactual(saldoactualbanco);
+                movimientobancario.setIdpagocompra(pagocompra);
+                movimientoBancarioEJB.create(movimientobancario);
+                
                 String subject;
                 String fechapag = formateador.format(pagocompra.getFechapago());
                 correo = "COMPRA NRO: " + compra.getIdcompra()

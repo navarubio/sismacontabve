@@ -22,7 +22,7 @@
                 <img src="../resources/images/monedasbilletes.png" width="70" height="70" alt="Comprobantes" align="right" />
 
                 <p:panel header="#{bundleingreso.ListOtroingresoTitle}">
-                    <p:dataTable id="datalist" value="#{otroingresoController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{otroingresoController.items}" var="item" widgetVar="otrosingre"
                                  selectionMode="single" selection="#{otroingresoController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idotroingreso}"
@@ -59,9 +59,12 @@
                             </f:facet>
                             <h:outputText value="#{item.idcuentabancaria.idbanco.nombrebanco}"/>
                         </p:column>
-                        <p:column width="200" style="text-align: center">
-                            <f:facet name="header">
-                                <h:outputText value="#{bundleingreso.ListOtroingresoTitle_idcuentabancaria}"/>
+                        <p:column width="200" filterBy="#{item.idcuentabancaria.numerocuenta}" headerText="#{bundleingreso.ListOtroingresoTitle_idcuentabancaria}" filterMatchMode="exact" style="text-align: center">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('otrosingre').filter()" >
+                                    <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{cuentabancariaController.items}" />
+                                </p:selectOneMenu>
                             </f:facet>
                             <h:outputText value="#{item.idcuentabancaria.numerocuenta}"/>
                         </p:column>

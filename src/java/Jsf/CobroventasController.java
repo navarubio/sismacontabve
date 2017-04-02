@@ -16,6 +16,7 @@ import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaventaFacadeLocal;
 import Jpa.FacturaFacadeLocal;
 import Jpa.MaestromovimientoFacadeLocal;
+import Jpa.MovimientobancarioFacadeLocal;
 import Jpa.TipoconjuntoFacadeLocal;
 import Jpa.TipopagoFacadeLocal;
 import Jpa.TiporetencionislrFacadeLocal;
@@ -29,6 +30,7 @@ import Modelo.Estatuscontable;
 import Modelo.Estatusfacturaventa;
 import Modelo.Factura;
 import Modelo.Maestromovimiento;
+import Modelo.Movimientobancario;
 import Modelo.Tipoconjunto;
 import Modelo.Tipopago;
 import Modelo.Tiporetencionislr;
@@ -83,6 +85,8 @@ public class CobroventasController implements Serializable {
     private DetalleretencionivaspFacadeLocal detalleretencionivaspEJB;
     @EJB
     private DetalleretencionislrspFacadeLocal detalleretencionislrefEJB;
+    @EJB
+    private MovimientobancarioFacadeLocal movimientoBancarioEJB;
 
     private Factura factura;
     private int numeroFact = 0;
@@ -126,6 +130,8 @@ public class CobroventasController implements Serializable {
 
     @Inject
     private Maestromovimiento maestromovi;
+    @Inject
+    private Movimientobancario movimientobancario;
     @Inject
     private Detallefactura detallefactu;
     @Inject
@@ -341,7 +347,7 @@ public class CobroventasController implements Serializable {
         double montoiva = factura.getIvafact();
         this.tipofactura = 1;
         this.totalretenido = 0;
-        this.montocobrado =0;
+        this.montocobrado =factura.getSaldopendiente();
         this.ivaretenido = 0;
         this.islrretenido = 0;
         double totalfactu = factura.getTotalgeneral();
@@ -459,7 +465,8 @@ public class CobroventasController implements Serializable {
 
                 if (visualizar == 6) {
                     cobro.setMontoretenido(0.0);
-                } else if (visualizar == 7) {
+                    cobro.setMontocobrado(montocobrado);
+                }else if (visualizar == 7) {
                     cobro.setMontoretenido((detalleretencionivasp.getTotalivaretenido() + detalleretencionislrsp.getTotalislrretenido()));
                     if (formacobro == 1) {
                         cobro.setMontocobrado(montoacobrar);
@@ -485,9 +492,18 @@ public class CobroventasController implements Serializable {
                 maestromovimientoEJB.create(maestromovi);
 
                 double saldoactualbanco = 0;
+                double saldoanteriorbanco = 0;
+                saldoanteriorbanco = cobro.getIdcuentabancaria().getSaldo();
                 saldoactualbanco = montocobrado + cobro.getIdcuentabancaria().getSaldo();
                 cuentabancaria.setSaldo(saldoactualbanco);
                 cuentabancariaEJB.edit(cuentabancaria);
+                
+                movimientobancario.setFecha(cobro.getFechacobro());
+                movimientobancario.setIdcuentabancaria(cuentabancaria);
+                movimientobancario.setSaldoanterior(saldoanteriorbanco);
+                movimientobancario.setCredito(cobro.getMontocobrado());
+                movimientobancario.setSaldoactual(saldoactualbanco);
+                movimientoBancarioEJB.create(movimientobancario);
 
                 if (factura.getSaldopendiente() < 1) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cobro fue Almacenado"));

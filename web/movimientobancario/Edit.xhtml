@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MovimientobancarioEditDlg" widgetVar="MovimientobancarioEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlebancario.EditMovimientobancarioTitle}">
+            <h:form id="MovimientobancarioEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{movimientobancarioController.selected != null}">
+                        <p:outputLabel value="#{bundlebancario.EditMovimientobancarioLabel_idmovimiento}" for="idmovimiento" />
+                        <p:inputText id="idmovimiento" value="#{movimientobancarioController.selected.idmovimiento}" title="#{bundlebancario.EditMovimientobancarioTitle_idmovimiento}" required="true" requiredMessage="#{bundlebancario.EditMovimientobancarioRequiredMessage_idmovimiento}"/>
+                        <p:outputLabel value="#{bundlebancario.EditMovimientobancarioLabel_idcuentabancaria}" for="idcuentabancaria" />
+                        <p:inputText id="idcuentabancaria" value="#{movimientobancarioController.selected.idcuentabancaria}" title="#{bundlebancario.EditMovimientobancarioTitle_idcuentabancaria}" />
+                        <p:outputLabel value="#{bundlebancario.EditMovimientobancarioLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{movimientobancarioController.selected.fecha}" title="#{bundlebancario.EditMovimientobancarioTitle_fecha}"  showOn="button"/>
+                        <p:outputLabel value="#{bundlebancario.EditMovimientobancarioLabel_saldoanterior}" for="saldoanterior" />
+                        <p:inputText id="saldoanterior" value="#{movimientobancarioController.selected.saldoanterior}" title="#{bundlebancario.EditMovimientobancarioTitle_saldoanterior}" />
+                        <p:outputLabel value="#{bundlebancario.EditMovimientobancarioLabel_debito}" for="debito" />
+                        <p:inputText id="debito" value="#{movimientobancarioController.selected.debito}" title="#{bundlebancario.EditMovimientobancarioTitle_debito}" />
+                        <p:outputLabel value="#{bundlebancario.EditMovimientobancarioLabel_credito}" for="credito" />
+                        <p:inputText id="credito" value="#{movimientobancarioController.selected.credito}" title="#{bundlebancario.EditMovimientobancarioTitle_credito}" />
+                        <p:outputLabel value="#{bundlebancario.EditMovimientobancarioLabel_saldoactual}" for="saldoactual" />
+                        <p:inputText id="saldoactual" value="#{movimientobancarioController.selected.saldoactual}" title="#{bundlebancario.EditMovimientobancarioTitle_saldoactual}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{movimientobancarioController.update}" value="#{bundlebancario.Save}" update="display,:MovimientobancarioListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MovimientobancarioEditDialog');"/>
+                    <p:commandButton value="#{bundlebancario.Cancel}" onclick="MovimientobancarioEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

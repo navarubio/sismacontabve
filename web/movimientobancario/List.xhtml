@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle}"></h:outputText>
+            <h:outputStylesheet library="css" name="index.css" />  
+
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="MovimientobancarioListForm">
+                <div id="imag2">
+                    <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
+                </div>     
+                <img src="../resources/images/sharemanager.png" width="70" height="70" alt="Movimientos" align="right" />
+
+                <p:panel header="#{bundlebancario.ListMovimientobancarioTitle}">
+                    <p:dataTable id="datalist" value="#{movimientobancarioController.items}" var="item" widgetVar="movimientosencta"
+                                 selectionMode="single" selection="#{movimientobancarioController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idmovimiento}"
+                                 rows="20"
+                                 rowsPerPageTemplate="20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_idmovimiento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idmovimiento}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_banco}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idcuentabancaria.idbanco.nombrebanco}"/>
+                        </p:column>
+                        <p:column width="200" filterBy="#{item.idcuentabancaria.numerocuenta}" headerText="#{bundlebancario.ListMovimientobancarioTitle_idcuentabancaria}" filterMatchMode="exact" style="text-align: center">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('movimientosencta').filter()" >
+                                    <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{cuentabancariaController.items}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{item.idcuentabancaria.numerocuenta}" />
+                        </p:column>                        
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_fecha}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_saldoanterior}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.saldoanterior}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_debito}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.debito}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_credito}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.credito}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_saldoactual}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.saldoactual}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlebancario.Create}" actionListener="#{movimientobancarioController.prepareCreate}" update=":MovimientobancarioCreateForm" oncomplete="PF('MovimientobancarioCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlebancario.View}" update=":MovimientobancarioViewForm" oncomplete="PF('MovimientobancarioViewDialog').show()" disabled="#{empty movimientobancarioController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundlebancario.Edit}" update=":MovimientobancarioEditForm" oncomplete="PF('MovimientobancarioEditDialog').show()" disabled="#{empty movimientobancarioController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundlebancario.Delete}" actionListener="#{movimientobancarioController.destroy}" update=":growl,datalist" disabled="#{empty movimientobancarioController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

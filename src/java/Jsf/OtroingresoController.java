@@ -3,6 +3,7 @@ package Jsf;
 import Jpa.CuentabancariaFacadeLocal;
 import Jpa.EstatuscontableFacadeLocal;
 import Jpa.MaestromovimientoFacadeLocal;
+import Jpa.MovimientobancarioFacadeLocal;
 import Modelo.Otroingreso;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
@@ -11,6 +12,7 @@ import Jpa.OtroingresoFacadeLocal;
 import Jpa.TipoconjuntoFacadeLocal;
 import Modelo.Cuentabancaria;
 import Modelo.Maestromovimiento;
+import Modelo.Movimientobancario;
 import Modelo.Tipoconjunto;
 import Modelo.Usuario;
 
@@ -47,6 +49,9 @@ public class OtroingresoController implements Serializable {
     private TipoconjuntoFacadeLocal tipoconjuntoEJB;
     @EJB
     private EstatuscontableFacadeLocal estatuscontableEJB;
+    @EJB
+    private MovimientobancarioFacadeLocal movimientoBancarioEJB;
+
     private List<Otroingreso> items = null;
     private Otroingreso selected;
     private Cuentabancaria cuentabancaria;
@@ -59,6 +64,8 @@ public class OtroingresoController implements Serializable {
     
     @Inject
     private Maestromovimiento maestromovi;
+    @Inject
+    private Movimientobancario movimientobancario;
 
     public OtroingresoController() {
     }
@@ -230,7 +237,10 @@ public class OtroingresoController implements Serializable {
             usa = requer.getUsuario();
             ingreso.setIdusuario(usa);
             double saldoactualbanco = 0;
+            double saldoanteriorbanco = 0;
+            saldoanteriorbanco = ingreso.getIdcuentabancaria().getSaldo();            
             saldoactualbanco = montoingreso + cuentabancaria.getSaldo();
+            
             cuentabancaria.setSaldo(saldoactualbanco);
             ingreso.setMontoingresado(montoingreso);
             ejbFacade.create(ingreso);
@@ -243,6 +253,14 @@ public class OtroingresoController implements Serializable {
             maestromovi.setIdtipoconjunto(tipoconjunto);
             maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
             maestromovimientoEJB.create(maestromovi);
+            
+            movimientobancario.setFecha(ingreso.getFechaingreso());
+            movimientobancario.setIdcuentabancaria(cuentabancaria);
+            movimientobancario.setSaldoanterior(saldoanteriorbanco);
+            movimientobancario.setCredito(ingreso.getMontoingresado());
+            movimientobancario.setSaldoactual(saldoactualbanco);
+            movimientobancario.setIdotroingreso(ingreso);
+            movimientoBancarioEJB.create(movimientobancario);
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Ingreso fue Almacenado", "Su Ingreso fue Almacenado"));
         } catch (Exception e) {
