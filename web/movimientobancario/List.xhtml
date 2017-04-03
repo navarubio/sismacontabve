@@ -40,12 +40,17 @@
                             </f:facet>
                             <h:outputText value="#{item.idmovimiento}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_banco}"/>
+                        <p:column width="150" filterBy="#{item.idcuentabancaria.idbanco.nombrebanco}" headerText="#{bundlebancario.ListMovimientobancarioTitle_banco}" filterMatchMode="exact" style="text-align: center">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('movimientosencta').filter()" >
+                                    <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{bancoController.items}" />
+                                </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="#{item.idcuentabancaria.idbanco.nombrebanco}"/>
+                            <h:outputText value="#{item.idcuentabancaria.idbanco.nombrebanco}" />
                         </p:column>
+
+                        
                         <p:column width="200" filterBy="#{item.idcuentabancaria.numerocuenta}" headerText="#{bundlebancario.ListMovimientobancarioTitle_idcuentabancaria}" filterMatchMode="exact" style="text-align: center">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('movimientosencta').filter()" >

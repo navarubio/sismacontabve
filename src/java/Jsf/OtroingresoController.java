@@ -60,7 +60,7 @@ public class OtroingresoController implements Serializable {
     private List<Otroingreso> items = null;
     private Otroingreso selected;
     private Cuentabancaria cuentabancaria;
-    private Cuentabancaria cuentaemisora=null;
+    private Cuentabancaria cuentaemisora = null;
     private double montoingreso;
     private Otroingreso ingreso = new Otroingreso();
     private Date fechaactual = new Date();
@@ -83,7 +83,6 @@ public class OtroingresoController implements Serializable {
     @Inject
     private Cobroventa cobroauxiliar;
 
-    
     public OtroingresoController() {
     }
 
@@ -185,14 +184,23 @@ public class OtroingresoController implements Serializable {
         this.visual = visual;
     }
 
+    public List<Cuentabancaria> getLstCuentasSeleccemisor() {
+        return lstCuentasSeleccemisor;
+    }
+
+    public void setLstCuentasSeleccemisor(List<Cuentabancaria> lstCuentasSeleccemisor) {
+        this.lstCuentasSeleccemisor = lstCuentasSeleccemisor;
+    }
+
     @PostConstruct
     public void init() {
-        ingreso=new Otroingreso();
-        cuentabancaria=null;
-        cuentaemisora=null;
+        visual = 3;
+        ingreso = new Otroingreso();
+        cuentabancaria = null;
+        cuentaemisora = null;
         ingreso.setFechaingreso(fechaactual);
         bancos = bancoEJB.findAll();
-        
+
     }
 
     public Otroingreso prepareCreate() {
@@ -318,7 +326,7 @@ public class OtroingresoController implements Serializable {
     public void registrar() {
         try {
             cuentabancaria = cobro.getIdcuentabancaria();
-            
+
             ingreso.setIdcuentabancaria(cuentabancaria);
             usa = requer.getUsuario();
             ingreso.setIdusuario(usa);
@@ -390,19 +398,19 @@ public class OtroingresoController implements Serializable {
 
     public List<Cuentabancaria> refrescarCuentasBancarias() {
         try {
-                lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco());            
+            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco());
         } catch (Exception e) {
         }
         cobro.setIdcuentabancaria(lstCuentasSelecc.get(0));
         return lstCuentasSelecc;
     }
 
-        public List<Cuentabancaria> refrescarCuentasBancariasemisoras() {
+    public List<Cuentabancaria> refrescarCuentasBancariasemisoras() {
         try {
-                lstCuentasSeleccemisor = cuentabancariaEJB.espxBanco(bancoemisor.getIdbanco());            
+            lstCuentasSeleccemisor = cuentabancariaEJB.espxBanco(bancoemisor.getIdbanco());
         } catch (Exception e) {
         }
-        cuentaemisora=(lstCuentasSeleccemisor.get(0));
+        cuentaemisora = (lstCuentasSeleccemisor.get(0));
         return lstCuentasSeleccemisor;
     }
 

@@ -312,5 +312,19 @@ public class CompraController implements Serializable {
         rArticulo.getOrdendeCompra(ruta, codigocompra);
         FacesContext.getCurrentInstance().responseComplete();
     }
+    
+    public void verOrdendeCompralista(Compra compra) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        //Instancia hacia la clase reporteClientes        
+        reporteArticulo rArticulo = new reporteArticulo();
+
+        int codigocompra = compra.getIdcompra();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("/resources/reportes/ordendecompra.jasper");
+
+        rArticulo.getOrdendeCompra(ruta, codigocompra);
+        FacesContext.getCurrentInstance().responseComplete();
+    }
 
 }
