@@ -20,6 +20,7 @@ import Modelo.Tipoconjunto;
 import Modelo.Usuario;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -37,6 +38,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 
 @Named("otroingresoController")
 @ViewScoped
@@ -344,6 +346,7 @@ public class OtroingresoController implements Serializable {
             }
 
             cuentabancaria.setSaldo(saldoactualbanco);
+            
             ingreso.setMontoingresado(montoingreso);
             ejbFacade.create(ingreso);
             cuentabancariaEJB.edit(cuentabancaria);
@@ -412,6 +415,20 @@ public class OtroingresoController implements Serializable {
         }
         cuentaemisora = (lstCuentasSeleccemisor.get(0));
         return lstCuentasSeleccemisor;
+    }
+    
+        public void verOrdendePago(Otroingreso item) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        //Instancia hacia la clase reporteClientes        
+        reporteArticulo rArticulo = new reporteArticulo();
+
+        int codigootroingreso = item.getIdotroingreso();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("/resources/reportes/comprobanteingreso.jasper");
+
+        rArticulo.getComprobanteIngreso(ruta, codigootroingreso);
+        FacesContext.getCurrentInstance().responseComplete();
     }
 
 }

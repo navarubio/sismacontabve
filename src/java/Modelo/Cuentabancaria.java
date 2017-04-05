@@ -40,6 +40,9 @@ public class Cuentabancaria implements Serializable {
     private Collection<Otroingreso> otroingresoCollection;
     @OneToMany(mappedBy = "idcuentabancaria")
     private Collection<Cobroventa> cobroventaCollection;
+    @OneToMany(mappedBy = "idcuentaemisora")
+    private Collection<Otroingreso> cuentaemisoraCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -159,4 +162,14 @@ public class Cuentabancaria implements Serializable {
     public void setOtroingresoCollection(Collection<Otroingreso> otroingresoCollection) {
         this.otroingresoCollection = otroingresoCollection;
     }
+    
+    @XmlTransient
+    public Collection<Otroingreso> getCuentaemisoraCollection() {
+        return cuentaemisoraCollection;
+    }
+
+    public void setCuentaemisoraCollection(Collection<Otroingreso> cuentaemisoraCollection) {
+        this.cuentaemisoraCollection = cuentaemisoraCollection;
+    }
+
 }

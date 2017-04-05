@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7c84cd74-2f43-40af-a87d-8979663c88b5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="d25f7c34-6c1f-4180-af27-5c4c9d5da8a0"/>
+	<parameter name="numeroingreso" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     otroingreso.`idotroingreso` AS otroingreso_idotroingreso,
+     otroingreso.`idusuario` AS otroingreso_idusuario,
+     otroingreso.`idtipopago` AS otroingreso_idtipopago,
+     otroingreso.`idtipoingreso` AS otroingreso_idtipoingreso,
+     otroingreso.`idcuentabancaria` AS otroingreso_idcuentabancaria,
+     otroingreso.`idcuentaemisora` AS otroingreso_idcuentaemisora,
+     otroingreso.`montoingresado` AS otroingreso_montoingresado,
+     otroingreso.`fechaingreso` AS otroingreso_fechaingreso,
+     otroingreso.`observaciones` AS otroingreso_observaciones,
+     tipopago.`idtipopago` AS tipopago_idtipopago,
+     tipopago.`tipopago` AS tipopago_tipopago,
+     tipoingreso.`idtipoingreso` AS tipoingreso_idtipoingreso,
+     tipoingreso.`tipoingreso` AS tipoingreso_tipoingreso,
+     banco.`idbanco` AS banco_idbanco,
+     banco.`nombrebanco` AS banco_nombrebanco,
+     banco.`telefonos` AS banco_telefonos,
+     cuentabancaria.`idcuentabancaria` AS cuentabancaria_idcuentabancaria,
+     cuentabancaria.`idbanco` AS cuentabancaria_idbanco,
+     cuentabancaria.`numerocuenta` AS cuentabancaria_numerocuenta,
+     cuentabancaria.`saldo` AS cuentabancaria_saldo,
+     cuentabancaria.`idplandecuenta` AS cuentabancaria_idplandecuenta,
+     movimientobancario.`idmovimiento` AS movimientobancario_idmovimiento,
+     movimientobancario.`idcuentabancaria` AS movimientobancario_idcuentabancaria,
+     movimientobancario.`fecha` AS movimientobancario_fecha,
+     movimientobancario.`saldoanterior` AS movimientobancario_saldoanterior,
+     movimientobancario.`debito` AS movimientobancario_debito,
+     movimientobancario.`idpagocompra` AS movimientobancario_idpagocompra,
+     movimientobancario.`credito` AS movimientobancario_credito,
+     movimientobancario.`idcobroventa` AS movimientobancario_idcobroventa,
+     movimientobancario.`idotroingreso` AS movimientobancario_idotroingreso,
+     movimientobancario.`saldoactual` AS movimientobancario_saldoactual
+FROM
+     `tipopago` tipopago INNER JOIN `otroingreso` otroingreso ON tipopago.`idtipopago` = otroingreso.`idtipopago`
+     INNER JOIN `tipoingreso` tipoingreso ON otroingreso.`idtipoingreso` = tipoingreso.`idtipoingreso`
+     INNER JOIN `cuentabancaria` cuentabancaria ON otroingreso.`idcuentabancaria` = cuentabancaria.`idcuentabancaria`
+     INNER JOIN `movimientobancario` movimientobancario ON otroingreso.`idotroingreso` = movimientobancario.`idotroingreso`
+     INNER JOIN `banco` banco ON cuentabancaria.`idbanco` = banco.`idbanco`
+WHERE
+     otroingreso.`idotroingreso` = $P{numeroingreso}]]>
+	</queryString>
+	<field name="otroingreso_idotroingreso" class="java.lang.Integer"/>
+	<field name="otroingreso_idusuario" class="java.lang.Integer"/>
+	<field name="otroingreso_idtipopago" class="java.lang.Integer"/>
+	<field name="otroingreso_idtipoingreso" class="java.lang.Integer"/>
+	<field name="otroingreso_idcuentabancaria" class="java.lang.Integer"/>
+	<field name="otroingreso_idcuentaemisora" class="java.lang.Integer"/>
+	<field name="otroingreso_montoingresado" class="java.lang.Double"/>
+	<field name="otroingreso_fechaingreso" class="java.sql.Date"/>
+	<field name="otroingreso_observaciones" class="java.lang.String"/>
+	<field name="tipopago_idtipopago" class="java.lang.Integer"/>
+	<field name="tipopago_tipopago" class="java.lang.String"/>
+	<field name="tipoingreso_idtipoingreso" class="java.lang.Integer"/>
+	<field name="tipoingreso_tipoingreso" class="java.lang.String"/>
+	<field name="banco_idbanco" class="java.lang.Integer"/>
+	<field name="banco_nombrebanco" class="java.lang.String"/>
+	<field name="banco_telefonos" class="java.lang.String"/>
+	<field name="cuentabancaria_idcuentabancaria" class="java.lang.Integer"/>
+	<field name="cuentabancaria_idbanco" class="java.lang.Integer"/>
+	<field name="cuentabancaria_numerocuenta" class="java.lang.String"/>
+	<field name="cuentabancaria_saldo" class="java.lang.Double"/>
+	<field name="cuentabancaria_idplandecuenta" class="java.lang.Integer"/>
+	<field name="movimientobancario_idmovimiento" class="java.lang.Integer"/>
+	<field name="movimientobancario_idcuentabancaria" class="java.lang.Integer"/>
+	<field name="movimientobancario_fecha" class="java.sql.Date"/>
+	<field name="movimientobancario_saldoanterior" class="java.lang.Double"/>
+	<field name="movimientobancario_debito" class="java.lang.Double"/>
+	<field name="movimientobancario_idpagocompra" class="java.lang.Integer"/>
+	<field name="movimientobancario_credito" class="java.lang.Double"/>
+	<field name="movimientobancario_idcobroventa" class="java.lang.Integer"/>
+	<field name="movimientobancario_idotroingreso" class="java.lang.Integer"/>
+	<field name="movimientobancario_saldoactual" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="326" splitType="Stretch">
+			<staticText>
+				<reportElement x="349" y="0" width="223" height="22" uuid="82809471-e4a2-4bfa-8862-79c66df7252c"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPROBANTE DE INGRESO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="448" y="48" width="50" height="14" uuid="ed2b7264-5f8b-4b83-a356-5b0cfa072fbe"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="22" width="100" height="12" uuid="ac2ba78b-9f00-46d0-9a67-f8e2afeb34ee"/>
+				<textElement>
+					<font size="9" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[RIF J-26720565-9]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="34" width="251" height="42" uuid="eb21a66f-5b54-444a-acea-846a55d00e1b"/>
+				<textElement textAlignment="Justified">
+					<font size="9" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[AV. 3H Entre calles 78 y 79 Residencias Republica PB Local 01 Maracaibo Estado Zulia. Telefono  0261-7934104 correo inpeca7@gmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="0" width="235" height="22" uuid="26605f85-cb9e-4b6c-bc94-7bee9177a6d8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INVERSIONES PEDREAÑEZ, C.A.]]></text>
+			</staticText>
+			<image>
+				<reportElement x="-1" y="10" width="131" height="76" uuid="e0ae1978-eb44-4a7d-8161-89ab7ff9a4ee"/>
+				<imageExpression><![CDATA["D:\\APLICACIONES JAVA SE - EE\\SistemaINPECA\\Inpeca\\web\\resources\\images\\LogoInpeca.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="97" width="573" height="21" uuid="8f15c02a-57b2-4a7c-bd41-565f96cf3d35"/>
+				<textElement textAlignment="Justified">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[COMPROBANTE DE MOVIMIENTO DE OTROS INGRESO A LAS CUENTAS BANCARIAS DE LA ENTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="448" y="34" width="50" height="14" uuid="65c4ba48-47e2-4614-8ed6-5a18b5394823"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NUMERO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="156" width="82" height="14" uuid="9cc416c8-6e23-4e85-8116-2e0cd9c1c48b"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMA DE PAGO :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="184" width="82" height="14" uuid="3c66ee6b-0607-4e7e-90d9-92733aa30e82"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BANCO :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="198" width="82" height="14" uuid="c284d5d1-6bea-4b5c-b1ba-8996686e25d1"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CUENTA EMISORA :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="132" width="211" height="20" uuid="44761f58-1b06-4695-a05d-21673c49d80d"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CUENTA RECEPTORA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="291" width="93" height="14" uuid="13c3b469-ce41-46f6-8cc3-ad2822a054e1"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDO ANTERIOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="291" width="71" height="14" uuid="5335a372-2f0a-4f40-aab5-95a0a1525e62"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MONTO INGRESO :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="291" width="120" height="14" uuid="828f1399-4cb0-439c-8967-5a5b6470e880"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDO ACTUALIZADO: ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="305" width="538" height="1" uuid="f2938ad5-3153-4d8b-9f27-9ff4445a6761"/>
+			</line>
+			<staticText>
+				<reportElement x="-3" y="169" width="82" height="14" uuid="3033ea2e-06ec-45a1-ae2a-94c5f6a45964"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO INGRESO :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="498" y="34" width="74" height="14" uuid="d12624be-ccdd-4027-ad19-ca227c933f54"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{otroingreso_idotroingreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="87" y="169" width="190" height="14" uuid="211c67db-230e-4a1f-afde-efcd75886cc3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoingreso_tipoingreso}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="498" y="48" width="74" height="14" uuid="6e1362a8-d2e8-4f1f-87a2-2dd83407327e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{otroingreso_fechaingreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="87" y="183" width="190" height="15" uuid="9f93f246-e8e6-40ad-96db-d18336748bae"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{banco_nombrebanco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="87" y="198" width="190" height="14" uuid="4814c8bf-61bb-421e-a327-9443b1e0334f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cuentabancaria_numerocuenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="87" y="156" width="190" height="13" uuid="a9e1259a-c2ac-4ae8-9e15-2b35e27e958e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipopago_tipopago}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="135" y="306" width="99" height="20" uuid="62d4ca86-2cc1-48e7-b153-48c2bfcb24ac"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{movimientobancario_saldoanterior}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="265" y="306" width="83" height="20" uuid="6bbeccdb-e5fe-47eb-887d-96568ec0fb03"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{movimientobancario_credito}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="415" y="306" width="100" height="20" uuid="71a1b158-f49b-489d-a17c-1077f5a2027d"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{movimientobancario_saldoactual}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="186" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="-1" y="12" width="573" height="66" uuid="94beda27-8fb9-4eae-96e9-0d900d0557c8"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="4" y="36" width="84" height="15" uuid="ffcc7ce8-6df5-4f65-8eff-db6acf81f1aa"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBERVACIONES:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="360" y="12" width="1" height="66" uuid="6c0e3f19-979b-421f-92e5-21ebadf64d4e"/>
+			</line>
+			<staticText>
+				<reportElement x="365" y="36" width="90" height="15" uuid="171f72ae-3da9-43af-b0d3-469f7063511a"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL INGRESO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="467" y="177" width="100" height="9" uuid="659daac8-e428-406a-9f0d-4e703ba60935"/>
+				<textElement textAlignment="Center">
+					<font fontName="Poor Richard" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISMACONTAB WEB ]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="5" y="177" width="100" height="9" uuid="399c6ae1-3fe7-43a9-b1c6-0d69cf5d3d73"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="117" y="135" width="88" height="25" uuid="1fa63252-9195-420d-911e-60c20f265553"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROCESADO POR: ADMINISTRACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="265" y="135" width="88" height="25" uuid="0b037a00-d7c4-427a-b827-e75332c6b27b"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REVISADO POR: CONTABILDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="416" y="135" width="88" height="25" uuid="a76d2f5e-012c-48f7-b2d0-7a554ff64267"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EN CUENTA: GERENCIA GENERAL]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="88" y="31" width="262" height="33" uuid="8a57629c-b2bd-4f51-b8a8-279f24c3a9e9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{otroingreso_observaciones}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="467" y="31" width="89" height="20" uuid="4f6f433f-aa5a-474d-ae9f-78b6fa6d4e57"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{otroingreso_montoingresado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
