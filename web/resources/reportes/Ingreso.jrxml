@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0937f91b-6d16-4631-9511-077cc8c9a3f6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     cuentabancaria.`idcuentabancaria` AS cuentabancaria_idcuentabancaria,
+     cuentabancaria.`idbanco` AS cuentabancaria_idbanco,
+     cuentabancaria.`numerocuenta` AS cuentabancaria_numerocuenta,
+     cuentabancaria.`saldo` AS cuentabancaria_saldo,
+     cuentabancaria.`idplandecuenta` AS cuentabancaria_idplandecuenta,
+     movimientobancario.`idmovimiento` AS movimientobancario_idmovimiento,
+     movimientobancario.`idcuentabancaria` AS movimientobancario_idcuentabancaria,
+     movimientobancario.`fecha` AS movimientobancario_fecha,
+     movimientobancario.`saldoanterior` AS movimientobancario_saldoanterior,
+     movimientobancario.`debito` AS movimientobancario_debito,
+     movimientobancario.`idpagocompra` AS movimientobancario_idpagocompra,
+     movimientobancario.`credito` AS movimientobancario_credito,
+     movimientobancario.`idcobroventa` AS movimientobancario_idcobroventa,
+     movimientobancario.`idotroingreso` AS movimientobancario_idotroingreso,
+     movimientobancario.`saldoactual` AS movimientobancario_saldoactual,
+     otroingreso.`idotroingreso` AS otroingreso_idotroingreso,
+     otroingreso.`idusuario` AS otroingreso_idusuario,
+     otroingreso.`idtipopago` AS otroingreso_idtipopago,
+     otroingreso.`idtipoingreso` AS otroingreso_idtipoingreso,
+     otroingreso.`idcuentabancaria` AS otroingreso_idcuentabancaria,
+     otroingreso.`idcuentaemisora` AS otroingreso_idcuentaemisora,
+     otroingreso.`montoingresado` AS otroingreso_montoingresado,
+     otroingreso.`fechaingreso` AS otroingreso_fechaingreso,
+     otroingreso.`observaciones` AS otroingreso_observaciones
+FROM
+     `cuentabancaria` cuentabancaria INNER JOIN `movimientobancario` movimientobancario ON cuentabancaria.`idcuentabancaria` = movimientobancario.`idcuentabancaria`
+     INNER JOIN `otroingreso` otroingreso ON movimientobancario.`idotroingreso` = otroingreso.`idotroingreso`]]>
+	</queryString>
+	<field name="cuentabancaria_idcuentabancaria" class="java.lang.Integer"/>
+	<field name="cuentabancaria_idbanco" class="java.lang.Integer"/>
+	<field name="cuentabancaria_numerocuenta" class="java.lang.String"/>
+	<field name="cuentabancaria_saldo" class="java.lang.Double"/>
+	<field name="cuentabancaria_idplandecuenta" class="java.lang.Integer"/>
+	<field name="movimientobancario_idmovimiento" class="java.lang.Integer"/>
+	<field name="movimientobancario_idcuentabancaria" class="java.lang.Integer"/>
+	<field name="movimientobancario_fecha" class="java.sql.Date"/>
+	<field name="movimientobancario_saldoanterior" class="java.lang.Double"/>
+	<field name="movimientobancario_debito" class="java.lang.Double"/>
+	<field name="movimientobancario_idpagocompra" class="java.lang.Integer"/>
+	<field name="movimientobancario_credito" class="java.lang.Double"/>
+	<field name="movimientobancario_idcobroventa" class="java.lang.Integer"/>
+	<field name="movimientobancario_idotroingreso" class="java.lang.Integer"/>
+	<field name="movimientobancario_saldoactual" class="java.lang.Double"/>
+	<field name="otroingreso_idotroingreso" class="java.lang.Integer"/>
+	<field name="otroingreso_idusuario" class="java.lang.Integer"/>
+	<field name="otroingreso_idtipopago" class="java.lang.Integer"/>
+	<field name="otroingreso_idtipoingreso" class="java.lang.Integer"/>
+	<field name="otroingreso_idcuentabancaria" class="java.lang.Integer"/>
+	<field name="otroingreso_idcuentaemisora" class="java.lang.Integer"/>
+	<field name="otroingreso_montoingresado" class="java.lang.Double"/>
+	<field name="otroingreso_fechaingreso" class="java.sql.Date"/>
+	<field name="otroingreso_observaciones" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="33" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="28" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="219" y="6" width="85" height="20" uuid="3692a823-ada5-49c7-a632-dba17c79fdff"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[saldo anterior]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="6" width="70" height="20" uuid="d7aa1a05-303c-4b3d-aaa1-e4c2be7fd746"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[credito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="304" y="6" width="81" height="20" uuid="c25e7dc1-15a1-49e5-ab63-c6c841a38fbf"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[debito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="119" y="6" width="100" height="20" uuid="46e6b20a-0979-4745-8f96-2ba59ffac8a9"/>
+				<text><![CDATA[cuenta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="6" width="62" height="20" uuid="1b2eecc4-01a9-43cc-9d3d-b20bd60f314a"/>
+				<text><![CDATA[codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="6" width="38" height="20" uuid="b5d24010-1201-4a5b-83a2-f5d82fdae587"/>
+				<text><![CDATA[movimientobancario_idmovimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="465" y="2" width="90" height="20" uuid="ccb85eb4-f260-44bb-ba4b-c1d9b9c17c93"/>
+				<text><![CDATA[movimientobancario_saldoactual]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="29" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="238" y="4" width="66" height="20" uuid="d058f70d-f6b8-47e9-8ae6-877d04871012"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{movimientobancario_saldoanterior}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="385" y="4" width="70" height="20" uuid="d7d4c8f6-d25f-4509-8a01-21661d5b31df"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{movimientobancario_credito}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="304" y="4" width="81" height="20" uuid="c6438c7f-8236-47a7-8fcf-6b576545983c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{movimientobancario_debito}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="100" y="4" width="138" height="20" uuid="80f08f2e-4284-4b21-8745-63c726fa4544"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cuentabancaria_numerocuenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="41" y="4" width="59" height="20" uuid="c0468203-c770-48a4-8554-821df1182d2a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{movimientobancario_idcuentabancaria}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="455" y="4" width="100" height="20" uuid="519031d4-cbf7-4e7d-bdbc-d6f63e9b8a2f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{movimientobancario_saldoactual}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

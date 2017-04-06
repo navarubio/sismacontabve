@@ -47,19 +47,19 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column style="text-align: center">
+                        <p:column style="text-align: center" width="100" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundleingreso.ListOtroingresoTitle_idtipopago}"/>
                             </f:facet>
                             <h:outputText value="#{item.idtipopago.tipopago}"/>
                         </p:column>
-                        <p:column style="text-align: center">
+                        <p:column style="text-align: center" width="120">
                             <f:facet name="header">
                                 <h:outputText value="#{bundleingreso.ListOtroingresoTitle_idbanco}"/>
                             </f:facet>
                             <h:outputText value="#{item.idcuentabancaria.idbanco.nombrebanco}"/>
                         </p:column>
-                        <p:column width="200" filterBy="#{item.idcuentabancaria.numerocuenta}" headerText="#{bundleingreso.ListOtroingresoTitle_idcuentabancaria}" filterMatchMode="exact" style="text-align: center">
+                        <p:column width="180" filterBy="#{item.idcuentabancaria.numerocuenta}" headerText="#{bundleingreso.ListOtroingresoTitle_idcuentabancaria}" filterMatchMode="exact" style="text-align: center">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('otrosingre').filter()" >
                                     <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
@@ -82,12 +82,12 @@
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>
                         </p:column>
-                        <p:column width="250" >
+                        <!--p:column width="250" >
                             <f:facet name="header">
-                                <h:outputText value="#{bundleingreso.ListOtroingresoTitle_observaciones}"/>
+                                <h:outputText value=".{bundleingreso.ListOtroingresoTitle_observaciones}"/>
                             </f:facet>
-                            <h:outputText value="#{item.observaciones}"/>
-                        </p:column>
+                            <h:outputText value=".{item.observaciones}"/>
+                        </p:column-->
                         <p:column style="text-align: center" headerText="Orden de Pago">
                             <h:commandLink actionListener="#{otroingresoController.verOrdendePago(item)}" target = "_blank"  > 
                                 <h:graphicImage library="images" name="imprimir.png" width="30" height="30" alt="Pagar Compra"/>
