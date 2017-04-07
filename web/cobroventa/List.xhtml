@@ -103,7 +103,7 @@
                             <h:outputText value="#{item.idcuentabancaria.numerocuenta}"/>
                         </p:column>
                         <p:column style="text-align: center" headerText="Comprobante Ingreso" width="80">
-                            <h:commandLink actionListener="#{comprobantesislrController.verComprobanteretislr(item) }" target = "_blank"  > 
+                            <h:commandLink actionListener="#{cobroventasController.verOrdendeCobro(item)}" target = "_blank"  > 
                                 <h:graphicImage library="images" name="imprimir.png" width="30" height="30" alt="Imprimir Comprobante"/>
                             </h:commandLink>      
                         </p:column>

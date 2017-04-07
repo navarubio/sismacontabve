@@ -31,9 +31,12 @@ import Modelo.Estatusfacturaventa;
 import Modelo.Factura;
 import Modelo.Maestromovimiento;
 import Modelo.Movimientobancario;
+import Modelo.Pagocompra;
 import Modelo.Tipoconjunto;
 import Modelo.Tipopago;
 import Modelo.Tiporetencionislr;
+import java.sql.SQLException;
+import java.sql.SQLException;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -44,7 +47,8 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
+import javax.faces.context.FacesContext;import javax.servlet.ServletContext;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -608,5 +612,18 @@ public class CobroventasController implements Serializable {
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
+    }
+    public void verOrdendeCobro(Cobroventa item) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        //Instancia hacia la clase reporteClientes        
+        reporteArticulo rArticulo = new reporteArticulo();
+
+        int codigocobroventa = item.getIdcobroventa();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("/resources/reportes/ordendecobro.jasper");
+
+        rArticulo.getOrdendeCobro(ruta, codigocobroventa);
+        FacesContext.getCurrentInstance().responseComplete();
     }
 }
