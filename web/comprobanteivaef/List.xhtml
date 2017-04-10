@@ -30,8 +30,8 @@
                                  rowsPerPageTemplate="15,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton "/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton "/>
 
                         <p:column width="220" filterBy="#{item.rifproveedor.razonsocial}" filterMatchMode="contains" filterStyle="width:155px;"  >
                             <f:facet name="header">

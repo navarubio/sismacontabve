@@ -27,7 +27,7 @@
                         <p:outputLabel value="#{bundle.CreateProveedorLabel_telefonocontacto}" for="telefonocontacto" />
                         <p:inputText id="telefonocontacto" size="50" value="#{proveedorController.selected.telefonocontacto}" title="#{bundle.CreateProveedorTitle_telefonocontacto}" />
                         <p:outputLabel value="#{bundle.CreateProveedorLabel_fechainscripcion}" for="fechainscripcion" />
-                        <p:calendar id="fechainscripcion" pattern="dd/MM/yyyy" value="#{proveedorController.selected.fechainscripcion}" title="#{bundle.EditProveedorTitle_fechainscripcion}"  showOn="button"/>
+                        <p:calendar id="fechainscripcion" locale="es" pattern="dd/MM/yyyy" value="#{proveedorController.selected.fechainscripcion}" title="#{bundle.EditProveedorTitle_fechainscripcion}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateProveedorLabel_idtipoproveedor}" for="idtipoproveedor" />
                         <p:selectOneMenu id="idtipoproveedor" value="#{proveedorController.selected.idtipoproveedor}" >
                             <f:selectItems value="#{tipoproveedorController.itemsAvailableSelectOne}"
@@ -58,6 +58,7 @@
                     <p:commandButton value="#{bundle.Cancel}" onclick="ProveedorCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
+            <h:outputScript library="js" name="spanishLocale.js"/>
         </p:dialog>
 
     </ui:composition>

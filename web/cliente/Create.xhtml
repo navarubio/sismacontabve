@@ -27,7 +27,7 @@
                         <p:outputLabel value="#{bundle.CreateClienteLabel_telefonocontacto}" for="telefonocontacto" />
                         <p:inputText id="telefonocontacto" size="50" value="#{clienteController.selected.telefonocontacto}" title="#{bundle.CreateClienteTitle_telefonocontacto}" />
                          <p:outputLabel value="#{bundle.CreateClienteLabel_fechainscripcion}" for="fechainscripcion" />
-                         <p:calendar id="fechainscripcion" size="12" pattern="MM/dd/yyyy" value="#{clienteController.selected.fechainscripcion}" title="#{bundle.EditClienteTitle_fechainscripcion}"  showOn="button"/>
+                         <p:calendar id="fechainscripcion" size="12" locale="es" pattern="dd/MM/yyyy" value="#{clienteController.selected.fechainscripcion}" title="#{bundle.EditClienteTitle_fechainscripcion}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateClienteLabel_idcontribuyente}" for="idcontribuyente" />
                         <p:selectOneMenu id="idcontribuyente" value="#{clienteController.selected.idcontribuyente}" >
                             <f:selectItems value="#{contribuyenteController.itemsAvailableSelectOne}"
@@ -45,6 +45,7 @@
                     <p:commandButton value="#{bundle.Cancel}" onclick="ClienteCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
+            <h:outputScript library="js" name="spanishLocale.js"/>
         </p:dialog>
 
     </ui:composition>
