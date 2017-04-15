@@ -17,14 +17,14 @@ import javax.persistence.Query;
  * @author sofimarye
  */
 @Stateless
-public class PlandecuentaFacade extends AbstractFacade<Plandecuenta> implements PlandecuentaFacadeLocal{
+public class PlandecuentaFacade extends AbstractFacade<Plandecuenta> implements PlandecuentaFacadeLocal {
+
     @PersistenceContext(unitName = "InpecaPU")
     private EntityManager em;
 
     private List<Plandecuenta> lista = null;
     private String consulta;
-    private Plandecuenta plandecuenta=null;
-
+    private Plandecuenta plandecuenta = null;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -34,20 +34,39 @@ public class PlandecuentaFacade extends AbstractFacade<Plandecuenta> implements 
     public PlandecuentaFacade() {
         super(Plandecuenta.class);
     }
-    
+
     @Override
-    public List<Plandecuenta> itemsordenados () {
+    public List<Plandecuenta> itemsordenados() {
         try {
-            consulta = "SELECT p FROM Plandecuenta p order by p.idgrupocontable,p.idsubgrupocontable,p.idespecificocontable,p.idsubespecificocontable,p.idgeneralcuenta" ;
+            consulta = "SELECT p FROM Plandecuenta p order by p.idgrupocontable,p.idsubgrupocontable,p.idespecificocontable,p.idsubespecificocontable,p.idgeneralcuenta";
             Query query = em.createQuery(consulta);
-            
+
             lista = query.getResultList();
 //            if (!lista.isEmpty()) {
 //                usuario = lista.get(0);
 //            }
         } catch (Exception e) {
             throw e;
-}
+        }
         return lista;
+    }
+
+    @Override
+    public Plandecuenta buscarcuenta(int codcta) {
+        String consulta;
+        Plandecuenta cuenta = null;
+        List<Plandecuenta> lista = null;
+        try {
+            consulta = "From Plandecuenta p where p.idplandecuenta= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, codcta);
+            lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                cuenta = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return cuenta;
     }
 }

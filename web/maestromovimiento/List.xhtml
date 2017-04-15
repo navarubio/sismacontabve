@@ -65,7 +65,7 @@
                                 <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idcompra}"/>
                             </f:facet>
                             <h:outputText value="#{item.idcompra}"/>
-                            <h:commandLink action="/auxiliarrequerimiento/Pagocompraver.xhtml" actionListener="#{pagosController.asignarCompra(item.idcompra)}" > 
+                            <h:commandLink action="/auxiliarrequerimiento/Compraasiento.xhtml" actionListener="#{asientoscontablesController.asignarCompra(item.idcompra)}" > 
                                 <h:graphicImage library="images" name="contable.png" width="30" height="30" alt="Compras"
                                                 rendered="#{item.idcompra!= null? true:false}"/>  
                             </h:commandLink>      

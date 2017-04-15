@@ -91,7 +91,7 @@ public class RequerimientosController implements Serializable {
     public void setPventa(double pventa) {
         this.pventa = pventa;
     }
-    
+
     public double getTotalgeneral() {
         return totalgeneral;
     }
@@ -264,7 +264,7 @@ public class RequerimientosController implements Serializable {
             id++;
             requerimientos = requerimientoEJB.findAll();
             pcosto = 0;
-            pventa =0;
+            pventa = 0;
             cantidad = 0;
             requer.setCodigo(null);
 //            requer.setCodigo(null);
@@ -272,7 +272,8 @@ public class RequerimientosController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Cantidad en 0.0"));
         }
     }
-        public void anexarafactura() {
+
+    public void anexarafactura() {
         if (cantidad != 0) {
             double alicuota = 0;
             double iva = 0;
@@ -294,7 +295,7 @@ public class RequerimientosController implements Serializable {
             id++;
             requerimientos = requerimientoEJB.findAll();
             pcosto = 0;
-            pventa =0;
+            pventa = 0;
             cantidad = 0;
             requer.setCodigo(null);
 //            requer.setCodigo(null);
@@ -379,9 +380,9 @@ public class RequerimientosController implements Serializable {
             auxrequer.setMontototal(totalgeneral);
 
             auxiliarrequerimientoEJB.create(auxrequer);
-            totalsubtotal=0;
-            totaliva=0;
-            totalgeneral=0;
+            totalsubtotal = 0;
+            totaliva = 0;
+            totalgeneral = 0;
 
             codAux = requerimientoEJB.ultimoInsertado();
             String subject;
@@ -396,7 +397,7 @@ public class RequerimientosController implements Serializable {
                 requer.setTotal(rq.getTotal());
                 requerimientoEJB.create(requer);
             }
-            String fechareque= formateador.format(auxrequer.getFecharequerimiento());
+            String fechareque = formateador.format(auxrequer.getFecharequerimiento());
             correo = "CODIGO: REQ-" + auxrequer.getIdauxiliarrequerimiento()
                     + "  SOLICITANTE: " + auxrequer.getIdusuario().getNombre()
                     + "  DEPARTAMENTO: " + auxrequer.getIddepartamento()

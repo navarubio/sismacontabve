@@ -32,4 +32,6 @@ public interface PlandecuentaFacadeLocal {
 
     int count();
     
+    Plandecuenta buscarcuenta(int codcta);
+    
 }
