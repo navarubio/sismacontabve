@@ -203,7 +203,7 @@
                         <p:dataTable id="listadoasiento" widgetVar="listadoreq1" value="#{asientoscontablesController.listadetalleslibrodiario}" 
                                      var="req1" emptyMessage="No hay cuentas contables para mostrar" rowStyleClass="#{req1.idplandecuenta.idplandecuenta== 12620 ? 'facturaabonada' : null}"
                                      selectionMode="single" rowKey="#{req1.idplandecuenta.idplandecuenta}">
-                            <p:column style="width:8%"  headerText="Codigo">
+                            <p:column style="text-align: center" width="60" headerText="Codigo">
                                 <h:outputText value="#{req1.idplandecuenta.idplandecuenta}"/> 
                             </p:column>
                             <p:column style="width:35%"  headerText="Cuenta Contable">
@@ -220,12 +220,14 @@
                                 </h:outputText>
                             </p:column> 
                             <p:column style="text-align: center" headerText="Editar">                                
-                                <p:commandLink actionListener="#{asientoscontablesController.asignarDetallelibrodiario(req1)}" value="Editar" update=":dialogo" oncomplete="PF('wdialogo').show();" >
-                                    <h:graphicImage library="images" name="desktop.png" width="30" height="30" alt="Editar Asiento"/> 
+                                <p:commandLink actionListener="#{asientoscontablesController.asignarDetallelibrodiario(req1)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
+                                    <h:graphicImage library="images" name="apply.png" width="20" height="20" alt="Editar Asiento"/> 
                                 </p:commandLink>
                             </p:column>
-                            <p:column style="width:10%" headerText="Eliminar">
-                                <p:commandLink value="Eliminar" actionListener="#{asientoscontablesController.eliminar(req1)}" update="listadoasiento" />
+                            <p:column style="text-align: center" headerText="Eliminar">
+                                <p:commandLink actionListener="#{asientoscontablesController.eliminar(req1)}" update="listadoasiento" >
+                                    <h:graphicImage library="images" name="button_cancel.png" width="20" height="20" alt="Eliminar Asiento"/> 
+                                </p:commandLink>
                             </p:column>
 
                             <p:columnGroup type="footer">

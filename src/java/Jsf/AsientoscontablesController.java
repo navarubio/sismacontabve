@@ -872,9 +872,7 @@ public class AsientoscontablesController implements Serializable {
 
     public void anexar() {
         listadetalleslibrodiario.clear();
-        double alicuota = 0;
-        double iva = 0;
-        double total = 0;
+        id=0;
         Detallecompra detalle1 = detallecompraFiltrados.get(0);
         Articulo arti = detalle1.getCodigo();
         Detallelibrodiario detallelib = new Detallelibrodiario();
@@ -898,6 +896,7 @@ public class AsientoscontablesController implements Serializable {
         Plandecuenta cuentacredfiscal=plandecuentaEJB.buscarcuenta(codcta);
         detallelibr.setIdplandecuenta(cuentacredfiscal);
         detallelibr.setDebe(compra.getIva());
+        detallelibr.setIddetallelibrodiario(id);
         this.listadetalleslibrodiario.add(detallelibr);
         id++;
 
@@ -907,6 +906,7 @@ public class AsientoscontablesController implements Serializable {
         Plandecuenta cuentaporpagar=plandecuentaEJB.buscarcuenta(codctahaber);
         detallelibro.setIdplandecuenta(cuentaporpagar);
         detallelibro.setHaber(compra.getTotal());
+        detallelibro.setIddetallelibrodiario(id);
         this.listadetalleslibrodiario.add(detallelibro);
         id++;        
     }
