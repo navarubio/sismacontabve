@@ -143,6 +143,7 @@ public class AsientoscontablesController implements Serializable {
     private int idAuxiliar = 0;
     private int idCompra = 0;
     private int id = 0;
+    private int indicearreglo=0;
     private double totaldebegeneral=0;
     private List<Auxiliarrequerimiento> auxiliarrequerimientos;
     private List<Tiporetencionislr> tiporetencionesfiltradasPD = null;
@@ -172,6 +173,8 @@ public class AsientoscontablesController implements Serializable {
     ArrayList<Detallecompra> lista = new ArrayList();
     private Tipoconjunto tipoconjunto = null;
     private List<Detallelibrodiario> listadetalleslibrodiario = new ArrayList();
+    private Detallelibrodiario detalleamodificar;
+    private int cuentaseleccionada;
 
     @Inject
     private Auxiliarrequerimiento auxiliar;
@@ -190,6 +193,7 @@ public class AsientoscontablesController implements Serializable {
     private Librodiario librodiario;
     @Inject
     private Detallelibrodiario detallelibroventa;
+    
     @Inject
     private Libromayor libromayor;
 
@@ -201,8 +205,24 @@ public class AsientoscontablesController implements Serializable {
         this.listadetalleslibrodiario = listadetalleslibrodiario;
     }
 
+    public int  getCuentaseleccionada() {
+        return cuentaseleccionada;
+    }
+
+    public void setCuentaseleccionada(int cuentaseleccionada) {
+        this.cuentaseleccionada = cuentaseleccionada;
+    }
+
     public Librodiario getLibrodiario() {
         return librodiario;
+    }
+
+    public Detallelibrodiario getDetalleamodificar() {
+        return detalleamodificar;
+    }
+
+    public void setDetalleamodificar(Detallelibrodiario detalleamodificar) {
+        this.detalleamodificar = detalleamodificar;
     }
 
     public void setLibrodiario(Librodiario librodiario) {
@@ -854,16 +874,18 @@ public class AsientoscontablesController implements Serializable {
         listadetalleslibrodiario.clear();
         double alicuota = 0;
         double iva = 0;
-        double total = 0;     
+        double total = 0;
         Detallecompra detalle1 = detallecompraFiltrados.get(0);
         Articulo arti = detalle1.getCodigo();
         Detallelibrodiario detallelib = new Detallelibrodiario();
         if (arti.getIdplandecuenta()!=null){
             detallelib.setIdplandecuenta(arti.getIdplandecuenta());
+            detallelibroventa.setIdplandecuenta(arti.getIdplandecuenta());
         }else{
             int codcta= 12620;
             Plandecuenta cuentaprovicional=plandecuentaEJB.buscarcuenta(codcta);
-            detallelib.setIdplandecuenta(cuentaprovicional);            
+            detallelib.setIdplandecuenta(cuentaprovicional);  
+            detallelibroventa.setIdplandecuenta(detallelib.getIdplandecuenta());            
         }
         detallelib.setDebe(compra.getSubtotal());
         detallelib.setIddetallelibrodiario(id);
@@ -911,4 +933,29 @@ public class AsientoscontablesController implements Serializable {
         return montothaber;
     }
     
+    public void eliminar(Detallelibrodiario detalleld) {
+        listadetalleslibrodiario.remove(detalleld.hashCode());
+        int indice = 0;
+        for (Detallelibrodiario detallazo : listadetalleslibrodiario) {
+            detallazo.setIddetallelibrodiario(indice);
+            indice++;
+            id = indice;
+        }
+        if (detalleld.hashCode() == 0) {
+            id = 0;
+        }
+
+    }
+    
+    public void asignarDetallelibrodiario(Detallelibrodiario detallelbr) {
+        detalleamodificar = detallelbr;
+        cuentaseleccionada= detallelbr.getIdplandecuenta().getIdplandecuenta();
+        indicearreglo = detallelbr.hashCode();        
+    }
+
+    public void modificar() {       
+        detalleamodificar.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada));
+        listadetalleslibrodiario.set(indicearreglo,detalleamodificar);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cuenta fue modificada"));
+    }    
 }

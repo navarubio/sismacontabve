@@ -16,7 +16,7 @@
             </ui:define>
 
             <ui:define name="body">
-                <p:growl id="msgs" showDetail="true" /> 
+                <p:growl id="msgs" showDetail="true" autoUpdate="true" showSummary="false" /> 
 
                 <h:form id="formulario" >
 
@@ -179,7 +179,7 @@
                                 <p:outputLabel id="ref" styleClass="text-ouputfact" value=".{facturasController.devolversiguientefactura()}" title=".{bundle.CreateFacturaTitle_numerofactura}" /-->
                                 <p:outputLabel for="observac" styleClass="text-ouput" value="Observaciones" />
                                 <p:inputTextarea  id="observac" value="#{asientoscontablesController.librodiario.descripcionasiento}" cols="70" rows="2" />
-                             </p:panelGrid>                                
+                            </p:panelGrid>                                
                         </p:fieldset>
                         <p:fieldset legend="Registros Contables"  toggleable="true" toggleSpeed="500"  >
                             <p:panelGrid columns="6" styleClass="ui-custompanelgrid3" >
@@ -201,7 +201,7 @@
                     </p:panel>
                     <p:panel>
                         <p:dataTable id="listadoasiento" widgetVar="listadoreq1" value="#{asientoscontablesController.listadetalleslibrodiario}" 
-                                     var="req1" emptyMessage="No hay cuentas contables para mostrar"  
+                                     var="req1" emptyMessage="No hay cuentas contables para mostrar" rowStyleClass="#{req1.idplandecuenta.idplandecuenta== 12620 ? 'facturaabonada' : null}"
                                      selectionMode="single" rowKey="#{req1.idplandecuenta.idplandecuenta}">
                             <p:column style="width:8%"  headerText="Codigo">
                                 <h:outputText value="#{req1.idplandecuenta.idplandecuenta}"/> 
@@ -220,12 +220,12 @@
                                 </h:outputText>
                             </p:column> 
                             <p:column style="text-align: center" headerText="Editar">                                
-                                <p:commandLink actionListener="#{comprasController.asignarRequerimiento(req)}" value="Editar" update=":dialogo" oncomplete="PF('wdialogo').show();" >
+                                <p:commandLink actionListener="#{asientoscontablesController.asignarDetallelibrodiario(req1)}" value="Editar" update=":dialogo" oncomplete="PF('wdialogo').show();" >
                                     <h:graphicImage library="images" name="desktop.png" width="30" height="30" alt="Editar Asiento"/> 
                                 </p:commandLink>
                             </p:column>
                             <p:column style="width:10%" headerText="Eliminar">
-                                <p:commandLink value="Eliminar" actionListener="#{requerimientosController.eliminar(req)}" update="listadoasiento" />
+                                <p:commandLink value="Eliminar" actionListener="#{asientoscontablesController.eliminar(req1)}" update="listadoasiento" />
                             </p:column>
 
                             <p:columnGroup type="footer">
@@ -241,19 +241,29 @@
                     </p:panel>
                 </h:form>
 
-                <p:dialog id="dialogo" widgetVar="wdialogo" header="Modificar cantidad y precio del Articulo" modal="true" closeOnEscape="true" 
+                <p:dialog id="dialogo" widgetVar="wdialogo" header="Modificar Cuenta Contable" modal="true" closeOnEscape="true" 
                           resizable="false" showEffect="explode" appendTo="@(body)"  >
                     <h:form>
-                        <h:panelGrid  id="display" columns="4">
-                            <p:outputLabel for="cantidad" value="Cantidad" />
-                            <p:inputText id="cantidad" label="#{comprasController.requerimiento.cantidad}" value="#{comprasController.requerimiento.cantidad}" style="text-align:right"/>
-                            <p:outputLabel for="precio"  value="Precio sin IVA" styleClass="optionalLbl"/>
-                            <p:inputText id="precio"  label="#{comprasController.requerimiento.pcosto}"  size="20" value="#{comprasController.requerimiento.pcosto}" style="text-align:right"/>
-                            <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{comprasController.modificar()}"  oncomplete="PF('wdialogo').hide();" update="display" />                             
+                        <h:panelGrid  id="display" columns="6">
+                            <p:outputLabel value="Cuenta Contable" for="subespecificocontable" />
+                            <p:selectOneMenu id="subespecificocontable" value="#{asientoscontablesController.cuentaseleccionada}" 
+                                             converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                <!--p:ajax event="change" update="codigcta"/-->
+                                <!--f:selectItem itemLabel="SIN APLICAR" itemValue="0" noSelectionOption="false" /-->
+                                <f:selectItems value="#{plandecuentaController.itemsordenados}"
+                                               var="subespecificocontableItem"
+                                               itemValue="#{subespecificocontableItem.idplandecuenta}" /> 
+                            </p:selectOneMenu>
+                            <p:outputLabel for="debito1"  value="DEBE" />
+                            <p:inputText id="debito1"  size="10" value="#{asientoscontablesController.detalleamodificar.debe}" style="text-align:right" />
+                            <p:outputLabel for="credito1"  value="HABER" />
+                            <p:inputText id="credito1"  size="10" value="#{asientoscontablesController.detalleamodificar.haber}" style="text-align:right"/>
+                            <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{asientoscontablesController.modificar()}"  
+                                             oncomplete="PF('wdialogo').hide();" update="display,:formulario:listadoasiento,:growl" />
                             <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
                         </h:panelGrid>
                     </h:form>
-                    <h:outputScript library="js" name="spanishLocale.js"/>
+                    <h:outputScript library="js" name="spanishLocale.js"/> 
                 </p:dialog>
             </ui:define>
         </ui:composition>
