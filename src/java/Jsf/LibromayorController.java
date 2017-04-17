@@ -4,6 +4,7 @@ import Modelo.Libromayor;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.LibromayorFacade;
+import Jpa.LibromayorFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,13 +19,14 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
 
 @Named("libromayorController")
-@SessionScoped
+@ViewScoped
 public class LibromayorController implements Serializable {
 
     @EJB
-    private Jpa.LibromayorFacade ejbFacade;
+    private Jpa.LibromayorFacadeLocal ejbFacade;
     private List<Libromayor> items = null;
     private Libromayor selected;
 
@@ -45,7 +47,7 @@ public class LibromayorController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private LibromayorFacade getFacade() {
+    private LibromayorFacadeLocal getFacade() {
         return ejbFacade;
     }
 

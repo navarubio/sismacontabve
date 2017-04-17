@@ -23,7 +23,7 @@
                     <div id="imag2">
                         <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca"/>
                     </div>      
-                    <img src="../resources/images/contabilidad.png" width="70" height="70" alt="Clientes" align="right" />
+                    <img src="../resources/images/contabilidadblank.png" width="70" height="70" alt="Clientes" align="right" />
 
                     <p:panel id="panel1" header="DETALLE DE COMPRA EFECTUADA">
                         <p:panelGrid columns="3">
@@ -204,18 +204,18 @@
                                      var="req1" emptyMessage="No hay cuentas contables para mostrar" rowStyleClass="#{req1.idplandecuenta.idplandecuenta== 12620 ? 'facturaabonada' : null}"
                                      selectionMode="single" rowKey="#{req1.idplandecuenta.idplandecuenta}">
                             <p:column style="text-align: center" width="60" headerText="Codigo">
-                                <h:outputText value="#{req1.idplandecuenta.idplandecuenta}"/> 
+                                <h:outputText value="#{req1.idplandecuenta.idplandecuenta}" styleClass="text-ouput"/> 
                             </p:column>
-                            <p:column style="width:35%"  headerText="Cuenta Contable">
-                                <h:outputText value="#{req1.idplandecuenta.descripcioncuenta}"/>
+                            <p:column style="width:35%"  headerText="Cuenta Contable" >
+                                <h:outputText value="#{req1.idplandecuenta.descripcioncuenta}" styleClass="text-ouput"/>
                             </p:column>
                             <p:column style="text-align: right" headerText="DEBE">
-                                <h:outputText value="#{req1.debe}" style="width:10px">
+                                <h:outputText value="#{req1.debe}" style="width:10px" styleClass="text-debe">
                                     <f:convertNumber type="currency" currencySymbol=" " />
                                 </h:outputText>
                             </p:column>
                             <p:column style="text-align: right" headerText="HABER">
-                                <h:outputText value="#{req1.haber}">
+                                <h:outputText value="#{req1.haber}" styleClass="text-haber">
                                     <f:convertNumber type="currency" currencySymbol=" " />
                                 </h:outputText>
                             </p:column> 
@@ -225,7 +225,7 @@
                                 </p:commandLink>
                             </p:column>
                             <p:column style="text-align: center" headerText="Eliminar">
-                                <p:commandLink actionListener="#{asientoscontablesController.eliminar(req1)}" update="listadoasiento" >
+                                <p:commandLink actionListener="#{asientoscontablesController.eliminar(req1)}" update=":formulario:listadoasiento" >
                                     <h:graphicImage library="images" name="button_cancel.png" width="20" height="20" alt="Eliminar Asiento"/> 
                                 </p:commandLink>
                             </p:column>
@@ -238,7 +238,8 @@
                                 </p:row>
                             </p:columnGroup>                            
                         </p:dataTable>
-                        <p:commandButton value="Registrar" actionListener="#{requerimientosController.registrar()}" action="/auxiliarrequerimiento/List?faces-redirect=true" update=":msgs" />
+                        <p:commandButton value="Registrar" actionListener="#{asientoscontablesController.registrar()}" action="/maestromovimiento/List?faces-redirect=true" update=":msgs" 
+                                         rendered  ="#{asientoscontablesController.totaldebegeneral==asientoscontablesController.totalhabergeneral ? true:false}"/>
                         <p:commandButton id= "exit" value="Salir" action="/maestromovimiento/List?faces-redirect=true"/>
                     </p:panel>
                 </h:form>

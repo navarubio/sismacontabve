@@ -27,35 +27,45 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_iddetallelibrodiario}"/>
                             </f:facet>
                             <h:outputText value="#{item.iddetallelibrodiario}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_debe}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.debe}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_haber}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.haber}"/>
-                        </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_idlibrodiario}"/>
                             </f:facet>
                             <h:outputText value="#{item.idlibrodiario}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_idplandecuenta}"/>
                             </f:facet>
                             <h:outputText value="#{item.idplandecuenta}"/>
+                        </p:column>
+                        <p:column width="300">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_cuenta}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idplandecuenta.descripcioncuenta}"/>
+                        </p:column>
+                        <p:column style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_debe}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.debe}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_haber}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.haber}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlecontabilidad.Create}" actionListener="#{detallelibrodiarioController.prepareCreate}" update=":DetallelibrodiarioCreateForm" oncomplete="PF('DetallelibrodiarioCreateDialog').show()"/>

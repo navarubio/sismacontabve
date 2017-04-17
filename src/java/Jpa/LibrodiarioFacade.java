@@ -6,16 +6,18 @@
 package Jpa;
 
 import Modelo.Librodiario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
  * @author sofimar
  */
 @Stateless
-public class LibrodiarioFacade extends AbstractFacade<Librodiario> {
+public class LibrodiarioFacade extends AbstractFacade<Librodiario> implements LibrodiarioFacadeLocal{
     @PersistenceContext(unitName = "InpecaPU")
     private EntityManager em;
 
@@ -28,4 +30,20 @@ public class LibrodiarioFacade extends AbstractFacade<Librodiario> {
         super(Librodiario.class);
     }
     
+    @Override
+    public Librodiario ultimoInsertado() {
+        String consulta = null;
+        Librodiario ultimo = new Librodiario();
+        try {
+            consulta = "Select l From Librodiario l Order By l.idlibrodiario Desc";
+            Query query = em.createQuery(consulta);
+            List<Librodiario> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                ultimo = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return ultimo;
+    }
 }

@@ -50,4 +50,23 @@ public class EstatuscontableFacade extends AbstractFacade<Estatuscontable> imple
         return estatus;
     }
     
+    @Override
+    public Estatuscontable estatusContableRegistrada () {
+        Estatuscontable estatus = null;
+        int paramet = 2;
+        String consulta;
+        try {
+            consulta  = "From Estatuscontable e where e.idestatuscontable = ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, paramet);
+
+            List<Estatuscontable> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                estatus = lista.get(0);
+}
+        } catch (Exception e) {
+            throw e;
+        }
+        return estatus;
+    }
 }

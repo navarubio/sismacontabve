@@ -20,7 +20,7 @@
                     <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
                 </div>     
 
-                <img src="../resources/images/contabilizar.png" width="70" height="70" alt="Clientes" align="right" />
+                <img src="../resources/images/contabilidadblank.png" width="70" height="70" alt="Clientes" align="right" />
 
                 <p:panel header="#{bundlecontabilidad.ListMaestromovimientoTitle}">
                     <p:dataTable id="datalist" value="#{maestromovimientoController.items}" var="item"
@@ -29,6 +29,7 @@
                                  rowKey="#{item.idmaestro}"
                                  rows="20"
                                  rowsPerPageTemplate="20,30,40,50"
+                                 rowStyleClass="#{item.idestatuscontable.idestatuscontable== 2 ? 'facturaabonada' : null} " 
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -65,8 +66,8 @@
                                 <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idcompra}"/>
                             </f:facet>
                             <h:outputText value="#{item.idcompra}"/>
-                            <h:commandLink action="/auxiliarrequerimiento/Compraasiento.xhtml" actionListener="#{asientoscontablesController.asignarCompra(item.idcompra)}" > 
-                                <h:graphicImage library="images" name="contable.png" width="30" height="30" alt="Compras"
+                            <h:commandLink action="/auxiliarrequerimiento/Compraasiento.xhtml" actionListener="#{asientoscontablesController.asignarCompra(item.idcompra, item)}" > 
+                                <h:graphicImage library="images" name="contable1.png" width="30" height="30" alt="Compras"
                                                 rendered="#{item.idcompra!= null? true:false}"/>  
                             </h:commandLink>      
                         </p:column>

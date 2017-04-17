@@ -69,4 +69,25 @@ public class PlandecuentaFacade extends AbstractFacade<Plandecuenta> implements 
         }
         return cuenta;
     }
+    @Override
+    public double buscarsaldoanterior(int codcta) {
+        String consulta;
+        Plandecuenta cuenta = null;
+        double sandoant=0;
+        List<Plandecuenta> lista = null;
+        try {
+            consulta = "From Plandecuenta p where p.idplandecuenta= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, codcta);
+            lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                cuenta = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return cuenta.getSaldogeneral();
+    }
+    
+    
 }

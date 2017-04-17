@@ -30,6 +30,8 @@ public interface EstatuscontableFacadeLocal {
 
     int count();
     
-    public Estatuscontable estatusContablePorRegistrar ();
+    Estatuscontable estatusContablePorRegistrar();
+    
+    Estatuscontable estatusContableRegistrada(); 
     
 }

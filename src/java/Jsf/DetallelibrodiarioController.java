@@ -4,6 +4,7 @@ import Modelo.Detallelibrodiario;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.DetallelibrodiarioFacade;
+import Jpa.DetallelibrodiarioFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,13 +19,14 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
 
 @Named("detallelibrodiarioController")
-@SessionScoped
+@ViewScoped
 public class DetallelibrodiarioController implements Serializable {
 
     @EJB
-    private Jpa.DetallelibrodiarioFacade ejbFacade;
+    private Jpa.DetallelibrodiarioFacadeLocal ejbFacade;
     private List<Detallelibrodiario> items = null;
     private Detallelibrodiario selected;
 
@@ -45,7 +47,7 @@ public class DetallelibrodiarioController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private DetallelibrodiarioFacade getFacade() {
+    private DetallelibrodiarioFacadeLocal getFacade() {
         return ejbFacade;
     }
 

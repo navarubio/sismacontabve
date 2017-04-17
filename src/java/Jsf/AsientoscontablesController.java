@@ -12,6 +12,7 @@ import Jpa.CompraFacadeLocal;
 import Jpa.CuentabancariaFacadeLocal;
 import Jpa.DepartamentoFacadeLocal;
 import Jpa.DetallecompraFacadeLocal;
+import Jpa.DetallelibrodiarioFacadeLocal;
 import Jpa.DetalleretencionislrefFacade;
 import Jpa.DetalleretencionislrefFacadeLocal;
 import Jpa.DetalleretencionivaefFacade;
@@ -19,6 +20,8 @@ import Jpa.DetalleretencionivaefFacadeLocal;
 import Jpa.EmpresaFacadeLocal;
 import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaFacadeLocal;
+import Jpa.LibrodiarioFacadeLocal;
+import Jpa.LibromayorFacadeLocal;
 import Jpa.MaestromovimientoFacadeLocal;
 import Jpa.MovimientobancarioFacadeLocal;
 import Jpa.PagocompraFacadeLocal;
@@ -118,9 +121,17 @@ public class AsientoscontablesController implements Serializable {
     private MovimientobancarioFacadeLocal movimientoBancarioEJB;
     @EJB
     private PlandecuentaFacadeLocal plandecuentaEJB;
+    @EJB
+    private LibrodiarioFacadeLocal librodiarioEJB;
+    @EJB
+    private LibromayorFacadeLocal libromayorEJB;
+    @EJB
+    private DetallelibrodiarioFacadeLocal detallelibrodiarioEJB;
+    
 
     private Auxiliarrequerimiento auxiliarrequerimiento;
     private Compra compra;
+    private Maestromovimiento master;
     private Autorizacion autoriza;
     private Detallecompra detallecompras;
     private Pagocompra pagocompra = new Pagocompra();
@@ -145,6 +156,7 @@ public class AsientoscontablesController implements Serializable {
     private int id = 0;
     private int indicearreglo=0;
     private double totaldebegeneral=0;
+    private double totalhabergeneral=0;
     private List<Auxiliarrequerimiento> auxiliarrequerimientos;
     private List<Tiporetencionislr> tiporetencionesfiltradasPD = null;
     private List<Cuentabancaria> cuentasbancarias;
@@ -175,6 +187,8 @@ public class AsientoscontablesController implements Serializable {
     private List<Detallelibrodiario> listadetalleslibrodiario = new ArrayList();
     private Detallelibrodiario detalleamodificar;
     private int cuentaseleccionada;
+    private Librodiario codlibrodiario;
+
 
     @Inject
     private Auxiliarrequerimiento auxiliar;
@@ -239,6 +253,14 @@ public class AsientoscontablesController implements Serializable {
 
     public void setTotaldebegeneral(double totaldebegeneral) {
         this.totaldebegeneral = totaldebegeneral;
+    }
+
+    public double getTotalhabergeneral() {
+        return totalhabergeneral;
+    }
+
+    public void setTotalhabergeneral(double totalhabergeneral) {
+        this.totalhabergeneral = totalhabergeneral;
     }
 
     public void setDetallelibroventa(Detallelibrodiario detallelibroventa) {
@@ -493,7 +515,7 @@ public class AsientoscontablesController implements Serializable {
     @PostConstruct
     public void init() {
         visualizar = 0;
-        librodiario.setFecha(fechaactual);
+//        librodiario.setFecha(fechaactual);
         auxiliarrequerimientos = auxiliarrequerimientoEJB.findAll();
         cuentasbancarias = cuentabancariaEJB.findAll();
         tipopagos = tipopagoEJB.findAll();
@@ -617,8 +639,9 @@ public class AsientoscontablesController implements Serializable {
         }
     }
 
-    public void asignarCompra(Compra compr) {
+    public void asignarCompra(Compra compr, Maestromovimiento maestro) {
         this.compra = compr;
+        this.master = maestro;
         this.idCompra = compr.getIdcompra();
         this.pagoespecifico = pagocompraEJB.buscarpago(compr);
         this.pagocompra = pagocompraEJB.buscarpagototal(compr);
@@ -626,6 +649,7 @@ public class AsientoscontablesController implements Serializable {
 //        this.auxiliar = aux;
         detallecompraFiltrados = detallecompraAuxiliar();
         listadetalleslibrodiario=detallesasiento();
+        librodiario.setFecha(compra.getFechaorden());
 //        this.compra.setIdauxiliarrequerimiento(auxiliar);
     }
 
@@ -699,124 +723,138 @@ public class AsientoscontablesController implements Serializable {
     }
 
     public void registrar() {
-        if (visualizar == 7 || visualizar == 6 || visualizar == 5) {
-            try {
-                /**
-                 * compra.setRifproveedor(provee);
-                 * compra.setSubtotal(auxiliar.getSubtotal());
-                 * compra.setIva(auxiliar.getMontoiva());
-                 * compra.setTotal(auxiliar.getMontototal()); Usuario us =
-                 * (Usuario)
-                 * FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-                 * compra.setIdusuario(us);*
-                 */
-                //estatuscontab = estatuscontableEJB.estatusContablePorRegistrar();
+        try {
+            double debe=0;
+            double haber=0;
+            double saldototaltotal=0;
+            librodiarioEJB.create(librodiario);
+            codlibrodiario = librodiarioEJB.ultimoInsertado();
 
-                if (formapago == 1) {
-                    double saldo = 0;
-                    if (montoapagar == compra.getTotal()) {
-                        pagocompra.setTotalpago(montoapagar);
-                        compra.setMontopendiente(saldo);
-                        pagocompra.setMontoretenido(saldo);
-                        int tipo = 3;
-                        statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
-                    } else {
-                        pagocompra.setTotalpago(montoapagar);
-                        compra.setMontopendiente(saldo);
-                        pagocompra.setMontoretenido(compra.getTotal() - montoapagar);
-                        int tipo = 3;
-                        statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
-                    }
-                } else {
-                    int tipo = 0;
-                    double saldop = 0;
-                    if (visualizar == 6 || visualizar == 5) {
-                        saldop = compra.getMontopendiente() - pagocompra.getTotalpago();
-                    } else if (visualizar == 7) {
-                        saldop = ((compra.getMontopendiente() - pagocompra.getTotalpago()) - (compra.getMontopendiente() - montoapagar));
-                    }
-                    if (saldop < 1) {
-                        tipo = 3;
-                    } else {
-                        tipo = 4;
-                    }
-                    compra.setMontopendiente(saldop);
-                    statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
+            Detallelibrodiario detalleld = new Detallelibrodiario();
+            Libromayor libromy = new Libromayor();
+            Plandecuenta cuentacontable= new Plandecuenta();
+            
+            for (Detallelibrodiario dld : listadetalleslibrodiario) {
+                detalleld.setIdlibrodiario(codlibrodiario);
+                libromy.setIdlibrodiario(codlibrodiario);
+                cuentacontable= plandecuentaEJB.buscarcuenta(dld.getIdplandecuenta().getIdplandecuenta());
+
+                                
+                detalleld.setIdplandecuenta(dld.getIdplandecuenta());
+                libromy.setIdplandecuenta(dld.getIdplandecuenta());
+                
+                if (dld.getDebe()!=null){
+                    detalleld.setDebe(dld.getDebe());
+                    detalleld.setHaber(0.0);
+                    debe=dld.getDebe();
+                    libromy.setHaber(0.0);
+                    libromy.setDebe(dld.getDebe());
                 }
-                pagocompra.setSaldopendiente(compra.getMontopendiente());
-                compra.setIdestatusfactura(statusfactu);
-                compraEJB.edit(compra);
-                pagocompra.setIdcompra(compra);
-                pagocompra.setIdbanco(banco);
-
-                if (visualizar == 6) {
-                    pagocompra.setMontoretenido(0.0);
-                } else if (visualizar == 7) {
-                    pagocompra.setMontoretenido((compra.getTotal() - montoapagar));
-                } else if (visualizar == 5) {
-                    pagocompra.setMontoretenido(0.0);
-                }
-                cuentabanco = pagocompra.getIdcuentabancaria();
-//              pagocompra.setTotalpago(compra.getTotal());
-//              pagocompra.setSaldopendiente(compra.getMontopendiente());
-                pagocompraEJB.create(pagocompra);
-
-                int tipoconj = 2;
-                tipoconjunto = tipoconjuntoEJB.cambiartipoConjunto(tipoconj);
-                pagocompra.setIdpagocompra(pagocompraEJB.ultimopago());
-                maestromovi.setIdpagocompra(pagocompra);
-                maestromovi.setFechamovimiento(pagocompra.getFechapago());
-                maestromovi.setIdtipoconjunto(tipoconjunto);
-                maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
-                maestromovimientoEJB.create(maestromovi);
-
-                if (visualizar == 7) {
-                    pagocompra.setIdpagocompra(pagocompraEJB.ultimopago());
-                    detalleretencionivaef.setIdpagocompra(pagocompra);
-                    detalleretencionivaefEJB.edit(detalleretencionivaef);
-                    visualizar = 0;
-                }
-
-                double saldoactualbanco = 0;
-                double saldoanteriorbanco = 0;
-                saldoanteriorbanco = pagocompra.getIdcuentabancaria().getSaldo();
-                saldoactualbanco = (pagocompra.getIdcuentabancaria().getSaldo() - pagocompra.getTotalpago());
-                cuentabanco.setSaldo(saldoactualbanco);
-                cuentabancariaEJB.edit(cuentabanco);
-
-                movimientobancario.setFecha(pagocompra.getFechapago());
-                movimientobancario.setIdcuentabancaria(cuentabanco);
-                movimientobancario.setSaldoanterior(saldoanteriorbanco);
-                movimientobancario.setDebito(pagocompra.getTotalpago());
-                movimientobancario.setSaldoactual(saldoactualbanco);
-                movimientobancario.setIdpagocompra(pagocompra);
-                movimientoBancarioEJB.create(movimientobancario);
-
-                String subject;
-                String fechapag = formateador.format(pagocompra.getFechapago());
-                correo = "COMPRA NRO: " + compra.getIdcompra()
-                        + "  FECHA: " + fechapag
-                        + "  PROVEEDOR: " + compra.getRifproveedor().getRazonsocial()
-                        + "  RIF: " + compra.getRifproveedor().getRifproveedor()
-                        + "  TIPO PAGO: " + pagocompra.getIdtipopago().getTipopago()
-                        + "  BANCO: " + pagocompra.getIdcuentabancaria().getIdbanco().getNombrebanco()
-                        + "  TOTAL: " + formatearnumero.format(pagocompra.getTotalpago())
-                        + "  OBSERVACIONES: " + pagocompra.getObservacionespago();
-
-                subject = "Emisión de Pago N° " + pagocompra.getIdpagocompra();
-                enviomail = new envioCorreo(correo, subject);
-                enviomail.start();
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Pago fue Almacenado"));
-            } catch (Exception e) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Pago"));
-            } finally {
-                FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+                if (dld.getHaber()!= null){
+                    detalleld.setHaber(dld.getHaber());
+                    detalleld.setDebe(0.0);
+                    haber=dld.getHaber();
+                    libromy.setDebe(0.0);
+                    libromy.setHaber(dld.getHaber());
+                }              
+                double saldoant= plandecuentaEJB.buscarsaldoanterior(dld.getIdplandecuenta().getIdplandecuenta());
+                libromy.setSaldoanterior(saldoant);
+                if (dld.getIdplandecuenta().getIdtiposaldocontable().getIdtiposaldocontable()==1){
+                    saldototaltotal=(((saldoant) + debe) - haber);
+                }else if(dld.getIdplandecuenta().getIdtiposaldocontable().getIdtiposaldocontable()==2){
+                    saldototaltotal=(((saldoant) - haber) + debe);    
+                }   
+                libromy.setSaldoposterior(saldototaltotal);
+                cuentacontable.setSaldogeneral(saldototaltotal);
+                detallelibrodiarioEJB.create(detalleld);
+                libromayorEJB.create(libromy);
+                plandecuentaEJB.edit(cuentacontable);
+                master.setIdestatuscontable(estatuscontableEJB.estatusContableRegistrada());
+                master.setIdlibrodiario(codlibrodiario);
+                maestromovimientoEJB.edit(master);
+                
+                debe=0;
+                haber=0;
+                saldototaltotal=0;
             }
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Debe efectuar la retención sobre el pago", "Aviso"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Asiento fue Almacenado Codigo" + codlibrodiario.getIdlibrodiario(), ""));
+            listadetalleslibrodiario.clear();
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Asiento Contable", "Aviso"));
+        } finally {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
     }
+    /*public saldosdecuenta (int codcta){
+        Plandecuenta ctaaactualizar= plandecuentaEJB.buscarcuenta(codcta);
+        List<Libromayor> listamayorcta= libromayorEJB.listacuentaespecifica(codcta);
+        double montotdebe = 0;
+        double montothaber = 0;
+        double totaldebetotal=0;
+        double totalhabertotal=0;
+        double saldototaltotal=0;
+        double debe=0.0;
+        double haber=0.0;
 
+        if (listamayorcta!=null){            
+            for (Libromayor mayoranalitico : listamayorcta) {
+                if (mayoranalitico.getDebe()!=null){
+                    montotdebe += mayoranalitico.getDebe();
+                }
+                if (mayoranalitico.getHaber()!=null){
+                    montothaber += mayoranalitico.getHaber();            
+                }
+            }
+            totaldebetotal= montotdebe;        
+            totalhabertotal=montothaber;
+        }else{
+            totaldebetotal= debe;
+            totalhabertotal=haber;
+        }      
+        
+        if (ctaaactualizar.getIdtipocuentacontable().getIdtipocuentacontable()==1){
+            saldototaltotal=(((totaldebetotal - totalhabertotal) + debe) - haber);
+        }
+        
+        
+        
+        For s = 1 To Adodc2.Recordset.RecordCount
+        saldoActDebe = Adodc2.Recordset.Fields("debe")
+        saldoTotalDebe = saldoAntDebe + saldoActDebe
+        saldoAntDebe = saldoTotalDebe
+        saldoActDebe = 0
+        saldoActHaber = Adodc2.Recordset.Fields("haber")
+        saldoTotalHaber = saldoAntHaber + saldoActHaber
+        saldoAntHaber = saldoTotalHaber
+        saldoActHaber = 0
+        Adodc2.Recordset.MoveNext
+    Next s
+    If Adodc2.Recordset.RecordCount = 0 Then
+        If debe = "" Then
+            debe = 0
+        ElseIf haber = "" Then
+            haber = 0
+        End If
+        saldoTotalDebe = CDbl(debe)
+        saldoTotalHaber = CDbl(haber)
+    End If
+            
+    If tipoSaldo = True Then
+        If Adodc2.Recordset.RecordCount <> 0 Then
+            SaldoTotalTotal = (((saldoTotalDebe - saldoTotalHaber) + debe) - haber)
+        Else
+            SaldoTotalTotal = (saldoTotalDebe - saldoTotalHaber)
+        End If
+    Else
+        If Adodc2.Recordset.RecordCount <> 0 Then
+            SaldoTotalTotal = ((saldoTotalDebe - saldoTotalHaber) - haber) + debe
+        Else
+            SaldoTotalTotal = (saldoTotalDebe - saldoTotalHaber)
+        End If
+    End If
+    saldoAntDebe = 0
+    saldoAntHaber = 0
+    }*/
     public void grabarRetencion() {
         try {
             if (detalleretencionivaef.getTotalivaretenido() >= 1) {
@@ -873,6 +911,7 @@ public class AsientoscontablesController implements Serializable {
     public void anexar() {
         listadetalleslibrodiario.clear();
         id=0;
+        visualizar=0;
         Detallecompra detalle1 = detallecompraFiltrados.get(0);
         Articulo arti = detalle1.getCodigo();
         Detallelibrodiario detallelib = new Detallelibrodiario();
@@ -909,6 +948,7 @@ public class AsientoscontablesController implements Serializable {
         detallelibro.setIddetallelibrodiario(id);
         this.listadetalleslibrodiario.add(detallelibro);
         id++;        
+        
     }
     
     public double totaldebe() {
@@ -930,6 +970,7 @@ public class AsientoscontablesController implements Serializable {
                 montothaber += detall.getHaber();            
             }
         }
+        totalhabergeneral=montothaber;
         return montothaber;
     }
     
@@ -944,7 +985,6 @@ public class AsientoscontablesController implements Serializable {
         if (detalleld.hashCode() == 0) {
             id = 0;
         }
-
     }
     
     public void asignarDetallelibrodiario(Detallelibrodiario detallelbr) {
@@ -956,6 +996,8 @@ public class AsientoscontablesController implements Serializable {
     public void modificar() {       
         detalleamodificar.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada));
         listadetalleslibrodiario.set(indicearreglo,detalleamodificar);
+        
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cuenta fue modificada"));
-    }    
+    }  
+    
 }

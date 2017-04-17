@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author sofimar
  */
 @Stateless
-public class DetallelibrodiarioFacade extends AbstractFacade<Detallelibrodiario> {
+public class DetallelibrodiarioFacade extends AbstractFacade<Detallelibrodiario> implements DetallelibrodiarioFacadeLocal{
     @PersistenceContext(unitName = "InpecaPU")
     private EntityManager em;
 

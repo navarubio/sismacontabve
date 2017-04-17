@@ -34,4 +34,6 @@ public interface PlandecuentaFacadeLocal {
     
     Plandecuenta buscarcuenta(int codcta);
     
+    double buscarsaldoanterior(int codcta);
+    
 }
