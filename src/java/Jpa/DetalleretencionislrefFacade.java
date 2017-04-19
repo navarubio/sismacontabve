@@ -61,5 +61,24 @@ public class DetalleretencionislrefFacade extends AbstractFacade<Detalleretencio
         return lista;
     }
     
-    
+    @Override
+    public double retencionislrporpago(int compra) {
+        String consulta;
+        Detalleretencionislref detalle=null;
+        List<Detalleretencionislref> lista = null;
+        double montoret=0;
+        try {
+            consulta = "From Detalleretencionislref d where d.idcompra.idcompra= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, compra);
+            lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                detalle = lista.get(0);
+                montoret=detalle.getTotalislrretenido();
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return montoret;
+    }
 }

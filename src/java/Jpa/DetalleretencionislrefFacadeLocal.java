@@ -36,4 +36,6 @@ public interface DetalleretencionislrefFacadeLocal {
     
     List<Detalleretencionislref> buscarretencionesActivas(); 
     
+    double retencionislrporpago(int compra);
+    
 }

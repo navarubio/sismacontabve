@@ -21,7 +21,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
 
 @ManagedBean(name = "cuentabancariaController")
-@ViewScoped
+@SessionScoped
 public class CuentabancariaController implements Serializable {
 
     @EJB

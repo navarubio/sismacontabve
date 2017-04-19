@@ -100,5 +100,4 @@ public class PagocompraFacade extends AbstractFacade<Pagocompra> implements Pago
         numeracion = ultima.getIdpagocompra();
         return numeracion;
     }
-
 }

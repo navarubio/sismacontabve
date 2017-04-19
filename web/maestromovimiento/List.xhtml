@@ -91,6 +91,10 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idpagocompra}"/>
                             </f:facet>
+                            <h:commandLink action="/auxiliarrequerimiento/Compraasiento.xhtml" actionListener="#{asientoscontablesController.asignarPagoCompra(item.idpagocompra, item)}" > 
+                                <h:graphicImage library="images" name="contable1.png" width="30" height="30" alt="Compras"
+                                                rendered="#{item.idpagocompra!= null? true:false}"/>  
+                            </h:commandLink>  
                             <h:outputText value="#{item.idpagocompra}"/>
                         </p:column>
                         <p:column style="text-align: center">

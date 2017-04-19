@@ -25,10 +25,10 @@
                     </div>      
                     <img src="../resources/images/contabilidadblank.png" width="70" height="70" alt="Clientes" align="right" />
 
-                    <p:panel id="panel1" header="DETALLE DE COMPRA EFECTUADA">
-                        <p:panelGrid columns="3">
-                            <p:fieldset  legend="Datos Requerimiento" >
-                                <p:panelGrid columns="6" styleClass="ui-custompanelgrid1">
+                    <p:panel id="panel1" header="DETALLE DE COMPRA EFECTUADA" >
+                        <p:panelGrid columns="3" >
+                            <p:fieldset  legend="Datos Requerimiento" rendered="#{asientoscontablesController.vercasilla==1 ? true:false}" >
+                                <p:panelGrid columns="4" styleClass="ui-custompanelgrid1">
                                     <p:outputLabel for="numero" value="Solicitud" styleClass="optionalLbl"/>
                                     <p:outputLabel id="numero" value="REQ- #{asientoscontablesController.auxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="usuario" value="Usuario" styleClass="optionalLbl"/>
@@ -49,7 +49,7 @@
                                 </p:panelGrid>
                             </p:fieldset>
                             <p:fieldset  legend="Datos Compra" >
-                                <p:panelGrid columns="6" styleClass="ui-custompanelgrid">
+                                <p:panelGrid columns="4" styleClass="ui-custompanelgrid">
                                     <p:outputLabel for="numeroc" value="Compra" styleClass="optionalLbl"/>
                                     <p:outputLabel id="numeroc" value="CMP- #{asientoscontablesController.compra.idcompra}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="usua" value="Usuario" styleClass="optionalLbl"/>
@@ -68,46 +68,64 @@
                                     <p:outputLabel id="observa" value="#{asientoscontablesController.compra.observacionescompra}" />
                                 </p:panelGrid>                                
                             </p:fieldset>
-                            <!--p:fieldset styleClass="ui-custompanelgrid2" legend="Datos del Pago" >
+                            <p:fieldset styleClass="ui-custompanelgrid2" legend="Datos del Pago" rendered="#{asientoscontablesController.vercasilla==2 ? true:false}" >
                                 <p:panelGrid columns="4">
                                     <p:outputLabel for="usua1" value="USUARIO" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="usua1" value=".{pagosController.usuario.nombre}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="usua1" value="#{asientoscontablesController.compra.idusuario.nombre}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="depto1" value="DEPARTAMENTO" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="depto1" value=".{pagosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="depto1" value="#{asientoscontablesController.compra.idusuario.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="numerofact" value="Numero Factura" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="numerofact" value=".{pagosController.compra.numerofactura}" />
+                                    <p:outputLabel id="numerofact" value="#{asientoscontablesController.compra.numerofactura}" />
                                     <p:outputLabel for="numerocontrol" value="Numero Control" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="numerocontrol" value=".{pagosController.compra.controlfactura}" />
+                                    <p:outputLabel id="numerocontrol" value="#{asientoscontablesController.compra.controlfactura}" />
                                     <p:outputLabel for="fechacompra1" value="Fecha Factura" />
-                                    <p:outputLabel  id="fechacompra1" value=".{pagosController.compra.fechafactura}">
+                                    <p:outputLabel  id="fechacompra1" value="#{asientoscontablesController.compra.fechafactura}">
                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </p:outputLabel>
-                                    <p:outputLabel for="montop" value="Monto a Pagar" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="montop" value=".{pagosController.compra.total}" styleClass="optionalLbl" >
+                                    <p:outputLabel for="montof" value="Monto Factura" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montof" value="#{asientoscontablesController.compra.total}" styleClass="text-ouputfact" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>                                        
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel for="montoretiva" value="IVA Retenido" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montoretiva" value="#{asientoscontablesController.retiva}" styleClass="text-ouputfact" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel for="montoretislr" value="ISLR retenido" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montoretislr" value="#{asientoscontablesController.retislr}" styleClass="text-ouputfact" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel for="montop" value="Monto Pagado" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="montop" value="#{asientoscontablesController.pagocompra.totalpago}" styleClass="text-ouputsaldo" >
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </p:outputLabel>
                                     <p:outputLabel for="fechapago" value="Fecha Pago" />
-                                    <p:outputLabel id="fechapago" value=".{pagosController.compra.fechaorden}" > 
+                                    <p:outputLabel id="fechapago" value="#{asientoscontablesController.pagocompra.fechapago}" > 
                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </p:outputLabel>
                                     <p:outputLabel for="tipopag"  value="Forma de Pago" styleClass="optionalLbl"/>
-                                    <p:outputLabel  id="tipopag" value=".{pagosController.pagocompra.idtipopago.tipopago}"/>
+                                    <p:outputLabel  id="tipopag" value="#{asientoscontablesController.pagocompra.idtipopago.tipopago}"/>
                                     <p:outputLabel for="banco" value="Banco" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="banco" value=".{pagosController.pagocompra.idbanco.nombrebanco}"/>  
+                                    <p:outputLabel id="banco" value="#{asientoscontablesController.pagocompra.idbanco.nombrebanco}"/>  
                                     <p:outputLabel for="cuentabanco" value="Cuenta Bancaria" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="cuentabanco" value=".{pagosController.pagocompra.idcuentabancaria.numerocuenta}" />
+                                    <p:outputLabel id="cuentabanco" value="#{asientoscontablesController.pagocompra.idcuentabancaria.numerocuenta}" />
                                     <p:outputLabel for="saldocuenta" value="Saldo Anterior en Cuenta" styleClass="optionalLbl"/>
-                                    <h:outputText id="saldocuenta" value=".{pagosController.pagocompra.idcuentabancaria.saldo}" styleClass="optionalLbl">
+                                    <h:outputText id="saldocuenta" value="#{asientoscontablesController.pagocompra.idcuentabancaria.saldo}" styleClass="optionalLbl">
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </h:outputText>
                                     <p:outputLabel for="ctareceptora" value="Cta. Receptora" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="ctareceptora" value=".{pagosController.pagocompra.cuentareceptora}" />                                    
+                                    <p:outputLabel id="ctareceptora" value="#{asientoscontablesController.pagocompra.cuentareceptora}" />                                    
                                     <p:outputLabel for="aprobacion" value="Nro. Aprobacion" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="aprobacion" value=".{pagosController.pagocompra.aprobacion}" />
+                                    <p:outputLabel id="aprobacion" value="#{asientoscontablesController.pagocompra.aprobacion}" />
                                     <p:outputLabel for="observa2" value="Observaciones" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="observa2"  value=".{pagosController.pagocompra.observacionespago}" />
+                                    <p:outputLabel id="observa2"  value="#{asientoscontablesController.pagocompra.observacionespago}" />
                                 </p:panelGrid>                                
-                            </p:fieldset-->
+                            </p:fieldset>
                         </p:panelGrid>
                         <!--p:fieldset legend="Datos de Articulos" toggleable="true" toggleSpeed="500" >
                             <p:panelGrid columns="7">
@@ -128,7 +146,7 @@
                             </p:panelGrid>
                         </p:fieldset-->
                     </p:panel>
-                    <p:panel id="panelart"  >
+                    <p:panel id="panelart" rendered="#{asientoscontablesController.vercasilla== 1 ? true:false}">
                         <p:dataTable id="listado" value="#{asientoscontablesController.detallecompraFiltrados}"
                                      var="req" emptyMessage="No hay articulos para mostrar" >
                             <p:column style="width:8%"  headerText="Codigo Articulo">
@@ -189,7 +207,8 @@
                                 <p:outputLabel for="debe" value="DEBE" style="float:right" styleClass="text-ouput" />
                                 <p:outputLabel for="haber" value="HABER" style="float:right" styleClass="text-ouput" />
                                 <p:outputLabel></p:outputLabel>                                
-                                <p:inputText id="codigocta" size="8" value="#{asientoscontablesController.detallelibroventa.idplandecuenta.idplandecuenta}" styleClass="optionalLbl"/>
+                                <p:inputText id="codigocta" size="8" />
+                                <!--value=".{asientoscontablesController.detallelibroventa.idplandecuenta.idplandecuenta}" styleClass="optionalLbl"-->
                                 <p:outputLabel id="descripcioncta" value="#{asientoscontablesController.compra.rifproveedor.razonsocial}"   /> 
                                 <p:outputLabel id="saldoactual" value="#{asientoscontablesController.compra.rifproveedor.rifproveedor}" styleClass="optionalLbl"/>
                                 <p:inputText id="debe"  size="20" value="#{asientoscontablesController.detallelibroventa.debe}" style="text-align:right"/>
