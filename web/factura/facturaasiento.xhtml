@@ -1,0 +1,287 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"> 
+
+    <body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="title">
+                Asiento de Ventas
+                <h:outputStylesheet library="css" name="index.css" />    
+            </ui:define>
+
+            <ui:define name="body">
+                <p:growl id="msgs" showDetail="true" autoUpdate="true" showSummary="false" /> 
+
+                <h:form id="formulario" >
+                    <div id="imag2">
+                        <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca"/>
+                    </div>      
+                    <img src="../resources/images/kwallet2.png" width="70" height="70" alt="Clientes" align="right" />
+
+                    <p:panel id="panel1" header="COBRO DE FACTURAS EMITIDAS">
+                        <p:panelGrid columns="2">
+                            <p:fieldset legend="Datos Facturación" >
+                                <p:panelGrid columns="4" styleClass="ui-custompanelgrid" >
+                                    <p:outputLabel for="numero" value="Numero Factura" styleClass="text-ouput"/>
+                                    <p:outputLabel id="numero" value="#{asientosventasController.factura.numerofact}" styleClass="optionalLbl">
+                                        <f:convertNumber pattern="00000" type="number"/>
+                                    </p:outputLabel>
+                                    <p:outputLabel for="control" styleClass="text-ouput" value="Numero Control" />
+                                    <p:outputLabel id="control" value="#{asientosventasController.factura.numerocontrol}" styleClass="optionalLbl"/>                                  
+                                    <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouput"/>
+                                    <p:outputLabel id="usuario" value="#{asientosventasController.factura.idusuario.nombre}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="cliente" value="Cliente" styleClass="text-ouput"/>
+                                    <p:outputLabel id="cliente" value="#{asientosventasController.factura.rifcliente.razonsocial}"/>
+                                    <p:outputLabel for="rifcliente" value="R.I.F." styleClass="text-ouput"/>
+                                    <p:outputLabel id="rifcliente" value="#{asientosventasController.factura.rifcliente}"/>                                    
+                                    <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouput"/>
+                                    <p:outputLabel id="telefono" value="#{asientosventasController.factura.idusuario.telefono}"/>
+                                    <p:outputLabel for="fechaventa" value="Fecha Facturacion" styleClass="text-ouput" />
+                                    <p:outputLabel id="fechaventa" value="#{asientosventasController.factura.fecha}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                    <p:outputLabel for="resena" value="Observaciones" styleClass="text-ouput"/>
+                                    <p:outputLabel id="resena" value="#{asientosventasController.factura.observacionesfact}" />
+                                </p:panelGrid>
+                            </p:fieldset>
+                            <p:fieldset styleClass="ui-custompanelgrid2" legend="Datos del Cobro" rendered="#{asientosventasController.vercasilla==2 ? true:false}" >>
+                                <p:panelGrid columns="4">
+                                    <p:outputLabel for="fechacobro" value="Fecha Cobro" styleClass="text-ouput" />
+                                    <p:calendar size="15" id="fechacobro" locale="es" pattern="dd/MM/yyyy" value="#{asientosventasController.cobro.fechacobro}" showOn="button" navigator="true" required="true">
+                                    </p:calendar>                                          
+                                    <p:outputLabel for="montofact" value="MONTO POR COBRAR" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montofact" value="#{asientosventasController.factura.saldopendiente}" styleClass="text-ouputcxc" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel for="montoretiva" value="IVA Retenido" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montoretiva" value="#{asientosventasController.detalleretencionivasp.totalivaretenido}" styleClass="text-ouputfact" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel for="montoretislr" value="ISLR retenido" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montoretislr" value="#{asientosventasController.detalleretencionislrsp.totalislrretenido}" styleClass="text-ouputfact" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel for="montop" value="Monto a Cobrar" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montop" value="#{asientosventasController.cobro.montocobrado}" styleClass="text-ouputfact" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+
+                                    <p:outputLabel value="Porción de Cobro" styleClass="text-ouput"/>
+                                    <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
+                                        <p:outputLabel for="console" value="" />
+                                        <p:selectOneRadio id="console" value="#{asientosventasController.mensaje}">
+                                            <f:selectItem itemLabel="Total" itemValue="total"/>
+                                            <f:selectItem itemLabel="Parcial" itemValue="parcial"/>
+                                            <!--f:ajax event="change" render="<Component ID to render>" listener=".{bean--> 
+                                            <p:ajax event="valueChange" 
+                                                    update="contenedorLabel,contenedorComponente" listener="#{asientosventasController.seleccionpagofraccionado()}"   
+                                                    process="@this" > 
+                                            </p:ajax>    
+                                        </p:selectOneRadio>                                        
+                                    </h:panelGrid>                             
+                                    <h:panelGroup id="contenedorLabel" >
+                                        <p:outputLabel value="Cantidad ABONAR" for="observacion" styleClass="text-output"
+                                                       rendered="#{asientosventasController.formacobro>=2 ? true:false}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup id="contenedorComponente">
+                                        <p:inputText value="#{asientosventasController.montocobrado}" id="observacion" size="10"
+                                                     rendered="#{asientosventasController.formacobro>= 2 ? true:false}"/>
+                                    </h:panelGroup>
+                                    <p:outputLabel for="tipopag" value="Forma de Pago" styleClass="text-ouput"/>
+                                    <p:selectOneMenu id="tipopag" value="#{asientosventasController.cobro.idtipopago}" converter="omnifaces.SelectItemsConverter" > 
+                                        <!--f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/-->
+                                        <f:selectItems value="#{asientosventasController.tipopagos}"
+                                                       var="idtpagoItem"
+                                                       itemLabel="#{idtpagoItem.tipopago}"  itemValue="#{idtpagoItem}" /> 
+                                    </p:selectOneMenu>
+                                    <p:outputLabel for="banco" value="Banco" style="text-align: right" styleClass="text-ouput"/>
+                                    <p:selectOneMenu id="banco" value="#{asientosventasController.banco}" converter="omnifaces.SelectItemsConverter"  >  
+                                        <p:ajax event="valueChange" listener="#{asientosventasController.refrescarCuentasBancarias()}" update="cuentabanco, saldocuenta"/>
+                                        <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
+                                        <f:selectItems value="#{asientosventasController.bancos}"
+                                                       var="idbancoItem"
+                                                       itemLabel="#{idbancoItem.nombrebanco}"  itemValue="#{idbancoItem}" /> 
+                                    </p:selectOneMenu>
+                                    <p:outputLabel for="cuentabanco" style="text-align: right" value="Cuenta Bancaria" styleClass="text-ouput"/>
+                                    <p:selectOneMenu id="cuentabanco" value="#{asientosventasController.cobro.idcuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
+                                        <p:ajax event="change" update="saldocuenta"/>                              
+                                        <f:selectItems value="#{asientosventasController.lstCuentasSelecc}"
+                                                       var="cuentaporbancoItem"
+                                                       itemLabel="#{cuentaporbancoItem.numerocuenta}" itemValue="#{cuentaporbancoItem}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel for="saldocuenta" value="Saldo Cuenta" styleClass="text-ouput"/>
+                                    <h:outputText id="saldocuenta" value="#{asientosventasController.cobro.idcuentabancaria.saldo}" styleClass="text-ouputsaldo">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                    <p:outputLabel for="aprobacion" value="Nro. Aprobacion" styleClass="text-ouput"/>
+                                    <p:inputText id="aprobacion" value="#{asientosventasController.cobro.aprobacion}" /> 
+                                    <p:outputLabel for="observaciones" value="Observaciones" styleClass="text-ouput"/>
+                                    <p:inputTextarea id="observaciones" value="#{asientosventasController.cobro.observacionescobro}" rows="2" cols="30" /> 
+                                </p:panelGrid>                                
+                            </p:fieldset>
+                        </p:panelGrid>
+                    </p:panel>
+                    <p:panel id="panelart"  >
+                        <p:dataTable id="listado" value="#{asientosventasController.detallesfacturafiltrados}"
+                                     var="req" emptyMessage="No hay articulos para mostrar" 
+                                     rowStyleClass="#{asientosventasController.visualizar== 6 || asientosventasController.visualizar== 7 ? 'facturaabonadaporcobrar' : null}">
+                            <p:column style="width:8%"  headerText="Codigo Articulo">
+                                <h:outputText value="#{req.codigo.codigo}" />
+                            </p:column>
+                            <p:column style="width:35%"  headerText="Descripcion del Articulo">
+                                <h:outputText value="#{req.codigo.descripcion}"/>  
+                            </p:column>
+                            <p:column style="text-align:center" headerText="Cantidad">                                
+                                <h:outputText style="width:10px"  value="#{req.unidades}"/>
+                            </p:column >
+                            <p:column style="text-align:right" headerText="Precio Unitario ">
+                                <h:outputText style="width:10px"  value="#{req.precioventa}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align:right" headerText="SUB TOTAL">
+                                <h:outputText value="#{req.subtotal}"> 
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align:right" headerText="IVA">
+                                <h:outputText value="#{req.tributoiva}"> 
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align:right" headerText="TOTAL">
+                                <h:outputText value="#{req.total}"> 
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align: center" headerText="Retenciones">                                
+                                <p:commandLink actionListener="#{asientosventasController.asignarDetalleFactura(req)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
+                                    <h:graphicImage library="images" name="balanzapago.png" width="30" height="30" alt="Editar Articulo" 
+                                                    rendered="#{asientosventasController.visualizar== 1 || asientosventasController.visualizar== 2 || asientosventasController.visualizar== 3 || asientosventasController.visualizar== 4? true:false}"/>  
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:columnGroup type="footer">
+                                <p:row>
+                                    <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
+                                    <p:column style="text-align: right"  footerText="#{asientosventasController.factura.bimponiblefact}" /> 
+                                    <p:column style="text-align: right"  footerText="#{asientosventasController.factura.ivafact}" />
+                                    <p:column style="text-align: right"  footerText="#{asientosventasController.factura.totalgeneral}" />                                        
+                                </p:row>
+                            </p:columnGroup>       
+                        </p:dataTable>                                                                            
+                    </p:panel>
+
+                    <p:panel id="panelcontab"> 
+                        <p:fieldset legend="Asiento Contable" >
+                            <p:panelGrid columns="6" styleClass="ui-custompanelgrid2" >
+                                <p:outputLabel for="fechaasiento" value="Fecha" styleClass="text-ouput"/>
+                                <p:calendar id="fechaasiento" style="text-align: right" value="#{asientosventasController.librodiario.fecha}" pattern="dd/MM/yyyy" locale="es" required="true" size="8"/>
+                                <!--p:outputLabel for="ref" styleClass="text-ouput" value="Referencia" />                                 
+                                <p:outputLabel id="ref" styleClass="text-ouputfact" value=".{facturasController.devolversiguientefactura()}" title=".{bundle.CreateFacturaTitle_numerofactura}" /-->
+                                <p:outputLabel for="observac" styleClass="text-ouput" value="Observaciones" />
+                                <p:inputTextarea  id="observac" value="#{asientosventasController.librodiario.descripcionasiento}" cols="70" rows="2" />
+                            </p:panelGrid>                                
+                        </p:fieldset>
+                        <p:fieldset legend="Registros Contables"  toggleable="true" toggleSpeed="500"  >
+                            <p:panelGrid columns="6" styleClass="ui-custompanelgrid3" >
+                                <p:outputLabel for="codigocta" value="Codigo" styleClass="text-ouput"/>
+                                <p:outputLabel for="descripcioncta" value="Cuenta" styleClass="text-ouput"/>
+                                <p:outputLabel for="saldoactual" value="Saldo Cta" styleClass="text-ouput"/>
+                                <p:outputLabel for="debe" value="DEBE" style="float:right" styleClass="text-ouput" />
+                                <p:outputLabel for="haber" value="HABER" style="float:right" styleClass="text-ouput" />
+                                <p:outputLabel></p:outputLabel>                                
+                                <p:inputText id="codigocta" size="8" />
+                                <!--value=".{asientoscontablesController.detallelibroventa.idplandecuenta.idplandecuenta}" styleClass="optionalLbl"-->
+                                <p:outputLabel id="descripcioncta" value="#{asientoscontablesController.compra.rifproveedor.razonsocial}"   /> 
+                                <p:outputLabel id="saldoactual" value="#{asientoscontablesController.compra.rifproveedor.rifproveedor}" styleClass="optionalLbl"/>
+                                <p:inputText id="debe"  size="20" value="#{asientoscontablesController.detallelibroventa.debe}" style="text-align:right"/>
+                                <p:inputText id="haber"  size="20" value="#{asientoscontablesController.detallelibroventa.haber}" style="text-align:right"/>                               
+                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{requerimientosController.anexar()}" update="listado"/>   
+                            </p:panelGrid>                                
+                        </p:fieldset>
+
+                    </p:panel>
+                    <p:panel>
+                        <p:dataTable id="listadoasiento" widgetVar="listadoreq1" value="#{asientosventasController.listadetalleslibrodiario}" 
+                                     var="req1" emptyMessage="No hay cuentas contables para mostrar" rowStyleClass="#{req1.idplandecuenta.idplandecuenta== 12620 ? 'facturaabonada' : null}"
+                                     selectionMode="single" rowKey="#{req1.idplandecuenta.idplandecuenta}">
+                            <p:column style="text-align: center" width="60" headerText="Codigo">
+                                <h:outputText value="#{req1.idplandecuenta.idplandecuenta}" styleClass="text-ouput"/> 
+                            </p:column>
+                            <p:column style="width:35%"  headerText="Cuenta Contable" >
+                                <h:outputText value="#{req1.idplandecuenta.descripcioncuenta}" styleClass="text-ouput"/>
+                            </p:column>
+                            <p:column style="text-align: right" headerText="DEBE">
+                                <h:outputText value="#{req1.debe}" style="width:10px" styleClass="text-debe">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align: right" headerText="HABER">
+                                <h:outputText value="#{req1.haber}" styleClass="text-haber">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column> 
+                            <p:column style="text-align: center" headerText="Editar">                                
+                                <p:commandLink actionListener="#{asientosventasController.asignarDetallelibrodiario(req1)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
+                                    <h:graphicImage library="images" name="apply.png" width="20" height="20" alt="Editar Asiento"/> 
+                                </p:commandLink>
+                            </p:column>
+                            <p:column style="text-align: center" headerText="Eliminar">
+                                <p:commandLink actionListener="#{asientosventasController.eliminar(req1)}" update=":formulario:listadoasiento" >
+                                    <h:graphicImage library="images" name="button_cancel.png" width="20" height="20" alt="Eliminar Asiento"/> 
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:columnGroup type="footer">
+                                <p:row>
+                                    <p:column colspan="2" style="text-align:right" footerText="TOTAL ASIENTO" />
+                                    <p:column style="text-align: right"  footerText="BsF #{asientosventasController.totaldebe()}" />
+                                    <p:column style="text-align: right"  footerText="BsF #{asientosventasController.totalhaber()}" />
+                                </p:row>
+                            </p:columnGroup>                            
+                        </p:dataTable>
+                        <p:commandButton value="Registrar" actionListener="#{asientosventasController.registrar()}" action="/maestromovimiento/List?faces-redirect=true" update=":msgs" 
+                                         rendered  ="#{asientosventasController.totaldebegeneral==asientosventasController.totalhabergeneral ? true:false}"/>
+                        <p:commandButton id= "exit" value="Salir" action="/maestromovimiento/List?faces-redirect=true"/>
+                    </p:panel>
+                </h:form>
+
+                <p:dialog id="dialogo" widgetVar="wdialogo" header="Modificar Cuenta Contable" modal="true" closeOnEscape="true" 
+                          resizable="false" showEffect="explode" appendTo="@(body)"  >
+                    <h:form>
+                        <h:panelGrid  id="display" columns="6">
+                            <p:outputLabel value="Cuenta Contable" for="subespecificocontable" />
+                            <p:selectOneMenu id="subespecificocontable" value="#{asientosventasController.cuentaseleccionada}" 
+                                             converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                <!--p:ajax event="change" update="codigcta"/-->
+                                <!--f:selectItem itemLabel="SIN APLICAR" itemValue="0" noSelectionOption="false" /-->
+                                <f:selectItems value="#{plandecuentaController.itemsordenados}"
+                                               var="subespecificocontableItem"
+                                               itemValue="#{subespecificocontableItem.idplandecuenta}" /> 
+                            </p:selectOneMenu>
+                            <p:outputLabel for="debito1"  value="DEBE" />
+                            <p:inputText id="debito1"  size="10" value="#{asientosventasController.detalleamodificar.debe}" style="text-align:right" />
+                            <p:outputLabel for="credito1"  value="HABER" />
+                            <p:inputText id="credito1"  size="10" value="#{asientosventasController.detalleamodificar.haber}" style="text-align:right"/>
+                            <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{asientosventasController.modificar()}"  
+                                             oncomplete="PF('wdialogo').hide();" update="display,:formulario:listadoasiento,:growl" />
+                            <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
+                        </h:panelGrid>
+                    </h:form>
+                    <h:outputScript library="js" name="spanishLocale.js"/> 
+                </p:dialog>
+            </ui:define>
+        </ui:composition>        
+    </body>
+</html>

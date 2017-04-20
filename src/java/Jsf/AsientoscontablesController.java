@@ -960,7 +960,6 @@ public class AsientoscontablesController implements Serializable {
         } else {
             formapago = 0;
         }
-
     }
 
     public Date fechaactual() {
