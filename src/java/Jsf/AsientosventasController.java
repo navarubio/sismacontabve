@@ -98,7 +98,7 @@ public class AsientosventasController implements Serializable {
     @EJB
     private DetalleretencionivaspFacadeLocal detalleretencionivaspEJB;
     @EJB
-    private DetalleretencionislrspFacadeLocal detalleretencionislrefEJB;
+    private DetalleretencionislrspFacadeLocal detalleretencionislrspEJB;
     @EJB
     private MovimientobancarioFacadeLocal movimientoBancarioEJB;
     @EJB
@@ -113,7 +113,7 @@ public class AsientosventasController implements Serializable {
     private Factura factura;
     private int numeroFact = 0;
     private int visualizar = 0;
-    static Cobroventa cobro;
+    private Cobroventa cobro = new Cobroventa();
     private Cobroventa cobroventa = new Cobroventa();
     static Cuentabancaria cuentabancaria;
     private Detallefactura detallefact;
@@ -440,7 +440,7 @@ public class AsientosventasController implements Serializable {
         tipopagos = tipopagoEJB.findAll();
         cobrosefectuados = cobroventaEJB.findAll();
         bancos = bancoEJB.findAll();
-        cobro = new Cobroventa();
+//        cobro = new Cobroventa();
         cobro.setFechacobro(fechaactual);
         visualizar = 0;
         vercasilla=0;
@@ -560,12 +560,37 @@ public class AsientosventasController implements Serializable {
         librodiario.setFecha(factura.getFecha());
     }
     
+    public void asignarpagofactura (Cobroventa cobro, Maestromovimiento maestro){
+        this.cobro=cobro; 
+        this.factura = cobro.getNumerofact();
+        detallesfacturafiltrados = detallesenfacturaEJB.buscardetallefactura(factura);
+        this.master = maestro;
+        this.vercasilla = 2;
+        this.retiva=0;
+        this.retislr=0;
+        librodiario.setFecha(factura.getFecha());
+        if (cobro.getMontoretenido()>0){
+            this.retiva=detalleretencionivaspEJB.retencionivaencobro(cobro.getNumerofact().getNumerofact());
+            this.retislr=detalleretencionislrspEJB.retencionislrencobro(cobro.getNumerofact().getNumerofact());
+        }
+        listadetalleslibrodiario = detallesasientocobro();
+
+    }
+    
     public List<Detallelibrodiario> detallesasiento() {
         List<Detallelibrodiario> detallesasiento = null;
         anexar();
         detallesasiento = listadetalleslibrodiario;
         return detallesasiento;
     }
+    
+    public List<Detallelibrodiario> detallesasientocobro() {
+        List<Detallelibrodiario> detallesasiento = null;
+        anexarcobro();
+        detallesasiento = listadetalleslibrodiario;
+        return detallesasiento;
+    }
+
     public void anexar() {
         listadetalleslibrodiario.clear();
         id = 0;
@@ -610,6 +635,71 @@ public class AsientosventasController implements Serializable {
         id++;
 
     }
+    
+        public void anexarcobro() {
+        listadetalleslibrodiario.clear();
+        id = 0;
+        visualizar = 0;
+
+
+        Detallelibrodiario detallelibr = new Detallelibrodiario();
+        detallelibr.setIdplandecuenta(cobro.getIdcuentabancaria().getIdplandecuenta());
+        detallelibr.setDebe(cobro.getMontocobrado());
+        detallelibr.setIddetallelibrodiario(id);
+        this.listadetalleslibrodiario.add(detallelibr);
+        id++;
+        
+        if (cobro.getMontoretenido() > 0) {
+            
+            if (cobro.getMontoretenido()==retiva){
+                Detallelibrodiario detallelib = new Detallelibrodiario();
+                int codcta = 116110;
+                Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);
+                detallelib.setIdplandecuenta(cuentaretencioniva);
+                detallelib.setDebe(cobro.getMontoretenido());
+                detallelib.setIddetallelibrodiario(id);
+                this.listadetalleslibrodiario.add(detallelib);
+                id++;                
+            }else if (cobro.getMontoretenido()>retiva){
+                Detallelibrodiario detallelib = new Detallelibrodiario();
+                int codcta = 116110;
+                Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);
+                detallelib.setIdplandecuenta(cuentaretencioniva);
+                detallelib.setDebe(retiva);
+                detallelib.setIddetallelibrodiario(id);
+                this.listadetalleslibrodiario.add(detallelib);
+                id++;
+
+                Detallelibrodiario detallelibr1 = new Detallelibrodiario();
+                int codcta1 = 11625;
+                Plandecuenta cuentaretencionislr = plandecuentaEJB.buscarcuenta(codcta1);
+                detallelibr1.setIdplandecuenta(cuentaretencionislr);
+                detallelibr1.setDebe(retislr);
+                detallelibr1.setIddetallelibrodiario(id);
+                this.listadetalleslibrodiario.add(detallelibr1);
+                id++;
+            }
+        }
+        
+        Detallelibrodiario detallelibro = new Detallelibrodiario();
+
+        int codctahaber = 11215;
+        Plandecuenta cuentaporcobrar = plandecuentaEJB.buscarcuenta(codctahaber);
+        detallelibro.setIdplandecuenta(cuentaporcobrar);
+        if (cobro.getMontopendiente()>0){
+            if (cobro.getMontoretenido()>0){
+                detallelibro.setHaber(cobro.getMontocobrado()+retiva+retislr);
+            }else{  
+                detallelibro.setHaber(cobro.getMontocobrado());
+            }
+        }else {
+            detallelibro.setHaber(cobro.getMontocobrado()+retiva+retislr);
+        }
+        detallelibro.setIddetallelibrodiario(id);
+        this.listadetalleslibrodiario.add(detallelibro);
+        id++;
+    }
+
 
     public List<Detallefactura> detallefacturaAuxiliar() {
         List<Detallefactura> listado = null;
@@ -879,32 +969,6 @@ public class AsientosventasController implements Serializable {
         detalleretencionislrsp.setSustraendo(sustraendo);
     }
 
-    public void grabarRetencion() {
-        try {
-            if (detalleretencionivasp.getTotalivaretenido() >= 1) {
-                detalleretencionivasp.setNumerofact(factura);
-                detalleretencionivasp.setBimponible(factura.getBimponiblefact());
-                detalleretencionivasp.setTotalventa(factura.getTotalgeneral());
-                detalleretencionivasp.setTotalivaretenido(ivaretenido);
-                detalleretencionivaspEJB.create(detalleretencionivasp);
-            }
-            if (detallefactu.getCodigo().getIdgrupo().getIdgrupo() == 2) {
-                detalleretencionislrsp.setNumerofact(factura);
-                detalleretencionislrsp.setTotalventa(factura.getTotalgeneral());
-                detalleretencionislrsp.setBimponible(factura.getBimponiblefact());
-                detalleretencionislrefEJB.create(detalleretencionislrsp);
-            }
-            calcularMontoacobrar();
-            totalretenido = ivaretenido + islrretenido;
-            montocobrado = montoacobrar;
-            visualizar = 7;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Retencion fue Almacenada", "Su Retencion fue Almacenada"));
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Retencion", "Error al Grabar Retencion"));
-        } finally {
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-        }
-    }
     public void verOrdendeCobro(Cobroventa item) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 
         //Instancia hacia la clase reporteClientes        

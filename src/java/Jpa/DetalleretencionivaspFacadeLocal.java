@@ -32,4 +32,6 @@ public interface DetalleretencionivaspFacadeLocal {
     List<Detalleretencionivasp> findRange(int[] range);
 
     int count();
+    
+    double retencionivaencobro(int cobro);
 }

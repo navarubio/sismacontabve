@@ -39,7 +39,7 @@
                             </f:facet>
                             <h:outputText value="#{item.idlibrodiario}"/>
                         </p:column>
-                        <p:column style="text-align: center">
+                        <p:column style="text-align: center" filterBy="#{item.idplandecuenta.idplandecuenta}" filterMatchMode="exact">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_idplandecuenta}"/>
                             </f:facet>

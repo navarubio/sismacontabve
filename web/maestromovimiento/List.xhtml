@@ -101,6 +101,10 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idcobroventa}"/>
                             </f:facet>
+                            <h:commandLink action="/factura/facturaasiento.xhtml" actionListener="#{asientosventasController.asignarpagofactura(item.idcobroventa, item)}" >
+                                <h:graphicImage library="images" name="contable1.png" width="30" height="30" alt="Cobros"
+                                                rendered="#{item.idcobroventa!= null? true:false}"/>  
+                            </h:commandLink>                            
                             <h:outputText value="#{item.idcobroventa}"/>
                         </p:column>
                         <p:column style="text-align: center">

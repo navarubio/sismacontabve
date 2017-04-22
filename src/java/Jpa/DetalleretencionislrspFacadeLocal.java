@@ -33,5 +33,6 @@ public interface DetalleretencionislrspFacadeLocal {
 
     int count();
     
+    double retencionislrencobro(int factu);
     
 }

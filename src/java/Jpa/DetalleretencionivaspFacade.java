@@ -6,9 +6,11 @@
 package Jpa;
 
 import Modelo.Detalleretencionivasp;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,6 +28,27 @@ public class DetalleretencionivaspFacade extends AbstractFacade<Detalleretencion
 
     public DetalleretencionivaspFacade() {
         super(Detalleretencionivasp.class);
+    }
+    
+    @Override
+    public double retencionivaencobro(int factu) {
+        String consulta;
+        Detalleretencionivasp detalle=null;
+        List<Detalleretencionivasp> lista = null;
+        double montoret=0;
+        try {
+            consulta = "From Detalleretencionivasp d where d.numerofact.numerofact= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, factu);
+            lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                detalle = lista.get(0);
+                montoret=detalle.getTotalivaretenido();
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return montoret;
     }
     
 }

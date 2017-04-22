@@ -22,7 +22,7 @@
                     </div>      
                     <img src="../resources/images/kwallet2.png" width="70" height="70" alt="Clientes" align="right" />
 
-                    <p:panel id="panel1" header="COBRO DE FACTURAS EMITIDAS">
+                    <p:panel id="panel1" header="ASIENTO DE COBRO DE FACTURA">
                         <p:panelGrid columns="2">
                             <p:fieldset legend="Datos Facturación" >
                                 <p:panelGrid columns="4" styleClass="ui-custompanelgrid" >
@@ -42,91 +42,52 @@
                                     <p:outputLabel id="telefono" value="#{asientosventasController.factura.idusuario.telefono}"/>
                                     <p:outputLabel for="fechaventa" value="Fecha Facturacion" styleClass="text-ouput" />
                                     <p:outputLabel id="fechaventa" value="#{asientosventasController.factura.fecha}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/> 
                                     </p:outputLabel>
                                     <p:outputLabel for="resena" value="Observaciones" styleClass="text-ouput"/>
                                     <p:outputLabel id="resena" value="#{asientosventasController.factura.observacionesfact}" />
                                 </p:panelGrid>
                             </p:fieldset>
-                            <p:fieldset styleClass="ui-custompanelgrid2" legend="Datos del Cobro" rendered="#{asientosventasController.vercasilla==2 ? true:false}" >>
-                                <p:panelGrid columns="4">
+                            <p:fieldset legend="Datos del Cobro" rendered="#{asientosventasController.vercasilla==2 ? true:false}" >
+                                <p:panelGrid columns="4" styleClass="ui-custompanelgrid2">
                                     <p:outputLabel for="fechacobro" value="Fecha Cobro" styleClass="text-ouput" />
-                                    <p:calendar size="15" id="fechacobro" locale="es" pattern="dd/MM/yyyy" value="#{asientosventasController.cobro.fechacobro}" showOn="button" navigator="true" required="true">
-                                    </p:calendar>                                          
-                                    <p:outputLabel for="montofact" value="MONTO POR COBRAR" styleClass="text-ouput"/>
-                                    <p:outputLabel id="montofact" value="#{asientosventasController.factura.saldopendiente}" styleClass="text-ouputcxc" >
+                                    <p:outputLabel id="fechacobro" value="#{asientosventasController.cobro.fechacobro}" >
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>                                          
+                                    <p:outputLabel for="montofact" value="MONTO FACTURA" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montofact" value="#{asientosventasController.factura.totalgeneral}" styleClass="text-ouputcxc" >
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </p:outputLabel>
                                     <p:outputLabel/>
                                     <p:outputLabel/>
                                     <p:outputLabel for="montoretiva" value="IVA Retenido" styleClass="text-ouput"/>
-                                    <p:outputLabel id="montoretiva" value="#{asientosventasController.detalleretencionivasp.totalivaretenido}" styleClass="text-ouputfact" >
+                                    <p:outputLabel id="montoretiva" value="#{asientosventasController.retiva}" styleClass="text-ouputfact" >
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </p:outputLabel>
                                     <p:outputLabel/>
                                     <p:outputLabel/>
-                                    <p:outputLabel for="montoretislr" value="ISLR retenido" styleClass="text-ouput"/>
-                                    <p:outputLabel id="montoretislr" value="#{asientosventasController.detalleretencionislrsp.totalislrretenido}" styleClass="text-ouputfact" >
+                                    <p:outputLabel for="montoretislr" value="ISLR Retenido" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montoretislr" value="#{asientosventasController.retislr}" styleClass="text-ouputfact" >
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </p:outputLabel>
                                     <p:outputLabel/>
                                     <p:outputLabel/>
-                                    <p:outputLabel for="montop" value="Monto a Cobrar" styleClass="text-ouput"/>
+                                    <p:outputLabel for="montop" value="Monto Cobrado" styleClass="text-ouput"/>
                                     <p:outputLabel id="montop" value="#{asientosventasController.cobro.montocobrado}" styleClass="text-ouputfact" >
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </p:outputLabel>
-
-                                    <p:outputLabel value="Porción de Cobro" styleClass="text-ouput"/>
-                                    <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
-                                        <p:outputLabel for="console" value="" />
-                                        <p:selectOneRadio id="console" value="#{asientosventasController.mensaje}">
-                                            <f:selectItem itemLabel="Total" itemValue="total"/>
-                                            <f:selectItem itemLabel="Parcial" itemValue="parcial"/>
-                                            <!--f:ajax event="change" render="<Component ID to render>" listener=".{bean--> 
-                                            <p:ajax event="valueChange" 
-                                                    update="contenedorLabel,contenedorComponente" listener="#{asientosventasController.seleccionpagofraccionado()}"   
-                                                    process="@this" > 
-                                            </p:ajax>    
-                                        </p:selectOneRadio>                                        
-                                    </h:panelGrid>                             
-                                    <h:panelGroup id="contenedorLabel" >
-                                        <p:outputLabel value="Cantidad ABONAR" for="observacion" styleClass="text-output"
-                                                       rendered="#{asientosventasController.formacobro>=2 ? true:false}"/>
-                                    </h:panelGroup>
-                                    <h:panelGroup id="contenedorComponente">
-                                        <p:inputText value="#{asientosventasController.montocobrado}" id="observacion" size="10"
-                                                     rendered="#{asientosventasController.formacobro>= 2 ? true:false}"/>
-                                    </h:panelGroup>
+                                    <p:outputLabel value="Cantidad ABONADA" for="observacion" styleClass="text-output" rendered="#{asientosventasController.cobro.montopendiente>0 ? true:false}" />
+                                    <p:outputLabel value="#{asientosventasController.cobro.montocobrado}" id="observacion" rendered="#{asientosventasController.cobro.montopendiente>0 ? true:false}"/>
                                     <p:outputLabel for="tipopag" value="Forma de Pago" styleClass="text-ouput"/>
-                                    <p:selectOneMenu id="tipopag" value="#{asientosventasController.cobro.idtipopago}" converter="omnifaces.SelectItemsConverter" > 
-                                        <!--f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/-->
-                                        <f:selectItems value="#{asientosventasController.tipopagos}"
-                                                       var="idtpagoItem"
-                                                       itemLabel="#{idtpagoItem.tipopago}"  itemValue="#{idtpagoItem}" /> 
-                                    </p:selectOneMenu>
+                                    <p:outputLabel id ="tipopag" value="#{asientosventasController.cobro.idtipopago.tipopago}"/>
                                     <p:outputLabel for="banco" value="Banco" style="text-align: right" styleClass="text-ouput"/>
-                                    <p:selectOneMenu id="banco" value="#{asientosventasController.banco}" converter="omnifaces.SelectItemsConverter"  >  
-                                        <p:ajax event="valueChange" listener="#{asientosventasController.refrescarCuentasBancarias()}" update="cuentabanco, saldocuenta"/>
-                                        <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
-                                        <f:selectItems value="#{asientosventasController.bancos}"
-                                                       var="idbancoItem"
-                                                       itemLabel="#{idbancoItem.nombrebanco}"  itemValue="#{idbancoItem}" /> 
-                                    </p:selectOneMenu>
+                                    <p:outputLabel id="banco" value="#{asientosventasController.cobro.idcuentabancaria.idbanco.nombrebanco}" />  
                                     <p:outputLabel for="cuentabanco" style="text-align: right" value="Cuenta Bancaria" styleClass="text-ouput"/>
-                                    <p:selectOneMenu id="cuentabanco" value="#{asientosventasController.cobro.idcuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
-                                        <p:ajax event="change" update="saldocuenta"/>                              
-                                        <f:selectItems value="#{asientosventasController.lstCuentasSelecc}"
-                                                       var="cuentaporbancoItem"
-                                                       itemLabel="#{cuentaporbancoItem.numerocuenta}" itemValue="#{cuentaporbancoItem}"/>
-                                    </p:selectOneMenu>
-                                    <p:outputLabel for="saldocuenta" value="Saldo Cuenta" styleClass="text-ouput"/>
-                                    <h:outputText id="saldocuenta" value="#{asientosventasController.cobro.idcuentabancaria.saldo}" styleClass="text-ouputsaldo">
-                                        <f:convertNumber type="currency" currencySymbol=" " />
-                                    </h:outputText>
+                                    <p:outputLabel id="cuentabanco" value="#{asientosventasController.cobro.idcuentabancaria.numerocuenta}"/> 
                                     <p:outputLabel for="aprobacion" value="Nro. Aprobacion" styleClass="text-ouput"/>
-                                    <p:inputText id="aprobacion" value="#{asientosventasController.cobro.aprobacion}" /> 
+                                    <p:outputLabel id="aprobacion" value="#{asientosventasController.cobro.aprobacion}"/> 
                                     <p:outputLabel for="observaciones" value="Observaciones" styleClass="text-ouput"/>
-                                    <p:inputTextarea id="observaciones" value="#{asientosventasController.cobro.observacionescobro}" rows="2" cols="30" /> 
+                                    <p:outputLabel id="observaciones" value="#{asientosventasController.cobro.observacionescobro}"/> 
                                 </p:panelGrid>                                
                             </p:fieldset>
                         </p:panelGrid>
@@ -164,13 +125,6 @@
                                     <f:convertNumber type="currency" currencySymbol=" " />
                                 </h:outputText>
                             </p:column>
-                            <p:column style="text-align: center" headerText="Retenciones">                                
-                                <p:commandLink actionListener="#{asientosventasController.asignarDetalleFactura(req)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
-                                    <h:graphicImage library="images" name="balanzapago.png" width="30" height="30" alt="Editar Articulo" 
-                                                    rendered="#{asientosventasController.visualizar== 1 || asientosventasController.visualizar== 2 || asientosventasController.visualizar== 3 || asientosventasController.visualizar== 4? true:false}"/>  
-                                </p:commandLink>
-                            </p:column>
-
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
