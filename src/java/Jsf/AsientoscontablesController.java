@@ -681,6 +681,9 @@ public class AsientoscontablesController implements Serializable {
         detallecompraFiltrados = detallecompraAuxiliar();
         listadetalleslibrodiario = detallesasiento();
         librodiario.setFecha(compra.getFechaorden());
+        Detallecompra detal = detallecompraFiltrados.get(0);
+        Articulo artic = detal.getCodigo();
+        librodiario.setDescripcionasiento("P/R COMPRA CMP-"+compra.getIdcompra()+ " "+artic.getDescripcion() );
 //        this.compra.setIdauxiliarrequerimiento(auxiliar);
     }
 
@@ -702,6 +705,7 @@ public class AsientoscontablesController implements Serializable {
         detallecompraFiltrados = detallecompraAuxiliar();
         listadetalleslibrodiario = detallesasientopago();
         librodiario.setFecha(compra.getFechaorden());
+        librodiario.setDescripcionasiento("P/R PAGO DE COMPRA CMP-"+compra.getIdcompra());
 //        this.compra.setIdauxiliarrequerimiento(auxiliar);
     }
 

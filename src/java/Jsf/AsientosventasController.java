@@ -558,6 +558,9 @@ public class AsientosventasController implements Serializable {
         this.retislr=0;
         listadetalleslibrodiario = detallesasiento();
         librodiario.setFecha(factura.getFecha());
+        Detallefactura detal = detallesfacturafiltrados.get(0);
+        Articulo artic = detal.getCodigo();
+        librodiario.setDescripcionasiento("P/R EMISION DE FACTURA N° "+factura.getNumerofact()+" CORRESPONDIENTE A "+artic.getDescripcion());
     }
     
     public void asignarpagofactura (Cobroventa cobro, Maestromovimiento maestro){
@@ -569,11 +572,13 @@ public class AsientosventasController implements Serializable {
         this.retiva=0;
         this.retislr=0;
         librodiario.setFecha(factura.getFecha());
+        
         if (cobro.getMontoretenido()>0){
             this.retiva=detalleretencionivaspEJB.retencionivaencobro(cobro.getNumerofact().getNumerofact());
             this.retislr=detalleretencionislrspEJB.retencionislrencobro(cobro.getNumerofact().getNumerofact());
         }
         listadetalleslibrodiario = detallesasientocobro();
+        librodiario.setDescripcionasiento("P/R COBRO N° "+  cobro.getIdcobroventa()+" CORRESPONDIENTE A LA FACTURA N° "+factura.getNumerofact());
 
     }
     
