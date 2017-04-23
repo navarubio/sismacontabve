@@ -7,6 +7,7 @@ import Jpa.LibromayorFacade;
 import Jpa.LibromayorFacadeLocal;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -109,6 +110,24 @@ public class LibromayorController implements Serializable {
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundlecontabilidad").getString("PersistenceErrorOccured"));
             }
         }
+    }
+    
+    public String getTotalDebe() {
+        int total = 0;
+ 
+        for(Libromayor debe : getItems()) {
+            total += debe.getDebe();
+        }
+        return new DecimalFormat("###,###.###").format(total);
+    }
+    
+    public String getTotalHaber() {
+        int total = 0;
+ 
+        for(Libromayor haber : getItems()) {
+            total += haber.getHaber();
+        }
+        return new DecimalFormat("###,###.###").format(total);
     }
 
     public Libromayor getLibromayor(java.lang.Integer id) {

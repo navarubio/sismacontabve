@@ -147,21 +147,27 @@
                                 <p:inputTextarea  id="observac" value="#{asientosventasController.librodiario.descripcionasiento}" cols="70" rows="2" />
                             </p:panelGrid>                                
                         </p:fieldset>
-                        <p:fieldset legend="Registros Contables"  toggleable="true" toggleSpeed="500"  >
-                            <p:panelGrid columns="6" styleClass="ui-custompanelgrid3" >
-                                <p:outputLabel for="codigocta" value="Codigo" styleClass="text-ouput"/>
+                        <p:fieldset legend="Registros Contables"  toggleable="true" toggleSpeed="500" collapsed="true" >
+                            <p:panelGrid columns="6" styleClass="ui-custompanelgrid3" > 
                                 <p:outputLabel for="descripcioncta" value="Cuenta" styleClass="text-ouput"/>
-                                <p:outputLabel for="saldoactual" value="Saldo Cta" styleClass="text-ouput"/>
+                                <p:outputLabel for="codigocta" value="Codigo" styleClass="text-ouput"/>
+                                <!--p:outputLabel for="saldoactual" value="Saldo Cta" styleClass="text-ouput"/-->
                                 <p:outputLabel for="debe" value="DEBE" style="float:right" styleClass="text-ouput" />
                                 <p:outputLabel for="haber" value="HABER" style="float:right" styleClass="text-ouput" />
                                 <p:outputLabel></p:outputLabel>                                
-                                <p:inputText id="codigocta" size="8" />
-                                <!--value=".{asientoscontablesController.detallelibroventa.idplandecuenta.idplandecuenta}" styleClass="optionalLbl"-->
-                                <p:outputLabel id="descripcioncta" value="#{asientoscontablesController.compra.rifproveedor.razonsocial}"   /> 
-                                <p:outputLabel id="saldoactual" value="#{asientoscontablesController.compra.rifproveedor.rifproveedor}" styleClass="optionalLbl"/>
-                                <p:inputText id="debe"  size="20" value="#{asientoscontablesController.detallelibroventa.debe}" style="text-align:right"/>
-                                <p:inputText id="haber"  size="20" value="#{asientoscontablesController.detallelibroventa.haber}" style="text-align:right"/>                               
-                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{requerimientosController.anexar()}" update="listado"/>   
+                                <p:selectOneMenu id="descripcioncta" value="#{asientosventasController.cuentaseleccionada}" 
+                                                 converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                    <p:ajax event="change" update="codigocta"/>
+                                    <!--f:selectItem itemLabel="SIN APLICAR" itemValue="0" noSelectionOption="false" /-->
+                                    <f:selectItems value="#{plandecuentaController.itemsordenados}"
+                                                   var="subespecificocontableItem"
+                                                   itemValue="#{subespecificocontableItem.idplandecuenta}" /> 
+                                </p:selectOneMenu>
+                                <p:outputLabel id="codigocta" value="#{asientosventasController.cuentaseleccionada}" />
+                                <!--p:outputLabel id="saldoactual" value=".{asientosventasController.detalleaanexar.idplandecuenta.saldogeneral}" styleClass="optionalLbl"/-->
+                                <p:inputText id="debe"  size="20" value="#{asientosventasController.detalleaanexar.debe}" style="text-align:right"/>
+                                <p:inputText id="haber"  size="20" value="#{asientosventasController.detalleaanexar.haber}" style="text-align:right"/>                               
+                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{asientosventasController.anexarregistro()}" update=":formulario:listadoasiento,:growl"/>   
                             </p:panelGrid>                                
                         </p:fieldset>
 

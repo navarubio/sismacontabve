@@ -142,6 +142,7 @@ public class AsientosventasController implements Serializable {
     private double totaldebegeneral = 0;
     private double totalhabergeneral = 0;
     private Detallelibrodiario detalleamodificar;
+    private Detallelibrodiario detalleaanexar= new Detallelibrodiario();
     private int cuentaseleccionada;
     private int indicearreglo = 0;
     private Librodiario codlibrodiario;
@@ -187,6 +188,14 @@ public class AsientosventasController implements Serializable {
 
     public void setTotaldebegeneral(double totaldebegeneral) {
         this.totaldebegeneral = totaldebegeneral;
+    }
+
+    public Detallelibrodiario getDetalleaanexar() {
+        return detalleaanexar;
+    }
+
+    public void setDetalleaanexar(Detallelibrodiario detalleaanexar) {
+        this.detalleaanexar = detalleaanexar;
     }
 
     public double getTotalhabergeneral() {
@@ -719,11 +728,25 @@ public class AsientosventasController implements Serializable {
     }
     
     public void modificar() {
+        
         detalleamodificar.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada));
         listadetalleslibrodiario.set(indicearreglo, detalleamodificar);
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cuenta fue modificada"));
     }
+    public void anexarregistro() {
+        Detallelibrodiario detalleanexo = new Detallelibrodiario();
+        detalleaanexar.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada));        
+        int indic = listadetalleslibrodiario.size();        
+        detalleaanexar.setIddetallelibrodiario(indic);
+        detalleanexo.setIddetallelibrodiario(indic);
+        detalleanexo.setIdplandecuenta(detalleaanexar.getIdplandecuenta());
+        detalleanexo.setDebe(detalleaanexar.getDebe());
+        detalleanexo.setHaber(detalleaanexar.getHaber());
+        this.listadetalleslibrodiario.add(detalleanexo);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cuenta fue modificada"));
+    }
+    
     public void eliminar(Detallelibrodiario detalleld) {
         listadetalleslibrodiario.remove(detalleld.hashCode());
         int indice = 0;

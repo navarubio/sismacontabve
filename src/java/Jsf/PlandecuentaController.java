@@ -11,6 +11,7 @@ import Modelo.Subespecificocontable;
 import Modelo.Subgrupocontable;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -167,6 +168,17 @@ public class PlandecuentaController implements Serializable {
             items = getFacade().itemsordenados();
         }
         return items;
+    }
+    
+    public String getComprobacionTotal() {
+        int total = 0;
+ 
+        for(Plandecuenta plandcta : getItems()) {
+            if (plandcta.getSaldogeneral()!=null){
+                total += plandcta.getSaldogeneral();            
+            }
+        }
+        return new DecimalFormat("###,###.###").format(total);
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

@@ -7,6 +7,7 @@ import Jpa.DetallelibrodiarioFacade;
 import Jpa.DetallelibrodiarioFacadeLocal;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -82,6 +83,25 @@ public class DetallelibrodiarioController implements Serializable {
         }
         return items;
     }
+    
+    public String getTotalDebe() {
+        int total = 0;
+ 
+        for(Detallelibrodiario debe : getItems()) {
+            total += debe.getDebe();
+        }
+        return new DecimalFormat("###,###.###").format(total);
+    }
+    
+    public String getTotalHaber() {
+        int total = 0;
+ 
+        for(Detallelibrodiario haber : getItems()) {
+            total += haber.getHaber();
+        }
+        return new DecimalFormat("###,###.###").format(total);
+    }
+    
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {

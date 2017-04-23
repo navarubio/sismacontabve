@@ -74,6 +74,14 @@
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>
                         </p:column>
+                        <p:columnGroup type="footer">
+                            <p:row>
+                                <p:column colspan="4" style="text-align:right" footerText="Totales:" />
+                                <p:column footerText="#{detallelibrodiarioController.totalDebe}" style="text-align: right" />
+
+                                <p:column footerText="#{detallelibrodiarioController.totalHaber}" style="text-align: right" />
+                            </p:row>
+                        </p:columnGroup>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlecontabilidad.Create}" actionListener="#{detallelibrodiarioController.prepareCreate}" update=":DetallelibrodiarioCreateForm" oncomplete="PF('DetallelibrodiarioCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlecontabilidad.View}" update=":DetallelibrodiarioViewForm" oncomplete="PF('DetallelibrodiarioViewDialog').show()" disabled="#{empty detallelibrodiarioController.selected}"/>

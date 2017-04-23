@@ -133,6 +133,7 @@ public class AsientoscontablesController implements Serializable {
     private Maestromovimiento master;
     private Autorizacion autoriza;
     private Detallecompra detallecompras;
+    private Detallelibrodiario detalleaanexar= new Detallelibrodiario();
     private Pagocompra pagocompra = new Pagocompra();
     private Pagocompra pagocompraver;
     private Estatusfactura statusfactu = null;
@@ -266,6 +267,14 @@ public class AsientoscontablesController implements Serializable {
 
     public double getRetislr() {
         return retislr;
+    }
+
+    public Detallelibrodiario getDetalleaanexar() {
+        return detalleaanexar;
+    }
+
+    public void setDetalleaanexar(Detallelibrodiario detalleaanexar) {
+        this.detalleaanexar = detalleaanexar;
     }
 
     public void setRetislr(double retislr) {
@@ -1125,6 +1134,19 @@ public class AsientoscontablesController implements Serializable {
         detalleamodificar.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada));
         listadetalleslibrodiario.set(indicearreglo, detalleamodificar);
 
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cuenta fue modificada"));
+    }
+    
+    public void anexarregistro() {
+        Detallelibrodiario detalleanexo = new Detallelibrodiario();
+        detalleaanexar.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada));        
+        int indic = listadetalleslibrodiario.size();        
+        detalleaanexar.setIddetallelibrodiario(indic);
+        detalleanexo.setIddetallelibrodiario(indic);
+        detalleanexo.setIdplandecuenta(detalleaanexar.getIdplandecuenta());
+        detalleanexo.setDebe(detalleaanexar.getDebe());
+        detalleanexo.setHaber(detalleaanexar.getHaber());
+        this.listadetalleslibrodiario.add(detalleanexo);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cuenta fue modificada"));
     }
 

@@ -99,6 +99,12 @@
                             </f:facet>
                             <h:outputText value="#{item.idtipopartidacontable.tipopartidacontable}"/>
                         </p:column>
+                         <p:columnGroup type="footer">
+                            <p:row>
+                                <p:column colspan="7" style="text-align:right" footerText="Comprobar Totales:" />
+                                <p:column footerText="#{plandecuentaController.comprobacionTotal}" style="text-align: right" />
+                            </p:row>
+                        </p:columnGroup>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlecontable.Create}" actionListener="#{plandecuentaController.prepareCreate}" update=":PlandecuentaCreateForm" oncomplete="PF('PlandecuentaCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlecontable.View}" update=":PlandecuentaViewForm" oncomplete="PF('PlandecuentaViewDialog').show()" disabled="#{empty plandecuentaController.selected}"/>

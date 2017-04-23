@@ -90,6 +90,15 @@
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>
                         </p:column>
+                        <p:columnGroup type="footer">
+                            <p:row>
+                                <p:column colspan="4" style="text-align:right" footerText="Totales:" />
+                                <p:column></p:column>
+                                <p:column footerText="#{libromayorController.totalDebe}" style="text-align: right" />
+
+                                <p:column footerText="#{libromayorController.totalHaber}" style="text-align: right" />
+                            </p:row>
+                        </p:columnGroup>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlecontabilidad.Create}" actionListener="#{libromayorController.prepareCreate}" update=":LibromayorCreateForm" oncomplete="PF('LibromayorCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlecontabilidad.View}" update=":LibromayorViewForm" oncomplete="PF('LibromayorViewDialog').show()" disabled="#{empty libromayorController.selected}"/>
