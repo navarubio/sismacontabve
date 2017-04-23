@@ -73,7 +73,9 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontable.ListPlandecuentaTitle_saldogeneral}"/>
                             </f:facet>
-                            <h:outputText value="#{item.saldogeneral}"/>
+                            <h:outputText value="#{item.saldogeneral}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
                         </p:column>
                         <p:column style="text-align: right">
                             <f:facet name="header">

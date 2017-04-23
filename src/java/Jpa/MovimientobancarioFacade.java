@@ -6,9 +6,12 @@
 package Jpa;
 
 import Modelo.Movimientobancario;
+import Modelo.Otroingreso;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,6 +29,21 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
 
     public MovimientobancarioFacade() {
         super(Movimientobancario.class);
+    }
+    
+    @Override
+    public List<Movimientobancario> buscarmovimiento (Otroingreso otro) {
+        String consulta;
+        List<Movimientobancario> lista = null;
+        try {
+            consulta = "From Movimientobancario m where m.idotroingreso.idotroingreso= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, otro.getIdotroingreso());
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
     }
     
 }

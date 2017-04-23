@@ -189,6 +189,16 @@
                         </p:dataTable> 
                     </p:panel>
                     <p:panel id="panelcontab"> 
+                         <p:fieldset legend="Asiento Contable" >
+                            <p:panelGrid columns="6" styleClass="ui-custompanelgrid2" >
+                                <p:outputLabel for="fechaasiento" value="Fecha" styleClass="text-ouput"/>
+                                <p:calendar id="fechaasiento" style="text-align: right" value="#{asientoscontablesController.librodiario.fecha}" pattern="dd/MM/yyyy" locale="es" required="true" size="8"/>
+                                <!--p:outputLabel for="ref" styleClass="text-ouput" value="Referencia" />                                 
+                                <p:outputLabel id="ref" styleClass="text-ouputfact" value=".{facturasController.devolversiguientefactura()}" title=".{bundle.CreateFacturaTitle_numerofactura}" /-->
+                                <p:outputLabel for="observac" styleClass="text-ouput" value="Observaciones" />
+                                <p:inputTextarea  id="observac" value="#{asientoscontablesController.librodiario.descripcionasiento}" cols="70" rows="2" />
+                            </p:panelGrid>                                
+                        </p:fieldset>
                         <p:fieldset legend="Registros Contables"  toggleable="true" toggleSpeed="500" collapsed="true" >
                             <p:panelGrid columns="6" styleClass="ui-custompanelgrid3" > 
                                 <p:outputLabel for="descripcioncta" value="Cuenta" styleClass="text-ouput"/>

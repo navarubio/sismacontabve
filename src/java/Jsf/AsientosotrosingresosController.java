@@ -49,6 +49,7 @@ import Modelo.Librodiario;
 import Modelo.Libromayor;
 import Modelo.Maestromovimiento;
 import Modelo.Movimientobancario;
+import Modelo.Otroingreso;
 import Modelo.Pagocompra;
 import Modelo.Plandecuenta;
 import Modelo.Requerimiento;
@@ -81,7 +82,7 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 
-public class AsientoscontablesController implements Serializable {
+public class AsientosotrosingresosController implements Serializable {
 
     @EJB
     private CuentabancariaFacadeLocal cuentabancariaEJB;
@@ -130,6 +131,8 @@ public class AsientoscontablesController implements Serializable {
 
     private Auxiliarrequerimiento auxiliarrequerimiento;
     private Compra compra;
+    @Inject
+    private Otroingreso otroingreso;
     private Maestromovimiento master;
     private Autorizacion autoriza;
     private Detallecompra detallecompras;
@@ -152,7 +155,7 @@ public class AsientoscontablesController implements Serializable {
     private double montopisoretiva = 0;
     private double montopisoretislr = 0;
     private int idAuxiliar = 0;
-    private int idCompra = 0;
+    private int idOtroingreso = 0;
     private int id = 0;
     private int indicearreglo = 0;
     private double totaldebegeneral = 0;
@@ -168,7 +171,7 @@ public class AsientoscontablesController implements Serializable {
     private List<Banco> bancos;
     private List<Cuentabancaria> lstCuentasSelecc;
     private List<Pagocompra> pagosefectuados;
-    private List<Pagocompra> pagoespecifico;
+    private List<Movimientobancario> ingresoespecifico;
     private String mensaje;
     private Date fechaactual = new Date();
     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
@@ -180,7 +183,9 @@ public class AsientoscontablesController implements Serializable {
     @Inject
     private Detalleretencionislref detalleretencionislref;
     @Inject
-    private Movimientobancario movimientobancario;
+    private Movimientobancario movimientoingreso;
+    @Inject
+    private Movimientobancario movimientoegreso;
     private double ivaretenido;
     private double islrretenido;
     private double montoapagar;
@@ -482,6 +487,14 @@ public class AsientoscontablesController implements Serializable {
         this.compra = compra;
     }
 
+    public Otroingreso getOtroingreso() {
+        return otroingreso;
+    }
+
+    public void setOtroingreso(Otroingreso otroingreso) {
+        this.otroingreso = otroingreso;
+    }
+
     public Autorizacion getAutoriza() {
         return autoriza;
     }
@@ -514,12 +527,28 @@ public class AsientoscontablesController implements Serializable {
         this.pagosefectuados = pagosefectuados;
     }
 
-    public List<Pagocompra> getPagoespecifico() {
-        return pagoespecifico;
+    public List<Movimientobancario> getIngresoespecifico() {
+        return ingresoespecifico;
     }
 
-    public void setPagoespecifico(List<Pagocompra> pagoespecifico) {
-        this.pagoespecifico = pagoespecifico;
+    public void setIngresoespecifico(List<Movimientobancario> ingresoespecifico) {
+        this.ingresoespecifico = ingresoespecifico;
+    }
+
+    public Movimientobancario getMovimientoingreso() {
+        return movimientoingreso;
+    }
+
+    public void setMovimientoingreso(Movimientobancario movimientoingreso) {
+        this.movimientoingreso = movimientoingreso;
+    }
+
+    public Movimientobancario getMovimientoegreso() {
+        return movimientoegreso;
+    }
+
+    public void setMovimientoegreso(Movimientobancario movimientoegreso) {
+        this.movimientoegreso = movimientoegreso;
     }
 
     public Empresa getEmpresa() {
@@ -566,157 +595,28 @@ public class AsientoscontablesController implements Serializable {
 //        this.auxiliarrequerimiento=requerimientosController.getAuxrequer();
     }
 
-    public void asignar(Compra compr) {
-        this.tipocompra = 1;
-        this.visualizar = 0;
-        this.totalretenido = 0;
-        this.ivaretenido = 0;
-        this.islrretenido = 0;
-        this.compra = compr;
-        this.pagocompra.setTotalpago(compra.getTotal());
-        this.montoapagar = compra.getTotal();
-        this.idCompra = compr.getIdcompra();
-        this.autoriza = autorizacionEJB.buscarAutorizacion(idCompra);
-        this.auxiliarrequerimiento = compr.getIdauxiliarrequerimiento();
-        detalleretencionivaef.setTotalivaretenido(0.0);
-        detalleretencionislref.setTotalislrretenido(0.0);
-        detalleretencionislref.setSustraendo(0.0);
-        detalleretencionislref.setProcentajeretencion(0.0);
-        detalleretencionivaef.setIdtiporetencioniva(null);
-        detalleretencionislref.setIdtiporetencionislr(null);
-//        this.auxiliar = aux;
-        detallecompraFiltrados = detallecompraAuxiliar();
-        tiporetencionesfiltradasPD = tiporetencionislrEJB.tiporetfiltradaPJyD(compra.getRifproveedor().getIdpersonalidad(), compra.getRifproveedor().getIdresidencia());
-        empresa = empresaEJB.devolverEmpresabase();
-        double montocompra = compra.getTotal();
-        double montoiva = compra.getIva();
-
-        // OJO CON ESTAS VARIABLES PARA CUANDO CAMBIE LA UNIDAD TRIBUTARIA CAMBIARLAS
-        montopisoretiva = (20 * 300);
-        montopisoretislr = 25000;
-        //////////////////////////////////////////////////////////////////////////////
-
-        int personaj = compra.getRifproveedor().getIdpersonalidad().getIdpersonalidad();
-        int residencia = compra.getRifproveedor().getIdresidencia().getIdresidencia();
-        int tipo1;
-        for (Detallecompra tipoc : detallecompraFiltrados) {
-            tipo1 = tipoc.getCodigo().getIdgrupo().getIdgrupo();
-            if (tipo1 == 1 && tipocompra == 1) {
-                tipocompra = 1;
-            } else if (tipo1 == 2) {
-                tipocompra = 2;
-            } else if (tipo1 == 3) {
-                tipocompra = 3;
-            }
-        }
-        if (empresa.getIdcontribuyente().getIdcontribuyente() == 2) {
-            if (montocompra >= montopisoretiva) {
-                if (tipocompra == 3) {
-                    visualizar = 5;
-                } else if (tipocompra == 1) {
-                    if (montoiva > 0) {
-                        visualizar = 1;
-                    } else {
-                        visualizar = 5;
-                    }
-                } else if ((tipocompra == 2) && (personaj == 2) && (residencia == 1)) {
-                    if (montocompra >= montopisoretislr) {
-                        if (montoiva > 0) {
-                            visualizar = 2;
-                        } else {
-                            visualizar = 3;
-                        }
-                    } else {
-                        if (montoiva > 0) {
-                            visualizar = 1;
-                        } else {
-                            visualizar = 5;
-                        }
-                    }
-                } else {
-                    if (montoiva > 0) {
-                        visualizar = 2;
-                    } else {
-                        visualizar = 3;
-                    }
-                }
-            } else {
-                if (tipocompra == 2) {
-                    if ((personaj == 2) && (residencia == 1)) {
-                        visualizar = 5;
-                    } else {
-                        visualizar = 3;
-                    }
-                } else if (tipocompra == 3) {
-                    visualizar = 5;
-                } else if (tipocompra == 1) {
-                    visualizar = 5;
-                }
-            }
-        } else if (empresa.getIdcontribuyente().getIdcontribuyente() == 1 || empresa.getIdcontribuyente().getIdcontribuyente() == 3) {
-            if (tipocompra == 2) {
-                if ((personaj == 2) && (residencia == 1)) {
-                    if (montocompra >= montopisoretislr) {
-                        visualizar = 4;
-                    } else {
-                        visualizar = 5;
-                    }
-                } else {
-                    visualizar = 4;
-                }
-            } else if (tipocompra == 3) {
-                visualizar = 5;
-            } else if (tipocompra == 1) {
-                visualizar = 5;
-            }
-        }
-        calcularMontoapagar();
-        if (compra.getTotal() > (compra.getMontopendiente())) {
-            visualizar = 6;
-        }
-    }
-
-    public void asignarCompra(Compra compr, Maestromovimiento maestro) {
+    public void asignarOtroingreso(Otroingreso otro, Maestromovimiento maestro) {
         this.retiva=0;
         this.retislr=0;
-        this.vercasilla = 1;
-        this.compra = compr;
+        this.vercasilla = 0;
+        this.otroingreso = otro;
         this.master = maestro;
-        this.idCompra = compr.getIdcompra();
-        this.pagoespecifico = pagocompraEJB.buscarpago(compr);
-        this.pagocompra = pagocompraEJB.buscarpagototal(compr);
-        this.auxiliarrequerimiento = compr.getIdauxiliarrequerimiento();
-//        this.auxiliar = aux;
-        detallecompraFiltrados = detallecompraAuxiliar();
-        listadetalleslibrodiario = detallesasiento();
-        librodiario.setFecha(compra.getFechaorden());
-        Detallecompra detal = detallecompraFiltrados.get(0);
-        Articulo artic = detal.getCodigo();
-        librodiario.setDescripcionasiento("P/R COMPRA CMP-"+compra.getIdcompra()+ " "+artic.getDescripcion() );
+        this.idOtroingreso = otro.getIdotroingreso();
+        this.ingresoespecifico = movimientoBancarioEJB.buscarmovimiento(otro);
+        this.movimientoingreso = ingresoespecifico.get(0);
+        int tamaño = ingresoespecifico.size();
+        if (tamaño > 1){
+            this.vercasilla=1;
+            this.movimientoegreso = ingresoespecifico.get(1);
+        }
+//        listadetalleslibrodiario = detallesasiento();
+//        librodiario.setFecha(compra.getFechaorden());
+//        Detallecompra detal = detallecompraFiltrados.get(0);
+ //       Articulo artic = detal.getCodigo();
+ //       librodiario.setDescripcionasiento("P/R COMPRA CMP-"+compra.getIdcompra()+ " "+artic.getDescripcion() );
 //        this.compra.setIdauxiliarrequerimiento(auxiliar);
     }
 
-    public void asignarPagoCompra(Pagocompra pagocompr, Maestromovimiento maestro ) { 
-        this.retiva=0;
-        this.retislr=0;
-        this.vercasilla = 2;
-        this.compra = pagocompr.getIdcompra();
-        this.master = maestro;
-        this.idCompra = pagocompr.getIdcompra().getIdcompra();
-        this.pagoespecifico = pagocompraEJB.buscarpago(compra);
-        this.pagocompra = pagocompr;
-        this.auxiliarrequerimiento = compra.getIdauxiliarrequerimiento();
-        if (pagocompra.getMontoretenido()>0){
-            this.retiva=detalleretencionivaefEJB.retencionivaporpago(pagocompra.getIdpagocompra());
-            this.retislr=detalleretencionislrefEJB.retencionislrporpago(compra.getIdcompra());
-        }
-//        this.auxiliar = aux;
-        detallecompraFiltrados = detallecompraAuxiliar();
-        listadetalleslibrodiario = detallesasientopago();
-        librodiario.setFecha(compra.getFechaorden());
-        librodiario.setDescripcionasiento("P/R PAGO DE COMPRA CMP-"+compra.getIdcompra());
-//        this.compra.setIdauxiliarrequerimiento(auxiliar);
-    }
 
     public List<Detallecompra> detallecompraAuxiliar() {
         List<Detallecompra> listado = null;
@@ -857,124 +757,7 @@ public class AsientoscontablesController implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
     }
-    /*public saldosdecuenta (int codcta){
-     Plandecuenta ctaaactualizar= plandecuentaEJB.buscarcuenta(codcta);
-     List<Libromayor> listamayorcta= libromayorEJB.listacuentaespecifica(codcta);
-     double montotdebe = 0;
-     double montothaber = 0;
-     double totaldebetotal=0;
-     double totalhabertotal=0;
-     double saldototaltotal=0;
-     double debe=0.0;
-     double haber=0.0;
-
-     if (listamayorcta!=null){            
-     for (Libromayor mayoranalitico : listamayorcta) {
-     if (mayoranalitico.getDebe()!=null){
-     montotdebe += mayoranalitico.getDebe();
-     }
-     if (mayoranalitico.getHaber()!=null){
-     montothaber += mayoranalitico.getHaber();            
-     }
-     }
-     totaldebetotal= montotdebe;        
-     totalhabertotal=montothaber;
-     }else{
-     totaldebetotal= debe;
-     totalhabertotal=haber;
-     }      
-        
-     if (ctaaactualizar.getIdtipocuentacontable().getIdtipocuentacontable()==1){
-     saldototaltotal=(((totaldebetotal - totalhabertotal) + debe) - haber);
-     }
-        
-        
-        
-     For s = 1 To Adodc2.Recordset.RecordCount
-     saldoActDebe = Adodc2.Recordset.Fields("debe")
-     saldoTotalDebe = saldoAntDebe + saldoActDebe
-     saldoAntDebe = saldoTotalDebe
-     saldoActDebe = 0
-     saldoActHaber = Adodc2.Recordset.Fields("haber")
-     saldoTotalHaber = saldoAntHaber + saldoActHaber
-     saldoAntHaber = saldoTotalHaber
-     saldoActHaber = 0
-     Adodc2.Recordset.MoveNext
-     Next s
-     If Adodc2.Recordset.RecordCount = 0 Then
-     If debe = "" Then
-     debe = 0
-     ElseIf haber = "" Then
-     haber = 0
-     End If
-     saldoTotalDebe = CDbl(debe)
-     saldoTotalHaber = CDbl(haber)
-     End If
-            
-     If tipoSaldo = True Then
-     If Adodc2.Recordset.RecordCount <> 0 Then
-     SaldoTotalTotal = (((saldoTotalDebe - saldoTotalHaber) + debe) - haber)
-     Else
-     SaldoTotalTotal = (saldoTotalDebe - saldoTotalHaber)
-     End If
-     Else
-     If Adodc2.Recordset.RecordCount <> 0 Then
-     SaldoTotalTotal = ((saldoTotalDebe - saldoTotalHaber) - haber) + debe
-     Else
-     SaldoTotalTotal = (saldoTotalDebe - saldoTotalHaber)
-     End If
-     End If
-     saldoAntDebe = 0
-     saldoAntHaber = 0
-     }*/
-
-    public void grabarRetencion() {
-        try {
-            if (detalleretencionivaef.getTotalivaretenido() >= 1) {
-                detalleretencionivaef.setIdcompra(compra);
-                detalleretencionivaef.setBimponible(compra.getSubtotal());
-                detalleretencionivaef.setTotalcompra(compra.getTotal());
-                detalleretencionivaef.setTotalivaretenido(ivaretenido);
-                detalleretencionivaef.setTotalivacompra(compra.getIva());
-                detalleretencionivaefEJB.create(detalleretencionivaef);
-            }
-            if (detallecompra.getCodigo().getIdgrupo().getIdgrupo() == 2) {
-                detalleretencionislref.setIdcompra(compra);
-                detalleretencionislref.setTotalcompra(compra.getTotal());
-                detalleretencionislref.setBimponible(compra.getSubtotal());
-                detalleretencionislrefEJB.create(detalleretencionislref);
-            }
-            calcularMontoapagar();
-            totalretenido = ivaretenido + islrretenido;
-            visualizar = 7;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Retencion fue Almacenada", ""));
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Retencion", ""));
-        } finally {
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-        }
-    }
-
-    public void calcularMontoapagar() {
-        if (compra.getTotal() > (compra.getMontopendiente())) {
-            montoapagar = compra.getMontopendiente();
-            pagocompra.setTotalpago(montoapagar);
-        } else {
-            montoapagar = (compra.getTotal() - detalleretencionivaef.getTotalivaretenido() - detalleretencionislref.getTotalislrretenido());
-            pagocompra.setTotalpago(montoapagar);
-        }
-    }
-
-    public void seleccionpagofraccionado() {
-        if (mensaje.equals("total")) {
-            formapago = 1;
-        } else if (mensaje.equals("parcial")) {
-            formapago = 2;
-        } else {
-            formapago = 0;
-        }
-    }
-
+    
     public Date fechaactual() {
         Date fecha = new Date();
         return fecha;

@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"> 
+
+    <body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="title">
+                Asiento de Otros Ingreso
+                <h:outputStylesheet library="css" name="index.css" />    
+            </ui:define>
+
+            <ui:define name="body">
+                <p:growl id="msgs" showDetail="true" autoUpdate="true" showSummary="false" /> 
+
+                <h:form id="formulario" >
+                    <div id="imag2">
+                        <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca"/>
+                    </div>      
+                    <img src="../resources/images/monedasbilletes.png" width="70" height="70" alt="Clientes" align="right" />
+
+                    <p:panel id="panel1" header="ASIENTO DE OTROS INGRESOS">
+                        <p:panelGrid columns="1">
+                            <p:fieldset  legend="Datos del Ingreso" >
+                                <p:panelGrid columns="4" styleClass="ui-custompanelgrid1">
+                                    <p:outputLabel for="usuario" value="USUARIO" style="font-weight:bold"  styleClass="text-ouput"/>
+                                    <p:outputLabel id="usuario" value="#{asientosotrosingresosController.otroingreso.idusuario.nombre}" />
+                                    <p:outputLabel for="departamento" style="font-weight:bold"  value="DEPARTAMENTO" styleClass="text-ouput"/>
+                                    <p:outputLabel id="departamento" value="#{asientosotrosingresosController.otroingreso.idusuario.iddepartamento.departamento}"/>
+                                    <p:outputLabel for="fechacobro" value="Fecha Ingreso" styleClass="text-ouput" />
+                                    <p:outputLabel id="fechacobro" value="#{asientosotrosingresosController.otroingreso.fechaingreso}" >
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                    <p:outputLabel for="montofact" value="MONTO INGRESADO" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montofact" value="#{asientosotrosingresosController.otroingreso.montoingresado}" styleClass="text-ouputcxc" style="text-align: right">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+                                    <p:outputLabel for="tipopago" value="Forma de Pago" styleClass="text-ouput"/>
+                                    <p:outputLabel id="tipopago" value="#{asientosotrosingresosController.otroingreso.idtipopago.tipopago}" /> 
+                                    <p:outputLabel for="tipoingreso" value="Tipo Ingreso" styleClass="text-ouput"/>
+                                    <p:outputLabel id="tipoingreso" value="#{asientosotrosingresosController.otroingreso.idtipoingreso.tipoingreso}" /> 
+                                    <p:outputLabel for="observaciones" value="Observaciones" styleClass="text-ouput"/>
+                                    <p:outputLabel id="observaciones" value="#{asientosotrosingresosController.otroingreso.observaciones}" /> 
+                                </p:panelGrid>
+                            </p:fieldset>
+                            <h:panelGroup id="contenedorLabel">
+                                <p:panelGrid columns="2" rendered="#{asientosotrosingresosController.vercasilla== 1 ? true:false}" >
+                                    <p:fieldset  legend="Datos Cuenta Emisora" > 
+                                        <p:panelGrid columns="6" styleClass="ui-custompanelgrid2">
+                                            <p:outputLabel for="bancoemisor" value="Banco Emisor" style="text-align: right" styleClass="text-ouput"/>
+                                            <p:outputLabel id="bancoemisor" value="#{asientosotrosingresosController.movimientoegreso.idcuentabancaria.idbanco.nombrebanco}"/>  
+                                            <p:outputLabel for="cuentabancoemisor" style="text-align: right" value="Cuenta Emisora" styleClass="text-ouput"/>
+                                            <p:outputLabel id="cuentabancoemisor" value="#{asientosotrosingresosController.movimientoegreso.idcuentabancaria.numerocuenta}" />
+                                            <p:outputLabel for="saldocuentaemisoraant" value="Saldo Anterior" styleClass="text-ouput"/>
+                                            <p:outputLabel id= "saldocuentaemisoraant" value="#{asientosotrosingresosController.movimientoegreso.saldoanterior}" styleClass="text-ouputsaldo">
+                                                <f:convertNumber type="currency" currencySymbol=" " />
+                                            </p:outputLabel>
+                                            <p:outputLabel for="montotrapaso" value="Monto Transpado" styleClass="text-ouput"/>
+                                            <p:outputLabel id= "montotrapaso" value="#{asientosotrosingresosController.movimientoegreso.debito}" styleClass="text-ouputsaldo">
+                                                <f:convertNumber type="currency" currencySymbol=" " />
+                                            </p:outputLabel>
+                                            <p:outputLabel for="saldocuentaemisorapos" value="Saldo Resultante" styleClass="text-ouput"/>
+                                            <p:outputLabel id= "saldocuentaemisorapos" value="#{asientosotrosingresosController.movimientoegreso.saldoactual}" styleClass="text-ouputsaldo">
+                                                <f:convertNumber type="currency" currencySymbol=" " />
+                                            </p:outputLabel>
+                                        </p:panelGrid>
+                                    </p:fieldset>
+                                </p:panelGrid>
+                            </h:panelGroup>
+                            <h:panelGroup id="contenedornormal">
+                                <p:panelGrid columns="2" >
+                                    <p:fieldset  legend="Datos Cuenta Receptora" >
+                                        <p:panelGrid columns="6" styleClass="ui-custompanelgrid3">
+                                            <p:outputLabel for="banco" value="Banco Receptor" style="text-align: right" styleClass="text-ouput"/>
+                                            <p:outputLabel id="banco" value="#{asientosotrosingresosController.movimientoingreso.idcuentabancaria.idbanco.nombrebanco}" />  
+                                            <p:outputLabel for="cuentabanco" style="text-align: right" value="Cuenta Receptora" styleClass="text-ouput"/>
+                                            <p:outputLabel id="cuentabanco" value="#{asientosotrosingresosController.movimientoingreso.idcuentabancaria.numerocuenta}"/>
+                                            <p:outputLabel for="saldoanterior" value="Saldo Anterior" styleClass="text-ouput"/>
+                                            <h:outputText id="saldoanterior" value="#{asientosotrosingresosController.movimientoingreso.saldoanterior}" styleClass="text-ouputsaldo">
+                                                <f:convertNumber type="currency" currencySymbol=" " />
+                                            </h:outputText>
+                                            <p:outputLabel for="montorecibido" value="Monto Recibido" styleClass="text-ouput"/>
+                                            <p:outputLabel id= "montorecibido" value="#{asientosotrosingresosController.movimientoingreso.credito}" styleClass="text-ouputsaldo">
+                                                <f:convertNumber type="currency" currencySymbol=" " />
+                                            </p:outputLabel>
+                                            <p:outputLabel for="saldoposterior" value="Saldo Posterior" styleClass="text-ouput"/>
+                                            <h:outputText id="saldoposterior" value="#{asientosotrosingresosController.movimientoingreso.saldoactual}" styleClass="text-ouputsaldo">
+                                                <f:convertNumber type="currency" currencySymbol=" " />
+                                            </h:outputText>
+                                        </p:panelGrid>
+                                    </p:fieldset>
+                                </p:panelGrid>                                
+                            </h:panelGroup>
+                        </p:panelGrid>
+                    </p:panel>
+                    <p:panel id="panelart"  >
+                        <p:commandButton value="Registrar" actionListener="#{otroingresoController.registrar()}" update=":msgs" action="/otroingreso/List?faces-redirect=true"/>
+                        <p:commandButton value="Cancelar" />
+                    </p:panel>
+                </h:form>
+                <h:outputScript library="js" name="spanishLocale.js"/>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

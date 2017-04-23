@@ -31,4 +31,6 @@ public interface MovimientobancarioFacadeLocal {
 
     int count();  
     
+    List<Movimientobancario> buscarmovimiento (Otroingreso otro); 
+    
 }
