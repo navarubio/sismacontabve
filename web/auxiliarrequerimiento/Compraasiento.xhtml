@@ -219,13 +219,13 @@
                                 <!--p:outputLabel id="saldoactual" value=".{asientosventasController.detalleaanexar.idplandecuenta.saldogeneral}" styleClass="optionalLbl"/-->
                                 <p:inputText id="debe"  size="20" value="#{asientoscontablesController.detalleaanexar.debe}" style="text-align:right"/>
                                 <p:inputText id="haber"  size="20" value="#{asientoscontablesController.detalleaanexar.haber}" style="text-align:right"/>                               
-                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{asientoscontablesController.anexarregistro()}" update=":formulario:listadoasiento,:growl"/>   
+                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{asientoscontablesController.anexarregistro()}" update=":formulario:contab,:growl"/>   
                             </p:panelGrid>                                
                         </p:fieldset>
                     </p:panel>
-                    <p:panel>
+                    <p:panel id="contab">
                         <p:dataTable id="listadoasiento" widgetVar="listadoreq1" value="#{asientoscontablesController.listadetalleslibrodiario}" 
-                                     var="req1" emptyMessage="No hay cuentas contables para mostrar" rowStyleClass="#{req1.idplandecuenta.idplandecuenta== 12620 ? 'facturaabonada' : null}"
+                                     var="req1" emptyMessage="No hay cuentas contables para mostrar" rowStyleClass="#{asientoscontablesController.totaldebegeneral==asientoscontablesController.totalhabergeneral ? 'asientocuadrado' : null}"
                                      selectionMode="single" rowKey="#{req1.idplandecuenta.idplandecuenta}">
                             <p:column style="text-align: center" width="60" headerText="Codigo">
                                 <h:outputText value="#{req1.idplandecuenta.idplandecuenta}" styleClass="text-ouput"/> 
@@ -249,7 +249,7 @@
                                 </p:commandLink>
                             </p:column>
                             <p:column style="text-align: center" headerText="Eliminar">
-                                <p:commandLink actionListener="#{asientoscontablesController.eliminar(req1)}" update=":formulario:listadoasiento" >
+                                <p:commandLink actionListener="#{asientoscontablesController.eliminar(req1)}" update=":formulario:contab,listadoasiento" >
                                     <h:graphicImage library="images" name="button_cancel.png" width="20" height="20" alt="Eliminar Asiento"/> 
                                 </p:commandLink>
                             </p:column>
@@ -286,7 +286,7 @@
                             <p:outputLabel for="credito1"  value="HABER" />
                             <p:inputText id="credito1"  size="10" value="#{asientoscontablesController.detalleamodificar.haber}" style="text-align:right"/>
                             <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{asientoscontablesController.modificar()}"  
-                                             oncomplete="PF('wdialogo').hide();" update="display,:formulario:listadoasiento,:growl" />
+                                             oncomplete="PF('wdialogo').hide();" update="display,:formulario:contab,:growl" />
                             <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
                         </h:panelGrid>
                     </h:form>

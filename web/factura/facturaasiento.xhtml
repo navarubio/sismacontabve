@@ -172,10 +172,11 @@
                         </p:fieldset>
 
                     </p:panel>
-                    <p:panel>
+                    <p:panel id="contable">
                         <p:dataTable id="listadoasiento" widgetVar="listadoreq1" value="#{asientosventasController.listadetalleslibrodiario}" 
-                                     var="req1" emptyMessage="No hay cuentas contables para mostrar" rowStyleClass="#{req1.idplandecuenta.idplandecuenta== 12620 ? 'facturaabonada' : null}"
+                                     var="req1" emptyMessage="No hay cuentas contables para mostrar" rowStyleClass="#{asientosventasController.totaldebegeneral==asientosventasController.totalhabergeneral ? 'asientocuadrado' : null}"
                                      selectionMode="single" rowKey="#{req1.idplandecuenta.idplandecuenta}">
+                                    <!--rowStyleClass=".{req1.idplandecuenta.idplandecuenta== 12620 ? 'facturaabonada' : null}"-->
                             <p:column style="text-align: center" width="60" headerText="Codigo">
                                 <h:outputText value="#{req1.idplandecuenta.idplandecuenta}" styleClass="text-ouput"/> 
                             </p:column>
@@ -198,7 +199,7 @@
                                 </p:commandLink>
                             </p:column>
                             <p:column style="text-align: center" headerText="Eliminar">
-                                <p:commandLink actionListener="#{asientosventasController.eliminar(req1)}" update=":formulario:listadoasiento" >
+                                <p:commandLink actionListener="#{asientosventasController.eliminar(req1)}" update=":formulario:contable,listadoasiento" >
                                     <h:graphicImage library="images" name="button_cancel.png" width="20" height="20" alt="Eliminar Asiento"/> 
                                 </p:commandLink>
                             </p:column>
@@ -235,7 +236,7 @@
                             <p:outputLabel for="credito1"  value="HABER" />
                             <p:inputText id="credito1"  size="10" value="#{asientosventasController.detalleamodificar.haber}" style="text-align:right"/>
                             <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{asientosventasController.modificar()}"  
-                                             oncomplete="PF('wdialogo').hide();" update="display,:formulario:listadoasiento,:growl" />
+                                             oncomplete="PF('wdialogo').hide();" update="display,:formulario:contable,:growl" />
                             <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
                         </h:panelGrid>
                     </h:form>

@@ -92,6 +92,12 @@
     color: black ;
     font-weight: bolder;
 }
+.asientocuadrado{
+    border: 1px solid black ;
+    background:  mediumturquoise;
+    color: black ;
+    font-weight: bolder;
+}
 
 #CompraListForm datatable{
     background: none repeat scroll 0 0 #F2F5F9;

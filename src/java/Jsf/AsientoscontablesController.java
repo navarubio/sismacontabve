@@ -1033,15 +1033,19 @@ public class AsientoscontablesController implements Serializable {
         int codctadebe = 21115;
         Plandecuenta cuentaporpagar = plandecuentaEJB.buscarcuenta(codctadebe);
         detallelibro.setIdplandecuenta(cuentaporpagar);
-        if (pagocompra.getSaldopendiente()>0){
-            if (pagocompra.getMontoretenido()>0){
+        double saldop = pagocompra.getSaldopendiente();
+        double montor = pagocompra.getMontoretenido();
+        double totalpg= pagocompra.getTotalpago();
+        double totalcp= compra.getTotal();
+        if (saldop > 0){
+            if (montor > 0){
                 detallelibro.setDebe(pagocompra.getTotalpago()+retiva+retislr);
             }else{  
                 detallelibro.setDebe(pagocompra.getTotalpago());
             }
         }else {
-            if (pagocompra.getTotalpago()<compra.getTotal()){
-                detallelibro.setDebe(pagocompra.getTotalpago());
+            if (totalpg < totalcp){
+                detallelibro.setDebe(pagocompra.getTotalpago()+retiva+retislr);
             }else{
                 detallelibro.setDebe(compra.getTotal());
             }
