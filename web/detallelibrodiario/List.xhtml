@@ -40,7 +40,7 @@
                             </f:facet>
                             <h:outputText value="#{item.iddetallelibrodiario}"/>
                         </p:column>
-                        <p:column style="text-align: center">
+                        <p:column style="text-align: center" filterBy="#{item.idlibrodiario.idlibrodiario}" filterMatchMode="exact">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_idlibrodiario}"/>
                             </f:facet>

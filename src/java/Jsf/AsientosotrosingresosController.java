@@ -580,7 +580,7 @@ public class AsientosotrosingresosController implements Serializable {
     public void init() {
         visualizar = 0;
         vercasilla = 0;
-        tamaño=0;
+        tamaño = 0;
 //        librodiario.setFecha(fechaactual);
         auxiliarrequerimientos = auxiliarrequerimientoEJB.findAll();
         cuentasbancarias = cuentabancariaEJB.findAll();
@@ -611,12 +611,15 @@ public class AsientosotrosingresosController implements Serializable {
         if (tamaño > 1) {
             this.vercasilla = 1;
             this.movimientoegreso = ingresoespecifico.get(1);
+            librodiario.setDescripcionasiento("P/R INGRESO ING- " + otroingreso.getIdotroingreso() + " POR TRASPASO A " + movimientoingreso.getIdcuentabancaria().getIdbanco().getNombrebanco() + " DEDE EL " + movimientoegreso.getIdcuentabancaria().getIdbanco().getNombrebanco());
+        } else {
+            librodiario.setDescripcionasiento("P/R INGRESO ING- " + otroingreso.getIdotroingreso() + " POR CONCEPTO DE " + otroingreso.getIdtipoingreso().getTipoingreso());
         }
         listadetalleslibrodiario = detallesasiento();
         librodiario.setFecha(otroingreso.getFechaingreso());
 //        Detallecompra detal = detallecompraFiltrados.get(0);
         //       Articulo artic = detal.getCodigo();
-        librodiario.setDescripcionasiento("P/R COMPRA ING- "+otroingreso.getIdotroingreso());
+
 //        this.compra.setIdauxiliarrequerimiento(auxiliar);
     }
 
@@ -763,7 +766,7 @@ public class AsientosotrosingresosController implements Serializable {
             detallelibro.setIddetallelibrodiario(id);
             this.listadetalleslibrodiario.add(detallelibro);
             id++;
-        }else{
+        } else {
 
             Detallelibrodiario detallelib = new Detallelibrodiario();
 
