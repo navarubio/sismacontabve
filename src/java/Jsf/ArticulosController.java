@@ -20,12 +20,13 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 
-@ManagedBean(name = "sheduleviewController")
-@SessionScoped
-public class SheduleView implements Serializable {
+@ManagedBean(name = "articulosController")
+@ViewScoped
+public class ArticulosController implements Serializable {
 
     @EJB
     private ArticuloFacadeLocal ejbFacade;
@@ -36,7 +37,7 @@ public class SheduleView implements Serializable {
     @Inject
     private Usuario usa;
 
-    public SheduleView() {
+    public ArticulosController() {
     }
 
     public Articulo getSelected() {
@@ -151,7 +152,7 @@ public class SheduleView implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SheduleView controller = (SheduleView) facesContext.getApplication().getELResolver().
+            ArticulosController controller = (ArticulosController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "articuloController");
             return controller.getFacade().find(getKey(value));
         }

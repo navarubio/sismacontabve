@@ -1,10 +1,10 @@
 package Jsf;
 
-import Modelo.Articulo;
+import Modelo.Auxiliarrequerimiento;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
-import Jpa.ArticuloFacadeLocal;
-import Modelo.Usuario;
+import Jpa.AuxiliarrequerimientoFacade;
+import Jpa.AuxiliarrequerimientoFacadeLocal;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
@@ -20,30 +21,32 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
+import javax.faces.view.ViewScoped;
 import javax.servlet.ServletContext;
 
-@ManagedBean(name = "sheduleviewController")
-@SessionScoped
-public class SheduleView implements Serializable {
+@ManagedBean(name = "auxiliarrequerimientoController1")
+@ViewScoped
+public class AuxiliarrequerimientoController1 implements Serializable {
 
     @EJB
-    private ArticuloFacadeLocal ejbFacade;
-    private List<Articulo> items = null;
-    private double pcosto=0;
-    private double pventa=0;
-    private Articulo selected;
-    @Inject
-    private Usuario usa;
+    private AuxiliarrequerimientoFacadeLocal ejbFacade;
+    private List<Auxiliarrequerimiento> items = null; 
+    private List<Auxiliarrequerimiento> requerimientosactivos = null;
+    private Auxiliarrequerimiento selected;
 
-    public SheduleView() {
+    @PostConstruct
+    public void init (){
+        requerimientosactivos = ejbFacade.buscarrequerimientosActivos();
+    }
+   
+    public AuxiliarrequerimientoController1() {
     }
 
-    public Articulo getSelected() {
+    public Auxiliarrequerimiento getSelected() {
         return selected;
     }
 
-    public void setSelected(Articulo selected) {
+    public void setSelected(Auxiliarrequerimiento selected) {
         this.selected = selected;
     }
 
@@ -53,60 +56,56 @@ public class SheduleView implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private ArticuloFacadeLocal getFacade() {
+    private AuxiliarrequerimientoFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public Articulo prepareCreate() {
-        selected = new Articulo();
-        selected.setPcosto(pcosto);
-        selected.setPventa(pventa);
+    public List<Auxiliarrequerimiento> getRequerimientosactivos() {
+        return requerimientosactivos;
+    }
+
+    public void setRequerimientosactivos(List<Auxiliarrequerimiento> requerimientosactivos) {
+        this.requerimientosactivos = requerimientosactivos;
+    }
+    
+    public List<Auxiliarrequerimiento> buscarRequerimientosActivos() {
+        requerimientosactivos = ejbFacade.buscarrequerimientosActivos();
+        return requerimientosactivos;
+    }
+
+    public Auxiliarrequerimiento prepareCreate() {
+        selected = new Auxiliarrequerimiento();
         initializeEmbeddableKey();
-        usa=getUsuario();
-        selected.setIdusuario(usa);
         return selected;
     }
 
-    public Usuario getUsuario() {
-        Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        usa = us;
-        return us;
-    }
-
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ArticuloCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AuxiliarrequerimientoCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
-
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ArticuloUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AuxiliarrequerimientoUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ArticuloDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("AuxiliarrequerimientoDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Articulo> getItems() {
+    public List<Auxiliarrequerimiento> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
         return items;
     }
-    
-        public List<Articulo> getListaOrdenada() {
-        if (items == null) {
-            items = getFacade().listadoArticulos();
-        }
-        return items;
-    }
 
+    
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
@@ -135,34 +134,38 @@ public class SheduleView implements Serializable {
         }
     }
 
-    public List<Articulo> getItemsAvailableSelectMany() {
+    public Auxiliarrequerimiento getAuxiliarrequerimiento(java.lang.Integer id) {
+        return getFacade().find(id);
+    }
+
+    public List<Auxiliarrequerimiento> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Articulo> getItemsAvailableSelectOne() {
+    public List<Auxiliarrequerimiento> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Articulo.class)
-    public static class ArticuloControllerConverter implements Converter {
+    @FacesConverter(forClass = Auxiliarrequerimiento.class)
+    public static class AuxiliarrequerimientoControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SheduleView controller = (SheduleView) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "articuloController");
+            AuxiliarrequerimientoController1 controller = (AuxiliarrequerimientoController1) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "auxiliarrequerimientoController");
             return controller.getFacade().find(getKey(value));
         }
 
-        java.lang.String getKey(String value) {
-            java.lang.String key;
-            key = value;
+        java.lang.Integer getKey(String value) {
+            java.lang.Integer key;
+            key = Integer.valueOf(value);
             return key;
         }
 
-        String getStringKey(java.lang.String value) {
+        String getStringKey(java.lang.Integer value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -173,17 +176,16 @@ public class SheduleView implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Articulo) {
-                Articulo o = (Articulo) object;
-                return getStringKey(o.getCodigo());
+            if (object instanceof Auxiliarrequerimiento) {
+                Auxiliarrequerimiento o = (Auxiliarrequerimiento) object;
+                return getStringKey(o.getIdauxiliarrequerimiento());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Articulo.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Auxiliarrequerimiento.class.getName()});
                 return null;
             }
         }
 
     }
-    
     public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         
         //Instancia hacia la clase reporteClientes        
@@ -191,7 +193,7 @@ public class SheduleView implements Serializable {
         
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-        String ruta = servletContext.getRealPath("/resources/reportes/articulos.jasper");
+        String ruta = servletContext.getRealPath("/resources/reportes/requerimientos.jasper");
        
         rArticulo.getReporte(ruta);        
         FacesContext.getCurrentInstance().responseComplete();               
