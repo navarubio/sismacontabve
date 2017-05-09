@@ -667,7 +667,7 @@ public class AsientosventasController implements Serializable {
             
             if (cobro.getMontoretenido()==retiva){
                 Detallelibrodiario detallelib = new Detallelibrodiario();
-                int codcta = 116110;
+                int codcta = 124210;
                 Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);
                 detallelib.setIdplandecuenta(cuentaretencioniva);
                 detallelib.setDebe(cobro.getMontoretenido());
@@ -676,7 +676,7 @@ public class AsientosventasController implements Serializable {
                 id++;                
             }else if (cobro.getMontoretenido()>retiva){
                 Detallelibrodiario detallelib = new Detallelibrodiario();
-                int codcta = 116110;
+                int codcta = 124210;
                 Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);
                 detallelib.setIdplandecuenta(cuentaretencioniva);
                 detallelib.setDebe(retiva);
@@ -685,7 +685,7 @@ public class AsientosventasController implements Serializable {
                 id++;
 
                 Detallelibrodiario detallelibr1 = new Detallelibrodiario();
-                int codcta1 = 11625;
+                int codcta1 = 124215;
                 Plandecuenta cuentaretencionislr = plandecuentaEJB.buscarcuenta(codcta1);
                 detallelibr1.setIdplandecuenta(cuentaretencionislr);
                 detallelibr1.setDebe(retislr);

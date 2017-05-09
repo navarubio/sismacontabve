@@ -27,8 +27,8 @@
                                  selectionMode="single" selection="#{movimientobancarioController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idmovimiento}"
-                                 rows="20"
-                                 rowsPerPageTemplate="20,30,40,50"
+                                 rows="25"
+                                 rowsPerPageTemplate="25,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton "/>
@@ -92,12 +92,12 @@
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>
                         </p:column>
-                        <p:column style="text-align: right">
+                        <p:column style="text-align: right" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_saldoactual}"/>
                             </f:facet>
-                            <h:outputText value="#{item.saldoactual}">
-                                <f:convertNumber type="currency" currencySymbol=" " />
+                            <h:outputText value="#{item.saldoactual}" >
+                                <f:convertNumber type="currency" currencySymbol=" "  />
                             </h:outputText>
                         </p:column>
                         <f:facet name="footer">
