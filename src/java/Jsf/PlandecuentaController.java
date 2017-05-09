@@ -171,11 +171,13 @@ public class PlandecuentaController implements Serializable {
     }
     
     public String getComprobacionTotal() {
-        int total = 0;
+        double total = 0;
  
         for(Plandecuenta plandcta : getItems()) {
             if (plandcta.getSaldogeneral()!=null){
-                total += plandcta.getSaldogeneral();            
+                if (plandcta.getSaldogeneral()<0 || plandcta.getSaldogeneral()>0){
+                    total += plandcta.getSaldogeneral();            
+                }
             }
         }
         return new DecimalFormat("###,###.###").format(total);

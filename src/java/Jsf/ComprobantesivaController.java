@@ -43,6 +43,7 @@ public class ComprobantesivaController implements Serializable {
             
     private Detalleretencionivaef detalleretencionivaef;
     private String correlativo="";
+    private int serialcomprob=0;
     private int anio;
     private int mes;
     private String mesfiscal;
@@ -167,6 +168,7 @@ public class ComprobantesivaController implements Serializable {
     public String devolversiguientecomprobante() {
         String siguiente;
         siguiente = comprobanteivaefEJB.siguientecomprobanteformat();
+        serialcomprob= Integer.parseInt (siguiente);
         correlativo=siguiente;
         return siguiente;
     }
@@ -249,6 +251,7 @@ public class ComprobantesivaController implements Serializable {
     @PostConstruct
     public void init() {
         detalleretivafiltrados.clear();
+       
     }
     
     public void verComprobanteretiva(Comprobanteivaef item) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {

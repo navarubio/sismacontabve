@@ -26,7 +26,7 @@
                                            itemValue="#{idbancoItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundlebanco.EditCuentabancariaLabel_idplandecuenta}" for="idplandecuenta" />
-                        <p:selectOneMenu id="idplandecuenta" value="#{cuentabancariaController.selected.idplandecuenta}" >
+                        <p:selectOneMenu id="idplandecuenta" value="#{cuentabancariaController.selected.idplandecuenta}" filter="true" filterMatchMode="contains" >
                             <f:selectItem itemLabel="#{bundlebanco.SelectOneMessage}"/>
                             <f:selectItems value="#{plandecuentaController.itemsordenados}"
                                            var="idplandecuentaItem"
