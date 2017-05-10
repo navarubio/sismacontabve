@@ -19,9 +19,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
 
 @Named("detallecompraController")
-@SessionScoped
+@ViewScoped
 public class DetallecompraController implements Serializable {
 
     @EJB
@@ -55,6 +56,11 @@ public class DetallecompraController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
+    
+    public List<Detallecompra> devolverlistado(){
+        List <Detallecompra> listaactualizada =ejbFacade.findAll();
+        return listaactualizada;
+    } 
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DetallecompraCreated"));

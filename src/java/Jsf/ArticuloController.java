@@ -4,6 +4,8 @@ import Modelo.Articulo;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.ArticuloFacadeLocal;
+import Jpa.PlandecuentaFacadeLocal;
+import Modelo.Plandecuenta;
 import Modelo.Usuario;
 
 import java.io.Serializable;
@@ -14,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -29,14 +32,34 @@ public class ArticuloController implements Serializable {
 
     @EJB
     private ArticuloFacadeLocal ejbFacade;
+    @EJB
+    private PlandecuentaFacadeLocal plandecuentaEJB;
     private List<Articulo> items = null;
     private double pcosto=0;
     private double pventa=0;
     private Articulo selected;
+    private Articulo articuloaclasificar;
+    private int cuentaseleccionada;
     @Inject
     private Usuario usa;
 
     public ArticuloController() {
+    }
+
+    public Articulo getArticuloaclasificar() {
+        return articuloaclasificar;
+    }
+
+    public void setArticuloaclasificar(Articulo articuloaclasificar) {
+        this.articuloaclasificar = articuloaclasificar;
+    }
+
+    public int getCuentaseleccionada() {
+        return cuentaseleccionada;
+    }
+
+    public void setCuentaseleccionada(int cuentaseleccionada) {
+        this.cuentaseleccionada = cuentaseleccionada;
     }
 
     public Articulo getSelected() {
@@ -66,6 +89,18 @@ public class ArticuloController implements Serializable {
         selected.setIdusuario(usa);
         return selected;
     }
+    
+    public void asignarArticulo(Articulo articulo) {        
+        this.selected = ejbFacade.buscarArticulo(articulo.getCodigo());
+    }
+
+        public void modificar() {
+        selected.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada));
+        ejbFacade.edit(selected);
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Articulo fue Asociado"));
+    }
+
 
     public Usuario getUsuario() {
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");

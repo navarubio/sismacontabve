@@ -92,6 +92,12 @@
     color: black ;
     font-weight: bolder;
 }
+.articulosinclasificar{
+    border: 2px solid black ;
+    background: yellowgreen ;
+    color: black ;
+    font-weight: bolder;
+}
 .asientocuadrado{
     border: 1px solid black ;
     background:  mediumturquoise;

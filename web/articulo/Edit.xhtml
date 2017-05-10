@@ -49,7 +49,7 @@
                                            itemValue="#{idgravamenItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditArticuloLabel_cuentacontable}" for="idplandecuenta" />
-                        <p:selectOneMenu id="idplandecuenta" value="#{articuloController.selected.idplandecuenta}" filter="true" filterMatchMode="contains" >
+                        <p:selectOneMenu id="idplandecuenta" value="#{articuloController.selected.idplandecuenta}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{plandecuentaController.itemsAvailableSelectOne}"
                                            var="idplandecuentaItem"
@@ -58,7 +58,7 @@
 
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{articuloController.update}" value="#{bundle.Save}" update="display,:ArticuloListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ArticuloEditDialog');"/>
+                    <p:commandButton actionListener="#{articuloController.modificar()}" value="#{bundle.Save}" update="display,:ArticuloListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ArticuloEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ArticuloEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

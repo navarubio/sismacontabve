@@ -12,6 +12,7 @@ import Modelo.Proveedor;
 import Modelo.Requerimiento;
 import Modelo.Usuario;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,6 +57,7 @@ public class RequerimientosController implements Serializable {
     private String correo;
     private Date fechaactual = new Date();
     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
 
     private Auxiliarrequerimiento codAux;
     private Auxiliarrequerimiento auxiliar;
