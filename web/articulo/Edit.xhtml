@@ -56,9 +56,8 @@
                                            itemValue="#{idplandecuentaItem}"/>
                         </p:selectOneMenu>
 
-
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{articuloController.modificar()}" value="#{bundle.Save}" update="display,:ArticuloListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ArticuloEditDialog');"/>
+                    <p:commandButton actionListener="#{articuloController.update()}" value="#{bundle.Save}" update="display,:ArticuloListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ArticuloEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ArticuloEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

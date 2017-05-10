@@ -113,21 +113,21 @@ public class LibromayorController implements Serializable {
     }
     
     public String getTotalDebe() {
-        int total = 0;
+        double total = 0;
  
         for(Libromayor debe : getItems()) {
             total += debe.getDebe();
         }
-        return new DecimalFormat("###,###.###").format(total);
+        return new DecimalFormat("###,###.##").format(total);
     }
     
     public String getTotalHaber() {
-        int total = 0;
+        double total = 0;
  
         for(Libromayor haber : getItems()) {
             total += haber.getHaber();
         }
-        return new DecimalFormat("###,###.###").format(total);
+        return new DecimalFormat("###,###.##").format(total);
     }
 
     public Libromayor getLibromayor(java.lang.Integer id) {

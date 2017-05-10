@@ -30,7 +30,7 @@ public class DetallelibrodiarioController implements Serializable {
     private Jpa.DetallelibrodiarioFacadeLocal ejbFacade;
     private List<Detallelibrodiario> items = null;
     private Detallelibrodiario selected;
-
+    
     public DetallelibrodiarioController() {
     }
 
@@ -85,21 +85,21 @@ public class DetallelibrodiarioController implements Serializable {
     }
     
     public String getTotalDebe() {
-        int total = 0;
+        double total = 0;
  
         for(Detallelibrodiario debe : getItems()) {
             total += debe.getDebe();
         }
-        return new DecimalFormat("###,###.###").format(total);
+        return new DecimalFormat("###,###.##").format(total);
     }
     
     public String getTotalHaber() {
-        int total = 0;
+        double total = 0;
  
         for(Detallelibrodiario haber : getItems()) {
             total += haber.getHaber();
         }
-        return new DecimalFormat("###,###.###").format(total);
+        return new DecimalFormat("###,###.##").format(total);
     }
     
 
