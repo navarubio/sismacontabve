@@ -53,6 +53,15 @@
                                 <p:menuitem value="Otros Ingresos" outcome="/otroingreso/List.xhtml"/>
                             </p:submenu> 
                         </p:submenu>
+                        <p:submenu label="#{bundle.OperaPica}" icon="ui-icon-bookmark">
+                            <p:menuitem value="Trituración" outcome="/articulo/List.xhtml" />
+                            <p:menuitem value="Equipo Móvil" outcome="/articulo/List.xhtml" />
+                            <p:menuitem value="Inventario Agregados" outcome="/articulo/List.xhtml" />
+                            <p:menuitem value="Despachos" outcome="/factura/newFactura.xhtml" />
+                            <p:menuitem value="Insumos" outcome="/articulo/List.xhtml" />   
+                            <p:menuitem value="Calculos" outcome="/articulo/List.xhtml" />  
+                            <p:menuitem value="Nominas" outcome="/login.xhtml" />  
+                        </p:submenu>                            
                         <p:submenu label="#{bundle.Opera}" icon="ui-icon-cart">
                             <p:menuitem value="Inventario Materia Prima" outcome="/articulo/List.xhtml" />
                             <p:menuitem value="Inventario Insumos" outcome="/articulo/List.xhtml" />   
@@ -60,13 +69,6 @@
                             <p:menuitem value="Calculos Resistencia" outcome="/articulo/List.xhtml" />  
                             <p:menuitem value="Nominas" outcome="/auxiliarrequerimiento/List.xhtml" />  
                         </p:submenu>    
-                        <p:submenu label="#{bundle.OperaPica}" icon="ui-icon-bookmark">
-                            <p:menuitem value="Inventario Materia Prima" outcome="/articulo/List.xhtml" />
-                            <p:menuitem value="Inventario Insumos" outcome="/articulo/List.xhtml" />   
-                            <p:menuitem value="Despachos" outcome="/articulo/List.xhtml" />  
-                            <p:menuitem value="Calculos Triturado" outcome="/articulo/List.xhtml" />  
-                            <p:menuitem value="Nominas" outcome="/login.xhtml" />  
-                        </p:submenu>                            
                         <p:submenu label="#{bundle.Contab}" icon="ui-icon-calculator">
                             <p:submenu label="#{bundletributos.Tributos}" icon="ui-icon-document">
                                 <p:menuitem value="Retenciones IVA efectuadas" outcome="/detalleretencionivaef/List.xhtml"/>
