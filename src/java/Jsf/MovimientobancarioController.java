@@ -1,16 +1,23 @@
 package Jsf;
 
+import Jpa.BancoFacadeLocal;
+import Jpa.CuentabancariaFacadeLocal;
 import Modelo.Movimientobancario;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.MovimientobancarioFacade;
 import Jpa.MovimientobancarioFacadeLocal;
+import Modelo.Banco;
+import Modelo.Cuentabancaria;
 
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
@@ -20,6 +27,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.servlet.ServletContext;
 
 @Named("movimientobancarioController")
 @ViewScoped
@@ -27,8 +35,20 @@ public class MovimientobancarioController implements Serializable {
 
     @EJB
     private Jpa.MovimientobancarioFacadeLocal ejbFacade;
+    @EJB
+    private CuentabancariaFacadeLocal cuentabancariaEJB;
+    @EJB
+    private BancoFacadeLocal bancoEJB;
     private List<Movimientobancario> items = null;
-    private Movimientobancario selected;
+    private Movimientobancario selected=new Movimientobancario();
+    private List<Banco> bancos;
+    private Banco bancoselec;
+    private Cuentabancaria cuentaselec;
+    private Date fechadesde;
+    private Date fechahasta;
+    private List<Cuentabancaria> lstCuentasSelecc;
+   
+    
 
     public MovimientobancarioController() {
     }
@@ -37,8 +57,48 @@ public class MovimientobancarioController implements Serializable {
         return selected;
     }
 
+    public List<Cuentabancaria> getLstCuentasSelecc() {
+        return lstCuentasSelecc;
+    }
+
+    public void setLstCuentasSelecc(List<Cuentabancaria> lstCuentasSelecc) {
+        this.lstCuentasSelecc = lstCuentasSelecc;
+    }
+
     public void setSelected(Movimientobancario selected) {
         this.selected = selected;
+    }
+
+    public Banco getBancoselec() {
+        return bancoselec;
+    }
+
+    public void setBancoselec(Banco bancoselec) {
+        this.bancoselec = bancoselec;
+    }
+
+    public Cuentabancaria getCuentaselec() {
+        return cuentaselec;
+    }
+
+    public void setCuentaselec(Cuentabancaria cuentaselec) {
+        this.cuentaselec = cuentaselec;
+    }
+
+    public Date getFechadesde() {
+        return fechadesde;
+    }
+
+    public void setFechadesde(Date fechadesde) {
+        this.fechadesde = fechadesde;
+    }
+
+    public Date getFechahasta() {
+        return fechahasta;
+    }
+
+    public void setFechahasta(Date fechahasta) {
+        this.fechahasta = fechahasta;
     }
 
     protected void setEmbeddableKeys() {
@@ -51,10 +111,35 @@ public class MovimientobancarioController implements Serializable {
         return ejbFacade;
     }
 
+    public List<Banco> getBancos() {
+        return bancos;
+    }
+
+    public void setBancos(List<Banco> bancos) {
+        this.bancos = bancos;
+    }
+
     public Movimientobancario prepareCreate() {
         selected = new Movimientobancario();
         initializeEmbeddableKey();
         return selected;
+    }
+
+    @PostConstruct
+    public void init() {
+        bancos=bancoEJB.findAll();
+    }
+    public List<Cuentabancaria> refrescarCuentasBancarias() {
+        try {
+            lstCuentasSelecc = cuentabancariaEJB.espxBanco(bancoselec.getIdbanco());
+        } catch (Exception e) {
+        }
+        selected.setIdcuentabancaria(lstCuentasSelecc.get(0));
+        return lstCuentasSelecc;
+    }
+
+    public void actualizar(){
+        items= ejbFacade.buscarmovimientoporfecha(selected.getIdcuentabancaria(), fechadesde, fechahasta);
     }
 
     public void create() {
@@ -163,5 +248,17 @@ public class MovimientobancarioController implements Serializable {
         }
 
     }
+    public void verMovimiento() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 
+        //Instancia hacia la clase reporteClientes        
+        reporteArticulo rArticulo = new reporteArticulo();
+
+        int codigocuenta = selected.getIdcuentabancaria().getIdcuentabancaria();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("/resources/reportes/movimientobancario.jasper");
+
+        rArticulo.getMovimientoBancario(ruta, codigocuenta,fechadesde,fechahasta);
+        FacesContext.getCurrentInstance().responseComplete();
+    }
 }

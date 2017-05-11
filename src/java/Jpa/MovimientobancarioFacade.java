@@ -5,8 +5,10 @@
  */
 package Jpa;
 
+import Modelo.Cuentabancaria;
 import Modelo.Movimientobancario;
 import Modelo.Otroingreso;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -39,6 +41,24 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
             consulta = "From Movimientobancario m where m.idotroingreso.idotroingreso= ?1";
             Query query = em.createQuery(consulta);
             query.setParameter(1, otro.getIdotroingreso());
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Movimientobancario> buscarmovimientoporfecha (Cuentabancaria cuenta, Date fechaini, Date fechafinish) {
+        String consulta;
+        List<Movimientobancario> lista = null;
+        try {
+            consulta = "From Movimientobancario m where m.idcuentabancaria.idcuentabancaria= ?1 and m.fecha between ?2 and ?3";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, cuenta.getIdcuentabancaria());
+            query.setParameter(2, fechaini);
+            query.setParameter(3, fechafinish);
+
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;
