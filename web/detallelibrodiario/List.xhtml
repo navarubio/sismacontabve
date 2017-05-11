@@ -40,9 +40,17 @@
                             </f:facet>
                             <h:outputText value="#{item.iddetallelibrodiario}"/>
                         </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListLibrodiarioTitle_fecha}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idlibrodiario.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
                         <p:column style="text-align: center" filterBy="#{item.idlibrodiario.idlibrodiario}" filterMatchMode="exact">
                             <f:facet name="header">
-                                <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_idlibrodiario}"/>
+                                <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_idasiento}"/>
                             </f:facet>
                             <h:outputText value="#{item.idlibrodiario}"/>
                         </p:column>
@@ -76,7 +84,7 @@
                         </p:column>
                         <p:columnGroup type="footer">
                             <p:row>
-                                <p:column colspan="4" style="text-align:right" footerText="Totales:" />
+                                <p:column colspan="5" style="text-align:right" footerText="Totales:" />
                                 <p:column footerText="#{detallelibrodiarioController.totalDebe}" style="text-align: right" />
 
                                 <p:column footerText="#{detallelibrodiarioController.totalHaber}" style="text-align: right" />

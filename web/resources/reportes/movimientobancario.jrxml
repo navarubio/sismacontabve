@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ddba77e-51be-47ac-8b24-c3354df35f82">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="570"/>
+	<property name="ireport.x" value="594"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="cuenta" class="java.lang.Integer"/>
 	<parameter name="fechaini" class="java.util.Date"/>
@@ -174,15 +174,29 @@ FROM
 				<text><![CDATA[DEBITOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="565" y="4" width="85" height="19" uuid="ddf220f7-08e2-4d13-a97f-412bd337286f"/>
+				<reportElement x="565" y="4" width="32" height="19" uuid="ddf220f7-08e2-4d13-a97f-412bd337286f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[CONCEPTO]]></text>
+				<text><![CDATA[PAGO]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="24" width="752" height="1" uuid="7d8805ed-349d-4fdf-9515-5a4e01698033"/>
 			</line>
+			<staticText>
+				<reportElement x="606" y="4" width="46" height="19" uuid="1026111a-ad9c-4dc0-ae89-2d377a58d824"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COBRO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="656" y="4" width="96" height="19" uuid="c942d66e-adfe-4a87-96ef-11bc745bb933"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INGRESO/TRASPASO]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -236,12 +250,26 @@ FROM
 				</textElement>
 				<textFieldExpression><![CDATA[$F{movimientobancario_fecha}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="556" y="3" width="28" height="19" uuid="fcdf708a-100f-45dc-b448-3d89941ecf9b"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="569" y="2" width="28" height="19" uuid="fcdf708a-100f-45dc-b448-3d89941ecf9b"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{movimientobancario_idpagocompra}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="606" y="2" width="46" height="19" uuid="b1a3bd26-3bef-4300-ad01-8ad8d3b2ccee"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{movimientobancario_idcobroventa}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="656" y="2" width="86" height="19" uuid="40287d39-d64a-4197-a06a-33ce4c9532bb"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{movimientobancario_idotroingreso}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
