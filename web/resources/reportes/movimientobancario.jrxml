@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ddba77e-51be-47ac-8b24-c3354df35f82">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="315"/>
+	<property name="ireport.x" value="570"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="cuenta" class="java.lang.Integer"/>
 	<parameter name="fechaini" class="java.util.Date"/>
@@ -235,6 +235,13 @@ FROM
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{movimientobancario_fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="556" y="3" width="28" height="19" uuid="fcdf708a-100f-45dc-b448-3d89941ecf9b"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{movimientobancario_idpagocompra}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
