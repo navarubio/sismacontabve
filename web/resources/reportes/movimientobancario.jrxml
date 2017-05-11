@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ddba77e-51be-47ac-8b24-c3354df35f82">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ddba77e-51be-47ac-8b24-c3354df35f82">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="315"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="cuenta" class="java.lang.Integer"/>
 	<parameter name="fechaini" class="java.util.Date"/>
@@ -55,7 +55,7 @@ FROM
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="44" splitType="Stretch">
+		<band height="50" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="215" height="13" uuid="1a7b2ecc-6866-457e-969d-177a2086da99"/>
 				<textElement>
@@ -84,39 +84,39 @@ FROM
 		</band>
 	</title>
 	<pageHeader>
-		<band height="23" splitType="Stretch">
+		<band height="28" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="3" width="263" height="20" uuid="34867c07-73a8-48ed-9283-8f2ca4018671"/>
+				<reportElement x="0" y="3" width="427" height="20" uuid="34867c07-73a8-48ed-9283-8f2ca4018671"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Movimientos Bancarios Efectuados ]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="352" y="3" width="86" height="20" uuid="8a1618ae-55db-4bfd-892a-e88fc5ca76e9"/>
-				<textElement textAlignment="Center">
-					<font size="12" isBold="true"/>
+				<reportElement x="502" y="3" width="76" height="20" uuid="8a1618ae-55db-4bfd-892a-e88fc5ca76e9"/>
+				<textElement>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fechaini}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="502" y="3" width="79" height="20" uuid="ee131293-c81b-43fa-9f12-f9ec41fde927"/>
-				<textElement textAlignment="Center">
-					<font size="12" isBold="true"/>
+				<reportElement x="638" y="3" width="79" height="20" uuid="ee131293-c81b-43fa-9f12-f9ec41fde927"/>
+				<textElement>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fechafin}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="298" y="3" width="54" height="20" uuid="a12782d1-9746-497e-a0c3-837bd3f8c9b5"/>
-				<textElement textAlignment="Center">
-					<font size="12" isBold="true"/>
+				<reportElement x="438" y="3" width="64" height="20" uuid="a12782d1-9746-497e-a0c3-837bd3f8c9b5"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Desde:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="448" y="3" width="54" height="20" uuid="fbe50f82-97c3-4db4-9124-9bee01e20628"/>
-				<textElement textAlignment="Center">
-					<font size="12" isBold="true"/>
+				<reportElement x="584" y="3" width="54" height="20" uuid="fbe50f82-97c3-4db4-9124-9bee01e20628"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Hasta:]]></text>
 			</staticText>
@@ -126,112 +126,115 @@ FROM
 		<band height="25" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="4" width="57" height="20" uuid="67466b27-1919-471e-a9c0-d8c58651b4f7"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="57" y="4" width="72" height="20" uuid="c3d1b701-c5d1-4c06-aafb-3efc4b5915ef"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[BANCO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="129" y="4" width="113" height="20" uuid="07b03ad7-74e4-46e9-bf19-1bd21d576f7d"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CUENTA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="242" y="4" width="85" height="20" uuid="38855cd7-dfb8-4edd-ada4-37fc12b40c74"/>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SALDO ANTERIOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="378" y="4" width="60" height="21" uuid="9e60caad-2501-4c9b-8af6-015026238256"/>
-				<textElement textAlignment="Right">
+				<reportElement x="378" y="4" width="60" height="20" uuid="9e60caad-2501-4c9b-8af6-015026238256"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CREDITOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="438" y="4" width="85" height="19" uuid="dc84d994-5c7c-446f-883b-feb704f7d549"/>
-				<textElement textAlignment="Right">
+				<reportElement x="438" y="4" width="102" height="19" uuid="dc84d994-5c7c-446f-883b-feb704f7d549"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SALDO ACTUAL]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="327" y="4" width="51" height="20" uuid="f230e4a1-5fca-4f7e-88ad-7e52e9165429"/>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DEBITOS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="565" y="4" width="85" height="19" uuid="ddf220f7-08e2-4d13-a97f-412bd337286f"/>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CONCEPTO]]></text>
 			</staticText>
+			<line>
+				<reportElement x="0" y="24" width="752" height="1" uuid="7d8805ed-349d-4fdf-9515-5a4e01698033"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="26" splitType="Stretch">
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="0" y="2" width="57" height="20" uuid="e7b709d4-477b-481a-af4e-adb782078559"/>
-				<textElement textAlignment="Center">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{movimientobancario_fecha}]]></textFieldExpression>
-			</textField>
+		<band height="23" splitType="Stretch">
 			<textField>
-				<reportElement x="57" y="0" width="72" height="20" uuid="f4cfbcf0-2d9c-45e4-900c-11c389bc202e"/>
+				<reportElement x="57" y="2" width="72" height="20" uuid="f4cfbcf0-2d9c-45e4-900c-11c389bc202e"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{banco_nombrebanco}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="129" y="0" width="113" height="20" uuid="8a32f7fa-8ec1-443e-afd4-595c597c4e05"/>
+				<reportElement x="129" y="2" width="113" height="20" uuid="8a32f7fa-8ec1-443e-afd4-595c597c4e05"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cuentabancaria_numerocuenta}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="242" y="0" width="74" height="20" uuid="2cee8ad1-4bef-4e6c-81c8-dceb5bf54051"/>
+				<reportElement x="242" y="2" width="74" height="20" uuid="2cee8ad1-4bef-4e6c-81c8-dceb5bf54051"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{movimientobancario_saldoanterior}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="327" y="0" width="51" height="20" uuid="816af8a7-255a-45a8-a006-162ea15efc27"/>
+				<reportElement x="316" y="2" width="62" height="20" forecolor="#CC3300" uuid="816af8a7-255a-45a8-a006-162ea15efc27"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{movimientobancario_debito}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="378" y="0" width="60" height="20" uuid="193fbe09-cbd9-4c51-b6eb-6197eb659600"/>
+				<reportElement x="378" y="2" width="60" height="20" forecolor="#006633" uuid="193fbe09-cbd9-4c51-b6eb-6197eb659600"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{movimientobancario_credito}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="448" y="0" width="75" height="20" uuid="59c44fb4-c3d9-4aa9-a5a4-a00d3e755b9d"/>
+				<reportElement x="448" y="2" width="75" height="20" uuid="59c44fb4-c3d9-4aa9-a5a4-a00d3e755b9d"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{movimientobancario_saldoactual}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="2" width="57" height="20" uuid="e7b709d4-477b-481a-af4e-adb782078559"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{movimientobancario_fecha}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
