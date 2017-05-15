@@ -4,6 +4,7 @@ import Modelo.Tipoconjunto;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.TipoconjuntoFacade;
+import Jpa.TipoconjuntoFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +25,7 @@ import javax.faces.convert.FacesConverter;
 public class TipoconjuntoController implements Serializable {
 
     @EJB
-    private Jpa.TipoconjuntoFacade ejbFacade;
+    private Jpa.TipoconjuntoFacadeLocal ejbFacade;
     private List<Tipoconjunto> items = null;
     private Tipoconjunto selected;
 
@@ -45,7 +46,7 @@ public class TipoconjuntoController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private TipoconjuntoFacade getFacade() {
+    private TipoconjuntoFacadeLocal getFacade() {
         return ejbFacade;
     }
 

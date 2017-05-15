@@ -179,7 +179,7 @@ public class PlandecuentasController implements Serializable {
                 }
             }
         }
-        return new DecimalFormat("###,###.###").format(total);
+        return new DecimalFormat("###,###.##").format(total);
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

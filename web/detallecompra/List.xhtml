@@ -41,7 +41,7 @@
                             </f:facet>
                             <h:outputText value="DTC-#{item.iddetallecompra}"/>
                         </p:column>
-                        <p:column width="60" sortBy="#{item.idcompra.idcompra}">
+                        <p:column width="60" filterBy="#{item.idcompra.idcompra}" filterMatchMode="contains" filterStyle="width:60px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDetallecompraTitle_idcompra}"/>
                             </f:facet>
@@ -55,7 +55,7 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column width="60">
+                        <p:column width="60" filterBy="#{item.codigo.codigo}" filterMatchMode="contains" filterStyle="width:60px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDetallecompraTitle_codigo}"/>
                             </f:facet>
@@ -113,7 +113,6 @@
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{detallecompraController.prepareCreate}" update=":DetallecompraCreateForm" oncomplete="PF('DetallecompraCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":DetallecompraViewForm" oncomplete="PF('DetallecompraViewDialog').show()" disabled="#{empty detallecompraController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":DetallecompraEditForm" oncomplete="PF('DetallecompraEditDialog').show()" disabled="#{empty detallecompraController.selected}"/>
-                            <!--p:commandButton id="clasifButton"   icon="ui-icon-pencil" value=".{bundle.Clasif}" update=":DetallecompraEditForm" oncomplete="PF('DetallecompraEditDialog').show()" disabled=".{empty articuloController.selected.codigo}"/-->                            
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{detallecompraController.destroy}" update=":growl,datalist" disabled="#{empty detallecompraController.selected}"/>
                         </f:facet>
                     </p:dataTable>
@@ -122,7 +121,6 @@
 
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
-            <!--ui:include src="../articulo/Edit.xhtml"/-->            
             <ui:include src="View.xhtml"/>
 
             <p:dialog id="dialogo" widgetVar="wdialogo" header="Asociar Cuenta Contable al Articulo" modal="true" closeOnEscape="true" 

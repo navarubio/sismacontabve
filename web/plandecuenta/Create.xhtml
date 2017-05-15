@@ -80,7 +80,7 @@
                         <p:outputLabel value="#{bundlecontable.CreatePlandecuentaLabel_fujodeefectivo}" for="fujodeefectivo" />
                         <p:inputText id="fujodeefectivo" value="#{plandecuentaController.selected.fujodeefectivo}" title="#{bundlecontable.CreatePlandecuentaTitle_fujodeefectivo}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{plandecuentaController.create}" value="#{bundlecontable.Save}" update="display,:PlandecuentaListForm:datalist,:growl" oncomplete="handleSubmit(args,'PlandecuentaCreateDialog');"/>
+                <p:commandButton actionListener="#{plandecuentaController.create}" value="#{bundlecontable.Save}" update="display,:PlandecuentaListForm:datalist,:growl" oncomplete="handleSubmit(args,'PlandecuentaCreateDialog');"/>
                     <p:commandButton value="#{bundlecontable.Cancel}" onclick="PlandecuentaCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

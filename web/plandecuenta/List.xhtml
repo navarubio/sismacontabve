@@ -14,6 +14,8 @@
         </ui:define>
 
         <ui:define name="body">
+            <p:growl id="msgs" showDetail="true" autoUpdate="true" showSummary="false" /> 
+            
             <h:form id="PlandecuentaListForm">
                 <p:panel header="#{bundlecontable.ListPlandecuentaTitle}">
                     <p:dataTable id="datalist" value="#{plandecuentasController.itemsordenados}" var="item"

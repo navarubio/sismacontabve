@@ -90,8 +90,9 @@ public class ArticuloController implements Serializable {
         return selected;
     }
     
-    public void asignarArticulo(Articulo articulo) {        
+    public void asignarArticulo(Articulo articulo) {
         this.selected = ejbFacade.buscarArticulo(articulo.getCodigo());
+        this.articuloaclasificar=selected;
     }
 
         public void modificar() {

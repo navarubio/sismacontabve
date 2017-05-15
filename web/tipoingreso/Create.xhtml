@@ -16,6 +16,13 @@
                         <p:inputText id="idtipoingreso" value="#{tipoingresoController.selected.idtipoingreso}" title="#{bundleingreso.CreateTipoingresoTitle_idtipoingreso}" required="true" requiredMessage="#{bundleingreso.CreateTipoingresoRequiredMessage_idtipoingreso}"/>
                         <p:outputLabel value="#{bundleingreso.CreateTipoingresoLabel_tipoingreso}" for="tipoingreso" />
                         <p:inputText id="tipoingreso" value="#{tipoingresoController.selected.tipoingreso}" title="#{bundleingreso.CreateTipoingresoTitle_tipoingreso}" />
+                        <p:outputLabel value="#{bundle.EditArticuloLabel_cuentacontable}" for="idplandecuenta" />
+                        <p:selectOneMenu id="idplandecuenta" value="#{tipoingresoController.selected.idplandecuenta}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{plandecuentaController.itemsordenados}"
+                                           var="idplandecuentaItem"
+                                           itemValue="#{idplandecuentaItem}"/>
+                        </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{tipoingresoController.create}" value="#{bundleingreso.Save}" update="display,:TipoingresoListForm:datalist,:growl" oncomplete="handleSubmit(args,'TipoingresoCreateDialog');"/>
                     <p:commandButton value="#{bundleingreso.Cancel}" onclick="TipoingresoCreateDialog.hide()"/>

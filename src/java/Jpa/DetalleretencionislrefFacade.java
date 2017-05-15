@@ -37,7 +37,7 @@ public class DetalleretencionislrefFacade extends AbstractFacade<Detalleretencio
         String rifprovee = rif;
         List<Detalleretencionislref> lista = null;
         try {
-            consulta = "From Detalleretencionislref d where d.idcompra.rifproveedor.rifproveedor= ?1";
+            consulta = "From Detalleretencionislref d where d.idcompra.rifproveedor.rifproveedor= ?1 AND d.idcomprobanteislref=null";
             Query query = em.createQuery(consulta);
             query.setParameter(1, rifprovee);
             lista = query.getResultList();

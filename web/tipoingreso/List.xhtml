@@ -16,7 +16,7 @@
         <ui:define name="body">
             <h:form id="TipoingresoListForm">
                 <p:panel header="#{bundleingreso.ListTipoingresoTitle}">
-                    <p:dataTable id="datalist" value="#{tipoingresoController.items}" var="item" style="width:500px"
+                    <p:dataTable id="datalist" value="#{tipoingresoController.items}" var="item" style="width:1000px"
                                  selectionMode="single" selection="#{tipoingresoController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idtipoingreso}"
@@ -27,18 +27,31 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column width="80">
                             <f:facet name="header">
                                 <h:outputText value="#{bundleingreso.ListTipoingresoTitle_idtipoingreso}"/>
                             </f:facet>
                             <h:outputText value="#{item.idtipoingreso}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="250">
                             <f:facet name="header">
                                 <h:outputText value="#{bundleingreso.ListTipoingresoTitle_tipoingreso}"/>
                             </f:facet>
                             <h:outputText value="#{item.tipoingreso}"/>
                         </p:column>
+                        <p:column width="80" style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleingreso.ListTipoingresoTitle_idcuentacontable}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idplandecuenta.idplandecuenta}"/>
+                        </p:column>
+                        <p:column width="350">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleingreso.ListTipoingresoTitle_cuentacontable}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idplandecuenta.descripcioncuenta}"/>
+                        </p:column>
+                        
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleingreso.Create}" actionListener="#{tipoingresoController.prepareCreate}" update=":TipoingresoCreateForm" oncomplete="PF('TipoingresoCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundleingreso.View}" update=":TipoingresoViewForm" oncomplete="PF('TipoingresoViewDialog').show()" disabled="#{empty tipoingresoController.selected}"/>

@@ -20,9 +20,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
 
 @Named("detallefacturaController")
-@SessionScoped
+@ViewScoped
 public class DetallefacturaController implements Serializable {
 
     @EJB
@@ -57,6 +58,11 @@ public class DetallefacturaController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
+    
+    public List<Detallefactura> devolverlistado(){
+        List <Detallefactura> listaactualizada =ejbFacade.findAll();
+        return listaactualizada;
+    } 
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundlefactura").getString("DetallefacturaCreated"));
