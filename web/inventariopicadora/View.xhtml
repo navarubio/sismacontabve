@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="InventariopicadoraViewDlg" widgetVar="InventariopicadoraViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.ViewInventariopicadoraTitle}">
+            <h:form id="InventariopicadoraViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{inventariopicadoraController.selected != null}">
+                        <h:outputText value="#{bundlepicadora.ViewInventariopicadoraLabel_idinventariopicadora}"/>
+                        <h:outputText value="#{inventariopicadoraController.selected.idinventariopicadora}" title="#{bundlepicadora.ViewInventariopicadoraTitle_idinventariopicadora}"/>
+                        <h:outputText value="#{bundlepicadora.ViewInventariopicadoraLabel_codigo}"/>
+                        <h:outputText value="#{inventariopicadoraController.selected.codigo}" title="#{bundlepicadora.ViewInventariopicadoraTitle_codigo}"/>
+                        <h:outputText value="#{bundlepicadora.ViewInventariopicadoraLabel_cantidad}"/>
+                        <h:outputText value="#{inventariopicadoraController.selected.cantidad}" title="#{bundlepicadora.ViewInventariopicadoraTitle_cantidad}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlepicadora.Close}" onclick="InventariopicadoraViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

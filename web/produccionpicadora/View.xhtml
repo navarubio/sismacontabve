@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProduccionpicadoraViewDlg" widgetVar="ProduccionpicadoraViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.ViewProduccionpicadoraTitle}">
+            <h:form id="ProduccionpicadoraViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{produccionpicadoraController.selected != null}">
+                        <h:outputText value="#{bundlepicadora.ViewProduccionpicadoraLabel_idproduccionpicadora}"/>
+                        <h:outputText value="#{produccionpicadoraController.selected.idproduccionpicadora}" title="#{bundlepicadora.ViewProduccionpicadoraTitle_idproduccionpicadora}"/>
+                        <h:outputText value="#{bundlepicadora.ViewProduccionpicadoraLabel_fecha}"/>
+                        <h:outputText value="#{produccionpicadoraController.selected.fecha}" title="#{bundlepicadora.ViewProduccionpicadoraTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundlepicadora.ViewProduccionpicadoraLabel_horastrituracion}"/>
+                        <h:outputText value="#{produccionpicadoraController.selected.horastrituracion}" title="#{bundlepicadora.ViewProduccionpicadoraTitle_horastrituracion}"/>
+                        <h:outputText value="#{bundlepicadora.ViewProduccionpicadoraLabel_observaciones}"/>
+                        <h:outputText value="#{produccionpicadoraController.selected.observaciones}" title="#{bundlepicadora.ViewProduccionpicadoraTitle_observaciones}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlepicadora.Close}" onclick="ProduccionpicadoraViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

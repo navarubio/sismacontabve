@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundlepicadora.ListDetalleproduccionpicadoraTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="DetalleproduccionpicadoraListForm">
+                <p:panel header="#{bundlepicadora.ListDetalleproduccionpicadoraTitle}">
+                    <p:dataTable id="datalist" value="#{detalleproduccionpicadoraController.items}" var="item"
+                                 selectionMode="single" selection="#{detalleproduccionpicadoraController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.iddetalleproduccionpicadora}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListDetalleproduccionpicadoraTitle_iddetalleproduccionpicadora}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.iddetalleproduccionpicadora}"/>
+                        </p:column>
+                        <p:column style="text-align: center" filterBy="#{item.codigo.codigo}" filterMatchMode="contains" filterStyle="width:60px;" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_codigo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codigo.codigo}"/>
+                        </p:column>
+
+                        <p:column width="300" filterBy="#{item.codigo.descripcion}" filterMatchMode="contains" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_articulo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codigo.descripcion}"/>
+                        </p:column>                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListDetalleproduccionpicadoraTitle_cantidad}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cantidad}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListDetalleproduccionpicadoraTitle_idproduccionpicadora}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idproduccionpicadora}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlepicadora.Create}" actionListener="#{detalleproduccionpicadoraController.prepareCreate}" update=":DetalleproduccionpicadoraCreateForm" oncomplete="PF('DetalleproduccionpicadoraCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlepicadora.View}" update=":DetalleproduccionpicadoraViewForm" oncomplete="PF('DetalleproduccionpicadoraViewDialog').show()" disabled="#{empty detalleproduccionpicadoraController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundlepicadora.Edit}" update=":DetalleproduccionpicadoraEditForm" oncomplete="PF('DetalleproduccionpicadoraEditDialog').show()" disabled="#{empty detalleproduccionpicadoraController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundlepicadora.Delete}" actionListener="#{detalleproduccionpicadoraController.destroy}" update=":growl,datalist" disabled="#{empty detalleproduccionpicadoraController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

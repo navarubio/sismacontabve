@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MaquinariapicadoraViewDlg" widgetVar="MaquinariapicadoraViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.ViewMaquinariapicadoraTitle}">
+            <h:form id="MaquinariapicadoraViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{maquinariapicadoraController.selected != null}">
+                        <h:outputText value="#{bundlepicadora.ViewMaquinariapicadoraLabel_idmaquinariapicadora}"/>
+                        <h:outputText value="#{maquinariapicadoraController.selected.idmaquinariapicadora}" title="#{bundlepicadora.ViewMaquinariapicadoraTitle_idmaquinariapicadora}"/>
+                        <h:outputText value="#{bundlepicadora.ViewMaquinariapicadoraLabel_descripcion}"/>
+                        <h:outputText value="#{maquinariapicadoraController.selected.descripcion}" title="#{bundlepicadora.ViewMaquinariapicadoraTitle_descripcion}"/>
+                        <h:outputText value="#{bundlepicadora.ViewMaquinariapicadoraLabel_precio1}"/>
+                        <h:outputText value="#{maquinariapicadoraController.selected.precio1}" title="#{bundlepicadora.ViewMaquinariapicadoraTitle_precio1}"/>
+                        <h:outputText value="#{bundlepicadora.ViewMaquinariapicadoraLabel_precio2}"/>
+                        <h:outputText value="#{maquinariapicadoraController.selected.precio2}" title="#{bundlepicadora.ViewMaquinariapicadoraTitle_precio2}"/>
+                        <h:outputText value="#{bundlepicadora.ViewMaquinariapicadoraLabel_idtipomaquinaria}"/>
+                        <h:outputText value="#{maquinariapicadoraController.selected.idtipomaquinaria}" title="#{bundlepicadora.ViewMaquinariapicadoraTitle_idtipomaquinaria}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlepicadora.Close}" onclick="MaquinariapicadoraViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundlepicadora.ListDetalledespachopicadoraTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="DetalledespachopicadoraListForm">
+                <p:panel header="#{bundlepicadora.ListDetalledespachopicadoraTitle}">
+                    <p:dataTable id="datalist" value="#{detalledespachopicadoraController.items}" var="item"
+                                 selectionMode="single" selection="#{detalledespachopicadoraController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.iddetalledespachopicadora}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListDetalledespachopicadoraTitle_iddetalledespachopicadora}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.iddetalledespachopicadora}"/>
+                        </p:column>
+                        <p:column style="text-align: center" filterBy="#{item.codigo.codigo}" filterMatchMode="contains" filterStyle="width:60px;" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_codigo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codigo.codigo}"/>
+                        </p:column>
+
+                        <p:column width="300" filterBy="#{item.codigo.descripcion}" filterMatchMode="contains" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_articulo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codigo.descripcion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListDetalledespachopicadoraTitle_cantidad}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cantidad}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListDetalledespachopicadoraTitle_precioventa}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.precioventa}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListDetalledespachopicadoraTitle_subtotal}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.subtotal}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListDetalledespachopicadoraTitle_iva}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.iva}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListDetalledespachopicadoraTitle_totalgeneral}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.totalgeneral}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListDetalledespachopicadoraTitle_iddespachopicadora}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.iddespachopicadora}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlepicadora.Create}" actionListener="#{detalledespachopicadoraController.prepareCreate}" update=":DetalledespachopicadoraCreateForm" oncomplete="PF('DetalledespachopicadoraCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlepicadora.View}" update=":DetalledespachopicadoraViewForm" oncomplete="PF('DetalledespachopicadoraViewDialog').show()" disabled="#{empty detalledespachopicadoraController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundlepicadora.Edit}" update=":DetalledespachopicadoraEditForm" oncomplete="PF('DetalledespachopicadoraEditDialog').show()" disabled="#{empty detalledespachopicadoraController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundlepicadora.Delete}" actionListener="#{detalledespachopicadoraController.destroy}" update=":growl,datalist" disabled="#{empty detalledespachopicadoraController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

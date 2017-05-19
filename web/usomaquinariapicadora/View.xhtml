@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsomaquinariapicadoraViewDlg" widgetVar="UsomaquinariapicadoraViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.ViewUsomaquinariapicadoraTitle}">
+            <h:form id="UsomaquinariapicadoraViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usomaquinariapicadoraController.selected != null}">
+                        <h:outputText value="#{bundlepicadora.ViewUsomaquinariapicadoraLabel_idusomaquinariapicadora}"/>
+                        <h:outputText value="#{usomaquinariapicadoraController.selected.idusomaquinariapicadora}" title="#{bundlepicadora.ViewUsomaquinariapicadoraTitle_idusomaquinariapicadora}"/>
+                        <h:outputText value="#{bundlepicadora.ViewUsomaquinariapicadoraLabel_fecha}"/>
+                        <h:outputText value="#{usomaquinariapicadoraController.selected.fecha}" title="#{bundlepicadora.ViewUsomaquinariapicadoraTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundlepicadora.ViewUsomaquinariapicadoraLabel_cantidad}"/>
+                        <h:outputText value="#{usomaquinariapicadoraController.selected.cantidad}" title="#{bundlepicadora.ViewUsomaquinariapicadoraTitle_cantidad}"/>
+                        <h:outputText value="#{bundlepicadora.ViewUsomaquinariapicadoraLabel_precio}"/>
+                        <h:outputText value="#{usomaquinariapicadoraController.selected.precio}" title="#{bundlepicadora.ViewUsomaquinariapicadoraTitle_precio}"/>
+                        <h:outputText value="#{bundlepicadora.ViewUsomaquinariapicadoraLabel_subtotal}"/>
+                        <h:outputText value="#{usomaquinariapicadoraController.selected.subtotal}" title="#{bundlepicadora.ViewUsomaquinariapicadoraTitle_subtotal}"/>
+                        <h:outputText value="#{bundlepicadora.ViewUsomaquinariapicadoraLabel_iva}"/>
+                        <h:outputText value="#{usomaquinariapicadoraController.selected.iva}" title="#{bundlepicadora.ViewUsomaquinariapicadoraTitle_iva}"/>
+                        <h:outputText value="#{bundlepicadora.ViewUsomaquinariapicadoraLabel_total}"/>
+                        <h:outputText value="#{usomaquinariapicadoraController.selected.total}" title="#{bundlepicadora.ViewUsomaquinariapicadoraTitle_total}"/>
+                        <h:outputText value="#{bundlepicadora.ViewUsomaquinariapicadoraLabel_idmaquinariapicadora}"/>
+                        <h:outputText value="#{usomaquinariapicadoraController.selected.idmaquinariapicadora}" title="#{bundlepicadora.ViewUsomaquinariapicadoraTitle_idmaquinariapicadora}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlepicadora.Close}" onclick="UsomaquinariapicadoraViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

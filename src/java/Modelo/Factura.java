@@ -58,6 +58,8 @@ public class Factura implements Serializable {
     private Collection<Detallefactura> detallefacturaCollection;
     @OneToMany(mappedBy = "numerofact")
     private Collection<Cobroventa> cobroventaCollection;
+    @OneToMany(mappedBy = "numerofact")
+    private Collection<Despachopicadora> despachopicadoraCollection;
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -275,6 +277,15 @@ public class Factura implements Serializable {
         this.cobroventaCollection = CobroventaCollection;
     }
 
+    @XmlTransient
+    public Collection<Despachopicadora> getDespachopicadoraCollection() {
+        return despachopicadoraCollection;
+    }
+
+    public void setDespachopicadoraCollection(Collection<Despachopicadora> despachopicadoraCollection) {
+        this.despachopicadoraCollection = despachopicadoraCollection;
+    }
+    
     @XmlTransient
     public Collection<Detalleretencionivasp> getDetalleretencionivaspCollection() {
         return detalleretencionivaspCollection;

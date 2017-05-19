@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalledespachopicadoraCreateDlg" widgetVar="DetalledespachopicadoraCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.CreateDetalledespachopicadoraTitle}">
+            <h:form id="DetalledespachopicadoraCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detalledespachopicadoraController.selected != null}">
+                        <p:outputLabel value="#{bundlepicadora.CreateDetalledespachopicadoraLabel_iddetalledespachopicadora}" for="iddetalledespachopicadora" />
+                        <p:inputText id="iddetalledespachopicadora" value="#{detalledespachopicadoraController.selected.iddetalledespachopicadora}" title="#{bundlepicadora.CreateDetalledespachopicadoraTitle_iddetalledespachopicadora}" required="true" requiredMessage="#{bundlepicadora.CreateDetalledespachopicadoraRequiredMessage_iddetalledespachopicadora}"/>
+                        <p:outputLabel value="#{bundlepicadora.CreateDetalledespachopicadoraLabel_cantidad}" for="cantidad" />
+                        <p:inputText id="cantidad" value="#{detalledespachopicadoraController.selected.cantidad}" title="#{bundlepicadora.CreateDetalledespachopicadoraTitle_cantidad}" />
+                        <p:outputLabel value="#{bundlepicadora.CreateDetalledespachopicadoraLabel_precioventa}" for="precioventa" />
+                        <p:inputText id="precioventa" value="#{detalledespachopicadoraController.selected.precioventa}" title="#{bundlepicadora.CreateDetalledespachopicadoraTitle_precioventa}" />
+                        <p:outputLabel value="#{bundlepicadora.CreateDetalledespachopicadoraLabel_subtotal}" for="subtotal" />
+                        <p:inputText id="subtotal" value="#{detalledespachopicadoraController.selected.subtotal}" title="#{bundlepicadora.CreateDetalledespachopicadoraTitle_subtotal}" />
+                        <p:outputLabel value="#{bundlepicadora.CreateDetalledespachopicadoraLabel_iva}" for="iva" />
+                        <p:inputText id="iva" value="#{detalledespachopicadoraController.selected.iva}" title="#{bundlepicadora.CreateDetalledespachopicadoraTitle_iva}" />
+                        <p:outputLabel value="#{bundlepicadora.CreateDetalledespachopicadoraLabel_totalgeneral}" for="totalgeneral" />
+                        <p:inputText id="totalgeneral" value="#{detalledespachopicadoraController.selected.totalgeneral}" title="#{bundlepicadora.CreateDetalledespachopicadoraTitle_totalgeneral}" />
+                        <p:outputLabel value="#{bundlepicadora.CreateDetalledespachopicadoraLabel_iddespachopicadora}" for="iddespachopicadora" />
+                        <p:selectOneMenu id="iddespachopicadora" value="#{detalledespachopicadoraController.selected.iddespachopicadora}" >
+                            <f:selectItems value="#{despachopicadoraController.itemsAvailableSelectOne}"
+                                           var="iddespachopicadoraItem"
+                                           itemValue="#{iddespachopicadoraItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detalledespachopicadoraController.create}" value="#{bundlepicadora.Save}" update="display,:DetalledespachopicadoraListForm:datalist,:growl" oncomplete="handleSubmit(args,'DetalledespachopicadoraCreateDialog');"/>
+                    <p:commandButton value="#{bundlepicadora.Cancel}" onclick="DetalledespachopicadoraCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

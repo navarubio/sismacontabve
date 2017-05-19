@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipotrabajomaquinariaEditDlg" widgetVar="TipotrabajomaquinariaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.EditTipotrabajomaquinariaTitle}">
+            <h:form id="TipotrabajomaquinariaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tipotrabajomaquinariaController.selected != null}">
+                        <p:outputLabel value="#{bundlepicadora.EditTipotrabajomaquinariaLabel_idtipotrabajomaquinaria}" for="idtipotrabajomaquinaria" />
+                        <p:inputText id="idtipotrabajomaquinaria" value="#{tipotrabajomaquinariaController.selected.idtipotrabajomaquinaria}" title="#{bundlepicadora.EditTipotrabajomaquinariaTitle_idtipotrabajomaquinaria}" required="true" requiredMessage="#{bundlepicadora.EditTipotrabajomaquinariaRequiredMessage_idtipotrabajomaquinaria}"/>
+                        <p:outputLabel value="#{bundlepicadora.EditTipotrabajomaquinariaLabel_tipotrabajomaquinaria}" for="tipotrabajomaquinaria" />
+                        <p:inputText id="tipotrabajomaquinaria" value="#{tipotrabajomaquinariaController.selected.tipotrabajomaquinaria}" title="#{bundlepicadora.EditTipotrabajomaquinariaTitle_tipotrabajomaquinaria}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipotrabajomaquinariaController.update}" value="#{bundlepicadora.Save}" update="display,:TipotrabajomaquinariaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TipotrabajomaquinariaEditDialog');"/>
+                    <p:commandButton value="#{bundlepicadora.Cancel}" onclick="TipotrabajomaquinariaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

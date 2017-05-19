@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MaquinariapicadoraCreateDlg" widgetVar="MaquinariapicadoraCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.CreateMaquinariapicadoraTitle}">
+            <h:form id="MaquinariapicadoraCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{maquinariapicadoraController.selected != null}">
+                        <p:outputLabel value="#{bundlepicadora.CreateMaquinariapicadoraLabel_idmaquinariapicadora}" for="idmaquinariapicadora" />
+                        <p:inputText id="idmaquinariapicadora" value="#{maquinariapicadoraController.selected.idmaquinariapicadora}" title="#{bundlepicadora.CreateMaquinariapicadoraTitle_idmaquinariapicadora}" required="true" requiredMessage="#{bundlepicadora.CreateMaquinariapicadoraRequiredMessage_idmaquinariapicadora}"/>
+                        <p:outputLabel value="#{bundlepicadora.CreateMaquinariapicadoraLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{maquinariapicadoraController.selected.descripcion}" title="#{bundlepicadora.CreateMaquinariapicadoraTitle_descripcion}" />
+                        <p:outputLabel value="#{bundlepicadora.CreateMaquinariapicadoraLabel_precio1}" for="precio1" />
+                        <p:inputText id="precio1" value="#{maquinariapicadoraController.selected.precio1}" title="#{bundlepicadora.CreateMaquinariapicadoraTitle_precio1}" />
+                        <p:outputLabel value="#{bundlepicadora.CreateMaquinariapicadoraLabel_precio2}" for="precio2" />
+                        <p:inputText id="precio2" value="#{maquinariapicadoraController.selected.precio2}" title="#{bundlepicadora.CreateMaquinariapicadoraTitle_precio2}" />
+                        <p:outputLabel value="#{bundlepicadora.CreateMaquinariapicadoraLabel_idtipomaquinaria}" for="idtipomaquinaria" />
+                        <p:selectOneMenu id="idtipomaquinaria" value="#{maquinariapicadoraController.selected.idtipomaquinaria}" >
+                            <f:selectItems value="#{tipomaquinariaController.itemsAvailableSelectOne}"
+                                           var="idtipomaquinariaItem"
+                                           itemValue="#{idtipomaquinariaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{maquinariapicadoraController.create}" value="#{bundlepicadora.Save}" update="display,:MaquinariapicadoraListForm:datalist,:growl" oncomplete="handleSubmit(args,'MaquinariapicadoraCreateDialog');"/>
+                    <p:commandButton value="#{bundlepicadora.Cancel}" onclick="MaquinariapicadoraCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

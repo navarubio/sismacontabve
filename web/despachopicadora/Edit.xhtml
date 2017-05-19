@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DespachopicadoraEditDlg" widgetVar="DespachopicadoraEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.EditDespachopicadoraTitle}">
+            <h:form id="DespachopicadoraEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{despachopicadoraController.selected != null}">
+                        <p:outputLabel value="#{bundlepicadora.EditDespachopicadoraLabel_iddespachopicadora}" for="iddespachopicadora" />
+                        <p:inputText id="iddespachopicadora" value="#{despachopicadoraController.selected.iddespachopicadora}" title="#{bundlepicadora.EditDespachopicadoraTitle_iddespachopicadora}" required="true" requiredMessage="#{bundlepicadora.EditDespachopicadoraRequiredMessage_iddespachopicadora}"/>
+                        <p:outputLabel value="#{bundlepicadora.EditDespachopicadoraLabel_fechadespacho}" for="fechadespacho" />
+                        <p:calendar id="fechadespacho" pattern="MM/dd/yyyy" value="#{despachopicadoraController.selected.fechadespacho}" title="#{bundlepicadora.EditDespachopicadoraTitle_fechadespacho}"  showOn="button"/>
+                        <p:outputLabel value="#{bundlepicadora.EditDespachopicadoraLabel_nota}" for="nota" />
+                        <p:inputText id="nota" value="#{despachopicadoraController.selected.nota}" title="#{bundlepicadora.EditDespachopicadoraTitle_nota}" />
+                        <p:outputLabel value="#{bundlepicadora.EditDespachopicadoraLabel_hora}" for="hora" />
+                        <p:inputText id="hora" value="#{despachopicadoraController.selected.hora}" title="#{bundlepicadora.EditDespachopicadoraTitle_hora}" />
+                        <p:outputLabel value="#{bundlepicadora.EditDespachopicadoraLabel_observaciones}" for="observaciones" />
+                        <p:inputText id="observaciones" value="#{despachopicadoraController.selected.observaciones}" title="#{bundlepicadora.EditDespachopicadoraTitle_observaciones}" />
+                        <p:outputLabel value="#{bundlepicadora.EditDespachopicadoraLabel_iddespachador}" for="iddespachador" />
+                        <p:selectOneMenu id="iddespachador" value="#{despachopicadoraController.selected.iddespachador}" >
+                            <f:selectItem itemLabel="#{bundlepicadora.SelectOneMessage}"/>
+                            <f:selectItems value="#{despachadorController.itemsAvailableSelectOne}"
+                                           var="iddespachadorItem"
+                                           itemValue="#{iddespachadorItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlepicadora.EditDespachopicadoraLabel_idchofer}" for="idchofer" />
+                        <p:selectOneMenu id="idchofer" value="#{despachopicadoraController.selected.idchofer}" >
+                            <f:selectItem itemLabel="#{bundlepicadora.SelectOneMessage}"/>
+                            <f:selectItems value="#{choferController.itemsAvailableSelectOne}"
+                                           var="idchoferItem"
+                                           itemValue="#{idchoferItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlepicadora.EditDespachopicadoraLabel_idcamion}" for="idcamion" />
+                        <p:selectOneMenu id="idcamion" value="#{despachopicadoraController.selected.idcamion}" >
+                            <f:selectItem itemLabel="#{bundlepicadora.SelectOneMessage}"/>
+                            <f:selectItems value="#{camionController.itemsAvailableSelectOne}"
+                                           var="idcamionItem"
+                                           itemValue="#{idcamionItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{despachopicadoraController.update}" value="#{bundlepicadora.Save}" update="display,:DespachopicadoraListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DespachopicadoraEditDialog');"/>
+                    <p:commandButton value="#{bundlepicadora.Cancel}" onclick="DespachopicadoraEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

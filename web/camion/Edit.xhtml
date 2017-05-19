@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CamionEditDlg" widgetVar="CamionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.EditCamionTitle}">
+            <h:form id="CamionEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{camionController.selected != null}">
+                        <p:outputLabel value="#{bundlepicadora.EditCamionLabel_idcamion}" for="idcamion" />
+                        <p:inputText id="idcamion" value="#{camionController.selected.idcamion}" title="#{bundlepicadora.EditCamionTitle_idcamion}" required="true" requiredMessage="#{bundlepicadora.EditCamionRequiredMessage_idcamion}"/>
+                        <p:outputLabel value="#{bundlepicadora.EditCamionLabel_placas}" for="placas" />
+                        <p:inputText id="placas" value="#{camionController.selected.placas}" title="#{bundlepicadora.EditCamionTitle_placas}" />
+                        <p:outputLabel value="#{bundlepicadora.EditCamionLabel_color}" for="color" />
+                        <p:inputText id="color" value="#{camionController.selected.color}" title="#{bundlepicadora.EditCamionTitle_color}" />
+                        <p:outputLabel value="#{bundlepicadora.EditCamionLabel_cubicaje}" for="cubicaje" />
+                        <p:inputText id="cubicaje" value="#{camionController.selected.cubicaje}" title="#{bundlepicadora.EditCamionTitle_cubicaje}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{camionController.update}" value="#{bundlepicadora.Save}" update="display,:CamionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CamionEditDialog');"/>
+                    <p:commandButton value="#{bundlepicadora.Cancel}" onclick="CamionEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -44,6 +44,15 @@ public class Articulo implements Serializable {
     private Collection<Detallecompra> detallecompraCollection;
     @OneToMany(mappedBy = "codigo")
     private Collection<Requerimiento> requerimientoCollection;
+    @OneToMany(mappedBy = "codigo")
+    private Collection<Detalledespachopicadora> detalledepachopicadoraCollection;
+    @OneToMany(mappedBy = "codigo")
+    private Collection<Detalleproduccionpicadora> detalleproduccionpicadoraCollection;
+    @OneToMany(mappedBy = "codigo")
+    private Collection<Inventariopicadora> inventariopicadoraCollection;
+    @OneToMany(mappedBy = "codigo")
+    private Collection<Movimientoinventariopicadora> movimientoinventariopicadoraCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -240,4 +249,39 @@ public class Articulo implements Serializable {
         this.detallefacturaCollection = detallefacturaCollection;
     }
     
+    @XmlTransient
+    public Collection<Detalledespachopicadora> getDetalledespachopicadoraCollection() {
+        return detalledepachopicadoraCollection;
+    }
+
+    public void setDetalledespachopicadoraCollection(Collection<Detalledespachopicadora> detalledespachopicadoraCollection) {
+        this.detalledepachopicadoraCollection = detalledespachopicadoraCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Detalleproduccionpicadora> getDetalleproduccionpicadoraCollection() {
+        return detalleproduccionpicadoraCollection;
+    }
+
+    public void setDetalleproduccionpicadoraCollection(Collection<Detalleproduccionpicadora> detalleproduccionpicadoraCollection) {
+        this.detalleproduccionpicadoraCollection = detalleproduccionpicadoraCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Inventariopicadora> getInventariopicadoraCollection() {
+        return inventariopicadoraCollection;
+    }
+
+    public void setInventariopicadoraCollection(Collection<Inventariopicadora> inventariopicadoraCollection) {
+        this.inventariopicadoraCollection = inventariopicadoraCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Movimientoinventariopicadora> getMovimientoinventariopicadoraCollection() {
+        return movimientoinventariopicadoraCollection;
+    }
+
+    public void setMOvimientoinventariopicadoraCollection(Collection<Movimientoinventariopicadora> movimientoinventariopicadoraCollection) {
+        this.movimientoinventariopicadoraCollection = movimientoinventariopicadoraCollection;
+    }
 }

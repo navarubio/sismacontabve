@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="UsomaquinariapicadoraListForm">
+                <p:panel header="#{bundlepicadora.ListUsomaquinariapicadoraTitle}">
+                    <p:dataTable id="datalist" value="#{usomaquinariapicadoraController.items}" var="item"
+                                 selectionMode="single" selection="#{usomaquinariapicadoraController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idusomaquinariapicadora}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_idusomaquinariapicadora}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idusomaquinariapicadora}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_fecha}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fecha}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_cantidad}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cantidad}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_precio}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.precio}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_subtotal}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.subtotal}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_iva}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.iva}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_total}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.total}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_idmaquinariapicadora}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idmaquinariapicadora}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlepicadora.Create}" actionListener="#{usomaquinariapicadoraController.prepareCreate}" update=":UsomaquinariapicadoraCreateForm" oncomplete="PF('UsomaquinariapicadoraCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlepicadora.View}" update=":UsomaquinariapicadoraViewForm" oncomplete="PF('UsomaquinariapicadoraViewDialog').show()" disabled="#{empty usomaquinariapicadoraController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundlepicadora.Edit}" update=":UsomaquinariapicadoraEditForm" oncomplete="PF('UsomaquinariapicadoraEditDialog').show()" disabled="#{empty usomaquinariapicadoraController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundlepicadora.Delete}" actionListener="#{usomaquinariapicadoraController.destroy}" update=":growl,datalist" disabled="#{empty usomaquinariapicadoraController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

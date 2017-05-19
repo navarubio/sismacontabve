@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ChoferEditDlg" widgetVar="ChoferEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.EditChoferTitle}">
+            <h:form id="ChoferEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{choferController.selected != null}">
+                        <p:outputLabel value="#{bundlepicadora.EditChoferLabel_idchofer}" for="idchofer" />
+                        <p:inputText id="idchofer" value="#{choferController.selected.idchofer}" title="#{bundlepicadora.EditChoferTitle_idchofer}" required="true" requiredMessage="#{bundlepicadora.EditChoferRequiredMessage_idchofer}"/>
+                        <p:outputLabel value="#{bundlepicadora.EditChoferLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{choferController.selected.nombre}" title="#{bundlepicadora.EditChoferTitle_nombre}" />
+                        <p:outputLabel value="#{bundlepicadora.EditChoferLabel_cedula}" for="cedula" />
+                        <p:inputText id="cedula" value="#{choferController.selected.cedula}" title="#{bundlepicadora.EditChoferTitle_cedula}" />
+                        <p:outputLabel value="#{bundlepicadora.EditChoferLabel_telefonos}" for="telefonos" />
+                        <p:inputText id="telefonos" value="#{choferController.selected.telefonos}" title="#{bundlepicadora.EditChoferTitle_telefonos}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{choferController.update}" value="#{bundlepicadora.Save}" update="display,:ChoferListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ChoferEditDialog');"/>
+                    <p:commandButton value="#{bundlepicadora.Cancel}" onclick="ChoferEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

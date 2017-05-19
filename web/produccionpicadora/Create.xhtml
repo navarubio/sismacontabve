@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProduccionpicadoraCreateDlg" widgetVar="ProduccionpicadoraCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.CreateProduccionpicadoraTitle}">
+            <h:form id="ProduccionpicadoraCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{produccionpicadoraController.selected != null}">
+                        <p:outputLabel value="#{bundlepicadora.CreateProduccionpicadoraLabel_idproduccionpicadora}" for="idproduccionpicadora" />
+                        <p:inputText id="idproduccionpicadora" value="#{produccionpicadoraController.selected.idproduccionpicadora}" title="#{bundlepicadora.CreateProduccionpicadoraTitle_idproduccionpicadora}" required="true" requiredMessage="#{bundlepicadora.CreateProduccionpicadoraRequiredMessage_idproduccionpicadora}"/>
+                        <p:outputLabel value="#{bundlepicadora.CreateProduccionpicadoraLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{produccionpicadoraController.selected.fecha}" title="#{bundlepicadora.EditProduccionpicadoraTitle_fecha}"  showOn="button"/>
+                        <p:outputLabel value="#{bundlepicadora.CreateProduccionpicadoraLabel_horastrituracion}" for="horastrituracion" />
+                        <p:inputText id="horastrituracion" value="#{produccionpicadoraController.selected.horastrituracion}" title="#{bundlepicadora.CreateProduccionpicadoraTitle_horastrituracion}" />
+                        <p:outputLabel value="#{bundlepicadora.CreateProduccionpicadoraLabel_observaciones}" for="observaciones" />
+                        <p:inputText id="observaciones" value="#{produccionpicadoraController.selected.observaciones}" title="#{bundlepicadora.CreateProduccionpicadoraTitle_observaciones}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{produccionpicadoraController.create}" value="#{bundlepicadora.Save}" update="display,:ProduccionpicadoraListForm:datalist,:growl" oncomplete="handleSubmit(args,'ProduccionpicadoraCreateDialog');"/>
+                    <p:commandButton value="#{bundlepicadora.Cancel}" onclick="ProduccionpicadoraCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

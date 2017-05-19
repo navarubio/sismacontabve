@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MovimientoinventariopicadoraViewDlg" widgetVar="MovimientoinventariopicadoraViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.ViewMovimientoinventariopicadoraTitle}">
+            <h:form id="MovimientoinventariopicadoraViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{movimientoinventariopicadoraController.selected != null}">
+                        <h:outputText value="#{bundlepicadora.ViewMovimientoinventariopicadoraLabel_idmovimientoinventariopicadora}"/>
+                        <h:outputText value="#{movimientoinventariopicadoraController.selected.idmovimientoinventariopicadora}" title="#{bundlepicadora.ViewMovimientoinventariopicadoraTitle_idmovimientoinventariopicadora}"/>
+                        <h:outputText value="#{bundlepicadora.ViewMovimientoinventariopicadoraLabel_cantidadanterior}"/>
+                        <h:outputText value="#{movimientoinventariopicadoraController.selected.cantidadanterior}" title="#{bundlepicadora.ViewMovimientoinventariopicadoraTitle_cantidadanterior}"/>
+                        <h:outputText value="#{bundlepicadora.ViewMovimientoinventariopicadoraLabel_aumento}"/>
+                        <h:outputText value="#{movimientoinventariopicadoraController.selected.aumento}" title="#{bundlepicadora.ViewMovimientoinventariopicadoraTitle_aumento}"/>
+                        <h:outputText value="#{bundlepicadora.ViewMovimientoinventariopicadoraLabel_disminucion}"/>
+                        <h:outputText value="#{movimientoinventariopicadoraController.selected.disminucion}" title="#{bundlepicadora.ViewMovimientoinventariopicadoraTitle_disminucion}"/>
+                        <h:outputText value="#{bundlepicadora.ViewMovimientoinventariopicadoraLabel_cantidadactual}"/>
+                        <h:outputText value="#{movimientoinventariopicadoraController.selected.cantidadactual}" title="#{bundlepicadora.ViewMovimientoinventariopicadoraTitle_cantidadactual}"/>
+                        <h:outputText value="#{bundlepicadora.ViewMovimientoinventariopicadoraLabel_idproduccionpicadora}"/>
+                        <h:outputText value="#{movimientoinventariopicadoraController.selected.idproduccionpicadora}" title="#{bundlepicadora.ViewMovimientoinventariopicadoraTitle_idproduccionpicadora}"/>
+                        <h:outputText value="#{bundlepicadora.ViewMovimientoinventariopicadoraLabel_iddespachopicadora}"/>
+                        <h:outputText value="#{movimientoinventariopicadoraController.selected.iddespachopicadora}" title="#{bundlepicadora.ViewMovimientoinventariopicadoraTitle_iddespachopicadora}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlepicadora.Close}" onclick="MovimientoinventariopicadoraViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

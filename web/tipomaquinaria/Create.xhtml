@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipomaquinariaCreateDlg" widgetVar="TipomaquinariaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.CreateTipomaquinariaTitle}">
+            <h:form id="TipomaquinariaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tipomaquinariaController.selected != null}">
+                        <p:outputLabel value="#{bundlepicadora.CreateTipomaquinariaLabel_idtipomaquinaria}" for="idtipomaquinaria" />
+                        <p:inputText id="idtipomaquinaria" value="#{tipomaquinariaController.selected.idtipomaquinaria}" title="#{bundlepicadora.CreateTipomaquinariaTitle_idtipomaquinaria}" required="true" requiredMessage="#{bundlepicadora.CreateTipomaquinariaRequiredMessage_idtipomaquinaria}"/>
+                        <p:outputLabel value="#{bundlepicadora.CreateTipomaquinariaLabel_tipomaquinaria}" for="tipomaquinaria" />
+                        <p:inputText id="tipomaquinaria" value="#{tipomaquinariaController.selected.tipomaquinaria}" title="#{bundlepicadora.CreateTipomaquinariaTitle_tipomaquinaria}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipomaquinariaController.create}" value="#{bundlepicadora.Save}" update="display,:TipomaquinariaListForm:datalist,:growl" oncomplete="handleSubmit(args,'TipomaquinariaCreateDialog');"/>
+                    <p:commandButton value="#{bundlepicadora.Cancel}" onclick="TipomaquinariaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

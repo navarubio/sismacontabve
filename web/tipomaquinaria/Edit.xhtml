@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipomaquinariaEditDlg" widgetVar="TipomaquinariaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.EditTipomaquinariaTitle}">
+            <h:form id="TipomaquinariaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tipomaquinariaController.selected != null}">
+                        <p:outputLabel value="#{bundlepicadora.EditTipomaquinariaLabel_idtipomaquinaria}" for="idtipomaquinaria" />
+                        <p:inputText id="idtipomaquinaria" value="#{tipomaquinariaController.selected.idtipomaquinaria}" title="#{bundlepicadora.EditTipomaquinariaTitle_idtipomaquinaria}" required="true" requiredMessage="#{bundlepicadora.EditTipomaquinariaRequiredMessage_idtipomaquinaria}"/>
+                        <p:outputLabel value="#{bundlepicadora.EditTipomaquinariaLabel_tipomaquinaria}" for="tipomaquinaria" />
+                        <p:inputText id="tipomaquinaria" value="#{tipomaquinariaController.selected.tipomaquinaria}" title="#{bundlepicadora.EditTipomaquinariaTitle_tipomaquinaria}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipomaquinariaController.update}" value="#{bundlepicadora.Save}" update="display,:TipomaquinariaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TipomaquinariaEditDialog');"/>
+                    <p:commandButton value="#{bundlepicadora.Cancel}" onclick="TipomaquinariaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MovimientoinventariopicadoraEditDlg" widgetVar="MovimientoinventariopicadoraEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.EditMovimientoinventariopicadoraTitle}">
+            <h:form id="MovimientoinventariopicadoraEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{movimientoinventariopicadoraController.selected != null}">
+                        <p:outputLabel value="#{bundlepicadora.EditMovimientoinventariopicadoraLabel_idmovimientoinventariopicadora}" for="idmovimientoinventariopicadora" />
+                        <p:inputText id="idmovimientoinventariopicadora" value="#{movimientoinventariopicadoraController.selected.idmovimientoinventariopicadora}" title="#{bundlepicadora.EditMovimientoinventariopicadoraTitle_idmovimientoinventariopicadora}" required="true" requiredMessage="#{bundlepicadora.EditMovimientoinventariopicadoraRequiredMessage_idmovimientoinventariopicadora}"/>
+                        <p:outputLabel value="#{bundlepicadora.EditMovimientoinventariopicadoraLabel_cantidadanterior}" for="cantidadanterior" />
+                        <p:inputText id="cantidadanterior" value="#{movimientoinventariopicadoraController.selected.cantidadanterior}" title="#{bundlepicadora.EditMovimientoinventariopicadoraTitle_cantidadanterior}" />
+                        <p:outputLabel value="#{bundlepicadora.EditMovimientoinventariopicadoraLabel_aumento}" for="aumento" />
+                        <p:inputText id="aumento" value="#{movimientoinventariopicadoraController.selected.aumento}" title="#{bundlepicadora.EditMovimientoinventariopicadoraTitle_aumento}" />
+                        <p:outputLabel value="#{bundlepicadora.EditMovimientoinventariopicadoraLabel_disminucion}" for="disminucion" />
+                        <p:inputText id="disminucion" value="#{movimientoinventariopicadoraController.selected.disminucion}" title="#{bundlepicadora.EditMovimientoinventariopicadoraTitle_disminucion}" />
+                        <p:outputLabel value="#{bundlepicadora.EditMovimientoinventariopicadoraLabel_cantidadactual}" for="cantidadactual" />
+                        <p:inputText id="cantidadactual" value="#{movimientoinventariopicadoraController.selected.cantidadactual}" title="#{bundlepicadora.EditMovimientoinventariopicadoraTitle_cantidadactual}" />
+                        <p:outputLabel value="#{bundlepicadora.EditMovimientoinventariopicadoraLabel_idproduccionpicadora}" for="idproduccionpicadora" />
+                        <p:selectOneMenu id="idproduccionpicadora" value="#{movimientoinventariopicadoraController.selected.idproduccionpicadora}" >
+                            <f:selectItem itemLabel="#{bundlepicadora.SelectOneMessage}"/>
+                            <f:selectItems value="#{produccionpicadoraController.itemsAvailableSelectOne}"
+                                           var="idproduccionpicadoraItem"
+                                           itemValue="#{idproduccionpicadoraItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlepicadora.EditMovimientoinventariopicadoraLabel_iddespachopicadora}" for="iddespachopicadora" />
+                        <p:selectOneMenu id="iddespachopicadora" value="#{movimientoinventariopicadoraController.selected.iddespachopicadora}" >
+                            <f:selectItem itemLabel="#{bundlepicadora.SelectOneMessage}"/>
+                            <f:selectItems value="#{despachopicadoraController.itemsAvailableSelectOne}"
+                                           var="iddespachopicadoraItem"
+                                           itemValue="#{iddespachopicadoraItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{movimientoinventariopicadoraController.update}" value="#{bundlepicadora.Save}" update="display,:MovimientoinventariopicadoraListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MovimientoinventariopicadoraEditDialog');"/>
+                    <p:commandButton value="#{bundlepicadora.Cancel}" onclick="MovimientoinventariopicadoraEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

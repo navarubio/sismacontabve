@@ -9,7 +9,7 @@
     <body>
         <ui:composition template="/template.xhtml">
             <ui:define name="title">
-                Nuevo Requerimiento
+                Produccion Diaria
                 <h:outputStylesheet library="css" name="index.css" />    
             </ui:define>
             <ui:define name="body">
@@ -22,14 +22,14 @@
                     <img src="../resources/images/tablet.png" width="70" height="70" alt="Requerimientos" align="right" />
 
                     <p:panel header="CARGA DE REQUERIMIENTOS">
-                        <p:fieldset  style="width: 39%" legend="Datos Requerimiento"  >
+                        <p:fieldset  style="width: 39%" legend="Datos Generales"  >
                             <p:panelGrid columns="2" styleClass="ui-custompanelgrid1">
                                 <p:outputLabel for="usuario" value="USUARIO" style="font-weight:bold"  styleClass="optionalLbl"/>
                                 <p:outputLabel id="usuario" value="#{requerimientosController.usuario.nombre}" styleClass="optionalLbl"/>
                                 <p:outputLabel for="departamento" style="font-weight:bold"  value="DEPARTAMENTO" styleClass="optionalLbl"/>
                                 <p:outputLabel id="departamento" value="#{requerimientosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="proveedor" style="font-weight:bold" value="Proveedor" styleClass="optionalLbl"/>
-                                <p:inputText id="proveedor" label="Proveedor" size ="50" value="#{requerimientosController.auxrequer.posibleproveedor}" />
+                                <p:outputLabel for="hrspicadora" style="font-weight:bold" value="HRS PICADORA" styleClass="optionalLbl"/>
+                                <p:inputText id="hrspicadora" label="Hora Picadora" size ="50" value="#{produ  }" />
                                 <p:outputLabel for="telefono" style="font-weight:bold"  value="Telefonos" styleClass="optionalLbl"/>
                                 <p:inputText id="telefono" label="Telefonos" size="40" value="#{requerimientosController.auxrequer.telefonoproveedor}"/>
                                 <p:outputLabel for="fechasolicitud" style="font-weight:bold"  value="Fecha Solicitud" />

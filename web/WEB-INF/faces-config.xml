@@ -60,5 +60,9 @@
             <base-name>/Bundlebancario</base-name>
             <var>bundlebancario</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/Bundlepicadora</base-name>
+            <var>bundlepicadora</var>
+        </resource-bundle>
     </application>
 </faces-config>

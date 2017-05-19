@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsomaquinariapicadoraCreateDlg" widgetVar="UsomaquinariapicadoraCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.CreateUsomaquinariapicadoraTitle}">
+            <h:form id="UsomaquinariapicadoraCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usomaquinariapicadoraController.selected != null}">
+                        <p:outputLabel value="#{bundlepicadora.CreateUsomaquinariapicadoraLabel_idusomaquinariapicadora}" for="idusomaquinariapicadora" />
+                        <p:inputText id="idusomaquinariapicadora" value="#{usomaquinariapicadoraController.selected.idusomaquinariapicadora}" title="#{bundlepicadora.CreateUsomaquinariapicadoraTitle_idusomaquinariapicadora}" required="true" requiredMessage="#{bundlepicadora.CreateUsomaquinariapicadoraRequiredMessage_idusomaquinariapicadora}"/>
+                        <p:outputLabel value="#{bundlepicadora.CreateUsomaquinariapicadoraLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{usomaquinariapicadoraController.selected.fecha}" title="#{bundlepicadora.EditUsomaquinariapicadoraTitle_fecha}"  showOn="button"/>
+                        <p:outputLabel value="#{bundlepicadora.CreateUsomaquinariapicadoraLabel_cantidad}" for="cantidad" />
+                        <p:inputText id="cantidad" value="#{usomaquinariapicadoraController.selected.cantidad}" title="#{bundlepicadora.CreateUsomaquinariapicadoraTitle_cantidad}" />
+                        <p:outputLabel value="#{bundlepicadora.CreateUsomaquinariapicadoraLabel_precio}" for="precio" />
+                        <p:inputText id="precio" value="#{usomaquinariapicadoraController.selected.precio}" title="#{bundlepicadora.CreateUsomaquinariapicadoraTitle_precio}" />
+                        <p:outputLabel value="#{bundlepicadora.CreateUsomaquinariapicadoraLabel_subtotal}" for="subtotal" />
+                        <p:inputText id="subtotal" value="#{usomaquinariapicadoraController.selected.subtotal}" title="#{bundlepicadora.CreateUsomaquinariapicadoraTitle_subtotal}" />
+                        <p:outputLabel value="#{bundlepicadora.CreateUsomaquinariapicadoraLabel_iva}" for="iva" />
+                        <p:inputText id="iva" value="#{usomaquinariapicadoraController.selected.iva}" title="#{bundlepicadora.CreateUsomaquinariapicadoraTitle_iva}" />
+                        <p:outputLabel value="#{bundlepicadora.CreateUsomaquinariapicadoraLabel_total}" for="total" />
+                        <p:inputText id="total" value="#{usomaquinariapicadoraController.selected.total}" title="#{bundlepicadora.CreateUsomaquinariapicadoraTitle_total}" />
+                        <p:outputLabel value="#{bundlepicadora.CreateUsomaquinariapicadoraLabel_idmaquinariapicadora}" for="idmaquinariapicadora" />
+                        <p:selectOneMenu id="idmaquinariapicadora" value="#{usomaquinariapicadoraController.selected.idmaquinariapicadora}" >
+                            <f:selectItems value="#{maquinariapicadoraController.itemsAvailableSelectOne}"
+                                           var="idmaquinariapicadoraItem"
+                                           itemValue="#{idmaquinariapicadoraItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usomaquinariapicadoraController.create}" value="#{bundlepicadora.Save}" update="display,:UsomaquinariapicadoraListForm:datalist,:growl" oncomplete="handleSubmit(args,'UsomaquinariapicadoraCreateDialog');"/>
+                    <p:commandButton value="#{bundlepicadora.Cancel}" onclick="UsomaquinariapicadoraCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

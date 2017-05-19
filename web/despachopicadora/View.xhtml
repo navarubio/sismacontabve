@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DespachopicadoraViewDlg" widgetVar="DespachopicadoraViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlepicadora.ViewDespachopicadoraTitle}">
+            <h:form id="DespachopicadoraViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{despachopicadoraController.selected != null}">
+                        <h:outputText value="#{bundlepicadora.ViewDespachopicadoraLabel_iddespachopicadora}"/>
+                        <h:outputText value="#{despachopicadoraController.selected.iddespachopicadora}" title="#{bundlepicadora.ViewDespachopicadoraTitle_iddespachopicadora}"/>
+                        <h:outputText value="#{bundlepicadora.ViewDespachopicadoraLabel_fechadespacho}"/>
+                        <h:outputText value="#{despachopicadoraController.selected.fechadespacho}" title="#{bundlepicadora.ViewDespachopicadoraTitle_fechadespacho}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundlepicadora.ViewDespachopicadoraLabel_nota}"/>
+                        <h:outputText value="#{despachopicadoraController.selected.nota}" title="#{bundlepicadora.ViewDespachopicadoraTitle_nota}"/>
+                        <h:outputText value="#{bundlepicadora.ViewDespachopicadoraLabel_hora}"/>
+                        <h:outputText value="#{despachopicadoraController.selected.hora}" title="#{bundlepicadora.ViewDespachopicadoraTitle_hora}"/>
+                        <h:outputText value="#{bundlepicadora.ViewDespachopicadoraLabel_observaciones}"/>
+                        <h:outputText value="#{despachopicadoraController.selected.observaciones}" title="#{bundlepicadora.ViewDespachopicadoraTitle_observaciones}"/>
+                        <h:outputText value="#{bundlepicadora.ViewDespachopicadoraLabel_iddespachador}"/>
+                        <h:outputText value="#{despachopicadoraController.selected.iddespachador}" title="#{bundlepicadora.ViewDespachopicadoraTitle_iddespachador}"/>
+                        <h:outputText value="#{bundlepicadora.ViewDespachopicadoraLabel_idchofer}"/>
+                        <h:outputText value="#{despachopicadoraController.selected.idchofer}" title="#{bundlepicadora.ViewDespachopicadoraTitle_idchofer}"/>
+                        <h:outputText value="#{bundlepicadora.ViewDespachopicadoraLabel_idcamion}"/>
+                        <h:outputText value="#{despachopicadoraController.selected.idcamion}" title="#{bundlepicadora.ViewDespachopicadoraTitle_idcamion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlepicadora.Close}" onclick="DespachopicadoraViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

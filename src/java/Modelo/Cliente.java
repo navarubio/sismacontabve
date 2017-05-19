@@ -49,6 +49,8 @@ public class Cliente implements Serializable {
     private Collection<Comprobanteivasp> comprobanteivaspCollection;
     @OneToMany(mappedBy = "rifcliente")
     private Collection<Factura> facturaCollection;
+    @OneToMany(mappedBy = "rifcliente")
+    private Collection<Despachopicadora> despachopicadoraCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -214,6 +216,15 @@ public class Cliente implements Serializable {
 
     public void setFacturaCollection(Collection<Factura> facturaCollection) {
         this.facturaCollection = facturaCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Despachopicadora> getDespachopicadoraCollection() {
+        return despachopicadoraCollection;
+    }
+
+    public void setDespachopicadoraCollection(Collection<Despachopicadora> despachopicadoraCollection) {
+        this.despachopicadoraCollection = despachopicadoraCollection;
     }
 
     @XmlTransient
