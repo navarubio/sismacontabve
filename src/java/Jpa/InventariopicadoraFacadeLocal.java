@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Articulo;
 import Modelo.Grupocontable;
 import Modelo.Inventariopicadora;
 import java.util.List;
@@ -30,5 +31,7 @@ public interface InventariopicadoraFacadeLocal {
     List<Inventariopicadora> findRange(int[] range);
 
     int count();
+    
+    Inventariopicadora buscarAgregado (Articulo articulo);
     
 }

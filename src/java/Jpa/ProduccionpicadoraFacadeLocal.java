@@ -30,4 +30,6 @@ public interface ProduccionpicadoraFacadeLocal {
 
     int count();
     
+    Produccionpicadora ultimoInsertado();
+    
 }

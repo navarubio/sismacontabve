@@ -5,10 +5,13 @@
  */
 package Jpa;
 
+import Modelo.Articulo;
 import Modelo.Inventariopicadora;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,6 +29,25 @@ public class InventariopicadoraFacade extends AbstractFacade<Inventariopicadora>
 
     public InventariopicadoraFacade() {
         super(Inventariopicadora.class);
+    }
+    
+    @Override
+    public Inventariopicadora buscarAgregado (Articulo articulo) {
+        Inventariopicadora inv = null;
+        String consulta;
+        try {
+            consulta = "From Inventariopicadora i where i.codigo = ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, articulo);
+
+            List<Inventariopicadora> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                inv = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return inv;
     }
     
 }

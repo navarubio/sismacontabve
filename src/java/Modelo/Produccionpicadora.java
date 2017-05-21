@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -44,6 +46,9 @@ public class Produccionpicadora implements Serializable {
     @Basic(optional = false)
     @Column(name = "idproduccionpicadora")
     private Integer idproduccionpicadora;
+    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
+    @ManyToOne
+    private Usuario idusuario;
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
@@ -72,7 +77,15 @@ public class Produccionpicadora implements Serializable {
     public void setIdproduccionpicadora(Integer idproduccionpicadora) {
         this.idproduccionpicadora = idproduccionpicadora;
     }
+    
+    public Usuario getIdusuario() {
+        return idusuario;
+    }
 
+    public void setIdusuario(Usuario idusuario) {
+        this.idusuario = idusuario;
+    }
+    
     public Date getFecha() {
         return fecha;
     }

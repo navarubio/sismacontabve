@@ -43,6 +43,9 @@ public class Maquinariapicadora implements Serializable {
     @Basic(optional = false)
     @Column(name = "idmaquinariapicadora")
     private Integer idmaquinariapicadora;
+    @Size(max = 15)
+    @Column(name = "serialmaquinaria")
+    private String serialmaquinaria;
     @Size(max = 50)
     @Column(name = "descripcion")
     private String descripcion;
@@ -71,7 +74,14 @@ public class Maquinariapicadora implements Serializable {
     public void setIdmaquinariapicadora(Integer idmaquinariapicadora) {
         this.idmaquinariapicadora = idmaquinariapicadora;
     }
+    
+    public String getSerialmaquinaria() {
+        return serialmaquinaria;
+    }
 
+    public void setSerialmaquinaria(String serialmaquinaria) {
+        this.serialmaquinaria = serialmaquinaria;
+    }
     public String getDescripcion() {
         return descripcion;
     }

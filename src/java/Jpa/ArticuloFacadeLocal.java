@@ -33,4 +33,6 @@ public interface ArticuloFacadeLocal {
     int count();
    
     public List<Articulo> listadoArticulos();
+    
+    List<Articulo> listadoAgregadospicadora();
 }

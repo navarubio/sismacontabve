@@ -20,8 +20,8 @@
                                  selectionMode="single" selection="#{detalleproduccionpicadoraController.selected}"
                                  paginator="true"
                                  rowKey="#{item.iddetalleproduccionpicadora}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="20"
+                                 rowsPerPageTemplate="20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -33,6 +33,21 @@
                             </f:facet>
                             <h:outputText value="#{item.iddetalleproduccionpicadora}"/>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListDetalleproduccionpicadoraTitle_idproduccionpicadora}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idproduccionpicadora}"/>
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListDetalleproduccionpicadoraTitle_fecha}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idproduccionpicadora.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
                         <p:column style="text-align: center" filterBy="#{item.codigo.codigo}" filterMatchMode="contains" filterStyle="width:60px;" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_codigo}"/>
@@ -46,17 +61,11 @@
                             </f:facet>
                             <h:outputText value="#{item.codigo.descripcion}"/>
                         </p:column>                        
-                        <p:column>
+                        <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListDetalleproduccionpicadoraTitle_cantidad}"/>
                             </f:facet>
                             <h:outputText value="#{item.cantidad}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlepicadora.ListDetalleproduccionpicadoraTitle_idproduccionpicadora}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idproduccionpicadora}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlepicadora.Create}" actionListener="#{detalleproduccionpicadoraController.prepareCreate}" update=":DetalleproduccionpicadoraCreateForm" oncomplete="PF('DetalleproduccionpicadoraCreateDialog').show()"/>

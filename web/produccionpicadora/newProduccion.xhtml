@@ -19,10 +19,10 @@
                     <div id="imag2">
                         <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca"/>
                     </div>      
-                    <img src="../resources/images/tablet.png" width="70" height="70" alt="Requerimientos" align="right" />
+                    <img src="../resources/images/kgoldrunner.png" width="70" height="70" alt="Requerimientos" align="right" />
 
-                    <p:panel header="CARGA DE PRODUCCION">
-                        <p:panelGrid columns="2" >
+                    <p:panel header="CARGA DE PRODUCCION DIARIA">
+                        <p:panelGrid columns="1" >
                         <p:fieldset  style="width: 39%" legend="PRODUCCION POR DIA"  >
                             <p:panelGrid columns="2" styleClass="ui-custompanelgrid1">
                                 <p:outputLabel for="usuario" value="USUARIO" style="font-weight:bold"  styleClass="optionalLbl"/>
@@ -30,79 +30,54 @@
                                 <p:outputLabel for="departamento" style="font-weight:bold"  value="DEPARTAMENTO" styleClass="optionalLbl"/>
                                 <p:outputLabel id="departamento" value="#{requerimientosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
                                 <p:outputLabel for="fechaproduccion" style="font-weight:bold"  value="Fecha Solicitud" />
-                                <p:calendar id="fechaproduccion" locale="es" pattern="dd/MM/yyyy" value="#{producciondiariapicadoraController.selected.fecha}" showOn="button" navigator="true" required="true"  />
-                                <p:outputLabel for="hrspicadora" style="font-weight:bold" value="HORAS PICADORA" styleClass="optionalLbl"/>
-                                <p:inputText id="hrspicadora" label="Horas Picadora" size ="50" value="#{producciondiariapicadoraController.selected.horastrituracion}" />
+                                <p:calendar id="fechaproduccion" size="8" locale="es" pattern="dd/MM/yyyy" value="#{producciondiariapicadoraController.selected.fecha}" showOn="button" navigator="true" required="true"  />
+                                <p:outputLabel for="hrspicadora" style="font-weight:bold" value="Hrs Picadora" styleClass="optionalLbl"/>
+                                <p:inputText id="hrspicadora" label="Horas Picadora" size ="8" value="#{producciondiariapicadoraController.selected.horastrituracion}" />
                                 <p:outputLabel for="resena" style="font-weight:bold" value="Breve Reseña" styleClass="optionalLbl"/>
                                 <p:inputTextarea id="resena"  rows="3" cols="50" label="breve resena" value="#{producciondiariapicadoraController.selected.observaciones}" required="true" />
                             </p:panelGrid>
                         </p:fieldset>
-                        <p:fieldset styleClass="ui-custompanelgrid2" legend="Datos de Articulos">
+                        <p:fieldset styleClass="ui-custompanelgrid2" legend="Agregados Obtenidos">
                             <p:panelGrid id= "datosarticulo" columns="7">
                                 <p:outputLabel value="Agregado" style="font-weight:bold" for="idrequerimiento"  />
-                                <p:selectOneMenu id="idrequerimiento" value="#{requerimientosController.requer.codigo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" >
-                                    <p:ajax event="change" listener="#{requerimientosController.buscarArticulo()}" update="precio"/>                              
+                                <p:selectOneMenu id="idrequerimiento" value="#{producciondiariapicadoraController.detallepro.codigo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" >
                                     <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                                     <!--f:selectItems value=".{articuloController.itemsAvailableSelectOne}"-->
-                                    <f:selectItems value="#{requerimientosController.articulos}"
+                                    <f:selectItems value="#{producciondiariapicadoraController.articulos}"
                                                    var="idarticuloItem"
                                                    itemLabel="#{idarticuloItem.descripcion}"  itemValue="#{idarticuloItem}" /> 
                                 </p:selectOneMenu>
                                 <p:outputLabel for="cantidad" style="font-weight:bold" value="Cantidad" />
-                                <p:inputText id="cantidad" value="#{requerimientosController.cantidad}" style="text-align:right" required="true"/>
-                                <p:outputLabel for="precio"  style="font-weight:bold" value="Precio sin IVA" styleClass="optionalLbl"/>
-                                <p:inputText id="precio"  size="20" value="#{requerimientosController.pcosto}" style="text-align:right">
-                                    <f:convertNumber type="currency" currencySymbol="" />
-                                </p:inputText>
-                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{requerimientosController.anexar()}" update="listado,datosarticulo"/>   
+                                <p:inputText id="cantidad" value="#{producciondiariapicadoraController.cantidad}" style="text-align:right" required="true"/>
+                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{producciondiariapicadoraController.anexar()}" update="listado,datosarticulo"/>   
                             </p:panelGrid>
                         </p:fieldset>
                         </p:panelGrid>
                         <p:panel>
-                            <p:dataTable id="listado" widgetVar="listadoreq" value="#{requerimientosController.listarequerimiento}" 
-                                         var="req" emptyMessage="No hay articulos para mostrar" rowKey="#{req.codigo.codigo}"
+                            <p:dataTable id="listado" widgetVar="listadoreq" value="#{producciondiariapicadoraController.listadetallesproduccion}" 
+                                         var="req" emptyMessage="No hay agregadosa para mostrar" rowKey="#{req.codigo.codigo}" style="width: 700px;"
                                          selectionMode="single" >
-                                <p:column style="width:8%"  headerText="Codigo Articulo">
+                                <p:column style="width:15%"  headerText="Codigo Articulo">
                                     #{req.codigo.codigo} 
                                 </p:column>
-                                <p:column style="width:25%"  headerText="Descripcion del Articulo">
-                                    #{req.codigo} 
+                                <p:column style="width:50%"  headerText="Descripcion del Articulo">
+                                    #{req.codigo.descripcion} 
                                 </p:column>
-                                <p:column style="text-align: center" headerText="Cantidad">
+                                <p:column style="text-align: right" headerText="Cantidad">
                                     #{req.cantidad} 
                                 </p:column >
-                                <p:column style="text-align: right" headerText="Precio Unitario ">
-                                    <h:outputText value="#{req.pcosto}">
-                                        <f:convertNumber type="currency" currencySymbol="BsF " />
-                                    </h:outputText>
-                                </p:column>
-                                <p:column style="text-align: right" headerText="SUB TOTAL">
-                                    <h:outputText value="#{req.subtotal}">
-                                        <f:convertNumber type="currency" currencySymbol="BsF " />
-                                    </h:outputText>
-                                </p:column>                                
-                                <p:column style="text-align: right" headerText="IVA">
-                                    <h:outputText value="#{req.tributoiva}">
-                                        <f:convertNumber type="currency" currencySymbol="" />
-                                    </h:outputText>
-                                </p:column>
-                                <p:column style="text-align: right" headerText="TOTAL">
-                                    <h:outputText value="#{req.total}">
-                                        <f:convertNumber type="currency" currencySymbol=""  />
-                                    </h:outputText>
-                                </p:column>
                                 <p:column style="width:10%" headerText="Eliminar">
-                                    <p:commandLink value="Eliminar" actionListener="#{requerimientosController.eliminar(req)}" update="listado" />
+                                    <p:commandLink value="Eliminar" actionListener="#{producciondiariapicadoraController.eliminar(req)}" update="listado" />
                                 </p:column>
 
                                 <p:columnGroup type="footer">
                                     <p:row>
-                                        <p:column colspan="6" style="text-align:right" footerText="Total del Requerimiento" />
-                                        <p:column style="text-align: right"  footerText="BsF #{requerimientosController.totaltotal()}" />
+                                        <p:column colspan="2" style="text-align:right" footerText="TOTAL PRODUCCION DIA  Mt3" />
+                                        <p:column style="text-align: right"  footerText="#{producciondiariapicadoraController.totaltotal()}" />
                                     </p:row>
                                 </p:columnGroup>                            
                             </p:dataTable>
-                            <p:commandButton value="Registrar" actionListener="#{requerimientosController.registrar()}" action="/auxiliarrequerimiento/List?faces-redirect=true" update=":msgs" />
+                            <p:commandButton value="Registrar" actionListener="#{producciondiariapicadoraController.registrar()}" action="/detalleproduccionpicadora/List?faces-redirect=true" update=":msgs" />
                         </p:panel>
                     </p:panel>
                 </h:form>

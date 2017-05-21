@@ -28,8 +28,8 @@
                                 <p:outputLabel id="usuario" value="#{requerimientosController.usuario.nombre}" styleClass="optionalLbl"/>
                                 <p:outputLabel for="departamento" style="font-weight:bold"  value="DEPARTAMENTO" styleClass="optionalLbl"/>
                                 <p:outputLabel id="departamento" value="#{requerimientosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="hrspicadora" style="font-weight:bold" value="HRS PICADORA" styleClass="optionalLbl"/>
-                                <p:inputText id="hrspicadora" label="Hora Picadora" size ="50" value="#{produ  }" />
+                                <p:outputLabel for="proveedor" style="font-weight:bold" value="Proveedor" styleClass="optionalLbl"/>
+                                <p:inputText id="proveedor" label="Proveedor" size ="50" value="#{requerimientosController.auxrequer.posibleproveedor}" />
                                 <p:outputLabel for="telefono" style="font-weight:bold"  value="Telefonos" styleClass="optionalLbl"/>
                                 <p:inputText id="telefono" label="Telefonos" size="40" value="#{requerimientosController.auxrequer.telefonoproveedor}"/>
                                 <p:outputLabel for="fechasolicitud" style="font-weight:bold"  value="Fecha Solicitud" />

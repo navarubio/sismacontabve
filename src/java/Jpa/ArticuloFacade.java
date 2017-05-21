@@ -111,4 +111,19 @@ public class ArticuloFacade extends AbstractFacade<Articulo> implements Articulo
         }
         return lista;
     }
+    @Override
+    public List<Articulo> listadoAgregadospicadora() {
+        String consulta;
+        int subgrupo=15;
+        List<Articulo> lista = null;
+        try {
+            consulta = "From Articulo a where a.idsubgrupo.idsubgrupo = ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, subgrupo);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
 }

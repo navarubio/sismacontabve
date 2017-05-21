@@ -1,24 +1,38 @@
 package Jsf;
 
+import Jpa.ArticuloFacadeLocal;
+import Jpa.DetalleproduccionpicadoraFacadeLocal;
+import Jpa.InventariopicadoraFacadeLocal;
+import Jpa.MovimientoinventariopicadoraFacadeLocal;
 import Modelo.Produccionpicadora;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
-import Jpa.ProduccionpicadoraFacade;
 import Jpa.ProduccionpicadoraFacadeLocal;
+import Modelo.Articulo;
+import Modelo.Detalleproduccionpicadora;
+import Modelo.Inventariopicadora;
+import Modelo.Movimientoinventariopicadora;
+import Modelo.Usuario;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("producciondiariapicadoraController")
 @SessionScoped
@@ -26,8 +40,35 @@ public class ProducciondiariapicadoraController implements Serializable {
 
     @EJB
     private Jpa.ProduccionpicadoraFacadeLocal ejbFacade;
+    @EJB
+    private ArticuloFacadeLocal articuloEJB;
+    @EJB
+    private DetalleproduccionpicadoraFacadeLocal detalleproduccionpicadoraEJB;
+    @EJB
+    private InventariopicadoraFacadeLocal inventariopicadoraEJB;
+    @EJB
+    private MovimientoinventariopicadoraFacadeLocal movimientoinventariopicadoraEJB;
+    
+    @Inject
+    private Detalleproduccionpicadora detallepro;
+    @Inject
+    private Inventariopicadora inventariopro;
+    @Inject
+    private Movimientoinventariopicadora moviinventariopro;
+    
+    
     private List<Produccionpicadora> items = null;
     private Produccionpicadora selected;
+    private List<Articulo> articulos = null;
+    private double cantidad = 0;
+    private int id = 0;
+    private List<Detalleproduccionpicadora> listadetallepro = new ArrayList();
+    private Produccionpicadora codPro;
+    SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+    private String correo;
+    private Date fechaactual = new Date();
+    private envioCorreo enviomail;
+    private Inventariopicadora inventariomodificar=new Inventariopicadora();
 
     public ProducciondiariapicadoraController() {
     }
@@ -40,6 +81,40 @@ public class ProducciondiariapicadoraController implements Serializable {
         this.selected = selected;
     }
 
+    public List<Articulo> getArticulos() {
+        return articulos;
+    }
+
+    public void setArticulos(List<Articulo> articulos) {
+        this.articulos = articulos;
+    }
+
+    public double getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(double cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public Detalleproduccionpicadora getDetallepro() {
+        return detallepro;
+    }
+
+    public void setDetallepro(Detalleproduccionpicadora detallepro) {
+        this.detallepro = detallepro;
+    }
+
+    public List<Detalleproduccionpicadora> getListadetallesproduccion() {
+        return listadetallepro;
+    }
+
+    public void setListadetallesproduccion(List<Detalleproduccionpicadora> listarequerimiento) {
+        this.listadetallepro = listarequerimiento;
+    }
+
+
+    
     protected void setEmbeddableKeys() {
     }
 
@@ -49,6 +124,102 @@ public class ProducciondiariapicadoraController implements Serializable {
     private ProduccionpicadoraFacadeLocal getFacade() {
         return ejbFacade;
     }
+
+     @PostConstruct
+    public void init() {
+        selected = new Produccionpicadora();
+        articulos = articuloEJB.listadoAgregadospicadora();
+        listadetallepro.clear();
+    }
+    
+    public void anexar() {
+        if (cantidad != 0) {
+            Detalleproduccionpicadora reque = new Detalleproduccionpicadora();
+            reque.setCodigo(detallepro.getCodigo());
+            reque.setCantidad(cantidad);
+            reque.setIddetalleproduccionpicadora(id);
+            this.listadetallepro.add(reque);
+            id++;
+//            requerimientos = requerimientoEJB.findAll();
+            cantidad = 0;
+            detallepro.setCodigo(null);
+
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Cantidad en 0.0"));
+        }
+    }
+    public void eliminar(Detalleproduccionpicadora requerim) {
+        listadetallepro.remove(requerim.hashCode());
+        int indice = 0;
+        for (Detalleproduccionpicadora requeri : listadetallepro) {
+            requeri.setIddetalleproduccionpicadora(indice);
+            indice++;
+            id = indice;
+        }
+        if (requerim.hashCode() == 0) {
+            id = 0;
+        }
+    }
+
+     public double totaltotal() {
+        double montotgeneral = 0;
+
+        for (Detalleproduccionpicadora requeri : listadetallepro) {
+            montotgeneral += requeri.getCantidad();
+        }
+
+        return montotgeneral;
+    }
+     
+        public void registrar() {
+        Articulo art = new Articulo();
+        Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+         
+        try {
+            selected.setIdusuario(us);
+            ejbFacade.create(selected);
+
+            codPro = ejbFacade.ultimoInsertado();
+            String subject;
+            for (Detalleproduccionpicadora rq : listadetallepro) {
+                Articulo arti = rq.getCodigo();
+                Inventariopicadora inventa=inventariopicadoraEJB.buscarAgregado(arti);
+                detallepro.setIdproduccionpicadora(codPro);
+                detallepro.setCodigo(arti);
+                detallepro.setCantidad(rq.getCantidad());
+                detalleproduccionpicadoraEJB.create(detallepro);
+                
+                moviinventariopro.setCodigo(arti);
+                moviinventariopro.setAumento(rq.getCantidad());
+                moviinventariopro.setIdproduccionpicadora(codPro);
+                movimientoinventariopicadoraEJB.create(moviinventariopro);
+                
+//                inventariopro = inventariopicadoraEJB.buscarAgregado(arti);
+                if(inventa==null){
+                    inventariopro.setCodigo(rq.getCodigo());
+                    inventariopro.setCantidad(rq.getCantidad());
+                    inventariopicadoraEJB.create(inventariopro);
+                }else{
+                    double cant=inventa.getCantidad();
+                    inventa.setCantidad(rq.getCantidad()+cant);
+                    inventariopicadoraEJB.edit(inventa);
+                }
+            }
+            String fechapro = formateador.format(codPro.getFecha());
+            correo = "PRODUCCION PICADORA DE FECHA: " + fechapro
+                    + "   OBSERVACIONES: " + codPro.getObservaciones();
+            subject = "Carga de ProduccionPicadora dia  " + fechapro;
+            enviomail = new envioCorreo(correo, subject);
+            enviomail.start();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "La Produccion fue Almacenado ",""));
+            listadetallepro.clear();
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Produccion", ""));
+        } finally {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        }
+    }
+ 
 
     public Produccionpicadora prepareCreate() {
         selected = new Produccionpicadora();
