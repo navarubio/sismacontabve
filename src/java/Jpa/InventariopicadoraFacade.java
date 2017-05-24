@@ -32,13 +32,13 @@ public class InventariopicadoraFacade extends AbstractFacade<Inventariopicadora>
     }
     
     @Override
-    public Inventariopicadora buscarAgregado (Articulo articulo) {
+    public Inventariopicadora buscarAgregado (String codigo) {
         Inventariopicadora inv = null;
         String consulta;
         try {
-            consulta = "From Inventariopicadora i where i.codigo = ?1";
+            consulta = "From Inventariopicadora i where i.codigo.codigo = ?1";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, articulo);
+            query.setParameter(1, codigo);
 
             List<Inventariopicadora> lista = query.getResultList();
             if (!lista.isEmpty()) {

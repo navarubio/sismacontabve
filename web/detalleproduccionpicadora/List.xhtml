@@ -11,13 +11,19 @@
 
         <ui:define name="title">
             <h:outputText value="#{bundlepicadora.ListDetalleproduccionpicadoraTitle}"></h:outputText>
+            <h:outputStylesheet library="css" name="index.css" />  
         </ui:define>
 
         <ui:define name="body">
             <h:form id="DetalleproduccionpicadoraListForm">
+                <div id="imag2">
+                    <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
+                </div>     
+                <img src="../resources/images/jumbo1.png" width="120" height="70" alt="Solicitudes" align="right" />
+
                 <p:panel header="#{bundlepicadora.ListDetalleproduccionpicadoraTitle}">
-                    <p:dataTable id="datalist" value="#{detalleproduccionpicadoraController.items}" var="item"
-                                 selectionMode="single" selection="#{detalleproduccionpicadoraController.selected}"
+                    <p:dataTable id="datalist" value="#{detallesproduccionpicadoraController.items}" var="item"
+                                 selectionMode="single" selection="#{detalleproduccionpicadoraController.selected}" style="width: 800px;"
                                  paginator="true"
                                  rowKey="#{item.iddetalleproduccionpicadora}"
                                  rows="20"
@@ -27,19 +33,13 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlepicadora.ListDetalleproduccionpicadoraTitle_iddetalleproduccionpicadora}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.iddetalleproduccionpicadora}"/>
-                        </p:column>
-                        <p:column>
+                        <p:column  style="text-align: center" width="100" filterBy="#{item.idproduccionpicadora.idproduccionpicadora}" filterMatchMode="exact" filterStyle="width:60px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListDetalleproduccionpicadoraTitle_idproduccionpicadora}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idproduccionpicadora}"/>
+                            <h:outputText value="#{item.idproduccionpicadora.idproduccionpicadora}"/>
                         </p:column>
-                        <p:column style="text-align: center">
+                        <p:column style="text-align: center" sortBy="#{item.idproduccionpicadora.fecha}" width="100">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListDetalleproduccionpicadoraTitle_fecha}"/>
                             </f:facet>
@@ -48,20 +48,20 @@
                             </h:outputText>
                         </p:column>
 
-                        <p:column style="text-align: center" filterBy="#{item.codigo.codigo}" filterMatchMode="contains" filterStyle="width:60px;" >
+                        <p:column style="text-align: center" filterBy="#{item.codigo.codigo}" filterMatchMode="contains" filterStyle="width:60px;" width="100">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_codigo}"/>
                             </f:facet>
                             <h:outputText value="#{item.codigo.codigo}"/>
                         </p:column>
 
-                        <p:column width="300" filterBy="#{item.codigo.descripcion}" filterMatchMode="contains" >
+                        <p:column width="150" filterBy="#{item.codigo.descripcion}" filterMatchMode="contains" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_articulo}"/>
                             </f:facet>
                             <h:outputText value="#{item.codigo.descripcion}"/>
                         </p:column>                        
-                        <p:column style="text-align: right">
+                        <p:column style="text-align: right" width="80">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListDetalleproduccionpicadoraTitle_cantidad}"/>
                             </f:facet>

@@ -9,7 +9,7 @@
     <body>
         <ui:composition template="/template.xhtml">
             <ui:define name="title">
-                Produccion Diaria
+                Produccion Picadora
                 <h:outputStylesheet library="css" name="index.css" />    
             </ui:define>
             <ui:define name="body">
@@ -19,12 +19,12 @@
                     <div id="imag2">
                         <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca"/>
                     </div>      
-                    <img src="../resources/images/kgoldrunner.png" width="70" height="70" alt="Requerimientos" align="right" />
+                    <img src="../resources/images/payloader1.png" width="120" height="70" alt="Requerimientos" align="right" />
 
-                    <p:panel header="CARGA DE PRODUCCION DIARIA">
+                    <p:panel header="CARGAR PRODUCCION DIARIA PICADORA">
                         <p:panelGrid columns="1" >
                         <p:fieldset  style="width: 39%" legend="PRODUCCION POR DIA"  >
-                            <p:panelGrid columns="2" styleClass="ui-custompanelgrid1">
+                            <p:panelGrid columns="2" styleClass="ui-custompanelgrid4">
                                 <p:outputLabel for="usuario" value="USUARIO" style="font-weight:bold"  styleClass="optionalLbl"/>
                                 <p:outputLabel id="usuario" value="#{requerimientosController.usuario.nombre}" styleClass="optionalLbl"/>
                                 <p:outputLabel for="departamento" style="font-weight:bold"  value="DEPARTAMENTO" styleClass="optionalLbl"/>
@@ -32,12 +32,12 @@
                                 <p:outputLabel for="fechaproduccion" style="font-weight:bold"  value="Fecha Solicitud" />
                                 <p:calendar id="fechaproduccion" size="8" locale="es" pattern="dd/MM/yyyy" value="#{producciondiariapicadoraController.selected.fecha}" showOn="button" navigator="true" required="true"  />
                                 <p:outputLabel for="hrspicadora" style="font-weight:bold" value="Hrs Picadora" styleClass="optionalLbl"/>
-                                <p:inputText id="hrspicadora" label="Horas Picadora" size ="8" value="#{producciondiariapicadoraController.selected.horastrituracion}" />
+                                <p:inputText id="hrspicadora" label="Horas Picadora" size ="8" value="#{producciondiariapicadoraController.selected.horastrituracion}" required="true" />
                                 <p:outputLabel for="resena" style="font-weight:bold" value="Breve Reseña" styleClass="optionalLbl"/>
                                 <p:inputTextarea id="resena"  rows="3" cols="50" label="breve resena" value="#{producciondiariapicadoraController.selected.observaciones}" required="true" />
                             </p:panelGrid>
                         </p:fieldset>
-                        <p:fieldset styleClass="ui-custompanelgrid2" legend="Agregados Obtenidos">
+                        <p:fieldset styleClass="ui-custompanelgrid5" legend="Agregados Obtenidos">
                             <p:panelGrid id= "datosarticulo" columns="7">
                                 <p:outputLabel value="Agregado" style="font-weight:bold" for="idrequerimiento"  />
                                 <p:selectOneMenu id="idrequerimiento" value="#{producciondiariapicadoraController.detallepro.codigo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" >

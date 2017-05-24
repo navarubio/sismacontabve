@@ -52,6 +52,16 @@
     background-color:  #E0EDFF ;
 }
 
+ui-custompanelgrid4, .ui-custompanelgrid4 td {
+    //font-weight: bold;
+    background-color:    goldenrod;
+}
+
+ui-custompanelgrid5, .ui-custompanelgrid5 td {
+    color: azure ;
+    background-color: black;
+}
+
 .ui-panelgrid > * > tr, .ui-panelgrid > * > tr > td.ui-panelgrid-cell {
     border: none;
 

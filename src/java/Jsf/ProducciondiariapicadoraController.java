@@ -174,6 +174,7 @@ public class ProducciondiariapicadoraController implements Serializable {
         public void registrar() {
         Articulo art = new Articulo();
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        Inventariopicadora inventa=new Inventariopicadora();
          
         try {
             selected.setIdusuario(us);
@@ -183,7 +184,7 @@ public class ProducciondiariapicadoraController implements Serializable {
             String subject;
             for (Detalleproduccionpicadora rq : listadetallepro) {
                 Articulo arti = rq.getCodigo();
-                Inventariopicadora inventa=inventariopicadoraEJB.buscarAgregado(arti);
+                inventariopro = inventariopicadoraEJB.buscarAgregado(arti.getCodigo());
                 detallepro.setIdproduccionpicadora(codPro);
                 detallepro.setCodigo(arti);
                 detallepro.setCantidad(rq.getCantidad());
@@ -200,9 +201,11 @@ public class ProducciondiariapicadoraController implements Serializable {
                     inventariopro.setCantidad(rq.getCantidad());
                     inventariopicadoraEJB.create(inventariopro);
                 }else{
-                    double cant=inventa.getCantidad();
-                    inventa.setCantidad(rq.getCantidad()+cant);
-                    inventariopicadoraEJB.edit(inventa);
+                    double cant=inventariopro.getCantidad()+rq.getCantidad();
+//                    inventariopro.setIdinventariopicadora(inventa.getIdinventariopicadora());
+//                    inventariopro.setCodigo(rq.getCodigo());
+                    inventariopro.setCantidad(cant);
+                    inventariopicadoraEJB.edit(inventariopro);
                 }
             }
             String fechapro = formateador.format(codPro.getFecha());

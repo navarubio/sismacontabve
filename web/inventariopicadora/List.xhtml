@@ -11,46 +11,46 @@
 
         <ui:define name="title">
             <h:outputText value="#{bundlepicadora.ListInventariopicadoraTitle}"></h:outputText>
+            <h:outputStylesheet library="css" name="index.css" />  
         </ui:define>
 
         <ui:define name="body">
             <h:form id="InventariopicadoraListForm">
+                <div id="imag2">
+                    <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
+                </div>     
+                <img src="../resources/images/jumbo1.png" width="120" height="70" alt="Solicitudes" align="right" />
+
                 <p:panel header="#{bundlepicadora.ListInventariopicadoraTitle}">
-                    <p:dataTable id="datalist" value="#{inventariopicadoraController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{inventariospicadoraController.items}" var="item" style="width: 700px; " widgetVar="inventario"
                                  selectionMode="single" selection="#{inventariopicadoraController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idinventariopicadora}"
-                                 rows="10"
+                                 rows="10" 
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlepicadora.ListInventariopicadoraTitle_idinventariopicadora}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idinventariopicadora}"/>
-                        </p:column>
-                        <p:column style="text-align: center" filterBy="#{item.codigo.codigo}" filterMatchMode="contains" filterStyle="width:60px;" >
+                        <p:column style="text-align: center" filterBy="#{item.codigo.codigo}" filterMatchMode="contains" filterStyle="width:60px;" width="80">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_codigo}"/>
                             </f:facet>
                             <h:outputText value="#{item.codigo.codigo}"/>
                         </p:column>
 
-                        <p:column width="300" filterBy="#{item.codigo.descripcion}" filterMatchMode="contains" >
+                        <p:column width="150" filterBy="#{item.codigo.descripcion}" filterMatchMode="contains"  >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_articulo}"/>
                             </f:facet>
                             <h:outputText value="#{item.codigo.descripcion}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="80" style="text-align: right" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListInventariopicadoraTitle_cantidad}"/>
                             </f:facet>
-                            <h:outputText value="#{item.cantidad}"/>
+                            <h:outputText value="#{item.cantidad}" styleClass="text-ouput"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlepicadora.Create}" actionListener="#{inventariopicadoraController.prepareCreate}" update=":InventariopicadoraCreateForm" oncomplete="PF('InventariopicadoraCreateDialog').show()"/>
