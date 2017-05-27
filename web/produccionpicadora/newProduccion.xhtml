@@ -31,9 +31,9 @@
                                 <p:outputLabel id="departamento" value="#{requerimientosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
                                 <p:outputLabel for="fechaproduccion" style="font-weight:bold"  value="Fecha Solicitud" />
                                 <p:calendar id="fechaproduccion" size="8" locale="es" pattern="dd/MM/yyyy" value="#{producciondiariapicadoraController.selected.fecha}" showOn="button" navigator="true" required="true"  />
-                                <p:outputLabel for="hrspicadora" style="font-weight:bold" value="Hrs Picadora" styleClass="optionalLbl"/>
-                                <p:inputText id="hrspicadora" label="Horas Picadora" size ="8" value="#{producciondiariapicadoraController.selected.horastrituracion}" required="true" />
-                                <p:outputLabel for="resena" style="font-weight:bold" value="Breve Reseña" styleClass="optionalLbl"/>
+                                <p:outputLabel for="hrspicadora" style="font-weight:bold" value="Hrs Picadora" />
+                                <p:inputText id="hrspicadora" value="#{producciondiariapicadoraController.selected.horastrituracion}" size="8"/>
+                                <p:outputLabel for="resena" style="font-weiht:bold" value="Breve Reseña" styleClass="optionalLbl"/>
                                 <p:inputTextarea id="resena"  rows="3" cols="50" label="breve resena" value="#{producciondiariapicadoraController.selected.observaciones}" required="true" />
                             </p:panelGrid>
                         </p:fieldset>

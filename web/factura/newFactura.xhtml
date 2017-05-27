@@ -24,8 +24,8 @@
                     <p:panel header="FACTURACION">
                         <p:fieldset style="width: 67%"  legend="Datos Vendedor y Cliente" >
                             <p:panelGrid columns="4" styleClass="ui-custompanelgrid1">
-                                <p:outputLabel for="razonsocial" styleClass="text-ouput" value=""/>
-                                <p:outputLabel id="razonsocial"  value="#{facturasController.factura.rifcliente.razonsocial}"/>
+                                <p:outputLabel for="usuario" styleClass="text-ouput" value="USUARIO"/>
+                                <p:outputLabel id="usuario"  value="#{requerimientosController.usuario.nombre}"/>
                                 <p:outputLabel for="numero" styleClass="text-ouput" value="Nro. Factura" />                                 
                                 <p:outputLabel id="numero" styleClass="text-ouputfact" value="#{facturasController.devolversiguientefactura()}" title="#{bundle.CreateFacturaTitle_numerofactura}" />
                                 <p:outputLabel for="departamento" styleClass="text-ouput" value="DEPARTAMENTO" />

@@ -5,8 +5,10 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.InventariopicadoraFacade;
 import Jpa.InventariopicadoraFacadeLocal;
+import Modelo.Libromayor;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -57,6 +59,15 @@ public class InventariospicadoraController implements Serializable {
         return selected;
     }
 
+    public String getTotalMt3() {
+        double total = 0;
+ 
+        for(Inventariopicadora inventa : getItems()) {
+            total += inventa.getCantidad();
+        }
+        return new DecimalFormat("###,###.##").format(total);
+    }
+    
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundlepicadora").getString("InventariopicadoraCreated"));
         if (!JsfUtil.isValidationFailed()) {

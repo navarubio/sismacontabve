@@ -22,12 +22,12 @@
                 <img src="../resources/images/volqueta1.png" width="120" height="70" alt="Solicitudes" align="right" />
 
                 <p:panel header="#{bundlepicadora.ListMovimientoinventariopicadoraTitle}">
-                    <p:dataTable id="datalist" value="#{movimientoinventariopicadoraController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{movimientoinventariopicadoraController.items}" var="item"  
                                  selectionMode="single" selection="#{movimientoinventariopicadoraController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idmovimientoinventariopicadora}"
-                                 rows="20"
-                                 rowsPerPageTemplate="20,30,40,50"
+                                 rows="25"
+                                 rowsPerPageTemplate="25,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
