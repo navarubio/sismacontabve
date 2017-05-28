@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetallenotacargaEditDlg" widgetVar="DetallenotacargaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlenotacarga.EditDetallenotacargaTitle}">
+            <h:form id="DetallenotacargaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detallenotacargaController.selected != null}">
+                        <p:outputLabel value="#{bundlenotacarga.EditDetallenotacargaLabel_iddetallenotacarga}" for="iddetallenotacarga" />
+                        <p:inputText id="iddetallenotacarga" value="#{detallenotacargaController.selected.iddetallenotacarga}" title="#{bundlenotacarga.EditDetallenotacargaTitle_iddetallenotacarga}" required="true" requiredMessage="#{bundlenotacarga.EditDetallenotacargaRequiredMessage_iddetallenotacarga}"/>
+                        <p:outputLabel value="#{bundlenotacarga.EditDetallenotacargaLabel_cantidad}" for="cantidad" />
+                        <p:inputText id="cantidad" value="#{detallenotacargaController.selected.cantidad}" title="#{bundlenotacarga.EditDetallenotacargaTitle_cantidad}" />
+                        <p:outputLabel value="#{bundlenotacarga.EditDetallenotacargaLabel_precioventa}" for="precioventa" />
+                        <p:inputText id="precioventa" value="#{detallenotacargaController.selected.precioventa}" title="#{bundlenotacarga.EditDetallenotacargaTitle_precioventa}" />
+                        <p:outputLabel value="#{bundlenotacarga.EditDetallenotacargaLabel_totalventa}" for="totalventa" />
+                        <p:inputText id="totalventa" value="#{detallenotacargaController.selected.totalventa}" title="#{bundlenotacarga.EditDetallenotacargaTitle_totalventa}" />
+                        <p:outputLabel value="#{bundlenotacarga.EditDetallenotacargaLabel_pordespachar}" for="pordespachar" />
+                        <p:inputText id="pordespachar" value="#{detallenotacargaController.selected.pordespachar}" title="#{bundlenotacarga.EditDetallenotacargaTitle_pordespachar}" />
+                        <p:outputLabel value="#{bundlenotacarga.EditDetallenotacargaLabel_idnotacarga}" for="idnotacarga" />
+                        <p:selectOneMenu id="idnotacarga" value="#{detallenotacargaController.selected.idnotacarga}" >
+                            <f:selectItem itemLabel="#{bundlenotacarga.SelectOneMessage}"/>
+                            <f:selectItems value="#{notacargaController.itemsAvailableSelectOne}"
+                                           var="idnotacargaItem"
+                                           itemValue="#{idnotacargaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlenotacarga.EditDetallenotacargaLabel_codigo}" for="codigo" />
+                        <p:selectOneMenu id="codigo" value="#{detallenotacargaController.selected.codigo}" >
+                            <f:selectItem itemLabel="#{bundlenotacarga.SelectOneMessage}"/>
+                            <f:selectItems value="#{articuloController.itemsAvailableSelectOne}"
+                                           var="codigoItem"
+                                           itemValue="#{codigoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detallenotacargaController.update}" value="#{bundlenotacarga.Save}" update="display,:DetallenotacargaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DetallenotacargaEditDialog');"/>
+                    <p:commandButton value="#{bundlenotacarga.Cancel}" onclick="DetallenotacargaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

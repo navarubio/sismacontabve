@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Despachopicadora.findAll", query = "SELECT d FROM Despachopicadora d"),
     @NamedQuery(name = "Despachopicadora.findByIddespachopicadora", query = "SELECT d FROM Despachopicadora d WHERE d.iddespachopicadora = :iddespachopicadora"),
     @NamedQuery(name = "Despachopicadora.findByFechadespacho", query = "SELECT d FROM Despachopicadora d WHERE d.fechadespacho = :fechadespacho"),
-    @NamedQuery(name = "Despachopicadora.findByNota", query = "SELECT d FROM Despachopicadora d WHERE d.nota = :nota"),
+    @NamedQuery(name = "Despachopicadora.findBySerial", query = "SELECT d FROM Despachopicadora d WHERE d.serial = :serial"),
     @NamedQuery(name = "Despachopicadora.findByHora", query = "SELECT d FROM Despachopicadora d WHERE d.hora = :hora"),
     @NamedQuery(name = "Despachopicadora.findByObservaciones", query = "SELECT d FROM Despachopicadora d WHERE d.observaciones = :observaciones")})
 public class Despachopicadora implements Serializable {
@@ -50,8 +50,8 @@ public class Despachopicadora implements Serializable {
     @Column(name = "fechadespacho")
     @Temporal(TemporalType.DATE)
     private Date fechadespacho;
-    @Column(name = "nota")
-    private Integer nota;
+    @Column(name = "serial")
+    private Integer serial;
     @Size(max = 12)
     @Column(name = "hora")
     private String hora;
@@ -77,6 +77,10 @@ public class Despachopicadora implements Serializable {
     @JoinColumn(name = "numerofact", referencedColumnName = "numerofact")
     @ManyToOne
     private Factura numerofact;
+    @JoinColumn(name = "idnotacarga", referencedColumnName = "idnotacarga")
+    @ManyToOne
+    private Notacarga idnotacarga;
+
     
 
     public Despachopicadora() {
@@ -100,6 +104,14 @@ public class Despachopicadora implements Serializable {
     public void setNumerofact(Factura numerofact) {
         this.numerofact = numerofact;
     }
+
+    public Notacarga getIdnotacarga() {
+        return idnotacarga;
+    }
+
+    public void setIdnotacarga(Notacarga idnotacarga) {
+        this.idnotacarga = idnotacarga;
+    }
     
     public Integer getIddespachopicadora() {
         return iddespachopicadora;
@@ -117,12 +129,12 @@ public class Despachopicadora implements Serializable {
         this.fechadespacho = fechadespacho;
     }
 
-    public Integer getNota() {
-        return nota;
+    public Integer getSerial() {
+        return serial;
     }
 
-    public void setNota(Integer nota) {
-        this.nota = nota;
+    public void setSerial(Integer serial) {
+        this.serial= serial;
     }
 
     public String getHora() {

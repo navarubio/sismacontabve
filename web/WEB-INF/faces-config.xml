@@ -64,5 +64,9 @@
             <base-name>/Bundlepicadora</base-name>
             <var>bundlepicadora</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/Bundlenotacarga</base-name>
+            <var>bundlenotacarga</var>
+        </resource-bundle>
     </application>
 </faces-config>

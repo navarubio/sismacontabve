@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetallenotacargaViewDlg" widgetVar="DetallenotacargaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlenotacarga.ViewDetallenotacargaTitle}">
+            <h:form id="DetallenotacargaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detallenotacargaController.selected != null}">
+                        <h:outputText value="#{bundlenotacarga.ViewDetallenotacargaLabel_iddetallenotacarga}"/>
+                        <h:outputText value="#{detallenotacargaController.selected.iddetallenotacarga}" title="#{bundlenotacarga.ViewDetallenotacargaTitle_iddetallenotacarga}"/>
+                        <h:outputText value="#{bundlenotacarga.ViewDetallenotacargaLabel_cantidad}"/>
+                        <h:outputText value="#{detallenotacargaController.selected.cantidad}" title="#{bundlenotacarga.ViewDetallenotacargaTitle_cantidad}"/>
+                        <h:outputText value="#{bundlenotacarga.ViewDetallenotacargaLabel_precioventa}"/>
+                        <h:outputText value="#{detallenotacargaController.selected.precioventa}" title="#{bundlenotacarga.ViewDetallenotacargaTitle_precioventa}"/>
+                        <h:outputText value="#{bundlenotacarga.ViewDetallenotacargaLabel_totalventa}"/>
+                        <h:outputText value="#{detallenotacargaController.selected.totalventa}" title="#{bundlenotacarga.ViewDetallenotacargaTitle_totalventa}"/>
+                        <h:outputText value="#{bundlenotacarga.ViewDetallenotacargaLabel_pordespachar}"/>
+                        <h:outputText value="#{detallenotacargaController.selected.pordespachar}" title="#{bundlenotacarga.ViewDetallenotacargaTitle_pordespachar}"/>
+                        <h:outputText value="#{bundlenotacarga.ViewDetallenotacargaLabel_idnotacarga}"/>
+                        <h:outputText value="#{detallenotacargaController.selected.idnotacarga}" title="#{bundlenotacarga.ViewDetallenotacargaTitle_idnotacarga}"/>
+                        <h:outputText value="#{bundlenotacarga.ViewDetallenotacargaLabel_codigo}"/>
+                        <h:outputText value="#{detallenotacargaController.selected.codigo}" title="#{bundlenotacarga.ViewDetallenotacargaTitle_codigo}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlenotacarga.Close}" onclick="DetallenotacargaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

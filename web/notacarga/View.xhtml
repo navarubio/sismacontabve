@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NotacargaViewDlg" widgetVar="NotacargaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlenotacarga.ViewNotacargaTitle}">
+            <h:form id="NotacargaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{notacargaController.selected != null}">
+                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_idnotacarga}"/>
+                        <h:outputText value="#{notacargaController.selected.idnotacarga}" title="#{bundlenotacarga.ViewNotacargaTitle_idnotacarga}"/>
+                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_fecha}"/>
+                        <h:outputText value="#{notacargaController.selected.fecha}" title="#{bundlenotacarga.ViewNotacargaTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_observacionesnotacarga}"/>
+                        <h:outputText value="#{notacargaController.selected.observacionesnotacarga}" title="#{bundlenotacarga.ViewNotacargaTitle_observacionesnotacarga}"/>
+                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_cantidad}"/>
+                        <h:outputText value="#{notacargaController.selected.cantidad}" title="#{bundlenotacarga.ViewNotacargaTitle_cantidad}"/>
+                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_bimponible}"/>
+                        <h:outputText value="#{notacargaController.selected.bimponible}" title="#{bundlenotacarga.ViewNotacargaTitle_bimponible}"/>
+                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_iva}"/>
+                        <h:outputText value="#{notacargaController.selected.iva}" title="#{bundlenotacarga.ViewNotacargaTitle_iva}"/>
+                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_totalgeneral}"/>
+                        <h:outputText value="#{notacargaController.selected.totalgeneral}" title="#{bundlenotacarga.ViewNotacargaTitle_totalgeneral}"/>
+                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_pendiente}"/>
+                        <h:outputText value="#{notacargaController.selected.pendiente}" title="#{bundlenotacarga.ViewNotacargaTitle_pendiente}"/>
+                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_rifcliente}"/>
+                        <h:outputText value="#{notacargaController.selected.rifcliente}" title="#{bundlenotacarga.ViewNotacargaTitle_rifcliente}"/>
+                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_idusuario}"/>
+                        <h:outputText value="#{notacargaController.selected.idusuario}" title="#{bundlenotacarga.ViewNotacargaTitle_idusuario}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlenotacarga.Close}" onclick="NotacargaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -30,10 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Detalledespachopicadora.findAll", query = "SELECT d FROM Detalledespachopicadora d"),
     @NamedQuery(name = "Detalledespachopicadora.findByIddetalledespachopicadora", query = "SELECT d FROM Detalledespachopicadora d WHERE d.iddetalledespachopicadora = :iddetalledespachopicadora"),
     @NamedQuery(name = "Detalledespachopicadora.findByCantidad", query = "SELECT d FROM Detalledespachopicadora d WHERE d.cantidad = :cantidad"),
-    @NamedQuery(name = "Detalledespachopicadora.findByPrecioventa", query = "SELECT d FROM Detalledespachopicadora d WHERE d.precioventa = :precioventa"),
-    @NamedQuery(name = "Detalledespachopicadora.findBySubtotal", query = "SELECT d FROM Detalledespachopicadora d WHERE d.subtotal = :subtotal"),
-    @NamedQuery(name = "Detalledespachopicadora.findByIva", query = "SELECT d FROM Detalledespachopicadora d WHERE d.iva = :iva"),
-    @NamedQuery(name = "Detalledespachopicadora.findByTotalgeneral", query = "SELECT d FROM Detalledespachopicadora d WHERE d.totalgeneral = :totalgeneral")})
+    @NamedQuery(name = "Detalledespachopicadora.findByPendiente", query = "SELECT d FROM Detalledespachopicadora d WHERE d.pendiente= :pendiente")})
 public class Detalledespachopicadora implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,14 +41,8 @@ public class Detalledespachopicadora implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "cantidad")
     private Double cantidad;
-    @Column(name = "precioventa")
-    private Double precioventa;
-    @Column(name = "subtotal")
-    private Double subtotal;
-    @Column(name = "iva")
-    private Double iva;
-    @Column(name = "totalgeneral")
-    private Double totalgeneral;
+    @Column(name = "pendiente")
+    private Double pendiente;
     @JoinColumn(name = "iddespachopicadora", referencedColumnName = "iddespachopicadora")
     @ManyToOne
     private Despachopicadora iddespachopicadora;
@@ -82,7 +73,7 @@ public class Detalledespachopicadora implements Serializable {
     public void setCodigo(Articulo codigo) {
         this.codigo = codigo;
     }
-    
+  
     public Double getCantidad() {
         return cantidad;
     }
@@ -91,36 +82,12 @@ public class Detalledespachopicadora implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public Double getPrecioventa() {
-        return precioventa;
+    public Double getPendiente() {
+        return pendiente;
     }
 
-    public void setPrecioventa(Double precioventa) {
-        this.precioventa = precioventa;
-    }
-
-    public Double getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(Double subtotal) {
-        this.subtotal = subtotal;
-    }
-
-    public Double getIva() {
-        return iva;
-    }
-
-    public void setIva(Double iva) {
-        this.iva = iva;
-    }
-
-    public Double getTotalgeneral() {
-        return totalgeneral;
-    }
-
-    public void setTotalgeneral(Double totalgeneral) {
-        this.totalgeneral = totalgeneral;
+    public void setPendiente (Double pendiente) {
+        this.pendiente = pendiente;
     }
 
     public Despachopicadora getIddespachopicadora() {

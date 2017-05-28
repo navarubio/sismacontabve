@@ -52,6 +52,8 @@ public class Articulo implements Serializable {
     private Collection<Inventariopicadora> inventariopicadoraCollection;
     @OneToMany(mappedBy = "codigo")
     private Collection<Movimientoinventariopicadora> movimientoinventariopicadoraCollection;
+    @OneToMany(mappedBy = "codigo")
+    private Collection<Detallenotacarga> detallenotacargaCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -283,5 +285,14 @@ public class Articulo implements Serializable {
 
     public void setMOvimientoinventariopicadoraCollection(Collection<Movimientoinventariopicadora> movimientoinventariopicadoraCollection) {
         this.movimientoinventariopicadoraCollection = movimientoinventariopicadoraCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Detallenotacarga> getDetallenotacargaCollection() {
+        return detallenotacargaCollection;
+    }
+
+    public void setDetallenotacargaCollection(Collection<Detallenotacarga> detallenotacargaCollection) {
+        this.detallenotacargaCollection = detallenotacargaCollection;
     }
 }

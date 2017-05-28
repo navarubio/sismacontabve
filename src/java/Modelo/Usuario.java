@@ -92,6 +92,8 @@ public class Usuario implements Serializable {
     private Collection<Articulo> articuloCollection;
     @OneToMany(mappedBy = "idusuario")
     private Collection<Produccionpicadora> produccionpicadoraCollection;
+    @OneToMany(mappedBy = "idusuario")
+    private Collection<Notacarga> notacargaCollection;
 
     public Usuario() {
     }
@@ -276,5 +278,14 @@ public class Usuario implements Serializable {
 
     public void setProduccionpicadoraCollection(Collection<Produccionpicadora> produccionpicadoraCollection) {
         this.produccionpicadoraCollection = produccionpicadoraCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Notacarga> getNotacargaCollection() {
+        return notacargaCollection;
+    }
+
+    public void setNotacargaCollection(Collection<Notacarga> notacargaCollection) {
+        this.notacargaCollection = notacargaCollection;
     }
 }
