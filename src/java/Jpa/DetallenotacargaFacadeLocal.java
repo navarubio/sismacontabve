@@ -5,6 +5,7 @@ import Modelo.Detallecompra;
 import Modelo.Detalledespachopicadora;
 import Modelo.Detallenotacarga;
 import Modelo.Detalleproduccionpicadora;
+import Modelo.Notacarga;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -24,4 +25,6 @@ public interface DetallenotacargaFacadeLocal {
     List<Detallenotacarga> findRange(int[] range);
 
     int count();
+    
+    List<Detallenotacarga> detallesfiltrados(Notacarga nota);
 }

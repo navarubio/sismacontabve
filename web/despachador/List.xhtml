@@ -16,12 +16,12 @@
         <ui:define name="body">
             <h:form id="DespachadorListForm">
                 <p:panel header="#{bundlepicadora.ListDespachadorTitle}">
-                    <p:dataTable id="datalist" value="#{despachadorController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{despachadorController.items}" var="item" style="width: 800px;"
                                  selectionMode="single" selection="#{despachadorController.selected}"
                                  paginator="true"
                                  rowKey="#{item.iddespachador}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="20"
+                                 rowsPerPageTemplate="20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>

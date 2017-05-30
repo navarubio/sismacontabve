@@ -59,7 +59,7 @@
                             </f:facet>
                             <h:outputText value="#{item.aumento}"/>
                         </p:column>
-                        <p:column style="text-align: center">
+                        <p:column style="text-align: center" filterBy="#{item.idproduccionpicadora.idproduccionpicadora}" filterMatchMode="exact" filterStyle="width:50px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListMovimientoinventariopicadoraTitle_idproduccionpicadora}"/>
                             </f:facet>

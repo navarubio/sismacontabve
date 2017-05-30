@@ -11,10 +11,16 @@
 
         <ui:define name="title">
             <h:outputText value="#{bundlenotacarga.ListDetallenotacargaTitle}"></h:outputText>
+            <h:outputStylesheet library="css" name="index.css" /> 
         </ui:define>
 
         <ui:define name="body">
             <h:form id="DetallenotacargaListForm">
+                <div id="imag2">
+                    <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
+                </div>     
+                <img src="../resources/images/Payloader2.png" width="120" height="70" alt="Solicitudes" align="right" />
+
                 <p:panel header="#{bundlenotacarga.ListDetallenotacargaTitle}">
                     <p:dataTable id="datalist" value="#{detallenotacargaController.items}" var="item"
                                  selectionMode="single" selection="#{detallenotacargaController.selected}"
@@ -26,43 +32,47 @@
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlenotacarga.ListDetallenotacargaTitle_idnotacarga}"/>
                             </f:facet>
                             <h:outputText value="#{item.idnotacarga}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center" filterBy="#{item.codigo.codigo}" filterMatchMode="contains" filterStyle="width:60px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlenotacarga.ListDetallenotacargaTitle_codigo}"/>
                             </f:facet>
                             <h:outputText value="#{item.codigo}"/>
                         </p:column>
-                        <p:column>
+                        <p:column filterBy="#{item.codigo.descripcion}" filterMatchMode="contains" filterStyle="width:150px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlenotacarga.ListDetallenotacargaTitle_codigo}"/>
                             </f:facet>
                             <h:outputText value="#{item.codigo.descripcion}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlenotacarga.ListDetallenotacargaTitle_cantidad}"/>
                             </f:facet>
                             <h:outputText value="#{item.cantidad}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlenotacarga.ListDetallenotacargaTitle_precioventa}"/>
                             </f:facet>
-                            <h:outputText value="#{item.precioventa}"/>
+                            <h:outputText value="#{item.precioventa}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlenotacarga.ListDetallenotacargaTitle_totalventa}"/>
                             </f:facet>
-                            <h:outputText value="#{item.subtotal}"/>
+                            <h:outputText value="#{item.subtotal}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlenotacarga.ListDetallenotacargaTitle_pordespachar}"/>
                             </f:facet>

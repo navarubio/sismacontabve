@@ -11,10 +11,16 @@
 
         <ui:define name="title">
             <h:outputText value="#{bundlenotacarga.ListNotacargaTitle}"></h:outputText>
+            <h:outputStylesheet library="css" name="index.css" /> 
         </ui:define>
 
         <ui:define name="body">
             <h:form id="NotacargaListForm">
+                <div id="imag2">
+                    <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
+                </div>     
+                <img src="../resources/images/roquero1.png" width="120" height="70" alt="Solicitudes" align="right" />
+
                 <p:panel header="#{bundlenotacarga.ListNotacargaTitle}">
                     <p:dataTable id="datalist" value="#{notacargaController.items}" var="item"
                                  selectionMode="single" selection="#{notacargaController.selected}"
@@ -27,13 +33,13 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column style="text-align: center" filterBy="#{item.idnotacarga}" filterMatchMode="exact" filterStyle="width:50px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlenotacarga.ListNotacargaTitle_idnotacarga}"/>
                             </f:facet>
                             <h:outputText value="#{item.idnotacarga}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center" sortBy="#{item.fecha}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlenotacarga.ListNotacargaTitle_fecha}"/>
                             </f:facet>
@@ -41,41 +47,52 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column width="300" filterBy="#{item.rifcliente.razonsocial}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlenotacarga.ListNotacargaTitle_rifcliente}"/>
                             </f:facet>
                             <h:outputText value="#{item.rifcliente.razonsocial}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlenotacarga.ListNotacargaTitle_cantidad}"/>
                             </f:facet>
                             <h:outputText value="#{item.cantidad}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlenotacarga.ListNotacargaTitle_bimponible}"/>
                             </f:facet>
-                            <h:outputText value="#{item.bimponible}"/>
+                            <h:outputText value="#{item.bimponible}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlenotacarga.ListNotacargaTitle_iva}"/>
                             </f:facet>
-                            <h:outputText value="#{item.iva}"/>
+                            <h:outputText value="#{item.iva}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlenotacarga.ListNotacargaTitle_totalgeneral}"/>
                             </f:facet>
-                            <h:outputText value="#{item.totalgeneral}"/>
+                            <h:outputText value="#{item.totalgeneral}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlenotacarga.ListNotacargaTitle_pendiente}"/>
                             </f:facet>
                             <h:outputText value="#{item.pendiente}"/>
+                        </p:column>
+                        <p:column style="text-align: center" headerText="Despachar">
+                            <p:commandLink actionListener="#{notacargaController.asignarNotacarga(item)}"  update=":dialogo" oncomplete="PF('wdialogo').show();" >
+                                <h:graphicImage library="images" name="iconoexcavadora.png" width="30" height="30" alt="Despacho"/> 
+                            </p:commandLink>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlenotacarga.Create}" actionListener="#{notacargaController.prepareCreate}" update=":NotacargaCreateForm" oncomplete="PF('NotacargaCreateDialog').show()"/>
@@ -90,6 +107,97 @@
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
+            <p:dialog id="dialogo" widgetVar="wdialogo" header="Detalles Nota de Carga Seleccionada" modal="true" closeOnEscape="true" 
+                      resizable="false" showEffect="explode" appendTo="@(body)"  >
+                <h:form id="formulario">
+                    <h:panelGrid  id="display" columns="2" style="vertical-align:top" width="900">
+                        <p:fieldset  legend="Datos Administrador y Cliente" >
+                            <h:panelGrid styleClass="ui-custompanelgrid1" columns="4" width="450">
+                                <p:outputLabel for="numero" value="Nota de Carga " styleClass="text-ouput"/>
+                                <p:outputLabel id="numero" value="NTC- #{notacargaController.notacargadialog.idnotacarga}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouput"/>
+                                <p:outputLabel id="usuario" value="#{notacargaController.notacargadialog.idusuario.nombre}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="departamento" value="Departamento" styleClass="text-ouput"/>
+                                <p:outputLabel id="departamento" value="#{notacargaController.notacargadialog.idusuario.iddepartamento.departamento}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="proveedor" value="Cliente" styleClass="text-ouput"/>
+                                <p:outputLabel id="proveedor" value="#{notacargaController.notacargadialog.rifcliente.razonsocial}"/>
+                                <p:outputLabel for="rifclient" value="RIF" styleClass="text-ouput"/>
+                                <p:outputLabel id="rifclient" value="#{notacargaController.notacargadialog.rifcliente.rifcliente}"/>                                
+                                <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouput"/>
+                                <p:outputLabel id="telefono" value="#{notacargaController.notacargadialog.rifcliente.telefonos}"/>
+                                <p:outputLabel for="fechasolicitud" value="Fecha Nota" styleClass="text-ouput" />
+                                <p:outputLabel id="fechasolicitud" value="#{notacargaController.notacargadialog.fecha}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:outputLabel>
+                                <p:outputLabel for="resena" value="Observaciones" styleClass="text-ouput"/>
+                                <p:outputLabel id="resena" value="#{notacargaController.notacargadialog.observacionesnotacarga}" />
+                            </h:panelGrid>
+                        </p:fieldset>
+                        <p:fieldset legend="Despacho">
+                            <h:panelGrid styleClass="ui-custompanelgrid3" columns="2" width="400">
+                                <p:outputLabel for="usuaauto" value="Usuario" styleClass="text-ouput"/>
+                                <p:outputLabel id="usuaauto" value="#{comprasController.usuario.nombre}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="deptoauto" value="Departamento" styleClass="text-ouput"/>
+                                <p:outputLabel id="deptoauto" value="#{comprasController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="observaauto" value="Observaciones" styleClass="text-ouput"/>
+                                <p:inputTextarea id="observaauto"  rows="2" cols="50" label="Observaciones" value="#{comprasController.autorizacion.observaciones}"/>
+                            </h:panelGrid>                                
+                        </p:fieldset>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" width="950">
+                        <p:fieldset legend="Agregados">
+                            <p:panel id="panelart"     >
+                                <p:dataTable id="listado" value="#{notacargaController.deallesnotafiltrados}"
+                                             var="req" emptyMessage="No hay articulos para mostrar"  >
+                                    <p:column style="width:8%"  headerText="Codigo Articulo">
+                                        <h:outputText value="#{req.codigo.codigo}" />
+                                    </p:column>
+                                    <p:column style="width:35%"  headerText="Descripcion del Articulo">
+                                        <h:outputText value="#{req.codigo.descripcion}"/>  
+                                    </p:column>
+                                    <p:column style="text-align:center" headerText="Cantidad">                                
+                                        <h:outputText style="width:10px"  value="#{req.cantidad}"/>
+                                    </p:column >
+                                    <p:column style="text-align:right" headerText="Precio Unitario ">
+                                        <h:outputText style="width:10px"  value="#{req.precioventa}">
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align:right" headerText="SUB TOTAL">
+                                        <h:outputText value="#{req.subtotal}"> 
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align:right" headerText="IVA">
+                                        <h:outputText value="#{req.iva}"> 
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align:right" headerText="TOTAL">
+                                        <h:outputText value="#{req.totalnota}"> 
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:columnGroup type="footer">
+                                        <p:row>
+                                            <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
+                                            <p:column style="text-align: right"  footerText="#{comprasController.auxiliarrequerimiento.subtotal}" /> 
+                                            <p:column style="text-align: right"  footerText="#{comprasController.auxiliarrequerimiento.montoiva}" />
+                                            <p:column style="text-align: right"  footerText="#{comprasController.auxiliarrequerimiento.montototal}" />                                        
+                                        </p:row>
+                                    </p:columnGroup>       
+                                </p:dataTable> 
+                            </p:panel>
+                        </p:fieldset>
+                    </h:panelGrid>
+
+                    <p:panelGrid columns="2">
+                        <p:commandButton value="Autorizar Compra" icon="ui-icon-key" actionListener="#{comprasController.autorizar()}"  oncomplete="PF('wdialogo').hide().;" update="display,:NotacargaListForm,:growl" />                             
+                        <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
+                    </p:panelGrid>
+                </h:form>
+            </p:dialog>
+
         </ui:define>
     </ui:composition>
 

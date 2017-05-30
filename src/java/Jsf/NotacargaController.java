@@ -76,6 +76,9 @@ public class NotacargaController implements Serializable {
     private Notacarga codnota;
     private int number;
     private List<Cliente> clientes;
+    int idnota=0;
+    private Notacarga notacargadialog;
+    private List <Detallenotacarga> deallesnotafiltrados;
     
     
 
@@ -135,6 +138,14 @@ public class NotacargaController implements Serializable {
 
     public List<Cliente> getClientes() {
         return clientes;
+    }
+
+    public Notacarga getNotacargadialog() {
+        return notacargadialog;
+    }
+
+    public void setNotacargadialog(Notacarga notacargadialog) {
+        this.notacargadialog = notacargadialog;
     }
 
     public void setClientes(List<Cliente> clientes) {
@@ -198,6 +209,13 @@ public class NotacargaController implements Serializable {
         this.totalsubtotal = totalsubtotal;
     }
 
+    public List<Detallenotacarga> getDeallesnotafiltrados() {
+        return deallesnotafiltrados;
+    }
+
+    public void setDeallesnotafiltrados(List<Detallenotacarga> deallesnotafiltrados) {
+        this.deallesnotafiltrados = deallesnotafiltrados;
+    }
 
     public List<Notacarga> getItems() {
         if (items == null) {
@@ -302,10 +320,10 @@ public class NotacargaController implements Serializable {
 //            subject = "Emisión de Factura N° " + ultimafactura;
 //            enviomail = new envioCorreo(correo, subject);
 //            enviomail.start();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "La Factura se registro exitosamente con el numero " + ejbFacade.ultimaInsertada()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "La nota de carga se registro exitosamente","Aviso"));
             limpiarListaArreglo();
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar esta Factura"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar esta Factura", "Aviso"));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
@@ -360,6 +378,13 @@ public class NotacargaController implements Serializable {
     public void limpiarListaArreglo() {
         listadetallenota.clear();
         totaltotal();
+    }
+    
+    public void asignarNotacarga(Notacarga notaselec) {
+        this.idnota = notaselec.getIdnotacarga();
+        this.notacargadialog = notaselec;
+        deallesnotafiltrados = detallenotacargaEJB.detallesfiltrados(notaselec);
+//        compraautorizada = compraselec;
     }
     
     
