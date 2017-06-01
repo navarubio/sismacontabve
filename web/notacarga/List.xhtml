@@ -111,8 +111,8 @@
                       resizable="false" showEffect="explode" appendTo="@(body)"  >
                 <h:form id="formulario">
                     <h:panelGrid  id="display" columns="2" style="vertical-align:top" width="900">
-                        <p:fieldset  legend="Datos Administrador y Cliente" >
-                            <h:panelGrid styleClass="ui-custompanelgrid1" columns="4" width="450">
+                        <p:fieldset  legend="Datos de la Nota de Carga" >
+                            <h:panelGrid styleClass="ui-custompanelgrid1" columns="4" width="600">
                                 <p:outputLabel for="numero" value="Nota de Carga " styleClass="text-ouput"/>
                                 <p:outputLabel id="numero" value="NTC- #{notacargaController.notacargadialog.idnotacarga}" styleClass="optionalLbl"/>
                                 <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouput"/>
@@ -120,7 +120,7 @@
                                 <p:outputLabel for="departamento" value="Departamento" styleClass="text-ouput"/>
                                 <p:outputLabel id="departamento" value="#{notacargaController.notacargadialog.idusuario.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                 <p:outputLabel for="proveedor" value="Cliente" styleClass="text-ouput"/>
-                                <p:outputLabel id="proveedor" value="#{notacargaController.notacargadialog.rifcliente.razonsocial}"/>
+                                <p:outputLabel id="proveedor" value="#{notacargaController.notacargadialog.rifcliente.razonsocial}" styleClass="text-ouputfact"/>
                                 <p:outputLabel for="rifclient" value="RIF" styleClass="text-ouput"/>
                                 <p:outputLabel id="rifclient" value="#{notacargaController.notacargadialog.rifcliente.rifcliente}"/>                                
                                 <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouput"/>
@@ -133,22 +133,13 @@
                                 <p:outputLabel id="resena" value="#{notacargaController.notacargadialog.observacionesnotacarga}" />
                             </h:panelGrid>
                         </p:fieldset>
-                        <p:fieldset legend="Despacho">
-                            <h:panelGrid styleClass="ui-custompanelgrid3" columns="2" width="400">
-                                <p:outputLabel for="usuaauto" value="Usuario" styleClass="text-ouput"/>
-                                <p:outputLabel id="usuaauto" value="#{comprasController.usuario.nombre}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="deptoauto" value="Departamento" styleClass="text-ouput"/>
-                                <p:outputLabel id="deptoauto" value="#{comprasController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="observaauto" value="Observaciones" styleClass="text-ouput"/>
-                                <p:inputTextarea id="observaauto"  rows="2" cols="50" label="Observaciones" value="#{comprasController.autorizacion.observaciones}"/>
-                            </h:panelGrid>                                
-                        </p:fieldset>
                     </h:panelGrid>
-                    <h:panelGrid columns="1" width="950">
+                    <h:panelGrid columns="1" width="1200">
                         <p:fieldset legend="Agregados">
                             <p:panel id="panelart"     >
                                 <p:dataTable id="listado" value="#{notacargaController.deallesnotafiltrados}"
-                                             var="req" emptyMessage="No hay articulos para mostrar"  >
+                                             var="req" emptyMessage="No hay articulos para mostrar"  
+                                             >
                                     <p:column style="width:8%"  headerText="Codigo Articulo">
                                         <h:outputText value="#{req.codigo.codigo}" />
                                     </p:column>
@@ -178,6 +169,16 @@
                                             <f:convertNumber type="currency" currencySymbol=" " />
                                         </h:outputText>
                                     </p:column>
+                                    <p:column style="text-align:right" headerText="PENDIENTE">
+                                        <h:outputText value="#{req.pordespachar}"> 
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: center" headerText="Despachar">
+                                        <p:commandLink actionListener="#{notacargaController.asignarDetallenota(req)}">
+                                            <h:graphicImage library="images" name="apply.png" width="30" height="30" alt="Despacho"/> 
+                                        </p:commandLink>
+                                    </p:column>
                                     <p:columnGroup type="footer">
                                         <p:row>
                                             <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
@@ -190,6 +191,36 @@
                             </p:panel>
                         </p:fieldset>
                     </h:panelGrid>
+                    <p:fieldset legend="Nota de Despacho">
+                        <p:panel id="notadespacho">
+                                 <h:panelGrid id= "areadespacho" styleClass="ui-custompanelgrid3" columns="4" width="400">
+                                <p:outputLabel for="fechadespacho" styleClass="text-ouput"  value="Fecha Despacho"  />
+                                <p:calendar id="fechadespacho" pattern="dd/MM/yyyy" locale="es" value="#{notacargaController.selected.fecha}" showOn="button" navigator="true" required="true" size="10"/>
+                                <p:outputLabel for="despachador" styleClass="text-ouput" value="Despachador"/>
+                                <p:selectOneMenu id="despachador" value="#{notacargaController.despacho.iddespachador}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" required="true"> 
+                                    <f:selectItems value="#{notacargaController.despachadores}"
+                                                   var="despachado"
+                                                   itemLabel="#{despachado.nombre}"  itemValue="#{despachado}"/> 
+                                </p:selectOneMenu>
+                                <p:outputLabel for="codigo1" value="Codigo" styleClass="text-ouput"/>
+                                <p:outputLabel id="codigo1" value="#{notacargaController.articulo.codigo}" styleClass="text-ouputfact" />
+                                <p:outputLabel for="agregado" value="Agregado Despachado" styleClass="text-ouput"/>
+                                <p:outputLabel id="agregado" value="#{notacargaController.articulo.descripcion}" styleClass="text-ouputfact" />
+                                <p:outputLabel for="unidad" styleClass="text-ouput" value="Camion"/>
+                                <p:selectOneMenu id="unidad" value="#{notacargaController.despacho.idcamion}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" required="true"> 
+                                    <p:ajax event="change" listener="#{notacargaController.buscarCamion()}" update="cubicaje"/>
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                    <f:selectItems value="#{notacargaController.camiones}"
+                                                   var="camion"
+                                                   itemLabel="#{camion.color} #{camion.placas}"  itemValue="#{camion}"/> 
+                                </p:selectOneMenu>
+                                <p:outputLabel for="cubicaje" value="Mts Cubicos " styleClass="text-ouput"/>
+                                <p:inputText id="cubicaje" value="#{notacargaController.mt3}" required="true" style="text-align: right" size="10" />
+                                <p:outputLabel for="observaauto" value="Observaciones" styleClass="text-ouput"/>
+                                <p:inputTextarea id="observaauto"  rows="2" cols="50" label="Observaciones" value="#{notacargaController.despacho.observaciones}"/>
+                            </h:panelGrid>                
+                        </p:panel>
+                    </p:fieldset>
 
                     <p:panelGrid columns="2">
                         <p:commandButton value="Autorizar Compra" icon="ui-icon-key" actionListener="#{comprasController.autorizar()}"  oncomplete="PF('wdialogo').hide().;" update="display,:NotacargaListForm,:growl" />                             

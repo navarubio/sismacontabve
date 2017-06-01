@@ -1,7 +1,11 @@
 package Jsf;
 
 import Jpa.ArticuloFacadeLocal;
+import Jpa.CamionFacadeLocal;
+import Jpa.ChoferFacadeLocal;
 import Jpa.ClienteFacadeLocal;
+import Jpa.DespachadorFacadeLocal;
+import Jpa.DespachopicadoraFacadeLocal;
 import Jpa.DetallenotacargaFacadeLocal;
 import Modelo.Notacarga;
 import Jsf.util.JsfUtil;
@@ -9,7 +13,11 @@ import Jsf.util.JsfUtil.PersistAction;
 import Jpa.NotacargaFacade;
 import Jpa.NotacargaFacadeLocal;
 import Modelo.Articulo;
+import Modelo.Camion;
+import Modelo.Chofer;
 import Modelo.Cliente;
+import Modelo.Despachador;
+import Modelo.Despachopicadora;
 import Modelo.Detallenotacarga;
 import Modelo.Produccionpicadora;
 import Modelo.Requerimiento;
@@ -49,7 +57,15 @@ public class NotacargaController implements Serializable {
     private DetallenotacargaFacadeLocal detallenotacargaEJB;
     @EJB
     private ClienteFacadeLocal clienteEJB;
-    
+    @EJB
+    private DespachopicadoraFacadeLocal despachopicadoraEJB;
+    @EJB
+    private DespachadorFacadeLocal despachorEJB;
+    @EJB
+    private CamionFacadeLocal camionEJB;
+    @EJB
+    private ChoferFacadeLocal choferEJB;
+
     private List<Notacarga> items = null;
     private Notacarga selected;
     private List<Articulo> articulos = null;
@@ -57,13 +73,15 @@ public class NotacargaController implements Serializable {
     private List<Detallenotacarga> detalles = null;
     private Detallenotacarga detallenota;
     private double cantidad = 0;
-    private double totalcantidad=0;
+    private double totalcantidad = 0;
     private double pventa = 0;
     private double subtotal = 0;
     private int id = 0;
     private double totalgeneral = 0;
     private double totaliva = 0;
     private double totalsubtotal = 0;
+    private Camion camion;
+    private double mt3 = 0;
     @Inject
     private Notacarga nota;
     @Inject
@@ -72,29 +90,35 @@ public class NotacargaController implements Serializable {
     private Detallenotacarga detalle;
     @Inject
     private Cliente cliente;
-    private FacturasController factu= new FacturasController();
+    private FacturasController factu = new FacturasController();
     private Notacarga codnota;
     private int number;
     private List<Cliente> clientes;
-    int idnota=0;
+    int idnota = 0;
     private Notacarga notacargadialog;
-    private List <Detallenotacarga> deallesnotafiltrados;
-    
-    
+    private List<Detallenotacarga> detallesnotafiltrados;
+    private List<Despachador> despachadores;
+    private List<Camion> camiones;
+    private List<Chofer> choferes;
+    @Inject
+    private Despachopicadora despacho;
 
     public NotacargaController() {
     }
-    
+
     @PostConstruct
     public void init() {
         clientes = clienteEJB.findAll();
         selected = new Notacarga();
         articulos = articuloEJB.listadoAgregadospicadora();
+        despachadores = despachorEJB.findAll();
+        camiones = camionEJB.findAll();
+        choferes = choferEJB.findAll();
         listadetallenota.clear();
-        totalsubtotal=0;
-        totaliva=0;
-        totalgeneral=0;
-        totalcantidad=0;
+        totalsubtotal = 0;
+        totaliva = 0;
+        totalgeneral = 0;
+        totalcantidad = 0;
     }
 
     public Notacarga getSelected() {
@@ -104,6 +128,7 @@ public class NotacargaController implements Serializable {
     public void setSelected(Notacarga selected) {
         this.selected = selected;
     }
+
     public double getCantidad() {
         return cantidad;
     }
@@ -120,6 +145,14 @@ public class NotacargaController implements Serializable {
         return cliente;
     }
 
+    public Camion getCamion() {
+        return camion;
+    }
+
+    public void setCamion(Camion camion) {
+        this.camion = camion;
+    }
+
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
@@ -127,7 +160,15 @@ public class NotacargaController implements Serializable {
     public void setArticulo(Articulo articulo) {
         this.articulo = articulo;
     }
-    
+
+    public Despachopicadora getDespacho() {
+        return despacho;
+    }
+
+    public void setDespacho(Despachopicadora despacho) {
+        this.despacho = despacho;
+    }
+
     public double getPventa() {
         return pventa;
     }
@@ -151,7 +192,7 @@ public class NotacargaController implements Serializable {
     public void setClientes(List<Cliente> clientes) {
         this.clientes = clientes;
     }
-    
+
     protected void setEmbeddableKeys() {
     }
 
@@ -177,6 +218,7 @@ public class NotacargaController implements Serializable {
     private NotacargaFacadeLocal getFacade() {
         return ejbFacade;
     }
+
     public List<Articulo> getArticulos() {
         return articulos;
     }
@@ -205,16 +247,48 @@ public class NotacargaController implements Serializable {
         return totalsubtotal;
     }
 
+    public List<Despachador> getDespachadores() {
+        return despachadores;
+    }
+
+    public void setDespachadores(List<Despachador> despachadores) {
+        this.despachadores = despachadores;
+    }
+
+    public List<Camion> getCamiones() {
+        return camiones;
+    }
+
+    public void setCamiones(List<Camion> camiones) {
+        this.camiones = camiones;
+    }
+
+    public List<Chofer> getChoferes() {
+        return choferes;
+    }
+
+    public void setChoferes(List<Chofer> choferes) {
+        this.choferes = choferes;
+    }
+
+    public double getMt3() {
+        return mt3;
+    }
+
+    public void setMt3(double mt3) {
+        this.mt3 = mt3;
+    }
+
     public void setTotalsubtotal(double totalsubtotal) {
         this.totalsubtotal = totalsubtotal;
     }
 
     public List<Detallenotacarga> getDeallesnotafiltrados() {
-        return deallesnotafiltrados;
+        return detallesnotafiltrados;
     }
 
     public void setDeallesnotafiltrados(List<Detallenotacarga> deallesnotafiltrados) {
-        this.deallesnotafiltrados = deallesnotafiltrados;
+        this.detallesnotafiltrados = deallesnotafiltrados;
     }
 
     public List<Notacarga> getItems() {
@@ -223,7 +297,6 @@ public class NotacargaController implements Serializable {
         }
         return items;
     }
-
 
     public Notacarga getNotacarga(java.lang.Integer id) {
         return getFacade().find(id);
@@ -269,8 +342,8 @@ public class NotacargaController implements Serializable {
         }
 
     }
-    
-    public void registrarnota(){
+
+    public void registrarnota() {
         Articulo art = new Articulo();
         Date fecha = new Date();
         DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
@@ -320,7 +393,7 @@ public class NotacargaController implements Serializable {
 //            subject = "Emisión de Factura N° " + ultimafactura;
 //            enviomail = new envioCorreo(correo, subject);
 //            enviomail.start();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "La nota de carga se registro exitosamente","Aviso"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "La nota de carga se registro exitosamente", "Aviso"));
             limpiarListaArreglo();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar esta Factura", "Aviso"));
@@ -334,8 +407,12 @@ public class NotacargaController implements Serializable {
 //        pcosto = articulo.getPcosto();
         pventa = articulo.getPventa();
     }
-    
-    public int devolversiguientenotacarga() { 
+
+    public void buscarCamion() {
+        mt3 = despacho.getIdcamion().getCubicaje();
+    }
+
+    public int devolversiguientenotacarga() {
         int siguiente;
         siguiente = ejbFacade.siguientenotacarga();
         return siguiente;
@@ -345,7 +422,7 @@ public class NotacargaController implements Serializable {
         double montotgeneral = 0;
         double montotiva = 0;
         double montotsubtotal = 0;
-        double cantidadmt3=0;
+        double cantidadmt3 = 0;
 
         for (Detallenotacarga requeri : listadetallenota) {
             montotgeneral += requeri.getTotalnota();
@@ -356,7 +433,7 @@ public class NotacargaController implements Serializable {
         totalgeneral = montotgeneral;
         totaliva = montotiva;
         totalsubtotal = montotsubtotal;
-        totalcantidad=cantidadmt3;
+        totalcantidad = cantidadmt3;
 
         return montotgeneral;
     }
@@ -379,14 +456,22 @@ public class NotacargaController implements Serializable {
         listadetallenota.clear();
         totaltotal();
     }
-    
+
     public void asignarNotacarga(Notacarga notaselec) {
         this.idnota = notaselec.getIdnotacarga();
         this.notacargadialog = notaselec;
-        deallesnotafiltrados = detallenotacargaEJB.detallesfiltrados(notaselec);
+        detallesnotafiltrados = detallenotacargaEJB.detallesfiltrados(notaselec);
+        if (detallesnotafiltrados.size() == 1) {
+            detalle = detallesnotafiltrados.get(0);
+            articulo = detalle.getCodigo();
+        }
 //        compraautorizada = compraselec;
     }
-    
-    
+
+    public void asignarDetallenota (Detallenotacarga detallenotaselec) {
+        this.detalle = detallenotaselec;
+        articulo=detalle.getCodigo();
+//        compraautorizada = compraselec;
+    }
 
 }

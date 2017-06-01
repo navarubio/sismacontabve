@@ -45,7 +45,7 @@ public class Articulo implements Serializable {
     @OneToMany(mappedBy = "codigo")
     private Collection<Requerimiento> requerimientoCollection;
     @OneToMany(mappedBy = "codigo")
-    private Collection<Detalledespachopicadora> detalledepachopicadoraCollection;
+    private Collection<Despachopicadora> despachopicadoraCollection;
     @OneToMany(mappedBy = "codigo")
     private Collection<Detalleproduccionpicadora> detalleproduccionpicadoraCollection;
     @OneToMany(mappedBy = "codigo")
@@ -252,12 +252,12 @@ public class Articulo implements Serializable {
     }
     
     @XmlTransient
-    public Collection<Detalledespachopicadora> getDetalledespachopicadoraCollection() {
-        return detalledepachopicadoraCollection;
+    public Collection<Despachopicadora> getDespachopicadoraCollection() {
+        return despachopicadoraCollection;
     }
 
-    public void setDetalledespachopicadoraCollection(Collection<Detalledespachopicadora> detalledespachopicadoraCollection) {
-        this.detalledepachopicadoraCollection = detalledespachopicadoraCollection;
+    public void setDespachopicadoraCollection(Collection<Despachopicadora> despachopicadoraCollection) {
+        this.despachopicadoraCollection = despachopicadoraCollection;
     }
     
     @XmlTransient

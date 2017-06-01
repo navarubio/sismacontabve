@@ -58,6 +58,10 @@ public class Despachopicadora implements Serializable {
     @Size(max = 255)
     @Column(name = "observaciones")
     private String observaciones;
+    @Column(name = "cantidad")
+    private Double cantidad;
+    @Column(name = "pendiente")
+    private Double pendiente;
     @OneToMany(mappedBy = "iddespachopicadora")
     private Collection<Movimientoinventariopicadora> movimientoinventariopicadoraCollection;
     @OneToMany(mappedBy = "iddespachopicadora")
@@ -71,28 +75,21 @@ public class Despachopicadora implements Serializable {
     @JoinColumn(name = "idcamion", referencedColumnName = "idcamion")
     @ManyToOne
     private Camion idcamion;
-    @JoinColumn(name = "rifcliente", referencedColumnName = "rifcliente")
-    @ManyToOne
-    private Cliente rifcliente; 
     @JoinColumn(name = "numerofact", referencedColumnName = "numerofact")
     @ManyToOne
     private Factura numerofact;
     @JoinColumn(name = "idnotacarga", referencedColumnName = "idnotacarga")
     @ManyToOne
     private Notacarga idnotacarga;
+    @JoinColumn(name = "codigo", referencedColumnName = "codigo")
+    @ManyToOne
+    private Articulo codigo;
 
     
 
     public Despachopicadora() {
     }
     
-    public Cliente getRifcliente() {
-        return rifcliente;
-    }
-
-    public void setRifcliente(Cliente rifcliente) {
-        this.rifcliente = rifcliente;
-    }
     public Despachopicadora(Integer iddespachopicadora) {
         this.iddespachopicadora = iddespachopicadora;
     }
@@ -117,6 +114,29 @@ public class Despachopicadora implements Serializable {
         return iddespachopicadora;
     }
 
+    public Articulo getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Articulo codigo) {
+        this.codigo = codigo;
+    }
+    
+    public Double getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Double cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public Double getPendiente() {
+        return pendiente;
+    }
+
+    public void setPendiente (Double pendiente) {
+        this.pendiente = pendiente;
+    }
     public void setIddespachopicadora(Integer iddespachopicadora) {
         this.iddespachopicadora = iddespachopicadora;
     }

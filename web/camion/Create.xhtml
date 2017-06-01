@@ -12,8 +12,6 @@
             <h:form id="CamionCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{camionController.selected != null}">
-                        <p:outputLabel value="#{bundlepicadora.CreateCamionLabel_idcamion}" for="idcamion" />
-                        <p:inputText id="idcamion" value="#{camionController.selected.idcamion}" title="#{bundlepicadora.CreateCamionTitle_idcamion}" required="true" requiredMessage="#{bundlepicadora.CreateCamionRequiredMessage_idcamion}"/>
                         <p:outputLabel value="#{bundlepicadora.CreateCamionLabel_placas}" for="placas" />
                         <p:inputText id="placas" value="#{camionController.selected.placas}" title="#{bundlepicadora.CreateCamionTitle_placas}" />
                         <p:outputLabel value="#{bundlepicadora.CreateCamionLabel_color}" for="color" />

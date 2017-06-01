@@ -50,8 +50,6 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy = "rifcliente")
     private Collection<Factura> facturaCollection;
     @OneToMany(mappedBy = "rifcliente")
-    private Collection<Despachopicadora> despachopicadoraCollection;
-    @OneToMany(mappedBy = "rifcliente")
     private Collection<Notacarga> notacargaCollection;
 
     private static final long serialVersionUID = 1L;
@@ -221,15 +219,6 @@ public class Cliente implements Serializable {
         this.facturaCollection = facturaCollection;
     }
     
-    @XmlTransient
-    public Collection<Despachopicadora> getDespachopicadoraCollection() {
-        return despachopicadoraCollection;
-    }
-
-    public void setDespachopicadoraCollection(Collection<Despachopicadora> despachopicadoraCollection) {
-        this.despachopicadoraCollection = despachopicadoraCollection;
-    }
-
     @XmlTransient
     public Collection<Comprobanteislrsp> getComprobanteislrspCollection() {
         return comprobanteislrspCollection;
