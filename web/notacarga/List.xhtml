@@ -110,7 +110,7 @@
             <p:dialog id="dialogo" widgetVar="wdialogo" header="Detalles Nota de Carga Seleccionada" modal="true" closeOnEscape="true" 
                       resizable="false" showEffect="explode" appendTo="@(body)"  >
                 <h:form id="formulario">
-                    <h:panelGrid  id="display" columns="2" style="vertical-align:top" width="900">
+                    <h:panelGrid  id="display" columns="2" style="vertical-align:top" width="600">
                         <p:fieldset  legend="Datos de la Nota de Carga" >
                             <h:panelGrid styleClass="ui-custompanelgrid1" columns="4" width="600">
                                 <p:outputLabel for="numero" value="Nota de Carga " styleClass="text-ouput"/>
@@ -134,12 +134,13 @@
                             </h:panelGrid>
                         </p:fieldset>
                     </h:panelGrid>
-                    <h:panelGrid columns="1" width="1200">
+                    <h:panelGrid columns="1" width="1100">
                         <p:fieldset legend="Agregados">
                             <p:panel id="panelart"     >
                                 <p:dataTable id="listado" value="#{notacargaController.deallesnotafiltrados}"
-                                             var="req" emptyMessage="No hay articulos para mostrar"  
-                                             >
+                                            var="req" emptyMessage="No hay articulos para mostrar"
+                                            rowStyleClass="#{req.codigo.codigo==notacargaController.articulo.codigo ? 'facturaabonada' : null}"
+                                    >
                                     <p:column style="width:8%"  headerText="Codigo Articulo">
                                         <h:outputText value="#{req.codigo.codigo}" />
                                     </p:column>
@@ -175,7 +176,7 @@
                                         </h:outputText>
                                     </p:column>
                                     <p:column style="text-align: center" headerText="Despachar">
-                                        <p:commandLink actionListener="#{notacargaController.asignarDetallenota(req)}">
+                                        <p:commandLink actionListener="#{notacargaController.asignarDetallenota(req)}" update=":formulario" >
                                             <h:graphicImage library="images" name="apply.png" width="30" height="30" alt="Despacho"/> 
                                         </p:commandLink>
                                     </p:column>
@@ -193,9 +194,13 @@
                     </h:panelGrid>
                     <p:fieldset legend="Nota de Despacho">
                         <p:panel id="notadespacho">
-                                 <h:panelGrid id= "areadespacho" styleClass="ui-custompanelgrid3" columns="4" width="400">
+                            <h:panelGrid id= "areadespacho" styleClass="ui-custompanelgrid3" columns="4" width="400">
                                 <p:outputLabel for="fechadespacho" styleClass="text-ouput"  value="Fecha Despacho"  />
-                                <p:calendar id="fechadespacho" pattern="dd/MM/yyyy" locale="es" value="#{notacargaController.selected.fecha}" showOn="button" navigator="true" required="true" size="10"/>
+                                <p:calendar id="fechadespacho" pattern="dd/MM/yyyy" locale="es" value="#{notacargaController.despacho.fechadespacho}" showOn="button" navigator="true" required="true" size="10"/>
+                                <p:outputLabel for="hora" value="Hora" styleClass="text-ouput"/>
+                                <p:inputMask id="hora" mask="99:99 a*" value="#{notacargaController.despacho.hora}" size="5" />
+                                <p:outputLabel for="serial" value="Serial Nota" styleClass="text-ouput"/>
+                                <p:inputText id="serial" value="#{notacargaController.despacho.serial}" required="true" style="text-align: right" size="10" styleClass="text-haber"/> 
                                 <p:outputLabel for="despachador" styleClass="text-ouput" value="Despachador"/>
                                 <p:selectOneMenu id="despachador" value="#{notacargaController.despacho.iddespachador}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" required="true"> 
                                     <f:selectItems value="#{notacargaController.despachadores}"
@@ -204,7 +209,7 @@
                                 </p:selectOneMenu>
                                 <p:outputLabel for="codigo1" value="Codigo" styleClass="text-ouput"/>
                                 <p:outputLabel id="codigo1" value="#{notacargaController.articulo.codigo}" styleClass="text-ouputfact" />
-                                <p:outputLabel for="agregado" value="Agregado Despachado" styleClass="text-ouput"/>
+                                <p:outputLabel for="agregado" value="Agregado" styleClass="text-ouput"/>
                                 <p:outputLabel id="agregado" value="#{notacargaController.articulo.descripcion}" styleClass="text-ouputfact" />
                                 <p:outputLabel for="unidad" styleClass="text-ouput" value="Camion"/>
                                 <p:selectOneMenu id="unidad" value="#{notacargaController.despacho.idcamion}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" required="true"> 
@@ -215,15 +220,27 @@
                                                    itemLabel="#{camion.color} #{camion.placas}"  itemValue="#{camion}"/> 
                                 </p:selectOneMenu>
                                 <p:outputLabel for="cubicaje" value="Mts Cubicos " styleClass="text-ouput"/>
-                                <p:inputText id="cubicaje" value="#{notacargaController.mt3}" required="true" style="text-align: right" size="10" />
+                                <p:inputText id="cubicaje" value="#{notacargaController.mt3}" required="true" style="text-align: right" size="10" styleClass="text-haber"/> 
+                                <p:outputLabel for="chofer" styleClass="text-ouput" value="Chofer"/>
+                                <p:selectOneMenu id="chofer" value="#{notacargaController.despacho.idchofer}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" required="true"> 
+                                    <p:ajax event="change" listener="#{notacargaController.buscarChofer()}" update="cedula"/>
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                    <f:selectItems value="#{notacargaController.choferes}"
+                                                   var="chofer"
+                                                   itemLabel="#{chofer.nombre}"  itemValue="#{chofer}"/> 
+                                </p:selectOneMenu>
+                                <p:outputLabel for="cedula" value="Cedula" styleClass="text-ouput"/>
+                                <p:outputLabel id="cedula" value="#{notacargaController.chofer.cedula}" />
+                                <p:outputLabel></p:outputLabel>    
+                                <p:outputLabel></p:outputLabel>    
                                 <p:outputLabel for="observaauto" value="Observaciones" styleClass="text-ouput"/>
-                                <p:inputTextarea id="observaauto"  rows="2" cols="50" label="Observaciones" value="#{notacargaController.despacho.observaciones}"/>
+                                <p:inputTextarea id="observaauto"  rows="2" cols="30" label="Observaciones" value="#{notacargaController.despacho.observaciones}"/>
                             </h:panelGrid>                
                         </p:panel>
                     </p:fieldset>
 
                     <p:panelGrid columns="2">
-                        <p:commandButton value="Autorizar Compra" icon="ui-icon-key" actionListener="#{comprasController.autorizar()}"  oncomplete="PF('wdialogo').hide().;" update="display,:NotacargaListForm,:growl" />                             
+                        <p:commandButton value="Grabar Despacho" icon="ui-icon-disk" actionListener="#{notacargaController.registrardespacho()}"  oncomplete="PF('wdialogo').hide().;" update="display,:NotacargaListForm,:growl" />                             
                         <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
                     </p:panelGrid>
                 </h:form>

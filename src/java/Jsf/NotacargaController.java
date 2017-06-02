@@ -7,6 +7,8 @@ import Jpa.ClienteFacadeLocal;
 import Jpa.DespachadorFacadeLocal;
 import Jpa.DespachopicadoraFacadeLocal;
 import Jpa.DetallenotacargaFacadeLocal;
+import Jpa.InventariopicadoraFacadeLocal;
+import Jpa.MovimientoinventariopicadoraFacadeLocal;
 import Modelo.Notacarga;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
@@ -19,6 +21,8 @@ import Modelo.Cliente;
 import Modelo.Despachador;
 import Modelo.Despachopicadora;
 import Modelo.Detallenotacarga;
+import Modelo.Inventariopicadora;
+import Modelo.Movimientoinventariopicadora;
 import Modelo.Produccionpicadora;
 import Modelo.Requerimiento;
 import Modelo.Usuario;
@@ -65,6 +69,12 @@ public class NotacargaController implements Serializable {
     private CamionFacadeLocal camionEJB;
     @EJB
     private ChoferFacadeLocal choferEJB;
+    @EJB
+    private NotacargaFacadeLocal notacargaEJB;
+    @EJB
+    private MovimientoinventariopicadoraFacadeLocal movimientoinventariopicadoraEJB;
+    @EJB
+    private InventariopicadoraFacadeLocal inventariopicadoraEJB;
 
     private List<Notacarga> items = null;
     private Notacarga selected;
@@ -90,6 +100,8 @@ public class NotacargaController implements Serializable {
     private Detallenotacarga detalle;
     @Inject
     private Cliente cliente;
+    @Inject
+    Chofer chofer;
     private FacturasController factu = new FacturasController();
     private Notacarga codnota;
     private int number;
@@ -102,6 +114,10 @@ public class NotacargaController implements Serializable {
     private List<Chofer> choferes;
     @Inject
     private Despachopicadora despacho;
+    @Inject
+    private Movimientoinventariopicadora moviinventariopro;
+    @Inject
+    private Inventariopicadora inventariopro;
 
     public NotacargaController() {
     }
@@ -119,6 +135,7 @@ public class NotacargaController implements Serializable {
         totaliva = 0;
         totalgeneral = 0;
         totalcantidad = 0;
+        articulo = null;
     }
 
     public Notacarga getSelected() {
@@ -147,6 +164,14 @@ public class NotacargaController implements Serializable {
 
     public Camion getCamion() {
         return camion;
+    }
+
+    public Chofer getChofer() {
+        return chofer;
+    }
+
+    public void setChofer(Chofer chofer) {
+        this.chofer = chofer;
     }
 
     public void setCamion(Camion camion) {
@@ -402,6 +427,70 @@ public class NotacargaController implements Serializable {
         }
     }
 
+    public void registrardespacho() {
+        Articulo art = new Articulo();
+        art = articulo;
+        double pendient = 0;
+        Inventariopicadora inventa = new Inventariopicadora();
+        try {
+            despacho.setIdnotacarga(notacargadialog);
+            despacho.setCodigo(articulo);
+            despacho.setCantidad(mt3);
+            pendient = detalle.getCantidad() - mt3;
+            despacho.setPendiente(pendient);
+            despachopicadoraEJB.create(despacho);
+            
+            inventariopro = inventariopicadoraEJB.buscarAgregado(articulo.getCodigo());
+            
+            detalle.setPordespachar(pendient);
+            detallenotacargaEJB.edit(detalle);
+
+            notacargadialog.setPendiente(notacargadialog.getPendiente() - mt3);
+            notacargaEJB.edit(notacargadialog);
+
+            moviinventariopro.setCodigo(art);
+            moviinventariopro.setDisminucion(mt3);
+            moviinventariopro.setIddespachopicadora(despacho);
+            movimientoinventariopicadoraEJB.create(moviinventariopro);
+
+            if (inventa == null) {
+                inventariopro.setCodigo(articulo);
+                inventariopro.setCantidad(0 - mt3);
+                inventariopicadoraEJB.create(inventariopro);
+            } else {
+                double cant = inventariopro.getCantidad();
+                double saldo = cant - mt3;
+                inventariopro.setCantidad(saldo);
+                inventariopicadoraEJB.edit(inventariopro);
+            }
+
+//            String subject;
+//            String ultimafactura = ejbFacade.u();
+//            String fechafactu = formateador.format(factura.getFecha());
+//            correo = "FACTURA NRO: " + ultimafactura
+//                    + "  CONTROL: " + factura.getNumerocontrol()
+//                    + "  USUARIO: " + factura.getIdusuario().getNombre()
+//                    + "  DEPARTAMENTO: " + factura.getIdusuario().getIddepartamento().getDepartamento()
+//                    + "  FECHA: " + fechafactu
+//                    + "  CLIENTE: " + factura.getRifcliente().getRazonsocial()
+//                    + "  RIF: " + factura.getRifcliente().getRifcliente()
+//                    + "  SUBTOTAL: " + formatearnumero.format(factura.getBimponiblefact())
+//                    + "  IVA: " + formatearnumero.format(factura.getIvafact())
+//                    + "  TOTAL: " + formatearnumero.format(factura.getTotalgeneral())
+//                    + "  OBSERVACIONES: " + factura.getObservacionesfact();
+//
+//            subject = "Emisión de Factura N° " + ultimafactura;
+//            enviomail = new envioCorreo(correo, subject);
+//            enviomail.start();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "La nota de despacho se registro exitosamente", "Aviso"));
+            limpiarListaArreglo();
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar nota de Despacho", "Aviso"));
+        } finally {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        }
+    }
+
     public void buscarArticulo() {
         articulo = detalle.getCodigo();
 //        pcosto = articulo.getPcosto();
@@ -410,6 +499,10 @@ public class NotacargaController implements Serializable {
 
     public void buscarCamion() {
         mt3 = despacho.getIdcamion().getCubicaje();
+    }
+
+    public void buscarChofer() {
+        chofer = despacho.getIdchofer();
     }
 
     public int devolversiguientenotacarga() {
@@ -461,16 +554,16 @@ public class NotacargaController implements Serializable {
         this.idnota = notaselec.getIdnotacarga();
         this.notacargadialog = notaselec;
         detallesnotafiltrados = detallenotacargaEJB.detallesfiltrados(notaselec);
-        if (detallesnotafiltrados.size() == 1) {
-            detalle = detallesnotafiltrados.get(0);
-            articulo = detalle.getCodigo();
-        }
+
+        detalle = detallesnotafiltrados.get(0);
+        articulo = detalle.getCodigo();
+
 //        compraautorizada = compraselec;
     }
 
-    public void asignarDetallenota (Detallenotacarga detallenotaselec) {
+    public void asignarDetallenota(Detallenotacarga detallenotaselec) {
         this.detalle = detallenotaselec;
-        articulo=detalle.getCodigo();
+        articulo = detalle.getCodigo();
 //        compraautorizada = compraselec;
     }
 

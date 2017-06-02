@@ -12,8 +12,6 @@
             <h:form id="ChoferCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{choferController.selected != null}">
-                        <p:outputLabel value="#{bundlepicadora.CreateChoferLabel_idchofer}" for="idchofer" />
-                        <p:inputText id="idchofer" value="#{choferController.selected.idchofer}" title="#{bundlepicadora.CreateChoferTitle_idchofer}" required="true" requiredMessage="#{bundlepicadora.CreateChoferRequiredMessage_idchofer}"/>
                         <p:outputLabel value="#{bundlepicadora.CreateChoferLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{choferController.selected.nombre}" title="#{bundlepicadora.CreateChoferTitle_nombre}" />
                         <p:outputLabel value="#{bundlepicadora.CreateChoferLabel_cedula}" for="cedula" />

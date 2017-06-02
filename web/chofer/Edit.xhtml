@@ -12,8 +12,6 @@
             <h:form id="ChoferEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{choferController.selected != null}">
-                        <p:outputLabel value="#{bundlepicadora.EditChoferLabel_idchofer}" for="idchofer" />
-                        <p:inputText id="idchofer" value="#{choferController.selected.idchofer}" title="#{bundlepicadora.EditChoferTitle_idchofer}" required="true" requiredMessage="#{bundlepicadora.EditChoferRequiredMessage_idchofer}"/>
                         <p:outputLabel value="#{bundlepicadora.EditChoferLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{choferController.selected.nombre}" title="#{bundlepicadora.EditChoferTitle_nombre}" />
                         <p:outputLabel value="#{bundlepicadora.EditChoferLabel_cedula}" for="cedula" />
