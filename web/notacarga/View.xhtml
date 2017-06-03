@@ -8,35 +8,150 @@
 
     <ui:composition>
 
-        <p:dialog id="NotacargaViewDlg" widgetVar="NotacargaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlenotacarga.ViewNotacargaTitle}">
+        <p:dialog id="NotacargaViewDialog" widgetVar="NotacargaViewDialog" header="Cargar Nota de Despacho a Cliente" modal="true" closeOnEscape="true" 
+                  resizable="false" showEffect="explode" appendTo="@(body)"  >
             <h:form id="NotacargaViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{notacargaController.selected != null}">
-                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_idnotacarga}"/>
-                        <h:outputText value="#{notacargaController.selected.idnotacarga}" title="#{bundlenotacarga.ViewNotacargaTitle_idnotacarga}"/>
-                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_fecha}"/>
-                        <h:outputText value="#{notacargaController.selected.fecha}" title="#{bundlenotacarga.ViewNotacargaTitle_fecha}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
-                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_observacionesnotacarga}"/>
-                        <h:outputText value="#{notacargaController.selected.observacionesnotacarga}" title="#{bundlenotacarga.ViewNotacargaTitle_observacionesnotacarga}"/>
-                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_cantidad}"/>
-                        <h:outputText value="#{notacargaController.selected.cantidad}" title="#{bundlenotacarga.ViewNotacargaTitle_cantidad}"/>
-                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_bimponible}"/>
-                        <h:outputText value="#{notacargaController.selected.bimponible}" title="#{bundlenotacarga.ViewNotacargaTitle_bimponible}"/>
-                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_iva}"/>
-                        <h:outputText value="#{notacargaController.selected.iva}" title="#{bundlenotacarga.ViewNotacargaTitle_iva}"/>
-                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_totalgeneral}"/>
-                        <h:outputText value="#{notacargaController.selected.totalgeneral}" title="#{bundlenotacarga.ViewNotacargaTitle_totalgeneral}"/>
-                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_pendiente}"/>
-                        <h:outputText value="#{notacargaController.selected.pendiente}" title="#{bundlenotacarga.ViewNotacargaTitle_pendiente}"/>
-                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_rifcliente}"/>
-                        <h:outputText value="#{notacargaController.selected.rifcliente}" title="#{bundlenotacarga.ViewNotacargaTitle_rifcliente}"/>
-                        <h:outputText value="#{bundlenotacarga.ViewNotacargaLabel_idusuario}"/>
-                        <h:outputText value="#{notacargaController.selected.idusuario}" title="#{bundlenotacarga.ViewNotacargaTitle_idusuario}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundlenotacarga.Close}" onclick="NotacargaViewDialog.hide()"/>
-                </h:panelGroup>
+                <h:panelGrid  id="display" columns="2" style="vertical-align:top" width="600">
+                    <p:fieldset  legend="Datos de la Nota de Carga" >
+                        <h:panelGrid styleClass="ui-custompanelgrid1" columns="4" width="600">
+                            <p:outputLabel for="numero" value="Nota de Carga " styleClass="text-ouput"/>
+                            <p:outputLabel id="numero" value="NTC- #{notacargaController.selected.idnotacarga}" styleClass="optionalLbl"/>
+                            <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouput"/>
+                            <p:outputLabel id="usuario" value="#{notacargaController.selected.idusuario.nombre}" styleClass="optionalLbl"/>
+                            <p:outputLabel for="departamento" value="Departamento" styleClass="text-ouput"/>
+                            <p:outputLabel id="departamento" value="#{notacargaController.selected.idusuario.iddepartamento.departamento}" styleClass="optionalLbl"/>
+                            <p:outputLabel for="proveedor" value="Cliente" styleClass="text-ouput"/>
+                            <p:outputLabel id="proveedor" value="#{notacargaController.selected.rifcliente.razonsocial}" styleClass="text-ouputfact"/>
+                            <p:outputLabel for="rifclient" value="RIF" styleClass="text-ouput"/>
+                            <p:outputLabel id="rifclient" value="#{notacargaController.selected.rifcliente.rifcliente}"/>                                
+                            <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouput"/>
+                            <p:outputLabel id="telefono" value="#{notacargaController.selected.rifcliente.telefonos}"/>
+                            <p:outputLabel for="fechasolicitud" value="Fecha Nota" styleClass="text-ouput" />
+                            <p:outputLabel id="fechasolicitud" value="#{notacargaController.selected.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:outputLabel>
+                            <p:outputLabel for="resena" value="Observaciones" styleClass="text-ouput"/>
+                            <p:outputLabel id="resena" value="#{notacargaController.selected.observacionesnotacarga}" />
+                        </h:panelGrid>
+                    </p:fieldset>
+                </h:panelGrid>
+                <h:panelGrid columns="1" width="1100">
+                    <p:fieldset legend="Agregados">
+                        <p:panel id="panelart"     >
+                            <p:dataTable id="listado" value="#{notacargaController.deallesnotafiltrados}"
+                                         var="req" emptyMessage="No hay articulos para mostrar"
+                                         rowStyleClass="#{req.codigo.codigo==notacargaController.articulo.codigo ? 'asientocuadrado' : null}"
+                                         >
+                                <p:column style="width:8%"  headerText="Codigo Articulo">
+                                    <h:outputText value="#{req.codigo.codigo}" />
+                                </p:column>
+                                <p:column style="width:35%"  headerText="Descripcion del Articulo">
+                                    <h:outputText value="#{req.codigo.descripcion}"/>  
+                                </p:column>
+                                <p:column style="text-align:center" headerText="Cantidad">                                
+                                    <h:outputText style="width:10px"  value="#{req.cantidad}"/>
+                                </p:column >
+                                <p:column style="text-align:right" headerText="Precio Unitario ">
+                                    <h:outputText style="width:10px"  value="#{req.precioventa}">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align:right" headerText="SUB TOTAL">
+                                    <h:outputText value="#{req.subtotal}"> 
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align:right" headerText="IVA">
+                                    <h:outputText value="#{req.iva}"> 
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align:right" headerText="TOTAL">
+                                    <h:outputText value="#{req.totalnota}"> 
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align:right" headerText="PENDIENTE">
+                                    <h:outputText value="#{req.pordespachar}"> 
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                </p:column>
+                                <p:columnGroup type="footer">
+                                    <p:row>
+                                        <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
+                                        <p:column style="text-align: right"  footerText="#{comprasController.auxiliarrequerimiento.subtotal}" /> 
+                                        <p:column style="text-align: right"  footerText="#{comprasController.auxiliarrequerimiento.montoiva}" />
+                                        <p:column style="text-align: right"  footerText="#{comprasController.auxiliarrequerimiento.montototal}" />                                        
+                                    </p:row>
+                                </p:columnGroup>       
+                            </p:dataTable> 
+                        </p:panel>
+                        <h1> Relacion de Notas de Despacho efectuadas  </h1>
+                    </p:fieldset>
+                </h:panelGrid>
+                <p:fieldset legend="Notas de Despacho">
+                    <p:panel id="notadespacho">
+                        <h:panelGrid id= "areadespacho" styleClass="ui-custompanelgrid3" columns="1" width="800">
+                            <p:dataTable id="datalist" value="#{notacargaController.despachosfiltrados}" style="width: 900px" var="item" widgetVar="pagos"
+                                         paginator="false"
+                                         rows="20"
+                                         >
+                                <p:column width="80" style="text-align: center">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_fechadespacho}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.fechadespacho}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column width="80" style="text-align: center">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_hora}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.hora}"/>
+                                </p:column>
+                                <p:column width="80" style="text-align: center">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_serial}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.serial}"/>
+                                </p:column>
+                                <p:column style="text-align: center">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_idcamion}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.idcamion.color} #{item.idcamion.placas}"/>
+                                </p:column>
+                                <p:column style="text-align: center">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_codigo}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.codigo.codigo}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_agregado}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.codigo.descripcion}"/>
+                                </p:column >
+                                <p:column width="80" style="text-align: center">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_cantidad}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.cantidad}"/>
+                                </p:column>
+                                <p:column width="80" style="text-align: center">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_pendiente}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.pendiente}"/>
+                                </p:column>
+                            </p:dataTable>
+                                <p:commandButton value="Cerrar" onclick="NotacargaViewDialog.hide()"/>
+
+                        </h:panelGrid>                
+                    </p:panel>
+                </p:fieldset>
             </h:form>
         </p:dialog>
 

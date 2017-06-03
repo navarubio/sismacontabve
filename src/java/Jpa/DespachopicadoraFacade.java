@@ -6,9 +6,13 @@
 package Jpa;
 
 import Modelo.Despachopicadora;
+import Modelo.Detallenotacarga;
+import Modelo.Notacarga;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,6 +30,21 @@ public class DespachopicadoraFacade extends AbstractFacade<Despachopicadora> imp
 
     public DespachopicadoraFacade() {
         super(Despachopicadora.class);
+    }
+    
+    @Override
+    public List<Despachopicadora> despachosfiltrados(Notacarga nota) {
+        String consulta;
+        List<Despachopicadora> lista = null;
+        try {
+            consulta = "From Despachopicadora d where d.idnotacarga.idnotacarga = ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, nota.getIdnotacarga());
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
     }
     
 }

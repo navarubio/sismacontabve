@@ -109,6 +109,7 @@ public class NotacargaController implements Serializable {
     int idnota = 0;
     private Notacarga notacargadialog;
     private List<Detallenotacarga> detallesnotafiltrados;
+    private List<Despachopicadora> despachosfiltrados;
     private List<Despachador> despachadores;
     private List<Camion> camiones;
     private List<Chofer> choferes;
@@ -143,7 +144,19 @@ public class NotacargaController implements Serializable {
     }
 
     public void setSelected(Notacarga selected) {
-        this.selected = selected;
+        if (selected!=null){
+            this.selected = selected;
+            detallesnotafiltrados = detallenotacargaEJB.detallesfiltrados(selected);
+            despachosfiltrados = despachopicadoraEJB.despachosfiltrados(selected);            
+        }
+    }
+
+    public List<Despachopicadora> getDespachosfiltrados() {
+        return despachosfiltrados;
+    }
+
+    public void setDespachosfiltrados(List<Despachopicadora> despachosfiltrados) {
+        this.despachosfiltrados = despachosfiltrados;
     }
 
     public double getCantidad() {
@@ -431,17 +444,17 @@ public class NotacargaController implements Serializable {
         Articulo art = new Articulo();
         art = articulo;
         double pendient = 0;
-        double cantidamax=detalle.getCantidad();
-        double cubicajemax=despacho.getIdcamion().getCubicaje();
+        double cantidamax = detalle.getPordespachar();
+        double cubicajemax = despacho.getIdcamion().getCubicaje();
         Inventariopicadora inventa = new Inventariopicadora();
-        
-        if (mt3<=cantidamax){
-            if (mt3<=cubicajemax){
+
+        if (mt3 <= cantidamax) {
+            if (mt3 <= cubicajemax) {
                 try {
                     despacho.setIdnotacarga(notacargadialog);
                     despacho.setCodigo(articulo);
                     despacho.setCantidad(mt3);
-                    pendient = detalle.getCantidad() - mt3;
+                    pendient = detalle.getPordespachar() - mt3;
                     despacho.setPendiente(pendient);
                     despachopicadoraEJB.create(despacho);
 
@@ -470,23 +483,23 @@ public class NotacargaController implements Serializable {
                     }
 
         //            String subject;
-        //            String ultimafactura = ejbFacade.u();
-        //            String fechafactu = formateador.format(factura.getFecha());
-        //            correo = "FACTURA NRO: " + ultimafactura
-        //                    + "  CONTROL: " + factura.getNumerocontrol()
-        //                    + "  USUARIO: " + factura.getIdusuario().getNombre()
-        //                    + "  DEPARTAMENTO: " + factura.getIdusuario().getIddepartamento().getDepartamento()
-        //                    + "  FECHA: " + fechafactu
-        //                    + "  CLIENTE: " + factura.getRifcliente().getRazonsocial()
-        //                    + "  RIF: " + factura.getRifcliente().getRifcliente()
-        //                    + "  SUBTOTAL: " + formatearnumero.format(factura.getBimponiblefact())
-        //                    + "  IVA: " + formatearnumero.format(factura.getIvafact())
-        //                    + "  TOTAL: " + formatearnumero.format(factura.getTotalgeneral())
-        //                    + "  OBSERVACIONES: " + factura.getObservacionesfact();
-        //
-        //            subject = "Emisión de Factura N° " + ultimafactura;
-        //            enviomail = new envioCorreo(correo, subject);
-        //            enviomail.start();
+                    //            String ultimafactura = ejbFacade.u();
+                    //            String fechafactu = formateador.format(factura.getFecha());
+                    //            correo = "FACTURA NRO: " + ultimafactura
+                    //                    + "  CONTROL: " + factura.getNumerocontrol()
+                    //                    + "  USUARIO: " + factura.getIdusuario().getNombre()
+                    //                    + "  DEPARTAMENTO: " + factura.getIdusuario().getIddepartamento().getDepartamento()
+                    //                    + "  FECHA: " + fechafactu
+                    //                    + "  CLIENTE: " + factura.getRifcliente().getRazonsocial()
+                    //                    + "  RIF: " + factura.getRifcliente().getRifcliente()
+                    //                    + "  SUBTOTAL: " + formatearnumero.format(factura.getBimponiblefact())
+                    //                    + "  IVA: " + formatearnumero.format(factura.getIvafact())
+                    //                    + "  TOTAL: " + formatearnumero.format(factura.getTotalgeneral())
+                    //                    + "  OBSERVACIONES: " + factura.getObservacionesfact();
+                    //
+                    //            subject = "Emisión de Factura N° " + ultimafactura;
+                    //            enviomail = new envioCorreo(correo, subject);
+                    //            enviomail.start();
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "La nota de despacho se registro exitosamente", "Aviso"));
                     limpiarListaArreglo();
                 } catch (Exception e) {
@@ -494,13 +507,13 @@ public class NotacargaController implements Serializable {
                 } finally {
                     FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
                 }
-            }else {
+            } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Cantidad no puede exceder cubicaje del camión", "Aviso"));
             }
-        }else{
+        } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Cantidad no puede exceder saldo pendiente del agregado", "Aviso"));
         }
-    } 
+    }
 
     public void buscarArticulo() {
         articulo = detalle.getCodigo();
@@ -563,12 +576,11 @@ public class NotacargaController implements Serializable {
 
     public void asignarNotacarga(Notacarga notaselec) {
         this.idnota = notaselec.getIdnotacarga();
+        this.selected=notaselec;
         this.notacargadialog = notaselec;
         detallesnotafiltrados = detallenotacargaEJB.detallesfiltrados(notaselec);
-
         detalle = detallesnotafiltrados.get(0);
         articulo = detalle.getCodigo();
-
 //        compraautorizada = compraselec;
     }
 
