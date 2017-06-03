@@ -22,7 +22,7 @@
                 <img src="../resources/images/volqueta1.png" width="120" height="70" alt="Solicitudes" align="right" />
 
                 <p:panel header="#{bundlepicadora.ListMovimientoinventariopicadoraTitle}">
-                    <p:dataTable id="datalist" value="#{movimientoinventariopicadoraController.items}" var="item"  
+                    <p:dataTable id="datalist" value="#{movimientoinventariopicadoraController.items}" var="item" style="width: 900px;" 
                                  selectionMode="single" selection="#{movimientoinventariopicadoraController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idmovimientoinventariopicadora}"
@@ -41,18 +41,12 @@
                             <h:outputText value="#{item.codigo.codigo}"/>
                         </p:column>
 
-                        <p:column width="300" filterBy="#{item.codigo.descripcion}" filterMatchMode="contains" >
+                        <p:column width="250" filterBy="#{item.codigo.descripcion}" filterMatchMode="contains" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlefactura.ListDetallefacturaTitle_articulo}"/>
                             </f:facet>
                             <h:outputText value="#{item.codigo.descripcion}"/>
                         </p:column>                       
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlepicadora.ListMovimientoinventariopicadoraTitle_cantidadanterior}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.cantidadanterior}"/>
-                        </p:column>
                         <p:column style="text-align: right">
                             <f:facet name="header"  >
                                 <h:outputText value="#{bundlepicadora.ListMovimientoinventariopicadoraTitle_aumento}"/>
@@ -66,23 +60,17 @@
                             <h:outputText value="#{item.idproduccionpicadora.idproduccionpicadora}"/>
                         </p:column>
 
-                        <p:column>
-                            <f:facet name="header">
+                        <p:column style="text-align: right" >
+                            <f:facet name="header" >
                                 <h:outputText value="#{bundlepicadora.ListMovimientoinventariopicadoraTitle_disminucion}"/>
                             </f:facet>
                             <h:outputText value="#{item.disminucion}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center" filterBy="#{item.iddespachopicadora.iddespachopicadora}" filterMatchMode="exact" filterStyle="width:50px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListMovimientoinventariopicadoraTitle_iddespachopicadora}"/>
                             </f:facet>
                             <h:outputText value="#{item.iddespachopicadora}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlepicadora.ListMovimientoinventariopicadoraTitle_cantidadactual}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.cantidadactual}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlepicadora.Create}" actionListener="#{movimientoinventariopicadoraController.prepareCreate}" update=":MovimientoinventariopicadoraCreateForm" oncomplete="PF('MovimientoinventariopicadoraCreateDialog').show()"/>

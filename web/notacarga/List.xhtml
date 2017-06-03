@@ -28,6 +28,7 @@
                                  rowKey="#{item.idnotacarga}"
                                  rows="20"
                                  rowsPerPageTemplate="20,30,40,50"
+                                 rowStyleClass="#{item.cantidad>item.pendiente ? 'facturaabonada' : null}"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -107,7 +108,7 @@
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
-            <p:dialog id="dialogo" widgetVar="wdialogo" header="Detalles Nota de Carga Seleccionada" modal="true" closeOnEscape="true" 
+            <p:dialog id="dialogo" widgetVar="wdialogo" header="Cargar Nota de Despacho a Cliente" modal="true" closeOnEscape="true" 
                       resizable="false" showEffect="explode" appendTo="@(body)"  >
                 <h:form id="formulario">
                     <h:panelGrid  id="display" columns="2" style="vertical-align:top" width="600">
@@ -139,7 +140,7 @@
                             <p:panel id="panelart"     >
                                 <p:dataTable id="listado" value="#{notacargaController.deallesnotafiltrados}"
                                             var="req" emptyMessage="No hay articulos para mostrar"
-                                            rowStyleClass="#{req.codigo.codigo==notacargaController.articulo.codigo ? 'facturaabonada' : null}"
+                                            rowStyleClass="#{req.codigo.codigo==notacargaController.articulo.codigo ? 'asientocuadrado' : null}"
                                     >
                                     <p:column style="width:8%"  headerText="Codigo Articulo">
                                         <h:outputText value="#{req.codigo.codigo}" />

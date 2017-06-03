@@ -431,65 +431,76 @@ public class NotacargaController implements Serializable {
         Articulo art = new Articulo();
         art = articulo;
         double pendient = 0;
+        double cantidamax=detalle.getCantidad();
+        double cubicajemax=despacho.getIdcamion().getCubicaje();
         Inventariopicadora inventa = new Inventariopicadora();
-        try {
-            despacho.setIdnotacarga(notacargadialog);
-            despacho.setCodigo(articulo);
-            despacho.setCantidad(mt3);
-            pendient = detalle.getCantidad() - mt3;
-            despacho.setPendiente(pendient);
-            despachopicadoraEJB.create(despacho);
-            
-            inventariopro = inventariopicadoraEJB.buscarAgregado(articulo.getCodigo());
-            
-            detalle.setPordespachar(pendient);
-            detallenotacargaEJB.edit(detalle);
+        
+        if (mt3<=cantidamax){
+            if (mt3<=cubicajemax){
+                try {
+                    despacho.setIdnotacarga(notacargadialog);
+                    despacho.setCodigo(articulo);
+                    despacho.setCantidad(mt3);
+                    pendient = detalle.getCantidad() - mt3;
+                    despacho.setPendiente(pendient);
+                    despachopicadoraEJB.create(despacho);
 
-            notacargadialog.setPendiente(notacargadialog.getPendiente() - mt3);
-            notacargaEJB.edit(notacargadialog);
+                    inventariopro = inventariopicadoraEJB.buscarAgregado(articulo.getCodigo());
 
-            moviinventariopro.setCodigo(art);
-            moviinventariopro.setDisminucion(mt3);
-            moviinventariopro.setIddespachopicadora(despacho);
-            movimientoinventariopicadoraEJB.create(moviinventariopro);
+                    detalle.setPordespachar(pendient);
+                    detallenotacargaEJB.edit(detalle);
 
-            if (inventa == null) {
-                inventariopro.setCodigo(articulo);
-                inventariopro.setCantidad(0 - mt3);
-                inventariopicadoraEJB.create(inventariopro);
-            } else {
-                double cant = inventariopro.getCantidad();
-                double saldo = cant - mt3;
-                inventariopro.setCantidad(saldo);
-                inventariopicadoraEJB.edit(inventariopro);
+                    notacargadialog.setPendiente(notacargadialog.getPendiente() - mt3);
+                    notacargaEJB.edit(notacargadialog);
+
+                    moviinventariopro.setCodigo(art);
+                    moviinventariopro.setDisminucion(mt3);
+                    moviinventariopro.setIddespachopicadora(despacho);
+                    movimientoinventariopicadoraEJB.create(moviinventariopro);
+
+                    if (inventa == null) {
+                        inventariopro.setCodigo(articulo);
+                        inventariopro.setCantidad(0 - mt3);
+                        inventariopicadoraEJB.create(inventariopro);
+                    } else {
+                        double cant = inventariopro.getCantidad();
+                        double saldo = cant - mt3;
+                        inventariopro.setCantidad(saldo);
+                        inventariopicadoraEJB.edit(inventariopro);
+                    }
+
+        //            String subject;
+        //            String ultimafactura = ejbFacade.u();
+        //            String fechafactu = formateador.format(factura.getFecha());
+        //            correo = "FACTURA NRO: " + ultimafactura
+        //                    + "  CONTROL: " + factura.getNumerocontrol()
+        //                    + "  USUARIO: " + factura.getIdusuario().getNombre()
+        //                    + "  DEPARTAMENTO: " + factura.getIdusuario().getIddepartamento().getDepartamento()
+        //                    + "  FECHA: " + fechafactu
+        //                    + "  CLIENTE: " + factura.getRifcliente().getRazonsocial()
+        //                    + "  RIF: " + factura.getRifcliente().getRifcliente()
+        //                    + "  SUBTOTAL: " + formatearnumero.format(factura.getBimponiblefact())
+        //                    + "  IVA: " + formatearnumero.format(factura.getIvafact())
+        //                    + "  TOTAL: " + formatearnumero.format(factura.getTotalgeneral())
+        //                    + "  OBSERVACIONES: " + factura.getObservacionesfact();
+        //
+        //            subject = "Emisión de Factura N° " + ultimafactura;
+        //            enviomail = new envioCorreo(correo, subject);
+        //            enviomail.start();
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "La nota de despacho se registro exitosamente", "Aviso"));
+                    limpiarListaArreglo();
+                } catch (Exception e) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar nota de Despacho", "Aviso"));
+                } finally {
+                    FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+                }
+            }else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Cantidad no puede exceder cubicaje del camión", "Aviso"));
             }
-
-//            String subject;
-//            String ultimafactura = ejbFacade.u();
-//            String fechafactu = formateador.format(factura.getFecha());
-//            correo = "FACTURA NRO: " + ultimafactura
-//                    + "  CONTROL: " + factura.getNumerocontrol()
-//                    + "  USUARIO: " + factura.getIdusuario().getNombre()
-//                    + "  DEPARTAMENTO: " + factura.getIdusuario().getIddepartamento().getDepartamento()
-//                    + "  FECHA: " + fechafactu
-//                    + "  CLIENTE: " + factura.getRifcliente().getRazonsocial()
-//                    + "  RIF: " + factura.getRifcliente().getRifcliente()
-//                    + "  SUBTOTAL: " + formatearnumero.format(factura.getBimponiblefact())
-//                    + "  IVA: " + formatearnumero.format(factura.getIvafact())
-//                    + "  TOTAL: " + formatearnumero.format(factura.getTotalgeneral())
-//                    + "  OBSERVACIONES: " + factura.getObservacionesfact();
-//
-//            subject = "Emisión de Factura N° " + ultimafactura;
-//            enviomail = new envioCorreo(correo, subject);
-//            enviomail.start();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "La nota de despacho se registro exitosamente", "Aviso"));
-            limpiarListaArreglo();
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar nota de Despacho", "Aviso"));
-        } finally {
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Cantidad no puede exceder saldo pendiente del agregado", "Aviso"));
         }
-    }
+    } 
 
     public void buscarArticulo() {
         articulo = detalle.getCodigo();
