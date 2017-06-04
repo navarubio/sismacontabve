@@ -44,6 +44,8 @@ public class Medida implements Serializable {
     private String medida;
     @OneToMany(mappedBy = "idmedida")
     private Collection<Articulo> articuloCollection;
+    @OneToMany(mappedBy = "idmedida")
+    private Collection<Maquinariapicadora> maquinariapicadoraCollection;
 
     public Medida() {
     }
@@ -75,6 +77,15 @@ public class Medida implements Serializable {
 
     public void setArticuloCollection(Collection<Articulo> articuloCollection) {
         this.articuloCollection = articuloCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Maquinariapicadora> getMaquinariapicadoraCollection() {
+        return maquinariapicadoraCollection;
+    }
+
+    public void setMaquinariapicadoraCollection(Collection<Maquinariapicadora> maquinariapicadoraCollection) {
+        this.maquinariapicadoraCollection = maquinariapicadoraCollection;
     }
 
     @Override

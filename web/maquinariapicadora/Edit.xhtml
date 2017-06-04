@@ -12,14 +12,10 @@
             <h:form id="MaquinariapicadoraEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{maquinariapicadoraController.selected != null}">
-                        <p:outputLabel value="#{bundlepicadora.EditMaquinariapicadoraLabel_idmaquinariapicadora}" for="idmaquinariapicadora" />
-                        <p:inputText id="idmaquinariapicadora" value="#{maquinariapicadoraController.selected.idmaquinariapicadora}" title="#{bundlepicadora.EditMaquinariapicadoraTitle_idmaquinariapicadora}" required="true" requiredMessage="#{bundlepicadora.EditMaquinariapicadoraRequiredMessage_idmaquinariapicadora}"/>
+                        <p:outputLabel value="#{bundlepicadora.CreateMaquinariapicadoraLabel_serialmaquinaria}" for="serialmaquinaria" />
+                        <p:inputText id="serialmaquinaria" value="#{maquinariapicadoraController.selected.serialmaquinaria}" title="#{bundlepicadora.CreateMaquinariapicadoraTitle_serialmaquinaria}"/>
                         <p:outputLabel value="#{bundlepicadora.EditMaquinariapicadoraLabel_descripcion}" for="descripcion" />
                         <p:inputText id="descripcion" value="#{maquinariapicadoraController.selected.descripcion}" title="#{bundlepicadora.EditMaquinariapicadoraTitle_descripcion}" />
-                        <p:outputLabel value="#{bundlepicadora.EditMaquinariapicadoraLabel_precio1}" for="precio1" />
-                        <p:inputText id="precio1" value="#{maquinariapicadoraController.selected.precio1}" title="#{bundlepicadora.EditMaquinariapicadoraTitle_precio1}" />
-                        <p:outputLabel value="#{bundlepicadora.EditMaquinariapicadoraLabel_precio2}" for="precio2" />
-                        <p:inputText id="precio2" value="#{maquinariapicadoraController.selected.precio2}" title="#{bundlepicadora.EditMaquinariapicadoraTitle_precio2}" />
                         <p:outputLabel value="#{bundlepicadora.EditMaquinariapicadoraLabel_idtipomaquinaria}" for="idtipomaquinaria" />
                         <p:selectOneMenu id="idtipomaquinaria" value="#{maquinariapicadoraController.selected.idtipomaquinaria}" >
                             <f:selectItem itemLabel="#{bundlepicadora.SelectOneMessage}"/>
@@ -27,6 +23,16 @@
                                            var="idtipomaquinariaItem"
                                            itemValue="#{idtipomaquinariaItem}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlepicadora.CreateMaquinariapicadoraLabel_idmedida}" for="idmedida"  />
+                        <p:selectOneMenu id="idmedida" value="#{maquinariapicadoraController.selected.idmedida}" converter="omnifaces.SelectItemsConverter" >
+                            <f:selectItems value="#{medidaController.itemsAvailableSelectOne}"
+                                           var="idmedidaItem"
+                                           itemValue="#{idmedidaItem}" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlepicadora.EditMaquinariapicadoraLabel_precio1}" for="precio1" />
+                        <p:inputText id="precio1" value="#{maquinariapicadoraController.selected.precio1}" title="#{bundlepicadora.EditMaquinariapicadoraTitle_precio1}" />
+                        <p:outputLabel value="#{bundlepicadora.EditMaquinariapicadoraLabel_precio2}" for="precio2" />
+                        <p:inputText id="precio2" value="#{maquinariapicadoraController.selected.precio2}" title="#{bundlepicadora.EditMaquinariapicadoraTitle_precio2}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{maquinariapicadoraController.update}" value="#{bundlepicadora.Save}" update="display,:MaquinariapicadoraListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MaquinariapicadoraEditDialog');"/>
                     <p:commandButton value="#{bundlepicadora.Cancel}" onclick="MaquinariapicadoraEditDialog.hide()"/>

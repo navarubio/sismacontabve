@@ -178,7 +178,7 @@
                                     </p:column>
                                     <p:column style="text-align: center" headerText="Despachar">
                                         <p:commandLink actionListener="#{notacargaController.asignarDetallenota(req)}" update=":formulario" >
-                                            <h:graphicImage library="images" name="apply.png" width="30" height="30" alt="Despacho"/> 
+                                            <h:graphicImage library="images" name="apply.png" width="30" height="30" alt="Despacho" rendered="#{req.pordespachar>0}"/> 
                                         </p:commandLink>
                                     </p:column>
                                     <p:columnGroup type="footer">

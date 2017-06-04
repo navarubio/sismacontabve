@@ -99,7 +99,7 @@ public class Tipomaquinaria implements Serializable {
 
     @Override
     public String toString() {
-        return "Modelo.Tipomaquinaria[ idtipomaquinaria=" + idtipomaquinaria + " ]";
+        return tipomaquinaria;
     }
     
 }

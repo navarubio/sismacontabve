@@ -23,7 +23,7 @@
                             <p:outputLabel for="proveedor" value="Cliente" styleClass="text-ouput"/>
                             <p:outputLabel id="proveedor" value="#{notacargaController.selected.rifcliente.razonsocial}" styleClass="text-ouputfact"/>
                             <p:outputLabel for="rifclient" value="RIF" styleClass="text-ouput"/>
-                            <p:outputLabel id="rifclient" value="#{notacargaController.selected.rifcliente.rifcliente}"/>                                
+                            <p:outputLabel id="rifclient" value="#{notacargaController.selected.rifcliente.rifcliente}" styleClass="text-ouputfact"/>                                
                             <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouput"/>
                             <p:outputLabel id="telefono" value="#{notacargaController.selected.rifcliente.telefonos}"/>
                             <p:outputLabel for="fechasolicitud" value="Fecha Nota" styleClass="text-ouput" />
@@ -91,7 +91,7 @@
                 </h:panelGrid>
                 <p:fieldset legend="Notas de Despacho">
                     <p:panel id="notadespacho">
-                        <h:panelGrid id= "areadespacho" styleClass="ui-custompanelgrid3" columns="1" width="800">
+                        <h:panelGrid id= "areadespacho" columns="1" width="800">
                             <p:dataTable id="datalist" value="#{notacargaController.despachosfiltrados}" style="width: 900px" var="item" widgetVar="pagos"
                                          paginator="false"
                                          rows="20"
@@ -134,13 +134,13 @@
                                     </f:facet>
                                     <h:outputText value="#{item.codigo.descripcion}"/>
                                 </p:column >
-                                <p:column width="80" style="text-align: center">
+                                <p:column width="80" style="text-align: center" styleClass="facturaabonadaporcobrar">
                                     <f:facet name="header">
                                         <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_cantidad}"/>
                                     </f:facet>
                                     <h:outputText value="#{item.cantidad}"/>
                                 </p:column>
-                                <p:column width="80" style="text-align: center">
+                                <p:column width="80" style="text-align: center" styleClass="pordespachar">
                                     <f:facet name="header">
                                         <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_pendiente}"/>
                                     </f:facet>

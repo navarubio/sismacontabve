@@ -11,72 +11,78 @@
 
         <ui:define name="title">
             <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle}"></h:outputText>
+            <h:outputStylesheet library="css" name="index.css" />  
         </ui:define>
 
         <ui:define name="body">
             <h:form id="DespachopicadoraListForm">
+                <div id="imag2">
+                    <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
+                </div>     
+                <img src="../resources/images/roquero1.png" width="120" height="70" alt="Solicitudes" align="right" />
+
                 <p:panel header="#{bundlepicadora.ListDespachopicadoraTitle}">
                     <p:dataTable id="datalist" value="#{despachopicadoraController.items}" var="item"
                                  selectionMode="single" selection="#{despachopicadoraController.selected}"
                                  paginator="true"
                                  rowKey="#{item.iddespachopicadora}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="25"
+                                 rowsPerPageTemplate="25,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_iddespachopicadora}"/>
                             </f:facet>
                             <h:outputText value="#{item.iddespachopicadora}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_fechadespacho}"/>
                             </f:facet>
                             <h:outputText value="#{item.fechadespacho}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_nota}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nota}"/>
-                        </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_hora}"/>
                             </f:facet>
                             <h:outputText value="#{item.hora}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
-                                <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_observaciones}"/>
+                                <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_serial}"/>
                             </f:facet>
-                            <h:outputText value="#{item.observaciones}"/>
+                            <h:outputText value="#{item.serial}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_iddespachador}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.iddespachador}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_idchofer}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idchofer}"/>
-                        </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_idcamion}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idcamion}"/>
+                            <h:outputText value="#{item.idcamion.color}  #{item.idcamion.placas}"/>
                         </p:column>
+                        <p:column >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_idchofer}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idchofer.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_agregado}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codigo.descripcion}"/>
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListDespachopicadoraTitle_cantidad}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cantidad}"/>
+                        </p:column>    
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlepicadora.Create}" actionListener="#{despachopicadoraController.prepareCreate}" update=":DespachopicadoraCreateForm" oncomplete="PF('DespachopicadoraCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlepicadora.View}" update=":DespachopicadoraViewForm" oncomplete="PF('DespachopicadoraViewDialog').show()" disabled="#{empty despachopicadoraController.selected}"/>

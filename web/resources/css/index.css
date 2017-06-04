@@ -96,6 +96,12 @@ ui-custompanelgrid5, .ui-custompanelgrid5 td {
     color: black;
     font-weight: normal;  
 }
+.pordespachar{
+    background:  #FF3838;
+    color: black;
+    font-weight: bold ;  
+}
+
 .facturaabonadaporcobrar{
     border: 2px solid black ;
     background: darkseagreen;

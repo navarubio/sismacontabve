@@ -14,14 +14,18 @@
                     <p:panelGrid columns="2" rendered="#{maquinariapicadoraController.selected != null}">
                         <h:outputText value="#{bundlepicadora.ViewMaquinariapicadoraLabel_idmaquinariapicadora}"/>
                         <h:outputText value="#{maquinariapicadoraController.selected.idmaquinariapicadora}" title="#{bundlepicadora.ViewMaquinariapicadoraTitle_idmaquinariapicadora}"/>
+                        <h:outputText value="#{bundlepicadora.ViewMaquinariapicadoraLabel_serial}"/>
+                        <h:outputText value="#{maquinariapicadoraController.selected.serialmaquinaria}" title="#{bundlepicadora.ViewMaquinariapicadoraTitle_descripcion}"/>                       
                         <h:outputText value="#{bundlepicadora.ViewMaquinariapicadoraLabel_descripcion}"/>
                         <h:outputText value="#{maquinariapicadoraController.selected.descripcion}" title="#{bundlepicadora.ViewMaquinariapicadoraTitle_descripcion}"/>
+                        <h:outputText value="#{bundlepicadora.ViewMaquinariapicadoraLabel_idtipomaquinaria}"/>
+                        <h:outputText value="#{maquinariapicadoraController.selected.idtipomaquinaria.tipomaquinaria}" title="#{bundlepicadora.ViewMaquinariapicadoraTitle_idtipomaquinaria}"/>
+                        <h:outputText value="#{bundlepicadora.ViewMaquinariapicadoraLabel_medida}"/>
+                        <h:outputText value="#{maquinariapicadoraController.selected.idmedida.medida}" title="#{bundlepicadora.ViewMaquinariapicadoraTitle_idtipomaquinaria}"/>
                         <h:outputText value="#{bundlepicadora.ViewMaquinariapicadoraLabel_precio1}"/>
                         <h:outputText value="#{maquinariapicadoraController.selected.precio1}" title="#{bundlepicadora.ViewMaquinariapicadoraTitle_precio1}"/>
                         <h:outputText value="#{bundlepicadora.ViewMaquinariapicadoraLabel_precio2}"/>
                         <h:outputText value="#{maquinariapicadoraController.selected.precio2}" title="#{bundlepicadora.ViewMaquinariapicadoraTitle_precio2}"/>
-                        <h:outputText value="#{bundlepicadora.ViewMaquinariapicadoraLabel_idtipomaquinaria}"/>
-                        <h:outputText value="#{maquinariapicadoraController.selected.idtipomaquinaria}" title="#{bundlepicadora.ViewMaquinariapicadoraTitle_idtipomaquinaria}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundlepicadora.Close}" onclick="MaquinariapicadoraViewDialog.hide()"/>
                 </h:panelGroup>

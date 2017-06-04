@@ -37,7 +37,11 @@ public class ScheduleView implements Serializable {
 
     private Date endDate, endDate1, endDate2, endDate3, endDate4, endDate5,
             endDate6, endDate7, endDate8, endDate9, endDate10, endDate11, endDate12,
-            endDate13, endDate14, endDate15, endDate16, endDate17;
+            endDate13, endDate14, endDate15, endDate16, endDate17, endDate18, endDate19,
+            endDate20, endDate21, endDate22, endDate23, endDate24, endDate25, endDate26, 
+            endDate27, endDate28, endDate29, endDate30, endDate31, endDate32, endDate33,
+            endDate34, endDate35, endDate36, endDate37, endDate38, endDate39, endDate40,
+            endDate41, endDate42, endDate43, endDate44, endDate45, endDate46, endDate47;
 
     @PostConstruct
     public void init() {
@@ -61,6 +65,36 @@ public class ScheduleView implements Serializable {
             endDate15 = formatter.parse("2017-06-7");
             endDate16 = formatter.parse("2017-06-9");
             endDate17 = formatter.parse("2017-06-14");
+            endDate18 = formatter.parse("2017-07-20");
+            endDate19 = formatter.parse("2017-07-20");
+            endDate20 = formatter.parse("2017-07-07");
+            endDate21 = formatter.parse("2017-07-11");
+            endDate22 = formatter.parse("2017-07-14");
+            endDate23 = formatter.parse("2017-08-22");
+            endDate24 = formatter.parse("2017-08-22");
+            endDate25 = formatter.parse("2017-08-07");
+            endDate26 = formatter.parse("2017-08-09");
+            endDate27 = formatter.parse("2017-08-15");           
+            endDate28 = formatter.parse("2017-09-20");           
+            endDate29 = formatter.parse("2017-09-20");           
+            endDate30 = formatter.parse("2017-09-05");           
+            endDate31 = formatter.parse("2017-09-07");           
+            endDate32 = formatter.parse("2017-09-13");           
+            endDate33 = formatter.parse("2017-10-23");           
+            endDate34 = formatter.parse("2017-10-23");           
+            endDate35 = formatter.parse("2017-10-06");           
+            endDate36 = formatter.parse("2017-10-10");           
+            endDate37 = formatter.parse("2017-10-16");           
+            endDate38 = formatter.parse("2017-11-20");           
+            endDate39 = formatter.parse("2017-11-20");           
+            endDate40 = formatter.parse("2017-11-03");           
+            endDate41 = formatter.parse("2017-11-08");           
+            endDate42 = formatter.parse("2017-11-13");
+            endDate43 = formatter.parse("2017-12-22");           
+            endDate44 = formatter.parse("2017-12-22");           
+            endDate45 = formatter.parse("2017-12-07");           
+            endDate46 = formatter.parse("2017-12-12");           
+            endDate47 = formatter.parse("2017-12-15");
             
 
         } catch (ParseException ex) {
@@ -89,7 +123,42 @@ public class ScheduleView implements Serializable {
         eventModel.addEvent(new DefaultScheduleEvent("RET ISLR", endDate16, endDate16));
         eventModel.addEvent(new DefaultScheduleEvent("ESTIMADA ISLR", endDate17, endDate17));
         
+        eventModel.addEvent(new DefaultScheduleEvent("IVA JUN", endDate18, endDate18));
+        eventModel.addEvent(new DefaultScheduleEvent("R1 IVA/IGTF", endDate19, endDate19));
+        eventModel.addEvent(new DefaultScheduleEvent("R2 IVA/IGTF", endDate20, endDate20));
+        eventModel.addEvent(new DefaultScheduleEvent("RET ISLR", endDate21, endDate21));
+        eventModel.addEvent(new DefaultScheduleEvent("ESTIMADA ISLR", endDate22, endDate22));
 
+        eventModel.addEvent(new DefaultScheduleEvent("IVA JUL", endDate23, endDate23));
+        eventModel.addEvent(new DefaultScheduleEvent("R1 IVA/IGTF", endDate24, endDate24));
+        eventModel.addEvent(new DefaultScheduleEvent("R2 IVA/IGTF", endDate25, endDate25));
+        eventModel.addEvent(new DefaultScheduleEvent("RET ISLR", endDate26, endDate26));
+        eventModel.addEvent(new DefaultScheduleEvent("ESTIMADA ISLR", endDate27, endDate27));
+
+        eventModel.addEvent(new DefaultScheduleEvent("IVA AGO", endDate28, endDate28));
+        eventModel.addEvent(new DefaultScheduleEvent("R1 IVA/IGTF", endDate29, endDate29));
+        eventModel.addEvent(new DefaultScheduleEvent("R2 IVA/IGTF", endDate30, endDate30));
+        eventModel.addEvent(new DefaultScheduleEvent("RET ISLR", endDate31, endDate31));
+        eventModel.addEvent(new DefaultScheduleEvent("ESTIMADA ISLR", endDate32, endDate32));
+
+        eventModel.addEvent(new DefaultScheduleEvent("IVA SEP", endDate33, endDate33));
+        eventModel.addEvent(new DefaultScheduleEvent("R1 IVA/IGTF", endDate34, endDate34));
+        eventModel.addEvent(new DefaultScheduleEvent("R2 IVA/IGTF", endDate35, endDate35));
+        eventModel.addEvent(new DefaultScheduleEvent("RET ISLR", endDate36, endDate36));
+        eventModel.addEvent(new DefaultScheduleEvent("ESTIMADA ISLR", endDate37, endDate37));
+
+        eventModel.addEvent(new DefaultScheduleEvent("IVA OCT", endDate38, endDate38));
+        eventModel.addEvent(new DefaultScheduleEvent("R1 IVA/IGTF", endDate39, endDate39));
+        eventModel.addEvent(new DefaultScheduleEvent("R2 IVA/IGTF", endDate40, endDate40));
+        eventModel.addEvent(new DefaultScheduleEvent("RET ISLR", endDate41, endDate41));
+        eventModel.addEvent(new DefaultScheduleEvent("ESTIMADA ISLR", endDate42, endDate42));
+       
+        eventModel.addEvent(new DefaultScheduleEvent("IVA NOV", endDate43, endDate43));
+        eventModel.addEvent(new DefaultScheduleEvent("R1 IVA/IGTF", endDate44, endDate44));
+        eventModel.addEvent(new DefaultScheduleEvent("R2 IVA/IGTF", endDate45, endDate45));
+        eventModel.addEvent(new DefaultScheduleEvent("RET ISLR", endDate46, endDate46));
+        eventModel.addEvent(new DefaultScheduleEvent("ESTIMADA ISLR", endDate47, endDate47));
+       
         lazyEventModel = new LazyScheduleModel() {
 
             @Override
