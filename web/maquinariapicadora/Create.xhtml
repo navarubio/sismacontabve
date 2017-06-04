@@ -28,13 +28,17 @@
                                            var="idmedidaItem"
                                            itemValue="#{idmedidaItem}" />
                         </p:selectOneMenu>
-
+                        <p:outputLabel value="#{bundlepicadora.CreateMaquinariapicadoraLabel_rifproveedor}" for="rifproveedor"  />
+                        <p:selectOneMenu id="rifproveedor" value="#{maquinariapicadoraController.selected.rifproveedor}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" >
+                            <f:selectItems value="#{proveedorController.itemsAvailableSelectOne}"
+                                           var="rifproveedorItem"
+                                           itemValue="#{rifproveedorItem}" />
+                        </p:selectOneMenu>
                         <p:outputLabel value="#{bundlepicadora.CreateMaquinariapicadoraLabel_precio1}" for="precio1" />
                         <p:inputText id="precio1" value="#{maquinariapicadoraController.selected.precio1}" title="#{bundlepicadora.CreateMaquinariapicadoraTitle_precio1}" />
                         <p:outputLabel value="#{bundlepicadora.CreateMaquinariapicadoraLabel_precio2}" for="precio2" />
                         <p:inputText id="precio2" value="#{maquinariapicadoraController.selected.precio2}" title="#{bundlepicadora.CreateMaquinariapicadoraTitle_precio2}" />
-                        <p:outputLabel value="#{bundlepicadora.CreateMaquinariapicadoraLabel_idtipomaquinaria}" for="idtipomaquinaria" />
-                    </p:panelGrid>
+                   </p:panelGrid>
                     <p:commandButton actionListener="#{maquinariapicadoraController.create}" value="#{bundlepicadora.Save}" update="display,:MaquinariapicadoraListForm:datalist,:growl" oncomplete="handleSubmit(args,'MaquinariapicadoraCreateDialog');"/>
                     <p:commandButton value="#{bundlepicadora.Cancel}" onclick="MaquinariapicadoraCreateDialog.hide()"/>
                 </h:panelGroup>

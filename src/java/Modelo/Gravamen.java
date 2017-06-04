@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Gravamen.findByCategoria", query = "SELECT g FROM Gravamen g WHERE g.categoria = :categoria"),
     @NamedQuery(name = "Gravamen.findByAlicuota", query = "SELECT g FROM Gravamen g WHERE g.alicuota = :alicuota")})
 public class Gravamen implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +49,8 @@ public class Gravamen implements Serializable {
     private Double alicuota;
     @OneToMany(mappedBy = "idgravamen")
     private Collection<Articulo> articuloCollection;
+    @OneToMany(mappedBy = "idgravamen")
+    private Collection<Maquinariapicadora> maquinariapicadoraCollection;
 
     public Gravamen() {
     }
@@ -88,6 +91,15 @@ public class Gravamen implements Serializable {
     public void setArticuloCollection(Collection<Articulo> articuloCollection) {
         this.articuloCollection = articuloCollection;
     }
+    
+    @XmlTransient
+    public Collection<Maquinariapicadora> getMaquinariapicadoraCollection() {
+        return maquinariapicadoraCollection;
+    }
+
+    public void setMaquinariapicadoraCollection(Collection<Maquinariapicadora> maquinariapicadoraCollection) {
+        this.maquinariapicadoraCollection = maquinariapicadoraCollection;
+    }
 
     @Override
     public int hashCode() {
@@ -113,5 +125,5 @@ public class Gravamen implements Serializable {
     public String toString() {
         return categoria;
     }
-    
+
 }

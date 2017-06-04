@@ -49,6 +49,9 @@ public class Proveedor implements Serializable {
     private Collection<Comprobanteislref> comprobanteislrefCollection;
     @OneToMany(mappedBy = "rifproveedor")
     private Collection<Compra> compraCollection;
+    @OneToMany(mappedBy = "rifproveedor")
+    private Collection<Maquinariapicadora> maquinariapicadoraCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -215,7 +218,7 @@ public class Proveedor implements Serializable {
 
     @Override
     public String toString() {
-        return "Modelo.Proveedor[ rifproveedor=" + rifproveedor + " ]";
+        return razonsocial;
     }
 
     @XmlTransient
@@ -243,6 +246,15 @@ public class Proveedor implements Serializable {
 
     public void setComprobanteislrefCollection(Collection<Comprobanteislref> comprobanteislrefCollection) {
         this.comprobanteislrefCollection = comprobanteislrefCollection;
+    }
+    
+     @XmlTransient
+    public Collection<Maquinariapicadora> getMaquinariapicadoraCollection() {
+        return maquinariapicadoraCollection;
+    }
+
+    public void setMaquinariapicadoraCollection(Collection<Maquinariapicadora> maquinariapicadoraCollection) {
+        this.maquinariapicadoraCollection = maquinariapicadoraCollection;
     }
     
 }

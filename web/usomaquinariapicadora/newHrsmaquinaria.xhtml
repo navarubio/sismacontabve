@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+        <ui:composition template="./../template.xhtml">
+            <ui:define name="title">
+                Horas Uso de Maquinaria
+                <h:outputStylesheet library="css" name="index.css" />   
+            </ui:define>
+            <ui:define name="body">
+                <p:growl id="msgs" showDetail="true" autoUpdate="true" showSummary="false" />
+
+                <h:form id ="formulario">
+                    <div id="imag2">
+                        <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca"/>
+                    </div>      
+                    <img src="../resources/images/payloader3.png" width="120" height="70" alt="Facturacion" align="right" />
+
+                    <p:panel header="HRS MAQUINA">
+                        <p:fieldset style="width: 67%"  legend="Datos Usuario y Fecha" >
+                            <p:panelGrid columns="4" styleClass="ui-custompanelgrid4">
+                                <p:outputLabel for="usuario" styleClass="text-ouput" value="USUARIO"/>
+                                <p:outputLabel id="usuario"  value="#{requerimientosController.usuario.nombre}"/>
+                                <p:outputLabel for="departamento" styleClass="text-ouput" value="DEPARTAMENTO" />
+                                <p:outputLabel id="departamento" value="#{requerimientosController.buscarDepartamento().departamento}" />
+                                <p:outputLabel></p:outputLabel>
+                                <p:outputLabel></p:outputLabel>
+                                <p:outputLabel for="fechatrabajada" styleClass="text-ouput"  value="Fecha Nota"  />
+                                <p:calendar id="fechatrabajada" pattern="dd/MM/yyyy" locale="es" value="#{usomaquinariapicadoraController.hrsuso.fecha}" showOn="button" navigator="true" required="true" size="10"/>
+                            </p:panelGrid>
+                        </p:fieldset>
+                        <p:fieldset styleClass="ui-custompanelgrid5" legend="Datos de Maquinaria">
+                            <p:panelGrid id= "datosmaquinaria" columns="7">
+                                <p:outputLabel value="Maquinaria" style="font-weight:bold"  for="idmaquinaria"  />
+                                <p:selectOneMenu id="idmaquinaria" value="#{usomaquinariapicadoraController.hrsuso.idmaquinariapicadora}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" >
+                                    <p:ajax event="change" listener="#{usomaquinariapicadoraController.listaprecios()}" update="precio"/>                              
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                    <!--f:selectItems value=".{articuloController.itemsAvailableSelectOne}"-->
+                                    <f:selectItems value="#{maquinariapicadoraController.itemsAvailableSelectOne}"
+                                                   var="idmaquinariaItem"
+                                                   itemLabel="#{idmaquinariaItem.descripcion}"  itemValue="#{idmaquinariaItem}" /> 
+                                </p:selectOneMenu>
+                                <p:outputLabel for="cantidad" style="font-weight:bold" value="Cantidad" />
+                                <p:inputText id="cantidad" value="#{usomaquinariapicadoraController.cantidad}" style="text-align:right" size="5" required="true" />
+                                <p:outputLabel for="precio"  style="font-weight:bold" value="Precio sin IVA" />
+                                <p:selectOneMenu id="precio" value="#{usomaquinariapicadoraController.hrsuso.precio}">
+                                    <!--f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/-->
+                                    <!--f:selectItems value=".{articuloController.itemsAvailableSelectOne}"-->
+                                    <f:selectItems value="#{usomaquinariapicadoraController.listadeprecio}"
+                                                   var="precio"
+                                                   itemLabel="#{precio}"  itemValue="#{precio}" /> 
+                                </p:selectOneMenu>
+
+                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{usomaquinariapicadoraController.anexaraHrs()}" update="listado,datosmaquinaria"/>   
+                            </p:panelGrid>
+                        </p:fieldset>
+                        <p:panel>
+                            <p:dataTable id="listado" widgetVar="listadoreq" value="#{usomaquinariapicadoraController.listadehrsmaquina}" 
+                                         var="req" emptyMessage="No hay articulos para mostrar" rowKey="#{req.idmaquinariapicadora.serialmaquinaria}"
+                                         >
+                                <p:column style="width:8%"  headerText="Serial Maquinaria">
+                                    #{req.idmaquinariapicadora.serialmaquinaria} 
+                                </p:column>
+                                <p:column style="width:25%"  headerText="Descripcion de Maquinaria">
+                                    #{req.idmaquinariapicadora.descripcion} 
+                                </p:column>
+                                <p:column style="text-align: center" headerText="Cantidad">
+                                    #{req.cantidad} 
+                                </p:column >
+                                <p:column style="text-align: right" headerText="Precio Unitario ">
+                                    <h:outputText value="#{req.precio}">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right" headerText="SUB TOTAL">
+                                    <h:outputText value="#{req.subtotal}">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                </p:column>                                
+                                <p:column style="text-align: right" headerText="IVA">
+                                    <h:outputText value="#{req.iva}">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right" headerText="TOTAL">
+                                    <h:outputText value="#{req.total}">
+                                        <f:convertNumber type="currency" currencySymbol=""  />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="width:10%" headerText="Eliminar">
+                                    <p:commandLink value="Eliminar" actionListener="#{usomaquinariapicadoraController.eliminar(req)}" update="listado" />
+                                </p:column>
+                                <p:columnGroup type="footer">
+                                    <p:row>
+                                        <p:column colspan="4" style="text-align:right" footerText="TOTALES GENERALES" />
+                                        <p:column style="text-align: right"  footerText="#{usomaquinariapicadoraController.totalsubtotal}"/> 
+                                        <p:column style="text-align: right"  footerText="#{usomaquinariapicadoraController.totaliva}" />
+                                        <p:column style="text-align: right"  footerText="#{usomaquinariapicadoraController.totalgeneral}" />
+                                    </p:row>
+                                </p:columnGroup>                            
+                            </p:dataTable>
+                            <p:commandButton value="Registrar" actionListener="#{notacargaController.registrarnota()}"  update=":formulario,:growl" action="/notacarga/List?faces-redirect=true" />
+                            <!--p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value=".{bundle.Imprimir}" actionListener=".{facturasController.verReporte()}" ajax="false" onclick="form.target = '_blank'"/-->                            
+                        </p:panel>
+                    </p:panel>
+                </h:form>
+                <h:outputScript library="js" name="spanishLocale.js"/>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
+
+<!-- :formulario, action="/factura/List?faces-redirect=true"-->

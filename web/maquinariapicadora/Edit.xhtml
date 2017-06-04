@@ -29,6 +29,13 @@
                                            var="idmedidaItem"
                                            itemValue="#{idmedidaItem}" />
                         </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlepicadora.CreateMaquinariapicadoraLabel_rifproveedor}" for="rifproveedor"  />
+                        <p:selectOneMenu id="rifproveedor" value="#{maquinariapicadoraController.selected.rifproveedor}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{proveedorController.itemsAvailableSelectOne}"
+                                           var="rifproveedorItem"
+                                           itemValue="#{rifproveedorItem}" />
+                        </p:selectOneMenu>
+
                         <p:outputLabel value="#{bundlepicadora.EditMaquinariapicadoraLabel_precio1}" for="precio1" />
                         <p:inputText id="precio1" value="#{maquinariapicadoraController.selected.precio1}" title="#{bundlepicadora.EditMaquinariapicadoraTitle_precio1}" />
                         <p:outputLabel value="#{bundlepicadora.EditMaquinariapicadoraLabel_precio2}" for="precio2" />

@@ -22,58 +22,68 @@
                 <img src="../resources/images/Payloader2.png" width="120" height="70" alt="Solicitudes" align="right" />
 
                 <p:panel header="#{bundlepicadora.ListMaquinariapicadoraTitle}">
-                    <p:dataTable id="datalist" value="#{maquinariapicadoraController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{maquinariapicadoraController.items}" var="item" style="width: 1100px;"
                                  selectionMode="single" selection="#{maquinariapicadoraController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idmaquinariapicadora}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="20"
+                                 rowsPerPageTemplate="20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column  width="80" style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListMaquinariapicadoraTitle_idmaquinariapicadora}"/>
                             </f:facet>
                             <h:outputText value="#{item.idmaquinariapicadora}"/>
                         </p:column>
-                        <p:column>
+                        <p:column  width="80" style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListMaquinariapicadoraTitle_serialmaquinaria}"/>
                             </f:facet>
                             <h:outputText value="#{item.serialmaquinaria}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="150">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListMaquinariapicadoraTitle_descripcion}"/>
                             </f:facet>
                             <h:outputText value="#{item.descripcion}"/>
                         </p:column>
-                        <p:column>
+                        <p:column  width="100" style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListMaquinariapicadoraTitle_idtipomaquinaria}"/>
                             </f:facet>
                             <h:outputText value="#{item.idtipomaquinaria.tipomaquinaria}"/>
                         </p:column>
-                        <p:column>
+                        <p:column  width="80" style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListMaquinariapicadoraTitle_idmedida}"/>
                             </f:facet>
                             <h:outputText value="#{item.idmedida.medida}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="200">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListMaquinariapicadoraTitle_proveedor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.rifproveedor.razonsocial}"/>
+                        </p:column>
+                        <p:column  width="80" style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListMaquinariapicadoraTitle_precio1}"/>
                             </f:facet>
-                            <h:outputText value="#{item.precio1}"/>
+                            <h:outputText value="#{item.precio1}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column  width="80" style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListMaquinariapicadoraTitle_precio2}"/>
                             </f:facet>
-                            <h:outputText value="#{item.precio2}"/>
+                            <h:outputText value="#{item.precio2}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlepicadora.Create}" actionListener="#{maquinariapicadoraController.prepareCreate}" update=":MaquinariapicadoraCreateForm" oncomplete="PF('MaquinariapicadoraCreateDialog').show()"/>

@@ -5,7 +5,9 @@
  */
 package Jpa;
 
+import Modelo.Maquinariapicadora;
 import Modelo.Usomaquinariapicadora;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,4 +30,5 @@ public class UsomaquinariapicadoraFacade extends AbstractFacade<Usomaquinariapic
         super(Usomaquinariapicadora.class);
     }
     
+
 }

@@ -62,6 +62,12 @@ public class Maquinariapicadora implements Serializable {
     @JoinColumn(name = "idmedida", referencedColumnName = "idmedida")
     @ManyToOne
     private Medida idmedida;
+    @JoinColumn(name = "rifproveedor", referencedColumnName = "rifproveedor")
+    @ManyToOne
+    private Proveedor rifproveedor;
+    @JoinColumn(name = "idgravamen", referencedColumnName = "idgravamen")
+    @ManyToOne
+    private Gravamen idgravamen;
 
 
     public Maquinariapicadora() {
@@ -100,6 +106,22 @@ public class Maquinariapicadora implements Serializable {
 
     public void setIdmedida(Medida idmedida) {
         this.idmedida = idmedida;
+    }
+
+    public Proveedor getRifproveedor() {
+        return rifproveedor;
+    }
+
+    public void setRifproveedor(Proveedor rifproveedor) {
+        this.rifproveedor = rifproveedor;
+    }
+    
+        public Gravamen getIdgravamen() {
+        return idgravamen;
+    }
+
+    public void setIdgravamen(Gravamen idgravamen) {
+        this.idgravamen = idgravamen;
     }
     
     public Double getPrecio1() {
