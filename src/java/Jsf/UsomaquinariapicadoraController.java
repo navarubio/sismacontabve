@@ -5,12 +5,18 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.UsomaquinariapicadoraFacade;
 import Jpa.UsomaquinariapicadoraFacadeLocal;
+import Modelo.Articulo;
 import Modelo.Cuentabancaria;
 import Modelo.Detallenotacarga;
 import Modelo.Maquinariapicadora;
+import Modelo.Usuario;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -228,7 +234,8 @@ public class UsomaquinariapicadoraController implements Serializable {
         }
         totaltotal();
     }
-      
+    
+        
     public List<Usomaquinariapicadora> getItems() {
         if (items == null) {
             items = getFacade().findAll();
