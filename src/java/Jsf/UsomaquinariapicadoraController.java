@@ -235,7 +235,50 @@ public class UsomaquinariapicadoraController implements Serializable {
         totaltotal();
     }
     
-        
+    public void registrarHrsMaquina() {
+        Articulo art = new Articulo();
+        Date fecha = new Date();
+        DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
+        String fechaCadena = hourFormat.format(fecha);
+        DecimalFormat numformat = new DecimalFormat("#######.##");
+        int cardinal=0;
+        try {
+            for (Usomaquinariapicadora rq : listadehrsmaquina) {
+                selected=listadehrsmaquina.get(cardinal);
+                cardinal++;
+                ejbFacade.create(selected);
+            }
+//            String subject;
+//            String ultimafactura = ejbFacade.u();
+//            String fechafactu = formateador.format(factura.getFecha());
+//            correo = "FACTURA NRO: " + ultimafactura
+//                    + "  CONTROL: " + factura.getNumerocontrol()
+//                    + "  USUARIO: " + factura.getIdusuario().getNombre()
+//                    + "  DEPARTAMENTO: " + factura.getIdusuario().getIddepartamento().getDepartamento()
+//                    + "  FECHA: " + fechafactu
+//                    + "  CLIENTE: " + factura.getRifcliente().getRazonsocial()
+//                    + "  RIF: " + factura.getRifcliente().getRifcliente()
+//                    + "  SUBTOTAL: " + formatearnumero.format(factura.getBimponiblefact())
+//                    + "  IVA: " + formatearnumero.format(factura.getIvafact())
+//                    + "  TOTAL: " + formatearnumero.format(factura.getTotalgeneral())
+//                    + "  OBSERVACIONES: " + factura.getObservacionesfact();
+//
+//            subject = "Emisión de Factura N° " + ultimafactura;
+//            enviomail = new envioCorreo(correo, subject);
+//            enviomail.start();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Las horas de maquinaria se registraron exitosamente", "Aviso"));
+            limpiarListaArreglo();
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar hotas Maquinaria", "Aviso"));
+        } finally {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        }
+    }
+    
+    public void limpiarListaArreglo() {
+        listadehrsmaquina.clear();
+        totaltotal();
+    }
     public List<Usomaquinariapicadora> getItems() {
         if (items == null) {
             items = getFacade().findAll();

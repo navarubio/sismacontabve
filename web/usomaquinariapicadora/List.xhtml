@@ -11,71 +11,78 @@
 
         <ui:define name="title">
             <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle}"></h:outputText>
+            <h:outputStylesheet library="css" name="index.css" />
         </ui:define>
 
         <ui:define name="body">
             <h:form id="UsomaquinariapicadoraListForm">
+                <div id="imag2">
+                    <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
+                </div>     
+                <img src="../resources/images/payloader3.png" width="120" height="70" alt="Solicitudes" align="right" />
+
                 <p:panel header="#{bundlepicadora.ListUsomaquinariapicadoraTitle}">
                     <p:dataTable id="datalist" value="#{usomaquinariapicadoraController.items}" var="item"
                                  selectionMode="single" selection="#{usomaquinariapicadoraController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idusomaquinariapicadora}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="20"
+                                 rowsPerPageTemplate="20,20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_idusomaquinariapicadora}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idusomaquinariapicadora}"/>
-                        </p:column>
-                        <p:column>
+                        <p:column width="80" style="text-align: center"   >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_fecha}"/>
                             </f:facet>
                             <h:outputText value="#{item.fecha}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
                         <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_proveedor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idmaquinariapicadora.rifproveedor.razonsocial}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_maquinaria}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idmaquinariapicadora.descripcion}"/>
+                        </p:column>
+
+                        <p:column width="80" style="text-align: center" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_cantidad}"/>
                             </f:facet>
                             <h:outputText value="#{item.cantidad}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="100" style="text-align: right" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_precio}"/>
                             </f:facet>
                             <h:outputText value="#{item.precio}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="100" style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_subtotal}"/>
                             </f:facet>
                             <h:outputText value="#{item.subtotal}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="100" style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_iva}"/>
                             </f:facet>
                             <h:outputText value="#{item.iva}"/>
-                        </p:column>
-                        <p:column>
+                        </p:column >
+                        <p:column width="100" style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_total}"/>
                             </f:facet>
                             <h:outputText value="#{item.total}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlepicadora.ListUsomaquinariapicadoraTitle_idmaquinariapicadora}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idmaquinariapicadora}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlepicadora.Create}" actionListener="#{usomaquinariapicadoraController.prepareCreate}" update=":UsomaquinariapicadoraCreateForm" oncomplete="PF('UsomaquinariapicadoraCreateDialog').show()"/>
