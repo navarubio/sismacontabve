@@ -4,6 +4,7 @@ import Modelo.Compra;
 import Modelo.Detallecompra;
 import Modelo.Detalledespachopicadora;
 import Modelo.Detalleproduccionpicadora;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -23,4 +24,6 @@ public interface DetalleproduccionpicadoraFacadeLocal {
     List<Detalleproduccionpicadora> findRange(int[] range);
 
     int count();
+    
+    List<Detalleproduccionpicadora> buscarmovimientoporfecha (Date fechaini, Date fechafinish);
 }

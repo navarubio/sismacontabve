@@ -22,7 +22,8 @@
                     <img src="../resources/images/payloader3.png" width="120" height="70" alt="Facturacion" align="right" />
 
                     <p:panel header="HRS MAQUINA">
-                        <p:fieldset style="width: 67%"  legend="Datos Usuario y Fecha" >
+                        <p:panelGrid columns="2"  >
+                        <p:fieldset style="width:500px; "  legend="Datos Usuario y Fecha" >
                             <p:panelGrid columns="4" styleClass="ui-custompanelgrid4">
                                 <p:outputLabel for="usuario" styleClass="text-ouput" value="USUARIO"/>
                                 <p:outputLabel id="usuario"  value="#{requerimientosController.usuario.nombre}"/>
@@ -33,6 +34,27 @@
                                 <p:outputLabel for="fechatrabajada" styleClass="text-ouput"  value="Fecha Nota"  />
                                 <p:calendar id="fechatrabajada" pattern="dd/MM/yyyy" locale="es" value="#{usomaquinariapicadoraController.hrsuso.fecha}" showOn="button" navigator="true" required="true" size="10"/>
                             </p:panelGrid>
+                        </p:fieldset>
+                        <p:fieldset  style="width: 50%" legend="Hrs Maquina Almacenadas"  >
+                            <p:dataTable id="listado1" widgetVar="listadoreq" value="#{usomaquinariapicadoraController.items}" 
+                                         var="req" emptyMessage="No hay produccion para mostrar" rowKey="#{req.fecha}" style="width: 450px;"
+                                         paginator="false"
+                                         rows="5">
+                                <p:column  width="30"  style="text-align: center">
+                                    <f:facet name="header">
+                                        <h:outputText value="Fecha"/>
+                                    </f:facet>
+                                    <h:outputText value="#{req.fecha}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column width="80"  headerText="Maquina" style="text-align: left">
+                                    #{req.idmaquinariapicadora.descripcion} 
+                                </p:column>
+                                <p:column headerText="Hrs Trabajadas" width="30" style="text-align: center">
+                                    #{req.cantidad} 
+                                </p:column >
+                            </p:dataTable>                                
                         </p:fieldset>
                         <p:fieldset styleClass="ui-custompanelgrid5" legend="Datos de Maquinaria">
                             <p:panelGrid id= "datosmaquinaria" columns="7">
@@ -59,6 +81,7 @@
                                 <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{usomaquinariapicadoraController.anexaraHrs()}" update="listado,datosmaquinaria"/>   
                             </p:panelGrid>
                         </p:fieldset>
+                        </p:panelGrid>
                         <p:panel>
                             <p:dataTable id="listado" widgetVar="listadoreq" value="#{usomaquinariapicadoraController.listadehrsmaquina}" 
                                          var="req" emptyMessage="No hay articulos para mostrar" rowKey="#{req.idmaquinariapicadora.serialmaquinaria}"

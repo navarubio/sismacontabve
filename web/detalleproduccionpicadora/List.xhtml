@@ -22,6 +22,28 @@
                 <img src="../resources/images/jumbo1.png" width="120" height="70" alt="Solicitudes" align="right" />
 
                 <p:panel header="#{bundlepicadora.ListDetalleproduccionpicadoraTitle}">
+                    <p:panelGrid columns="1" >
+                        <p:fieldset  legend="Seleccion por Fecha"  toggleable="true" toggleSpeed="500" collapsed="true" >
+                            <p:panelGrid columns="8" styleClass="ui-custompanelgrid1">
+                                <p:outputLabel for="agregado" value="Agregado" styleClass="text-ouput"/>
+                                <p:selectOneMenu id="agregado" value="#{detallesproduccionpicadoraController.articuloelegido}" converter="omnifaces.SelectItemsConverter" required="true" > 
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
+                                    <f:selectItems value="#{detallesproduccionpicadoraController.articulos}"
+                                                   var="articuloItem"
+                                                   itemLabel="#{articuloItem.descripcion}"  itemValue="#{articuloItem}" /> 
+                                </p:selectOneMenu>
+                              <p:outputLabel for="fechadesde" value="Fecha Desde" />
+                              <p:calendar size="10"  locale="es" id="fechadesde" pattern="dd/MM/yyyy" value="#{detallesproduccionpicadoraController.fechadesde}" showOn="button" navigator="true" required="true"/>                                
+                                <p:outputLabel for="fechahasta" value="Fecha Hasta" />
+                                <p:calendar size="10"  locale="es" id="fechahasta" pattern="dd/MM/yyyy" value="#{detallesproduccionpicadoraController.fechahasta}" showOn="button" navigator="true" required="true"/>                                
+
+                                <p:commandButton value="Buscar" icon="ui-icon-check" actionListener="#{detallesproduccionpicadoraController.actualizar()}" update="panelart"/>
+                                <p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value="#{bundle.Imprimir}" actionListener="#{movimientobancarioController.verMovimiento()}" ajax="false" onclick="form.target = '_blank'"/>
+                            </p:panelGrid>
+                        </p:fieldset>
+                    </p:panelGrid>
+                </p:panel>
+                <p:panel id="panelart">
                     <p:dataTable id="datalist" value="#{detallesproduccionpicadoraController.items}" var="item"
                                  selectionMode="single" selection="#{detalleproduccionpicadoraController.selected}" style="width: 800px;"
                                  paginator="true"
@@ -30,8 +52,8 @@
                                  rowsPerPageTemplate="25,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton "/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton "/>
 
                         <p:column  style="text-align: center" width="100" filterBy="#{item.idproduccionpicadora.idproduccionpicadora}" filterMatchMode="exact" filterStyle="width:60px;">
                             <f:facet name="header">
@@ -71,7 +93,7 @@
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlepicadora.Create}" actionListener="#{detalleproduccionpicadoraController.prepareCreate}" update=":DetalleproduccionpicadoraCreateForm" oncomplete="PF('DetalleproduccionpicadoraCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlepicadora.View}" update=":DetalleproduccionpicadoraViewForm" oncomplete="PF('DetalleproduccionpicadoraViewDialog').show()" disabled="#{empty detalleproduccionpicadoraController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundlepicadora.Edit}" update=":DetalleproduccionpicadoraEditForm" oncomplete="PF('DetalleproduccionpicadoraEditDialog').show()" disabled="#{empty detalleproduccionpicadoraController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundlepicadora.Delete}" actionListener="#{detalleproduccionpicadoraController.destroy}" update=":growl,datalist" disabled="#{empty detalleproduccionpicadoraController.selected}"/>
+                            <!--p:commandButton id="deleteButton" icon="ui-icon-trash"  value=".{bundlepicadora.Delete}" actionListener=".{detalleproduccionpicadoraController.destroy}" update=":growl,datalist" disabled=".{empty detalleproduccionpicadoraController.selected}"/-->
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

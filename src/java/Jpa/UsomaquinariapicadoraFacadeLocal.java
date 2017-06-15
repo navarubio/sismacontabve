@@ -29,6 +29,8 @@ public interface UsomaquinariapicadoraFacadeLocal {
     List<Usomaquinariapicadora> findAll();
 
     List<Usomaquinariapicadora> findRange(int[] range);
+    
+    List<Usomaquinariapicadora> usomaquinafechadesc();
 
     int count();
     

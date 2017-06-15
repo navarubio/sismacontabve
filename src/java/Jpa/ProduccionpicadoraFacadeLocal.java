@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Produccionpicadora;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -32,4 +33,7 @@ public interface ProduccionpicadoraFacadeLocal {
     
     Produccionpicadora ultimoInsertado();
     
+    List<Produccionpicadora> buscarmovimientoporfecha (Date fechaini, Date fechafinish);
+    
+    List<Produccionpicadora> produccionfechadesc();
 }

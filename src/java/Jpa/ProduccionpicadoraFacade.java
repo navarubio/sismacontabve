@@ -7,6 +7,7 @@ package Jpa;
 
 import Modelo.Auxiliarrequerimiento;
 import Modelo.Produccionpicadora;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -46,6 +47,37 @@ public class ProduccionpicadoraFacade extends AbstractFacade<Produccionpicadora>
             throw e;
         }
         return ultimo;
+    }
+
+    @Override
+    public List<Produccionpicadora> buscarmovimientoporfecha (Date fechaini, Date fechafinish) {
+        String consulta;
+        List<Produccionpicadora> lista = null;
+        try {
+            consulta = "From Produccionpicadora p where p.fecha between ?1 and ?3";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, fechaini);
+            query.setParameter(2, fechafinish);
+
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Produccionpicadora> produccionfechadesc() {
+        String consulta = null;
+        List<Produccionpicadora> lista = null;
+        try {
+            consulta = "Select p From Produccionpicadora p Order By p.fecha Desc";
+            Query query = em.createQuery(consulta);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
     }
 
     

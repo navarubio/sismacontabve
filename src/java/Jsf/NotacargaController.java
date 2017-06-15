@@ -347,6 +347,12 @@ public class NotacargaController implements Serializable {
     public List<Notacarga> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
+    
+    public Notacarga prepareCreate() {
+        selected = new Notacarga();
+        initializeEmbeddableKey();
+        return selected;
+    }
 
     public void anexaraNota() {
         if (cantidad != 0) {

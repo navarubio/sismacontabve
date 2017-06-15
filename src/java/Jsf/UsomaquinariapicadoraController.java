@@ -135,6 +135,7 @@ public class UsomaquinariapicadoraController implements Serializable {
         totaliva = 0;
         totalgeneral = 0;
         totalcantidad = 0;
+        items= ejbFacade.usomaquinafechadesc();
     }
     
     public Usomaquinariapicadora prepareCreate() {

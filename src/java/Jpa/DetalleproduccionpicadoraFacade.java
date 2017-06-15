@@ -5,10 +5,16 @@
  */
 package Jpa;
 
+import Modelo.Articulo;
+import Modelo.Cuentabancaria;
 import Modelo.Detalleproduccionpicadora;
+import Modelo.Movimientobancario;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,5 +33,22 @@ public class DetalleproduccionpicadoraFacade extends AbstractFacade<Detalleprodu
     public DetalleproduccionpicadoraFacade() {
         super(Detalleproduccionpicadora.class);
     }
+
     
+    @Override
+    public List<Detalleproduccionpicadora> buscarmovimientoporfecha (Date fechaini, Date fechafinish) {
+        String consulta;
+        List<Detalleproduccionpicadora> lista = null;
+        try {
+            consulta = "SELECT p FROM Produccionpicadora t JOIN t.Detalleproduccionpicadora p t.fecha between ?1 and ?2";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, fechaini);
+            query.setParameter(2, fechafinish);
+
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
 }

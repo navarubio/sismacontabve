@@ -130,6 +130,7 @@ public class ProducciondiariapicadoraController implements Serializable {
         selected = new Produccionpicadora();
         articulos = articuloEJB.listadoAgregadospicadora();
         listadetallepro.clear();
+        items = ejbFacade.produccionfechadesc();
     }
     
     public void anexar() {

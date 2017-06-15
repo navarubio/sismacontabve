@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
@@ -50,7 +51,12 @@ public class ProduccionpicadoraController implements Serializable {
     private ProduccionpicadoraFacadeLocal getFacade() {
         return ejbFacade;
     }
-
+    
+    @PostConstruct
+    public void init() {
+        selected = new Produccionpicadora();
+        items = ejbFacade.produccionfechadesc();
+    }
     public Produccionpicadora prepareCreate() {
         selected = new Produccionpicadora();
         initializeEmbeddableKey();
