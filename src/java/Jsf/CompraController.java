@@ -28,6 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 
 @Named("compraController")
@@ -53,7 +54,8 @@ public class CompraController implements Serializable {
     private Compra selected;
     private Compra compraseleccionada;
     private PagosController pagoscontroller;
-
+    @Inject
+    private Compra compraefectuada;
     public CompraController() {
     }
 
@@ -66,9 +68,18 @@ public class CompraController implements Serializable {
 
     public void setSelected(Compra selected) {
         this.selected = selected;
+        this.compraefectuada=selected;
         if (selected != null) {
             asignar();
         }
+    }
+
+    public Compra getCompraefectuada() {
+        return compraefectuada;
+    }
+
+    public void setCompraefectuada(Compra compraefectuada) {
+        this.compraefectuada = compraefectuada;
     }
 
     public Compra getSelected() {
@@ -78,6 +89,7 @@ public class CompraController implements Serializable {
     public void setCompraseleccionada(Compra compraseleccionada) {
         if (compraseleccionada != null) {
             this.compraseleccionada = compraseleccionada;
+            this.compraefectuada = compraseleccionada;
             this.selected = compraseleccionada;
             asignar();
         }

@@ -57,7 +57,7 @@
                         <p:panel id="panelart" >
                             <p:fieldset legend="Datos los Articulos" >
                                 <p:dataTable id="listado" value="#{compraController.detallecompraFiltrados}"
-                                             var="req" emptyMessage="No hay articulos para mostrar" style="width: 800px" >
+                                             var="req" emptyMessage="No hay articulos para mostrar" style="width: 900px" >
                                     <p:column style="width:10%"  headerText="Codigo Articulo">
                                         <h:outputText value="#{req.codigo.codigo}" />
                                     </p:column>
@@ -90,9 +90,9 @@
                                     <p:columnGroup type="footer">
                                         <p:row>
                                             <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
-                                            <p:column style="text-align: right"  footerText="#{pagosController.compra.iva}" /> 
-                                            <p:column style="text-align: right"  footerText="#{pagosController.compra.iva}" />
-                                            <p:column style="text-align: right"  footerText="#{pagosController.compra.total}" />                                        
+                                            <p:column style="text-align: right"  footerText="#{compraController.compraefectuada.subtotal}" /> 
+                                            <p:column style="text-align: right"  footerText="#{compraController.compraefectuada.iva}" />
+                                            <p:column style="text-align: right"  footerText="#{compraController.compraefectuada.total}" />                                        
                                         </p:row>
                                     </p:columnGroup>       
                                 </p:dataTable> 
