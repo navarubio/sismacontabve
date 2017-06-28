@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -37,6 +39,8 @@ public class Contribuyente implements Serializable {
     private Collection<Tiporetencionislr> tiporetencionislrCollection;
     @OneToMany(mappedBy = "idcontribuyente")
     private Collection<Empresa> empresaCollection;
+    @OneToMany(mappedBy = "idcontribuyente")
+    private Collection<Proveedor> proveedorCollection;
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,6 +53,9 @@ public class Contribuyente implements Serializable {
     private String contribuyente;
     @OneToMany(mappedBy = "idcontribuyente")
     private Collection<Cliente> clienteCollection;
+    @JoinColumn(name = "idpersonalidad", referencedColumnName = "idpersonalidad")
+    @ManyToOne
+    private Personalidadjuridica idpersonalidad;
 
     public Contribuyente() {
     }
@@ -69,6 +76,14 @@ public class Contribuyente implements Serializable {
         return contribuyente;
     }
 
+    public Personalidadjuridica getIdpersonalidad() {
+        return idpersonalidad;
+    }
+
+    public void setIdpersonalidad(Personalidadjuridica idpersonalidad) {
+        this.idpersonalidad = idpersonalidad;
+    }
+    
     public void setContribuyente(String contribuyente) {
         this.contribuyente = contribuyente;
     }
@@ -124,4 +139,14 @@ public class Contribuyente implements Serializable {
     public void setEmpresaCollection(Collection<Empresa> empresaCollection) {
         this.empresaCollection = empresaCollection;
     }
+
+    @XmlTransient
+    public Collection<Proveedor> getProveedorCollection() {
+        return proveedorCollection;
+    }
+
+    public void setProveedorCollection(Collection<Proveedor> proveedorCollection) {
+        this.proveedorCollection = proveedorCollection;
+    }
+
 }

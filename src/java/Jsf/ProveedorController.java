@@ -1,20 +1,26 @@
 package Jsf;
 
+import Jpa.ContribuyenteFacadeLocal;
 import Modelo.Proveedor;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.ProveedorFacade;
 import Jpa.ProveedorFacadeLocal;
+import Jpa.ResidenciajuridicaFacadeLocal;
+import Modelo.Contribuyente;
+import Modelo.Residenciajuridica;
 import Modelo.Usuario;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -28,12 +34,25 @@ import javax.servlet.ServletContext;
 @SessionScoped
 public class ProveedorController implements Serializable {
 
-    @EJB 
+    @EJB
     private ProveedorFacadeLocal ejbFacade;
+    @EJB
+    private ContribuyenteFacadeLocal contribuyenteEJB;
+    @EJB
+    private ResidenciajuridicaFacadeLocal residenciajuridicaEJB;
     private List<Proveedor> items = null;
     private Proveedor selected;
+    private ClienteController clientecontrolador = new ClienteController();
+    private List<Contribuyente> listadoContri = null;
+
+    private List<Residenciajuridica> listadoResidencia = null;
     @Inject
     private Usuario usa;
+    private Date fechaactual = new Date();
+    private ValidarRUC validarucspv = new ValidarRUC();
+    private ValidaRUCep validarrucep = new ValidaRUCep();
+    private ValidaCedula validarcedula = new ValidaCedula();
+    private Boolean rucvalido;
 
     public ProveedorController() {
     }
@@ -56,8 +75,25 @@ public class ProveedorController implements Serializable {
         return ejbFacade;
     }
 
+    public List<Contribuyente> getListadoContri() {
+        return listadoContri;
+    }
+
+    public void setListadoContri(List<Contribuyente> listadoContri) {
+        this.listadoContri = listadoContri;
+    }
+
+    public List<Residenciajuridica> getListadoResidencia() {
+        return listadoResidencia;
+    }
+
+    public void setListadoResidencia(List<Residenciajuridica> listadoResidencia) {
+        this.listadoResidencia = listadoResidencia;
+    }
+
     public Proveedor prepareCreate() {
         selected = new Proveedor();
+        selected.setFechainscripcion(fechaactual);
         initializeEmbeddableKey();
         usa = getUsuario();
         selected.setIdusuario(usa);
@@ -71,16 +107,43 @@ public class ProveedorController implements Serializable {
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ProveedorCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+        int tipocontri = selected.getIdcontribuyente().getIdcontribuyente();
+        if (tipocontri == 4 || tipocontri == 6) {
+            rucvalido = validarucspv.validacionRUC(selected.getRifproveedor());
+        } else if (tipocontri == 1 || tipocontri == 2 || tipocontri == 3) {
+            rucvalido = validarcedula.validacionCedula(selected.getRifproveedor());
+        } else if (tipocontri == 5) {
+            rucvalido = validarrucep.validaRucEP(selected.getRifproveedor());
+        }
+        if (rucvalido) {
+            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ProveedorCreated"));
+            if (!JsfUtil.isValidationFailed()) {
+                items = null;    // Invalidate list of items to trigger re-query.
+            }
+        }else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error en el RUC ingresado", "Error en el RUC ingresado"));
+            System.out.print("RUC ERRADO");        
         }
     }
+    
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ProveedorUpdated"));
+        int tipocontri = selected.getIdcontribuyente().getIdcontribuyente();
+        if (tipocontri == 4 || tipocontri == 6) {
+            rucvalido = validarucspv.validacionRUC(selected.getRifproveedor());
+        } else if (tipocontri == 1 || tipocontri == 2 || tipocontri == 3) {
+            rucvalido = validarcedula.validacionCedula(selected.getRifproveedor());
+        } else if (tipocontri == 5) {
+            rucvalido = validarrucep.validaRucEP(selected.getRifproveedor());
+        }
+        if (rucvalido) {
+            persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ProveedorUpdated"));
+    
+        }else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error en el RUC ingresado", "Error en el RUC ingresado"));
+            System.out.print("RUC ERRADO");        
+        }
     }
-
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ProveedorDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -176,16 +239,26 @@ public class ProveedorController implements Serializable {
         }
 
     }
-public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        
+
+    public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
         //Instancia hacia la clase reporteClientes        
         reporteArticulo rArticulo = new reporteArticulo();
-        
+
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
         String ruta = servletContext.getRealPath("/resources/reportes/proveedores.jasper");
-       
-        rArticulo.getReporte(ruta);        
-        FacesContext.getCurrentInstance().responseComplete();               
+
+        rArticulo.getReporte(ruta);
+        FacesContext.getCurrentInstance().responseComplete();
+    }
+
+    public List<Contribuyente> refrescarContribuyentes() {
+        try {
+            listadoContri = contribuyenteEJB.contribuyentexPersona(selected.getIdpersonalidad().getIdpersonalidad());
+            listadoResidencia = residenciajuridicaEJB.residenciaxPersona(selected.getIdpersonalidad().getIdpersonalidad());
+        } catch (Exception e) {
+        }
+        return listadoContri;
     }
 }

@@ -29,6 +29,7 @@
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditArticuloLabel_idgrupo}" for="idgrupo"  />
                         <p:selectOneMenu id="idgrupo" value="#{articuloController.selected.idgrupo}" required="true" >
+                            <p:ajax event="change" listener="#{articuloController.refrescarSubgrupo()}" update="idsubgrupo"/>
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{grupoController.itemsAvailableSelectOne}"
                                            var="idgrupoItem"
@@ -36,8 +37,8 @@
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditArticuloLabel_idsubgrupo}" for="idsubgrupo" />
                         <p:selectOneMenu id="idsubgrupo" value="#{articuloController.selected.idsubgrupo}" required="true" >
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{subgrupoController.itemsAvailableSelectOne}"
+                            <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
+                            <f:selectItems value="#{articuloController.lstCuentasSelecc}"
                                            var="idsubgrupoItem"
                                            itemValue="#{idsubgrupoItem}"/>
                         </p:selectOneMenu>

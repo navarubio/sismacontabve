@@ -30,6 +30,7 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -79,7 +80,17 @@ public class ComprasController implements Serializable {
     private Autorizacion codAutoriza;
     private Compra compraautorizada;
     private Tipoconjunto tipoconjunto = null;
-    private int varAutoriza=0;
+    private int varAutoriza = 0;
+    private double pcosto = 0;
+    private double pventa = 0;
+    private double cantidad = 0;
+    private double subtotal = 0;
+    private int id = 0;
+    private double totalgeneral = 0;
+    private double totaliva = 0;
+    private double totalsubtotal = 0;
+
+    private List<Requerimiento> listarequerimiento = new ArrayList();
 
     @Inject
     private Auxiliarrequerimiento auxiliar;
@@ -93,6 +104,10 @@ public class ComprasController implements Serializable {
     private Autorizacion autorizacion;
     @Inject
     private Maestromovimiento maestromovi;
+    @Inject
+    private Requerimiento requer;
+    @Inject
+    private Articulo articulo;
 
     public Compra getCompra() {
         return compra;
@@ -104,6 +119,30 @@ public class ComprasController implements Serializable {
 
     public void setCompraautorizada(Compra compraautorizada) {
         this.compraautorizada = compraautorizada;
+    }
+
+    public Requerimiento getRequer() {
+        return requer;
+    }
+
+    public void setRequer(Requerimiento requer) {
+        this.requer = requer;
+    }
+
+    public double getPcosto() {
+        return pcosto;
+    }
+
+    public void setPcosto(double pcosto) {
+        this.pcosto = pcosto;
+    }
+
+    public double getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(double cantidad) {
+        this.cantidad = cantidad;
     }
 
     public void setCompra(Compra compra) {
@@ -124,6 +163,14 @@ public class ComprasController implements Serializable {
 
     public void setDetallecompra(Detallecompra detallecompra) {
         this.detallecompra = detallecompra;
+    }
+
+    public List<Requerimiento> getListarequerimiento() {
+        return listarequerimiento;
+    }
+
+    public void setListarequerimiento(List<Requerimiento> listarequerimiento) {
+        this.listarequerimiento = listarequerimiento;
     }
 
     private List<Auxiliarrequerimiento> auxiliarrequerimientos;
@@ -200,7 +247,30 @@ public class ComprasController implements Serializable {
     public void setAuxiliarrequerimiento(Auxiliarrequerimiento auxiliarrequerimiento) {
         this.auxiliarrequerimiento = auxiliarrequerimiento;
     }
+    
+    public double getTotaliva() {
+        return totaliva;
+    }
 
+    public void setTotaliva(double totaliva) {
+        this.totaliva = totaliva;
+    }
+
+    public double getTotalsubtotal() {
+        return totalsubtotal;
+    }
+    
+    public double getTotalgeneral() {
+        return totalgeneral;
+    }
+
+    public void setTotalgeneral(double totalgeneral) {
+        this.totalgeneral = totalgeneral;
+    }
+    
+    public void setTotalsubtotal(double totalsubtotal) {
+        this.totalsubtotal = totalsubtotal;
+    }
     public Requerimiento getRequerimiento() {
         return requerimiento;
     }
@@ -259,7 +329,7 @@ public class ComprasController implements Serializable {
         comprasporpagar = compraEJB.buscarcomprasporPagar();
         compraspagadas = compraEJB.buscarcomprasPagadas();
         compra.setFechaorden(fechaactual);
-        varAutoriza=0;
+        varAutoriza = 0;
 
 //        this.auxiliarrequerimiento=requerimientosController.getAuxrequer();
     }
@@ -275,7 +345,9 @@ public class ComprasController implements Serializable {
         this.idAuxiliar = aux.getIdauxiliarrequerimiento();
         this.auxiliar = aux;
         requerimientosFiltrados = requerimientosAuxiliar();
+        listarequerimiento=requerimientosFiltrados;
         this.compra.setIdauxiliarrequerimiento(auxiliar);
+        totaltotal();
     }
 
     public List<Requerimiento> buscarrequerimiento() {
@@ -330,6 +402,7 @@ public class ComprasController implements Serializable {
         auxiliarrequerimiento.setMontototal(montotgeneral);
 
         auxiliarrequerimientoEJB.edit(auxiliarrequerimiento);
+        totaltotal();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Requerimiento fue Modificado"));
     }
 
@@ -352,7 +425,7 @@ public class ComprasController implements Serializable {
         autorizacionEJB.create(autorizacion);
         autorizacion.setObservaciones(null);
         Estatusfactura statusfactu = null;
-        codAutoriza= autorizacionEJB.ultimaautorizacionInsertada();
+        codAutoriza = autorizacionEJB.ultimaautorizacionInsertada();
         int tipo = 2;
         statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
         compraautorizada.setIdestatusfactura(statusfactu);
@@ -381,9 +454,10 @@ public class ComprasController implements Serializable {
     public void asignarCompraAutorizada(Compra compraselec) {
         this.idAuxiliar = compraselec.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento();
         this.auxiliar = compraselec.getIdauxiliarrequerimiento();
-        auxiliarrequerimiento=auxiliar;
+        auxiliarrequerimiento = auxiliar;
         requerimientosFiltrados = requerimientosAuxiliar();
         compraautorizada = compraselec;
+        totaltotal();
     }
 
     public List<Requerimiento> solicitarRequerimientosFiltro() {
@@ -441,7 +515,7 @@ public class ComprasController implements Serializable {
             }
 
             int numerocompra = codCompra.getIdcompra();
-            for (Requerimiento rq : requerimientosFiltrados) {
+            for (Requerimiento rq : listarequerimiento) {
                 Articulo arti = rq.getCodigo();
                 detallecompra.setIdcompra(codCompra);
                 detallecompra.setCodigo(arti);
@@ -500,5 +574,65 @@ public class ComprasController implements Serializable {
     public List<Compra> buscarComprasPagadas() {
         compraspagadas = compraEJB.buscarcomprasPagadas();
         return comprasporpagar;
+    }
+
+    public void buscarArticulo() {
+        articulo = requer.getCodigo();
+        pcosto = articulo.getPcosto();
+        pventa = articulo.getPventa();
+    }
+    
+     public void anexar() {
+        if (cantidad != 0) {
+            double alicuota = 0;
+            double iva = 0;
+            double total = 0;
+            Requerimiento reque = new Requerimiento();
+            reque.setCodigo(requer.getCodigo());
+            reque.setCantidad(cantidad);
+//            pcosto = reque.getCodigo().getPcosto();
+            reque.setPcosto(pcosto);
+            subtotal = cantidad * pcosto;
+            reque.setSubtotal(subtotal);
+            alicuota = reque.getCodigo().getIdgravamen().getAlicuota();
+            iva = (subtotal * alicuota) / 100;
+            total = subtotal + iva;
+            reque.setTributoiva(iva);
+            reque.setTotal(total);
+            reque.setIdrequerimiento(id);
+            this.listarequerimiento.add(reque);
+            reque.setIdauxiliarrequerimiento(auxiliarrequerimiento);
+            requerimientoEJB.create(reque);
+            id++;
+            requerimientos = requerimientoEJB.findAll();
+            pcosto = 0;
+            pventa = 0;
+            cantidad = 0;
+            requer.setCodigo(null);
+            totaltotal();
+            auxiliarrequerimiento.setSubtotal(totalsubtotal);
+            auxiliarrequerimiento.setMontoiva(totaliva);
+            auxiliarrequerimiento.setMontototal(totalgeneral);
+            auxiliarrequerimientoEJB.edit(auxiliarrequerimiento);
+            
+//            visualizar=1;
+//            requer.setCodigo(null);
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Cantidad en 0.0"));
+        }
+     }
+     public void totaltotal() {
+        double montotgeneral = 0;
+        double montotiva = 0;
+        double montotsubtotal = 0;
+
+        for (Requerimiento requeri : listarequerimiento) {
+            montotgeneral += requeri.getTotal();
+            montotiva += requeri.getTributoiva();
+            montotsubtotal += requeri.getSubtotal();
+        }
+        totalgeneral = montotgeneral;
+        totaliva = montotiva;
+        totalsubtotal = montotsubtotal;
     }
 }

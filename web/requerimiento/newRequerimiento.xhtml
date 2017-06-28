@@ -9,7 +9,7 @@
     <body>
         <ui:composition template="/template.xhtml">
             <ui:define name="title">
-                Produccion Diaria
+                Nuevo Requerimiento
                 <h:outputStylesheet library="css" name="index.css" />    
             </ui:define>
             <ui:define name="body">
@@ -21,21 +21,21 @@
                     </div>      
                     <img src="../resources/images/tablet.png" width="70" height="70" alt="Requerimientos" align="right" />
 
-                    <p:panel header="CARGA DE REQUERIMIENTOS">
+                    <p:panel id="reque" header="CARGA DE REQUERIMIENTOS">
                         <p:fieldset  style="width: 39%" legend="Datos Generales"  >
                             <p:panelGrid columns="2" styleClass="ui-custompanelgrid1">
-                                <p:outputLabel for="usuario" value="USUARIO" style="font-weight:bold"  styleClass="optionalLbl"/>
+                                <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouput" />
                                 <p:outputLabel id="usuario" value="#{requerimientosController.usuario.nombre}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="departamento" style="font-weight:bold"  value="DEPARTAMENTO" styleClass="optionalLbl"/>
+                                <p:outputLabel for="departamento"  value="Departamento" styleClass="text-ouput"/>
                                 <p:outputLabel id="departamento" value="#{requerimientosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="proveedor" style="font-weight:bold" value="Proveedor" styleClass="optionalLbl"/>
+                                <p:outputLabel for="proveedor" value="Proveedor" styleClass="text-ouput"/>
                                 <p:inputText id="proveedor" label="Proveedor" size ="50" value="#{requerimientosController.auxrequer.posibleproveedor}" />
-                                <p:outputLabel for="telefono" style="font-weight:bold"  value="Telefonos" styleClass="optionalLbl"/>
+                                <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouput"/>
                                 <p:inputText id="telefono" label="Telefonos" size="40" value="#{requerimientosController.auxrequer.telefonoproveedor}"/>
-                                <p:outputLabel for="fechasolicitud" style="font-weight:bold"  value="Fecha Solicitud" />
-                                <p:calendar id="fechasolicitud" locale="es" pattern="dd/MM/yyyy" value="#{requerimientosController.auxrequer.fecharequerimiento}" showOn="button" navigator="true" required="true"/>
-                                <p:outputLabel for="resena" style="font-weight:bold" value="Breve Reseña" styleClass="optionalLbl"/>
-                                <p:inputTextarea id="resena"  rows="3" cols="50" label="breve resena" value="#{requerimientosController.auxrequer.descripcion}" required="true" />
+                                <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" styleClass="text-ouput" />
+                                <p:calendar id="fechasolicitud" locale="es" pattern="dd/MM/yyyy" value="#{requerimientosController.auxrequer.fecharequerimiento}" showOn="button" navigator="true" required="true" requiredMessage="Debe elegir una fecha para su requerimiento"/>
+                                <p:outputLabel for="resena" value="Breve Reseña" styleClass="text-ouput"/>
+                                <p:inputTextarea id="resena"  rows="3" cols="50" label="breve resena" value="#{requerimientosController.auxrequer.descripcion}" required="true" requiredMessage="Se requiere anexar una reseña para este requerimiento" />
                             </p:panelGrid>
                         </p:fieldset>
                         <p:fieldset styleClass="ui-custompanelgrid2" legend="Datos de Articulos">
@@ -49,16 +49,16 @@
                                                    var="idarticuloItem"
                                                    itemLabel="#{idarticuloItem.descripcion}"  itemValue="#{idarticuloItem}" /> 
                                 </p:selectOneMenu>
-                                <p:outputLabel for="cantidad" style="font-weight:bold" value="Cantidad" />
+                                <p:outputLabel for="cantidad" style="font-weight:bold" value="Cantidad"/>
                                 <p:inputText id="cantidad" value="#{requerimientosController.cantidad}" style="text-align:right" required="true"/>
                                 <p:outputLabel for="precio"  style="font-weight:bold" value="Precio sin IVA" styleClass="optionalLbl"/>
                                 <p:inputText id="precio"  size="20" value="#{requerimientosController.pcosto}" style="text-align:right">
                                     <f:convertNumber type="currency" currencySymbol="" />
                                 </p:inputText>
-                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{requerimientosController.anexar()}" update="listado,datosarticulo"/>   
+                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{requerimientosController.anexar()}" update="listaarticulos,listado,datosarticulo"/>   
                             </p:panelGrid>
                         </p:fieldset>
-                        <p:panel>
+                        <p:panel id="listaarticulos">
                             <p:dataTable id="listado" widgetVar="listadoreq" value="#{requerimientosController.listarequerimiento}" 
                                          var="req" emptyMessage="No hay articulos para mostrar" rowKey="#{req.codigo.codigo}"
                                          selectionMode="single" >
@@ -91,8 +91,8 @@
                                         <f:convertNumber type="currency" currencySymbol=""  />
                                     </h:outputText>
                                 </p:column>
-                                <p:column style="width:10%" headerText="Eliminar">
-                                    <p:commandLink value="Eliminar" actionListener="#{requerimientosController.eliminar(req)}" update="listado" />
+                                <p:column style="width:10%" headerText="Eliminar" >
+                                    <p:commandLink value="Eliminar" actionListener="#{requerimientosController.eliminar(req)}" styleClass="text-ouputfact" update="listado"  />
                                 </p:column>
 
                                 <p:columnGroup type="footer">
@@ -102,7 +102,9 @@
                                     </p:row>
                                 </p:columnGroup>                            
                             </p:dataTable>
-                            <p:commandButton value="Registrar" actionListener="#{requerimientosController.registrar()}" action="/auxiliarrequerimiento/List?faces-redirect=true" update=":msgs" />
+                            <p:commandButton value="Registrar" actionListener="#{requerimientosController.registrar()}" action="/auxiliarrequerimiento/List?faces-redirect=true" update=":msgs" 
+                                             rendered  ="#{requerimientosController.visualizar== 1 ? true:false}"/> 
+
                         </p:panel>
                     </p:panel>
                 </h:form>

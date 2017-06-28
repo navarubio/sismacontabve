@@ -23,14 +23,14 @@
                         <p:outputLabel value="#{bundle.EditAuxiliarrequerimientoLabel_fecharequerimiento}" for="fecharequerimiento" />
                         <p:calendar id="fecharequerimiento" pattern="dd/MM/yyyy" value="#{auxiliarrequerimientoController.selected.fecharequerimiento}" title="#{bundle.EditAuxiliarrequerimientoTitle_fecharequerimiento}"  showOn="button" locale="es"/>
                         <p:outputLabel value="#{bundle.EditAuxiliarrequerimientoLabel_idusuario}" for="idusuario" />
-                        <p:selectOneMenu id="idusuario" value="#{auxiliarrequerimientoController.selected.idusuario}" >
+                        <p:selectOneMenu id="idusuario" value="#{auxiliarrequerimientoController.selected.idusuario}"  disabled="true" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
                                            var="idusuarioItem"
                                            itemValue="#{idusuarioItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditAuxiliarrequerimientoLabel_iddepartamento}" for="iddepartamento" />
-                        <p:selectOneMenu id="iddepartamento" value="#{auxiliarrequerimientoController.selected.iddepartamento}" >
+                        <p:selectOneMenu id="iddepartamento" value="#{auxiliarrequerimientoController.selected.iddepartamento}" disabled="true" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
                                            var="iddepartamentoItem"

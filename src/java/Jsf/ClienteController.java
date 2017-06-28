@@ -4,16 +4,23 @@ import Modelo.Cliente;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.ClienteFacadeLocal;
+import Jpa.ContribuyenteFacadeLocal;
+import Modelo.Contribuyente;
+import Modelo.Cuentabancaria;
+import Modelo.Proveedor;
 import Modelo.Usuario;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -29,12 +36,28 @@ public class ClienteController implements Serializable {
 
     @EJB
     private ClienteFacadeLocal ejbFacade;
+    @EJB
+    private ContribuyenteFacadeLocal contribuyenteEJB;
     private List<Cliente> items = null;
+    private List<Contribuyente> lstCuentasSelecc;
     private Cliente selected;
     @Inject
+    private Proveedor proveedor;
+    @Inject
     private Usuario usa;
+    private Date fechaactual = new Date();
+    private ValidarRUC validarucspv = new ValidarRUC();
+    private ValidaRUCep validarrucep= new ValidaRUCep();
+    private ValidaCedula validarcedula= new ValidaCedula();
+    private Boolean rucvalido;
 
     public ClienteController() {
+    }
+
+    @PostConstruct
+    public void init() {
+        lstCuentasSelecc = null;
+
     }
 
     public Cliente getSelected() {
@@ -43,6 +66,22 @@ public class ClienteController implements Serializable {
 
     public void setSelected(Cliente selected) {
         this.selected = selected;
+    }
+
+    public List<Contribuyente> getLstCuentasSelecc() {
+        return lstCuentasSelecc;
+    }
+
+    public void setLstCuentasSelecc(List<Contribuyente> lstCuentasSelecc) {
+        this.lstCuentasSelecc = lstCuentasSelecc;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
     protected void setEmbeddableKeys() {
@@ -57,6 +96,7 @@ public class ClienteController implements Serializable {
 
     public Cliente prepareCreate() {
         selected = new Cliente();
+        selected.setFechainscripcion(fechaactual);
         initializeEmbeddableKey();
         usa = getUsuario();
         selected.setIdusuario(usa);
@@ -70,14 +110,44 @@ public class ClienteController implements Serializable {
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+        int tipocontri=selected.getIdcontribuyente().getIdcontribuyente();
+        if (tipocontri==4 || tipocontri==6){
+            rucvalido = validarucspv.validacionRUC(selected.getRifcliente());
+        }else if (tipocontri==1 ||tipocontri==2 || tipocontri==3){
+            rucvalido = validarcedula.validacionCedula(selected.getRifcliente());
+        }else if (tipocontri==5){
+            rucvalido = validarrucep.validaRucEP(selected.getRifcliente());
+        }
+        if (rucvalido) {
+            System.out.print("RUC VALIDADO");
+            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));
+            if (!JsfUtil.isValidationFailed()) {
+                items = null;    // Invalidate list of items to trigger re-query.
+            }
+
+        }else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error en el RUC ingresado", "Error en el RUC ingresado"));
+            System.out.print("RUC ERRADO");
         }
     }
 
+
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ClienteUpdated"));
+        int tipocontri=selected.getIdcontribuyente().getIdcontribuyente();
+        if (tipocontri==4 || tipocontri==6){
+            rucvalido = validarucspv.validacionRUC(selected.getRifcliente());
+        }else if (tipocontri==1 ||tipocontri==2 || tipocontri==3){
+            rucvalido = validarcedula.validacionCedula(selected.getRifcliente());
+        }else if (tipocontri==5){
+            rucvalido = validarrucep.validaRucEP(selected.getRifcliente());
+        }
+        if (rucvalido) {
+            System.out.print("RUC VALIDADO");
+            persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ClienteUpdated"));
+        }else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error en el RUC ingresado", "Error en el RUC ingresado"));
+            System.out.print("RUC ERRADO");
+        }
     }
 
     public void destroy() {
@@ -129,49 +199,53 @@ public class ClienteController implements Serializable {
 
     public List<Cliente> getItemsAvailableSelectOne() {
         return getFacade().findAll();
-    }
+    
+
+
+
+}
 
     @FacesConverter(forClass = Cliente.class)
-    public static class ClienteControllerConverter implements Converter {
+public static class ClienteControllerConverter implements Converter {
 
-        @Override
-        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
-            if (value == null || value.length() == 0) {
-                return null;
-            }
-            ClienteController controller = (ClienteController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "clienteController");
-            return controller.getFacade().find(getKey(value));
+    @Override
+    public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+        if (value == null || value.length() == 0) {
+            return null;
         }
-
-        java.lang.String getKey(String value) {
-            java.lang.String key;
-            key = value;
-            return key;
-        }
-
-        String getStringKey(java.lang.String value) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(value);
-            return sb.toString();
-        }
-
-        @Override
-        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-            if (object == null) {
-                return null;
-            }
-            if (object instanceof Cliente) {
-                Cliente o = (Cliente) object;
-                return getStringKey(o.getRifcliente());
-            } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Cliente.class.getName()});
-                return null;
-            }
-        }
-
+        ClienteController controller = (ClienteController) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "clienteController");
+        return controller.getFacade().find(getKey(value));
     }
-    public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+    java.lang.String getKey(String value) {
+        java.lang.String key;
+        key = value;
+        return key;
+    }
+
+    String getStringKey(java.lang.String value) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(value);
+        return sb.toString();
+    }
+
+    @Override
+    public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+        if (object == null) {
+            return null;
+        }
+        if (object instanceof Cliente) {
+            Cliente o = (Cliente) object;
+            return getStringKey(o.getRifcliente());
+        } else {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Cliente.class.getName()});
+            return null;
+        }
+    }
+
+}
+public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         
         //Instancia hacia la clase reporteClientes        
         reporteArticulo rArticulo = new reporteArticulo();
@@ -183,5 +257,32 @@ public class ClienteController implements Serializable {
         rArticulo.getReporte(ruta);        
         FacesContext.getCurrentInstance().responseComplete();               
     }
+    
+    public List<Contribuyente> refrescarContribuyentes() {
+        try {
+            lstCuentasSelecc = contribuyenteEJB.contribuyentexPersona(selected.getIdpersonalidad().getIdpersonalidad());
+        } catch (Exception e) {
+        }
+        return lstCuentasSelecc;
+    }
+    
+    public List<Contribuyente> refrescarContribuyentes2() {
+        
+        lstCuentasSelecc=null;
+        try {
+            lstCuentasSelecc = contribuyenteEJB.contribuyentexPersona(proveedor.getIdpersonalidad().getIdpersonalidad());
+        } catch (Exception e) {
+        }
+        return lstCuentasSelecc;
+    }
 
+    public void validarRucSociedadesprivadas (){
+        rucvalido=validarucspv.validacionRUC(selected.getRifcliente());
+        if (rucvalido){
+            System.out.print("RUC VALIDADO");
+        }else{
+            System.out.print("RUC ERRADO");
+            
+        }
+    }
 }

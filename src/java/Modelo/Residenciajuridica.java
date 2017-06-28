@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -40,6 +42,9 @@ public class Residenciajuridica implements Serializable {
     @Basic(optional = false)
     @Column(name = "idresidencia")
     private Integer idresidencia;
+    @JoinColumn(name = "idpersonalidad", referencedColumnName = "idpersonalidad")
+    @ManyToOne
+    private Personalidadjuridica idpersonalidad;
     @Size(max = 20)
     @Column(name = "residencia")
     private String residencia;
@@ -73,6 +78,14 @@ public class Residenciajuridica implements Serializable {
 
     public void setResidencia(String residencia) {
         this.residencia = residencia;
+    }
+
+    public Personalidadjuridica getIdpersonalidad() {
+        return idpersonalidad;
+    }
+
+    public void setIdpersonalidad(Personalidadjuridica idpersonalidad) {
+        this.idpersonalidad = idpersonalidad;
     }
 
     public String getAbreviatura() {

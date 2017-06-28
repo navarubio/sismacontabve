@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    
+
     <ui:composition>
 
         <p:dialog id="ArticuloCreateDlg" widgetVar="ArticuloCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateArticuloTitle}">
@@ -16,7 +16,7 @@
                         <p:outputLabel value="#{bundle.CreateArticuloLabel_codigo}" for="codigo" />
                         <p:inputText id="codigo" value="#{articuloController.selected.codigo}" title="#{bundle.CreateArticuloTitle_codigo}" required="true" requiredMessage="#{bundle.CreateArticuloRequiredMessage_codigo}"/>
                         <p:outputLabel value="#{bundle.CreateArticuloLabel_descripcion}" for="descripcion" />
-                        <p:inputText size="40" id="descripcion" value="#{articuloController.selected.descripcion}" title="#{bundle.CreateArticuloTitle_descripcion}"  required="true"/>
+                        <p:inputText size="40" id="descripcion" value="#{articuloController.selected.descripcion}" title="#{bundle.CreateArticuloTitle_descripcion}"  required="true" style="width: 300px;"/>
                         <p:outputLabel value="#{bundle.CreateArticuloLabel_pcosto}" for="pcosto" />
                         <p:inputText id="pcosto" value="#{articuloController.selected.pcosto}" title="#{bundle.CreateArticuloTitle_pcosto}"  label="0.0"/>
                         <p:outputLabel value="#{bundle.CreateArticuloLabel_pventa}" for="pventa" />
@@ -31,13 +31,15 @@
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateArticuloLabel_idgrupo}" for="idgrupo"  />
                         <p:selectOneMenu id="idgrupo" value="#{articuloController.selected.idgrupo}" required="true" >
+                            <p:ajax event="change" listener="#{articuloController.refrescarSubgrupo()}" update="idsubgrupo"/>
+                            <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
                             <f:selectItems value="#{grupoController.itemsAvailableSelectOne}"
                                            var="idgrupoItem"
                                            itemValue="#{idgrupoItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateArticuloLabel_idsubgrupo}" for="idsubgrupo" />
                         <p:selectOneMenu id="idsubgrupo" value="#{articuloController.selected.idsubgrupo}"  required="true">
-                            <f:selectItems value="#{subgrupoController.itemsAvailableSelectOne}"
+                            <f:selectItems value="#{articuloController.lstCuentasSelecc}"
                                            var="idsubgrupoItem"
                                            itemValue="#{idsubgrupoItem}"/>
                         </p:selectOneMenu>
@@ -47,7 +49,7 @@
                                            var="idgravamenItem"
                                            itemValue="#{idgravamenItem}" itemLabel="#{idgravamenItem.alicuota}%  #{idgravamenItem.categoria}" />
                         </p:selectOneMenu>
-                        
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{articuloController.create}" value="#{bundle.Save}" update="display,:ArticuloListForm:datalist,:growl" oncomplete="handleSubmit(args,'ArticuloCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ArticuloCreateDialog.hide()"/>

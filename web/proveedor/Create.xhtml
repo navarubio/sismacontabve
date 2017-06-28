@@ -34,21 +34,25 @@
                                            var="idtipoproveedorItem"
                                            itemValue="#{idtipoproveedorItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreateProveedorLabel_idusuario}" for="idusuario" />
-                        <p:selectOneMenu id="idusuario" value="#{proveedorController.selected.idusuario}" >
-                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
-                                           var="idusuarioItem"
-                                           itemValue="#{idusuarioItem}"/>
-                        </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateProveedorLabel_idpersonalidad}" for="idpersonalidad" />
-                        <p:selectOneMenu id="idpersonalidad" value="#{proveedorController.selected.idpersonalidad}" >
+                        <p:selectOneMenu id="idpersonalidad" value="#{proveedorController.selected.idpersonalidad}" converter="omnifaces.SelectItemsConverter" required="true" >
+                            <p:ajax event="change" listener="#{proveedorController.refrescarContribuyentes()}" update="idcontribuyente, idresidencia"/>
+                            <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
                             <f:selectItems value="#{personalidadjuridicaController.itemsAvailableSelectOne}"
                                            var="idpersonalidadItem"
                                            itemValue="#{idpersonalidadItem}"/>
-                        </p:selectOneMenu>
+                        </p:selectOneMenu> 
+
+                        <p:outputLabel value="#{bundle.CreateProveedorLabel_idcontribuyente}" for="idcontribuyente" />
+                        <p:selectOneMenu id="idcontribuyente" value="#{proveedorController.selected.idcontribuyente}" converter="omnifaces.SelectItemsConverter" required="true" >
+                            <f:selectItems value="#{proveedorController.listadoContri}"
+                                           var="idcontribuyenteItem"
+                                           itemLabel="#{idcontribuyenteItem.contribuyente}" itemValue="#{idcontribuyenteItem}"/>
+                        </p:selectOneMenu> 
+
                         <p:outputLabel value="#{bundle.CreateProveedorLabel_idresidencia}" for="idresidencia" />
                         <p:selectOneMenu id="idresidencia" value="#{proveedorController.selected.idresidencia}" >
-                            <f:selectItems value="#{residenciajuridicaController.itemsAvailableSelectOne}"
+                            <f:selectItems value="#{proveedorController.listadoResidencia}"
                                            var="idresidenciaItem"
                                            itemLabel="#{idresidenciaItem.residencia}" itemValue="#{idresidenciaItem}"/>
                         </p:selectOneMenu>

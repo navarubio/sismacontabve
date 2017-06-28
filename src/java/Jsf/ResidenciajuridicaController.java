@@ -4,6 +4,7 @@ import Modelo.Residenciajuridica;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.ResidenciajuridicaFacade;
+import Jpa.ResidenciajuridicaFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +25,7 @@ import javax.faces.convert.FacesConverter;
 public class ResidenciajuridicaController implements Serializable {
 
     @EJB
-    private Jpa.ResidenciajuridicaFacade ejbFacade;
+    private Jpa.ResidenciajuridicaFacadeLocal ejbFacade;
     private List<Residenciajuridica> items = null;
     private Residenciajuridica selected;
 
@@ -45,7 +46,7 @@ public class ResidenciajuridicaController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private ResidenciajuridicaFacade getFacade() {
+    private ResidenciajuridicaFacadeLocal getFacade() {
         return ejbFacade;
     }
 

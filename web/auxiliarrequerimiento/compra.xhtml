@@ -29,32 +29,32 @@
                         <p:panelGrid columns="2">
                             <p:fieldset styleClass="ui-custompanelgrid1" legend="Datos Requerimiento" >
                                 <p:panelGrid columns="2">
-                                    <p:outputLabel for="numero" value="Solicitud" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="numero" value="Solicitud" styleClass="text-ouput"/>
                                     <p:outputLabel id="numero" value="REQ- #{comprasController.auxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="usuario" value="Usuario" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouput"/>
                                     <p:outputLabel id="usuario" value="#{comprasController.auxiliarrequerimiento.idusuario.nombre}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="departamento" value="Departamento" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="departamento" value="Departamento" styleClass="text-ouput"/>
                                     <p:outputLabel id="departamento" value="#{comprasController.auxiliarrequerimiento.iddepartamento.departamento}" styleClass="optionalLbl"/>
 
-                                    <p:outputLabel for="proveedor" value="Proveedor Referido" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="proveedor" value="Proveedor Referido" styleClass="text-ouput"/>
                                     <p:outputLabel id="proveedor" value="#{comprasController.auxiliarrequerimiento.posibleproveedor}"/>
-                                    <p:outputLabel for="telefono" value="Telefonos" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouput"/>
                                     <p:outputLabel id="telefono" value="#{comprasController.auxiliarrequerimiento.telefonoproveedor}"/>
-                                    <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" />
+                                    <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" styleClass="text-ouput"/>
                                     <p:outputLabel id="fechasolicitud" value="#{comprasController.auxiliarrequerimiento.fecharequerimiento}">
                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </p:outputLabel>
-                                    <p:outputLabel for="resena" value="Breve Reseña" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="resena" value="Breve Reseña" styleClass="text-ouput"/>
                                     <p:outputLabel id="resena" value="#{comprasController.auxiliarrequerimiento.descripcion}" />
                                 </p:panelGrid>
                             </p:fieldset>
                             <p:fieldset styleClass="ui-custompanelgrid" legend="Datos Compra" >
                                 <p:panelGrid columns="2">
-                                    <p:outputLabel for="usua" value="USUARIO" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="usua" value="#{comprasController.usuario.nombre}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="depto" value="DEPARTAMENTO" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="usua" value="Usuario" styleClass="text-ouput"/>
+                                    <p:outputLabel id="usua" value="#{comprasController.usuario.nombre}" styleClass=""/>
+                                    <p:outputLabel for="depto" value="Departamento" styleClass="text-ouput"/>
                                     <p:outputLabel id="depto" value="#{comprasController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="proveedor" value="Proveedor" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="proveedor" value="Proveedor" styleClass="text-ouput"/>
                                     <p:selectOneMenu id="provee" value="#{comprasController.provee}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
                                         <p:ajax event="change" update="rif, telef"/>                              
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
@@ -62,40 +62,42 @@
                                                        var="idarticuloItem"
                                                        itemLabel="#{idarticuloItem.razonsocial}"  itemValue="#{idarticuloItem}" /> 
                                     </p:selectOneMenu>
-                                    <p:outputLabel for="rif" value="R.I.F." styleClass="optionalLbl"/>
+                                    <p:outputLabel for="rif" value="R.U.C." styleClass="text-ouput"/>
                                     <p:outputLabel id="rif" value="#{comprasController.provee.rifproveedor}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="telef" value="Telefono" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="telef" value="Telefonos" styleClass="text-ouput"/>
                                     <p:outputLabel id="telef" value="#{comprasController.provee.telefonos}" styleClass="optionalLbl"/>                                    
-                                    <p:outputLabel for="fechacompra" value="Fecha Orden de Compra" />
+                                    <p:outputLabel for="fechacompra" value="Fecha Orden de Compra" styleClass="text-ouput" />
                                     <p:calendar id="fechacompra" locale="es" pattern="dd/MM/yyyy" value="#{comprasController.compra.fechaorden}" showOn="button" navigator="true" required="true" />
-                                    <p:outputLabel for="observa" value="Observaciones" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="observa" value="Observaciones" styleClass="text-ouput"/>
                                     <p:inputTextarea id="observa"  rows="2" cols="50" label="Observaciones" value="#{comprasController.compra.observacionescompra}" required="true"/>
 
                                 </p:panelGrid>                                
                             </p:fieldset>
                         </p:panelGrid>
 
-                        <!--p:fieldset legend="Datos de Articulos" toggleable="true" toggleSpeed="500" >
+                        <p:fieldset legend="Anexar Articulos a la Orden del Compra" toggleable="true" toggleSpeed="500" collapsed="true" >
                             <p:panelGrid columns="7">
                                 <p:outputLabel value="Articulo" for="idrequerimiento"  />
-                                <p:selectOneMenu id="idrequerimiento" value=".{requerimientosController.requer.codigo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
-                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/>
-                                    <f:selectItems value=".{articuloController.itemsAvailableSelectOne}">
-                                    <f:selectItems value=".{requerimientosController.articulos}"
+                                <p:selectOneMenu id="idrequerimiento" value="#{comprasController.requer.codigo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
+                                    <p:ajax event="change" listener="#{comprasController.buscarArticulo()}" update="precio"/>                              
+
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                    <f:selectItems value="#{articuloController.itemsAvailableSelectOne}"/>
+                                    <f:selectItems value="#{comprasController.articulos}"
                                                    var="idarticuloItem"
-                                                   itemLabel=".{idarticuloItem.descripcion}"  itemValue=".{idarticuloItem}" /> 
+                                                   itemLabel="#{idarticuloItem.descripcion}"  itemValue="#{idarticuloItem}" /> 
                                 </p:selectOneMenu>
 
                                 <p:outputLabel for="cantidad" value="Cantidad" />
-                                <p:inputText id="cantidad" value=".{requerimientosController.cantidad}" style="text-align:right"/>
+                                <p:inputText id="cantidad" value="#{comprasController.cantidad}" style="text-align:right"/>
                                 <p:outputLabel for="precio"  value="Precio" styleClass="optionalLbl"/>
-                                <p:inputText id="precio" size="20" value=".{requerimientosController.pcosto}" style="text-align:right"/>
-                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action=".{requerimientosController.anexar()}" update="listado"/>  
+                                <p:inputText id="precio" size="20" value="#{comprasController.pcosto}" style="text-align:right"/>
+                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{comprasController.anexar()}" update="listado"/>  
                             </p:panelGrid>
-                        </p:fieldset-->
+                        </p:fieldset>
                     </p:panel>
                     <p:panel id="panelart"  >
-                        <p:dataTable id="listado" value="#{comprasController.requerimientosFiltrados}"
+                        <p:dataTable id="listado" value="#{comprasController.listarequerimiento}"
                                      var="req" emptyMessage="No hay articulos para mostrar" >
                             <p:column style="width:8%"  headerText="Codigo Articulo">
                                 <h:outputText value="#{req.codigo.codigo}" />
@@ -127,16 +129,16 @@
                                 </h:outputText>
                             </p:column>
                             <p:column style="text-align: center" headerText="Editar">                                
-                                <p:commandLink actionListener="#{comprasController.asignarRequerimiento(req)}" value="Editar" update=":dialogo" oncomplete="PF('wdialogo').show();" >
+                                <p:commandLink actionListener="#{comprasController.asignarRequerimiento(req)}" value="Editar" styleClass="text-ouputsaldo" update=":dialogo" oncomplete="PF('wdialogo').show();" >
                                     <h:graphicImage library="images" name="desktop.png" width="30" height="30" alt="Editar Articulo"/> 
                                 </p:commandLink>
                             </p:column>
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
-                                    <p:column style="text-align: right"  footerText="#{comprasController.auxiliarrequerimiento.subtotal}" /> 
-                                    <p:column style="text-align: right"  footerText="#{comprasController.auxiliarrequerimiento.montoiva}" />
-                                    <p:column style="text-align: right"  footerText="#{comprasController.auxiliarrequerimiento.montototal}" />                                        
+                                    <p:column style="text-align: right"  footerText="#{comprasController.totalsubtotal}" /> 
+                                    <p:column style="text-align: right"  footerText="#{comprasController.totaliva}" />
+                                    <p:column style="text-align: right"  footerText="#{comprasController.totalgeneral}" />                                        
                                 </p:row>
                             </p:columnGroup>       
                         </p:dataTable> 

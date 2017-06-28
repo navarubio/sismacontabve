@@ -92,6 +92,9 @@ public class Proveedor implements Serializable {
     @JoinColumn(name = "idresidencia", referencedColumnName = "idresidencia")
     @ManyToOne
     private Residenciajuridica idresidencia;
+    @JoinColumn(name = "idcontribuyente", referencedColumnName = "idcontribuyente")
+    @ManyToOne
+    private Contribuyente idcontribuyente;
 
     public Proveedor() {
     }
@@ -154,6 +157,14 @@ public class Proveedor implements Serializable {
 
     public void setPersonacontacto(String personacontacto) {
         this.personacontacto = personacontacto;
+    }
+
+    public Contribuyente getIdcontribuyente() {
+        return idcontribuyente;
+    }
+
+    public void setIdcontribuyente(Contribuyente idcontribuyente) {
+        this.idcontribuyente = idcontribuyente;
     }
 
     public String getTelefonocontacto() {

@@ -30,4 +30,6 @@ public interface SubgrupoFacadeLocal {
 
     int count();
     
+    List<Subgrupo> subgrupoxGrupo (int idgrupo);
+    
 }

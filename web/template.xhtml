@@ -27,7 +27,12 @@
                         </f:facet>
                         <p:menuitem value="#{bundle.Home}" outcome="/protegido/menup.xhtml" icon="ui-icon-home"/>
                         <p:submenu label="Administracion" icon="ui-icon-pencil">
-                            <p:menuitem value="Articulos" outcome="/articulo/List.xhtml" />
+                            <p:submenu label="#{bundle.Articulo}" icon="ui-icon-contact">
+                                <p:menuitem value="Catologo" outcome="/articulo/List.xhtml" />
+                                <p:menuitem value="Grupos" outcome="/grupo/List.xhtml" />
+                                <p:menuitem value="Subgrupos" outcome="/subgrupo/List.xhtml" />
+                                <p:menuitem value="Medidas" outcome="/medida/List.xhtml" />
+                            </p:submenu>
                             <p:submenu label="#{bundle.Ventas}" icon="ui-icon-calculator">
                                 <p:menuitem value="Clientes" outcome="/cliente/List.xhtml" />
                                 <p:menuitem value="Facturacion" outcome="/factura/newFactura.xhtml"/>
@@ -53,41 +58,6 @@
                                 <p:menuitem value="Otros Ingresos" outcome="/otroingreso/List.xhtml"/>
                             </p:submenu> 
                         </p:submenu>
-                        <p:submenu label="#{bundle.OperaPica}" icon="ui-icon-bookmark">
-                            <p:submenu label="#{bundle.Produccion}" icon="ui-icon-calculator">
-                                <p:menuitem value="Produccion Día" outcome="/produccionpicadora/newProduccion.xhtml" />                                
-                                <p:menuitem value="Detalles de Produccion" outcome="/detalleproduccionpicadora/List"/>
-                            </p:submenu>
-                            <p:submenu label="#{bundle.Inventarios}" icon="ui-icon-calculator">
-                                <p:menuitem value="Inventario en Patio" outcome="/inventariopicadora/List" />
-                                <p:menuitem value="Movimiento Inventario" outcome="/movimientoinventariopicadora/List"/>
-                            </p:submenu>
-                            <p:submenu label="#{bundle.Despachos}" icon="ui-icon-calculator">
-                                <p:menuitem value="Nota de Carga" outcome="/notacarga/newNotacarga.xhtml" />
-                                <p:menuitem value="Notas Emitidas" outcome="/notacarga/List" />
-                                <p:menuitem value="Detalles NotaCarga" outcome="/detallenotacarga/List"/>
-                                <p:menuitem value="Despachos" outcome="/despachopicadora/List" />
-                                <p:menuitem value="Camiones" outcome="/camion/List"/>
-                                <p:menuitem value="Choferes" outcome="/chofer/List"/>
-                                <p:menuitem value="Despachadores" outcome="/despachador/List"/>                                
-                            </p:submenu>
-                            <p:submenu label="#{bundle.Maquinaria}" icon="ui-icon-calculator">
-                                <p:menuitem value="Maquinaria" outcome="/maquinariapicadora/List" />
-                                <p:menuitem value="Hrs Maquinaria" outcome="/usomaquinariapicadora/newHrsmaquinaria.xhtml"/>
-                                <p:menuitem value="Detalles Hrs" outcome="/usomaquinariapicadora/List"/>
-                                <p:menuitem value="Distribucion uso Maquinaria" outcome="/distribucionusomaquinaria/List"/>
-                                <p:menuitem value="Tipo Maquinaria" outcome="/tipomaquinaria/List"/>
-                                <p:menuitem value="Tipo Trabajo Maquinaria" outcome="/tipotrabajomaquinaria/List"/>
-                            </p:submenu>
-                            <p:menuitem value="Nominas" outcome="/login.xhtml" />  
-                        </p:submenu>                            
-                        <p:submenu label="#{bundle.Opera}" icon="ui-icon-cart">
-                            <p:menuitem value="Inventario Materia Prima" outcome="/articulo/List.xhtml" />
-                            <p:menuitem value="Inventario Insumos" outcome="/articulo/List.xhtml" />   
-                            <p:menuitem value="Despachos" outcome="/articulo/List.xhtml" />  
-                            <p:menuitem value="Calculos Resistencia" outcome="/articulo/List.xhtml" />  
-                            <p:menuitem value="Nominas" outcome="/auxiliarrequerimiento/List.xhtml" />  
-                        </p:submenu>    
                         <p:submenu label="#{bundle.Contab}" icon="ui-icon-calculator">
                             <p:submenu label="#{bundletributos.Tributos}" icon="ui-icon-document">
                                 <p:menuitem value="Retenciones IVA efectuadas" outcome="/detalleretencionivaef/List.xhtml"/>
@@ -100,6 +70,8 @@
                                 <p:menuitem value="Tipo de Retencion IVA" outcome="/tiporetencioniva/List.xhtml"/>
                                 <p:menuitem value="Tipo de Retencion ISLR" outcome="/tiporetencionislr/List.xhtml"/>
                                 <p:menuitem value="Calendario" outcome="/articulo/calendario.xhtml" />
+                                <p:menuitem value="Contribuyente" outcome="/contribuyente/List.xhtml" />
+                                <p:menuitem value="Personalidadjuridica" outcome="/personalidadjuridica/List.xhtml" />
                             </p:submenu>
                             <p:submenu label="#{bundle.Contab}" icon="ui-icon-calculator">
                                 <p:menuitem value="Contabilizar" outcome="/maestromovimiento/List.xhtml" />
@@ -125,14 +97,9 @@
                         <p:submenu label="#{bundle.Maintenance}" icon="ui-icon-wrench">
                             <p:menuitem value="Datos Empresa" outcome="/empresa/List.xhtml" />                            
                             <p:menuitem value="Condicionfactura" outcome="/condicionfactura/List.xhtml" />
-                            <p:menuitem value="Contribuyente" outcome="/contribuyente/List.xhtml" />
                             <p:menuitem value="Departamento" outcome="/departamento/List.xhtml" />
                             <p:menuitem value="Deposito" outcome="/deposito/List.xhtml" />
                             <p:menuitem value="Gravamen" outcome="/gravamen/List.xhtml" />
-                            <p:menuitem value="Grupo" outcome="/grupo/List.xhtml" />
-                            <p:menuitem value="Subgrupo" outcome="/subgrupo/List.xhtml" />
-                            <p:menuitem value="Medida" outcome="/medida/List.xhtml" />
-                            <p:menuitem value="Personalidadjuridica" outcome="/personalidadjuridica/List.xhtml" />
                             <p:menuitem value="Tipopago" outcome="/tipopago/List.xhtml" />
                             <p:menuitem value="Tipoproveedor" outcome="/tipoproveedor/List.xhtml" />
                             <p:menuitem value="Estatus Contable" outcome="/estatuscontable/List.xhtml" />

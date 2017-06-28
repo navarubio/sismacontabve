@@ -8,6 +8,7 @@ package Jpa;
 import Modelo.Contribuyente;
 import java.util.List;
 import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  *
@@ -29,5 +30,7 @@ public interface ContribuyenteFacadeLocal {
     List<Contribuyente> findRange(int[] range);
 
     int count();
+    
+    List<Contribuyente> contribuyentexPersona (int idpersona);
     
 }

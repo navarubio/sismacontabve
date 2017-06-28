@@ -58,6 +58,7 @@ public class RequerimientosController implements Serializable {
     private Date fechaactual = new Date();
     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
+    int visualizar=0;
 
     private Auxiliarrequerimiento codAux;
     private Auxiliarrequerimiento auxiliar;
@@ -92,6 +93,14 @@ public class RequerimientosController implements Serializable {
 
     public void setPventa(double pventa) {
         this.pventa = pventa;
+    }
+
+    public int getVisualizar() {
+        return visualizar;
+    }
+
+    public void setVisualizar(int visualizar) {
+        this.visualizar = visualizar;
     }
 
     public double getTotalgeneral() {
@@ -186,6 +195,7 @@ public class RequerimientosController implements Serializable {
         articulos = articuloEJB.findAll();
         auxrequer.setFecharequerimiento(fechaactual);
         listarequerimiento.clear();
+        visualizar=0;
     }
 
     @Inject
@@ -269,6 +279,7 @@ public class RequerimientosController implements Serializable {
             pventa = 0;
             cantidad = 0;
             requer.setCodigo(null);
+            visualizar=1;
 //            requer.setCodigo(null);
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Cantidad en 0.0"));
@@ -317,6 +328,7 @@ public class RequerimientosController implements Serializable {
         if (requerim.hashCode() == 0) {
             id = 0;
         }
+        visualizar=0;
 
     }
 

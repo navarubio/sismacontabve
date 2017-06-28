@@ -51,7 +51,11 @@ public class Personalidadjuridica implements Serializable {
     private Collection<Cliente> clienteCollection;
     @OneToMany(mappedBy = "idpersonalidad")
     private Collection<Proveedor> proveedorCollection;
-
+    @OneToMany(mappedBy = "idpersonalidad")
+    private Collection<Contribuyente> contribuyenteCollection;
+    @OneToMany(mappedBy = "idpersonalidad")
+    private Collection<Residenciajuridica> residenciajuridicaCollection;
+    
     public Personalidadjuridica() {
     }
 
@@ -101,6 +105,15 @@ public class Personalidadjuridica implements Serializable {
         this.proveedorCollection = proveedorCollection;
     }
 
+    @XmlTransient
+    public Collection<Contribuyente> getContribuyenteCollection() {
+        return contribuyenteCollection;
+    }
+
+    public void setContribuyenteCollection(Collection<Contribuyente> contribuyenteCollection) {
+        this.contribuyenteCollection = contribuyenteCollection;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -134,5 +147,15 @@ public class Personalidadjuridica implements Serializable {
     public void setTiporetencionislrCollection(Collection<Tiporetencionislr> tiporetencionislrCollection) {
         this.tiporetencionislrCollection = tiporetencionislrCollection;
     }
+    
+    @XmlTransient
+    public Collection<Residenciajuridica> getResidenciajuridicaCollection() {
+        return residenciajuridicaCollection;
+    }
+
+    public void setResidenciajuridicaCollection(Collection<Residenciajuridica> ResidenciajuridicaCollection) {
+        this.residenciajuridicaCollection = ResidenciajuridicaCollection;
+    }
+
     
 }

@@ -28,20 +28,21 @@
                         <p:inputText id="telefonocontacto" size="50" value="#{clienteController.selected.telefonocontacto}" title="#{bundle.EditClienteTitle_telefonocontacto}" />
                         <p:outputLabel value="#{bundle.EditClienteLabel_fechainscripcion}" styleClass="text-ouput" for="fechainscripcion" />
                         <p:calendar id="fechainscripcion" size="12" pattern="dd/MM/yyyy" value="#{clienteController.selected.fechainscripcion}" title="#{bundle.EditClienteTitle_fechainscripcion}"  showOn="button" required="true" locale="es"/>
-                        <p:outputLabel value="#{bundle.EditClienteLabel_idcontribuyente}" styleClass="text-ouput" for="idcontribuyente" />
-                        <p:selectOneMenu id="idcontribuyente" value="#{clienteController.selected.idcontribuyente}" styleClass="text-ouput" required="true">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{contribuyenteController.itemsAvailableSelectOne}"
-                                           var="idcontribuyenteItem"
-                                           itemValue="#{idcontribuyenteItem}"/>
-                        </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditClienteLabel_idpersonalidad}" styleClass="text-ouput" for="idpersonalidad" />
-                        <p:selectOneMenu id="idpersonalidad" value="#{clienteController.selected.idpersonalidad}" required="true">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                        <p:selectOneMenu id="idpersonalidad" value="#{clienteController.selected.idpersonalidad}" converter="omnifaces.SelectItemsConverter"  required="true">
+                            <p:ajax event="change" listener="#{clienteController.refrescarContribuyentes()}" update="idcontribuyente"/>                        
+                            <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
                             <f:selectItems value="#{personalidadjuridicaController.itemsAvailableSelectOne}"
                                            var="idpersonalidadItem"
                                            itemValue="#{idpersonalidadItem}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditClienteLabel_idcontribuyente}" styleClass="text-ouput" for="idcontribuyente" />
+                        <p:selectOneMenu id="idcontribuyente" value="#{clienteController.selected.idcontribuyente}" converter="omnifaces.SelectItemsConverter" required="true">
+                            <f:selectItems value="#{clienteController.lstCuentasSelecc}"
+                                           var="idcontribuyenteItem"
+                                           itemLabel="#{idcontribuyenteItem.contribuyente}" itemValue="#{idcontribuyenteItem}"/>
+                        </p:selectOneMenu>
+                        
                     </p:panelGrid>
                         <p:commandButton actionListener="#{clienteController.update}" value="#{bundle.Save}" update="display,:ClienteListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ClienteEditDialog');" />
                         <p:commandButton value="#{bundle.Cancel}" onclick="ClienteEditDialog.hide()"/>                    

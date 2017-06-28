@@ -5,7 +5,10 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.ArticuloFacadeLocal;
 import Jpa.PlandecuentaFacadeLocal;
+import Jpa.SubgrupoFacadeLocal;
+import Modelo.Contribuyente;
 import Modelo.Plandecuenta;
+import Modelo.Subgrupo;
 import Modelo.Usuario;
 
 import java.io.Serializable;
@@ -34,12 +37,15 @@ public class ArticuloController implements Serializable {
     private ArticuloFacadeLocal ejbFacade;
     @EJB
     private PlandecuentaFacadeLocal plandecuentaEJB;
+    @EJB
+    private SubgrupoFacadeLocal subgrupoEJB;
     private List<Articulo> items = null;
     private double pcosto=0;
     private double pventa=0;
     private Articulo selected;
     private Articulo articuloaclasificar;
     private int cuentaseleccionada;
+    private List<Subgrupo> lstCuentasSelecc;
     @Inject
     private Usuario usa;
 
@@ -78,6 +84,14 @@ public class ArticuloController implements Serializable {
 
     private ArticuloFacadeLocal getFacade() {
         return ejbFacade;
+    }
+
+    public List<Subgrupo> getLstCuentasSelecc() {
+        return lstCuentasSelecc;
+    }
+
+    public void setLstCuentasSelecc(List<Subgrupo> lstCuentasSelecc) {
+        this.lstCuentasSelecc = lstCuentasSelecc;
     }
 
     public Articulo prepareCreate() {
@@ -231,6 +245,14 @@ public class ArticuloController implements Serializable {
        
         rArticulo.getReporte(ruta);        
         FacesContext.getCurrentInstance().responseComplete();               
+    }
+    
+    public List<Subgrupo> refrescarSubgrupo() {
+        try {
+            lstCuentasSelecc = subgrupoEJB.subgrupoxGrupo(selected.getIdgrupo().getIdgrupo());
+        } catch (Exception e) {
+        }
+        return lstCuentasSelecc;
     }
 
 }

@@ -229,8 +229,6 @@ public class FacturasController implements Serializable {
     public void setRequerimientos(List<Requerimiento> requerimientos) {
         this.requerimientos = requerimientos;
     }
-    
-    
 
     @PostConstruct
     public void init() {

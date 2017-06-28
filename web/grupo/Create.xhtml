@@ -12,8 +12,6 @@
             <h:form id="GrupoCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{grupoController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateGrupoLabel_idgrupo}" for="idgrupo" />
-                        <p:inputText id="idgrupo" value="#{grupoController.selected.idgrupo}" title="#{bundle.CreateGrupoTitle_idgrupo}" required="true" requiredMessage="#{bundle.CreateGrupoRequiredMessage_idgrupo}"/>
                         <p:outputLabel value="#{bundle.CreateGrupoLabel_grupo}" for="grupo" />
                         <p:inputText id="grupo" value="#{grupoController.selected.grupo}" title="#{bundle.CreateGrupoTitle_grupo}" />
                     </p:panelGrid>
