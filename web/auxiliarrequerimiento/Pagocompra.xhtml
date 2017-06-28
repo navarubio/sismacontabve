@@ -59,10 +59,12 @@
                                     <p:outputLabel id="depto" value="#{pagosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="proveedor1" value="Proveedor" styleClass="text-ouput"/>
                                     <p:outputLabel id="proveedor1" value="#{pagosController.compra.rifproveedor.razonsocial}"   /> 
-                                    <p:outputLabel for="rif" value="R.I.F." styleClass="text-ouput"/>
+                                    <p:outputLabel for="rif" value="R.U.C." styleClass="text-ouput"/>
                                     <p:outputLabel id="rif" value="#{pagosController.compra.rifproveedor.rifproveedor}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="personalidad" value="P. Juridica" styleClass="text-ouput"/>
                                     <p:outputLabel id="personalidad" value="#{pagosController.compra.rifproveedor.idpersonalidad.personalidad}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="contribuyente" value="Contribuyente" styleClass="text-ouput"/>
+                                    <p:outputLabel id="contribuyente" value="#{pagosController.compra.rifproveedor.idcontribuyente.contribuyente}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="residencia" value="T. Residencia" styleClass="text-ouput"/>
                                     <p:outputLabel id="residencia" value="#{pagosController.compra.rifproveedor.idresidencia.residencia}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="fechacompra" value="Fecha Orden Compra" styleClass="text-ouput" />
@@ -122,7 +124,7 @@
                                     <p:outputLabel value="Porción de Pago" styleClass="text-ouput"/>
                                     <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
                                         <p:outputLabel for="console" value="" />
-                                        <p:selectOneRadio id="console" value="#{pagosController.mensaje}" required="true">
+                                        <p:selectOneRadio id="console" value="#{pagosController.mensaje}" required="true" >
                                             <f:selectItem itemLabel="Total" itemValue="total"/>
                                             <f:selectItem itemLabel="Parcial" itemValue="parcial"/>
                                             <p:ajax event="valueChange" 
@@ -263,10 +265,12 @@
                                     <p:outputLabel></p:outputLabel>
                                     <p:outputLabel for="proveedorret" value="Razón Social :" />
                                     <p:outputLabel id="proveedorret"  value="#{pagosController.compra.rifproveedor.razonsocial}" />
-                                    <p:outputLabel for="rifproveedorret" value="RIF :" />
+                                    <p:outputLabel for="rifproveedorret" value="RUC :" />
                                     <p:outputLabel id="rifproveedorret" value="#{pagosController.compra.rifproveedor.rifproveedor}"/>
                                     <p:outputLabel for="personalidad"  value="Personalidad Juridica" styleClass="optionalLbl"/>
                                     <p:outputLabel id="personalidad"  value="#{pagosController.compra.rifproveedor.idpersonalidad.personalidad}" style="text-align:right"/>
+                                    <p:outputLabel for="contribuyente"  value="Tipo Contribuyente" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="contribuyente"  value="#{pagosController.compra.rifproveedor.idcontribuyente.contribuyente}" style="text-align:right"/>
                                     <p:outputLabel for="residencia"  value="Tipo de Residencia" styleClass="optionalLbl"/>
                                     <p:outputLabel id="residencia"  value="#{pagosController.compra.rifproveedor.idresidencia.residencia}" style="text-align:right"/>                                  
 

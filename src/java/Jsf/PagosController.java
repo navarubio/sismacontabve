@@ -778,7 +778,7 @@ public class PagosController implements Serializable {
         }
 
     }
-
+    
     public Date fechaactual() {
         Date fecha = new Date();
         return fecha;
