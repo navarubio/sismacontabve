@@ -23,6 +23,7 @@ import Jpa.MaestromovimientoFacadeLocal;
 import Jpa.MovimientobancarioFacadeLocal;
 import Jpa.PagocompraFacadeLocal;
 import Jpa.RequerimientoFacadeLocal;
+import Jpa.RetencionivasriFacadeLocal;
 import Jpa.TipoconjuntoFacadeLocal;
 import Jpa.TipopagoFacadeLocal;
 import Jpa.TiporetencionislrFacadeLocal;
@@ -43,6 +44,7 @@ import Modelo.Maestromovimiento;
 import Modelo.Movimientobancario;
 import Modelo.Pagocompra;
 import Modelo.Requerimiento;
+import Modelo.Retencionivasri;
 import Modelo.Tipoconjunto;
 import Modelo.Tipopago;
 import Modelo.Tiporetencionislr;
@@ -110,6 +112,8 @@ public class PagosController implements Serializable {
     private TipoconjuntoFacadeLocal tipoconjuntoEJB;
     @EJB
     private MovimientobancarioFacadeLocal movimientoBancarioEJB;
+    @EJB 
+    private RetencionivasriFacadeLocal retencionesivasriEJB;
 
     private Auxiliarrequerimiento auxiliarrequerimiento;
     private Compra compra;
@@ -460,6 +464,13 @@ public class PagosController implements Serializable {
         
         int personaj = compra.getRifproveedor().getIdpersonalidad().getIdpersonalidad();
         int residencia = compra.getRifproveedor().getIdresidencia().getIdresidencia();
+        int contribproveedor=compra.getRifproveedor().getIdcontribuyente().getIdcontribuyente();
+        int contriempresa=empresa.getIdcontribuyente().getIdcontribuyente();
+        String codigoret=contriempresa+""+contribproveedor;
+        int codigoretencion=Integer.parseInt(codigoret);
+        Retencionivasri retencionprevista=retencionesivasriEJB.buscarcoPorcentajes(codigoretencion);
+        double retencionivabienes=retencionprevista.getPorcentajeivabienes();
+        double retencionivaservicios=retencionprevista.getPorcentajeivaservicios();
         int tipo1;
         for (Detallecompra tipoc : detallecompraFiltrados) {
             tipo1 = tipoc.getCodigo().getIdgrupo().getIdgrupo();
