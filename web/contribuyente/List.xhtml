@@ -16,7 +16,7 @@
         <ui:define name="body">
             <h:form id="ContribuyenteListForm">
                 <p:panel header="#{bundle.ListContribuyenteTitle}">
-                    <p:dataTable id="datalist" value="#{contribuyenteController.items}" var="item" style="width:500px"
+                    <p:dataTable id="datalist" value="#{contribuyenteController.items}" var="item" style="width:600px"
                                  selectionMode="single" selection="#{contribuyenteController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idcontribuyente}"
@@ -27,7 +27,7 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column width="100" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListContribuyenteTitle_idcontribuyente}"/>
                             </f:facet>

@@ -237,7 +237,7 @@
                             </p:column>
                             <p:column style="text-align: center" headerText="Retenciones">                                
                                 <p:commandLink actionListener="#{pagosController.asignarDetalleCompra(req)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
-                                    <h:graphicImage library="images" name="balanzapago.png" width="30" height="30" alt="Editar Articulo" 
+                                    <h:graphicImage library="images" name="balanzapago.png" width="30" height="30" alt="Retenciones" 
                                                     rendered="#{pagosController.visualizar== 1 || pagosController.visualizar== 2 || pagosController.visualizar== 3 || pagosController.visualizar== 4? true:false}"/>  
                                 </p:commandLink>
                             </p:column>
