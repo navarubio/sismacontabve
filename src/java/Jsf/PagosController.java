@@ -147,6 +147,8 @@ public class PagosController implements Serializable {
     private List<Cuentabancaria> lstCuentasSelecc;
     private List<Pagocompra> pagosefectuados;
     private List<Pagocompra> pagoespecifico;
+    ArrayList<Retencionivasri> retencionesivadisponible = new ArrayList();
+//    private List<Retencionivasri> retencionesivadisponible;
     private String mensaje;
     private Date fechaactual = new Date();
     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
@@ -417,6 +419,16 @@ public class PagosController implements Serializable {
         this.tipocompra = tipocompra;
     }
 
+    public ArrayList<Retencionivasri> getRetencionesivadisponible() {
+        return retencionesivadisponible;
+    }
+
+    public void setRetencionesivadisponible(ArrayList<Retencionivasri> retencionesivadisponible) {
+        this.retencionesivadisponible = retencionesivadisponible;
+    }
+
+    
+
     @PostConstruct
     public void init() {
         visualizar = 0;
@@ -470,6 +482,7 @@ public class PagosController implements Serializable {
         int codigoretencion=Integer.parseInt(codigoret);
         Retencionivasri retencionprevista=retencionesivasriEJB.buscarcoPorcentajes(codigoretencion);
         double retencionivabienes=retencionprevista.getPorcentajeivabienes();
+        retencionesivadisponible.add(retencionprevista);
         double retencionivaservicios=retencionprevista.getPorcentajeivaservicios();
         int tipo1;
         for (Detallecompra tipoc : detallecompraFiltrados) {
@@ -482,13 +495,13 @@ public class PagosController implements Serializable {
                 tipocompra = 3;
             }
         }
-        if (empresa.getIdcontribuyente().getIdcontribuyente() == 2) {
+        if (empresa.getIdcontribuyente().getIdcontribuyente() == 3 || empresa.getIdcontribuyente().getIdcontribuyente() == 6 ) {
             if (montocompra >= montopisoretiva) {
                 if (tipocompra == 3) {
                     visualizar = 5;
                 }else if (tipocompra == 1) {
                     if (montoiva > 0) {
-                        visualizar = 1;                    
+                        visualizar = 2;                    
                     }else {
                         visualizar=5;
                     }
@@ -526,7 +539,7 @@ public class PagosController implements Serializable {
                     visualizar=5;
                 }
             }
-        } else if (empresa.getIdcontribuyente().getIdcontribuyente() == 1 || empresa.getIdcontribuyente().getIdcontribuyente() == 3) {
+        } else if (empresa.getIdcontribuyente().getIdcontribuyente() == 1 || empresa.getIdcontribuyente().getIdcontribuyente() == 4 || empresa.getIdcontribuyente().getIdcontribuyente() == 5) {
             if (tipocompra == 2) {
                 if ((personaj == 2) && (residencia == 1)) {
                     if (montocompra >= montopisoretislr) {

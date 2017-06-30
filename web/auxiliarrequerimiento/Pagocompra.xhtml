@@ -311,7 +311,7 @@
                                     </p:inputText>
                                     <p:outputLabel for="tiporetencionislr" value="Porcentaje Retencion ISLR" />
                                     <p:selectOneMenu id="tiporetencionislr" value="#{pagosController.detalleretencionislref.idtiporetencionislr}" converter="omnifaces.SelectItemsConverter" 
-                                        rendered="#{pagosController.tipocompra==2  ? true:false}">  
+                                        rendered="#{pagosController.tipocompra==1 || pagosController.tipocompra==2  ? true:false}">  
                                         <p:ajax event="change" listener="#{pagosController.calcularislrretenido()}" update="islrretenido,sustraendo,display"/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                                         <f:selectItems value="#{pagosController.tiporetencionesfiltradasPD}"

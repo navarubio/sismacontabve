@@ -41,6 +41,8 @@ public class Tiporetencioniva implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "porcentajeiva")
     private Double porcentajeiva;
+    @Column(name = "porcentajeivaserv")
+    private Double porcentajeivaser;
     @OneToMany(mappedBy = "idtiporetencioniva")
     private Collection<Detalleretencionivaef> detalleretencionivaefCollection;
     @OneToMany(mappedBy = "idtiporetencioniva")
@@ -68,6 +70,15 @@ public class Tiporetencioniva implements Serializable {
     public void setPorcentajeiva(Double porcentajeiva) {
         this.porcentajeiva = porcentajeiva;
     }
+
+    public Double getPorcentajeivaser() {
+        return porcentajeivaser;
+    }
+
+    public void setPorcentajeivaser(Double porcentajeivaser) {
+        this.porcentajeivaser = porcentajeivaser;
+    }
+    
 
     @XmlTransient
     public Collection<Detalleretencionivaef> getDetalleretencionivaefCollection() {
