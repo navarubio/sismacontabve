@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -32,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Tiporetencioniva.findByIdtiporetencioniva", query = "SELECT t FROM Tiporetencioniva t WHERE t.idtiporetencioniva = :idtiporetencioniva"),
     @NamedQuery(name = "Tiporetencioniva.findByPorcentajeiva", query = "SELECT t FROM Tiporetencioniva t WHERE t.porcentajeiva = :porcentajeiva")})
 public class Tiporetencioniva implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,8 +44,9 @@ public class Tiporetencioniva implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "porcentajeiva")
     private Double porcentajeiva;
-    @Column(name = "porcentajeivaserv")
-    private Double porcentajeivaser;
+    @JoinColumn(name = "idgrupo", referencedColumnName = "idgrupo")
+    @ManyToOne
+    private Grupo idgrupo;
     @OneToMany(mappedBy = "idtiporetencioniva")
     private Collection<Detalleretencionivaef> detalleretencionivaefCollection;
     @OneToMany(mappedBy = "idtiporetencioniva")
@@ -63,6 +67,14 @@ public class Tiporetencioniva implements Serializable {
         this.idtiporetencioniva = idtiporetencioniva;
     }
 
+    public Grupo getIdgrupo() {
+        return idgrupo;
+    }
+
+    public void setIdgrupo(Grupo idgrupo) {
+        this.idgrupo = idgrupo;
+    }
+    
     public Double getPorcentajeiva() {
         return porcentajeiva;
     }
@@ -70,15 +82,6 @@ public class Tiporetencioniva implements Serializable {
     public void setPorcentajeiva(Double porcentajeiva) {
         this.porcentajeiva = porcentajeiva;
     }
-
-    public Double getPorcentajeivaser() {
-        return porcentajeivaser;
-    }
-
-    public void setPorcentajeivaser(Double porcentajeivaser) {
-        this.porcentajeivaser = porcentajeivaser;
-    }
-    
 
     @XmlTransient
     public Collection<Detalleretencionivaef> getDetalleretencionivaefCollection() {
@@ -122,5 +125,5 @@ public class Tiporetencioniva implements Serializable {
     public String toString() {
         return "Modelo.Tiporetencioniva[ idtiporetencioniva=" + idtiporetencioniva + " ]";
     }
-    
+
 }

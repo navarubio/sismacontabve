@@ -43,16 +43,20 @@ public class Subgrupo implements Serializable {
     @Basic(optional = false)
     @Column(name = "idsubgrupo")
     private Integer idsubgrupo;
-    @Size(max = 50)
+    @Size(max = 200)
     @Column(name = "subgrupo")
     private String subgrupo;
+    @Column(name = "porcentajeretencion")
+    private Double procentajeretencion;
     @JoinColumn(name = "idgrupo", referencedColumnName = "idgrupo")
     @ManyToOne
     private Grupo idgrupo;
     @OneToMany(mappedBy = "idsubgrupo")
     private Collection<Articulo> articuloCollection;
-
-    public Subgrupo() {
+    @OneToMany(mappedBy = "idsubgrupo") 
+    private Collection<Detalleretencionislref> detalleretencionislrefCollection;
+    
+        public Subgrupo() {
     }
 
     public Subgrupo(Integer idsubgrupo) {
@@ -83,6 +87,14 @@ public class Subgrupo implements Serializable {
         this.idgrupo = idgrupo;
     }
 
+    public Double getProcentajeretencion() {
+        return procentajeretencion;
+    }
+
+    public void setProcentajeretencion(Double procentajeretencion) {
+        this.procentajeretencion = procentajeretencion;
+    }
+    
     @XmlTransient
     public Collection<Articulo> getArticuloCollection() {
         return articuloCollection;
@@ -126,4 +138,12 @@ public class Subgrupo implements Serializable {
         this.tiporetencionislrCollection = tiporetencionislrCollection;
     }
     
+    @XmlTransient
+    public Collection<Detalleretencionislref> getDetalleretencionislrefCollection() {
+        return detalleretencionislrefCollection;
+    }
+
+    public void setDetalleretencionislrefCollection(Collection<Detalleretencionislref> detalleretencionislrefCollection) {
+        this.detalleretencionislrefCollection = detalleretencionislrefCollection;
+    }
 }

@@ -61,6 +61,9 @@ public class Detalleretencionislref implements Serializable {
     @JoinColumn(name = "idcompra", referencedColumnName = "idcompra")
     @ManyToOne
     private Compra idcompra;
+    @JoinColumn(name = "idsubgrupo", referencedColumnName = "idsubgrupo")
+    @ManyToOne
+    private Subgrupo idsubgrupo;
 
     public Detalleretencionislref() {
     }
@@ -139,6 +142,14 @@ public class Detalleretencionislref implements Serializable {
 
     public void setIdcompra(Compra idcompra) {
         this.idcompra = idcompra;
+    }
+
+    public Subgrupo getIdsubgrupo() {
+        return idsubgrupo;
+    }
+
+    public void setIdsubgrupo(Subgrupo idsubgrupo) {
+        this.idsubgrupo = idsubgrupo;
     }
 
     @Override

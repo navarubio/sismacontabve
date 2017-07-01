@@ -46,6 +46,8 @@ public class Grupo implements Serializable {
     private Collection<Subgrupo> subgrupoCollection;
     @OneToMany(mappedBy = "idgrupo")
     private Collection<Articulo> articuloCollection;
+    @OneToMany(mappedBy = "idgrupo")
+    private Collection<Tiporetencioniva> tiporetencionivaCollection;
 
     public Grupo() {
     }
@@ -86,6 +88,15 @@ public class Grupo implements Serializable {
 
     public void setArticuloCollection(Collection<Articulo> articuloCollection) {
         this.articuloCollection = articuloCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Tiporetencioniva> getTiporetencionivaCollection() {
+        return tiporetencionivaCollection;
+    }
+
+    public void setTiporetencionivaCollection(Collection<Tiporetencioniva> tiporetencionivaCollection) {
+        this.tiporetencionivaCollection = tiporetencionivaCollection;
     }
 
     @Override

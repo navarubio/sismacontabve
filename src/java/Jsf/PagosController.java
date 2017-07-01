@@ -24,9 +24,11 @@ import Jpa.MovimientobancarioFacadeLocal;
 import Jpa.PagocompraFacadeLocal;
 import Jpa.RequerimientoFacadeLocal;
 import Jpa.RetencionivasriFacadeLocal;
+import Jpa.SubgrupoFacadeLocal;
 import Jpa.TipoconjuntoFacadeLocal;
 import Jpa.TipopagoFacadeLocal;
 import Jpa.TiporetencionislrFacadeLocal;
+import Jpa.TiporetencionivaFacadeLocal;
 import Modelo.Autorizacion;
 import Modelo.Auxiliarrequerimiento;
 import Modelo.Banco;
@@ -45,9 +47,11 @@ import Modelo.Movimientobancario;
 import Modelo.Pagocompra;
 import Modelo.Requerimiento;
 import Modelo.Retencionivasri;
+import Modelo.Subgrupo;
 import Modelo.Tipoconjunto;
 import Modelo.Tipopago;
 import Modelo.Tiporetencionislr;
+import Modelo.Tiporetencioniva;
 import Modelo.Usuario;
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -99,7 +103,7 @@ public class PagosController implements Serializable {
     @EJB
     private BancoFacadeLocal bancoEJB;
     @EJB
-    private TiporetencionislrFacadeLocal tiporetencionislrEJB;
+    private TiporetencionivaFacadeLocal tiporetencionivaEJB;
     @EJB
     private DetalleretencionivaefFacadeLocal detalleretencionivaefEJB;
     @EJB
@@ -114,6 +118,8 @@ public class PagosController implements Serializable {
     private MovimientobancarioFacadeLocal movimientoBancarioEJB;
     @EJB 
     private RetencionivasriFacadeLocal retencionesivasriEJB;
+    @EJB
+    private SubgrupoFacadeLocal subgrupoEJB;
 
     private Auxiliarrequerimiento auxiliarrequerimiento;
     private Compra compra;
@@ -140,6 +146,8 @@ public class PagosController implements Serializable {
     private int idCompra = 0;
     private List<Auxiliarrequerimiento> auxiliarrequerimientos;
     private List<Tiporetencionislr> tiporetencionesfiltradasPD = null;
+    private List<Subgrupo> subgruposfiltrados= null; 
+    private List<Tiporetencioniva> tiporetencionivafiltrada= null; 
     private List<Cuentabancaria> cuentasbancarias;
     private List<Tipopago> tipopagos;
     private List<Detallecompra> detallecompraFiltrados;
@@ -268,6 +276,14 @@ public class PagosController implements Serializable {
 
     public void setPagocompraver(Pagocompra pagocompraver) {
         this.pagocompraver = pagocompraver;
+    }
+
+    public List<Subgrupo> getSubgruposfiltrados() {
+        return subgruposfiltrados;
+    }
+
+    public void setSubgruposfiltrados(List<Subgrupo> subgruposfiltrados) {
+        this.subgruposfiltrados = subgruposfiltrados;
     }
 
     public Date getFechaactual() {
@@ -427,6 +443,14 @@ public class PagosController implements Serializable {
         this.retencionesivadisponible = retencionesivadisponible;
     }
 
+    public List<Tiporetencioniva> getTiporetencionivafiltrada() {
+        return tiporetencionivafiltrada;
+    }
+
+    public void setTiporetencionivafiltrada(List<Tiporetencioniva> tiporetencionivafiltrada) {
+        this.tiporetencionivafiltrada = tiporetencionivafiltrada;
+    }
+
     
 
     @PostConstruct
@@ -464,7 +488,7 @@ public class PagosController implements Serializable {
         detalleretencionislref.setIdtiporetencionislr(null);
 //        this.auxiliar = aux;
         detallecompraFiltrados = detallecompraAuxiliar();
-        tiporetencionesfiltradasPD = tiporetencionislrEJB.tiporetfiltradaPJyD(compra.getRifproveedor().getIdpersonalidad(), compra.getRifproveedor().getIdresidencia());
+//        tiporetencionesfiltradasPD = subgrupoEJB.tiporetfiltradaPJyD(compra.getRifproveedor().getIdpersonalidad(), compra.getRifproveedor().getIdresidencia());
         empresa = empresaEJB.devolverEmpresabase();
         double montocompra = compra.getTotal();
         double montoiva = compra.getIva();
@@ -495,6 +519,8 @@ public class PagosController implements Serializable {
                 tipocompra = 3;
             }
         }
+        subgruposfiltrados = subgrupoEJB.subgrupoxGrupo(tipocompra);
+        tiporetencionivafiltrada=tiporetencionivaEJB.tiporetencionivaxGrupo(tipocompra);
         if (empresa.getIdcontribuyente().getIdcontribuyente() == 3 || empresa.getIdcontribuyente().getIdcontribuyente() == 6 ) {
             if (montocompra >= montopisoretiva) {
                 if (tipocompra == 3) {
@@ -622,18 +648,18 @@ public class PagosController implements Serializable {
     }
 
     public void calcularislrretenido() {
-        int personal = compra.getRifproveedor().getIdpersonalidad().getIdpersonalidad();
-        int residenc = compra.getRifproveedor().getIdresidencia().getIdresidencia();
-        int tiposervicio = detalleretencionislref.getIdtiporetencionislr().getIdsubgrupo().getIdsubgrupo();
-        Tiporetencionislr tiporetencion = tiporetencionislrEJB.retencionislrFiltrada(personal, residenc, tiposervicio);
+//        int personal = compra.getRifproveedor().getIdpersonalidad().getIdpersonalidad();
+//        int residenc = compra.getRifproveedor().getIdresidencia().getIdresidencia();
+//        int tiposervicio = detalleretencionislref.getIdsubgrupo().getIdsubgrupo();
+//        Tiporetencionislr tiporetencion = tiporetencionislrEJB.retencionislrFiltrada(personal, residenc, tiposervicio);
         double bimponibletotal = compra.getSubtotal();
-        double porcentbimponible = tiporetencion.getPorcentajebimponible();
-        double porcentislr = tiporetencion.getPorcentajeretencion();
-        double sustraendo = tiporetencion.getSustraendo();
-        islrretenido = (((((porcentbimponible * bimponibletotal) / 100) * porcentislr) / 100) - sustraendo);
+//        double porcentbimponible = tiporetencion.getPorcentajebimponible();
+        double porcentislr = detalleretencionislref.getIdsubgrupo().getProcentajeretencion();
+//        double sustraendo = tiporetencion.getSustraendo();
+        islrretenido = ((bimponibletotal * porcentislr) / 100);
         detalleretencionislref.setProcentajeretencion(porcentislr);
         detalleretencionislref.setTotalislrretenido(islrretenido);
-        detalleretencionislref.setSustraendo(sustraendo);
+        detalleretencionislref.setSustraendo(0.0);
     }
 
     public void registrar() {
@@ -764,8 +790,6 @@ public class PagosController implements Serializable {
                 detalleretencionivaef.setTotalivaretenido(ivaretenido);
                 detalleretencionivaef.setTotalivacompra(compra.getIva());
                 detalleretencionivaefEJB.create(detalleretencionivaef);
-            }
-            if (detallecompra.getCodigo().getIdgrupo().getIdgrupo() == 2) {
                 detalleretencionislref.setIdcompra(compra);
                 detalleretencionislref.setTotalcompra(compra.getTotal());
                 detalleretencionislref.setBimponible(compra.getSubtotal());
