@@ -761,7 +761,7 @@ public class PagosController implements Serializable {
                 correo = "COMPRA NRO: " + compra.getIdcompra()
                         + "  FECHA: " + fechapag
                         + "  PROVEEDOR: " + compra.getRifproveedor().getRazonsocial()
-                        + "  RIF: " + compra.getRifproveedor().getRifproveedor()
+                        + "  RUC: " + compra.getRifproveedor().getRifproveedor()
                         + "  TIPO PAGO: " + pagocompra.getIdtipopago().getTipopago()
                         + "  BANCO: " + pagocompra.getIdcuentabancaria().getIdbanco().getNombrebanco()
                         + "  TOTAL: " + formatearnumero.format(pagocompra.getTotalpago())
@@ -783,13 +783,15 @@ public class PagosController implements Serializable {
 
     public void grabarRetencion() {
         try {
-            if (detalleretencionivaef.getTotalivaretenido() >= 1) {
+            if (detalleretencionivaef.getTotalivaretenido() > 0) {
                 detalleretencionivaef.setIdcompra(compra);
                 detalleretencionivaef.setBimponible(compra.getSubtotal());
                 detalleretencionivaef.setTotalcompra(compra.getTotal());
                 detalleretencionivaef.setTotalivaretenido(ivaretenido);
                 detalleretencionivaef.setTotalivacompra(compra.getIva());
                 detalleretencionivaefEJB.create(detalleretencionivaef);
+            }
+            if (detalleretencionislref.getTotalislrretenido()>0){
                 detalleretencionislref.setIdcompra(compra);
                 detalleretencionislref.setTotalcompra(compra.getTotal());
                 detalleretencionislref.setBimponible(compra.getSubtotal());

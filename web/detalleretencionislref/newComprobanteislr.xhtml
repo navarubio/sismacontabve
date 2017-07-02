@@ -75,7 +75,7 @@
                                         <f:facet name="header">
                                             <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle_concepto}"/>
                                         </f:facet>
-                                        <h:outputText value="#{ret.idtiporetencionislr.descripcionservicio}"/>
+                                        <h:outputText value="#{ret.idsubgrupo.subgrupo}"/>
                                     </p:column>
                                     <p:column style="text-align: right">
                                         <f:facet name="header">
@@ -101,12 +101,6 @@
                                     </p:column>   
                                     <p:column style="text-align: right">
                                         <f:facet name="header">
-                                            <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle_sustraendo}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{ret.sustraendo}"/>
-                                    </p:column>
-                                    <p:column style="text-align: right">
-                                        <f:facet name="header">
                                             <h:outputText value="#{bundletributos.ListDetalleretencionislrefTitle_totalislrretenido}"/>
                                         </f:facet>
                                         <h:outputText value="#{ret.totalislrretenido}">
@@ -120,7 +114,7 @@
                                     </p:column>
                                     <p:columnGroup type="footer">
                                         <p:row>
-                                            <p:column colspan="4" style="text-align:right" footerText="TOTALES GENERALES" />
+                                            <p:column colspan="5" style="text-align:right" footerText="TOTALES GENERALES" />
                                             <p:column style="text-align: right"  footerText="#{comprobantesislrController.totalgeneral}"/> 
                                             <p:column style="text-align: right"  footerText="#{comprobantesislrController.totalbaseimponible}" />
                                             <p:column style="text-align: right"  footerText="#{null}" />
