@@ -9,6 +9,7 @@ import Jpa.ArticuloFacadeLocal;
 import Jpa.CajaFacadeLocal;
 import Jpa.ClienteFacadeLocal;
 import Jpa.DetallefacturaFacadeLocal;
+import Jpa.EmpresaFacadeLocal;
 import Jpa.EstatuscontableFacade;
 import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaventaFacadeLocal;
@@ -21,6 +22,7 @@ import Modelo.Articulo;
 import Modelo.Caja;
 import Modelo.Cliente;
 import Modelo.Detallefactura;
+import Modelo.Empresa;
 import Modelo.Estatuscontable;
 import Modelo.Factura;
 import Modelo.Maestromovimiento;
@@ -73,6 +75,9 @@ public class FacturasController implements Serializable {
     private TipoconjuntoFacadeLocal tipoconjuntoEJB;
     @EJB
     private RequerimientoFacadeLocal requerimientoEJB;
+    @EJB
+    private EmpresaFacadeLocal empresaEJB;
+    private Empresa empresa;
 
     private Detallefactura detallefactura;
     //private RequerimientosController reque = new RequerimientosController();
@@ -272,7 +277,7 @@ public class FacturasController implements Serializable {
             maestromovi.setIdtipoconjunto(tipoconjunto);
             maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
             maestromovimientoEJB.create(maestromovi);
-
+            String material = " ";
             for (Requerimiento rq : listarequerimiento) {
                 Articulo arti = rq.getCodigo();
                 detalle.setNumerofact(codfactura);
@@ -282,6 +287,8 @@ public class FacturasController implements Serializable {
                 detalle.setSubtotal(rq.getSubtotal());
                 detalle.setTributoiva(rq.getTributoiva());
                 detalle.setTotal(rq.getTotal());
+                material = material + detalle.getCodigo().getDescripcion() + 
+                         " CANTIDAD: " + detalle.getUnidades()+ " "+detalle.getCodigo().getIdmedida().getMedida()+" PRECIO: "+ detalle.getPrecioventa()+"  ";
                 detallefacturaEJB.create(detalle);
             }
             String subject;
@@ -294,12 +301,13 @@ public class FacturasController implements Serializable {
                     + "  FECHA: " + fechafactu
                     + "  CLIENTE: " + factura.getRifcliente().getRazonsocial()
                     + "  RIF: " + factura.getRifcliente().getRifcliente()
+                    + "  MATERIAL: " + material
                     + "  SUBTOTAL: " + formatearnumero.format(factura.getBimponiblefact())
                     + "  IVA: " + formatearnumero.format(factura.getIvafact())
                     + "  TOTAL: " + formatearnumero.format(factura.getTotalgeneral())
                     + "  OBSERVACIONES: " + factura.getObservacionesfact();
 
-            subject = "Emisión de Factura N° " + ultimafactura;
+            subject = empresa.getNombrecomercial()+ "Emisión de Factura N° " + ultimafactura;
             enviomail = new envioCorreo(correo, subject);
             enviomail.start();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "La Factura se registro exitosamente con el numero " + facturaEJB.ultimafacturaformat()));

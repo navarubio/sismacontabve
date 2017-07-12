@@ -3,10 +3,12 @@ package Jsf;
 import Jpa.ArticuloFacadeLocal;
 import Jpa.AuxiliarrequerimientoFacadeLocal;
 import Jpa.DepartamentoFacadeLocal;
+import Jpa.EmpresaFacadeLocal;
 import Jpa.RequerimientoFacadeLocal;
 import Modelo.Articulo;
 import Modelo.Auxiliarrequerimiento;
 import Modelo.Departamento;
+import Modelo.Empresa;
 import Modelo.Estatusrequerimiento;
 import Modelo.Proveedor;
 import Modelo.Requerimiento;
@@ -38,7 +40,9 @@ public class RequerimientosController implements Serializable {
     private AuxiliarrequerimientoFacadeLocal auxiliarrequerimientoEJB;
     @EJB
     private DepartamentoFacadeLocal departamentoEJB;
-
+    @EJB
+    private EmpresaFacadeLocal empresaEJB;
+    private Empresa empresa;
     private List<Articulo> articulos = null;
     private List<Requerimiento> requerimientos = null;
     private List<Requerimiento> requerimientosfiltrados;
@@ -400,6 +404,8 @@ public class RequerimientosController implements Serializable {
 
             codAux = requerimientoEJB.ultimoInsertado();
             String subject;
+            String material = " ";
+            
             for (Requerimiento rq : listarequerimiento) {
                 Articulo arti = rq.getCodigo();
                 requer.setIdauxiliarrequerimiento(codAux);
@@ -409,15 +415,19 @@ public class RequerimientosController implements Serializable {
                 requer.setSubtotal(rq.getSubtotal());
                 requer.setTributoiva(rq.getTributoiva());
                 requer.setTotal(rq.getTotal());
+                material = material + requer.getCodigo().getDescripcion() + 
+                       " CANTIDAD: " + requer.getCantidad()+ " PRECIO: "+requer.getPcosto() +"  ";
                 requerimientoEJB.create(requer);
             }
             String fechareque = formateador.format(auxrequer.getFecharequerimiento());
+            empresa= empresaEJB.devolverEmpresabase();
             correo = "CODIGO: REQ-" + auxrequer.getIdauxiliarrequerimiento()
                     + "  SOLICITANTE: " + auxrequer.getIdusuario().getNombre()
                     + "  DEPARTAMENTO: " + auxrequer.getIddepartamento()
                     + "  FECHA: " + fechareque
+                    + "  MATERIAL O SERVICIO: "+material
                     + "  SOLICITUD: " + auxrequer.getDescripcion();
-            subject = "Carga de Requerimiento REQ-" + requer.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento();
+            subject = empresa.getNombrecomercial()+" Requerimiento REQ-" + requer.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento();
             enviomail = new envioCorreo(correo, subject);
             enviomail.start();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Requerimiento fue Almacenado Codigo " + requer.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento(), ""));

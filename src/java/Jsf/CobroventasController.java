@@ -12,29 +12,37 @@ import Jpa.DetallefacturaFacadeLocal;
 import Jpa.DetalleretencionislrspFacadeLocal;
 import Jpa.DetalleretencionivaefFacadeLocal;
 import Jpa.DetalleretencionivaspFacadeLocal;
+import Jpa.EmpresaFacadeLocal;
 import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaventaFacadeLocal;
 import Jpa.FacturaFacadeLocal;
 import Jpa.MaestromovimientoFacadeLocal;
 import Jpa.MovimientobancarioFacadeLocal;
+import Jpa.RetencionivasriFacadeLocal;
+import Jpa.SubgrupoFacadeLocal;
 import Jpa.TipoconjuntoFacadeLocal;
 import Jpa.TipopagoFacadeLocal;
 import Jpa.TiporetencionislrFacadeLocal;
+import Jpa.TiporetencionivaFacadeLocal;
 import Modelo.Banco;
 import Modelo.Cobroventa;
 import Modelo.Cuentabancaria;
 import Modelo.Detallefactura;
 import Modelo.Detalleretencionislrsp;
 import Modelo.Detalleretencionivasp;
+import Modelo.Empresa;
 import Modelo.Estatuscontable;
 import Modelo.Estatusfacturaventa;
 import Modelo.Factura;
 import Modelo.Maestromovimiento;
 import Modelo.Movimientobancario;
 import Modelo.Pagocompra;
+import Modelo.Retencionivasri;
+import Modelo.Subgrupo;
 import Modelo.Tipoconjunto;
 import Modelo.Tipopago;
 import Modelo.Tiporetencionislr;
+import Modelo.Tiporetencioniva;
 import java.sql.SQLException;
 import java.sql.SQLException;
 import java.io.Serializable;
@@ -91,6 +99,14 @@ public class CobroventasController implements Serializable {
     private DetalleretencionislrspFacadeLocal detalleretencionislrefEJB;
     @EJB
     private MovimientobancarioFacadeLocal movimientoBancarioEJB;
+    @EJB
+    private SubgrupoFacadeLocal subgrupoEJB;
+    @EJB
+    private TiporetencionivaFacadeLocal tiporetencionivaEJB;
+    @EJB
+    private EmpresaFacadeLocal empresaEJB;
+    @EJB 
+    private RetencionivasriFacadeLocal retencionesivasriEJB;
 
     private Factura factura;
     private int numeroFact = 0;
@@ -107,6 +123,8 @@ public class CobroventasController implements Serializable {
     private List<Detallefactura> detallesfactura;
     private List<Detallefactura> detallesfacturafiltrados;
     private List<Cuentabancaria> cuentasbancarias;
+    private List<Subgrupo> subgruposfiltrados= null;     
+    private List<Tiporetencioniva> tiporetencionivafiltrada= null;
     private double saldocuenta;
     private List<Tipopago> tipopagos;
     private List<Cobroventa> cobrosefectuados;
@@ -114,6 +132,7 @@ public class CobroventasController implements Serializable {
     private List<Banco> bancos;
     private int edad = 0;
     private String mensaje;
+    private Empresa empresa;
     private Date fechaactual = new Date();
     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
@@ -183,12 +202,28 @@ public class CobroventasController implements Serializable {
         this.visualizar = visualizar;
     }
 
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
     public List<Tipopago> getTipopagos() {
         return tipopagos;
     }
 
     public void setTipopagos(List<Tipopago> tipopagos) {
         this.tipopagos = tipopagos;
+    }
+    
+        public List<Subgrupo> getSubgruposfiltrados() {
+        return subgruposfiltrados;
+    }
+
+    public void setSubgruposfiltrados(List<Subgrupo> subgruposfiltrados) {
+        this.subgruposfiltrados = subgruposfiltrados;
     }
 
     public List<Tiporetencionislr> getTiporetencionesfiltradasPD() {
@@ -341,6 +376,14 @@ public class CobroventasController implements Serializable {
     public void saldoactual() {
         saldocuenta = cuentabancariaEJB.saldoencuenta(lstCuentasSelecc);
     }
+    
+    public List<Tiporetencioniva> getTiporetencionivafiltrada() {
+        return tiporetencionivafiltrada;
+    }
+
+    public void setTiporetencionivafiltrada(List<Tiporetencioniva> tiporetencionivafiltrada) {
+        this.tiporetencionivafiltrada = tiporetencionivafiltrada;
+    }
 
     public void asignar(Factura factura) {
         this.tipocompra = 1;
@@ -355,7 +398,8 @@ public class CobroventasController implements Serializable {
         this.ivaretenido = 0;
         this.islrretenido = 0;
         double totalfactu = factura.getTotalgeneral();
-        montopisoretiva = (20 * 300);
+        empresa = empresaEJB.devolverEmpresabase();
+        montopisoretiva = (0);
         montopisoretislr = 0;
         detalleretencionivasp.setTotalivaretenido(0.0);
         detalleretencionislrsp.setTotalislrretenido(0.0);
@@ -364,6 +408,15 @@ public class CobroventasController implements Serializable {
         detalleretencionivasp.setIdtiporetencioniva(null);
         detalleretencionislrsp.setIdtiporetencionislr(null);
         tiporetencionesfiltradasPD = tiporetencionislrEJB.tiporetfiltradaPJD();
+        
+        int contribcliente=factura.getRifcliente().getIdcontribuyente().getIdcontribuyente();
+        int contriempresa=empresa.getIdcontribuyente().getIdcontribuyente();
+        String codigoret=contribcliente+""+contriempresa;
+        int codigoretencion=Integer.parseInt(codigoret);
+        Retencionivasri retencionprevista=retencionesivasriEJB.buscarcoPorcentajes(codigoretencion);
+        double retencionivabienes=retencionprevista.getPorcentajeivabienes();
+//        retencionesivadisponible.add(retencionprevista);
+        double retencionivaservicios=retencionprevista.getPorcentajeivaservicios();
 
         int tipo1;
         for (Detallefactura tipoc : detallesfacturafiltrados) {
@@ -376,14 +429,16 @@ public class CobroventasController implements Serializable {
                 tipocompra = 3;
             }
         }
+        subgruposfiltrados = subgrupoEJB.subgrupoxGrupo(tipocompra);
+        tiporetencionivafiltrada=tiporetencionivaEJB.tiporetencionivaxGrupo(tipocompra);
 
-        if (factura.getRifcliente().getIdcontribuyente().getIdcontribuyente() == 2) {
+        if (retencionivabienes==0 ) {
             if (totalfactu >= montopisoretiva) {
                 if (tipocompra == 3) {
                     visualizar = 5;
                 } else if (tipocompra == 1) {
                     if (montoiva > 0) {
-                        visualizar = 1;
+                        visualizar = 2;
                     } else {
                         visualizar = 5;
                     }
@@ -402,7 +457,7 @@ public class CobroventasController implements Serializable {
                         }
                     }
                 }
-            } else {
+            }else {
                 if (tipocompra == 2) {
                     visualizar = 3;
                 } else if (tipocompra == 3) {

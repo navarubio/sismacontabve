@@ -36,7 +36,7 @@ public class envioCorreo implements Runnable {
 
     String correo="sismacontab@hotmail.com";
     String contrasena="evita09**"; 
-    String dest = "rodriguezprietoca@gmail.com;navarubio@hotmail.com";
+    String dest = "rodriguezprietoca@gmail.com;abelgranda@hotmail.es";
     String subject="Carga de Requerimiento";
     String nom, msn;
     String rout="";
