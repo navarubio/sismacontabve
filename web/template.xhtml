@@ -58,6 +58,48 @@
                                 <p:menuitem value="Otros Ingresos" outcome="/otroingreso/List.xhtml"/>
                             </p:submenu> 
                         </p:submenu>
+                        <p:submenu label="#{bundle.OperaPica}" icon="ui-icon-bookmark">
+                            <p:submenu label="#{bundle.Produccion}" icon="ui-icon-calculator">
+                                <p:menuitem value="Produccion Día" outcome="/produccionpicadora/newProduccion.xhtml" />                                
+                                <p:menuitem value="Detalles de Produccion" outcome="/detalleproduccionpicadora/List"/>
+                            </p:submenu>
+                            <p:submenu label="#{bundle.Inventarios}" icon="ui-icon-calculator">
+                                <p:menuitem value="Inventario en Patio" outcome="/inventariopicadora/List" />
+                                <p:menuitem value="Movimiento Inventario" outcome="/movimientoinventariopicadora/List"/>
+                            </p:submenu>
+                            <p:submenu label="#{bundle.Despachos}" icon="ui-icon-calculator">
+                                <p:menuitem value="Nota de Carga" outcome="/notacarga/newNotacarga.xhtml" />
+                                <p:menuitem value="Notas Emitidas" outcome="/notacarga/List" />
+                                <p:menuitem value="Detalles NotaCarga" outcome="/detallenotacarga/List"/>
+                                <p:menuitem value="Despachos" outcome="/despachopicadora/List" />
+                                <p:menuitem value="Camiones" outcome="/camion/List"/>
+                                <p:menuitem value="Choferes" outcome="/chofer/List"/>
+                                <p:menuitem value="Despachadores" outcome="/despachador/List"/>                                
+                            </p:submenu>
+                            <p:submenu label="#{bundle.Maquinaria}" icon="ui-icon-calculator">
+                                <p:menuitem value="Maquinaria" outcome="/maquinariapicadora/List" />
+                                <p:menuitem value="Hrs Maquinaria" outcome="/usomaquinariapicadora/newHrsmaquinaria.xhtml"/>
+                                <p:menuitem value="Detalles Hrs" outcome="/usomaquinariapicadora/List"/>
+                                <p:menuitem value="Distribucion uso Maquinaria" outcome="/distribucionusomaquinaria/List"/>
+                                <p:menuitem value="Tipo Maquinaria" outcome="/tipomaquinaria/List"/>
+                                <p:menuitem value="Tipo Trabajo Maquinaria" outcome="/tipotrabajomaquinaria/List"/>
+                            </p:submenu>
+                            <p:menuitem value="Nominas" outcome="/login.xhtml" />  
+                        </p:submenu>                            
+                        <p:submenu label="#{bundle.Opera}" icon="ui-icon-cart">
+                            <p:submenu label="#{bundle.Inventarios}" icon="ui-icon-calculator">
+                                <p:menuitem value="Materia Prima" outcome="/articulo/List.xhtml"/>                                
+                                <p:menuitem value="Insumos" outcome="/articulo/List.xhtml"/>
+                            </p:submenu>
+                            <p:submenu label="#{bundle.Despachos}" icon="ui-icon-calculator">
+                                <p:menuitem value="Programados" outcome="/articulo/List.xhtml"/>                                
+                                <p:menuitem value="Efectuados" outcome="/articulo/List.xhtml"/>
+                            </p:submenu>
+                            <p:menuitem value="Laboratorio" outcome="/articulo/List.xhtml" />                              
+                            <p:menuitem value="Tabla Dosificadora" outcome="/articulo/List.xhtml" />                             
+                            <p:menuitem value="Calculos Resistencia" outcome="/articulo/List.xhtml" />  
+                            <p:menuitem value="Plan Mantenimiento" outcome="/auxiliarrequerimiento/List.xhtml" />  
+                        </p:submenu>    
                         <p:submenu label="#{bundle.Contab}" icon="ui-icon-calculator">
                             <p:submenu label="#{bundletributos.Tributos}" icon="ui-icon-document">
                                 <p:menuitem value="Retenciones IVA efectuadas" outcome="/detalleretencionivaef/List.xhtml"/>
@@ -74,8 +116,8 @@
                                 <p:menuitem value="Personalidadjuridica" outcome="/personalidadjuridica/List.xhtml" />
                             </p:submenu>
                             <p:submenu label="#{bundle.Contab}" icon="ui-icon-calculator">
-                                <p:menuitem value="Contabilizar" outcome="/maestromovimiento/List.xhtml" />
-                                <p:menuitem value="Asientos" outcome="/detallelibrodiario/List.xhtml" />
+                                <p:menuitem value="Contabilizar Maestro" outcome="/maestromovimiento/List.xhtml" />
+                                <p:menuitem value="Asientos Internos" outcome="/librodiario/asientoespecifico.xhtml" />
                                 <p:menuitem value="Libro Diario" outcome="/librodiario/List.xhtml" /> 
                                 <p:menuitem value="Detalles Diario" outcome="/detallelibrodiario/List.xhtml" />                                 
                                 <p:menuitem value="Libro Mayor" outcome="/libromayor/List.xhtml" /> 
