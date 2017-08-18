@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="java" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ddba77e-51be-47ac-8b24-c3354df35f82">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ddba77e-51be-47ac-8b24-c3354df35f82">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="148"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT
@@ -19,10 +19,20 @@
      contribuyente.`idcontribuyente` AS contribuyente_idcontribuyente,
      contribuyente.`contribuyente` AS contribuyente_contribuyente,
      personalidadjuridica.`idpersonalidad` AS personalidadjuridica_idpersonalidad,
-     personalidadjuridica.`personalidad` AS personalidadjuridica_personalidad
+     personalidadjuridica.`personalidad` AS personalidadjuridica_personalidad,
+     empresa.`rif` AS empresa_rif,
+     empresa.`razonsocial` AS empresa_razonsocial,
+     empresa.`nombrecomercial` AS empresa_nombrecomercial,
+     empresa.`direccionfiscal` AS empresa_direccionfiscal,
+     empresa.`telefonos` AS empresa_telefonos,
+     empresa.`presidente` AS empresa_presidente,
+     empresa.`administrador` AS empresa_administrador,
+     empresa.`contador` AS empresa_contador,
+     empresa.`idcontribuyente` AS empresa_idcontribuyente
 FROM
      `contribuyente` contribuyente INNER JOIN `cliente` cliente ON contribuyente.`idcontribuyente` = cliente.`idcontribuyente`
-     INNER JOIN `personalidadjuridica` personalidadjuridica ON cliente.`idpersonalidad` = personalidadjuridica.`idpersonalidad`]]>
+     INNER JOIN `personalidadjuridica` personalidadjuridica ON cliente.`idpersonalidad` = personalidadjuridica.`idpersonalidad`,
+     `empresa` empresa]]>
 	</queryString>
 	<field name="cliente_rifcliente" class="java.lang.String"/>
 	<field name="cliente_razonsocial" class="java.lang.String"/>
@@ -30,8 +40,24 @@ FROM
 	<field name="cliente_telefonos" class="java.lang.String"/>
 	<field name="cliente_correo" class="java.lang.String"/>
 	<field name="cliente_fechainscripcion" class="java.sql.Date"/>
-	<field name="personalidadjuridica_personalidad" class="java.lang.String"/>
+	<field name="cliente_personacontacto" class="java.lang.String"/>
+	<field name="cliente_telefonocontacto" class="java.lang.String"/>
+	<field name="cliente_idpersonalidad" class="java.lang.Integer"/>
+	<field name="cliente_idcontribuyente" class="java.lang.Integer"/>
+	<field name="cliente_idusuario" class="java.lang.Integer"/>
+	<field name="contribuyente_idcontribuyente" class="java.lang.Integer"/>
 	<field name="contribuyente_contribuyente" class="java.lang.String"/>
+	<field name="personalidadjuridica_idpersonalidad" class="java.lang.Integer"/>
+	<field name="personalidadjuridica_personalidad" class="java.lang.String"/>
+	<field name="empresa_rif" class="java.lang.String"/>
+	<field name="empresa_razonsocial" class="java.lang.String"/>
+	<field name="empresa_nombrecomercial" class="java.lang.String"/>
+	<field name="empresa_direccionfiscal" class="java.lang.String"/>
+	<field name="empresa_telefonos" class="java.lang.String"/>
+	<field name="empresa_presidente" class="java.lang.String"/>
+	<field name="empresa_administrador" class="java.lang.String"/>
+	<field name="empresa_contador" class="java.lang.String"/>
+	<field name="empresa_idcontribuyente" class="java.lang.Integer"/>
 	<group name="cliente_razonsocial">
 		<groupExpression><![CDATA[$F{cliente_razonsocial}]]></groupExpression>
 	</group>
@@ -40,30 +66,37 @@ FROM
 	</background>
 	<title>
 		<band height="44" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="227" height="13" uuid="1a7b2ecc-6866-457e-969d-177a2086da99"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA["INVERSIONES PEDREAÑEZ, C.A".]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="13" width="100" height="12" uuid="5bced9d0-4f76-44cb-a41f-2dbec357a268"/>
-				<textElement>
-					<font size="8" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[RIF J-26720565-9]]></text>
-			</staticText>
 			<image>
 				<reportElement x="634" y="-3" width="118" height="47" uuid="753d1aab-962a-4e5f-8f4f-aa1d3635fa60"/>
 				<imageExpression><![CDATA["D:\\APLICACIONES JAVA SE - EE\\SistemaINPECA\\Inpeca\\web\\resources\\images\\LogoInpeca.jpg"]]></imageExpression>
 			</image>
-			<staticText>
-				<reportElement x="0" y="25" width="335" height="12" uuid="bdbcbfdf-13f1-43c7-ad3b-a8080e5a1e53"/>
+			<textField>
+				<reportElement x="0" y="0" width="398" height="13" uuid="896d65e6-6f90-418a-b9b0-071046e43d7d"/>
 				<textElement>
-					<font size="8" isItalic="false"/>
+					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[AV. 3H Entre calles 78 y 79 Residencias Republica PB Local 01 Maracaibo Estado Zulia]]></text>
+				<textFieldExpression><![CDATA[$F{empresa_razonsocial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="33" y="13" width="180" height="13" uuid="96a2935f-8b95-43fb-9dd8-504b5b17b92a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_rif}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="26" width="609" height="18" uuid="79093ba3-cbd8-4091-98d7-a73e01e9964b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_direccionfiscal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="14" width="32" height="12" uuid="52601909-7c4e-422f-9e44-825c89b94b79"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC:]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -85,7 +118,7 @@ FROM
 				<textElement textAlignment="Center">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[RIF]]></text>
+				<text><![CDATA[RUC]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="54" y="4" width="100" height="20" uuid="c3d1b701-c5d1-4c06-aafb-3efc4b5915ef"/>

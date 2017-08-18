@@ -10,6 +10,7 @@ import Modelo.Auxiliarrequerimiento;
 import Modelo.Departamento;
 import Modelo.Empresa;
 import Modelo.Estatusrequerimiento;
+import Modelo.Inventariopicadora;
 import Modelo.Proveedor;
 import Modelo.Requerimiento;
 import Modelo.Usuario;
@@ -333,9 +334,24 @@ public class RequerimientosController implements Serializable {
             id = 0;
         }
         visualizar=0;
-
     }
 
+    public String getTotalrequeriminto() {
+        double total = 0;
+        double totalimpuesto = 0;
+        double totalbaseimp = 0;
+ 
+        for(Requerimiento inventa : listarequerimiento) {
+            totalbaseimp += inventa.getSubtotal();
+            totalimpuesto += inventa.getTributoiva();
+            total += inventa.getTotal();
+        }
+        totalsubtotal = totalbaseimp;
+        totaliva= totalimpuesto;
+        totalgeneral = total;
+        return new DecimalFormat("###,###.##").format(total);
+    }
+    
     public double totaltotal() {
         double montotgeneral = 0;
         double montotiva = 0;

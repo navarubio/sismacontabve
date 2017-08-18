@@ -206,12 +206,12 @@
                                 </h:panelGrid>                                
                             </p:fieldset>
                         </h:panelGrid>
-                        <h:panelGrid columns="1" width="950">
+                        <h:panelGrid columns="1" width="1200">
                             <p:fieldset legend="Articulos a Comprar">
                                 <p:panel id="panelart"     >
                                     <p:dataTable id="listado" value="#{comprasController.requerimientosFiltrados}"
                                                  var="req" emptyMessage="No hay articulos para mostrar"  >
-                                        <p:column style="width:8%"  headerText="Codigo Articulo">
+                                        <p:column style="width:12%"  headerText="Codigo Articulo">
                                             <h:outputText value="#{req.codigo.codigo}" />
                                         </p:column>
                                         <p:column style="width:35%"  headerText="Descripcion del Articulo">
@@ -243,9 +243,9 @@
                                         <p:columnGroup type="footer">
                                             <p:row>
                                                 <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
-                                                <p:column style="text-align: right"  footerText="#{comprasController.compraautorizada.subtotal}" /> 
-                                                <p:column style="text-align: right"  footerText="#{comprasController.compraautorizada.iva}" />
-                                                <p:column style="text-align: right"  footerText="#{comprasController.compraautorizada.total}" />                                        
+                                                <p:column style="text-align: right"  footerText="$ #{comprasController.totalsubtotalform}" /> 
+                                                <p:column style="text-align: right"  footerText="$ #{comprasController.totalivaform}" />
+                                                <p:column style="text-align: right"  footerText="$ #{comprasController.totalgeneralform}" />                                        
                                             </p:row>
                                         </p:columnGroup>       
                                     </p:dataTable> 

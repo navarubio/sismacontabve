@@ -41,7 +41,7 @@ public class Empresa implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 12)
+    @Size(min = 1, max = 15)
     @Column(name = "rif")
     private String rif;
     @Size(max = 100)
@@ -65,6 +65,8 @@ public class Empresa implements Serializable {
     @Size(max = 150)
     @Column(name = "contador")
     private String contador;
+    @Column(name = "montoparaautorizacion")
+    private Double montoparaautorizacion;
     @JoinColumn(name = "idcontribuyente", referencedColumnName = "idcontribuyente")
     @ManyToOne
     private Contribuyente idcontribuyente;
@@ -149,7 +151,14 @@ public class Empresa implements Serializable {
         this.idcontribuyente = idcontribuyente;
     }
 
-  
+    public Double getMontoparaautorizacion() {
+        return montoparaautorizacion;
+    }
+
+    public void setMontoparaautorizacion(Double montoparaautorizacion) {
+        this.montoparaautorizacion = montoparaautorizacion;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

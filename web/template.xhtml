@@ -84,7 +84,7 @@
                                 <p:menuitem value="Tipo Maquinaria" outcome="/tipomaquinaria/List"/>
                                 <p:menuitem value="Tipo Trabajo Maquinaria" outcome="/tipotrabajomaquinaria/List"/>
                             </p:submenu>
-                            <p:menuitem value="Nominas" outcome="/login.xhtml" />  
+                            <p:menuitem value="Plan Mantenimiento" outcome="/login.xhtml" />  
                         </p:submenu>                            
                         <p:submenu label="#{bundle.Opera}" icon="ui-icon-cart">
                             <p:submenu label="#{bundle.Inventarios}" icon="ui-icon-calculator">
@@ -92,10 +92,16 @@
                                 <p:menuitem value="Insumos" outcome="/articulo/List.xhtml"/>
                             </p:submenu>
                             <p:submenu label="#{bundle.Despachos}" icon="ui-icon-calculator">
-                                <p:menuitem value="Programados" outcome="/articulo/List.xhtml"/>                                
-                                <p:menuitem value="Efectuados" outcome="/articulo/List.xhtml"/>
+                                <p:menuitem value="Nota de Carga" outcome="/notacarga/newNotacarga.xhtml" />
+                                <p:menuitem value="Notas Emitidas" outcome="/notacarga/List" />
+                                <p:menuitem value="Detalles NotaCarga" outcome="/detallenotacarga/List"/>
+                                <p:menuitem value="Despachos" outcome="/despachopicadora/List" />
+                                <p:menuitem value="Camiones" outcome="/camion/List"/>
+                                <p:menuitem value="Choferes" outcome="/chofer/List"/>
+                                <p:menuitem value="Despachadores" outcome="/despachador/List"/>                                
                             </p:submenu>
                             <p:menuitem value="Laboratorio" outcome="/articulo/List.xhtml" />                              
+                            <p:menuitem value="Estructura Costos" outcome="/articulo/List.xhtml" />                             
                             <p:menuitem value="Tabla Dosificadora" outcome="/articulo/List.xhtml" />                             
                             <p:menuitem value="Calculos Resistencia" outcome="/articulo/List.xhtml" />  
                             <p:menuitem value="Plan Mantenimiento" outcome="/auxiliarrequerimiento/List.xhtml" />  

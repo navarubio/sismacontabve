@@ -6,6 +6,7 @@ import Jpa.AuxiliarrequerimientoFacadeLocal;
 import Jpa.CompraFacadeLocal;
 import Jpa.DepartamentoFacadeLocal;
 import Jpa.DetallecompraFacadeLocal;
+import Jpa.EmpresaFacadeLocal;
 import Jpa.EstatuscontableFacadeLocal;
 import Jpa.EstatusfacturaFacadeLocal;
 import Jpa.EstatusrequerimientoFacadeLocal;
@@ -19,6 +20,7 @@ import Modelo.Auxiliarrequerimiento;
 import Modelo.Detallecompra;
 import Modelo.Compra;
 import Modelo.Departamento;
+import Modelo.Empresa;
 import Modelo.Estatusfactura;
 import Modelo.Estatusrequerimiento;
 import Modelo.Maestromovimiento;
@@ -28,6 +30,7 @@ import Modelo.Tipoconjunto;
 import Modelo.Usuario;
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -72,6 +75,8 @@ public class ComprasController implements Serializable {
     private TipoconjuntoFacadeLocal tipoconjuntoEJB;
     @EJB
     private EstatuscontableFacadeLocal estatuscontableEJB;
+    @EJB
+    private EmpresaFacadeLocal empresaEJB;
 
     private Auxiliarrequerimiento auxiliarrequerimiento;
     private Usuario usa;
@@ -79,6 +84,7 @@ public class ComprasController implements Serializable {
     private Compra codCompra;
     private Autorizacion codAutoriza;
     private Compra compraautorizada;
+    private Empresa empresa;
     private Tipoconjunto tipoconjunto = null;
     private int varAutoriza = 0;
     private double pcosto = 0;
@@ -89,7 +95,10 @@ public class ComprasController implements Serializable {
     private double totalgeneral = 0;
     private double totaliva = 0;
     private double totalsubtotal = 0;
-
+    private String totalgeneralform;
+    private String totalivaform;
+    private String totalsubtotalform;
+    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     private List<Requerimiento> listarequerimiento = new ArrayList();
 
     @Inject
@@ -173,6 +182,14 @@ public class ComprasController implements Serializable {
         this.listarequerimiento = listarequerimiento;
     }
 
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+    
     private List<Auxiliarrequerimiento> auxiliarrequerimientos;
     private List<Requerimiento> requerimientos;
     private List<Proveedor> proveedores;
@@ -319,6 +336,30 @@ public class ComprasController implements Serializable {
         this.compraspagadas = compraspagadas;
     }
 
+    public String getTotalgeneralform() {
+        return totalgeneralform;
+    }
+
+    public void setTotalgeneralform(String totalgeneralform) {
+        this.totalgeneralform = totalgeneralform;
+    }
+
+    public String getTotalivaform() {
+        return totalivaform;
+    }
+
+    public void setTotalivaform(String totalivaform) {
+        this.totalivaform = totalivaform;
+    }
+
+    public String getTotalsubtotalform() {
+        return totalsubtotalform;
+    }
+
+    public void setTotalsubtotalform(String totalsubtotalform) {
+        this.totalsubtotalform = totalsubtotalform;
+    }
+
     @PostConstruct
     public void init() {
         auxiliarrequerimientos = auxiliarrequerimientoEJB.findAll();
@@ -330,6 +371,8 @@ public class ComprasController implements Serializable {
         compraspagadas = compraEJB.buscarcomprasPagadas();
         compra.setFechaorden(fechaactual);
         varAutoriza = 0;
+        listarequerimiento.clear();
+
 
 //        this.auxiliarrequerimiento=requerimientosController.getAuxrequer();
     }
@@ -347,6 +390,7 @@ public class ComprasController implements Serializable {
         requerimientosFiltrados = requerimientosAuxiliar();
         listarequerimiento=requerimientosFiltrados;
         this.compra.setIdauxiliarrequerimiento(auxiliar);
+        empresa = empresaEJB.devolverEmpresabase();
         totaltotal();
     }
 
@@ -489,9 +533,10 @@ public class ComprasController implements Serializable {
             compra.setIdusuario(us);
             Estatusfactura statusfactu = null;
             int tipo = 0;
-            if (compra.getTotal() <= 50000) {
+            //Para fijar monto minimo de de aprobacion para compras directas
+            if (compra.getTotal() <= empresa.getMontoparaautorizacion()) {
                 tipo = 0;
-            } else if (compra.getTotal() > 50000) {
+            } else if (compra.getTotal() > empresa.getMontoparaautorizacion()) {
                 tipo = 1;
             }
             statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
@@ -634,5 +679,19 @@ public class ComprasController implements Serializable {
         totalgeneral = montotgeneral;
         totaliva = montotiva;
         totalsubtotal = montotsubtotal;
+        totalgeneralform= formatearnumero.format(totalgeneral);
+        totalivaform= formatearnumero.format(totaliva);
+        totalsubtotalform= formatearnumero.format(totalsubtotal);
+        
+    }
+    
+     public void eliminar(Requerimiento requerim) {
+        requerimientoEJB.remove(requerim);
+        listarequerimiento.remove(requerim);
+        totaltotal();
+        auxiliarrequerimiento.setSubtotal(totalsubtotal);
+        auxiliarrequerimiento.setMontoiva(totaliva);
+        auxiliarrequerimiento.setMontototal(totalgeneral);
+        auxiliarrequerimientoEJB.edit(auxiliarrequerimiento);
     }
 }

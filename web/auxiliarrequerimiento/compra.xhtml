@@ -82,7 +82,6 @@
                                     <p:ajax event="change" listener="#{comprasController.buscarArticulo()}" update="precio"/>                              
 
                                     <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
-                                    <f:selectItems value="#{articuloController.itemsAvailableSelectOne}"/>
                                     <f:selectItems value="#{comprasController.articulos}"
                                                    var="idarticuloItem"
                                                    itemLabel="#{idarticuloItem.descripcion}"  itemValue="#{idarticuloItem}" /> 
@@ -99,7 +98,7 @@
                     <p:panel id="panelart"  >
                         <p:dataTable id="listado" value="#{comprasController.listarequerimiento}"
                                      var="req" emptyMessage="No hay articulos para mostrar" >
-                            <p:column style="width:8%"  headerText="Codigo Articulo">
+                            <p:column style="width:10%"  headerText="Codigo Articulo">
                                 <h:outputText value="#{req.codigo.codigo}" />
                             </p:column>
                             <p:column style="width:35%"  headerText="Descripcion del Articulo">
@@ -133,12 +132,15 @@
                                     <h:graphicImage library="images" name="desktop.png" width="30" height="30" alt="Editar Articulo"/> 
                                 </p:commandLink>
                             </p:column>
+                            <p:column style="width:10%" headerText="Eliminar" >
+                                <p:commandLink value="Eliminar" actionListener="#{comprasController.eliminar(req)}" styleClass="text-ouputfact" update="listado"  />
+                            </p:column>
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
-                                    <p:column style="text-align: right"  footerText="#{comprasController.totalsubtotal}" /> 
-                                    <p:column style="text-align: right"  footerText="#{comprasController.totaliva}" />
-                                    <p:column style="text-align: right"  footerText="#{comprasController.totalgeneral}" />                                        
+                                    <p:column style="text-align: right"  footerText="$ #{comprasController.totalsubtotalform}" /> 
+                                    <p:column style="text-align: right"  footerText="$ #{comprasController.totalivaform}" />
+                                    <p:column style="text-align: right"  footerText="$ #{comprasController.totalgeneralform}" />                                        
                                 </p:row>
                             </p:columnGroup>       
                         </p:dataTable> 
