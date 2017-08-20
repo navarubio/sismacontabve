@@ -104,6 +104,9 @@ public class FacturasController implements Serializable {
     private List<Requerimiento> listarequerimiento = new ArrayList();
     private int id = 0;
     private List<Requerimiento> requerimientos = null;
+    private String totalgeneralform;
+    private String totalivaform;
+    private String totalsubtotalform;
 
     @Inject
     private Factura factura;
@@ -235,6 +238,30 @@ public class FacturasController implements Serializable {
         this.requerimientos = requerimientos;
     }
 
+    public String getTotalgeneralform() {
+        return totalgeneralform;
+    }
+
+    public void setTotalgeneralform(String totalgeneralform) {
+        this.totalgeneralform = totalgeneralform;
+    }
+
+    public String getTotalivaform() {
+        return totalivaform;
+    }
+
+    public void setTotalivaform(String totalivaform) {
+        this.totalivaform = totalivaform;
+    }
+
+    public String getTotalsubtotalform() {
+        return totalsubtotalform;
+    }
+
+    public void setTotalsubtotalform(String totalsubtotalform) {
+        this.totalsubtotalform = totalsubtotalform;
+    }
+    
     @PostConstruct
     public void init() {
         clientes = clienteEJB.findAll();
@@ -356,11 +383,27 @@ public class FacturasController implements Serializable {
             pventa = 0;
             cantidad = 0;
             requer.setCodigo(null);
+            totaltotales();
 //            requer.setCodigo(null);
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Cantidad en 0.0"));
         }
 
+    }
+    
+    public void totaltotales() {
+        double montotgeneral = 0;
+        double montotiva = 0;
+        double montotsubtotal = 0;
+
+        for (Requerimiento requeri : listarequerimiento) {
+            montotgeneral += requeri.getTotal();
+            montotiva += requeri.getTributoiva();
+            montotsubtotal += requeri.getSubtotal();
+        }
+        totalgeneralform = formatearnumero.format(montotgeneral);
+        totalivaform = formatearnumero.format(montotiva);
+        totalsubtotalform = formatearnumero.format(montotsubtotal);
     }
 
     public double totaltotal() {
