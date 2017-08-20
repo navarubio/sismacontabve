@@ -12,10 +12,8 @@
             <h:form id="BancoCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{bancoController.selected != null}">
-                        <p:outputLabel value="#{bundlebanco.CreateBancoLabel_idbanco}" for="idbanco" />
-                        <p:inputText id="idbanco" value="#{bancoController.selected.idbanco}" title="#{bundlebanco.CreateBancoTitle_idbanco}" required="true" requiredMessage="#{bundlebanco.CreateBancoRequiredMessage_idbanco}"/>
                         <p:outputLabel value="#{bundlebanco.CreateBancoLabel_nombrebanco}" for="nombrebanco" />
-                        <p:inputText id="nombrebanco" value="#{bancoController.selected.nombrebanco}" title="#{bundlebanco.CreateBancoTitle_nombrebanco}" />
+                        <p:inputText id="nombrebanco" value="#{bancoController.selected.nombrebanco}" title="#{bundlebanco.CreateBancoTitle_nombrebanco}" size="50" />
                         <p:outputLabel value="#{bundlebanco.CreateBancoLabel_telefonos}" for="telefonos" />
                         <p:inputText id="telefonos" value="#{bancoController.selected.telefonos}" title="#{bundlebanco.CreateBancoTitle_telefonos}" />
                     </p:panelGrid>

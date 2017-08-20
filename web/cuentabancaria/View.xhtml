@@ -19,9 +19,9 @@
                         <h:outputText value="#{bundlebanco.ViewCuentabancariaLabel_saldo}"/>
                         <h:outputText value="#{cuentabancariaController.selected.saldo}" title="#{bundlebanco.ViewCuentabancariaTitle_saldo}"/>
                         <h:outputText value="#{bundlebanco.ViewCuentabancariaLabel_idbanco}"/>
-                        <h:outputText value="#{cuentabancariaController.selected.idbanco}" title="#{bundlebanco.ViewCuentabancariaTitle_idbanco}"/>
+                        <h:outputText value="#{cuentabancariaController.selected.idbanco.nombrebanco}" title="#{bundlebanco.ViewCuentabancariaTitle_idbanco}"/>
                         <h:outputText value="#{bundlebanco.ViewCuentabancariaLabel_idplandecuenta}"/>
-                        <h:outputText value="#{cuentabancariaController.selected.idplandecuenta}" title="#{bundlebanco.ViewCuentabancariaTitle_idplandecuenta}"/>
+                        <h:outputText value="#{cuentabancariaController.selected.idplandecuenta.idplandecuenta} #{cuentabancariaController.selected.idplandecuenta.descripcioncuenta}" title="#{bundlebanco.ViewCuentabancariaTitle_idplandecuenta}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundlebanco.Close}" onclick="CuentabancariaViewDialog.hide()"/>
                 </h:panelGroup>

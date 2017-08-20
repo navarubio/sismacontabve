@@ -159,6 +159,12 @@ ui-custompanelgrid5, .ui-custompanelgrid5 td {
     color:blue;
     font-size: 110% !important;
 }
+#formulario .text-ouputfactura{
+    font-weight:  bold;
+    color:red;
+    font-size: 110% !important;
+}
+
 .text-cantidad{
     font-weight: bold;
     color:greenyellow;

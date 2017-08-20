@@ -173,6 +173,9 @@ public class PagosController implements Serializable {
     private double islrretenido;
     private double montoapagar;
     private double totalretenido;
+    private String totalgeneralform;
+    private String totalivaform;
+    private String totalsubtotalform;
     ArrayList<Detallecompra> lista = new ArrayList();
      private Tipoconjunto tipoconjunto = null;
 
@@ -451,7 +454,30 @@ public class PagosController implements Serializable {
         this.tiporetencionivafiltrada = tiporetencionivafiltrada;
     }
 
-    
+    public String getTotalgeneralform() {
+        return totalgeneralform;
+    }
+
+    public void setTotalgeneralform(String totalgeneralform) {
+        this.totalgeneralform = totalgeneralform;
+    }
+
+    public String getTotalivaform() {
+        return totalivaform;
+    }
+
+    public void setTotalivaform(String totalivaform) {
+        this.totalivaform = totalivaform;
+    }
+
+    public String getTotalsubtotalform() {
+        return totalsubtotalform;
+    }
+
+    public void setTotalsubtotalform(String totalsubtotalform) {
+        this.totalsubtotalform = totalsubtotalform;
+    }
+
 
     @PostConstruct
     public void init() {
@@ -492,7 +518,9 @@ public class PagosController implements Serializable {
         empresa = empresaEJB.devolverEmpresabase();
         double montocompra = compra.getTotal();
         double montoiva = compra.getIva();
-        
+        this.totalgeneralform=formatearnumero.format(compra.getTotal());
+        this.totalivaform=formatearnumero.format(compra.getIva());
+        this.totalsubtotalform=formatearnumero.format(compra.getSubtotal()); 
         // OJO CON ESTAS VARIABLES PARA CUANDO CAMBIE LA UNIDAD TRIBUTARIA CAMBIARLAS
         montopisoretiva = (20 * 300);
         montopisoretislr = 25000;
@@ -764,11 +792,11 @@ public class PagosController implements Serializable {
                         + "  RUC: " + compra.getRifproveedor().getRifproveedor()
                         + "  FORMA PAGO: " + pagocompra.getIdtipopago().getTipopago()
                         + "  BANCO: " + pagocompra.getIdcuentabancaria().getIdbanco().getNombrebanco()
-                        + "  TOTAL: " + formatearnumero.format(pagocompra.getTotalpago())
-                        + "  SALDO PENDIENTE: " + formatearnumero.format(pagocompra.getSaldopendiente())
+                        + "  TOTAL: $" + formatearnumero.format(pagocompra.getTotalpago())
+                        + "  SALDO PENDIENTE: $" + formatearnumero.format(pagocompra.getSaldopendiente())
                         + "  OBSERVACIONES: " + pagocompra.getObservacionespago();
 
-                subject = empresa.getNombrecomercial()+ " Emisión de Pago N° " + pagocompra.getIdpagocompra();
+                subject = empresa.getNombrecomercial()+ " Pago N° " + pagocompra.getIdpagocompra();
                 enviomail = new envioCorreo(correo, subject);
                 enviomail.start();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Pago fue Almacenado"));

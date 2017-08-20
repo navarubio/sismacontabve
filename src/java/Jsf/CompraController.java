@@ -14,6 +14,7 @@ import Modelo.Pagocompra;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -54,8 +55,13 @@ public class CompraController implements Serializable {
     private Compra selected;
     private Compra compraseleccionada;
     private PagosController pagoscontroller;
+    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
+    private String totalgeneralform;
+    private String totalivaform;
+    private String totalsubtotalform;
     @Inject
     private Compra compraefectuada;
+    
     public CompraController() {
     }
 
@@ -68,7 +74,8 @@ public class CompraController implements Serializable {
 
     public void setSelected(Compra selected) {
         this.selected = selected;
-        this.compraefectuada=selected;
+        this.compraefectuada=selected;      
+        
         if (selected != null) {
             asignar();
         }
@@ -102,6 +109,10 @@ public class CompraController implements Serializable {
     public void asignar() {
         detallecompraFiltrados = detallecompraAuxiliar();
         pagosporidcompra = pagocompraEJB.buscarpago(selected);
+        
+        this.totalgeneralform=formatearnumero.format(selected.getTotal());
+        this.totalivaform=formatearnumero.format(selected.getIva());
+        this.totalsubtotalform=formatearnumero.format(selected.getSubtotal());  
     }
 
     protected void setEmbeddableKeys() {
@@ -178,6 +189,30 @@ public class CompraController implements Serializable {
         List<Detallecompra> listado = null;
         listado = detallecompraEJB.buscardetallecompra(selected);
         return listado;
+    }
+
+    public String getTotalgeneralform() {
+        return totalgeneralform;
+    }
+
+    public void setTotalgeneralform(String totalgeneralform) {
+        this.totalgeneralform = totalgeneralform;
+    }
+
+    public String getTotalivaform() {
+        return totalivaform;
+    }
+
+    public void setTotalivaform(String totalivaform) {
+        this.totalivaform = totalivaform;
+    }
+
+    public String getTotalsubtotalform() {
+        return totalsubtotalform;
+    }
+
+    public void setTotalsubtotalform(String totalsubtotalform) {
+        this.totalsubtotalform = totalsubtotalform;
     }
 
     public List<Pagocompra> pagosFiltrados(Compra compra) {

@@ -500,6 +500,7 @@ public class ComprasController implements Serializable {
         this.auxiliar = compraselec.getIdauxiliarrequerimiento();
         auxiliarrequerimiento = auxiliar;
         requerimientosFiltrados = requerimientosAuxiliar();
+        listarequerimiento = requerimientosFiltrados;
         compraautorizada = compraselec;
         totaltotal();
     }

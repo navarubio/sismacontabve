@@ -12,10 +12,8 @@
             <h:form id="BancoEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{bancoController.selected != null}">
-                        <p:outputLabel value="#{bundlebanco.EditBancoLabel_idbanco}" for="idbanco" />
-                        <p:inputText id="idbanco" value="#{bancoController.selected.idbanco}" title="#{bundlebanco.EditBancoTitle_idbanco}" required="true" requiredMessage="#{bundlebanco.EditBancoRequiredMessage_idbanco}"/>
                         <p:outputLabel value="#{bundlebanco.EditBancoLabel_nombrebanco}" for="nombrebanco" />
-                        <p:inputText id="nombrebanco" value="#{bancoController.selected.nombrebanco}" title="#{bundlebanco.EditBancoTitle_nombrebanco}" />
+                        <p:inputText id="nombrebanco" value="#{bancoController.selected.nombrebanco}" title="#{bundlebanco.EditBancoTitle_nombrebanco}" size="50" />
                         <p:outputLabel value="#{bundlebanco.EditBancoLabel_telefonos}" for="telefonos" />
                         <p:inputText id="telefonos" value="#{bancoController.selected.telefonos}" title="#{bundlebanco.EditBancoTitle_telefonos}" />
                     </p:panelGrid>
