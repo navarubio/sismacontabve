@@ -93,12 +93,12 @@
                                 <p:panelGrid styleClass="ui-custompanelgrid2" columns="4">
                                     <p:outputLabel for="usua1" value="Usuario" styleClass="text-ouput"/>
                                     <p:outputLabel id="usua1" value="#{pagosController.usuario.nombre}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="numerofact" value="Numero Factura" styleClass="text-ouput"/>
-                                    <p:inputText id="numerofact" label="Numero de Factura" size ="10" value="#{pagosController.compra.numerofactura}" required="true" />
+                                    <p:outputLabel for="numerofact" value="Factura" styleClass="text-ouput"/>
+                                    <p:inputText id="numerofact" label="Factura" size ="10" value="#{pagosController.compra.numerofactura}" required="true" />
                                     <p:outputLabel for="depto1" value="Departamento" styleClass="text-ouput"/>
                                     <p:outputLabel id="depto1" value="#{pagosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="numerocontrol" value="Numero Control" styleClass="text-ouput"/>
-                                    <p:inputText id="numerocontrol" label="Numero de Control" size ="10" value="#{pagosController.compra.controlfactura}" />
+                                    <p:outputLabel for="numerocontrol" value="Control" styleClass="text-ouput"/>
+                                    <p:inputText id="numerocontrol" label="Control" size ="10" value="#{pagosController.compra.controlfactura}" />
                                     <p:outputLabel for="montof" value="Monto Factura" styleClass="text-ouput"/>
                                     <p:outputLabel id="montof" value="#{pagosController.compra.total}" styleClass="text-ouputfactura" >
                                         <f:convertNumber type="currency" currencySymbol="$ " />
@@ -121,10 +121,10 @@
                                     <p:outputLabel id="montop" value="#{pagosController.pagocompra.totalpago}" styleClass="text-ouputfactura" >
                                         <f:convertNumber type="currency" currencySymbol="$ " />
                                     </p:outputLabel>
-                                    <p:outputLabel value="Porción de Pago" styleClass="text-ouput"/>
+                                    <p:outputLabel value="Porción Pago" styleClass="text-ouput"/>
                                     <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
                                         <p:outputLabel for="console" value="" />
-                                        <p:selectOneRadio id="console" value="#{pagosController.mensaje}" required="true" >
+                                        <p:selectOneRadio id="console" value="#{pagosController.mensaje}" >
                                             <f:selectItem itemLabel="Total" itemValue="total"/>
                                             <f:selectItem itemLabel="Parcial" itemValue="parcial"/>
                                             <p:ajax event="valueChange" 
@@ -134,7 +134,7 @@
                                         </p:selectOneRadio>                                        
                                     </h:panelGrid>                             
                                     <p:outputLabel for="fechacompra1" value="Fecha Factura" styleClass="text-ouput" />
-                                    <p:calendar size="10"  locale="es" id="fechacompra1" pattern="dd/MM/yyyy" value="#{pagosController.compra.fechafactura}" showOn="button" navigator="true" required="true"/>
+                                    <p:calendar size="6"  locale="es" id="fechacompra1" pattern="dd/MM/yyyy" value="#{pagosController.compra.fechafactura}" showOn="button" navigator="true" required="true" />
                                     <h:panelGroup id="contenedorLabel" >
                                         <p:outputLabel value="MONTO ABONAR" for="observacion" styleClass="text-ouput" 
                                                        rendered="#{pagosController.formapago>=2 ? true:false}"/>
@@ -146,7 +146,7 @@
                                         </p:inputText>
                                     </h:panelGroup>
                                     <p:outputLabel for="fechapago" value="Fecha Pago" styleClass="text-ouput" />
-                                    <p:calendar size="10" locale="es" id="fechapago" pattern="dd/MM/yyyy" value="#{pagosController.pagocompra.fechapago}" showOn="button" navigator="true" required="true"/>
+                                    <p:calendar size="6" locale="es" id="fechapago" pattern="dd/MM/yyyy" value="#{pagosController.pagocompra.fechapago}" showOn="button" navigator="true" required="true"/>
                                     <p:outputLabel for="tipopag"  value="Forma de Pago" styleClass="text-ouput"/>
                                     <p:selectOneMenu id="tipopag" value="#{pagosController.pagocompra.idtipopago}" converter="omnifaces.SelectItemsConverter" > 
                                         <!--f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/-->

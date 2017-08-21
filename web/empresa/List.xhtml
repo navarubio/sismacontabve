@@ -75,6 +75,15 @@
                             </f:facet>
                             <h:outputText value="#{item.contador}"/>
                         </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleEmpresa.ListEmpresaTitle_montoparaautorizacion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montoparaautorizacion}">
+                                <f:convertNumber type="currency" currencySymbol="$ " />
+                            </h:outputText>
+                        </p:column>
+
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundleEmpresa.ListEmpresaTitle_idcontribuyente}"/>

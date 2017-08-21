@@ -33,7 +33,7 @@
                                 <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouput"/>
                                 <p:inputText id="telefono" label="Telefonos" size="40" value="#{requerimientosController.auxrequer.telefonoproveedor}"/>
                                 <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" styleClass="text-ouput" />
-                                <p:calendar id="fechasolicitud" locale="es" pattern="dd/MM/yyyy" value="#{requerimientosController.auxrequer.fecharequerimiento}" showOn="button" navigator="true" required="true" requiredMessage="Debe elegir una fecha para su requerimiento"/>
+                                <p:calendar id="fechasolicitud" locale="es" pattern="dd/MM/yyyy" value="#{requerimientosController.auxrequer.fecharequerimiento}" showOn="button" navigator="true" required="true" requiredMessage="Debe elegir una fecha para su requerimiento" size="8"/>
                                 <p:outputLabel for="resena" value="Breve Reseña" styleClass="text-ouput"/>
                                 <p:inputTextarea id="resena"  rows="3" cols="50" label="breve resena" value="#{requerimientosController.auxrequer.descripcion}" required="true" requiredMessage="Se requiere anexar una reseña para este requerimiento" />
                             </p:panelGrid>

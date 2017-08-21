@@ -28,6 +28,8 @@
                         <p:inputText id="administrador" value="#{empresaController.selected.administrador}" title="#{bundleEmpresa.CreateEmpresaTitle_administrador}" />
                         <p:outputLabel value="#{bundleEmpresa.CreateEmpresaLabel_contador}" for="contador" />
                         <p:inputText id="contador" value="#{empresaController.selected.contador}" title="#{bundleEmpresa.CreateEmpresaTitle_contador}" />
+                        <p:outputLabel value="#{bundleEmpresa.CreateEmpresaLabel_montoparaautorizacion}" for="montoautoriza" />
+                        <p:inputText id="montoautoriza" value="#{empresaController.selected.montoparaautorizacion}" title="#{bundleEmpresa.CreateEmpresaTitle_montoparaautorizacion}" />
                         <p:outputLabel value="#{bundleEmpresa.CreateEmpresaLabel_idcontribuyente}" for="idcontribuyente" />
                         <p:selectOneMenu id="idcontribuyente" value="#{empresaController.selected.idcontribuyente}" >
                             <f:selectItems value="#{contribuyenteController.itemsAvailableSelectOne}"
