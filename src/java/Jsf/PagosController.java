@@ -522,8 +522,8 @@ public class PagosController implements Serializable {
         this.totalivaform=formatearnumero.format(compra.getIva());
         this.totalsubtotalform=formatearnumero.format(compra.getSubtotal()); 
         // OJO CON ESTAS VARIABLES PARA CUANDO CAMBIE LA UNIDAD TRIBUTARIA CAMBIARLAS
-        montopisoretiva = (20 * 300);
-        montopisoretislr = 25000;
+        montopisoretiva = (0.1);
+        montopisoretislr = 0.1;
         //////////////////////////////////////////////////////////////////////////////
         
         int personaj = compra.getRifproveedor().getIdpersonalidad().getIdpersonalidad();

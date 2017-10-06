@@ -106,6 +106,24 @@
                             <p:menuitem value="Calculos Resistencia" outcome="/articulo/List.xhtml" />  
                             <p:menuitem value="Plan Mantenimiento" outcome="/auxiliarrequerimiento/List.xhtml" />  
                         </p:submenu>    
+                        <p:submenu label="#{bundle.Prefab}" icon="ui-icon-cart">
+                            <p:submenu label="#{bundle.Inventarios}" icon="ui-icon-calculator">
+                                <p:menuitem value="Materia Prima" outcome="/articulo/List.xhtml"/>                                
+                                <p:menuitem value="Productos para Venta" outcome="/articulo/List.xhtml"/>
+                                <p:menuitem value="Insumos" outcome="/articulo/List.xhtml"/>                                
+                            </p:submenu>
+                            <p:submenu label="#{bundle.Despachos}" icon="ui-icon-calculator">
+                                <p:menuitem value="Nota de Carga" outcome="/notacarga/newNotacarga.xhtml" />
+                                <p:menuitem value="Notas Emitidas" outcome="/notacarga/List" />
+                                <p:menuitem value="Detalles NotaCarga" outcome="/detallenotacarga/List"/>
+                                <p:menuitem value="Despachos" outcome="/despachopicadora/List" />
+                                <p:menuitem value="Despachadores" outcome="/despachador/List"/>                                
+                            </p:submenu>
+                            <p:menuitem value="Estructura Costos" outcome="/articulo/List.xhtml" />                             
+                            <p:menuitem value="Tabla Dosificadora" outcome="/articulo/List.xhtml" />                             
+                            <p:menuitem value="Plan Mantenimiento" outcome="/auxiliarrequerimiento/List.xhtml" />  
+                        </p:submenu>    
+
                         <p:submenu label="#{bundle.Contab}" icon="ui-icon-calculator">
                             <p:submenu label="#{bundletributos.Tributos}" icon="ui-icon-document">
                                 <p:menuitem value="Retenciones IVA efectuadas" outcome="/detalleretencionivaef/List.xhtml"/>
