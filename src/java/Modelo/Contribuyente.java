@@ -48,7 +48,7 @@ public class Contribuyente implements Serializable {
     @Basic(optional = false)
     @Column(name = "idcontribuyente")
     private Integer idcontribuyente;
-    @Size(max = 15)
+    @Size(max = 50)
     @Column(name = "contribuyente")
     private String contribuyente;
     @OneToMany(mappedBy = "idcontribuyente")

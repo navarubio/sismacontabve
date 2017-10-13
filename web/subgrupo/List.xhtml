@@ -11,17 +11,23 @@
 
         <ui:define name="title">
             <h:outputText value="#{bundle.ListSubgrupoTitle}"></h:outputText>
+            <h:outputStylesheet library="css" name="index.css" />
         </ui:define>
 
         <ui:define name="body">
             <h:form id="SubgrupoListForm">
+                <div id="imag2">
+                    <img src="../resources/images/LogoInpeca.jpg" width="165" height="58" alt="Logo Inpeca"/>
+                </div>  
+                <img src="../resources/images/blockdevice.png" width="70" height="70" alt="Clientes" align="right" />
+
                 <p:panel header="#{bundle.ListSubgrupoTitle}">
-                    <p:dataTable id="datalist" value="#{subgrupoController.items}" var="item" style="width:700px"
+                    <p:dataTable id="datalist" value="#{subgrupoController.items}" var="item" style="width:1200px"
                                  selectionMode="single" selection="#{subgrupoController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idsubgrupo}"
-                                 rows="20"
-                                 rowsPerPageTemplate="20,30,40,50"
+                                 rows="30"
+                                 rowsPerPageTemplate="30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -39,7 +45,7 @@
                             </f:facet>
                             <h:outputText value="#{item.idgrupo.grupo}"/>
                         </p:column>
-                        <p:column width="400">
+                        <p:column width="800">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListSubgrupoTitle_subgrupo}"/>
                             </f:facet>

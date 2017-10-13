@@ -16,7 +16,7 @@
         <ui:define name="body">
             <h:form id="TipoconjuntoListForm">
                 <p:panel header="#{bundlecontabilidad.ListTipoconjuntoTitle}">
-                    <p:dataTable id="datalist" value="#{tipoconjuntoController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{tipoconjuntoController.items}" var="item" style="width:500px"
                                  selectionMode="single" selection="#{tipoconjuntoController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idtipoconjunto}"

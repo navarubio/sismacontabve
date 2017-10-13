@@ -77,7 +77,8 @@ public class FacturasController implements Serializable {
     private RequerimientoFacadeLocal requerimientoEJB;
     @EJB
     private EmpresaFacadeLocal empresaEJB;
-    private Empresa empresa;
+    
+ 
 
     private Detallefactura detallefactura;
     //private RequerimientosController reque = new RequerimientosController();
@@ -120,6 +121,8 @@ public class FacturasController implements Serializable {
     private Requerimiento requer;
     @Inject
     private Articulo articulo;
+    @Inject
+    private Empresa empresa;        
 
     Numeroaletras numletras = new Numeroaletras();
 
@@ -268,6 +271,8 @@ public class FacturasController implements Serializable {
         articulos = articuloEJB.findAll();
         factura.setFecha(fechaactual);
         listarequerimiento.clear();
+        number=0;
+        empresa= empresaEJB.devolverEmpresabase();
     }
 
     public void registrarventa() {
@@ -279,6 +284,7 @@ public class FacturasController implements Serializable {
 
         try {
             Usuario usua = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            factura.setNumerofact(number);
             factura.setIdusuario(usua);
             factura.setRifcliente(cliente);
             factura.setBimponiblefact(totalbaseimponible());
@@ -334,7 +340,7 @@ public class FacturasController implements Serializable {
                     + "  TOTAL: " + formatearnumero.format(factura.getTotalgeneral())
                     + "  OBSERVACIONES: " + factura.getObservacionesfact();
 
-            subject = empresa.getNombrecomercial()+ "Emisión de Factura N° " + ultimafactura;
+            subject = empresa.getNombrecomercial()+ " Factura N° " + ultimafactura;
             enviomail = new envioCorreo(correo, subject);
             enviomail.start();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "La Factura se registro exitosamente con el numero " + facturaEJB.ultimafacturaformat()));
@@ -355,6 +361,7 @@ public class FacturasController implements Serializable {
     public String devolversiguientefactura() {
         String siguiente;
         siguiente = facturaEJB.siguientefacturaformat();
+        number = Integer.parseInt(siguiente);
         return siguiente;
     }
 

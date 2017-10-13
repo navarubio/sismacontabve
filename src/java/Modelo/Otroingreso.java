@@ -69,9 +69,6 @@ public class Otroingreso implements Serializable {
     @JoinColumn(name = "idtipoingreso", referencedColumnName = "idtipoingreso")
     @ManyToOne
     private Tipoingreso idtipoingreso;
-    @JoinColumn(name = "idcuentaemisora", referencedColumnName = "idcuentaemisora")
-    @ManyToOne
-    private Cuentabancaria idcuentaemisora;
 
     public Otroingreso() {
     }
@@ -144,13 +141,6 @@ public class Otroingreso implements Serializable {
         this.idtipoingreso = idtipoingreso;
     }
 
-    public Cuentabancaria getIdcuentaemisora() {
-        return idcuentaemisora;
-    }
-
-    public void setIdcuentaemisora(Cuentabancaria idcuentaemisora) {
-        this.idcuentaemisora = idcuentaemisora;
-    }
 
     @Override
     public int hashCode() {

@@ -15,7 +15,7 @@
                         <p:outputLabel value="#{bundle.EditContribuyenteLabel_idcontribuyente}" for="idcontribuyente" />
                         <p:inputText id="idcontribuyente" value="#{contribuyenteController.selected.idcontribuyente}" title="#{bundle.EditContribuyenteTitle_idcontribuyente}" required="true" requiredMessage="#{bundle.EditContribuyenteRequiredMessage_idcontribuyente}"/>
                         <p:outputLabel value="#{bundle.EditContribuyenteLabel_contribuyente}" for="contribuyente" />
-                        <p:inputText id="contribuyente" value="#{contribuyenteController.selected.contribuyente}" title="#{bundle.EditContribuyenteTitle_contribuyente}" />
+                        <p:inputText id="contribuyente" value="#{contribuyenteController.selected.contribuyente}" title="#{bundle.EditContribuyenteTitle_contribuyente}" size="50" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{contribuyenteController.update}" value="#{bundle.Save}" update="display,:ContribuyenteListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ContribuyenteEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ContribuyenteEditDialog.hide()"/>
