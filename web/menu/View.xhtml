@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MenuViewDlg" widgetVar="MenuViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlemenu.ViewMenuTitle}">
+            <h:form id="MenuViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{menuController.selected != null}">
+                        <h:outputText value="#{bundlemenu.ViewMenuLabel_idmenu}"/>
+                        <h:outputText value="#{menuController.selected.idmenu}" title="#{bundlemenu.ViewMenuTitle_idmenu}"/>
+                        <h:outputText value="#{bundlemenu.ViewMenuLabel_descripcion}"/>
+                        <h:outputText value="#{menuController.selected.descripcion}" title="#{bundlemenu.ViewMenuTitle_descripcion}"/>
+                        <h:outputText value="#{bundlemenu.ViewMenuLabel_url}"/>
+                        <h:outputText value="#{menuController.selected.url}" title="#{bundlemenu.ViewMenuTitle_url}"/>
+                        <h:outputText value="#{bundlemenu.ViewMenuLabel_icon}"/>
+                        <h:outputText value="#{menuController.selected.icon}" title="#{bundlemenu.ViewMenuTitle_icon}"/>
+                        <h:outputText value="#{bundlemenu.ViewMenuLabel_estado}"/>
+                        <p:selectBooleanCheckbox value="#{menuController.selected.estado}" disabled="true"/>
+                        <h:outputText value="#{bundlemenu.ViewMenuLabel_idsubmenu}"/>
+                        <h:outputText value="#{menuController.selected.idsubmenu}" title="#{bundlemenu.ViewMenuTitle_idsubmenu}"/>
+                        <h:outputText value="#{bundlemenu.ViewMenuLabel_idrol}"/>
+                        <h:outputText value="#{menuController.selected.idrol}" title="#{bundlemenu.ViewMenuTitle_idrol}"/>
+                        <h:outputText value="#{bundlemenu.ViewMenuLabel_idtipoitemmenu}"/>
+                        <h:outputText value="#{menuController.selected.idtipoitemmenu}" title="#{bundlemenu.ViewMenuTitle_idtipoitemmenu}"/>
+                        <h:outputText value="#{bundlemenu.ViewMenuLabel_iddepartamento}"/>
+                        <h:outputText value="#{menuController.selected.iddepartamento}" title="#{bundlemenu.ViewMenuTitle_iddepartamento}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlemenu.Close}" onclick="MenuViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

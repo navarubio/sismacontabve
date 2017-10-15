@@ -46,6 +46,8 @@ public class Departamento implements Serializable {
     private Collection<Auxiliarrequerimiento> auxiliarrequerimientoCollection;
     @OneToMany(mappedBy = "iddepartamento")
     private Collection<Usuario> usuarioCollection;
+    @OneToMany(mappedBy = "iddepartamento")
+    private Collection<Menu> menuCollection;
 
     public Departamento() {
     }
@@ -86,6 +88,15 @@ public class Departamento implements Serializable {
 
     public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
         this.usuarioCollection = usuarioCollection;
+    }
+
+    @XmlTransient
+    public Collection<Menu> getMenuCollection() {
+        return menuCollection;
+    }
+
+    public void setMenuCollection(Collection<Menu> menuCollection) {
+        this.menuCollection = menuCollection;
     }
 
     @Override

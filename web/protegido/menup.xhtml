@@ -6,38 +6,38 @@
       xmlns:p="http://primefaces.org/ui">
     <body>
         <h:form>
-        <ui:composition template="./../template.xhtml">
+            <ui:composition template="./../template.xhtml">
 
-            <ui:define name="title">
-                <h:outputStylesheet library="css" name="index.css"/>                
-                <h:outputText value="#{bundle.Menup}"></h:outputText>
-            </ui:define>
+                <ui:define name="title">
+                    <h:outputStylesheet library="css" name="index.css"/>                
+                    <h:outputText value="#{bundle.Menup}"></h:outputText>
+                </ui:define>
 
-            <ui:define name="body">
-                <a href="../cliente/List.xhtml"> <img src="../resources/images/kuser.png" width="100" height="100" alt="Clientes" title="Clientes Registrados"/></a>
-                <br/> 
-                <a href="../proveedor/List.xhtml"><img src="../resources/images/kdmconfig.png" width="100" height="100" alt="Proveedores" title="Proveedores Registrados"/></a>
-                <br/>
-                <a href="../articulo/List.xhtml"><img src="../resources/images/blockdevice.png" width="100" height="100" alt="Consultar Articulos" title="Catalogo de Articulos"/></a>
-                <br/>
-                <a href="../requerimiento/newRequerimiento.xhtml"><img src="../resources/images/tablet.png"  width="100" height="100" alt="Consutar Usurios" title="Hacer Requerimientos" /> </a> 
-                <br/>    
+                <ui:define name="body">
+                    <a href="../cliente/List.xhtml"> <img src="../resources/images/kuser.png" width="100" height="100" alt="Clientes" title="Clientes Registrados"/></a>
+                    <br/> 
+                    <a href="../proveedor/List.xhtml"><img src="../resources/images/kdmconfig.png" width="100" height="100" alt="Proveedores" title="Proveedores Registrados"/></a>
+                    <br/>
+                    <a href="../articulo/List.xhtml"><img src="../resources/images/blockdevice.png" width="100" height="100" alt="Consultar Articulos" title="Catalogo de Articulos"/></a>
+                    <br/>
+                    <a href="../requerimiento/newRequerimiento.xhtml"><img src="../resources/images/tablet.png"  width="100" height="100" alt="Consutar Usurios" title="Hacer Requerimientos" /> </a> 
+                    <br/>    
 
-                <div id="imag">
-                    <img src="../resources/images/sismacontabec.png" width="550" height="155" alt="Logo Sismacontab"/>
-                </div>  
-                <div id="imag1">
-                    <img src="../resources/images/sismacontabecuador.png" width="310" height="310" alt="Sismacontab Ecuador" />
-                </div>
-                <p:outputLabel id="etiqueta" value="Calendario de pagos SRI 2017" styleClass="etiqueta1" />   
-                <h:panelGrid columnClasses="value">
-                    <!--h3 id="etiqueta" styleclass="etiqueta1">Calendario de Contribuyentes Especiales 2017</h3-->
+                    <div id="imag">
+                        <img src="../resources/images/sismacontabec.png" width="550" height="155" alt="Logo Sismacontab"/>
+                    </div>  
+                    <div id="imag1">
+                        <img src="../resources/images/sismacontabecuador.png" width="310" height="310" alt="Sismacontab Ecuador" />
+                    </div>
+                    <p:outputLabel id="etiqueta" value="Calendario de pagos SRI 2017" styleClass="etiqueta1" />   
+                    <h:panelGrid columnClasses="value">
+                        <!--h3 id="etiqueta" styleclass="etiqueta1">Calendario de Contribuyentes Especiales 2017</h3-->
 
-                    <p:schedule id="schedule" value="#{scheduleView.eventModel}" allDaySlot="false" resizable="true" styleClass="calendario" />
+                        <p:schedule id="schedule" value="#{scheduleView.eventModel}" allDaySlot="false" resizable="true" styleClass="calendario" />
 
-                </h:panelGrid>
-            </ui:define>
-        </ui:composition>
-            </h:form>
+                    </h:panelGrid>
+                </ui:define>
+            </ui:composition>
+        </h:form>
     </body>
 </html>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MenuCreateDlg" widgetVar="MenuCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlemenu.CreateMenuTitle}">
+            <h:form id="MenuCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{menuController.selected != null}">
+                        <p:outputLabel value="#{bundlemenu.CreateMenuLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{menuController.selected.descripcion}" title="#{bundlemenu.CreateMenuTitle_descripcion}" size="50" />
+                        <p:outputLabel value="#{bundlemenu.CreateMenuLabel_url}" for="url" />
+                        <p:inputText id="url" value="#{menuController.selected.url}" title="#{bundlemenu.CreateMenuTitle_url}" size="50" />
+                        <p:outputLabel value="#{bundlemenu.CreateMenuLabel_icon}" for="icon" />
+                        <p:inputText id="icon" value="#{menuController.selected.icon}" title="#{bundlemenu.CreateMenuTitle_icon}" size="50" />
+                        <p:outputLabel value="#{bundlemenu.CreateMenuLabel_estado}" for="estado" />
+                        <p:selectBooleanCheckbox id="estado" value="#{menuController.selected.estado}"  />
+                        <p:outputLabel value="#{bundlemenu.CreateMenuLabel_idsubmenu}" for="idsubmenu" />
+                        <p:selectOneMenu id="idsubmenu" value="#{menuController.selected.idsubmenu}" >
+                            <f:selectItems value="#{submenuController.itemsAvailableSelectOne}"
+                                           var="idsubmenuItem"
+                                           itemValue="#{idsubmenuItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Codigo Enlace" for="codsubmenu" />
+                        <p:selectOneMenu id="codsubmenu" value="#{menuController.selected.codigosubmenu}" filter="true" filterMatchMode="contains" >
+                            <f:selectItem noSelectionOption="true" itemLabel="Ninguno" itemValue="#{null}" />
+                            <f:selectItems value="#{menuController.itemsAvailableSelectOne}"
+                                           var="idsubmenuItem"
+                                           itemValue="#{idsubmenuItem}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{bundlemenu.CreateMenuLabel_idrol}" for="idrol" />
+                        <p:selectOneMenu id="idrol" value="#{menuController.selected.idrol}" >
+                            <f:selectItems value="#{rolController.itemsAvailableSelectOne}"
+                                           var="idrolItem"
+                                           itemValue="#{idrolItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlemenu.CreateMenuLabel_idtipoitemmenu}" for="idtipoitemmenu" />
+                        <p:selectOneMenu id="idtipoitemmenu" value="#{menuController.selected.idtipoitemmenu}" >
+                            <f:selectItems value="#{tipoitemmenuController.itemsAvailableSelectOne}"
+                                           var="idtipoitemmenuItem"
+                                           itemValue="#{idtipoitemmenuItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlemenu.CreateMenuLabel_iddepartamento}" for="iddepartamento" />
+                        <p:selectOneMenu id="iddepartamento" value="#{menuController.selected.iddepartamento}" >
+                            <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
+                                           var="iddepartamentoItem"
+                                           itemValue="#{iddepartamentoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{menuController.create}" value="#{bundlemenu.Save}" update="display,:MenuListForm:datalist,:growl" oncomplete="handleSubmit(args,'MenuCreateDialog');"/>
+                    <p:commandButton value="#{bundlemenu.Cancel}" onclick="MenuCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

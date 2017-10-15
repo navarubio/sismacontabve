@@ -73,6 +73,12 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
+                                <h:outputText value="#{bundle.EditUsuarioLabel_idrol}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idrol.rol}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListUsuarioTitle_iddepartamento}"/>
                             </f:facet>
                             <h:outputText value="#{item.iddepartamento.departamento}"/>
