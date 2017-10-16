@@ -37,6 +37,88 @@
                                            var="idcontribuyenteItem"
                                            itemValue="#{idcontribuyenteItem}"/>
                         </p:selectOneMenu>
+
+                        <p:outputLabel></p:outputLabel>
+                        <p:outputLabel value="CONFIGURACION CUENTAS CONTABLES" styleClass="text-ouput" />
+                        <p:outputLabel></p:outputLabel>
+                        <p:outputLabel value="CUENTAS DEL ACTIVO" styleClass="text-ouput"/>
+                        <p:outputLabel></p:outputLabel>
+                        <p:outputLabel></p:outputLabel>
+                        <p:outputLabel value="Creditos Fiscales" for="credfiscal" />
+                        <p:selectOneMenu id="credfiscal" value="#{empresaController.selected.credfiscal}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="SELECCIONES CUENTA"/>
+                            <f:selectItems value="#{plandecuentasController.itemsordenados}"
+                                           var="itemplancuenta"
+                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Retenciones Iva efectuadas por Clientes" for="retivacliente" />
+                        <p:selectOneMenu id="retivacliente" value="#{empresaController.selected.retivacliente}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="SELECCIONES CUENTA"/>
+                            <f:selectItems value="#{plandecuentasController.itemsordenados}"
+                                           var="itemplancuenta"
+                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Reteciones ISLR efectuadas por Clientes" for="retislrcliente" />
+                        <p:selectOneMenu id="retislrcliente" value="#{empresaController.selected.retislrcliente}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="SELECCIONES CUENTA"/>
+                            <f:selectItems value="#{plandecuentasController.itemsordenados}"
+                                           var="itemplancuenta"
+                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Cuentas por Cobrar Comerciales" for="ctaxcobrar" />
+                        <p:selectOneMenu id="ctaxcobrar" value="#{empresaController.selected.ctasxcobrar}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="SELECCIONES CUENTA"/>
+                            <f:selectItems value="#{plandecuentasController.itemsordenados}"
+                                           var="itemplancuenta"
+                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel></p:outputLabel>
+
+                        <p:outputLabel value="CUENTAS DEL PASIVO Y GASTO" styleClass="text-ouput"/>
+                        <p:outputLabel value="Debitos Fiscales" for="debfiscal" />
+                        <p:selectOneMenu id="debfiscal" value="#{empresaController.selected.debfiscal}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="SELECCIONES CUENTA"/>
+                            <f:selectItems value="#{plandecuentasController.itemsordenados}"
+                                           var="itemplancuenta"
+                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                        </p:selectOneMenu>                        
+                        <p:outputLabel value="Retenciones IVA por Enterar" for="retivaxenterar" />
+                        <p:selectOneMenu id="retivaxenterar" value="#{empresaController.selected.retivaxenterar}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="SELECCIONES CUENTA"/>
+                            <f:selectItems value="#{plandecuentasController.itemsordenados}"
+                                           var="itemplancuenta"
+                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                        </p:selectOneMenu>                        
+                        <p:outputLabel value="Retensiones ISLR por Enterar" for="retislrxenterar" />
+                        <p:selectOneMenu id="retislrxenterar" value="#{empresaController.selected.retislrxenterar}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="SELECCIONES CUENTA"/>
+                            <f:selectItems value="#{plandecuentasController.itemsordenados}"
+                                           var="itemplancuenta"
+                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                        </p:selectOneMenu>                        
+                        <p:outputLabel value="Cuentas por Pagar Proveedores" for="ctaxpagarp" />
+                        <p:selectOneMenu id="ctaxpagarp" value="#{empresaController.selected.ctaxpagarproved}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="SELECCIONES CUENTA"/>
+                            <f:selectItems value="#{plandecuentasController.itemsordenados}"
+                                           var="itemplancuenta"
+                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                        </p:selectOneMenu>                        
+                        <p:outputLabel value="Cuentas Internas por Pagar" for="ctasintxpagarp" />
+                        <p:selectOneMenu id="ctasintxpagarp" value="#{empresaController.selected.ctaxpagarinterna}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="SELECCIONES CUENTA"/>
+                            <f:selectItems value="#{plandecuentasController.itemsordenados}"
+                                           var="itemplancuenta"
+                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                        </p:selectOneMenu>                        
+                        <p:outputLabel value="Cuenta Gasto Provisional" for="ctagastop" />
+                        <p:selectOneMenu id="ctagastop" value="#{empresaController.selected.ctagastoprovisional}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="SELECCIONES CUENTA"/>
+                            <f:selectItems value="#{plandecuentasController.itemsordenados}"
+                                           var="itemplancuenta"
+                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                        </p:selectOneMenu>                        
+
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{empresaController.update}" value="#{bundleEmpresa.Save}" update="display,:EmpresaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EmpresaEditDialog');"/>
                     <p:commandButton value="#{bundleEmpresa.Cancel}" onclick="EmpresaEditDialog.hide()"/>

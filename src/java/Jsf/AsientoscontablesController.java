@@ -145,7 +145,7 @@ public class AsientoscontablesController implements Serializable {
     private Usuario usa;
     private Departamento dpto;
     private Compra codCompra;
-    private Empresa empresa;
+    
     private int visualizar = 0;
     private int tipocompra = 1;
     private double montoUT = 0;
@@ -209,10 +209,11 @@ public class AsientoscontablesController implements Serializable {
     private Librodiario librodiario;
     @Inject
     private Detallelibrodiario detallelibroventa;
-
     @Inject
     private Libromayor libromayor;
-
+    @Inject
+    private Empresa empresa;
+    
     public List<Detallelibrodiario> getListadetalleslibrodiario() {
         return listadetalleslibrodiario;
     }
@@ -692,7 +693,7 @@ public class AsientoscontablesController implements Serializable {
         librodiario.setFecha(compra.getFechaorden());
         Detallecompra detal = detallecompraFiltrados.get(0);
         Articulo artic = detal.getCodigo();
-        librodiario.setDescripcionasiento("P/R COMPRA CMP-" + compra.getIdcompra() + " " + artic.getDescripcion());
+        librodiario.setDescripcionasiento("P/R COMPRA CMP-" + compra.getIdcompra() + " " + artic.getDescripcion()+ ", "+compra.getIdauxiliarrequerimiento().getDescripcion());
 //        this.compra.setIdauxiliarrequerimiento(auxiliar);
     }
 
@@ -714,7 +715,7 @@ public class AsientoscontablesController implements Serializable {
         detallecompraFiltrados = detallecompraAuxiliar();
         listadetalleslibrodiario = detallesasientopago();
         librodiario.setFecha(compra.getFechaorden());
-        librodiario.setDescripcionasiento("P/R PAGO DE COMPRA CMP-" + compra.getIdcompra());
+        librodiario.setDescripcionasiento("P/R PAGO DE COMPRA CMP-" + compra.getIdcompra()+", "+pagocompra.getObservacionespago());
 //        this.compra.setIdauxiliarrequerimiento(auxiliar);
     }
 
@@ -733,7 +734,8 @@ public class AsientoscontablesController implements Serializable {
 
     public List<Detallelibrodiario> detallesasientopago() {
         List<Detallelibrodiario> detallesasiento = null;
-        anexarpagocompra();
+//        anexarpagocompra();
+        anexarComprapago();
         detallesasiento = listadetalleslibrodiario;
         return detallesasiento;
     }
@@ -982,6 +984,7 @@ public class AsientoscontablesController implements Serializable {
 
     public void anexar() {
         listadetalleslibrodiario.clear();
+        empresa=empresaEJB.devolverEmpresabase();
         id = 0;
         visualizar = 0;
         Detallecompra detalle1 = detallecompraFiltrados.get(0);
@@ -991,7 +994,7 @@ public class AsientoscontablesController implements Serializable {
             detallelib.setIdplandecuenta(arti.getIdplandecuenta());
             detallelibroventa.setIdplandecuenta(arti.getIdplandecuenta());
         } else {
-            int codcta = 6121100;
+            int codcta = empresa.getCtagastoprovisional();
             Plandecuenta cuentaprovisional = plandecuentaEJB.buscarcuenta(codcta);
             detallelib.setIdplandecuenta(cuentaprovisional);
             detallelibroventa.setIdplandecuenta(detallelib.getIdplandecuenta());
@@ -1004,7 +1007,7 @@ public class AsientoscontablesController implements Serializable {
         if (compra.getIva() > 0.0) {
             Detallelibrodiario detallelibr = new Detallelibrodiario();
 
-            int codcta = 12425;
+            int codcta = empresa.getCredfiscal();
             Plandecuenta cuentacredfiscal = plandecuentaEJB.buscarcuenta(codcta);
             detallelibr.setIdplandecuenta(cuentacredfiscal);
             detallelibr.setDebe(compra.getIva());
@@ -1014,25 +1017,104 @@ public class AsientoscontablesController implements Serializable {
         }
 
         Detallelibrodiario detallelibro = new Detallelibrodiario();
-
-        int codctahaber = 21115;
+        int codctahaber = 0;
+        if (arti.getIdgrupo().getIdgrupo()<3){
+            codctahaber = empresa.getCtaxpagarproved();
+        }else if (arti.getIdgrupo().getIdgrupo()==3){        
+            codctahaber = empresa.getCtaxpagarinterna();    
+        }
         Plandecuenta cuentaporpagar = plandecuentaEJB.buscarcuenta(codctahaber);
         detallelibro.setIdplandecuenta(cuentaporpagar);
         detallelibro.setHaber(compra.getTotal());
         detallelibro.setIddetallelibrodiario(id);
         this.listadetalleslibrodiario.add(detallelibro);
         id++;
-
     }
+    
+        public void anexarComprapago() {
+        listadetalleslibrodiario.clear();
+        empresa=empresaEJB.devolverEmpresabase();
+        id = 0;
+        visualizar = 0;
+        Detallecompra detalle1 = detallecompraFiltrados.get(0);
+        Articulo arti = detalle1.getCodigo();
+        Detallelibrodiario detallelib = new Detallelibrodiario();
+        if (arti.getIdplandecuenta() != null) {
+            detallelib.setIdplandecuenta(arti.getIdplandecuenta());
+            detallelibroventa.setIdplandecuenta(arti.getIdplandecuenta());
+        } else {
+            int codcta = empresa.getCtagastoprovisional();
+            Plandecuenta cuentaprovisional = plandecuentaEJB.buscarcuenta(codcta);
+            detallelib.setIdplandecuenta(cuentaprovisional);
+            detallelibroventa.setIdplandecuenta(detallelib.getIdplandecuenta());
+        }
+        detallelib.setDebe(compra.getSubtotal());
+        detallelib.setIddetallelibrodiario(id);
+        this.listadetalleslibrodiario.add(detallelib);
+        id++;
+
+        if (compra.getIva() > 0.0) {
+            Detallelibrodiario detallelibr = new Detallelibrodiario();
+
+            int codcta = empresa.getCredfiscal();
+            Plandecuenta cuentacredfiscal = plandecuentaEJB.buscarcuenta(codcta);
+            detallelibr.setIdplandecuenta(cuentacredfiscal);
+            detallelibr.setDebe(compra.getIva());
+            detallelibr.setIddetallelibrodiario(id);
+            this.listadetalleslibrodiario.add(detallelibr);
+            id++;
+        }
+
+        if (pagocompra.getMontoretenido() > 0) {
+
+            if (pagocompra.getMontoretenido() == retiva) {
+                Detallelibrodiario detallelibr = new Detallelibrodiario();
+                int codcta = empresa.getRetivaxenterar();
+                Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);
+                detallelibr.setIdplandecuenta(cuentaretencioniva);
+                detallelibr.setHaber(pagocompra.getMontoretenido());
+                detallelibr.setIddetallelibrodiario(id);
+                this.listadetalleslibrodiario.add(detallelibr);
+                id++;
+            } else if (pagocompra.getMontoretenido() > retiva) {
+                Detallelibrodiario detallelibr = new Detallelibrodiario();
+                int codcta = empresa.getRetivaxenterar();
+                Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);
+                detallelibr.setIdplandecuenta(cuentaretencioniva);
+                detallelibr.setHaber(retiva);
+                detallelibr.setIddetallelibrodiario(id);
+                this.listadetalleslibrodiario.add(detallelibr);
+                id++;
+                
+                Detallelibrodiario detallelibr1 = new Detallelibrodiario();
+                int codcta1 = empresa.getRetislrxenterar();
+                Plandecuenta cuentaretencionislr = plandecuentaEJB.buscarcuenta(codcta1);
+                detallelibr1.setIdplandecuenta(cuentaretencionislr);
+                detallelibr1.setHaber(retislr);
+                detallelibr1.setIddetallelibrodiario(id);
+                this.listadetalleslibrodiario.add(detallelibr1);
+                id++;
+            }
+            
+        }
+
+        Detallelibrodiario detallelibr = new Detallelibrodiario();
+        detallelibr.setIdplandecuenta(pagocompra.getIdcuentabancaria().getIdplandecuenta());
+        detallelibr.setHaber(pagocompra.getTotalpago());
+        detallelibr.setIddetallelibrodiario(id);
+        this.listadetalleslibrodiario.add(detallelibr);
+        id++;
+    }
+
 
     public void anexarpagocompra() {
         listadetalleslibrodiario.clear();
         id = 0;
         visualizar = 0;
+        empresa=empresaEJB.devolverEmpresabase();
 
         Detallelibrodiario detallelibro = new Detallelibrodiario();
-
-        int codctadebe = 21115;
+        int codctadebe = empresa.getCtaxpagarproved();
         Plandecuenta cuentaporpagar = plandecuentaEJB.buscarcuenta(codctadebe);
         detallelibro.setIdplandecuenta(cuentaporpagar);
         double saldop = pagocompra.getSaldopendiente();
@@ -1060,7 +1142,7 @@ public class AsientoscontablesController implements Serializable {
 
             if (pagocompra.getMontoretenido() == retiva) {
                 Detallelibrodiario detallelib = new Detallelibrodiario();
-                int codcta = 21235;
+                int codcta = empresa.getRetivaxenterar();
                 Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);
                 detallelib.setIdplandecuenta(cuentaretencioniva);
                 detallelib.setHaber(pagocompra.getMontoretenido());
@@ -1069,7 +1151,7 @@ public class AsientoscontablesController implements Serializable {
                 id++;
             } else if (pagocompra.getMontoretenido() > retiva) {
                 Detallelibrodiario detallelib = new Detallelibrodiario();
-                int codcta = 21235;
+                int codcta = empresa.getRetivaxenterar();
                 Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);
                 detallelib.setIdplandecuenta(cuentaretencioniva);
                 detallelib.setHaber(retiva);
@@ -1078,7 +1160,7 @@ public class AsientoscontablesController implements Serializable {
                 id++;
                 
                 Detallelibrodiario detallelibr1 = new Detallelibrodiario();
-                int codcta1 = 212310;
+                int codcta1 = empresa.getRetislrxenterar();
                 Plandecuenta cuentaretencionislr = plandecuentaEJB.buscarcuenta(codcta1);
                 detallelibr1.setIdplandecuenta(cuentaretencionislr);
                 detallelibr1.setHaber(retislr);
@@ -1160,5 +1242,4 @@ public class AsientoscontablesController implements Serializable {
         this.listadetalleslibrodiario.add(detalleanexo);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cuenta fue modificada"));
     }
-
 }

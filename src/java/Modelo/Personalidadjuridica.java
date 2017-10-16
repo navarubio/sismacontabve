@@ -55,6 +55,8 @@ public class Personalidadjuridica implements Serializable {
     private Collection<Contribuyente> contribuyenteCollection;
     @OneToMany(mappedBy = "idpersonalidad")
     private Collection<Residenciajuridica> residenciajuridicaCollection;
+    @OneToMany(mappedBy = "idpersonalidad")
+    private Collection<Empresa> empresaCollection;
     
     public Personalidadjuridica() {
     }
@@ -114,6 +116,15 @@ public class Personalidadjuridica implements Serializable {
         this.contribuyenteCollection = contribuyenteCollection;
     }
     
+    @XmlTransient
+    public Collection<Empresa> getEmpresaCollection() {
+        return empresaCollection;
+    }
+
+    public void setEmpresaCollection(Collection<Empresa> empresaCollection) {
+        this.empresaCollection = empresaCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+<ui:composition template="/template.xhtml">
 
 
         <ui:define name="title">
@@ -23,12 +23,12 @@
                 <img src="../resources/images/contabilidadblank.png" width="70" height="70" alt="Clientes" align="right" />
 
                 <p:panel header="#{bundlecontabilidad.ListMaestromovimientoTitle}">
-                    <p:dataTable id="datalist" value="#{maestromovimientoController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{maestromovimientoController.itemsordenados}" var="item"
                                  selectionMode="single" selection="#{maestromovimientoController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idmaestro}"
-                                 rows="20" scrollable="true" scrollHeight="550"
-                                 rowsPerPageTemplate="20,30,40,50"
+                                 rows="30" scrollable="true" scrollHeight="650"
+                                 rowsPerPageTemplate="30,40,50"
                                  rowStyleClass="#{item.idestatuscontable.idestatuscontable== 2 ? 'facturaabonada' : null} " 
                                  >
 
@@ -49,7 +49,7 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column style="text-align: center">
+                        <p:column style="text-align: center" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idestatuscontable}"/>
                             </f:facet>
@@ -61,7 +61,7 @@
                             </f:facet>
                             <h:outputText value="#{item.idtipoconjunto.conjunto}"/>
                         </p:column>
-                        <p:column style="text-align: center">
+                        <p:column style="text-align: center" filterBy="#{item.idcompra.idcompra}"  filterMatchMode="exact" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idcompra}"/>
                             </f:facet>
@@ -71,6 +71,22 @@
                                                 rendered="#{item.idcompra!= null? true:false}"/>  
                             </h:commandLink>      
                         </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idautorizacion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idautorizacion}"/>
+                        </p:column>
+                        <p:column style="text-align: center" filterBy="#{item.idpagocompra.idcompra.idcompra}"  filterMatchMode="exact">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idpagocompra}"/>
+                            </f:facet>
+                            <h:commandLink action="/auxiliarrequerimiento/Compraasiento.xhtml" actionListener="#{asientoscontablesController.asignarPagoCompra(item.idpagocompra, item)}" > 
+                                <h:graphicImage library="images" name="contable1.png" width="30" height="30" alt="Compras"
+                                                rendered="#{item.idpagocompra!= null? true:false}"/>  
+                            </h:commandLink>  
+                            <h:outputText value="#{item.idpagocompra.idcompra}"/>
+                        </p:column>                        
                         <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_numerofact}"/>
@@ -83,29 +99,13 @@
                         </p:column>
                         <p:column style="text-align: center">
                             <f:facet name="header">
-                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idautorizacion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idautorizacion}"/>
-                        </p:column>
-                        <p:column style="text-align: center">
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idpagocompra}"/>
-                            </f:facet>
-                            <h:commandLink action="/auxiliarrequerimiento/Compraasiento.xhtml" actionListener="#{asientoscontablesController.asignarPagoCompra(item.idpagocompra, item)}" > 
-                                <h:graphicImage library="images" name="contable1.png" width="30" height="30" alt="Compras"
-                                                rendered="#{item.idpagocompra!= null? true:false}"/>  
-                            </h:commandLink>  
-                            <h:outputText value="#{item.idpagocompra}"/>
-                        </p:column>
-                        <p:column style="text-align: center">
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idcobroventa}"/>
+                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idcobrofactura}"/>
                             </f:facet>
                             <h:commandLink action="/factura/facturaasiento.xhtml" actionListener="#{asientosventasController.asignarpagofactura(item.idcobroventa, item)}" >
                                 <h:graphicImage library="images" name="contable1.png" width="30" height="30" alt="Cobros"
                                                 rendered="#{item.idcobroventa!= null? true:false}"/>  
                             </h:commandLink>                            
-                            <h:outputText value="#{item.idcobroventa}"/>
+                            <h:outputText value="#{item.idcobroventa.numerofact.numerofact}"/>
                         </p:column>
                         <p:column style="text-align: center">
                             <f:facet name="header">

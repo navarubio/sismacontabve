@@ -21,7 +21,7 @@
                 <div id="imag2">
                     <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
                 </div>     
-                <img src="../resources/images/viewtree.png" width="70" height="70" alt="Solicitudes" align="right" />
+                <img src="../resources/images/view_tree.png" width="70" height="70" alt="Solicitudes" align="right" />
 
                 <p:panel header="#{bundlecontable.ListPlandecuentaTitle}">
                     <p:dataTable id="datalist" value="#{plandecuentasController.itemsordenados}" var="item"
@@ -29,7 +29,7 @@
                                  paginator="true"
                                  rowKey="#{item.idplandecuenta}"
                                  rows="30"
-                                 rowStyleClass="#{item.idgeneralcuenta> 0 ? 'facturaabonada' : null}"
+                                 rowStyleClass="#{item.idgeneralcuenta> 0 ? 'facturaabonada' : null} #{item.idgeneralcuenta== 0 ? 'asientocuadrado' : null}"
                                  rowsPerPageTemplate="30,40,50"
                                  >
 

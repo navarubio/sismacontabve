@@ -20,8 +20,8 @@
                                  selectionMode="single" selection="#{usuarioController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idusuario}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="20"
+                                 rowsPerPageTemplate="20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -62,7 +62,7 @@
                                 <h:outputText value="#{bundle.ListUsuarioTitle_fechainscripcion}"/>
                             </f:facet>
                             <h:outputText value="#{item.fechainscripcion}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
                         <p:column>

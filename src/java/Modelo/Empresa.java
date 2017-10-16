@@ -70,8 +70,30 @@ public class Empresa implements Serializable {
     @JoinColumn(name = "idcontribuyente", referencedColumnName = "idcontribuyente")
     @ManyToOne
     private Contribuyente idcontribuyente;
- 
-    
+    @JoinColumn(name = "idpersonalidad", referencedColumnName = "idpersonalidad")
+    @ManyToOne
+    private Personalidadjuridica idpersonalidad;
+    @Column(name = "ctaxpagarproveed")
+    private Integer ctaxpagarproved;
+    @Column(name = "credfiscal")
+    private Integer credfiscal;
+    @Column(name = "retivacliente")
+    private Integer retivacliente;
+    @Column(name = "retislrcliente")
+    private Integer retislrcliente;
+    @Column(name = "ctasxcobrar")
+    private Integer ctasxcobrar;
+    @Column(name = "ctagastoprovisional")
+    private Integer ctagastoprovisional;
+    @Column(name = "debfiscal")
+    private Integer debfiscal;
+    @Column(name = "retislrxenterar")
+    private Integer retislrxenterar;
+    @Column(name = "retivaxenterar")
+    private Integer retivaxenterar;
+    @Column(name = "ctaxpagarinterna")
+    private Integer ctaxpagarinterna;
+
     public Empresa() {
     }
 
@@ -157,6 +179,94 @@ public class Empresa implements Serializable {
 
     public void setMontoparaautorizacion(Double montoparaautorizacion) {
         this.montoparaautorizacion = montoparaautorizacion;
+    }
+
+    public Personalidadjuridica getIdpersonalidad() {
+        return idpersonalidad;
+    }
+
+    public void setIdpersonalidad(Personalidadjuridica idpersonalidad) {
+        this.idpersonalidad = idpersonalidad;
+    }
+
+    public Integer getCtaxpagarproved() {
+        return ctaxpagarproved;
+    }
+
+    public void setCtaxpagarproved(Integer ctaxpagarproved) {
+        this.ctaxpagarproved = ctaxpagarproved;
+    }
+
+    public Integer getCredfiscal() {
+        return credfiscal;
+    }
+
+    public void setCredfiscal(Integer credfiscal) {
+        this.credfiscal = credfiscal;
+    }
+
+    public Integer getRetivacliente() {
+        return retivacliente;
+    }
+
+    public void setRetivacliente(Integer retivacliente) {
+        this.retivacliente = retivacliente;
+    }
+
+    public Integer getRetislrcliente() {
+        return retislrcliente;
+    }
+
+    public void setRetislrcliente(Integer retislrcliente) {
+        this.retislrcliente = retislrcliente;
+    }
+
+    public Integer getCtasxcobrar() {
+        return ctasxcobrar;
+    }
+
+    public void setCtasxcobrar(Integer ctasxcobrar) {
+        this.ctasxcobrar = ctasxcobrar;
+    }
+
+    public Integer getCtagastoprovisional() {
+        return ctagastoprovisional;
+    }
+
+    public void setCtagastoprovisional(Integer ctagastoprovisional) {
+        this.ctagastoprovisional = ctagastoprovisional;
+    }
+
+    public Integer getDebfiscal() {
+        return debfiscal;
+    }
+
+    public void setDebfiscal(Integer debfiscal) {
+        this.debfiscal = debfiscal;
+    }
+
+    public Integer getRetislrxenterar() {
+        return retislrxenterar;
+    }
+
+    public void setRetislrxenterar(Integer retislrxenterar) {
+        this.retislrxenterar = retislrxenterar;
+    }
+
+    public Integer getRetivaxenterar() {
+        return retivaxenterar;
+    }
+
+    public void setRetivaxenterar(Integer retivaxenterar) {
+        this.retivaxenterar = retivaxenterar;
+    }
+
+    public Integer getCtaxpagarinterna() {
+        return ctaxpagarinterna;
+    }
+
+    public void setCtaxpagarinterna(Integer ctaxpagarinterna) {
+        this.ctaxpagarinterna = ctaxpagarinterna;
     }
 
     @Override
