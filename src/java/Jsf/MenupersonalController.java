@@ -67,27 +67,32 @@ public class MenupersonalController implements Serializable {
                         nivel1submenu.setIcon(sm.getIcon());
                     }
                     for (Menu sm2 : lista) {
-                        if (sm2.getIdsubmenu().getIdsubmenu().equals(sm.getIdsubmenu().getIdsubmenu()) && sm2.getIdtipoitemmenu().getIdtipoitemmenu() == 2) {
-                            DefaultSubMenu nivel2submenu = new DefaultSubMenu(sm2.getDescripcion());
-                            if (sm2.getIcon() != null) {
-                                nivel2submenu.setIcon(sm2.getIcon());
-                            }
-                            for (Menu it : lista) {
-                                subMenu = it.getCodigosubmenu();
-                                if (subMenu != null) {
-                                    if (sm2.getIdmenu().equals(it.getCodigosubmenu().getIdmenu())) {
-                                        if (it.getIdsubmenu().getIdsubmenu().equals(sm2.getIdsubmenu().getIdsubmenu()) && it.getIdtipoitemmenu().getIdtipoitemmenu() == 3 && it.getIdrol().getIdrol() <= (us.getIdrol().getIdrol()) && it.getIddepartamento().getIddepartamento().equals(us.getIddepartamento().getIddepartamento())) {
-                                            DefaultMenuItem item = new DefaultMenuItem(it.getDescripcion());
-                                            if (it.getUrl() != null) {
-                                                item.setUrl(it.getUrl());
+                        if (sm2.getCodigosubmenu() != null) {
+                            if (sm2.getCodigosubmenu().getIdmenu().equals(sm.getIdmenu()) && sm2.getIdtipoitemmenu().getIdtipoitemmenu() == 2) {
+//                            if (sm2.getIdsubmenu().getIdsubmenu().equals(sm.getIdsubmenu().getIdsubmenu()) && sm2.getIdtipoitemmenu().getIdtipoitemmenu() == 2) {
+
+                                DefaultSubMenu nivel2submenu = new DefaultSubMenu(sm2.getDescripcion());
+                                if (sm2.getIcon() != null) {
+                                    nivel2submenu.setIcon(sm2.getIcon());
+                                }
+                                for (Menu it : lista) {
+                                    subMenu = it.getCodigosubmenu();
+                                    if (subMenu != null) {
+                                        if (sm2.getIdmenu().equals(it.getCodigosubmenu().getIdmenu())) {
+                                            if (it.getIdsubmenu().getIdsubmenu().equals(sm2.getIdsubmenu().getIdsubmenu()) && it.getIdtipoitemmenu().getIdtipoitemmenu() == 3 && it.getIdrol().getIdrol() <= (us.getIdrol().getIdrol()) && it.getIddepartamento().getIddepartamento().equals(us.getIddepartamento().getIddepartamento())) {
+                                                DefaultMenuItem item = new DefaultMenuItem(it.getDescripcion());
+                                                if (it.getUrl() != null) {
+                                                    item.setUrl(it.getUrl());
+                                                }
+                                                nivel2submenu.addElement(item);
                                             }
-                                            nivel2submenu.addElement(item);
                                         }
                                     }
                                 }
+                                nivel1submenu.addElement(nivel2submenu);
                             }
-                            nivel1submenu.addElement(nivel2submenu);
                         }
+
                     }
                     menumodelo.addElement(nivel1submenu);
                 }
