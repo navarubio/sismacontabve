@@ -5,7 +5,7 @@
  */
 package Jpa;
 
-import Modelo.Submenu;
+import Modelo.Itemmenu;
 import Modelo.Subnivel;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,8 +18,7 @@ import javax.persistence.Query;
  * @author sofimar
  */
 @Stateless
-public class SubmenuFacade extends AbstractFacade<Submenu> implements SubmenuFacadeLocal {
-
+public class ItemmenuFacade extends AbstractFacade<Itemmenu> implements ItemmenuFacadeLocal{
     @PersistenceContext(unitName = "InpecaPU")
     private EntityManager em;
 
@@ -28,16 +27,16 @@ public class SubmenuFacade extends AbstractFacade<Submenu> implements SubmenuFac
         return em;
     }
 
-    public SubmenuFacade() {
-        super(Submenu.class);
+    public ItemmenuFacade() {
+        super(Itemmenu.class);
     }
-
+    
     @Override
-    public List<Submenu> submenuesOrdenados() {
+    public List<Itemmenu> itemsOrdenados () {
         String consulta;
-        List<Submenu> lista = null;
-        try {
-            consulta = "From Submenu s order by s.idsubmenu";
+        List<Itemmenu> lista = null; 
+        try { 
+            consulta = "From Itemmenu i order by i.idsubmenu.idsubmenu, i.idsubnivel.idsubnivel";
             Query query = em.createQuery(consulta);
             lista = query.getResultList();
         } catch (Exception e) {
@@ -45,5 +44,5 @@ public class SubmenuFacade extends AbstractFacade<Submenu> implements SubmenuFac
         }
         return lista;
     }
-
+    
 }

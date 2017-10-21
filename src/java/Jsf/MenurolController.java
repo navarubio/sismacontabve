@@ -1,10 +1,10 @@
 package Jsf;
 
-import Modelo.Submenu;
+import Modelo.Menurol;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
-import Jpa.SubmenuFacade;
-import Jpa.SubmenuFacadeLocal;
+import Jpa.MenurolFacade;
+import Jpa.MenurolFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,23 +20,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("submenuController")
+@Named("menurolController")
 @SessionScoped
-public class SubmenuController implements Serializable {
+public class MenurolController implements Serializable {
 
     @EJB
-    private Jpa.SubmenuFacadeLocal ejbFacade;
-    private List<Submenu> items = null;
-    private Submenu selected;
+    private Jpa.MenurolFacadeLocal ejbFacade;
+    private List<Menurol> items = null;
+    private Menurol selected;
 
-    public SubmenuController() {
+    public MenurolController() {
     }
 
-    public Submenu getSelected() {
+    public Menurol getSelected() {
         return selected;
     }
 
-    public void setSelected(Submenu selected) {
+    public void setSelected(Menurol selected) {
         this.selected = selected;
     }
 
@@ -46,45 +46,38 @@ public class SubmenuController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private SubmenuFacadeLocal getFacade() {
+    private MenurolFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public Submenu prepareCreate() {
-        selected = new Submenu();
+    public Menurol prepareCreate() {
+        selected = new Menurol();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundlemenu").getString("SubmenuCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundlemenurol").getString("MenurolCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundlemenu").getString("SubmenuUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundlemenurol").getString("MenurolUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundlemenu").getString("SubmenuDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundlemenurol").getString("MenurolDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Submenu> getItems() {
+    public List<Menurol> getItems() {
         if (items == null) {
             items = getFacade().findAll();
-        }
-        return items;
-    }
-    
-    public List<Submenu> getItemsOrdenados() {
-        if (items == null) {
-            items = getFacade().submenuesOrdenados();
         }
         return items;
     }
@@ -108,38 +101,38 @@ public class SubmenuController implements Serializable {
                 if (msg.length() > 0) {
                     JsfUtil.addErrorMessage(msg);
                 } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundlemenu").getString("PersistenceErrorOccured"));
+                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundlemenurol").getString("PersistenceErrorOccured"));
                 }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundlemenu").getString("PersistenceErrorOccured"));
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundlemenurol").getString("PersistenceErrorOccured"));
             }
         }
     }
 
-    public Submenu getSubmenu(java.lang.Integer id) {
+    public Menurol getMenurol(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<Submenu> getItemsAvailableSelectMany() {
+    public List<Menurol> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Submenu> getItemsAvailableSelectOne() {
+    public List<Menurol> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Submenu.class)
-    public static class SubmenuControllerConverter implements Converter {
+    @FacesConverter(forClass = Menurol.class)
+    public static class MenurolControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SubmenuController controller = (SubmenuController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "submenuController");
-            return controller.getSubmenu(getKey(value));
+            MenurolController controller = (MenurolController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "menurolController");
+            return controller.getMenurol(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -159,11 +152,11 @@ public class SubmenuController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Submenu) {
-                Submenu o = (Submenu) object;
-                return getStringKey(o.getIdsubmenu());
+            if (object instanceof Menurol) {
+                Menurol o = (Menurol) object;
+                return getStringKey(o.getIdmenurol());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Submenu.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Menurol.class.getName()});
                 return null;
             }
         }

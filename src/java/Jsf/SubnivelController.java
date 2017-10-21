@@ -1,10 +1,10 @@
 package Jsf;
 
-import Modelo.Submenu;
+import Modelo.Subnivel;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
-import Jpa.SubmenuFacade;
-import Jpa.SubmenuFacadeLocal;
+import Jpa.SubnivelFacade;
+import Jpa.SubnivelFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,23 +20,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("submenuController")
+@Named("subnivelController")
 @SessionScoped
-public class SubmenuController implements Serializable {
+public class SubnivelController implements Serializable {
 
     @EJB
-    private Jpa.SubmenuFacadeLocal ejbFacade;
-    private List<Submenu> items = null;
-    private Submenu selected;
+    private Jpa.SubnivelFacadeLocal ejbFacade;
+    private List<Subnivel> items = null;
+    private Subnivel selected;
 
-    public SubmenuController() {
+    public SubnivelController() {
     }
 
-    public Submenu getSelected() {
+    public Subnivel getSelected() {
         return selected;
     }
 
-    public void setSelected(Submenu selected) {
+    public void setSelected(Subnivel selected) {
         this.selected = selected;
     }
 
@@ -46,45 +46,45 @@ public class SubmenuController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private SubmenuFacadeLocal getFacade() {
+    private SubnivelFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public Submenu prepareCreate() {
-        selected = new Submenu();
+    public Subnivel prepareCreate() {
+        selected = new Subnivel();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundlemenu").getString("SubmenuCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundlemenurol").getString("SubnivelCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundlemenu").getString("SubmenuUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundlemenurol").getString("SubnivelUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundlemenu").getString("SubmenuDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundlemenurol").getString("SubnivelDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Submenu> getItems() {
+    public List<Subnivel> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
         return items;
     }
-    
-    public List<Submenu> getItemsOrdenados() {
+
+    public List<Subnivel> getItemsordenados() {
         if (items == null) {
-            items = getFacade().submenuesOrdenados();
+            items = getFacade().subnivelesOrdenados();
         }
         return items;
     }
@@ -108,38 +108,38 @@ public class SubmenuController implements Serializable {
                 if (msg.length() > 0) {
                     JsfUtil.addErrorMessage(msg);
                 } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundlemenu").getString("PersistenceErrorOccured"));
+                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundlemenurol").getString("PersistenceErrorOccured"));
                 }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundlemenu").getString("PersistenceErrorOccured"));
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundlemenurol").getString("PersistenceErrorOccured"));
             }
         }
     }
 
-    public Submenu getSubmenu(java.lang.Integer id) {
+    public Subnivel getSubnivel(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<Submenu> getItemsAvailableSelectMany() {
+    public List<Subnivel> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Submenu> getItemsAvailableSelectOne() {
+    public List<Subnivel> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Submenu.class)
-    public static class SubmenuControllerConverter implements Converter {
+    @FacesConverter(forClass = Subnivel.class)
+    public static class SubnivelControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SubmenuController controller = (SubmenuController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "submenuController");
-            return controller.getSubmenu(getKey(value));
+            SubnivelController controller = (SubnivelController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "subnivelController");
+            return controller.getSubnivel(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -159,11 +159,11 @@ public class SubmenuController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Submenu) {
-                Submenu o = (Submenu) object;
-                return getStringKey(o.getIdsubmenu());
+            if (object instanceof Subnivel) {
+                Subnivel o = (Subnivel) object;
+                return getStringKey(o.getIdsubnivel());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Submenu.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Subnivel.class.getName()});
                 return null;
             }
         }

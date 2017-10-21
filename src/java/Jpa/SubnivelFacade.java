@@ -5,7 +5,8 @@
  */
 package Jpa;
 
-import Modelo.Submenu;
+import Modelo.Cuentabancaria;
+import Modelo.Menu;
 import Modelo.Subnivel;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,8 +19,7 @@ import javax.persistence.Query;
  * @author sofimar
  */
 @Stateless
-public class SubmenuFacade extends AbstractFacade<Submenu> implements SubmenuFacadeLocal {
-
+public class SubnivelFacade extends AbstractFacade<Subnivel> implements SubnivelFacadeLocal{
     @PersistenceContext(unitName = "InpecaPU")
     private EntityManager em;
 
@@ -28,16 +28,16 @@ public class SubmenuFacade extends AbstractFacade<Submenu> implements SubmenuFac
         return em;
     }
 
-    public SubmenuFacade() {
-        super(Submenu.class);
+    public SubnivelFacade() {
+        super(Subnivel.class);
     }
-
+    
     @Override
-    public List<Submenu> submenuesOrdenados() {
+    public List<Subnivel> subnivelesOrdenados () {
         String consulta;
-        List<Submenu> lista = null;
+        List<Subnivel> lista = null;
         try {
-            consulta = "From Submenu s order by s.idsubmenu";
+            consulta = "From Subnivel s order by s.idsubnivel";
             Query query = em.createQuery(consulta);
             lista = query.getResultList();
         } catch (Exception e) {
@@ -45,5 +45,20 @@ public class SubmenuFacade extends AbstractFacade<Submenu> implements SubmenuFac
         }
         return lista;
     }
-
+    
+    @Override
+    public List<Subnivel> subnivelxSubmenu(int idsubmenu) {
+        String consulta;
+        List<Subnivel> lista = null; 
+        try { 
+            consulta = "From Subnivel s where s.idsubmenu.idsubmenu= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, idsubmenu);            
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+    
 }

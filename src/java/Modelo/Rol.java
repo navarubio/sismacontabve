@@ -33,6 +33,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Rol.findByIdrol", query = "SELECT r FROM Rol r WHERE r.idrol = :idrol"),
     @NamedQuery(name = "Rol.findByRol", query = "SELECT r FROM Rol r WHERE r.rol = :rol")})
 public class Rol implements Serializable {
+    @Column(name = "estadomenu")
+    private Boolean estadomenu;
+    @OneToMany(mappedBy = "idrol")
+    private Collection<Menurol> menurolCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -111,6 +115,23 @@ public class Rol implements Serializable {
     @Override
     public String toString() {
         return rol;
+    }
+
+    public Boolean getEstadomenu() {
+        return estadomenu;
+    }
+
+    public void setEstadomenu(Boolean estadomenu) {
+        this.estadomenu = estadomenu;
+    }
+
+    @XmlTransient
+    public Collection<Menurol> getMenurolCollection() {
+        return menurolCollection;
+    }
+
+    public void setMenurolCollection(Collection<Menurol> menurolCollection) {
+        this.menurolCollection = menurolCollection;
     }
     
 }

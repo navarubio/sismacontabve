@@ -33,6 +33,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Submenu.findByIdsubmenu", query = "SELECT s FROM Submenu s WHERE s.idsubmenu = :idsubmenu"),
     @NamedQuery(name = "Submenu.findBySubmenu", query = "SELECT s FROM Submenu s WHERE s.submenu = :submenu")})
 public class Submenu implements Serializable {
+
+    @OneToMany(mappedBy = "idsubmenu")
+    private Collection<Itemmenu> itemmenuCollection;
+    @OneToMany(mappedBy = "idsubmenu")
+    private Collection<Subnivel> subnivelCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +47,9 @@ public class Submenu implements Serializable {
     @Size(max = 50)
     @Column(name = "submenu")
     private String submenu;
+    @Size(max = 50)
+    @Column(name = "icon")
+    private String icon;
     @OneToMany(mappedBy = "idsubmenu")
     private Collection<Menu> menuCollection;
 
@@ -68,6 +76,14 @@ public class Submenu implements Serializable {
         this.submenu = submenu;
     }
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+    
     @XmlTransient
     public Collection<Menu> getMenuCollection() {
         return menuCollection;
@@ -101,5 +117,23 @@ public class Submenu implements Serializable {
     public String toString() {
         return submenu;
     }
-    
+
+    @XmlTransient
+    public Collection<Itemmenu> getItemmenuCollection() {
+        return itemmenuCollection;
+    }
+
+    public void setItemmenuCollection(Collection<Itemmenu> itemmenuCollection) {
+        this.itemmenuCollection = itemmenuCollection;
+    }
+
+    @XmlTransient
+    public Collection<Subnivel> getSubnivelCollection() {
+        return subnivelCollection;
+    }
+
+    public void setSubnivelCollection(Collection<Subnivel> subnivelCollection) {
+        this.subnivelCollection = subnivelCollection;
+    }
+
 }

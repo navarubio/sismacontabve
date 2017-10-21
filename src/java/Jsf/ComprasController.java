@@ -383,16 +383,7 @@ public class ComprasController implements Serializable {
         return lista;
     }
 
-    public void asignar(Auxiliarrequerimiento aux) {
-        this.auxiliarrequerimiento = aux;
-        this.idAuxiliar = aux.getIdauxiliarrequerimiento();
-        this.auxiliar = aux;
-        requerimientosFiltrados = requerimientosAuxiliar();
-        listarequerimiento=requerimientosFiltrados;
-        this.compra.setIdauxiliarrequerimiento(auxiliar);
-        empresa = empresaEJB.devolverEmpresabase();
-        totaltotal();
-    }
+    
 
     public List<Requerimiento> buscarrequerimiento() {
         List<Requerimiento> listado = null;

@@ -16,12 +16,12 @@
         <ui:define name="body">
             <h:form id="SubmenuListForm">
                 <p:panel header="#{bundlemenu.ListSubmenuTitle}">
-                    <p:dataTable id="datalist" value="#{submenuController.items}" var="item" style="width: 400px;"
+                    <p:dataTable id="datalist" value="#{submenuController.itemsOrdenados}" var="item" style="width: 400px;"
                                  selectionMode="single" selection="#{submenuController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idsubmenu}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="20"
+                                 rowsPerPageTemplate="20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -39,6 +39,13 @@
                             </f:facet>
                             <h:outputText value="#{item.submenu}"/>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlemenurol.CreateItemmenuTitle_icon}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.icon}"/>
+                        </p:column>
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlemenu.Create}" actionListener="#{submenuController.prepareCreate}" update=":SubmenuCreateForm" oncomplete="PF('SubmenuCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlemenu.View}" update=":SubmenuViewForm" oncomplete="PF('SubmenuViewDialog').show()" disabled="#{empty submenuController.selected}"/>

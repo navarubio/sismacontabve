@@ -31,4 +31,6 @@ public interface SubmenuFacadeLocal {
     List<Submenu> findRange(int[] range);
 
     int count();
+    
+    List<Submenu> submenuesOrdenados(); 
 }

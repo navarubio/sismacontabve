@@ -16,6 +16,9 @@
                         <p:inputText id="idsubmenu" value="#{submenuController.selected.idsubmenu}" title="#{bundlemenu.EditSubmenuTitle_idsubmenu}" required="true" requiredMessage="#{bundlemenu.EditSubmenuRequiredMessage_idsubmenu}"/>
                         <p:outputLabel value="#{bundlemenu.EditSubmenuLabel_submenu}" for="submenu" />
                         <p:inputText id="submenu" value="#{submenuController.selected.submenu}" title="#{bundlemenu.EditSubmenuTitle_submenu}" />
+                        <p:outputLabel value="#{bundlemenurol.CreateItemmenuTitle_icon}" for="icono" />
+                        <p:inputText id="icono" value="#{submenuController.selected.icon}" title="#{bundlemenurol.CreateItemmenuTitle_icon}" />
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{submenuController.update}" value="#{bundlemenu.Save}" update="display,:SubmenuListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SubmenuEditDialog');"/>
                     <p:commandButton value="#{bundlemenu.Cancel}" onclick="SubmenuEditDialog.hide()"/>

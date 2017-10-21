@@ -1,20 +1,29 @@
 package Jsf;
 
+import Jpa.ItemmenuFacadeLocal;
+import Jpa.MenurolFacadeLocal;
 import Modelo.Rol;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.RolFacade;
 import Jpa.RolFacadeLocal;
+import Modelo.Articulo;
+import Modelo.Itemmenu;
+import Modelo.Menurol;
+import Modelo.Requerimiento;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -26,10 +35,26 @@ public class RolController implements Serializable {
 
     @EJB
     private Jpa.RolFacadeLocal ejbFacade;
+    @EJB
+    private ItemmenuFacadeLocal EJBitemmenu;
+    @EJB
+    private MenurolFacadeLocal EJBmenurol;
+
     private List<Rol> items = null;
     private Rol selected;
+    private int visualizar = 0;
+    private List<Itemmenu> listaitemsmenu = new ArrayList();
+    private List<Itemmenu> listadooriginal;
 
     public RolController() {
+    }
+
+    @PostConstruct
+    public void init() {
+        visualizar = 0;
+        listaitemsmenu.clear();
+        listadooriginal = EJBitemmenu.itemsOrdenados();
+        listaitemsmenu = listadooriginal;
     }
 
     public Rol getSelected() {
@@ -48,6 +73,22 @@ public class RolController implements Serializable {
 
     private RolFacadeLocal getFacade() {
         return ejbFacade;
+    }
+
+    public int getVisualizar() {
+        return visualizar;
+    }
+
+    public void setVisualizar(int visualizar) {
+        this.visualizar = visualizar;
+    }
+
+    public List<Itemmenu> getListaitemsmenu() {
+        return listaitemsmenu;
+    }
+
+    public void setListaitemsmenu(List<Itemmenu> listaitemsmenu) {
+        this.listaitemsmenu = listaitemsmenu;
     }
 
     public Rol prepareCreate() {
@@ -80,6 +121,39 @@ public class RolController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
+    }
+
+    public void asignar(Rol rl) {
+        this.selected = rl;
+        visualizar = 1;
+    }
+
+    public void limpiarvisualizar() {
+        visualizar = 0;
+        listaitemsmenu.clear();
+    }
+
+    public void registrar() {
+
+        try {
+            for (Itemmenu itm : listaitemsmenu) {
+                Menurol menuRol = new Menurol();
+                if (itm.getEstado() == true) {
+                    menuRol.setIditemmenu(itm);
+                    menuRol.setIdrol(selected);
+                    EJBmenurol.create(menuRol);
+                    selected.setEstadomenu(Boolean.TRUE);
+                    ejbFacade.edit(selected);
+                }
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sus Almacenaron las Opciones de Menu para el Rol " + selected.getRol(), ""));
+            listaitemsmenu.clear();
+            visualizar=0;
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Opciones de Menu", "Aviso"));
+        } finally {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        }
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
