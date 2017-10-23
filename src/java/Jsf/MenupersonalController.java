@@ -67,8 +67,8 @@ public class MenupersonalController implements Serializable {
         menumodelo = new DefaultMenuModel();
         menumodelonuevo = new DefaultMenuModel();
         subMenu=new Menu();
- //       cargarMenu();
-        cargarMenunuevo();
+//        cargarMenu();
+         cargarMenunuevo();
 
     }
 
@@ -78,7 +78,6 @@ public class MenupersonalController implements Serializable {
         } catch (Exception e) {
 
         }
-
     }
 
     public void cargarMenu() {
@@ -131,7 +130,6 @@ public class MenupersonalController implements Serializable {
                     menumodelo.addElement(item);
                 }
             }
-
         }
     }
 
@@ -158,8 +156,8 @@ public class MenupersonalController implements Serializable {
                             
                             if (subnivel!=sm2.getIditemmenu().getIdsubnivel()){
                                 DefaultSubMenu nivel2submenu = new DefaultSubMenu(sm2.getIditemmenu().getIdsubnivel().getSubnivel());
-                                if (sm2.getIditemmenu().getIdsubmenu().getIcon() != null) {
-                                    nivel2submenu.setIcon(sm2.getIditemmenu().getIdsubmenu().getIcon());
+                                if (sm2.getIditemmenu().getIdsubnivel().getIcon() != null) {
+                                    nivel2submenu.setIcon(sm2.getIditemmenu().getIdsubnivel().getIcon());
                                 }
                                 subnivel = sm2.getIditemmenu().getIdsubnivel();
 
@@ -167,7 +165,7 @@ public class MenupersonalController implements Serializable {
                                     submenu2 = it.getIditemmenu().getIdsubmenu();
                                     if (submenu2 != null) {
                                         if (sm2.getIditemmenu().getIdsubmenu().equals(it.getIditemmenu().getIdsubmenu())) {
-                                            if (it.getIditemmenu().getIdsubnivel().equals(sm2.getIditemmenu().getIdsubnivel())) {
+                                            if (it.getIditemmenu().getIdsubnivel().equals(sm2.getIditemmenu().getIdsubnivel())&&sm2.getIditemmenu().getEstado()==true) {
                                                 DefaultMenuItem item = new DefaultMenuItem(it.getIditemmenu().getDescripcion());
                                                 if (it.getIditemmenu().getUrl() != null) {
                                                     item.setUrl(it.getIditemmenu().getUrl());

@@ -39,19 +39,19 @@
                             </f:facet>
                             <h:outputText value="#{item.idrol.rol}"/>
                         </p:column>
-                        <p:column>
+                        <p:column filterBy="#{item.iditemmenu.idsubmenu.submenu}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="Sub Menu"/>
                             </f:facet>
                             <h:outputText value="#{item.iditemmenu.idsubmenu.submenu}"/>
                         </p:column>
-                        <p:column>
+                        <p:column filterBy="#{item.iditemmenu.idsubnivel.subnivel}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="Sub Nivel"/>
                             </f:facet>
                             <h:outputText value="#{item.iditemmenu.idsubnivel.subnivel}"/>
                         </p:column>
-                        <p:column>
+                        <p:column filterBy="#{item.iditemmenu.descripcion}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="Item Menu"/>
                             </f:facet>

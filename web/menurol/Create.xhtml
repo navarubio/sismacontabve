@@ -12,8 +12,6 @@
             <h:form id="MenurolCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{menurolController.selected != null}">
-                        <p:outputLabel value="#{bundlemenurol.CreateMenurolLabel_idmenurol}" for="idmenurol" />
-                        <p:inputText id="idmenurol" value="#{menurolController.selected.idmenurol}" title="#{bundlemenurol.CreateMenurolTitle_idmenurol}" required="true" requiredMessage="#{bundlemenurol.CreateMenurolRequiredMessage_idmenurol}"/>
                         <p:outputLabel value="#{bundlemenurol.CreateMenurolLabel_iditemmenu}" for="iditemmenu" />
                         <p:selectOneMenu id="iditemmenu" value="#{menurolController.selected.iditemmenu}" >
                             <f:selectItems value="#{itemmenuController.itemsAvailableSelectOne}"

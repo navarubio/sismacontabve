@@ -113,6 +113,13 @@ public class ItemmenuController implements Serializable {
         return items;
     }
 
+        public List<Itemmenu> getItemsordenados() {
+        if (items == null) {
+            items = getFacade().itemsOrdenados();
+        }
+        return items;
+    }
+    
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();

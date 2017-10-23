@@ -16,7 +16,7 @@
         <ui:define name="body">
             <h:form id="ItemmenuListForm">
                 <p:panel header="#{bundlemenurol.ListItemmenuTitle}">
-                    <p:dataTable id="datalist" value="#{itemmenuController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{itemmenuController.itemsordenados}" var="item"
                                  selectionMode="single" selection="#{itemmenuController.selected}"
                                  paginator="true"
                                  rowKey="#{item.iditemmenu}"

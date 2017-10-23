@@ -38,7 +38,7 @@ public class MenurolFacade extends AbstractFacade<Menurol> implements MenurolFac
         String consulta;
         List<Menurol> lista = null;
         try {
-            consulta = "From Menurol m where m.idrol.idrol= ?1 order by m.iditemmenu";
+            consulta = "From Menurol m where m.idrol.idrol= ?1 order by m.iditemmenu.idsubmenu.idsubmenu,m.iditemmenu.idsubnivel.idsubnivel ";
             Query query = em.createQuery(consulta);
             query.setParameter(1, rolusuario.getIdrol());
             lista = query.getResultList();

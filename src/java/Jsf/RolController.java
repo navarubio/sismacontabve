@@ -148,6 +148,7 @@ public class RolController implements Serializable {
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sus Almacenaron las Opciones de Menu para el Rol " + selected.getRol(), ""));
             listaitemsmenu.clear();
+            
             visualizar=0;
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Opciones de Menu", "Aviso"));

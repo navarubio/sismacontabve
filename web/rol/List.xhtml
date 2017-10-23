@@ -46,7 +46,8 @@
 
                             <p:column style="text-align: center" headerText="Opciones Menu">
                                 <h:commandLink actionListener="#{rolController.asignar(item)}"  >       
-                                    <h:graphicImage library="images" name="procesarffinal.png" width="30" height="30" alt="Procesar" />
+                                    <h:graphicImage library="images" name="procesarffinal.png" width="30" height="30" alt="Procesar" 
+                                                    rendered="#{item.estadomenu== false ? true:false}"/>  
                                 </h:commandLink>      
                             </p:column>
 
@@ -122,7 +123,7 @@
                                 <p:commandButton id="editButton" icon="ui-icon-pencil" value="Regisrar" actionListener="#{rolController.registrar()}" action="/menurol/List.xhtml" update="datalista" />
                             </f:facet>
                         </p:dataTable>
-                        
+
                     </p:panelGrid>
                 </p:panel>
             </h:form>
