@@ -7,6 +7,7 @@ package Jpa;
 
 import Modelo.Itemmenu;
 import Modelo.Menurol;
+import Modelo.Rol;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -31,4 +32,7 @@ public interface MenurolFacadeLocal {
 
     int count();   
     
+    List<Menurol> itemsxrol(Rol rolusuario);
+    
+    List<Menurol> itemsxsubmenu(Itemmenu item);
 }

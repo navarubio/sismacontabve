@@ -14,12 +14,12 @@
     </h:head>
 
     <h:body>
-
+ 
         <p:growl id="growl" life="3000" /> 
         <p:layout fullPage="true">
             <p:layoutUnit position="north" size="65" header="#{bundle.AppName}">
                 <h:form id="menuForm">
-                    <p:menubar model="#{menupersonalController.menumodelo}"  >
+                    <p:menubar model="#{menupersonalController.menumodelonuevo}"  >
                         <f:facet name="options">
                             <p:commandLink actionListener="#{plantillaController.cerrarSesion()}" value="Cerrar Sesion" action="/index?faces-redirect=true"/>
                         </f:facet>
