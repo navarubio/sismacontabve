@@ -13,7 +13,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{menurolController.selected != null}">
                         <p:outputLabel value="#{bundlemenurol.CreateMenurolLabel_iditemmenu}" for="iditemmenu" />
-                        <p:selectOneMenu id="iditemmenu" value="#{menurolController.selected.iditemmenu}" >
+                        <p:selectOneMenu id="iditemmenu" value="#{menurolController.selected.iditemmenu}" filter="true" filterMatchMode="contains" >
                             <f:selectItems value="#{itemmenuController.itemsAvailableSelectOne}"
                                            var="iditemmenuItem"
                                            itemValue="#{iditemmenuItem}"/>
