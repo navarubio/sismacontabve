@@ -16,7 +16,7 @@
         <ui:define name="body">
             <h:form id="ItemmenuListForm">
                 <p:panel header="#{bundlemenurol.ListItemmenuTitle}">
-                    <p:dataTable id="datalist" value="#{itemmenuController.itemsordenados}" var="item"
+                    <p:dataTable id="datalist" value="#{itemmenuController.itemsordenados}" var="item" style="width: 1200px"
                                  selectionMode="single" selection="#{itemmenuController.selected}"
                                  paginator="true"
                                  rowKey="#{item.iditemmenu}"
@@ -27,32 +27,32 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column width="50">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlemenurol.ListItemmenuTitle_iditemmenu}"/>
                             </f:facet>
                             <h:outputText value="#{item.iditemmenu}"/>
                         </p:column>
-                        <p:column>
+                        <p:column filterBy="#{item.idsubmenu.submenu}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlemenurol.ListItemmenuTitle_idsubmenu}"/>
                             </f:facet>
                             <h:outputText value="#{item.idsubmenu.submenu}"/>
                         </p:column>
-                        <p:column>
+                        <p:column filterBy="#{item.idsubnivel}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlemenurol.ListItemmenuTitle_idsubnivel}"/>
                             </f:facet>
                             <h:outputText value="#{item.idsubnivel.subnivel}"/>
                         </p:column>
 
-                        <p:column filterBy="#{item.descripcion}" filterMatchMode="constains" >
+                        <p:column width="150" filterBy="#{item.descripcion}" filterMatchMode="contains" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlemenurol.ListItemmenuTitle_descripcion}"/>
                             </f:facet>
                             <h:outputText value="#{item.descripcion}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="250">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlemenurol.ListItemmenuTitle_url}"/>
                             </f:facet>
