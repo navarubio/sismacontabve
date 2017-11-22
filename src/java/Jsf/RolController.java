@@ -156,6 +156,10 @@ public class RolController implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
     }
+    
+    public void cambiarEstado (Itemmenu item){
+        listaitemsmenu.set(item.hashCode(), item);
+    }
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {

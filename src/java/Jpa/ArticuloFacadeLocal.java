@@ -35,4 +35,6 @@ public interface ArticuloFacadeLocal {
     public List<Articulo> listadoArticulos();
     
     List<Articulo> listadoAgregadospicadora();
+    
+    Articulo buscarXcodigo(String codigo);
 }

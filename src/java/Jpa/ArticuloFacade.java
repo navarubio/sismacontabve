@@ -49,7 +49,26 @@ public class ArticuloFacade extends AbstractFacade<Articulo> implements Articulo
         }
         return art;
     }
-   
+    
+    @Override
+    public Articulo buscarXcodigo(String codigo) {
+        Articulo art = null;
+        String consulta;
+        try {
+//            consulta = "From Articulo a where a.codigo = ?1";
+            Query query = em.createNamedQuery("Articulo.findByCodigo");
+            query.setParameter("codigo", codigo);
+
+            List<Articulo> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                art = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return art;
+    }
+    
     public class reporteCliente {
 
         public void getReporte(String ruta) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
@@ -126,4 +145,5 @@ public class ArticuloFacade extends AbstractFacade<Articulo> implements Articulo
         }
         return lista;
     }
+    
 }

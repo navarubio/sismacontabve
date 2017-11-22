@@ -13,21 +13,21 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{empresaController.selected != null}">
                         <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_rif}" for="rif" />
-                        <p:inputText id="rif" value="#{empresaController.selected.rif}" title="#{bundleEmpresa.EditEmpresaTitle_rif}" required="true" requiredMessage="#{bundleEmpresa.EditEmpresaRequiredMessage_rif}"/>
+                        <p:inputText id="rif" value="#{empresaController.selected.rif}" title="#{bundleEmpresa.EditEmpresaTitle_rif}" required="true" requiredMessage="#{bundleEmpresa.EditEmpresaRequiredMessage_rif}" size="80"/>
                         <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_razonsocial}" for="razonsocial" />
-                        <p:inputText id="razonsocial" value="#{empresaController.selected.razonsocial}" title="#{bundleEmpresa.EditEmpresaTitle_razonsocial}" />
+                        <p:inputText id="razonsocial" value="#{empresaController.selected.razonsocial}" title="#{bundleEmpresa.EditEmpresaTitle_razonsocial}" size="80"/>
                         <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_nombrecomercial}" for="nombrecomercial" />
-                        <p:inputText id="nombrecomercial" value="#{empresaController.selected.nombrecomercial}" title="#{bundleEmpresa.EditEmpresaTitle_nombrecomercial}" />
+                        <p:inputText id="nombrecomercial" value="#{empresaController.selected.nombrecomercial}" title="#{bundleEmpresa.EditEmpresaTitle_nombrecomercial}" size="80" />
                         <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_direccionfiscal}" for="direccionfiscal" />
-                        <p:inputText id="direccionfiscal" value="#{empresaController.selected.direccionfiscal}" title="#{bundleEmpresa.EditEmpresaTitle_direccionfiscal}" />
+                        <p:inputText id="direccionfiscal" value="#{empresaController.selected.direccionfiscal}" title="#{bundleEmpresa.EditEmpresaTitle_direccionfiscal}" size="80"/>
                         <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_telefonos}" for="telefonos" />
-                        <p:inputText id="telefonos" value="#{empresaController.selected.telefonos}" title="#{bundleEmpresa.EditEmpresaTitle_telefonos}" />
+                        <p:inputText id="telefonos" value="#{empresaController.selected.telefonos}" title="#{bundleEmpresa.EditEmpresaTitle_telefonos}" size="80"/>
                         <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_presidente}" for="presidente" />
-                        <p:inputText id="presidente" value="#{empresaController.selected.presidente}" title="#{bundleEmpresa.EditEmpresaTitle_presidente}" />
+                        <p:inputText id="presidente" value="#{empresaController.selected.presidente}" title="#{bundleEmpresa.EditEmpresaTitle_presidente}" size="80"/>
                         <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_administrador}" for="administrador" />
-                        <p:inputText id="administrador" value="#{empresaController.selected.administrador}" title="#{bundleEmpresa.EditEmpresaTitle_administrador}" />
+                        <p:inputText id="administrador" value="#{empresaController.selected.administrador}" title="#{bundleEmpresa.EditEmpresaTitle_administrador}" size="80" />
                         <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_contador}" for="contador" />
-                        <p:inputText id="contador" value="#{empresaController.selected.contador}" title="#{bundleEmpresa.EditEmpresaTitle_contador}" />
+                        <p:inputText id="contador" value="#{empresaController.selected.contador}" title="#{bundleEmpresa.EditEmpresaTitle_contador}" size="80"/>
                         <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_montoparaautorizacion}" for="montoautoriza" />
                         <p:inputText id="montoautoriza" value="#{empresaController.selected.montoparaautorizacion}" title="#{bundleEmpresa.EditEmpresaTitle_montoparaautorizacion}" />
                         <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_idcontribuyente}" for="idcontribuyente" />

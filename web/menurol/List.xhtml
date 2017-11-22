@@ -62,7 +62,7 @@
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlemenurol.Create}" actionListener="#{menurolController.prepareCreate}" update=":MenurolCreateForm" oncomplete="PF('MenurolCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlemenurol.View}" update=":MenurolViewForm" oncomplete="PF('MenurolViewDialog').show()" disabled="#{empty menurolController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundlemenurol.Edit}" update=":MenurolEditForm" oncomplete="PF('MenurolEditDialog').show()" disabled="#{empty menurolController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundlemenurol.Delete}" actionListener="#{menurolController.destroy}" update=":growl,datalist" disabled="#{empty menurolController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundlemenurol.Delete}" actionListener="#{menurolController.destroy}" update=":growl,:MenurolListForm,datalist" disabled="#{empty menurolController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

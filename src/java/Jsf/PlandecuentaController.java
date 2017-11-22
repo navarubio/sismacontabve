@@ -43,6 +43,7 @@ public class PlandecuentaController implements Serializable {
 
     private List<Plandecuenta> items = null;
     private Plandecuenta selected;
+    private Plandecuenta cuentaseleccionada;
 
     private List<Grupocontable> lstGrupos;
     private List<Subgrupocontable> lstSubgrupos;
@@ -95,6 +96,9 @@ public class PlandecuentaController implements Serializable {
 
     public void setSelected(Plandecuenta selected) {
         this.selected = selected;
+        refrescarSubgrupos();
+        refrescarEspecificos();
+        refrescarSubespecificos();
     }
 
     protected void setEmbeddableKeys() {

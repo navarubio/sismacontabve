@@ -633,7 +633,7 @@ public class ComprasController implements Serializable {
             reque.setSubtotal(subtotal);
             alicuota = reque.getCodigo().getIdgravamen().getAlicuota();
             iva = (subtotal * alicuota) / 100;
-            total = subtotal + iva;
+            total = subtotal + iva; 
             reque.setTributoiva(iva);
             reque.setTotal(total);
             reque.setIdrequerimiento(id);

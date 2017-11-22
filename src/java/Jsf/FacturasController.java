@@ -475,7 +475,7 @@ public class FacturasController implements Serializable {
         if (requerim.hashCode() == 0) {
             id = 0;
         }
-
+        totaltotales();
     }
 
     public void limpiarListaArreglo() {

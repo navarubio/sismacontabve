@@ -47,7 +47,7 @@
                             <p:column style="text-align: center" headerText="Opciones Menu">
                                 <h:commandLink actionListener="#{rolController.asignar(item)}"  >       
                                     <h:graphicImage library="images" name="procesarffinal.png" width="30" height="30" alt="Procesar" 
-                                                    rendered="#{item.estadomenu== false ? true:false}"/>  
+                                                    rendered="#{not item.estadomenu}"/>  
                                 </h:commandLink>      
                             </p:column>
 
