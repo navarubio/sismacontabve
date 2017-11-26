@@ -15,6 +15,7 @@ import Modelo.Pagocompra;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -48,6 +49,7 @@ public class CompraController implements Serializable {
     private List<Compra> items = null;
     private List<Compra> comprasactivas = null;
     private List<Compra> comprasporautorizar = null;
+    private List<Compra> comprasfiltradas = null;
     private List<Compra> compraspagadas = null;
     private List<Estatusfactura> estatusfactxpagar = null;
     private List<Detallecompra> detallecompraFiltrados;
@@ -62,6 +64,11 @@ public class CompraController implements Serializable {
     @Inject
     private Compra compraefectuada;
     
+    private Estatusfactura estatusfact;
+    private Date fechadesde;
+    private Date fechahasta;    
+
+
     public CompraController() {
     }
 
@@ -74,8 +81,8 @@ public class CompraController implements Serializable {
 
     public void setSelected(Compra selected) {
         this.selected = selected;
-        this.compraefectuada=selected;      
-        
+        this.compraefectuada = selected;
+
         if (selected != null) {
             asignar();
         }
@@ -102,6 +109,14 @@ public class CompraController implements Serializable {
         }
     }
 
+    public List<Compra> getComprasfiltradas() {
+        return comprasfiltradas;
+    }
+
+    public void setComprasfiltradas(List<Compra> comprasfiltradas) {
+        this.comprasfiltradas = comprasfiltradas;
+    }
+    
     public Compra getCompraseleccionada() {
         return compraseleccionada;
     }
@@ -109,10 +124,10 @@ public class CompraController implements Serializable {
     public void asignar() {
         detallecompraFiltrados = detallecompraAuxiliar();
         pagosporidcompra = pagocompraEJB.buscarpago(selected);
-        
-        this.totalgeneralform=formatearnumero.format(selected.getTotal());
-        this.totalivaform=formatearnumero.format(selected.getIva());
-        this.totalsubtotalform=formatearnumero.format(selected.getSubtotal());  
+
+        this.totalgeneralform = formatearnumero.format(selected.getTotal());
+        this.totalivaform = formatearnumero.format(selected.getIva());
+        this.totalsubtotalform = formatearnumero.format(selected.getSubtotal());
     }
 
     protected void setEmbeddableKeys() {
@@ -129,6 +144,30 @@ public class CompraController implements Serializable {
         return comprasactivas;
     }
 
+    public Estatusfactura getEstatusfact() {
+        return estatusfact;
+    }
+
+    public void setEstatusfact(Estatusfactura estatusfact) {
+        this.estatusfact = estatusfact;
+    }
+    
+    public Date getFechadesde() {
+        return fechadesde;
+    }
+
+    public void setFechadesde(Date fechadesde) {
+        this.fechadesde = fechadesde;
+    }
+
+    public Date getFechahasta() {
+        return fechahasta;
+    }
+
+    public void setFechahasta(Date fechahasta) {
+        this.fechahasta = fechahasta;
+    }
+    
     public List<Compra> getComprasporAutorizar() {
         return comprasporautorizar;
     }
@@ -226,6 +265,10 @@ public class CompraController implements Serializable {
         return selected;
     }
 
+    public void actualizar(){
+        comprasfiltradas= ejbFacade.buscarcomprasFiltradas(estatusfact, fechadesde, fechahasta);
+    }
+    
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CompraCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -345,7 +388,7 @@ public class CompraController implements Serializable {
         rArticulo.getReporte(ruta);
         FacesContext.getCurrentInstance().responseComplete();
     }
-    
+
     public void verOrdendeCompra() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 
         //Instancia hacia la clase reporteClientes        
@@ -359,7 +402,7 @@ public class CompraController implements Serializable {
         rArticulo.getOrdendeCompra(ruta, codigocompra);
         FacesContext.getCurrentInstance().responseComplete();
     }
-    
+
     public void verOrdendeCompralista(Compra compra) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 
         //Instancia hacia la clase reporteClientes        
@@ -371,6 +414,20 @@ public class CompraController implements Serializable {
         String ruta = servletContext.getRealPath("/resources/reportes/ordendecompra.jasper");
 
         rArticulo.getOrdendeCompra(ruta, codigocompra);
+        FacesContext.getCurrentInstance().responseComplete();
+    }
+    
+    public void verMovimientoCompras() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        //Instancia hacia la clase reporteClientes        
+        reporteArticulo rArticulo = new reporteArticulo();
+
+        int codigoestatus = estatusfact.getIdestatusfactura() ;
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("/resources/reportes/comprashechas.jasper");
+
+        rArticulo.getMovimientoCompras(ruta, codigoestatus,fechadesde,fechahasta);
         FacesContext.getCurrentInstance().responseComplete();
     }
 

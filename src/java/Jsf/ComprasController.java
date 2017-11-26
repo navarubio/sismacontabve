@@ -686,4 +686,15 @@ public class ComprasController implements Serializable {
         auxiliarrequerimiento.setMontototal(totalgeneral);
         auxiliarrequerimientoEJB.edit(auxiliarrequerimiento);
     }
+     
+    public void asignar(Auxiliarrequerimiento aux) {
+        this.auxiliarrequerimiento = aux;
+        this.idAuxiliar = aux.getIdauxiliarrequerimiento();
+        this.auxiliar = aux;
+        requerimientosFiltrados = requerimientosAuxiliar();
+        listarequerimiento=requerimientosFiltrados;
+        this.compra.setIdauxiliarrequerimiento(auxiliar);
+        totaltotal();
+    }
+
 }

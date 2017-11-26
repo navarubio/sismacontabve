@@ -96,7 +96,7 @@
                         </p:fieldset>
                     </p:panel>
                     <p:panel id="panelart"  >
-                        <p:dataTable id="listado" value="#{comprasController.listarequerimiento}"
+                        <p:dataTable id="listado" value="#{comprasController.requerimientosFiltrados}"
                                      var="req" emptyMessage="No hay articulos para mostrar" >
                             <p:column style="width:10%"  headerText="Codigo Articulo">
                                 <h:outputText value="#{req.codigo.codigo}" />
@@ -132,8 +132,8 @@
                                     <h:graphicImage library="images" name="desktop.png" width="30" height="30" alt="Editar Articulo"/> 
                                 </p:commandLink>
                             </p:column>
-                            <p:column style="width:10%" headerText="Eliminar" >
-                                <p:commandLink value="Eliminar" actionListener="#{comprasController.eliminar(req)}" styleClass="text-ouputfact" update="listado"  />
+                            <p:column style="text-align: center"  headerText="Eliminar" >
+                                <p:commandLink value="Eliminar" actionListener="#{comprasController.eliminar(req)}" styleClass="text-ouputfact" update=":formulario:listado,:growl" rendered="#{comprasController.listarequerimiento.size()>1 ? true:false}"  />
                             </p:column>
                             <p:columnGroup type="footer">
                                 <p:row>
@@ -144,7 +144,7 @@
                                 </p:row>
                             </p:columnGroup>       
                         </p:dataTable> 
-                        <p:commandButton value="Registrar" actionListener="#{comprasController.registrar()}"  action="/compra/List?faces-redirect=true" update="formulario,:growl"/>
+                        <p:commandButton value="Registrar" actionListener="#{comprasController.registrar()}"  action="/compra/List?faces-redirect=true" update="panelart,:formulario:listado,:growl"/>
                         <p:commandButton value="Cancelar" />
                     </p:panel>
 

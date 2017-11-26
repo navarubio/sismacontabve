@@ -38,7 +38,7 @@ public class AuxiliarrequerimientoFacade extends AbstractFacade<Auxiliarrequerim
         int idstatus = 1;
         List<Auxiliarrequerimiento> lista = null;
         try {
-            consulta = "From Auxiliarrequerimiento a where a.idestatusrequerimiento.idestatusrequerimiento = ?1";
+            consulta = "From Auxiliarrequerimiento a where a.idestatusrequerimiento.idestatusrequerimiento = ?1 Order By a.idauxiliarrequerimiento Desc";
             Query query = em.createQuery(consulta);
             query.setParameter(1, idstatus);
             lista = query.getResultList();
