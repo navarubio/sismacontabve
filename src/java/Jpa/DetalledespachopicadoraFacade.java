@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class DetalledespachopicadoraFacade extends AbstractFacade<Detalledespachopicadora> implements DetalledespachopicadoraFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

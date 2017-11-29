@@ -20,7 +20,7 @@ import javax.persistence.Query;
 @Stateless
 public class ComprobanteislrefFacade extends AbstractFacade<Comprobanteislref> implements ComprobanteislrefFacadeLocal {
 
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

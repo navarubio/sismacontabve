@@ -21,7 +21,7 @@ import javax.persistence.Query;
 @Stateless
 public class MenurolFacade extends AbstractFacade<Menurol> implements MenurolFacadeLocal {
 
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override
@@ -38,7 +38,7 @@ public class MenurolFacade extends AbstractFacade<Menurol> implements MenurolFac
         String consulta;
         List<Menurol> lista = null;
         try {
-            consulta = "From Menurol m where m.idrol.idrol= ?1 order by m.iditemmenu.idsubmenu.idsubmenu,m.iditemmenu.idsubnivel.idsubnivel ";
+            consulta = "From Menurol m where m.idrol.idrol= ?1 order by m.iditemmenu.idsubmenu.idsubmenu,m.iditemmenu.idsubnivel.idsubnivel, m.iditemmenu ";
             Query query = em.createQuery(consulta);
             query.setParameter(1, rolusuario.getIdrol());
             lista = query.getResultList();

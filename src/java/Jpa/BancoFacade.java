@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class BancoFacade extends AbstractFacade<Banco> implements BancoFacadeLocal{
 
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

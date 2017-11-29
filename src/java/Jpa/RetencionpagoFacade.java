@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class RetencionpagoFacade extends AbstractFacade<Retencionpago> implements RetencionpagoFacadeLocal {
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

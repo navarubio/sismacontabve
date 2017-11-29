@@ -5,8 +5,6 @@
  */
 package Jpa;
 
-import Modelo.Cuentabancaria;
-import Modelo.Menu;
 import Modelo.Subnivel;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -20,7 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class SubnivelFacade extends AbstractFacade<Subnivel> implements SubnivelFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

@@ -18,7 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class AutorizacionFacade extends AbstractFacade<Autorizacion> implements AutorizacionFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

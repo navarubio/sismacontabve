@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class TipopagoFacade extends AbstractFacade<Tipopago> implements TipopagoFacadeLocal{
 
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

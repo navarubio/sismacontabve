@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class CondicionfacturaFacade extends AbstractFacade<Condicionfactura> implements CondicionfacturaFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

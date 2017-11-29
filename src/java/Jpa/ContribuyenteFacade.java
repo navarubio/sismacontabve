@@ -22,7 +22,7 @@ import javax.persistence.Query;
 @Stateless
 
 public class ContribuyenteFacade extends AbstractFacade<Contribuyente> implements ContribuyenteFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
     private List<Contribuyente> lista = null;
     private String consulta;

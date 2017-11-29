@@ -20,7 +20,7 @@ import javax.persistence.Query;
 @Stateless
 public class CobroventaFacade extends AbstractFacade<Cobroventa> implements CobroventaFacadeLocal {
 
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

@@ -26,9 +26,9 @@
                             <p:fieldset  style="width: 39%" legend="PRODUCCION POR DIA"  >
                                 <p:panelGrid columns="2" styleClass="ui-custompanelgrid4">
                                     <p:outputLabel for="usuario" value="USUARIO" style="font-weight:bold"  styleClass="optionalLbl"/>
-                                    <p:outputLabel id="usuario" value="#{requerimientosController.usuario.nombre}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="usuario" value="#{requerimientosController.usa.nombre}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="departamento" style="font-weight:bold"  value="DEPARTAMENTO" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="departamento" value="#{requerimientosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="departamento" value="#{requerimientosController.usa.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="fechaproduccion" style="font-weight:bold"  value="Fecha Solicitud" />
                                     <p:calendar id="fechaproduccion" size="8" locale="es" pattern="dd/MM/yyyy" value="#{producciondiariapicadoraController.selected.fecha}" showOn="button" navigator="true" required="true"  />
                                     <p:outputLabel for="hrspicadora" style="font-weight:bold" value="Hrs Picadora" />

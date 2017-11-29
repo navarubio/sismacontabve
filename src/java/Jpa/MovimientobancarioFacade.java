@@ -21,7 +21,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario> implements MovimientobancarioFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

@@ -19,7 +19,7 @@ import javax.persistence.Query;
 @Stateless
 public class PlandecuentaFacade extends AbstractFacade<Plandecuenta> implements PlandecuentaFacadeLocal {
 
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     private List<Plandecuenta> lista = null;

@@ -20,7 +20,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class MenuFacade extends AbstractFacade<Menu> implements MenuFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

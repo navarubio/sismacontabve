@@ -18,7 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class OtroingresoFacade extends AbstractFacade<Otroingreso> implements OtroingresoFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

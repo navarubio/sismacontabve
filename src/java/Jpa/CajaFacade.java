@@ -18,7 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class CajaFacade extends AbstractFacade<Caja> implements CajaFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

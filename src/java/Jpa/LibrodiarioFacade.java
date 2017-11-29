@@ -18,7 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class LibrodiarioFacade extends AbstractFacade<Librodiario> implements LibrodiarioFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

@@ -182,7 +182,7 @@
                                     <p:outputLabel for="usua" value="Usuario" styleClass="text-ouput"/>
                                     <p:outputLabel id="usua" value="#{comprasController.compraautorizada.idusuario.nombre}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="depto" value="Departamento" styleClass="text-ouput"/>
-                                    <p:outputLabel id="depto" value="#{comprasController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="depto" value="#{comprasController.compraautorizada.idusuario.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="proveedor1" value="Proveedor" styleClass="text-ouput"/>
                                     <p:outputLabel id="proveedor1" value="#{comprasController.compraautorizada.rifproveedor.razonsocial}"   /> 
                                     <p:outputLabel for="rif" value="R.U.C." styleClass="text-ouput"/>
@@ -198,9 +198,9 @@
                             <p:fieldset legend="Autorización">
                                 <h:panelGrid styleClass="ui-custompanelgrid3" columns="2" width="400">
                                     <p:outputLabel for="usuaauto" value="Usuario" styleClass="text-ouput"/>
-                                    <p:outputLabel id="usuaauto" value="#{comprasController.usuario.nombre}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="usuaauto" value="#{comprasController.auxiliarrequerimiento.idusuario.nombre}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="deptoauto" value="Departamento" styleClass="text-ouput"/>
-                                    <p:outputLabel id="deptoauto" value="#{comprasController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="deptoauto" value="#{comprasController.auxiliarrequerimiento.idusuario.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="observaauto" value="Observaciones" styleClass="text-ouput"/>
                                     <p:inputTextarea id="observaauto"  rows="2" cols="50" label="Observaciones" value="#{comprasController.autorizacion.observaciones}"/>
                                 </h:panelGrid>                                

@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class PersonalidadjuridicaFacade extends AbstractFacade<Personalidadjuridica> implements PersonalidadjuridicaFacadeLocal{
 
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

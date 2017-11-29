@@ -62,8 +62,6 @@ public class ComprasController implements Serializable {
     @EJB
     private CompraFacadeLocal compraEJB;
     @EJB
-    private DepartamentoFacadeLocal departamentoEJB;
-    @EJB
     private DetallecompraFacadeLocal detallecompraEJB;
     @EJB
     private EstatusrequerimientoFacadeLocal estatusrequerimientoEJB;
@@ -77,30 +75,6 @@ public class ComprasController implements Serializable {
     private EstatuscontableFacadeLocal estatuscontableEJB;
     @EJB
     private EmpresaFacadeLocal empresaEJB;
-
-    private Auxiliarrequerimiento auxiliarrequerimiento;
-    private Usuario usa;
-    private Departamento dpto;
-    private Compra codCompra;
-    private Autorizacion codAutoriza;
-    private Compra compraautorizada;
-    private Empresa empresa;
-    private Tipoconjunto tipoconjunto = null;
-    private int varAutoriza = 0;
-    private double pcosto = 0;
-    private double pventa = 0;
-    private double cantidad = 0;
-    private double subtotal = 0;
-    private int id = 0;
-    private double totalgeneral = 0;
-    private double totaliva = 0;
-    private double totalsubtotal = 0;
-    private String totalgeneralform;
-    private String totalivaform;
-    private String totalsubtotalform;
-    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
-    private List<Requerimiento> listarequerimiento = new ArrayList();
-
     @Inject
     private Auxiliarrequerimiento auxiliar;
     @Inject
@@ -117,6 +91,46 @@ public class ComprasController implements Serializable {
     private Requerimiento requer;
     @Inject
     private Articulo articulo;
+    @Inject
+    private Empresa empresa;
+    @Inject
+    private Proveedor provee;
+    @Inject
+    private RequerimientosController requerimientosController;
+
+    private List<Requerimiento> listarequerimiento = new ArrayList();
+    private List<Auxiliarrequerimiento> auxiliarrequerimientos;
+    private List<Requerimiento> requerimientos;
+    private List<Proveedor> proveedores;
+    private List<Articulo> articulos;
+    private List<Requerimiento> requerimientosFiltrados;
+    private List<Detallecompra> detallesCompras;
+    private List<Detallecompra> detallesactuales;
+    private List<Compra> comprasporautorizar = null;
+    private List<Compra> comprasporpagar = null;
+    private List<Compra> compraspagadas = null;
+    private String totalgeneralform;
+    private String totalivaform;
+    private String totalsubtotalform;
+    private double pcosto = 0;
+    private double pventa = 0;
+    private double cantidad = 0;
+    private double subtotal = 0;
+    private double totalgeneral = 0;
+    private double totaliva = 0;
+    private double totalsubtotal = 0;
+    private int id = 0;
+    private int varAutoriza = 0;
+    private int idAuxiliar = 0;
+    private Auxiliarrequerimiento auxiliarrequerimiento;
+    private Usuario usa;
+    private Departamento dpto;
+    private Compra codCompra;
+    private Autorizacion codAutoriza;
+    private Compra compraautorizada;
+    private Tipoconjunto tipoconjunto = null;
+    private Date fechaactual = new Date();
+    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
 
     public Compra getCompra() {
         return compra;
@@ -189,19 +203,6 @@ public class ComprasController implements Serializable {
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
-    
-    private List<Auxiliarrequerimiento> auxiliarrequerimientos;
-    private List<Requerimiento> requerimientos;
-    private List<Proveedor> proveedores;
-    private List<Articulo> articulos;
-    private int idAuxiliar = 0;
-    private List<Requerimiento> requerimientosFiltrados;
-    private List<Detallecompra> detallesCompras;
-    private List<Detallecompra> detallesactuales;
-    private List<Compra> comprasporautorizar = null;
-    private List<Compra> comprasporpagar = null;
-    private List<Compra> compraspagadas = null;
-    private Date fechaactual = new Date();
 
     public int getIdAuxiliar() {
         return idAuxiliar;
@@ -210,12 +211,6 @@ public class ComprasController implements Serializable {
     public void setIdAuxiliar(int idAuxiliar) {
         this.idAuxiliar = idAuxiliar;
     }
-
-    @Inject
-    private Proveedor provee;
-
-    @Inject
-    private RequerimientosController requerimientosController;
 
     public Proveedor getProvee() {
         return provee;
@@ -264,7 +259,7 @@ public class ComprasController implements Serializable {
     public void setAuxiliarrequerimiento(Auxiliarrequerimiento auxiliarrequerimiento) {
         this.auxiliarrequerimiento = auxiliarrequerimiento;
     }
-    
+
     public double getTotaliva() {
         return totaliva;
     }
@@ -276,7 +271,7 @@ public class ComprasController implements Serializable {
     public double getTotalsubtotal() {
         return totalsubtotal;
     }
-    
+
     public double getTotalgeneral() {
         return totalgeneral;
     }
@@ -284,10 +279,11 @@ public class ComprasController implements Serializable {
     public void setTotalgeneral(double totalgeneral) {
         this.totalgeneral = totalgeneral;
     }
-    
+
     public void setTotalsubtotal(double totalsubtotal) {
         this.totalsubtotal = totalsubtotal;
     }
+
     public Requerimiento getRequerimiento() {
         return requerimiento;
     }
@@ -372,7 +368,7 @@ public class ComprasController implements Serializable {
         compra.setFechaorden(fechaactual);
         varAutoriza = 0;
         listarequerimiento.clear();
-
+        empresa = empresaEJB.devolverEmpresabase();
 
 //        this.auxiliarrequerimiento=requerimientosController.getAuxrequer();
     }
@@ -382,8 +378,6 @@ public class ComprasController implements Serializable {
         lista = proveedorEJB.findAll();
         return lista;
     }
-
-    
 
     public List<Requerimiento> buscarrequerimiento() {
         List<Requerimiento> listado = null;
@@ -526,6 +520,8 @@ public class ComprasController implements Serializable {
             Estatusfactura statusfactu = null;
             int tipo = 0;
             //Para fijar monto minimo de de aprobacion para compras directas
+            // ESTO DEBE PASARSE A REGLAS DE NEGOCIO EN DROOLS
+            
             if (compra.getTotal() <= empresa.getMontoparaautorizacion()) {
                 tipo = 0;
             } else if (compra.getTotal() > empresa.getMontoparaautorizacion()) {
@@ -575,19 +571,6 @@ public class ComprasController implements Serializable {
         }
     }
 
-    public Usuario getUsuario() {
-        Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        usa = us;
-        return us;
-    }
-
-    public Departamento buscarDepartamento() {
-        Usuario usua = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        dpto = departamentoEJB.buscarDepartamento(usua);
-//        statusreq.setIdestatusrequerimiento(statu);
-        return dpto;
-    }
-
     public List<Requerimiento> buscarRequerimiento(Auxiliarrequerimiento auxi) {
         requerimientosFiltrados = requerimientoEJB.buscarrequerimientos(auxiliar);
         return requerimientosFiltrados;
@@ -618,8 +601,8 @@ public class ComprasController implements Serializable {
         pcosto = articulo.getPcosto();
         pventa = articulo.getPventa();
     }
-    
-     public void anexar() {
+
+    public void anexar() {
         if (cantidad != 0) {
             double alicuota = 0;
             double iva = 0;
@@ -627,13 +610,12 @@ public class ComprasController implements Serializable {
             Requerimiento reque = new Requerimiento();
             reque.setCodigo(requer.getCodigo());
             reque.setCantidad(cantidad);
-//            pcosto = reque.getCodigo().getPcosto();
             reque.setPcosto(pcosto);
             subtotal = cantidad * pcosto;
             reque.setSubtotal(subtotal);
             alicuota = reque.getCodigo().getIdgravamen().getAlicuota();
             iva = (subtotal * alicuota) / 100;
-            total = subtotal + iva; 
+            total = subtotal + iva;
             reque.setTributoiva(iva);
             reque.setTotal(total);
             reque.setIdrequerimiento(id);
@@ -651,14 +633,15 @@ public class ComprasController implements Serializable {
             auxiliarrequerimiento.setMontoiva(totaliva);
             auxiliarrequerimiento.setMontototal(totalgeneral);
             auxiliarrequerimientoEJB.edit(auxiliarrequerimiento);
-            
+
 //            visualizar=1;
 //            requer.setCodigo(null);
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Cantidad en 0.0"));
         }
-     }
-     public void totaltotal() {
+    }
+
+    public void totaltotal() {
         double montotgeneral = 0;
         double montotiva = 0;
         double montotsubtotal = 0;
@@ -671,13 +654,13 @@ public class ComprasController implements Serializable {
         totalgeneral = montotgeneral;
         totaliva = montotiva;
         totalsubtotal = montotsubtotal;
-        totalgeneralform= formatearnumero.format(totalgeneral);
-        totalivaform= formatearnumero.format(totaliva);
-        totalsubtotalform= formatearnumero.format(totalsubtotal);
-        
+        totalgeneralform = formatearnumero.format(totalgeneral);
+        totalivaform = formatearnumero.format(totaliva);
+        totalsubtotalform = formatearnumero.format(totalsubtotal);
+
     }
-    
-     public void eliminar(Requerimiento requerim) {
+
+    public void eliminar(Requerimiento requerim) {
         requerimientoEJB.remove(requerim);
         listarequerimiento.remove(requerim);
         totaltotal();
@@ -686,13 +669,13 @@ public class ComprasController implements Serializable {
         auxiliarrequerimiento.setMontototal(totalgeneral);
         auxiliarrequerimientoEJB.edit(auxiliarrequerimiento);
     }
-     
+
     public void asignar(Auxiliarrequerimiento aux) {
         this.auxiliarrequerimiento = aux;
         this.idAuxiliar = aux.getIdauxiliarrequerimiento();
         this.auxiliar = aux;
         requerimientosFiltrados = requerimientosAuxiliar();
-        listarequerimiento=requerimientosFiltrados;
+        listarequerimiento = requerimientosFiltrados;
         this.compra.setIdauxiliarrequerimiento(auxiliar);
         totaltotal();
     }

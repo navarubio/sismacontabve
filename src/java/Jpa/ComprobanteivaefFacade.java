@@ -19,7 +19,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class ComprobanteivaefFacade extends AbstractFacade<Comprobanteivaef> implements ComprobanteivaefFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

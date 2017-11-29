@@ -330,7 +330,7 @@ public class OtroingresoController implements Serializable {
             cuentabancaria = cobro.getIdcuentabancaria();
 
             ingreso.setIdcuentabancaria(cuentabancaria);
-            usa = requer.getUsuario();
+            usa = requer.getUsa();
             ingreso.setIdusuario(usa);
             double saldoactualbanco = 0;
             double saldoanteriorbanco = 0;

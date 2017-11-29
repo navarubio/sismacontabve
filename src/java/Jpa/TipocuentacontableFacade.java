@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class TipocuentacontableFacade extends AbstractFacade<Tipocuentacontable> {
 
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

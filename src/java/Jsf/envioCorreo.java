@@ -36,11 +36,11 @@ import javax.swing.JTextField;
  */
 public class envioCorreo implements Runnable {
 
-//    String correo="sismacontab@hotmail.com";
-//    String contrasena="evita09**"; 
-    String correo="sismacontab_ec@ingelsystems.com";
-    String contrasena="sismacontab_ec."; 
-    String dest = "sismacontab@hotmail.com,rodriguezprietoca@gmail.com";
+    String correo="sismacontab@hotmail.com";
+    String contrasena="evita09**"; 
+//    String correo="sismacontab_ec@ingelsystems.com";
+//    String contrasena="sismacontab_ec."; 
+    String dest = "rodriguezprietoca@gmail.com";
     String subject="Carga de Requerimiento";
     String nom, msn;
     String rout="";
@@ -75,21 +75,21 @@ public class envioCorreo implements Runnable {
             final String pass = contrasena;
             Properties props = new Properties();
 
-/*            props.put("mail.transport.protocol", "smtp");
+            props.put("mail.transport.protocol", "smtp");
             props.put("mail.smtp.host", "smtp.live.com");
             props.put("mail.smtp.socketFactory.port", "587");
             props.put("mail.smtp.socketFactory.fallback", "false");
             props.put("mail.smtp.starttls.enable", "true");
             props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.port", "587");*/
+            props.put("mail.smtp.port", "587");
 
-//            props.put("mail.transport.protocol", "smtp");
+    /*      props.put("mail.transport.protocol", "smtp");
             props.put("mail.smtp.auth", "true");
             props.put("mail.smtp.starttls.enable", "true");
             props.put("mail.smtp.host", "mail.ingelsystems.com");
-//            props.put("mail.smtp.socketFactory.port", "465");
-//            props.put("mail.smtp.socketFactory.fallback", "false");
-            props.put("mail.smtp.port", "465");
+            props.put("mail.smtp.socketFactory.port", "465");
+            props.put("mail.smtp.socketFactory.fallback", "false");
+            props.put("mail.smtp.port", "465");*/
 
             Session session = Session.getInstance(props,
                     new javax.mail.Authenticator() {

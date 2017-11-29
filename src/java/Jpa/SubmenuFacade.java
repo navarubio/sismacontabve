@@ -20,7 +20,7 @@ import javax.persistence.Query;
 @Stateless
 public class SubmenuFacade extends AbstractFacade<Submenu> implements SubmenuFacadeLocal {
 
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

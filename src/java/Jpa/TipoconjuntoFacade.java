@@ -18,7 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class TipoconjuntoFacade extends AbstractFacade<Tipoconjunto> implements TipoconjuntoFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

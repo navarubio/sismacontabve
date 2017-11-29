@@ -20,7 +20,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class UsomaquinariapicadoraFacade extends AbstractFacade<Usomaquinariapicadora> implements UsomaquinariapicadoraFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

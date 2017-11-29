@@ -35,7 +35,7 @@
 }
 .ui-custompanelgrid, .ui-custompanelgrid td {
     //font-weight: bold;
-    background-color:  #FFEFFF;
+    background-color:  mistyrose;
 }
 .ui-custompanelgrid1, .ui-custompanelgrid1 td {
     //font-weight: bold;
@@ -76,7 +76,7 @@ ui-custompanelgrid5, .ui-custompanelgrid5 td {
 }
 
 .requerimientoactivo {
-    background-color: #FFEFFF;
+    background-color: mistyrose;
     color: black;
     font-weight: normal;
 }

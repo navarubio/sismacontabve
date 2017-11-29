@@ -18,7 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class MaestromovimientoFacade extends AbstractFacade<Maestromovimiento> implements MaestromovimientoFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

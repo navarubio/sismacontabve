@@ -18,7 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class EspecificocontableFacade extends AbstractFacade<Especificocontable> implements EspecificocontableFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
     
     private List<Especificocontable> lista = null;

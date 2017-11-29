@@ -19,7 +19,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class ResidenciajuridicaFacade extends AbstractFacade<Residenciajuridica> implements ResidenciajuridicaFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
     private List<Residenciajuridica> lista = null;
     private String consulta;

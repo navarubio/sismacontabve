@@ -20,7 +20,7 @@ import javax.persistence.Query;
 @Stateless
 public class DepartamentoFacade extends AbstractFacade<Departamento> implements DepartamentoFacadeLocal{
 
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

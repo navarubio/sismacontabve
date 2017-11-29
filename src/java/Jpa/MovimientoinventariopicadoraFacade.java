@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class MovimientoinventariopicadoraFacade extends AbstractFacade<Movimientoinventariopicadora> implements MovimientoinventariopicadoraFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

@@ -45,6 +45,8 @@ public class CompraController implements Serializable {
     private DetallecompraFacadeLocal detallecompraEJB;
     @EJB
     private PagocompraFacadeLocal pagocompraEJB;
+    @Inject
+    private Compra compraefectuada;
 
     private List<Compra> items = null;
     private List<Compra> comprasactivas = null;
@@ -54,19 +56,16 @@ public class CompraController implements Serializable {
     private List<Estatusfactura> estatusfactxpagar = null;
     private List<Detallecompra> detallecompraFiltrados;
     private List<Pagocompra> pagosporidcompra;
-    private Compra selected;
-    private Compra compraseleccionada;
-    private PagosController pagoscontroller;
-    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     private String totalgeneralform;
     private String totalivaform;
     private String totalsubtotalform;
-    @Inject
-    private Compra compraefectuada;
-    
+    private Compra selected;
+    private Compra compraseleccionada;
+    private PagosController pagoscontroller;  
     private Estatusfactura estatusfact;
     private Date fechadesde;
     private Date fechahasta;    
+    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
 
 
     public CompraController() {
@@ -124,7 +123,6 @@ public class CompraController implements Serializable {
     public void asignar() {
         detallecompraFiltrados = detallecompraAuxiliar();
         pagosporidcompra = pagocompraEJB.buscarpago(selected);
-
         this.totalgeneralform = formatearnumero.format(selected.getTotal());
         this.totalivaform = formatearnumero.format(selected.getIva());
         this.totalsubtotalform = formatearnumero.format(selected.getSubtotal());

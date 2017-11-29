@@ -18,7 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class TiporetencionivaFacade extends AbstractFacade<Tiporetencioniva> implements TiporetencionivaFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
     private List<Tiporetencioniva> lista = null;
     private String consulta;

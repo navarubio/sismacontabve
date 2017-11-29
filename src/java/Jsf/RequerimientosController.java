@@ -7,11 +7,8 @@ import Jpa.EmpresaFacadeLocal;
 import Jpa.RequerimientoFacadeLocal;
 import Modelo.Articulo;
 import Modelo.Auxiliarrequerimiento;
-import Modelo.Departamento;
 import Modelo.Empresa;
 import Modelo.Estatusrequerimiento;
-import Modelo.Inventariopicadora;
-import Modelo.Proveedor;
 import Modelo.Requerimiento;
 import Modelo.Usuario;
 import java.io.Serializable;
@@ -40,16 +37,26 @@ public class RequerimientosController implements Serializable {
     @EJB
     private AuxiliarrequerimientoFacadeLocal auxiliarrequerimientoEJB;
     @EJB
-    private DepartamentoFacadeLocal departamentoEJB;
-    @EJB
     private EmpresaFacadeLocal empresaEJB;
+    @Inject
+    private Articulo articulo;
+    @Inject
+    private Requerimiento requer;
+    @Inject
+    private Auxiliarrequerimiento auxrequer;
+    @Inject
+    private Usuario usa;
+    @Inject
     private Empresa empresa;
+    @Inject
+    private Estatusrequerimiento statusreq;
     private List<Articulo> articulos = null;
     private List<Requerimiento> requerimientos = null;
     private List<Requerimiento> requerimientosfiltrados;
     private List<Requerimiento> listarequerimiento = new ArrayList();
     private String codigo = null;
     private String descripcion = null;
+    private String correo;
     private double cantidad = 0;
     private double pcosto = 0;
     private double pventa = 0;
@@ -58,15 +65,16 @@ public class RequerimientosController implements Serializable {
     private double totaliva = 0;
     private double totalsubtotal = 0;
     private int id = 0;
+    private int visualizar=0;
+    private int statu = 1;
     private envioCorreo enviomail;
-    private String correo;
+    private Auxiliarrequerimiento codAux;
+    private Auxiliarrequerimiento auxiliar;
+
     private Date fechaactual = new Date();
     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
-    int visualizar=0;
 
-    private Auxiliarrequerimiento codAux;
-    private Auxiliarrequerimiento auxiliar;
 
     public Auxiliarrequerimiento getAuxiliar() {
         return auxiliar;
@@ -188,31 +196,6 @@ public class RequerimientosController implements Serializable {
         this.requerimientos = requerimientos;
     }
 
-    @Inject
-    private Articulo articulo;
-    @Inject
-    private Requerimiento requer;
-    @Inject
-    private Proveedor provee;
-
-    @PostConstruct
-    public void init() {
-        articulos = articuloEJB.findAll();
-        auxrequer.setFecharequerimiento(fechaactual);
-        listarequerimiento.clear();
-        visualizar=0;
-    }
-
-    @Inject
-    private Auxiliarrequerimiento auxrequer;
-    @Inject
-    private Usuario usa;
-    @Inject
-    private Departamento dpto;
-    @Inject
-    private Estatusrequerimiento statusreq;
-    private int statu = 1;
-
     public Articulo getArticulo() {
         return articulo;
     }
@@ -237,23 +220,32 @@ public class RequerimientosController implements Serializable {
         this.auxrequer = auxrequer;
     }
 
-    public Usuario getUsuario() {
+    public Usuario getUsa() {
+        return usa;
+    }
+
+    public void setUsa(Usuario usa) {
+        this.usa = usa;
+    }
+
+    @PostConstruct
+    public void init() {
+        articulos = articuloEJB.findAll();
+        auxrequer.setFecharequerimiento(fechaactual);
+        listarequerimiento.clear();
+        visualizar=0;
+        ObtenerUsuario();
+    }
+   
+    public void ObtenerUsuario() {
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        usa = us;
-        return us;
-    }
-
-    public Departamento buscarDepartamento() {
-        Usuario usua = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        dpto = departamentoEJB.buscarDepartamento(usua);
+        usa=us;
         statusreq.setIdestatusrequerimiento(statu);
-        return dpto;
     }
-
+    
     public void buscarArticulo() {
         articulo = requer.getCodigo();
         pcosto = articulo.getPcosto();
-        pventa = articulo.getPventa();
     }
 
     public void buscarProveedor() {
@@ -267,7 +259,6 @@ public class RequerimientosController implements Serializable {
             Requerimiento reque = new Requerimiento();
             reque.setCodigo(requer.getCodigo());
             reque.setCantidad(cantidad);
-//            pcosto = reque.getCodigo().getPcosto();
             reque.setPcosto(pcosto);
             subtotal = cantidad * pcosto;
             reque.setSubtotal(subtotal);
@@ -278,14 +269,13 @@ public class RequerimientosController implements Serializable {
             reque.setTotal(total);
             reque.setIdrequerimiento(id);
             this.listarequerimiento.add(reque);
-            id++;
             requerimientos = requerimientoEJB.findAll();
             pcosto = 0;
             pventa = 0;
             cantidad = 0;
             requer.setCodigo(null);
             visualizar=1;
-//            requer.setCodigo(null);
+            id++;
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Cantidad en 0.0"));
         }
@@ -352,7 +342,7 @@ public class RequerimientosController implements Serializable {
         return new DecimalFormat("###,###.##").format(total);
     }
     
-    public double totaltotal() {
+/*     public double totaltotal() {
         double montotgeneral = 0;
         double montotiva = 0;
         double montotsubtotal = 0;
@@ -369,7 +359,7 @@ public class RequerimientosController implements Serializable {
         return montotgeneral;
     }
 
-    public double totaliva() {
+   public double totaliva() {
         double montotgeneral = 0;
         double montotiva = 0;
         double montotsubtotal = 0;
@@ -401,12 +391,11 @@ public class RequerimientosController implements Serializable {
         totalsubtotal = montotsubtotal;
 
         return montotsubtotal;
-    }
+    }*/
 
     public void registrar() {
-        Articulo art = new Articulo();
         try {
-            auxrequer.setIddepartamento(dpto);
+            auxrequer.setIddepartamento(usa.getIddepartamento());
             auxrequer.setIdusuario(usa);
             auxrequer.setIdestatusrequerimiento(statusreq);
             auxrequer.setSubtotal(totalsubtotal);

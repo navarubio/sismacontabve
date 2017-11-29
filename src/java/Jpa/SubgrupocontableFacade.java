@@ -18,7 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class SubgrupocontableFacade extends AbstractFacade<Subgrupocontable> implements SubgrupocontableFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
     
     private List<Subgrupocontable> lista = null;

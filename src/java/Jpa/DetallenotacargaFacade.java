@@ -19,7 +19,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class DetallenotacargaFacade extends AbstractFacade<Detallenotacarga> implements DetallenotacargaFacadeLocal{
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

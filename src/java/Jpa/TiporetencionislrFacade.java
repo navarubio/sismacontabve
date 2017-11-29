@@ -21,7 +21,7 @@ import javax.persistence.Query;
 @Stateless
 public class TiporetencionislrFacade extends AbstractFacade<Tiporetencionislr> implements TiporetencionislrFacadeLocal {
 
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

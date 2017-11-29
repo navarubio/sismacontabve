@@ -22,7 +22,7 @@ import javax.persistence.Query;
 @Stateless
 public class RequerimientoFacade extends AbstractFacade<Requerimiento> implements RequerimientoFacadeLocal {
 
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
     @Override

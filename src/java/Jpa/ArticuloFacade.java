@@ -18,7 +18,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 @Stateless
 public class ArticuloFacade extends AbstractFacade<Articulo> implements ArticuloFacadeLocal {
 
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
     Articulo art;
 

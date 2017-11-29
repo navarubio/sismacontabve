@@ -19,7 +19,7 @@ import javax.persistence.Query;
 @Stateless
 public class CuentabancariaFacade extends AbstractFacade<Cuentabancaria> implements CuentabancariaFacadeLocal{
 
-    @PersistenceContext(unitName = "InpecaPU")
+    @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
     private List<Cuentabancaria> lista = null;
     private String consulta;
