@@ -75,23 +75,6 @@ public class NotacargaController implements Serializable {
     private MovimientoinventariopicadoraFacadeLocal movimientoinventariopicadoraEJB;
     @EJB
     private InventariopicadoraFacadeLocal inventariopicadoraEJB;
-
-    private List<Notacarga> items = null;
-    private Notacarga selected;
-    private List<Articulo> articulos = null;
-    private List<Detallenotacarga> listadetallenota = new ArrayList();
-    private List<Detallenotacarga> detalles = null;
-    private Detallenotacarga detallenota;
-    private double cantidad = 0;
-    private double totalcantidad = 0;
-    private double pventa = 0;
-    private double subtotal = 0;
-    private int id = 0;
-    private double totalgeneral = 0;
-    private double totaliva = 0;
-    private double totalsubtotal = 0;
-    private Camion camion;
-    private double mt3 = 0;
     @Inject
     private Notacarga nota;
     @Inject
@@ -101,55 +84,43 @@ public class NotacargaController implements Serializable {
     @Inject
     private Cliente cliente;
     @Inject
-    Chofer chofer;
-    private FacturasController factu = new FacturasController();
-    private Notacarga codnota;
-    private int number;
-    private List<Cliente> clientes;
-    int idnota = 0;
-    private Notacarga notacargadialog;
-    private List<Detallenotacarga> detallesnotafiltrados;
-    private List<Despachopicadora> despachosfiltrados;
-    private List<Despachador> despachadores;
-    private List<Camion> camiones;
-    private List<Chofer> choferes;
+    private Chofer chofer;
     @Inject
     private Despachopicadora despacho;
     @Inject
     private Movimientoinventariopicadora moviinventariopro;
     @Inject
     private Inventariopicadora inventariopro;
-
-    public NotacargaController() {
-    }
-
-    @PostConstruct
-    public void init() {
-        clientes = clienteEJB.findAll();
-        selected = new Notacarga();
-        articulos = articuloEJB.listadoAgregadospicadora();
-        despachadores = despachorEJB.findAll();
-        camiones = camionEJB.findAll();
-        choferes = choferEJB.findAll();
-        listadetallenota.clear();
-        totalsubtotal = 0;
-        totaliva = 0;
-        totalgeneral = 0;
-        totalcantidad = 0;
-        articulo = null;
-    }
-
-    public Notacarga getSelected() {
-        return selected;
-    }
-
-    public void setSelected(Notacarga selected) {
-        if (selected!=null){
-            this.selected = selected;
-            detallesnotafiltrados = detallenotacargaEJB.detallesfiltrados(selected);
-            despachosfiltrados = despachopicadoraEJB.despachosfiltrados(selected);            
-        }
-    }
+    @Inject
+    private RequerimientosController requerimientosController;
+    
+    private List<Notacarga> items = null;
+    private List<Articulo> articulos = null;
+    private List<Detallenotacarga> listadetallenota = new ArrayList();
+    private List<Detallenotacarga> detalles = null;
+    private List<Cliente> clientes;
+    private List<Detallenotacarga> detallesnotafiltrados;
+    private List<Despachopicadora> despachosfiltrados;
+    private List<Despachador> despachadores;
+    private List<Camion> camiones;
+    private List<Chofer> choferes;
+    private double cantidad = 0;
+    private double totalcantidad = 0;
+    private double pventa = 0;
+    private double subtotal = 0;
+    private double totalgeneral = 0;
+    private double totaliva = 0;
+    private double totalsubtotal = 0;
+    private double mt3 = 0;
+    private int id = 0;
+    private int number;
+    int idnota = 0;
+    private Camion camion;
+    private FacturasController factu = new FacturasController();
+    private Notacarga codnota;
+    private Notacarga selected;
+    private Detallenotacarga detallenota;
+    private Notacarga notacargadialog;
 
     public List<Despachopicadora> getDespachosfiltrados() {
         return despachosfiltrados;
@@ -329,6 +300,45 @@ public class NotacargaController implements Serializable {
         this.detallesnotafiltrados = deallesnotafiltrados;
     }
 
+    public RequerimientosController getRequerimientosController() {
+        return requerimientosController;
+    }
+
+    public void setRequerimientosController(RequerimientosController requerimientosController) {
+        this.requerimientosController = requerimientosController;
+    }
+        
+    public NotacargaController() {
+    }
+
+    @PostConstruct
+    public void init() {
+        clientes = clienteEJB.findAll();
+        selected = new Notacarga();
+        articulos = articuloEJB.listadoAgregadospicadora();
+        despachadores = despachorEJB.findAll();
+        camiones = camionEJB.findAll();
+        choferes = choferEJB.findAll();
+        listadetallenota.clear();
+        totalsubtotal = 0;
+        totaliva = 0;
+        totalgeneral = 0;
+        totalcantidad = 0;
+        articulo = null;
+    }
+
+    public Notacarga getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Notacarga selected) {
+        if (selected!=null){
+            this.selected = selected;
+            detallesnotafiltrados = detallenotacargaEJB.detallesfiltrados(selected);
+            despachosfiltrados = despachopicadoraEJB.despachosfiltrados(selected);            
+        }
+    }  
+
     public List<Notacarga> getItems() {
         if (items == null) {
             items = getFacade().findAll();
@@ -394,7 +404,7 @@ public class NotacargaController implements Serializable {
         String fechaCadena = hourFormat.format(fecha);
         DecimalFormat numformat = new DecimalFormat("#######.##");
         try {
-            Usuario usua = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            Usuario usua = requerimientosController.getUsa();
             selected.setIdusuario(usua);
             selected.setRifcliente(cliente);
             selected.setCantidad(totalcantidad);

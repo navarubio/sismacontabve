@@ -74,7 +74,7 @@ public class ArticuloFacade extends AbstractFacade<Articulo> implements Articulo
         public void getReporte(String ruta) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
             Connection conexion;
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/inpeca", "root", "091095");
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/sismacontab_ec", "root", "091095");
 
             //Se definen los parametros si es que el reporte necesita
             Map parameter = new HashMap();

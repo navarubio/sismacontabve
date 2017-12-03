@@ -644,7 +644,7 @@ public class PagosController implements Serializable {
         usa = us;
         return us;
     }
-
+ 
     public Departamento buscarDepartamento() {
         Usuario usua = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         dpto = departamentoEJB.buscarDepartamento(usua);
@@ -662,7 +662,11 @@ public class PagosController implements Serializable {
             lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco());
         } catch (Exception e) {
         }
-        pagocompra.setIdcuentabancaria(lstCuentasSelecc.get(0));
+        if (lstCuentasSelecc.size()>0){
+            pagocompra.setIdcuentabancaria(lstCuentasSelecc.get(0));
+        }else{
+            lstCuentasSelecc=null;
+        }
         return lstCuentasSelecc;
     }
 

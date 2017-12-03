@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ddba77e-51be-47ac-8b24-c3354df35f82">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="509"/>
+	<property name="ireport.x" value="391"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT
@@ -52,12 +52,34 @@
      articulo.`pcosto` AS articulo_pcosto,
      articulo.`pventa` AS articulo_pventa,
      articulo.`idusuario` AS articulo_idusuario,
-     articulo.`idplandecuenta` AS articulo_idplandecuenta
+     articulo.`idplandecuenta` AS articulo_idplandecuenta,
+     empresa.`rif` AS empresa_rif,
+     empresa.`razonsocial` AS empresa_razonsocial,
+     empresa.`nombrecomercial` AS empresa_nombrecomercial,
+     empresa.`direccionfiscal` AS empresa_direccionfiscal,
+     empresa.`telefonos` AS empresa_telefonos,
+     empresa.`presidente` AS empresa_presidente,
+     empresa.`administrador` AS empresa_administrador,
+     empresa.`contador` AS empresa_contador,
+     empresa.`idcontribuyente` AS empresa_idcontribuyente,
+     empresa.`idpersonalidad` AS empresa_idpersonalidad,
+     empresa.`montoparaautorizacion` AS empresa_montoparaautorizacion,
+     empresa.`credfiscal` AS empresa_credfiscal,
+     empresa.`retivacliente` AS empresa_retivacliente,
+     empresa.`retislrcliente` AS empresa_retislrcliente,
+     empresa.`ctasxcobrar` AS empresa_ctasxcobrar,
+     empresa.`ctagastoprovisional` AS empresa_ctagastoprovisional,
+     empresa.`debfiscal` AS empresa_debfiscal,
+     empresa.`retislrxenterar` AS empresa_retislrxenterar,
+     empresa.`retivaxenterar` AS empresa_retivaxenterar,
+     empresa.`ctaxpagarproveed` AS empresa_ctaxpagarproveed,
+     empresa.`ctaxpagarinterna` AS empresa_ctaxpagarinterna
 FROM
      `cliente` cliente INNER JOIN `factura` factura ON cliente.`rifcliente` = factura.`rifcliente`
      INNER JOIN `estatusfacturaventa` estatusfacturaventa ON factura.`idestatusfacturaventa` = estatusfacturaventa.`idestatusfacturaventa`
      INNER JOIN `detallefactura` detallefactura ON factura.`numerofact` = detallefactura.`numerofact`
-     INNER JOIN `articulo` articulo ON detallefactura.`codigo` = articulo.`codigo`
+     INNER JOIN `articulo` articulo ON detallefactura.`codigo` = articulo.`codigo`,
+     `empresa` empresa
 ORDER BY
      factura.`numerofact` ASC]]>
 	</queryString>
@@ -109,6 +131,27 @@ ORDER BY
 	<field name="articulo_pventa" class="java.lang.Double"/>
 	<field name="articulo_idusuario" class="java.lang.Integer"/>
 	<field name="articulo_idplandecuenta" class="java.lang.Integer"/>
+	<field name="empresa_rif" class="java.lang.String"/>
+	<field name="empresa_razonsocial" class="java.lang.String"/>
+	<field name="empresa_nombrecomercial" class="java.lang.String"/>
+	<field name="empresa_direccionfiscal" class="java.lang.String"/>
+	<field name="empresa_telefonos" class="java.lang.String"/>
+	<field name="empresa_presidente" class="java.lang.String"/>
+	<field name="empresa_administrador" class="java.lang.String"/>
+	<field name="empresa_contador" class="java.lang.String"/>
+	<field name="empresa_idcontribuyente" class="java.lang.Integer"/>
+	<field name="empresa_idpersonalidad" class="java.lang.Integer"/>
+	<field name="empresa_montoparaautorizacion" class="java.lang.Double"/>
+	<field name="empresa_credfiscal" class="java.lang.Integer"/>
+	<field name="empresa_retivacliente" class="java.lang.Integer"/>
+	<field name="empresa_retislrcliente" class="java.lang.Integer"/>
+	<field name="empresa_ctasxcobrar" class="java.lang.Integer"/>
+	<field name="empresa_ctagastoprovisional" class="java.lang.Integer"/>
+	<field name="empresa_debfiscal" class="java.lang.Integer"/>
+	<field name="empresa_retislrxenterar" class="java.lang.Integer"/>
+	<field name="empresa_retivaxenterar" class="java.lang.Integer"/>
+	<field name="empresa_ctaxpagarproveed" class="java.lang.Integer"/>
+	<field name="empresa_ctaxpagarinterna" class="java.lang.Integer"/>
 	<group name="cliente_razonsocial">
 		<groupExpression><![CDATA[$F{factura_numerofact}]]></groupExpression>
 	</group>
@@ -117,31 +160,38 @@ ORDER BY
 	</background>
 	<title>
 		<band height="44" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="227" height="13" uuid="1a7b2ecc-6866-457e-969d-177a2086da99"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA["INVERSIONES PEDREAÑEZ, C.A".]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="13" width="100" height="12" uuid="5bced9d0-4f76-44cb-a41f-2dbec357a268"/>
-				<textElement>
-					<font size="8" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[RIF J-26720565-9]]></text>
-			</staticText>
 			<image>
 				<reportElement x="634" y="-3" width="118" height="47" uuid="753d1aab-962a-4e5f-8f4f-aa1d3635fa60"/>
 				<imageExpression><![CDATA["D:\\APLICACIONES JAVA SE - EE\\SistemaINPECA\\Inpeca\\web\\resources\\images\\LogoInpeca.jpg"]]></imageExpression>
 			</image>
-			<staticText>
-				<reportElement x="0" y="25" width="335" height="12" uuid="bdbcbfdf-13f1-43c7-ad3b-a8080e5a1e53"/>
+			<textField>
+				<reportElement x="0" y="25" width="489" height="19" uuid="41536fcf-f410-4c38-8c04-bf5ba7aac4ba"/>
 				<textElement>
-					<font size="8" isItalic="false"/>
+					<font size="8"/>
 				</textElement>
-				<text><![CDATA[AV. 3H Entre calles 78 y 79 Residencias Republica PB Local 01 Maracaibo Estado Zulia]]></text>
+				<textFieldExpression><![CDATA[$F{empresa_direccionfiscal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="14" width="28" height="11" uuid="b2ae7846-31ba-4f2f-adff-9ddf12d72225"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R.U.C]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="0" y="0" width="477" height="13" uuid="4e0dfea1-d496-4ec4-8c49-14b1f283c4a3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_razonsocial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="28" y="13" width="107" height="12" uuid="80838359-7328-4b24-a7d0-d1e52b6cc604"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_rif}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -186,7 +236,7 @@ ORDER BY
 				<text><![CDATA[ARTICULO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="408" y="5" width="57" height="20" uuid="9e60caad-2501-4c9b-8af6-015026238256"/>
+				<reportElement x="420" y="4" width="57" height="20" uuid="9e60caad-2501-4c9b-8af6-015026238256"/>
 				<textElement textAlignment="Right">
 					<font size="9" isBold="true"/>
 				</textElement>
@@ -267,14 +317,14 @@ ORDER BY
 				<textFieldExpression><![CDATA[$F{detallefactura_codigo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="248" y="2" width="160" height="22" uuid="b5d4ce44-0a4e-41f4-97c2-f313850ff390"/>
+				<reportElement x="248" y="2" width="172" height="22" uuid="b5d4ce44-0a4e-41f4-97c2-f313850ff390"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{articulo_descripcion}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="408" y="2" width="57" height="22" uuid="6c24e338-9d81-42dc-aa07-d5ab5359ef3f"/>
+				<reportElement x="420" y="1" width="57" height="22" uuid="6c24e338-9d81-42dc-aa07-d5ab5359ef3f"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>

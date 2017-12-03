@@ -25,11 +25,11 @@
                         <p:fieldset style="width: 67%"  legend="Datos Administrador y Cliente" >
                             <p:panelGrid columns="4" styleClass="ui-custompanelgrid4">
                                 <p:outputLabel for="usuario" styleClass="text-ouput" value="USUARIO"/>
-                                <p:outputLabel id="usuario"  value="#{requerimientosController.usuario.nombre}"/>
+                                <p:outputLabel id="usuario"  value="#{requerimientosController.usa.nombre}"/>
                                 <p:outputLabel for="numero" styleClass="text-ouput" value="Nro. Nota" />                                 
                                 <p:outputLabel id="numero" styleClass="text-haber" value="#{notacargaController.devolversiguientenotacarga()}" title="#{bundle.CreateFacturaTitle_numerofactura}" />
                                 <p:outputLabel for="departamento" styleClass="text-ouput" value="DEPARTAMENTO" />
-                                <p:outputLabel id="departamento" value="#{requerimientosController.buscarDepartamento().departamento}" />
+                                <p:outputLabel id="departamento" value="#{requerimientosController.usa.iddepartamento.departamento}" />
                                 <p:outputLabel/>
                                 <p:outputLabel/>
                                 <p:outputLabel for="client" styleClass="text-ouput" value="Cliente"/>

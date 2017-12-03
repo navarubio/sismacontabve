@@ -12,16 +12,16 @@
             <h:form id="CuentabancariaCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{cuentabancariaController.selected != null}">
-                        <p:outputLabel value="#{bundlebanco.CreateCuentabancariaLabel_numerocuenta}" for="numerocuenta" />
-                        <p:inputText id="numerocuenta" value="#{cuentabancariaController.selected.numerocuenta}" title="#{bundlebanco.CreateCuentabancariaTitle_numerocuenta}" />
-                        <p:outputLabel value="#{bundlebanco.CreateCuentabancariaLabel_saldo}" for="saldo" />
-                        <p:inputText id="saldo" value="#{cuentabancariaController.selected.saldo}" title="#{bundlebanco.CreateCuentabancariaTitle_saldo}" />
                         <p:outputLabel value="#{bundlebanco.CreateCuentabancariaLabel_idbanco}" for="idbanco" />
                         <p:selectOneMenu id="idbanco" value="#{cuentabancariaController.selected.idbanco}" converter="omnifaces.SelectItemsConverter" >
                             <f:selectItems value="#{bancoController.itemsAvailableSelectOne}" 
                                            var="idbancoItem"
                                            itemValue="#{idbancoItem}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlebanco.CreateCuentabancariaLabel_numerocuenta}" for="numerocuenta" />
+                        <p:inputMask id="numerocuenta" size="50" mask="9999-9999-99-9999999999" value="#{cuentabancariaController.selected.numerocuenta}" title="#{bundlebanco.CreateCuentabancariaTitle_numerocuenta}" />
+                        <p:outputLabel value="#{bundlebanco.CreateCuentabancariaLabel_saldo}" for="saldo" />
+                        <p:inputText id="saldo" value="#{cuentabancariaController.selected.saldo}" title="#{bundlebanco.CreateCuentabancariaTitle_saldo}" />
                         <p:outputLabel value="#{bundlebanco.CreateCuentabancariaLabel_idplandecuenta}" for="idplandecuenta" />
                         <p:selectOneMenu id="idplandecuenta" value="#{cuentabancariaController.selected.idplandecuenta}" filter="true" filterMatchMode="contains"  converter="omnifaces.SelectItemsConverter" >
                             <f:selectItems value="#{plandecuentaController.itemsordenados}"

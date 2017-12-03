@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author sofimar
+ * @author sofimar/Ecuador
  */
 @Entity
 @Table(name = "empresa")

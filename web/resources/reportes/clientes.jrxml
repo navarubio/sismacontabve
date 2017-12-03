@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ddba77e-51be-47ac-8b24-c3354df35f82">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="419"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT
@@ -71,39 +71,39 @@ FROM
 				<imageExpression><![CDATA["D:\\APLICACIONES JAVA SE - EE\\SistemaINPECA\\Inpeca\\web\\resources\\images\\LogoInpeca.jpg"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="0" y="0" width="398" height="13" uuid="896d65e6-6f90-418a-b9b0-071046e43d7d"/>
+				<reportElement x="2" y="25" width="489" height="19" uuid="d39a67f1-20c4-4bfd-8681-fa0682193330"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_direccionfiscal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="14" width="28" height="11" uuid="10e94782-36d8-488f-ab36-1d913c33e3a8"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R.U.C]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="0" width="477" height="13" uuid="a2e1f690-5f39-41b4-b8bc-5a7c93278375"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{empresa_razonsocial}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="33" y="13" width="180" height="13" uuid="96a2935f-8b95-43fb-9dd8-504b5b17b92a"/>
+				<reportElement x="30" y="13" width="107" height="12" uuid="0e073c6d-091a-4dbc-9f59-97186266afa4"/>
 				<textElement>
-					<font isBold="true"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{empresa_rif}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="0" y="26" width="609" height="18" uuid="79093ba3-cbd8-4091-98d7-a73e01e9964b"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{empresa_direccionfiscal}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="14" width="32" height="12" uuid="52601909-7c4e-422f-9e44-825c89b94b79"/>
-				<textElement>
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[RUC:]]></text>
-			</staticText>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="23" splitType="Stretch">
 			<staticText>
-				<reportElement x="180" y="3" width="237" height="20" uuid="34867c07-73a8-48ed-9283-8f2ca4018671"/>
+				<reportElement x="2" y="3" width="750" height="20" uuid="34867c07-73a8-48ed-9283-8f2ca4018671"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -156,7 +156,7 @@ FROM
 				<text><![CDATA[PERSONALIDAD]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="688" y="4" width="89" height="20" uuid="dc84d994-5c7c-446f-883b-feb704f7d549"/>
+				<reportElement x="677" y="4" width="89" height="20" uuid="dc84d994-5c7c-446f-883b-feb704f7d549"/>
 				<textElement textAlignment="Center">
 					<font size="9" isBold="true"/>
 				</textElement>

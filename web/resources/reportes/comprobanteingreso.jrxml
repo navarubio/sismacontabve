@@ -70,7 +70,28 @@
      usuario.`clave` AS usuario_clave,
      usuario.`iddepartamento` AS usuario_iddepartamento,
      departamento.`iddepartamento` AS departamento_iddepartamento,
-     departamento.`departamento` AS departamento_departamento
+     departamento.`departamento` AS departamento_departamento,
+     empresa.`rif` AS empresa_rif,
+     empresa.`razonsocial` AS empresa_razonsocial,
+     empresa.`nombrecomercial` AS empresa_nombrecomercial,
+     empresa.`direccionfiscal` AS empresa_direccionfiscal,
+     empresa.`telefonos` AS empresa_telefonos,
+     empresa.`presidente` AS empresa_presidente,
+     empresa.`administrador` AS empresa_administrador,
+     empresa.`contador` AS empresa_contador,
+     empresa.`idcontribuyente` AS empresa_idcontribuyente,
+     empresa.`idpersonalidad` AS empresa_idpersonalidad,
+     empresa.`montoparaautorizacion` AS empresa_montoparaautorizacion,
+     empresa.`credfiscal` AS empresa_credfiscal,
+     empresa.`retivacliente` AS empresa_retivacliente,
+     empresa.`retislrcliente` AS empresa_retislrcliente,
+     empresa.`ctasxcobrar` AS empresa_ctasxcobrar,
+     empresa.`ctagastoprovisional` AS empresa_ctagastoprovisional,
+     empresa.`debfiscal` AS empresa_debfiscal,
+     empresa.`retislrxenterar` AS empresa_retislrxenterar,
+     empresa.`retivaxenterar` AS empresa_retivaxenterar,
+     empresa.`ctaxpagarproveed` AS empresa_ctaxpagarproveed,
+     empresa.`ctaxpagarinterna` AS empresa_ctaxpagarinterna
 FROM
      `tipopago` tipopago INNER JOIN `otroingreso` otroingreso ON tipopago.`idtipopago` = otroingreso.`idtipopago`
      INNER JOIN `tipoingreso` tipoingreso ON otroingreso.`idtipoingreso` = tipoingreso.`idtipoingreso`
@@ -78,7 +99,8 @@ FROM
      INNER JOIN `usuario` usuario ON otroingreso.`idusuario` = usuario.`idusuario`
      INNER JOIN `departamento` departamento ON usuario.`iddepartamento` = departamento.`iddepartamento`
      INNER JOIN `cuentabancaria` cuentabancaria ON movimientobancario.`idcuentabancaria` = cuentabancaria.`idcuentabancaria`
-     INNER JOIN `banco` banco ON cuentabancaria.`idbanco` = banco.`idbanco`
+     INNER JOIN `banco` banco ON cuentabancaria.`idbanco` = banco.`idbanco`,
+     `empresa` empresa
 WHERE
      otroingreso.`idotroingreso` = $P{numeroingreso}]]>
 	</queryString>
@@ -124,6 +146,27 @@ WHERE
 	<field name="usuario_iddepartamento" class="java.lang.Integer"/>
 	<field name="departamento_iddepartamento" class="java.lang.Integer"/>
 	<field name="departamento_departamento" class="java.lang.String"/>
+	<field name="empresa_rif" class="java.lang.String"/>
+	<field name="empresa_razonsocial" class="java.lang.String"/>
+	<field name="empresa_nombrecomercial" class="java.lang.String"/>
+	<field name="empresa_direccionfiscal" class="java.lang.String"/>
+	<field name="empresa_telefonos" class="java.lang.String"/>
+	<field name="empresa_presidente" class="java.lang.String"/>
+	<field name="empresa_administrador" class="java.lang.String"/>
+	<field name="empresa_contador" class="java.lang.String"/>
+	<field name="empresa_idcontribuyente" class="java.lang.Integer"/>
+	<field name="empresa_idpersonalidad" class="java.lang.Integer"/>
+	<field name="empresa_montoparaautorizacion" class="java.lang.Double"/>
+	<field name="empresa_credfiscal" class="java.lang.Integer"/>
+	<field name="empresa_retivacliente" class="java.lang.Integer"/>
+	<field name="empresa_retislrcliente" class="java.lang.Integer"/>
+	<field name="empresa_ctasxcobrar" class="java.lang.Integer"/>
+	<field name="empresa_ctagastoprovisional" class="java.lang.Integer"/>
+	<field name="empresa_debfiscal" class="java.lang.Integer"/>
+	<field name="empresa_retislrxenterar" class="java.lang.Integer"/>
+	<field name="empresa_retivaxenterar" class="java.lang.Integer"/>
+	<field name="empresa_ctaxpagarproveed" class="java.lang.Integer"/>
+	<field name="empresa_ctaxpagarinterna" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -142,27 +185,6 @@ WHERE
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FECHA:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="135" y="22" width="100" height="12" uuid="ac2ba78b-9f00-46d0-9a67-f8e2afeb34ee"/>
-				<textElement>
-					<font size="9" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[RIF J-26720565-9]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="135" y="34" width="251" height="42" uuid="eb21a66f-5b54-444a-acea-846a55d00e1b"/>
-				<textElement textAlignment="Justified">
-					<font size="9" isItalic="false"/>
-				</textElement>
-				<text><![CDATA[AV. 3H Entre calles 78 y 79 Residencias Republica PB Local 01 Maracaibo Estado Zulia. Telefono  0261-7934104 correo inpeca7@gmail.com]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="135" y="0" width="235" height="22" uuid="26605f85-cb9e-4b6c-bc94-7bee9177a6d8"/>
-				<textElement verticalAlignment="Middle">
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[INVERSIONES PEDREAÑEZ, C.A.]]></text>
 			</staticText>
 			<image>
 				<reportElement x="-1" y="10" width="131" height="76" uuid="e0ae1978-eb44-4a7d-8161-89ab7ff9a4ee"/>
@@ -261,6 +283,34 @@ WHERE
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{departamento_departamento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="142" y="34" width="256" height="52" uuid="6b1fed77-4fb0-4387-80df-85722cfeb795"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_direccionfiscal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="142" y="23" width="28" height="11" uuid="1fdce0e9-50ab-458e-bb8c-3c33996770bc"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R.U.C]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="142" y="9" width="206" height="13" uuid="a9be987d-5b2c-4394-9795-4dd66a249408"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_razonsocial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="172" y="22" width="107" height="12" uuid="96f64f14-f840-4788-bee1-93cc15068f94"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_rif}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

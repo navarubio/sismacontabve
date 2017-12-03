@@ -356,6 +356,14 @@ public class ComprasController implements Serializable {
         this.totalsubtotalform = totalsubtotalform;
     }
 
+    public RequerimientosController getRequerimientosController() {
+        return requerimientosController;
+    }
+
+    public void setRequerimientosController(RequerimientosController requerimientosController) {
+        this.requerimientosController = requerimientosController;
+    }
+
     @PostConstruct
     public void init() {
         auxiliarrequerimientos = auxiliarrequerimientoEJB.findAll();
@@ -436,7 +444,7 @@ public class ComprasController implements Serializable {
     }
 
     public void autorizar() {
-        Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        Usuario us = requerimientosController.getUsa();              
         Date fecha = new Date();
         DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
         Date fechafinal = null;
@@ -515,7 +523,7 @@ public class ComprasController implements Serializable {
             compra.setIva(auxiliar.getMontoiva());
             compra.setTotal(auxiliar.getMontototal());
             compra.setMontopendiente(auxiliar.getMontototal());
-            Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            Usuario us = requerimientosController.getUsa();
             compra.setIdusuario(us);
             Estatusfactura statusfactu = null;
             int tipo = 0;

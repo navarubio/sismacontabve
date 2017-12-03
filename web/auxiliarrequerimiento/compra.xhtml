@@ -50,9 +50,9 @@
                             <p:fieldset  legend="Datos Compra" >
                                 <p:panelGrid styleClass="ui-custompanelgrid" columns="2">
                                     <p:outputLabel for="usua" value="Usuario" styleClass="text-ouput"/>
-                                    <p:outputLabel id="usua" value="#{comprasController.auxiliarrequerimiento.idusuario.nombre}" styleClass=""/>
+                                    <p:outputLabel id="usua" value="#{requerimientosController.usa.nombre}" styleClass=""/>
                                     <p:outputLabel for="depto" value="Departamento" styleClass="text-ouput"/>
-                                    <p:outputLabel id="depto" value="#{comprasController.auxiliarrequerimiento.idusuario.iddepartamento.departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="depto" value="#{requerimientosController.usa.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="proveedor" value="Proveedor" styleClass="text-ouput"/>
                                     <p:selectOneMenu id="provee" value="#{comprasController.provee}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
                                         <p:ajax event="change" update="rif, telef"/>                              
