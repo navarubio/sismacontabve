@@ -58,24 +58,6 @@ public class OtroingresoController implements Serializable {
     private MovimientobancarioFacadeLocal movimientoBancarioEJB;
     @EJB
     private BancoFacadeLocal bancoEJB;
-
-    private List<Otroingreso> items = null;
-    private Otroingreso selected;
-    private Cuentabancaria cuentabancaria;
-    private Cuentabancaria cuentaemisora = null;
-    private double montoingreso;
-    private Otroingreso ingreso = new Otroingreso();
-    private Date fechaactual = new Date();
-    private Usuario usa;
-    private RequerimientosController requer = new RequerimientosController();
-    private Tipoconjunto tipoconjunto = null;
-    private int visual = 0;
-    private List<Banco> bancos;
-    private Banco banco;
-    private Banco bancoemisor;
-    private List<Cuentabancaria> lstCuentasSelecc;
-    private List<Cuentabancaria> lstCuentasSeleccemisor;
-
     @Inject
     private Maestromovimiento maestromovi;
     @Inject
@@ -84,6 +66,22 @@ public class OtroingresoController implements Serializable {
     private Cobroventa cobro;
     @Inject
     private Cobroventa cobroauxiliar;
+    private List<Otroingreso> items = null;
+    private List<Banco> bancos;
+    private List<Cuentabancaria> lstCuentasSelecc;
+    private List<Cuentabancaria> lstCuentasSeleccemisor;
+    private double montoingreso;
+    private int visual = 0;   
+    private Otroingreso selected;
+    private Cuentabancaria cuentabancaria;
+    private Cuentabancaria cuentaemisora = null;
+    private Otroingreso ingreso = new Otroingreso();
+    private Date fechaactual = new Date();
+    private Usuario usa;
+    private RequerimientosController requer = new RequerimientosController();
+    private Tipoconjunto tipoconjunto = null;
+    private Banco banco;
+    private Banco bancoemisor;
 
     public OtroingresoController() {
     }
