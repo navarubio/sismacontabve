@@ -120,65 +120,12 @@ public class PagosController implements Serializable {
     private RetencionivasriFacadeLocal retencionesivasriEJB;
     @EJB
     private SubgrupoFacadeLocal subgrupoEJB;
-
-    private Auxiliarrequerimiento auxiliarrequerimiento;
-    private Compra compra;
-    private Autorizacion autoriza;
-    private Detallecompra detallecompras;
-    private Pagocompra pagocompra = new Pagocompra();
-    private Pagocompra pagocompraver;
-    private Estatusfactura statusfactu = null;
-    private int formapago = 0;
-    private Estatuscontable estatuscontab = null;
-    private Banco banco;
-    private Cuentabancaria cuentabanco;
-    private Pagocompra pago;
-    private Usuario usa;
-    private Departamento dpto;
-    private Compra codCompra;
-    private Empresa empresa;
-    private int visualizar = 0;
-    private int tipocompra = 1;
-    private double montoUT = 0;
-    private double montopisoretiva = 0;
-    private double montopisoretislr = 0;
-    private int idAuxiliar = 0;
-    private int idCompra = 0;
-    private List<Auxiliarrequerimiento> auxiliarrequerimientos;
-    private List<Tiporetencionislr> tiporetencionesfiltradasPD = null;
-    private List<Subgrupo> subgruposfiltrados= null; 
-    private List<Tiporetencioniva> tiporetencionivafiltrada= null; 
-    private List<Cuentabancaria> cuentasbancarias;
-    private List<Tipopago> tipopagos;
-    private List<Detallecompra> detallecompraFiltrados;
-    private List<Banco> bancos;
-    private List<Cuentabancaria> lstCuentasSelecc;
-    private List<Pagocompra> pagosefectuados;
-    private List<Pagocompra> pagoespecifico;
-    ArrayList<Retencionivasri> retencionesivadisponible = new ArrayList();
-//    private List<Retencionivasri> retencionesivadisponible;
-    private String mensaje;
-    private Date fechaactual = new Date();
-    SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
-    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
-    private String correo;
-    private envioCorreo enviomail;
     @Inject
     private Detalleretencionivaef detalleretencionivaef;
     @Inject
     private Detalleretencionislref detalleretencionislref;
     @Inject
     private Movimientobancario movimientobancario;
-    private double ivaretenido;
-    private double islrretenido;
-    private double montoapagar;
-    private double totalretenido;
-    private String totalgeneralform;
-    private String totalivaform;
-    private String totalsubtotalform;
-    ArrayList<Detallecompra> lista = new ArrayList();
-     private Tipoconjunto tipoconjunto = null;
-
     @Inject
     private Auxiliarrequerimiento auxiliar;
     private Requerimiento requerimiento;
@@ -192,6 +139,58 @@ public class PagosController implements Serializable {
     private Cuentabancaria cuentabancaria;
     @Inject
     private Maestromovimiento maestromovi;
+    private List<Auxiliarrequerimiento> auxiliarrequerimientos;
+    private List<Tiporetencionislr> tiporetencionesfiltradasPD = null;
+    private List<Subgrupo> subgruposfiltrados= null; 
+    private List<Tiporetencioniva> tiporetencionivafiltrada= null; 
+    private List<Cuentabancaria> cuentasbancarias;
+    private List<Tipopago> tipopagos;
+    private List<Detallecompra> detallecompraFiltrados;
+    private List<Banco> bancos;
+    private List<Cuentabancaria> lstCuentasSelecc;
+    private List<Pagocompra> pagosefectuados;
+    private List<Pagocompra> pagoespecifico;
+    ArrayList<Retencionivasri> retencionesivadisponible = new ArrayList();
+    ArrayList<Detallecompra> lista = new ArrayList();
+    private String totalgeneralform;
+    private String totalivaform;
+    private String totalsubtotalform;
+    private String correo;
+    private String mensaje;
+    private double montoUT = 0;
+    private double montopisoretiva = 0;
+    private double montopisoretislr = 0;
+    private double ivaretenido;
+    private double islrretenido;
+    private double montoapagar;
+    private double totalretenido;
+    private int idAuxiliar = 0;
+    private int idCompra = 0;
+    private int formapago = 0;
+    private int visualizar = 0;
+    private int tipocompra = 1;
+    private Auxiliarrequerimiento auxiliarrequerimiento;
+    private Compra compra;
+    private Autorizacion autoriza;
+    private Detallecompra detallecompras;
+    private Pagocompra pagocompra = new Pagocompra();
+    private Pagocompra pagocompraver;
+    private Estatusfactura statusfactu = null;
+    private Estatuscontable estatuscontab = null;
+    private Banco banco;
+    private Cuentabancaria cuentabanco;
+    private Pagocompra pago;
+    private Usuario usa;
+    private Departamento dpto;
+    private Compra codCompra;
+    private Empresa empresa;
+    private envioCorreo enviomail;
+    private Tipoconjunto tipoconjunto = null;
+//    private List<Retencionivasri> retencionesivadisponible;
+    private Date fechaactual = new Date();
+    SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
+
 
     public List<Cuentabancaria> getLstCuentasSelecc() {
         return lstCuentasSelecc;
