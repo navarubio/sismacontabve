@@ -11,11 +11,19 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.cdi-api-1.2.jar}</file>
+                    <file>${file.reference.Plataforma_JavaEE-MySql-javamail-1.4.5}</file>
+                    <path-in-war>WEB-INF/classes</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.all-themes-1.0.10.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.omnifaces-2.2.jar-1}</file>
+                    <file>${file.reference.bcmail-jdk14-136.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.cdi-api-1.2.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
@@ -63,7 +71,15 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
+                    <file>${file.reference.jcommon-1.0.15.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
                     <file>${file.reference.mysql-connector-java-5.1.18-bin.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.omnifaces-2.2.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
@@ -73,14 +89,6 @@
                 <library dirs="200">
                     <file>${file.reference.poi-3.7.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.jcommon-1.0.15.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.Plataforma_JavaEE-MySql-javamail-1.4.5}</file>
-                    <path-in-war>WEB-INF/classes</path-in-war>
                 </library>
             </web-module-libraries>
             <web-module-additional-libraries/>

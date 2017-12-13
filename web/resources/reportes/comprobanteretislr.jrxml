@@ -76,15 +76,17 @@
      empresa.`administrador` AS empresa_administrador,
      empresa.`contador` AS empresa_contador,
      empresa.`idcontribuyente` AS empresa_idcontribuyente,
-     empresa_A.`rif` AS empresa_A_rif,
-     empresa_A.`razonsocial` AS empresa_A_razonsocial,
-     empresa_A.`nombrecomercial` AS empresa_A_nombrecomercial,
-     empresa_A.`direccionfiscal` AS empresa_A_direccionfiscal,
-     empresa_A.`telefonos` AS empresa_A_telefonos,
-     empresa_A.`presidente` AS empresa_A_presidente,
-     empresa_A.`administrador` AS empresa_A_administrador,
-     empresa_A.`contador` AS empresa_A_contador,
-     empresa_A.`idcontribuyente` AS empresa_A_idcontribuyente,
+     empresa.`idpersonalidad` AS empresa_idpersonalidad,
+     empresa.`credfiscal` AS empresa_credfiscal,
+     empresa.`retivacliente` AS empresa_retivacliente,
+     empresa.`retislrcliente` AS empresa_retislrcliente,
+     empresa.`ctasxcobrar` AS empresa_ctasxcobrar,
+     empresa.`ctagastoprovisional` AS empresa_ctagastoprovisional,
+     empresa.`debfiscal` AS empresa_debfiscal,
+     empresa.`retislrxenterar` AS empresa_retislrxenterar,
+     empresa.`retivaxenterar` AS empresa_retivaxenterar,
+     empresa.`ctaxpagarproveed` AS empresa_ctaxpagarproveed,
+     empresa.`ctaxpagarinterna` AS empresa_ctaxpagarinterna,
      gravamen.`idgravamen` AS gravamen_idgravamen,
      gravamen.`categoria` AS gravamen_categoria,
      gravamen.`alicuota` AS gravamen_alicuota,
@@ -137,17 +139,10 @@
      detalleretencionislref.`procentajeretencion` AS detalleretencionislref_procentajeretencion,
      detalleretencionislref.`sustraendo` AS detalleretencionislref_sustraendo,
      detalleretencionislref.`totalislrretenido` AS detalleretencionislref_totalislrretenido,
-     tiporetencionislr.`idtiporetencionislr` AS tiporetencionislr_idtiporetencionislr,
-     tiporetencionislr.`idsubgrupo` AS tiporetencionislr_idsubgrupo,
-     tiporetencionislr.`descripcionservicio` AS tiporetencionislr_descripcionservicio,
-     tiporetencionislr.`idpersonalidad` AS tiporetencionislr_idpersonalidad,
-     tiporetencionislr.`idcontribuyente` AS tiporetencionislr_idcontribuyente,
-     tiporetencionislr.`idresidencia` AS tiporetencionislr_idresidencia,
-     tiporetencionislr.`porcentajebimponible` AS tiporetencionislr_porcentajebimponible,
-     tiporetencionislr.`porcentajeretencion` AS tiporetencionislr_porcentajeretencion,
-     tiporetencionislr.`sustraendo` AS tiporetencionislr_sustraendo,
-     tiporetencionislr.`pisogravable` AS tiporetencionislr_pisogravable,
-     tiporetencionislr.`codigoxml` AS tiporetencionislr_codigoxml
+     subgrupo.`idsubgrupo` AS subgrupo_idsubgrupo,
+     subgrupo.`idgrupo` AS subgrupo_idgrupo,
+     subgrupo.`subgrupo` AS subgrupo_subgrupo,
+     subgrupo.`porcentajeretencion` AS subgrupo_porcentajeretencion
 FROM
      `compra` compra INNER JOIN `proveedor` proveedor ON compra.`rifproveedor` = proveedor.`rifproveedor`
      INNER JOIN `pagocompra` pagocompra ON compra.`idcompra` = pagocompra.`idcompra`
@@ -155,13 +150,13 @@ FROM
      INNER JOIN `detallecompra` detallecompra_A ON compra.`idcompra` = detallecompra_A.`idcompra`
      INNER JOIN `detalleretencionislref` detalleretencionislref ON compra.`idcompra` = detalleretencionislref.`idcompra`
      INNER JOIN `comprobanteislref` comprobanteislref ON detalleretencionislref.`idcomprobanteislref` = comprobanteislref.`idcomprobanteislref`
-     INNER JOIN `tiporetencionislr` tiporetencionislr ON detalleretencionislref.`idtiporetencionislr` = tiporetencionislr.`idtiporetencionislr`
-     AND proveedor.`rifproveedor` = comprobanteislref.`rifproveedor`
-     INNER JOIN `articulo` articulo ON detallecompra_A.`codigo` = articulo.`codigo`
+     INNER JOIN `subgrupo` subgrupo ON detalleretencionislref.`idsubgrupo` = subgrupo.`idsubgrupo`
+     INNER JOIN `articulo` articulo ON subgrupo.`idsubgrupo` = articulo.`idsubgrupo`
+     AND detallecompra_A.`codigo` = articulo.`codigo`
      AND articulo.`codigo` = detallecompra.`codigo`
-     INNER JOIN `gravamen` gravamen ON articulo.`idgravamen` = gravamen.`idgravamen`,
-     `empresa` empresa,
-     `empresa` empresa_A
+     INNER JOIN `gravamen` gravamen ON articulo.`idgravamen` = gravamen.`idgravamen`
+     AND proveedor.`rifproveedor` = comprobanteislref.`rifproveedor`,
+     `empresa` empresa
 WHERE
      comprobanteislref.`idcomprobanteislref` = $P{numerocomprobante}]]>
 	</queryString>
@@ -212,15 +207,17 @@ WHERE
 	<field name="empresa_administrador" class="java.lang.String"/>
 	<field name="empresa_contador" class="java.lang.String"/>
 	<field name="empresa_idcontribuyente" class="java.lang.Integer"/>
-	<field name="empresa_A_rif" class="java.lang.String"/>
-	<field name="empresa_A_razonsocial" class="java.lang.String"/>
-	<field name="empresa_A_nombrecomercial" class="java.lang.String"/>
-	<field name="empresa_A_direccionfiscal" class="java.lang.String"/>
-	<field name="empresa_A_telefonos" class="java.lang.String"/>
-	<field name="empresa_A_presidente" class="java.lang.String"/>
-	<field name="empresa_A_administrador" class="java.lang.String"/>
-	<field name="empresa_A_contador" class="java.lang.String"/>
-	<field name="empresa_A_idcontribuyente" class="java.lang.Integer"/>
+	<field name="empresa_idpersonalidad" class="java.lang.Integer"/>
+	<field name="empresa_credfiscal" class="java.lang.Integer"/>
+	<field name="empresa_retivacliente" class="java.lang.Integer"/>
+	<field name="empresa_retislrcliente" class="java.lang.Integer"/>
+	<field name="empresa_ctasxcobrar" class="java.lang.Integer"/>
+	<field name="empresa_ctagastoprovisional" class="java.lang.Integer"/>
+	<field name="empresa_debfiscal" class="java.lang.Integer"/>
+	<field name="empresa_retislrxenterar" class="java.lang.Integer"/>
+	<field name="empresa_retivaxenterar" class="java.lang.Integer"/>
+	<field name="empresa_ctaxpagarproveed" class="java.lang.Integer"/>
+	<field name="empresa_ctaxpagarinterna" class="java.lang.Integer"/>
 	<field name="gravamen_idgravamen" class="java.lang.Integer"/>
 	<field name="gravamen_categoria" class="java.lang.String"/>
 	<field name="gravamen_alicuota" class="java.lang.Double"/>
@@ -273,17 +270,10 @@ WHERE
 	<field name="detalleretencionislref_procentajeretencion" class="java.lang.Double"/>
 	<field name="detalleretencionislref_sustraendo" class="java.lang.Double"/>
 	<field name="detalleretencionislref_totalislrretenido" class="java.lang.Double"/>
-	<field name="tiporetencionislr_idtiporetencionislr" class="java.lang.Integer"/>
-	<field name="tiporetencionislr_idsubgrupo" class="java.lang.Integer"/>
-	<field name="tiporetencionislr_descripcionservicio" class="java.lang.String"/>
-	<field name="tiporetencionislr_idpersonalidad" class="java.lang.Integer"/>
-	<field name="tiporetencionislr_idcontribuyente" class="java.lang.Integer"/>
-	<field name="tiporetencionislr_idresidencia" class="java.lang.Integer"/>
-	<field name="tiporetencionislr_porcentajebimponible" class="java.lang.Double"/>
-	<field name="tiporetencionislr_porcentajeretencion" class="java.lang.Double"/>
-	<field name="tiporetencionislr_sustraendo" class="java.lang.Double"/>
-	<field name="tiporetencionislr_pisogravable" class="java.lang.Double"/>
-	<field name="tiporetencionislr_codigoxml" class="java.lang.String"/>
+	<field name="subgrupo_idsubgrupo" class="java.lang.Integer"/>
+	<field name="subgrupo_idgrupo" class="java.lang.Integer"/>
+	<field name="subgrupo_subgrupo" class="java.lang.String"/>
+	<field name="subgrupo_porcentajeretencion" class="java.lang.Double"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -333,7 +323,7 @@ WHERE
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[R.I.F :]]></text>
+				<text><![CDATA[R.U.C :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="8" y="204" width="89" height="14" uuid="36c7553a-ed51-4538-8301-abdf3e2d9173"/>
@@ -382,7 +372,7 @@ WHERE
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[R.I.F :]]></text>
+				<text><![CDATA[R.U.C :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="205" y="282" width="57" height="14" uuid="b9ed17e3-b0d0-4e46-ac3e-6fa9c079dce3"/>
@@ -417,7 +407,7 @@ WHERE
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{empresa_A_razonsocial}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{empresa_razonsocial}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="98" y="190" width="100" height="14" uuid="8ad0ec73-df33-454d-a117-bcbfc8d59da1"/>
@@ -438,7 +428,7 @@ WHERE
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{empresa_A_telefonos}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{empresa_telefonos}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="98" y="268" width="292" height="14" uuid="01d24b82-14cf-4ba2-bbf9-89388902fb80"/>
@@ -480,7 +470,7 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{empresa_A_razonsocial}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{empresa_razonsocial}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="73" y="125" width="90" height="14" uuid="a7034a17-8e2b-4041-87f9-fc98d589f5c2"/>
@@ -595,13 +585,6 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalleretencionislref_totalcompra}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="262" y="0" width="95" height="32" uuid="f5eee234-7cbf-4439-ac55-aa5dc6297017"/>
-				<textElement textAlignment="Center">
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{tiporetencionislr_descripcionservicio}]]></textFieldExpression>
-			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="358" y="0" width="66" height="18" uuid="30fbc221-b7ea-47ba-b929-1035ce88c79a"/>
 				<textElement textAlignment="Right">
@@ -629,6 +612,13 @@ WHERE
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalleretencionislref_sustraendo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="257" y="0" width="100" height="18" uuid="d30ecd78-d565-48d5-885a-4a23b136f19f"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subgrupo_subgrupo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -663,13 +653,13 @@ WHERE
 				<textElement textAlignment="Right">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[R.I.F:]]></text>
+				<text><![CDATA[R.U.C:]]></text>
 			</staticText>
 			<line>
 				<reportElement x="357" y="3" width="223" height="1" uuid="81fc6e31-b096-4760-a97f-1758cb1fb702"/>
 			</line>
 			<textField>
-				<reportElement x="252" y="108" width="111" height="15" uuid="f23ba568-82fb-4828-9b99-b5ec88ddca24"/>
+				<reportElement x="254" y="108" width="111" height="15" uuid="f23ba568-82fb-4828-9b99-b5ec88ddca24"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>

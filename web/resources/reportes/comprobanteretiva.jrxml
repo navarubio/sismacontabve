@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7c84cd74-2f43-40af-a87d-8979663c88b5">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="14"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
@@ -330,7 +330,7 @@ WHERE
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[R.I.F :]]></text>
+				<text><![CDATA[R.U.C :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="8" y="204" width="89" height="14" uuid="36c7553a-ed51-4538-8301-abdf3e2d9173"/>
@@ -400,7 +400,7 @@ WHERE
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[R.I.F :]]></text>
+				<text><![CDATA[R.U.C :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="603" y="190" width="57" height="14" uuid="b9ed17e3-b0d0-4e46-ac3e-6fa9c079dce3"/>

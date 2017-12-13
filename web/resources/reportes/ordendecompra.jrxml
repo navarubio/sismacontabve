@@ -86,7 +86,6 @@
      empresa.`contador` AS empresa_contador,
      empresa.`idcontribuyente` AS empresa_idcontribuyente,
      empresa.`idpersonalidad` AS empresa_idpersonalidad,
-     empresa.`montoparaautorizacion` AS empresa_montoparaautorizacion,
      empresa.`credfiscal` AS empresa_credfiscal,
      empresa.`retivacliente` AS empresa_retivacliente,
      empresa.`retislrcliente` AS empresa_retislrcliente,
@@ -162,7 +161,6 @@ WHERE
 	<field name="empresa_contador" class="java.lang.String"/>
 	<field name="empresa_idcontribuyente" class="java.lang.Integer"/>
 	<field name="empresa_idpersonalidad" class="java.lang.Integer"/>
-	<field name="empresa_montoparaautorizacion" class="java.lang.Double"/>
 	<field name="empresa_credfiscal" class="java.lang.Integer"/>
 	<field name="empresa_retivacliente" class="java.lang.Integer"/>
 	<field name="empresa_retislrcliente" class="java.lang.Integer"/>
