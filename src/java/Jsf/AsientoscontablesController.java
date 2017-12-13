@@ -1180,7 +1180,7 @@ public class AsientoscontablesController implements Serializable {
 
     }
 
-    public double totaldebe() {
+    public String totaldebe() {
         double montotdebe = 0;
 
         for (Detallelibrodiario detall : listadetalleslibrodiario) {
@@ -1189,10 +1189,27 @@ public class AsientoscontablesController implements Serializable {
             }
         }
         totaldebegeneral = montotdebe;
-        return montotdebe;
+        return new DecimalFormat("###,###.##").format(montotdebe);
+//        return montotdebe;
     }
+    
+  /*  public String getTotalrequeriminto() {
+        double total = 0;
+        double totalimpuesto = 0;
+        double totalbaseimp = 0;
+ 
+        for(Requerimiento inventa : listarequerimiento) {
+            totalbaseimp += inventa.getSubtotal();
+            totalimpuesto += inventa.getTributoiva();
+            total += inventa.getTotal();
+        }
+        totalsubtotal = totalbaseimp;
+        totaliva= totalimpuesto;
+        totalgeneral = total;
+        return new DecimalFormat("###,###.##").format(total);
+    }*/
 
-    public double totalhaber() {
+    public String totalhaber() {
         double montothaber = 0;
 
         for (Detallelibrodiario detall : listadetalleslibrodiario) {
@@ -1201,7 +1218,8 @@ public class AsientoscontablesController implements Serializable {
             }
         }
         totalhabergeneral = montothaber;
-        return montothaber;
+        return new DecimalFormat("###,###.##").format(montothaber);
+//        return montothaber;
     }
 
     public void eliminar(Detallelibrodiario detalleld) {

@@ -927,7 +927,7 @@ public class AsientosventasController implements Serializable {
         }
     }
 
-    public double totaldebe() {
+    public String totaldebe() {
         double montotdebe = 0;
 
         for (Detallelibrodiario detall : listadetalleslibrodiario) {
@@ -936,10 +936,11 @@ public class AsientosventasController implements Serializable {
             }
         }
         totaldebegeneral = montotdebe;
-        return montotdebe;
+        return new DecimalFormat("###,###.##").format(montotdebe);
+//        return montotdebe;
     }
 
-    public double totalhaber() {
+    public String totalhaber() {
         double montothaber = 0;
 
         for (Detallelibrodiario detall : listadetalleslibrodiario) {
@@ -948,7 +949,8 @@ public class AsientosventasController implements Serializable {
             }
         }
         totalhabergeneral = montothaber;
-        return montothaber;
+        return new DecimalFormat("###,###.##").format(montothaber);
+//        return montothaber;
     }
 
     public void seleccionpagofraccionado() {
