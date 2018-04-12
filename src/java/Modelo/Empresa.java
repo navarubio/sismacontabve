@@ -6,18 +6,23 @@
 package Modelo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,11 +42,15 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Empresa.findByAdministrador", query = "SELECT e FROM Empresa e WHERE e.administrador = :administrador"),
     @NamedQuery(name = "Empresa.findByContador", query = "SELECT e FROM Empresa e WHERE e.contador = :contador")})
 public class Empresa implements Serializable {
+    @OneToMany(mappedBy = "idempresa")
+    private Collection<Cajachica> cajachicaCollection;
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 15)
+    @Column(name = "idempresa")
+    private Integer idempresa;
+    @Size(max = 15)
     @Column(name = "rif")
     private String rif;
     @Size(max = 100)
@@ -73,6 +82,10 @@ public class Empresa implements Serializable {
     @JoinColumn(name = "idpersonalidad", referencedColumnName = "idpersonalidad")
     @ManyToOne
     private Personalidadjuridica idpersonalidad;
+    @Column(name = "serialconsumo")
+    private Integer serialconsumo;
+    @Column(name = "serialreposicion")
+    private Integer serialreposicion;
     @Column(name = "ctaxpagarproveed")
     private Integer ctaxpagarproved;
     @Column(name = "credfiscal")
@@ -93,12 +106,26 @@ public class Empresa implements Serializable {
     private Integer retivaxenterar;
     @Column(name = "ctaxpagarinterna")
     private Integer ctaxpagarinterna;
+    
+    @OneToMany(mappedBy = "idempresa")
+    private Collection<Departamento> departamentoCollection;
+    @OneToMany(mappedBy = "idempresa")
+    private Collection<Centrodecosto> centrodecostoCollection;
+
 
     public Empresa() {
     }
 
-    public Empresa(String rif) {
-        this.rif = rif;
+    public Empresa (Integer idempresa) {
+        this.idempresa=idempresa;
+    }
+    
+    public Integer getIdempresa(){
+        return idempresa;
+    }
+
+    public void setIdempresa(Integer idempresa) {
+        this.idempresa = idempresa;
     }
 
     public String getRif() {
@@ -189,6 +216,22 @@ public class Empresa implements Serializable {
         this.idpersonalidad = idpersonalidad;
     }
 
+    public Integer getSerialconsumo() {
+        return serialconsumo;
+    }
+
+    public void setSerialconsumo(Integer serialconsumo) {
+        this.serialconsumo = serialconsumo;
+    }
+
+    public Integer getSerialreposicion() {
+        return serialreposicion;
+    }
+
+    public void setSerialreposicion(Integer serialreposicion) {
+        this.serialreposicion = serialreposicion;
+    }
+    
     public Integer getCtaxpagarproved() {
         return ctaxpagarproved;
     }
@@ -269,6 +312,15 @@ public class Empresa implements Serializable {
         this.ctaxpagarinterna = ctaxpagarinterna;
     }
 
+    @XmlTransient
+    public Collection<Departamento> getDepartamentoCollection() {
+        return departamentoCollection;
+    }
+
+    public void setDepartamentoCollection(Collection<Departamento> departamentoCollection) {
+        this.departamentoCollection = departamentoCollection;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -291,7 +343,25 @@ public class Empresa implements Serializable {
 
     @Override
     public String toString() {
-        return "Modelo.Empresa[ rif=" + rif + " ]";
+        return razonsocial;
+    }
+
+    @XmlTransient
+    public Collection<Centrodecosto> getCentrodecostoCollection() {
+        return centrodecostoCollection;
+    }
+
+    public void setCentrodecostoCollection(Collection<Centrodecosto> centrodecostoCollection) {
+        this.centrodecostoCollection = centrodecostoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Cajachica> getCajachicaCollection() {
+        return cajachicaCollection;
+    }
+
+    public void setCajachicaCollection(Collection<Cajachica> cajachicaCollection) {
+        this.cajachicaCollection = cajachicaCollection;
     }
     
 }

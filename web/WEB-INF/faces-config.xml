@@ -76,5 +76,9 @@
             <base-name>/Bundlemenurol</base-name>
             <var>bundlemenurol</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/Bundlecentrocosto</base-name>
+            <var>bundlecentrocosto</var>
+        </resource-bundle>
     </application>
 </faces-config>

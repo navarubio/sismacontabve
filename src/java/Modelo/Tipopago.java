@@ -34,6 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Tipopago.findByTipopago", query = "SELECT t FROM Tipopago t WHERE t.tipopago = :tipopago")})
 public class Tipopago implements Serializable {
     @OneToMany(mappedBy = "idtipopago")
+    private Collection<Reposicioncajachica> reposicioncajachicaCollection;
+    @OneToMany(mappedBy = "idtipopago")
     private Collection<Otroingreso> otroingresoCollection;
 
     @OneToMany(mappedBy = "idtipopago")
@@ -124,6 +126,15 @@ public class Tipopago implements Serializable {
 
     public void setOtroingresoCollection(Collection<Otroingreso> otroingresoCollection) {
         this.otroingresoCollection = otroingresoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Reposicioncajachica> getReposicioncajachicaCollection() {
+        return reposicioncajachicaCollection;
+    }
+
+    public void setReposicioncajachicaCollection(Collection<Reposicioncajachica> reposicioncajachicaCollection) {
+        this.reposicioncajachicaCollection = reposicioncajachicaCollection;
     }
 
 }

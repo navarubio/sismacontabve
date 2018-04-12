@@ -39,7 +39,7 @@
                                 <p:outputLabel for="descripcioncta" value="Cuenta" styleClass="text-ouput"/>
                                 <p:outputLabel for="codigocta" value="Codigo" styleClass="text-ouput"/>
                                 <!--p:outputLabel for="saldoactual" value="Saldo Cta" styleClass="text-ouput"/-->
-                                <p:outputLabel for="debe" value="DEBE" style="float:right" styleClass="text-ouput" />
+                                <p:outputLabel for="debe" value="DEBE" style="float:right" styleClass="text-ouput"  />
                                 <p:outputLabel for="haber" value="HABER" style="float:right" styleClass="text-ouput" />
                                 <p:outputLabel></p:outputLabel>                                
                                 <p:selectOneMenu id="descripcioncta" value="#{asientosespecificosController.cuentaseleccionada}" 
@@ -52,8 +52,8 @@
                                 </p:selectOneMenu>
                                 <p:outputLabel id="codigocta" value="#{asientosespecificosController.cuentaseleccionada}" />
                                 <!--p:outputLabel id="saldoactual" value=".{asientosventasController.detalleaanexar.idplandecuenta.saldogeneral}" styleClass="optionalLbl"/-->
-                                <p:inputText id="debe"  size="20" value="#{asientosespecificosController.detalleaanexar.debe}" style="text-align:right"/>
-                                <p:inputText id="haber"  size="20" value="#{asientosespecificosController.detalleaanexar.haber}" style="text-align:right"/>                               
+                                <p:inputText id="debe"  size="20" value="#{asientosespecificosController.detalleaanexar.debe}" style="text-align:right" />
+                                <p:inputText id="haber"  size="20" value="#{asientosespecificosController.detalleaanexar.haber}" style="text-align:right" />                               
                                 <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{asientosespecificosController.anexarregistro()}" update="listadoasiento,panelcontab,:growl"/>   
                             </p:panelGrid>                                
                         </p:fieldset>

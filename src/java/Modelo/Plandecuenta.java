@@ -42,6 +42,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Plandecuenta.findByFujodeefectivo", query = "SELECT p FROM Plandecuenta p WHERE p.fujodeefectivo = :fujodeefectivo")})
 public class Plandecuenta implements Serializable {
     @OneToMany(mappedBy = "idplandecuenta")
+    private Collection<Tipogastocajachica> tipogastocajachicaCollection;
+    @OneToMany(mappedBy = "idplandecuenta")
+    private Collection<Cajachica> cajachicaCollection;
+    @OneToMany(mappedBy = "idplandecuenta")
     private Collection<Libromayor> libromayorCollection;
     @OneToMany(mappedBy = "idplandecuenta")
     private Collection<Detallelibrodiario> detallelibrodiarioCollection;
@@ -279,6 +283,24 @@ public class Plandecuenta implements Serializable {
 
     public void setDetallelibrodiarioCollection(Collection<Detallelibrodiario> detallelibrodiarioCollection) {
         this.detallelibrodiarioCollection = detallelibrodiarioCollection;
+    }
+
+    @XmlTransient
+    public Collection<Tipogastocajachica> getTipogastocajachicaCollection() {
+        return tipogastocajachicaCollection;
+    }
+
+    public void setTipogastocajachicaCollection(Collection<Tipogastocajachica> tipogastocajachicaCollection) {
+        this.tipogastocajachicaCollection = tipogastocajachicaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Cajachica> getCajachicaCollection() {
+        return cajachicaCollection;
+    }
+
+    public void setCajachicaCollection(Collection<Cajachica> cajachicaCollection) {
+        this.cajachicaCollection = cajachicaCollection;
     }
     
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CentrodecostoViewDlg" widgetVar="CentrodecostoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecentrocosto.ViewCentrodecostoTitle}">
+            <h:form id="CentrodecostoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{centrodecostoController.selected != null}">
+                        <h:outputText value="#{bundlecentrocosto.ViewCentrodecostoLabel_codigocentrocosto}"/>
+                        <h:outputText value="#{centrodecostoController.selected.codigocentrocosto}" title="#{bundlecentrocosto.ViewCentrodecostoTitle_codigocentrocosto}"/>
+                        <h:outputText value="#{bundlecentrocosto.ViewCentrodecostoLabel_descripcion}"/>
+                        <h:outputText value="#{centrodecostoController.selected.descripcion}" title="#{bundlecentrocosto.ViewCentrodecostoTitle_descripcion}"/>
+                        <h:outputText value="#{bundlecentrocosto.ViewCentrodecostoLabel_iddepartamento}"/>
+                        <h:outputText value="#{centrodecostoController.selected.iddepartamento.departamento}" title="#{bundlecentrocosto.ViewCentrodecostoTitle_iddepartamento}"/>
+                        <h:outputText value="#{bundlecentrocosto.ViewCentrodecostoLabel_idempresa}"/>
+                        <h:outputText value="#{centrodecostoController.selected.idempresa.razonsocial}" title="#{bundlecentrocosto.ViewCentrodecostoTitle_idempresa}"/>
+                        <h:outputText value="#{bundlecentrocosto.ViewCentrodecostoLabel_idresponsable}"/>
+                        <h:outputText value="#{centrodecostoController.selected.idresponsable.nombre}" title="#{bundlecentrocosto.ViewCentrodecostoTitle_idresponsable}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlecentrocosto.Close}" onclick="CentrodecostoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

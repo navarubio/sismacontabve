@@ -591,6 +591,8 @@ public class AsientosespecificosController implements Serializable {
         listadetalleslibrodiario.clear();
         retiva = 0;
         retislr = 0;
+        detalleaanexar.setDebe(0.0);
+        detalleaanexar.setHaber(0.0);
         //articulos = articuloEJB.findAll();
         //comprasporautorizar=compraEJB.buscarcomprasporAutorizar();
 
@@ -608,6 +610,7 @@ public class AsientosespecificosController implements Serializable {
         dpto = departamentoEJB.buscarDepartamento(usua);
         return dpto;
     }
+
     public void asignarOtroingreso(Otroingreso otro, Maestromovimiento maestro) {
         this.retiva = 0;
         this.retislr = 0;
@@ -622,7 +625,7 @@ public class AsientosespecificosController implements Serializable {
         if (tamaño > 1) {
             this.vercasilla = 1;
             this.movimientoegreso = ingresoespecifico.get(1);
-            librodiario.setDescripcionasiento("P/R INGRESO ING- " + otroingreso.getIdotroingreso() + " POR TRASPASO DESDE " + movimientoegreso.getIdcuentabancaria().getIdbanco().getNombrebanco()  + " AL " + movimientoingreso.getIdcuentabancaria().getIdbanco().getNombrebanco());
+            librodiario.setDescripcionasiento("P/R INGRESO ING- " + otroingreso.getIdotroingreso() + " POR TRASPASO DESDE " + movimientoegreso.getIdcuentabancaria().getIdbanco().getNombrebanco() + " AL " + movimientoingreso.getIdcuentabancaria().getIdbanco().getNombrebanco());
         } else {
             librodiario.setDescripcionasiento("P/R INGRESO ING- " + otroingreso.getIdotroingreso() + " POR CONCEPTO DE " + otroingreso.getIdtipoingreso().getTipoingreso());
         }
@@ -893,8 +896,8 @@ public class AsientosespecificosController implements Serializable {
     }
 
     public void anexarregistro() {
-        Plandecuenta cuentaelegida=plandecuentaEJB.buscarcuenta(cuentaseleccionada);
-        if (cuentaelegida.getIdgeneralcuenta()>0){
+        Plandecuenta cuentaelegida = plandecuentaEJB.buscarcuenta(cuentaseleccionada);
+        if (cuentaelegida.getIdgeneralcuenta() > 0) {
             Detallelibrodiario detalleanexo = new Detallelibrodiario();
             detalleaanexar.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada));
             int indic = listadetalleslibrodiario.size();
@@ -906,11 +909,11 @@ public class AsientosespecificosController implements Serializable {
             this.listadetalleslibrodiario.add(detalleanexo);
             detalleaanexar.setDebe(0.0);
             detalleaanexar.setHaber(0.0);
-            cuentaseleccionada=0;
+            cuentaseleccionada = 0;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cuenta fue amexada"));
-        }else{
+        } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "La Cuenta Seleccionada no es de movimiento"));
-            
+
         }
     }
 

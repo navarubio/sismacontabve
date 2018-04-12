@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -33,6 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Departamento.findByIddepartamento", query = "SELECT d FROM Departamento d WHERE d.iddepartamento = :iddepartamento"),
     @NamedQuery(name = "Departamento.findByDepartamento", query = "SELECT d FROM Departamento d WHERE d.departamento = :departamento")})
 public class Departamento implements Serializable {
+    @OneToMany(mappedBy = "iddepartamento")
+    private Collection<Centrodecosto> centrodecostoCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +52,10 @@ public class Departamento implements Serializable {
     private Collection<Usuario> usuarioCollection;
     @OneToMany(mappedBy = "iddepartamento")
     private Collection<Menu> menuCollection;
-
+    @JoinColumn(name = "idempresa", referencedColumnName = "idempresa")
+    @ManyToOne
+    private Empresa idempresa;
+    
     public Departamento() {
     }
 
@@ -70,6 +77,14 @@ public class Departamento implements Serializable {
 
     public void setDepartamento(String departamento) {
         this.departamento = departamento;
+    }
+
+    public Empresa getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(Empresa idempresa) {
+        this.idempresa = idempresa;
     }
 
     @XmlTransient
@@ -122,6 +137,15 @@ public class Departamento implements Serializable {
     @Override
     public String toString() {
         return departamento;
+    }
+
+    @XmlTransient
+    public Collection<Centrodecosto> getCentrodecostoCollection() {
+        return centrodecostoCollection;
+    }
+
+    public void setCentrodecostoCollection(Collection<Centrodecosto> centrodecostoCollection) {
+        this.centrodecostoCollection = centrodecostoCollection;
     }
     
 }

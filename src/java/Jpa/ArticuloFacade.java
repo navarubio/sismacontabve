@@ -13,7 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.util.JRLoader; 
 
 @Stateless
 public class ArticuloFacade extends AbstractFacade<Articulo> implements ArticuloFacadeLocal {

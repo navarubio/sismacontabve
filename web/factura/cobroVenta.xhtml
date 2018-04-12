@@ -228,7 +228,7 @@
                                     </p:outputLabel>
                                 </p:panelGrid>
                             </p:fieldset>
-                            <p:fieldset legend="Retencion I.S.L.R." rendered="#{cobroventasController.visualizar== 2 || cobroventasController.visualizar== 3 || cobroventasController.visualizar== 4 ? true:false}"> 
+                            <p:fieldset legend="Retencion I.S.L.R." rendered="#{cobroventasController.visualizar<= 2 || cobroventasController.visualizar== 3 || cobroventasController.visualizar== 4 ? true:false}"> 
                                 <p:panelGrid columns="2" styleClass="ui-custompanelgrid2" >
                                     <p:outputLabel for="totalcompra" value="Total Factura" />
                                     <p:inputText id="totalcompra" value="#{cobroventasController.factura.totalgeneral}" style="text-align:right">
@@ -238,10 +238,10 @@
                                     </p:inputText>
                                     <p:outputLabel for="tiporetencionislr" value="Porcentaje Retencion ISLR" />
                                     <p:selectOneMenu id="tiporetencionislr" value="#{cobroventasController.detalleretencionislrsp.idtiporetencionislr}" converter="omnifaces.SelectItemsConverter" 
-                                                     rendered="#{cobroventasController.tipocompra==2  ? true:false}">  
+                                                     rendered="#{cobroventasController.tipocompra==1  ? true:false}">  
                                         <p:ajax event="change" listener="#{cobroventasController.calcularislrretenido()}" update="islrretenido,sustraendo,display"/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
-                                        <f:selectItems value="#{cobroventasController.tiporetencionesfiltradasPD}"
+                                        <f:selectItems value="#{cobroventasController.subgruposfiltrados}"
                                                        var="idtiporetencionItem"
                                                        itemLabel="#{idtiporetencionItem.descripcionservicio}"  itemValue="#{idtiporetencionItem}" /> 
                                     </p:selectOneMenu>

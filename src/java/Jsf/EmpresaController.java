@@ -110,9 +110,9 @@ public class EmpresaController implements Serializable {
         }
     }
 
-    public Empresa getEmpresa(java.lang.String id) {
+/*    public Empresa getEmpresa(java.lang.String id) {
         return getFacade().find(id);
-    }
+    }*/
 
     public List<Empresa> getItemsAvailableSelectMany() {
         return getFacade().findAll();
@@ -132,16 +132,16 @@ public class EmpresaController implements Serializable {
             }
             EmpresaController controller = (EmpresaController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "empresaController");
-            return controller.getEmpresa(getKey(value));
+            return controller.getFacade().find(getKey(value));
         }
 
-        java.lang.String getKey(String value) {
-            java.lang.String key;
-            key = value;
+        java.lang.Integer getKey(String value) {
+            java.lang.Integer key;
+            key = Integer.valueOf(value);
             return key;
         }
 
-        String getStringKey(java.lang.String value) {
+        String getStringKey(java.lang.Integer value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -154,7 +154,7 @@ public class EmpresaController implements Serializable {
             }
             if (object instanceof Empresa) {
                 Empresa o = (Empresa) object;
-                return getStringKey(o.getRif());
+                return getStringKey(o.getIdempresa());
             } else {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Empresa.class.getName()});
                 return null;

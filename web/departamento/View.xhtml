@@ -12,6 +12,8 @@
             <h:form id="DepartamentoViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{departamentoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateDepartamentoLabel_empresa}" />
+                        <p:outputLabel value="#{departamentoController.selected.idempresa.razonsocial}" />  
                         <h:outputText value="#{bundle.ViewDepartamentoLabel_iddepartamento}"/>
                         <h:outputText value="#{departamentoController.selected.iddepartamento}" title="#{bundle.ViewDepartamentoTitle_iddepartamento}"/>
                         <h:outputText value="#{bundle.ViewDepartamentoLabel_departamento}"/>

@@ -45,6 +45,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByClave", query = "SELECT u FROM Usuario u WHERE u.clave = :clave")})
 public class Usuario implements Serializable {
     @OneToMany(mappedBy = "idusuario")
+    private Collection<Consumocajachica> consumocajachicaCollection;
+    @OneToMany(mappedBy = "idcustodio")
+    private Collection<Cajachica> cajachicaCollection;
+    @OneToMany(mappedBy = "idrepositor")
+    private Collection<Reposicioncajachica> reposicioncajachicaCollection;
+    @OneToMany(mappedBy = "idresponsable")
+    private Collection<Centrodecosto> centrodecostoCollection;
+    @OneToMany(mappedBy = "idusuario")
     private Collection<Otroingreso> otroingresoCollection;
     @OneToMany(mappedBy = "idusuario")
     private Collection<Autorizacion> autorizacionCollection;
@@ -298,5 +306,41 @@ public class Usuario implements Serializable {
 
     public void setNotacargaCollection(Collection<Notacarga> notacargaCollection) {
         this.notacargaCollection = notacargaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Centrodecosto> getCentrodecostoCollection() {
+        return centrodecostoCollection;
+    }
+
+    public void setCentrodecostoCollection(Collection<Centrodecosto> centrodecostoCollection) {
+        this.centrodecostoCollection = centrodecostoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Consumocajachica> getConsumocajachicaCollection() {
+        return consumocajachicaCollection;
+    }
+
+    public void setConsumocajachicaCollection(Collection<Consumocajachica> consumocajachicaCollection) {
+        this.consumocajachicaCollection = consumocajachicaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Cajachica> getCajachicaCollection() {
+        return cajachicaCollection;
+    }
+
+    public void setCajachicaCollection(Collection<Cajachica> cajachicaCollection) {
+        this.cajachicaCollection = cajachicaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Reposicioncajachica> getReposicioncajachicaCollection() {
+        return reposicioncajachicaCollection;
+    }
+
+    public void setReposicioncajachicaCollection(Collection<Reposicioncajachica> reposicioncajachicaCollection) {
+        this.reposicioncajachicaCollection = reposicioncajachicaCollection;
     }
 }

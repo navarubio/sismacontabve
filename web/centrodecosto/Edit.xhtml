@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CentrodecostoEditDlg" widgetVar="CentrodecostoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecentrocosto.EditCentrodecostoTitle}">
+            <h:form id="CentrodecostoEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{centrodecostoController.selected != null}">
+                        <p:outputLabel value="#{bundlecentrocosto.EditCentrodecostoLabel_codigocentrocosto}" for="codigocentrocosto" />
+                        <p:inputText id="codigocentrocosto" value="#{centrodecostoController.selected.codigocentrocosto}" title="#{bundlecentrocosto.EditCentrodecostoTitle_codigocentrocosto}" required="true" requiredMessage="#{bundlecentrocosto.EditCentrodecostoRequiredMessage_codigocentrocosto}"/>
+                        <p:outputLabel value="#{bundlecentrocosto.EditCentrodecostoLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{centrodecostoController.selected.descripcion}" title="#{bundlecentrocosto.EditCentrodecostoTitle_descripcion}" />
+                        <p:outputLabel value="#{bundlecentrocosto.EditCentrodecostoLabel_iddepartamento}" for="iddepartamento" />
+                        <p:selectOneMenu id="iddepartamento" value="#{centrodecostoController.selected.iddepartamento}" >
+                            <f:selectItem itemLabel="#{bundlecentrocosto.SelectOneMessage}"/>
+                            <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
+                                           var="iddepartamentoItem"
+                                           itemValue="#{iddepartamentoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecentrocosto.EditCentrodecostoLabel_idempresa}" for="idempresa" />
+                        <p:selectOneMenu id="idempresa" value="#{centrodecostoController.selected.idempresa}" >
+                            <f:selectItem itemLabel="#{bundlecentrocosto.SelectOneMessage}"/>
+                            <f:selectItems value="#{empresaController.itemsAvailableSelectOne}"
+                                           var="idempresaItem"
+                                           itemValue="#{idempresaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecentrocosto.EditCentrodecostoLabel_idresponsable}" for="idresponsable" />
+                        <p:selectOneMenu id="idresponsable" value="#{centrodecostoController.selected.idresponsable}" >
+                            <f:selectItem itemLabel="#{bundlecentrocosto.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="idresponsableItem"
+                                           itemValue="#{idresponsableItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{centrodecostoController.update}" value="#{bundlecentrocosto.Save}" update="display,:CentrodecostoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CentrodecostoEditDialog');"/>
+                    <p:commandButton value="#{bundlecentrocosto.Cancel}" onclick="CentrodecostoEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

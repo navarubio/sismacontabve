@@ -628,7 +628,7 @@ public class CobroventasController implements Serializable {
     }
 
     public void calcularislrretenido() {
-        int personal = 1;
+        int personal = 1; 
         int residenc = 3;
         int tiposervicio = detalleretencionislrsp.getIdtiporetencionislr().getIdsubgrupo().getIdsubgrupo();
         Tiporetencionislr tiporetencion = tiporetencionislrEJB.retencionislrFiltrada(personal, residenc, tiposervicio);

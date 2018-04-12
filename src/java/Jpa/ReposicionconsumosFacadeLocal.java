@@ -1,0 +1,33 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Jpa;
+
+import Modelo.Reposicionconsumos;
+import java.util.List;
+import javax.ejb.Local;
+
+/**
+ *
+ * @author sofimar
+ */
+@Local
+public interface ReposicionconsumosFacadeLocal {
+
+    void create(Reposicionconsumos reposicionconsumos);
+
+    void edit(Reposicionconsumos reposicionconsumos);
+
+    void remove(Reposicionconsumos reposicionconsumos);
+
+    Reposicionconsumos find(Object id);
+
+    List<Reposicionconsumos> findAll();
+
+    List<Reposicionconsumos> findRange(int[] range);
+
+    int count();
+    
+}

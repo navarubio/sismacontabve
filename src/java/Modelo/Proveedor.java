@@ -44,6 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Proveedor.findByTelefonocontacto", query = "SELECT p FROM Proveedor p WHERE p.telefonocontacto = :telefonocontacto")})
 public class Proveedor implements Serializable {
     @OneToMany(mappedBy = "rifproveedor")
+    private Collection<Detalleconsumocajachica> detalleconsumocajachicaCollection;
+    @OneToMany(mappedBy = "rifproveedor")
     private Collection<Comprobanteivaef> comprobanteivaefCollection;
     @OneToMany(mappedBy = "rifproveedor")
     private Collection<Comprobanteislref> comprobanteislrefCollection;
@@ -266,6 +268,15 @@ public class Proveedor implements Serializable {
 
     public void setMaquinariapicadoraCollection(Collection<Maquinariapicadora> maquinariapicadoraCollection) {
         this.maquinariapicadoraCollection = maquinariapicadoraCollection;
+    }
+
+    @XmlTransient
+    public Collection<Detalleconsumocajachica> getDetalleconsumocajachicaCollection() {
+        return detalleconsumocajachicaCollection;
+    }
+
+    public void setDetalleconsumocajachicaCollection(Collection<Detalleconsumocajachica> detalleconsumocajachicaCollection) {
+        this.detalleconsumocajachicaCollection = detalleconsumocajachicaCollection;
     }
     
 }

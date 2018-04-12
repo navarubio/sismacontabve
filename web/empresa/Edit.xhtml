@@ -30,6 +30,10 @@
                         <p:inputText id="contador" value="#{empresaController.selected.contador}" title="#{bundleEmpresa.EditEmpresaTitle_contador}" size="80"/>
                         <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_montoparaautorizacion}" for="montoautoriza" />
                         <p:inputText id="montoautoriza" value="#{empresaController.selected.montoparaautorizacion}" title="#{bundleEmpresa.EditEmpresaTitle_montoparaautorizacion}" />
+                        <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_serialconsumo}" for="serialconsumo" />
+                        <p:inputText id="serialconsumo" value="#{empresaController.selected.serialconsumo}" title="#{bundleEmpresa.EditEmpresaTitle_serialconsumo}" />
+                        <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_serialreposicion}" for="serialreposicion" />
+                        <p:inputText id="serialreposicion" value="#{empresaController.selected.serialreposicion}" title="#{bundleEmpresa.EditEmpresaTitle_serialreposicion}" />                        
                         <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_idcontribuyente}" for="idcontribuyente" />
                         <p:selectOneMenu id="idcontribuyente" value="#{empresaController.selected.idcontribuyente}" >
                             <f:selectItem itemLabel="#{bundleEmpresa.SelectOneMessage}"/>
