@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/template.xhtml">
+    <ui:composition template="/template.xhtml">
 
 
         <ui:define name="title">
@@ -117,6 +117,17 @@
                             </h:commandLink>   
                             <h:outputText value="#{item.idotroingreso}"/>
                         </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idreposicioncajachica}"/>
+                            </f:facet>
+                            <h:commandLink action="/otroingreso/asientootrosingresos.xhtml" actionListener="#{asientosotrosingresosController.asignarOtroingreso(item.idotroingreso, item)}" >
+                                <h:graphicImage library="images" name="contable1.png" width="30" height="30" alt="Cobros"
+                                                rendered="#{item.idreposicioncajachica!= null? true:false}"/>  
+                            </h:commandLink>   
+                            <h:outputText value="#{item.idreposicioncajachica}"/>
+                        </p:column>
+                        
                         <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idlibrodiario}"/>

@@ -77,6 +77,9 @@ public class Maestromovimiento implements Serializable {
     @JoinColumn(name = "idotroingreso", referencedColumnName = "idotroingreso")
     @ManyToOne
     private Otroingreso idotroingreso;
+    @JoinColumn(name = "idreposicioncajachica", referencedColumnName = "idreposicioncajachica")
+    @ManyToOne
+    private Reposicioncajachica idreposicioncajachica;
 
     @OneToMany(mappedBy = "idmaestro")
     private Collection<Cobroventa> cobroventaCollection;
@@ -196,6 +199,14 @@ public class Maestromovimiento implements Serializable {
 
     public void setIdotroingreso(Otroingreso idotroingreso) {
         this.idotroingreso = idotroingreso;
+    }
+
+    public Reposicioncajachica getIdreposicioncajachica() {
+        return idreposicioncajachica;
+    }
+
+    public void setIdreposicioncajachica(Reposicioncajachica idreposicioncajachica) {
+        this.idreposicioncajachica = idreposicioncajachica;
     }
 
     @XmlTransient

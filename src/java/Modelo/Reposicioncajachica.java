@@ -48,6 +48,8 @@ public class Reposicioncajachica implements Serializable {
     @Basic(optional = false)
     @Column(name = "idreposicioncajachica")
     private Integer idreposicioncajachica;
+    @Column(name = "serialreposicion")
+    private Integer serialreposicion;
     @Column(name = "fecharesposicion")
     @Temporal(TemporalType.DATE)
     private Date fecharesposicion;
@@ -74,6 +76,9 @@ public class Reposicioncajachica implements Serializable {
     @JoinColumn(name = "idrepositor", referencedColumnName = "idusuario")
     @ManyToOne
     private Usuario idrepositor;
+    @OneToMany(mappedBy = "idreposicioncajachica")
+    private Collection<Maestromovimiento> maestromovimientoCollection;    
+
 
     public Reposicioncajachica() {
     }
@@ -88,6 +93,14 @@ public class Reposicioncajachica implements Serializable {
 
     public void setIdreposicioncajachica(Integer idreposicioncajachica) {
         this.idreposicioncajachica = idreposicioncajachica;
+    }
+
+    public Integer getSerialreposicion() {
+        return serialreposicion;
+    }
+
+    public void setSerialreposicion(Integer serialreposicion) {
+        this.serialreposicion = serialreposicion;
     }
 
     public Date getFecharesposicion() {
@@ -163,6 +176,15 @@ public class Reposicioncajachica implements Serializable {
         this.idrepositor = idrepositor;
     }
 
+    @XmlTransient
+    public Collection<Maestromovimiento> getMaestromovimientoCollection() {
+        return maestromovimientoCollection;
+    }
+
+    public void setMaestromovimientoCollection(Collection<Maestromovimiento> maestromovimientoCollection) {
+        this.maestromovimientoCollection = maestromovimientoCollection;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

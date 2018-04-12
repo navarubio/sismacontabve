@@ -49,6 +49,8 @@ public class Consumocajachica implements Serializable {
     @Basic(optional = false)
     @Column(name = "idconsumocajachica")
     private Integer idconsumocajachica;
+    @Column(name = "serialconsumo")
+    private Integer serialconsumo;
     @Column(name = "fechaloteconsumo")
     @Temporal(TemporalType.DATE)
     private Date fechaloteconsumo;
@@ -93,6 +95,14 @@ public class Consumocajachica implements Serializable {
         this.idconsumocajachica = idconsumocajachica;
     }
 
+    public Integer getSerialconsumo() {
+        return serialconsumo;
+    }
+
+    public void setSerialconsumo(Integer serialconsumo) {
+        this.serialconsumo = serialconsumo;
+    }
+    
     public Date getFechaloteconsumo() {
         return fechaloteconsumo;
     }
