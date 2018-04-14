@@ -4,6 +4,7 @@ import Modelo.Tipogastocajachica;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.TipogastocajachicaFacade;
+import Jpa.TipogastocajachicaFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -21,10 +22,10 @@ import javax.faces.convert.FacesConverter;
 
 @Named("tipogastocajachicaController")
 @SessionScoped
-public class TipogastocajachicaController implements Serializable {
+public class TipogastocajachicaController implements Serializable  {
 
     @EJB
-    private Jpa.TipogastocajachicaFacade ejbFacade;
+    private Jpa.TipogastocajachicaFacadeLocal ejbFacade;
     private List<Tipogastocajachica> items = null;
     private Tipogastocajachica selected;
 
@@ -45,7 +46,7 @@ public class TipogastocajachicaController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private TipogastocajachicaFacade getFacade() {
+    private TipogastocajachicaFacadeLocal getFacade() {
         return ejbFacade;
     }
 

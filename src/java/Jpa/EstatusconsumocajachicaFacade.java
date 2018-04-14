@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author sofimar
  */
 @Stateless
-public class EstatusconsumocajachicaFacade extends AbstractFacade<Estatusconsumocajachica> {
+public class EstatusconsumocajachicaFacade extends AbstractFacade<Estatusconsumocajachica> implements EstatusconsumocajachicaFacadeLocal{
     @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 

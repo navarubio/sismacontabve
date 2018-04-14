@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author sofimar
  */
 @Stateless
-public class TipogastocajachicaFacade extends AbstractFacade<Tipogastocajachica> {
+public class TipogastocajachicaFacade extends AbstractFacade<Tipogastocajachica> implements TipogastocajachicaFacadeLocal{
     @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 

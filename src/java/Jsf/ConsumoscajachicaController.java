@@ -15,6 +15,7 @@ import Jpa.MaestromovimientoFacadeLocal;
 import Jpa.ProveedorFacadeLocal;
 import Jpa.RequerimientoFacadeLocal;
 import Jpa.TipoconjuntoFacadeLocal;
+import Jpa.TipogastocajachicaFacadeLocal;
 import Modelo.Articulo;
 import Modelo.Autorizacion;
 import Modelo.Auxiliarrequerimiento;
@@ -31,6 +32,7 @@ import Modelo.Maestromovimiento;
 import Modelo.Proveedor;
 import Modelo.Requerimiento;
 import Modelo.Tipoconjunto;
+import Modelo.Tipogastocajachica;
 import Modelo.Usuario;
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -59,27 +61,17 @@ public class ConsumoscajachicaController implements Serializable {
     private AuxiliarrequerimientoFacadeLocal auxiliarrequerimientoEJB;
     @EJB
     private CajachicaFacadeLocal cajachicaEJB;
-    @Inject
-    private Cajachica cajachica;
-    @Inject
-    private Consumocajachica consumocajachica;
-    @Inject
-    private Detalleconsumocajachica detalleconsumocajachica;
-    @Inject
-    private Proveedor provee;
-    
-    private java.util.GregorianCalendar fecha1= new GregorianCalendar();
-    private Calendar cal = Calendar.getInstance();
-    private Date fechaactual =cal.getTime();
-    
-    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
-    
+    @EJB
+    private TipogastocajachicaFacadeLocal tipogastocajachicaEJB;
+    @EJB
+    private ProveedorFacadeLocal proveedorEJB;
+
+    //PARA ELIMINAR AL TERMINAR DE CONFIGURAR EL CONTROLADOR//////////////
     @EJB
     private AutorizacionFacadeLocal autorizacionEJB;
     @EJB
     private RequerimientoFacadeLocal requerimientoEJB;
-    @EJB
-    private ProveedorFacadeLocal proveedorEJB;
+
     @EJB
     private ArticuloFacadeLocal articuloEJB;
     @EJB
@@ -98,6 +90,32 @@ public class ConsumoscajachicaController implements Serializable {
     private EstatuscontableFacadeLocal estatuscontableEJB;
     @EJB
     private EmpresaFacadeLocal empresaEJB;
+
+    //PARA ELIMINAR AL TERMINAR DE CONFIGURAR EL CONTROLADOR//////////////
+    @Inject
+    private Cajachica cajachica;
+    @Inject
+    private Consumocajachica consumocajachica;
+    @Inject
+    private Detalleconsumocajachica detalleconsumocajachica;
+    @Inject
+    private Proveedor provee;
+    @Inject
+    private Detalleconsumocajachica detalleamodif;
+
+    private java.util.GregorianCalendar fecha1 = new GregorianCalendar();
+    private Calendar cal = Calendar.getInstance();
+    private Date fechaactual = cal.getTime();
+    private String totalgeneralform;
+    private String totalivaform;
+    private String totalsubtotalform;
+    private double totalgeneral = 0;
+    private double totaliva = 0;
+    private double totalsubtotal = 0;
+
+    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
+    private List<Detalleconsumocajachica> listadetalles = new ArrayList();
+
     @Inject
     private Auxiliarrequerimiento auxiliar;
     @Inject
@@ -121,6 +139,7 @@ public class ConsumoscajachicaController implements Serializable {
     private RequerimientosController requerimientosController;
 
     private List<Cajachica> cajaschicas;
+    private List<Tipogastocajachica> tiposdegastos;
 
     public List<Cajachica> getCajaschicas() {
         return cajaschicas;
@@ -128,6 +147,14 @@ public class ConsumoscajachicaController implements Serializable {
 
     public void setCajaschicas(List<Cajachica> cajaschicas) {
         this.cajaschicas = cajaschicas;
+    }
+
+    public List<Tipogastocajachica> getTiposdegastos() {
+        return tiposdegastos;
+    }
+
+    public void setTiposdegastos(List<Tipogastocajachica> tiposdegastos) {
+        this.tiposdegastos = tiposdegastos;
     }
 
     public Cajachica getCajachica() {
@@ -153,12 +180,71 @@ public class ConsumoscajachicaController implements Serializable {
     public void setDetalleconsumocajachica(Detalleconsumocajachica detalleconsumocajachica) {
         this.detalleconsumocajachica = detalleconsumocajachica;
     }
-    
-    
-    
-    
-    
-    
+
+    public List<Detalleconsumocajachica> getListadetalles() {
+        return listadetalles;
+    }
+
+    public void setListadetalles(List<Detalleconsumocajachica> listadetalles) {
+        this.listadetalles = listadetalles;
+    }
+
+    public double getTotaliva() {
+        return totaliva;
+    }
+
+    public void setTotaliva(double totaliva) {
+        this.totaliva = totaliva;
+    }
+
+    public double getTotalsubtotal() {
+        return totalsubtotal;
+    }
+
+    public double getTotalgeneral() {
+        return totalgeneral;
+    }
+
+    public void setTotalgeneral(double totalgeneral) {
+        this.totalgeneral = totalgeneral;
+    }
+
+    public void setTotalsubtotal(double totalsubtotal) {
+        this.totalsubtotal = totalsubtotal;
+    }
+
+    public String getTotalgeneralform() {
+        return totalgeneralform;
+    }
+
+    public void setTotalgeneralform(String totalgeneralform) {
+        this.totalgeneralform = totalgeneralform;
+    }
+
+    public String getTotalivaform() {
+        return totalivaform;
+    }
+
+    public void setTotalivaform(String totalivaform) {
+        this.totalivaform = totalivaform;
+    }
+
+    public String getTotalsubtotalform() {
+        return totalsubtotalform;
+    }
+
+    public void setTotalsubtotalform(String totalsubtotalform) {
+        this.totalsubtotalform = totalsubtotalform;
+    }
+
+    public Detalleconsumocajachica getDetalleamodif() {
+        return detalleamodif;
+    }
+
+    public void setDetalleamodif(Detalleconsumocajachica detalleamodif) {
+        this.detalleamodif = detalleamodif;
+    }
+
     private List<Requerimiento> listarequerimiento = new ArrayList();
     private List<Auxiliarrequerimiento> auxiliarrequerimientos;
     private List<Requerimiento> requerimientos;
@@ -170,16 +256,10 @@ public class ConsumoscajachicaController implements Serializable {
     private List<Compra> comprasporautorizar = null;
     private List<Compra> comprasporpagar = null;
     private List<Compra> compraspagadas = null;
-    private String totalgeneralform;
-    private String totalivaform;
-    private String totalsubtotalform;
     private double pcosto = 0;
     private double pventa = 0;
     private double cantidad = 0;
     private double subtotal = 0;
-    private double totalgeneral = 0;
-    private double totaliva = 0;
-    private double totalsubtotal = 0;
     private int id = 0;
     private int varAutoriza = 0;
     private int idAuxiliar = 0;
@@ -190,7 +270,6 @@ public class ConsumoscajachicaController implements Serializable {
     private Autorizacion codAutoriza;
     private Compra compraautorizada;
     private Tipoconjunto tipoconjunto = null;
-
 
     public Compra getCompra() {
         return compra;
@@ -320,30 +399,6 @@ public class ConsumoscajachicaController implements Serializable {
         this.auxiliarrequerimiento = auxiliarrequerimiento;
     }
 
-    public double getTotaliva() {
-        return totaliva;
-    }
-
-    public void setTotaliva(double totaliva) {
-        this.totaliva = totaliva;
-    }
-
-    public double getTotalsubtotal() {
-        return totalsubtotal;
-    }
-
-    public double getTotalgeneral() {
-        return totalgeneral;
-    }
-
-    public void setTotalgeneral(double totalgeneral) {
-        this.totalgeneral = totalgeneral;
-    }
-
-    public void setTotalsubtotal(double totalsubtotal) {
-        this.totalsubtotal = totalsubtotal;
-    }
-
     public Requerimiento getRequerimiento() {
         return requerimiento;
     }
@@ -392,30 +447,6 @@ public class ConsumoscajachicaController implements Serializable {
         this.compraspagadas = compraspagadas;
     }
 
-    public String getTotalgeneralform() {
-        return totalgeneralform;
-    }
-
-    public void setTotalgeneralform(String totalgeneralform) {
-        this.totalgeneralform = totalgeneralform;
-    }
-
-    public String getTotalivaform() {
-        return totalivaform;
-    }
-
-    public void setTotalivaform(String totalivaform) {
-        this.totalivaform = totalivaform;
-    }
-
-    public String getTotalsubtotalform() {
-        return totalsubtotalform;
-    }
-
-    public void setTotalsubtotalform(String totalsubtotalform) {
-        this.totalsubtotalform = totalsubtotalform;
-    }
-
     public RequerimientosController getRequerimientosController() {
         return requerimientosController;
     }
@@ -428,14 +459,14 @@ public class ConsumoscajachicaController implements Serializable {
     public void init() {
         cajaschicas = cajachicaEJB.findAll();
         consumocajachica.setFechaloteconsumo(fechaactual);
-        
-        
+        tiposdegastos = tipogastocajachicaEJB.findAll();
+
         compra.setFechaorden(fechaactual);
         auxiliarrequerimientos = auxiliarrequerimientoEJB.findAll();
         requerimientos = requerimientoEJB.findAll();
         proveedores = proveedorEJB.findAll();
         articulos = articuloEJB.findAll();
-        
+
         varAutoriza = 0;
         listarequerimiento.clear();
         empresa = empresaEJB.devolverEmpresabase();
@@ -512,7 +543,7 @@ public class ConsumoscajachicaController implements Serializable {
     }
 
     public void autorizar() {
-        Usuario us = requerimientosController.getUsa();              
+        Usuario us = requerimientosController.getUsa();
         Date fecha = new Date();
         DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
         Date fechafinal = null;
@@ -550,6 +581,10 @@ public class ConsumoscajachicaController implements Serializable {
 
     public void asignarRequerimiento(Requerimiento requeri) {
         requerimiento = requeri;
+    }
+
+    public void asignarDetalle(Detalleconsumocajachica detalleaeditar) {
+        detalleamodif = detalleaeditar;
     }
 
     public void asignarCompra(Compra compraselec) {
@@ -597,7 +632,7 @@ public class ConsumoscajachicaController implements Serializable {
             int tipo = 0;
             //Para fijar monto minimo de de aprobacion para compras directas
             // ESTO DEBE PASARSE A REGLAS DE NEGOCIO EN DROOLS
-            
+
             if (compra.getTotal() <= empresa.getMontoparaautorizacion()) {
                 tipo = 0;
             } else if (compra.getTotal() > empresa.getMontoparaautorizacion()) {
@@ -679,41 +714,25 @@ public class ConsumoscajachicaController implements Serializable {
     }
 
     public void anexar() {
-        if (cantidad != 0) {
-            double alicuota = 0;
-            double iva = 0;
+        if (detalleconsumocajachica.getSubtotal() != 0) {
             double total = 0;
-            Requerimiento reque = new Requerimiento();
-            reque.setCodigo(requer.getCodigo());
-            reque.setCantidad(cantidad);
-            reque.setPcosto(pcosto);
-            subtotal = cantidad * pcosto;
-            reque.setSubtotal(subtotal);
-            alicuota = reque.getCodigo().getIdgravamen().getAlicuota();
-            iva = (subtotal * alicuota) / 100;
-            total = subtotal + iva;
-            reque.setTributoiva(iva);
-            reque.setTotal(total);
-            reque.setIdrequerimiento(id);
-            this.listarequerimiento.add(reque);
-            reque.setIdauxiliarrequerimiento(auxiliarrequerimiento);
-            requerimientoEJB.create(reque);
+            Detalleconsumocajachica detalle = new Detalleconsumocajachica();
+            detalle.setFechaconsumo(detalleconsumocajachica.getFechaconsumo());
+            detalle.setRifproveedor(detalleconsumocajachica.getRifproveedor());
+            detalle.setIdtipogastocajachica(detalleconsumocajachica.getIdtipogastocajachica());
+            detalle.setNumerofactura(detalleconsumocajachica.getNumerofactura());
+            detalle.setSubtotal(detalleconsumocajachica.getSubtotal());
+            detalle.setIva(detalleconsumocajachica.getIva());
+            total = detalleconsumocajachica.getSubtotal() + detalleconsumocajachica.getIva();
+            detalle.setToalgeneral(total);
+            this.listadetalles.add(detalle);
             id++;
-            requerimientos = requerimientoEJB.findAll();
-            pcosto = 0;
-            pventa = 0;
-            cantidad = 0;
-            requer.setCodigo(null);
+            total = 0;
             totaltotal();
-            auxiliarrequerimiento.setSubtotal(totalsubtotal);
-            auxiliarrequerimiento.setMontoiva(totaliva);
-            auxiliarrequerimiento.setMontototal(totalgeneral);
-            auxiliarrequerimientoEJB.edit(auxiliarrequerimiento);
-
 //            visualizar=1;
 //            requer.setCodigo(null);
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Cantidad en 0.0"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Subtotal en 0.0"));
         }
     }
 
@@ -722,10 +741,10 @@ public class ConsumoscajachicaController implements Serializable {
         double montotiva = 0;
         double montotsubtotal = 0;
 
-        for (Requerimiento requeri : listarequerimiento) {
-            montotgeneral += requeri.getTotal();
-            montotiva += requeri.getTributoiva();
-            montotsubtotal += requeri.getSubtotal();
+        for (Detalleconsumocajachica detalles : listadetalles) {
+            montotgeneral += detalles.getToalgeneral();
+            montotiva += detalles.getIva();
+            montotsubtotal += detalles.getSubtotal();
         }
         totalgeneral = montotgeneral;
         totaliva = montotiva;
@@ -744,6 +763,15 @@ public class ConsumoscajachicaController implements Serializable {
         auxiliarrequerimiento.setMontoiva(totaliva);
         auxiliarrequerimiento.setMontototal(totalgeneral);
         auxiliarrequerimientoEJB.edit(auxiliarrequerimiento);
+    }
+
+    public void eliminardetalle(Detalleconsumocajachica detalleaeliminar) {
+        listadetalles.remove(detalleaeliminar);
+        totaltotal();
+        /*        auxiliarrequerimiento.setSubtotal(totalsubtotal);
+         auxiliarrequerimiento.setMontoiva(totaliva);
+         auxiliarrequerimiento.setMontototal(totalgeneral);
+         auxiliarrequerimientoEJB.edit(auxiliarrequerimiento);*/
     }
 
     public void asignar(Auxiliarrequerimiento aux) {

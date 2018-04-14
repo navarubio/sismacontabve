@@ -23,7 +23,7 @@
                     <div id="imag2">
                         <img src="../resources/images/LogoInpeca2.jpg" width="155" height="58" alt="Logo Inpeca"/>
                     </div>      
-                    <img src="../resources/images/kwallet.png" width="70" height="70" alt="Compras" align="right" />
+                    <img src="../resources/images/kwallet.png" width="70" height="70" alt="Consumos" align="right" />
 
                     <p:panel id="panel1" header="PROCESAMIENTO CONSUMOS DE CAJA CHICA">
                         <p:panelGrid columns="1">
@@ -53,87 +53,82 @@
                             </p:fieldset>
                         </p:panelGrid>
 
-                        <p:fieldset legend="ANEXAR CONSUMOS DE CAJA CHICA" toggleable="false" toggleSpeed="500" collapsed="true" >
-                            <p:panelGrid styleClass="ui-custompanelgrid5" columns="7">
-                                <p:outputLabel for="fechaconsumo" value="Fecha" styleClass="text-ouput" />
-                                <p:calendar id="fechaconsumo" locale="es" pattern="dd/MM/yyyy" value="#{consumoscajachicaController.detalleconsumocajachica.fechaconsumo}" showOn="button" navigator="true" required="true" />
-                                <p:outputLabel for="proveedor" value="Proveedor" styleClass="text-ouput"/>
+                        <p:fieldset legend="ANEXAR CONSUMOS DE CAJA CHICA" toggleable="true" toggleSpeed="500" collapsed="true" >
+                            <p:panelGrid styleClass="ui-custompanelgrid5" columns="13">
+                                <p:outputLabel for="fechaconsumo" value="Fecha" />
+                                <p:calendar id="fechaconsumo" style="text-align: right" value="#{consumoscajachicaController.detalleconsumocajachica.fechaconsumo}" pattern="dd/MM/yyyy" locale="es" required="true" size="8"/>
+                                <p:outputLabel for="provee" value="Proveedor" />
                                 <p:selectOneMenu id="provee" value="#{consumoscajachicaController.provee}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
                                     <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
                                     <f:selectItems value="#{consumoscajachicaController.listarproveedores()}" 
                                                    var="idproveedorItem"
                                                    itemLabel="#{idproveedorItem.razonsocial}"  itemValue="#{idproveedorItem}" /> 
                                 </p:selectOneMenu>
-
-
-                                <p:outputLabel value="Articulo" for="idrequerimiento"  />
-                                <p:selectOneMenu id="idrequerimiento" value="#{comprasController.requer.codigo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
-                                    <p:ajax event="change" listener="#{comprasController.buscarArticulo()}" update="precio"/>                              
-
+                                <p:outputLabel for="tipogasto"  value="Gasto"  />
+                                <p:selectOneMenu id="tipogasto" value="#{consumoscajachicaController.detalleconsumocajachica.idtipogastocajachica}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
                                     <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
-                                    <f:selectItems value="#{comprasController.articulos}"
-                                                   var="idarticuloItem"
-                                                   itemLabel="#{idarticuloItem.descripcion}"  itemValue="#{idarticuloItem}" /> 
+                                    <f:selectItems value="#{consumoscajachicaController.tiposdegastos}"
+                                                   var="idtipogastoItem"
+                                                   itemLabel="#{idtipogastoItem.tipogastocajachica}"  itemValue="#{idtipogastoItem}" /> 
                                 </p:selectOneMenu>
-
-                                <p:outputLabel for="cantidad" value="Cantidad" />
-                                <p:inputText id="cantidad" value="#{comprasController.cantidad}" style="text-align:right"/>
-                                <p:outputLabel for="precio"  value="Precio" styleClass="optionalLbl"/>
-                                <p:inputText id="precio" size="20" value="#{comprasController.pcosto}" style="text-align:right"/>
-                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{comprasController.anexar()}" update="listado"/>  
+                                <p:outputLabel for="factura" value="Factura" />
+                                <p:inputText id="factura" value="#{consumoscajachicaController.detalleconsumocajachica.numerofactura}" style="text-align:right" size="5"/>
+                                <p:outputLabel for="subtotal" value="SubTotal" />
+                                <p:inputText id="subtotal" value="#{consumoscajachicaController.detalleconsumocajachica.subtotal}" style="text-align:right" size="7"/>
+                                <p:outputLabel for="iva"  value="Iva" styleClass="optionalLbl"/>
+                                <p:inputText id="iva" value="#{consumoscajachicaController.detalleconsumocajachica.iva}" style="text-align:right" size="7"/>
+                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{consumoscajachicaController.anexar()}" update="listado"/>  
                             </p:panelGrid>
                         </p:fieldset>
                     </p:panel>
                     <p:panel id="panelart"  >
-                        <p:dataTable id="listado" value="#{comprasController.requerimientosFiltrados}"
-                                     var="req" emptyMessage="No hay articulos para mostrar" >
-                            <p:column style="width:10%"  headerText="Codigo Articulo">
-                                <h:outputText value="#{req.codigo.codigo}" />
+                        <p:dataTable id="listado" value="#{consumoscajachicaController.listadetalles}"
+                                     var="detal" emptyMessage="No se han ingresado consumos" >
+                            <p:column style="width:10%"  headerText="Fecha">
+                                <h:outputText value="#{detal.fechaconsumo}" />
                             </p:column>
-                            <p:column style="width:35%"  headerText="Descripcion del Articulo">
-                                <h:outputText value="#{req.codigo.descripcion}"/>  
+                            <p:column style="width:35%"  headerText="Proveedor">
+                                <h:outputText value="#{detal.rifproveedor.razonsocial}"/>  
                             </p:column>
-                            <p:column style="text-align:center" headerText="Cantidad">                                
-                                <h:outputText style="width:10px"  value="#{req.cantidad}"/>
+                            <p:column style="text-align:center" headerText="Tipo Gasto">                                
+                                <h:outputText style="width:10px"  value="#{detal.idtipogastocajachica.tipogastocajachica}"/>
                             </p:column >
-                            <p:column style="text-align:right" headerText="Precio Unitario ">
-                                <h:outputText style="width:10px"  value="#{req.pcosto}">
-                                    <f:convertNumber type="currency" currencySymbol=" " />
-                                </h:outputText>
+                            <p:column style="text-align:right" headerText="Factura">
+                                <h:outputText style="width:10px"  value="#{detal.numerofactura}"/>
                             </p:column>
                             <p:column style="text-align:right" headerText="SUB TOTAL">
-                                <h:outputText value="#{req.subtotal}"> 
+                                <h:outputText value="#{detal.subtotal}"> 
                                     <f:convertNumber type="currency" currencySymbol=" " />
                                 </h:outputText>
                             </p:column>
                             <p:column style="text-align:right" headerText="IVA">
-                                <h:outputText value="#{req.tributoiva}"> 
+                                <h:outputText value="#{detal.iva}"> 
                                     <f:convertNumber type="currency" currencySymbol=" " />
                                 </h:outputText>
                             </p:column>
                             <p:column style="text-align:right" headerText="TOTAL">
-                                <h:outputText value="#{req.total}"> 
+                                <h:outputText value="#{detal.toalgeneral}"> 
                                     <f:convertNumber type="currency" currencySymbol=" " />
                                 </h:outputText>
                             </p:column>
                             <p:column style="text-align: center" headerText="Editar">                                
-                                <p:commandLink actionListener="#{comprasController.asignarRequerimiento(req)}" value="Editar" styleClass="text-ouputsaldo" update=":dialogo" oncomplete="PF('wdialogo').show();" >
+                                <p:commandLink actionListener="#{consumoscajachicaController.asignarDetalle(detal)}" value="Editar" styleClass="text-ouputsaldo" update=":dialogo" oncomplete="PF('wdialogo').show();" >
                                     <h:graphicImage library="images" name="desktop.png" width="30" height="30" alt="Editar Articulo"/> 
                                 </p:commandLink>
                             </p:column>
                             <p:column style="text-align: center"  headerText="Eliminar" >
-                                <p:commandLink value="Eliminar" actionListener="#{comprasController.eliminar(req)}" styleClass="text-ouputfact" update=":formulario:listado,:growl" rendered="#{comprasController.listarequerimiento.size()>1 ? true:false}"  />
+                                <p:commandLink value="Eliminar" actionListener="#{consumoscajachicaController.eliminar(req)}" styleClass="text-ouputfact" update=":formulario:listado,:growl" rendered="#{comprasController.listarequerimiento.size()>1 ? true:false}"  />
                             </p:column>
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
-                                    <p:column style="text-align: right"  footerText="$ #{comprasController.totalsubtotalform}" /> 
-                                    <p:column style="text-align: right"  footerText="$ #{comprasController.totalivaform}" />
-                                    <p:column style="text-align: right"  footerText="$ #{comprasController.totalgeneralform}" />                                        
+                                    <p:column style="text-align: right"  footerText="$ #{consumoscajachicaController.totalsubtotalform}" /> 
+                                    <p:column style="text-align: right"  footerText="$ #{consumoscajachicaController.totalivaform}" />
+                                    <p:column style="text-align: right"  footerText="$ #{consumoscajachicaController.totalgeneralform}" />                                        
                                 </p:row>
                             </p:columnGroup>       
                         </p:dataTable> 
-                        <p:commandButton value="Registrar" actionListener="#{comprasController.registrar()}"  action="/compra/List?faces-redirect=true" update="panelart,:formulario:listado,:growl"/>
+                        <p:commandButton value="Registrar" actionListener="#{consumoscajachicaController.registrar()}"  action="/compra/List?faces-redirect=true" update="panelart,:formulario:listado,:growl"/>
                         <p:commandButton value="Cancelar" />
                     </p:panel>
 
@@ -142,11 +137,11 @@
                           resizable="false" showEffect="explode" appendTo="@(body)"  >
                     <h:form>
                         <h:panelGrid  id="display" columns="4">
-                            <p:outputLabel for="cantidad" value="Cantidad" />
-                            <p:inputText id="cantidad" label="#{comprasController.requerimiento.cantidad}" value="#{comprasController.requerimiento.cantidad}" style="text-align:right"/>
-                            <p:outputLabel for="precio"  value="Precio sin IVA" styleClass="optionalLbl"/>
-                            <p:inputText id="precio"  label="#{comprasController.requerimiento.pcosto}"  size="20" value="#{comprasController.requerimiento.pcosto}" style="text-align:right"/>
-                            <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{comprasController.modificar()}"  oncomplete="PF('wdialogo').hide();" update="display,:formulario:listado,:growl" />                             
+                            <p:outputLabel for="subt" value="Cantidad" />
+                            <p:inputText id="subt" label="#{consumoscajachicaController.detalleamodif.subtotal}" value="#{consumoscajachicaController.detalleamodif.subtotal}" style="text-align:right"/>
+                            <p:outputLabel for="impuesto"  value="Precio sin IVA" styleClass="optionalLbl"/>
+                            <p:inputText id="impuesto"  label="#{consumoscajachicaController.detalleamodif.iva}"  size="20" value="#{consumoscajachicaController.detalleamodif.iva}" style="text-align:right"/>
+                            <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{consumoscajachicaController.modificar()}"  oncomplete="PF('wdialogo').hide();" update="display,:formulario:listado,:growl" />                             
                             <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
                         </h:panelGrid>
                     </h:form>

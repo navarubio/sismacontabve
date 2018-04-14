@@ -20,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -38,6 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Detalleconsumocajachica.findByToalgeneral", query = "SELECT d FROM Detalleconsumocajachica d WHERE d.toalgeneral = :toalgeneral"),
     @NamedQuery(name = "Detalleconsumocajachica.findByAprobacion", query = "SELECT d FROM Detalleconsumocajachica d WHERE d.aprobacion = :aprobacion")})
 public class Detalleconsumocajachica implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +49,9 @@ public class Detalleconsumocajachica implements Serializable {
     @Column(name = "fechaconsumo")
     @Temporal(TemporalType.DATE)
     private Date fechaconsumo;
+    @Size(max = 10)
+    @Column(name = "numerofactura")
+    private String numerofactura;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "subtotal")
     private Double subtotal;
@@ -92,6 +97,15 @@ public class Detalleconsumocajachica implements Serializable {
         this.fechaconsumo = fechaconsumo;
     }
 
+    public String getNumerofactura() {
+        return numerofactura;
+    }
+
+    public void setNumerofactura(String numerofactura) {
+        this.numerofactura = numerofactura;
+    }
+
+    
     public Double getSubtotal() {
         return subtotal;
     }
@@ -180,5 +194,5 @@ public class Detalleconsumocajachica implements Serializable {
     public String toString() {
         return "Modelo.Detalleconsumocajachica[ iddetalleconsumocajachica=" + iddetalleconsumocajachica + " ]";
     }
-    
+
 }

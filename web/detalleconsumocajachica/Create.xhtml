@@ -46,7 +46,7 @@
                         <p:selectOneMenu id="idtipogastocajachica" value="#{detalleconsumocajachicaController.selected.idtipogastocajachica}" >
                             <f:selectItems value="#{tipogastocajachicaController.itemsAvailableSelectOne}"
                                            var="idtipogastocajachicaItem"
-                                           itemValue="#{idtipogastocajachicaItem}"/>
+                                           itemValue="#{idtipogastocajachicaItem}"/> 
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{detalleconsumocajachicaController.create}" value="#{bundlecajachica.Save}" update="display,:DetalleconsumocajachicaListForm:datalist,:growl" oncomplete="handleSubmit(args,'DetalleconsumocajachicaCreateDialog');"/>
