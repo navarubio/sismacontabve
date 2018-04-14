@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CajachicaCreateDlg" widgetVar="CajachicaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecajachica.CreateCajachicaTitle}">
+            <h:form id="CajachicaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{cajachicaController.selected != null}">
+                        <p:outputLabel value="#{bundlecajachica.CreateCajachicaLabel_idempresa}" />
+                        <p:outputLabel value="#{cajachicaController.usuario.iddepartamento.idempresa.razonsocial}" />  
+                        <p:outputLabel value="#{bundlecajachica.CreateCajachicaLabel_idcajachica}" for="idcajachica" />
+                        <p:inputText id="idcajachica" value="#{cajachicaController.selected.idcajachica}" title="#{bundlecajachica.CreateCajachicaTitle_idcajachica}" required="true" requiredMessage="#{bundlecajachica.CreateCajachicaRequiredMessage_idcajachica}" size="10"/>
+                        <p:outputLabel value="#{bundlecajachica.CreateCajachicaLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{cajachicaController.selected.descripcion}" title="#{bundlecajachica.CreateCajachicaTitle_descripcion}" size="50" />
+                        <p:outputLabel value="#{bundlecajachica.CreateCajachicaLabel_montoasignado}" for="montoasignado" />
+                        <p:inputText id="montoasignado" value="#{cajachicaController.selected.montoasignado}" title="#{bundlecajachica.CreateCajachicaTitle_montoasignado}" size="10" />
+                        <p:outputLabel value="#{bundlecajachica.CreateCajachicaLabel_montomaximo}" for="montomaximo" />
+                        <p:inputText id="montomaximo" value="#{cajachicaController.selected.montomaximo}" title="#{bundlecajachica.CreateCajachicaTitle_montomaximo}" size="10" />
+                        <p:outputLabel value="#{bundlecajachica.CreateCajachicaLabel_montominimo}" for="montominimo" />
+                        <p:inputText id="montominimo" value="#{cajachicaController.selected.montominimo}" title="#{bundlecajachica.CreateCajachicaTitle_montominimo}" size="10" />
+                        <p:outputLabel value="#{bundlecajachica.CreateCajachicaLabel_idcustodio}" for="idcustodio" />
+                        <p:selectOneMenu id="idcustodio" value="#{cajachicaController.selected.idcustodio}" >
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="idcustodioItem"
+                                           itemValue="#{idcustodioItem}" itemLabel="#{idcustodioItem.nombre} #{idcustodioItem.cedula} "/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cajachicaController.create}" value="#{bundlecajachica.Save}" update="display,:CajachicaListForm:datalist,:growl" oncomplete="handleSubmit(args,'CajachicaCreateDialog');"/>
+                    <p:commandButton value="#{bundlecajachica.Cancel}" onclick="CajachicaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

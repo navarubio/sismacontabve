@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EstatusconsumocajachicaEditDlg" widgetVar="EstatusconsumocajachicaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecajachica.EditEstatusconsumocajachicaTitle}">
+            <h:form id="EstatusconsumocajachicaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{estatusconsumocajachicaController.selected != null}">
+                        <p:outputLabel value="#{bundlecajachica.EditEstatusconsumocajachicaLabel_idestatusconsumocajachica}" for="idestatusconsumocajachica" />
+                        <p:inputText id="idestatusconsumocajachica" value="#{estatusconsumocajachicaController.selected.idestatusconsumocajachica}" title="#{bundlecajachica.EditEstatusconsumocajachicaTitle_idestatusconsumocajachica}" required="true" requiredMessage="#{bundlecajachica.EditEstatusconsumocajachicaRequiredMessage_idestatusconsumocajachica}"/>
+                        <p:outputLabel value="#{bundlecajachica.EditEstatusconsumocajachicaLabel_estatusconsumocajachica}" for="estatusconsumocajachica" />
+                        <p:inputText id="estatusconsumocajachica" value="#{estatusconsumocajachicaController.selected.estatusconsumocajachica}" title="#{bundlecajachica.EditEstatusconsumocajachicaTitle_estatusconsumocajachica}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{estatusconsumocajachicaController.update}" value="#{bundlecajachica.Save}" update="display,:EstatusconsumocajachicaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EstatusconsumocajachicaEditDialog');"/>
+                    <p:commandButton value="#{bundlecajachica.Cancel}" onclick="EstatusconsumocajachicaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

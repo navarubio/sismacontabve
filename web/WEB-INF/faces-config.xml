@@ -80,5 +80,9 @@
             <base-name>/Bundlecentrocosto</base-name>
             <var>bundlecentrocosto</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/Bundlecajachica</base-name>
+            <var>bundlecajachica</var>
+        </resource-bundle>
     </application>
 </faces-config>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ConsumocajachicaViewDlg" widgetVar="ConsumocajachicaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecajachica.ViewConsumocajachicaTitle}">
+            <h:form id="ConsumocajachicaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{consumocajachicaController.selected != null}">
+                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_idconsumocajachica}"/>
+                        <h:outputText value="#{consumocajachicaController.selected.idconsumocajachica}" title="#{bundlecajachica.ViewConsumocajachicaTitle_idconsumocajachica}"/>
+                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_serialconsumo}"/>
+                        <h:outputText value="#{consumocajachicaController.selected.serialconsumo}" title="#{bundlecajachica.ViewConsumocajachicaTitle_serialconsumo}"/>
+                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_fechaloteconsumo}"/>
+                        <h:outputText value="#{consumocajachicaController.selected.fechaloteconsumo}" title="#{bundlecajachica.ViewConsumocajachicaTitle_fechaloteconsumo}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_observaciones}"/>
+                        <h:outputText value="#{consumocajachicaController.selected.observaciones}" title="#{bundlecajachica.ViewConsumocajachicaTitle_observaciones}"/>
+                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_subtotalconsumo}"/>
+                        <h:outputText value="#{consumocajachicaController.selected.subtotalconsumo}" title="#{bundlecajachica.ViewConsumocajachicaTitle_subtotalconsumo}"/>
+                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_ivaconsumo}"/>
+                        <h:outputText value="#{consumocajachicaController.selected.ivaconsumo}" title="#{bundlecajachica.ViewConsumocajachicaTitle_ivaconsumo}"/>
+                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_totalconsumo}"/>
+                        <h:outputText value="#{consumocajachicaController.selected.totalconsumo}" title="#{bundlecajachica.ViewConsumocajachicaTitle_totalconsumo}"/>
+                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_saldocajaactual}"/>
+                        <h:outputText value="#{consumocajachicaController.selected.saldocajaactual}" title="#{bundlecajachica.ViewConsumocajachicaTitle_saldocajaactual}"/>
+                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_idcajachica}"/>
+                        <h:outputText value="#{consumocajachicaController.selected.idcajachica}" title="#{bundlecajachica.ViewConsumocajachicaTitle_idcajachica}"/>
+                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_idestatusconsumocajachica}"/>
+                        <h:outputText value="#{consumocajachicaController.selected.idestatusconsumocajachica}" title="#{bundlecajachica.ViewConsumocajachicaTitle_idestatusconsumocajachica}"/>
+                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_idusuario}"/>
+                        <h:outputText value="#{consumocajachicaController.selected.idusuario}" title="#{bundlecajachica.ViewConsumocajachicaTitle_idusuario}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlecajachica.Close}" onclick="ConsumocajachicaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ReposicioncajachicaEditDlg" widgetVar="ReposicioncajachicaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecajachica.EditReposicioncajachicaTitle}">
+            <h:form id="ReposicioncajachicaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{reposicioncajachicaController.selected != null}">
+                        <p:outputLabel value="#{bundlecajachica.EditReposicioncajachicaLabel_idreposicioncajachica}" for="idreposicioncajachica" />
+                        <p:inputText id="idreposicioncajachica" value="#{reposicioncajachicaController.selected.idreposicioncajachica}" title="#{bundlecajachica.EditReposicioncajachicaTitle_idreposicioncajachica}" required="true" requiredMessage="#{bundlecajachica.EditReposicioncajachicaRequiredMessage_idreposicioncajachica}"/>
+                        <p:outputLabel value="#{bundlecajachica.EditReposicioncajachicaLabel_serialreposicion}" for="serialreposicion" />
+                        <p:inputText id="serialreposicion" value="#{reposicioncajachicaController.selected.serialreposicion}" title="#{bundlecajachica.EditReposicioncajachicaTitle_serialreposicion}" />
+                        <p:outputLabel value="#{bundlecajachica.EditReposicioncajachicaLabel_fecharesposicion}" for="fecharesposicion" />
+                        <p:calendar id="fecharesposicion" pattern="MM/dd/yyyy" value="#{reposicioncajachicaController.selected.fecharesposicion}" title="#{bundlecajachica.EditReposicioncajachicaTitle_fecharesposicion}"  showOn="button"/>
+                        <p:outputLabel value="#{bundlecajachica.EditReposicioncajachicaLabel_montoreposicion}" for="montoreposicion" />
+                        <p:inputText id="montoreposicion" value="#{reposicioncajachicaController.selected.montoreposicion}" title="#{bundlecajachica.EditReposicioncajachicaTitle_montoreposicion}" />
+                        <p:outputLabel value="#{bundlecajachica.EditReposicioncajachicaLabel_numerodocumento}" for="numerodocumento" />
+                        <p:inputText id="numerodocumento" value="#{reposicioncajachicaController.selected.numerodocumento}" title="#{bundlecajachica.EditReposicioncajachicaTitle_numerodocumento}" />
+                        <p:outputLabel value="#{bundlecajachica.EditReposicioncajachicaLabel_beneficiario}" for="beneficiario" />
+                        <p:inputText id="beneficiario" value="#{reposicioncajachicaController.selected.beneficiario}" title="#{bundlecajachica.EditReposicioncajachicaTitle_beneficiario}" />
+                        <p:outputLabel value="#{bundlecajachica.EditReposicioncajachicaLabel_observaciones}" for="observaciones" />
+                        <p:inputText id="observaciones" value="#{reposicioncajachicaController.selected.observaciones}" title="#{bundlecajachica.EditReposicioncajachicaTitle_observaciones}" />
+                        <p:outputLabel value="#{bundlecajachica.EditReposicioncajachicaLabel_idcuentabancaria}" for="idcuentabancaria" />
+                        <p:selectOneMenu id="idcuentabancaria" value="#{reposicioncajachicaController.selected.idcuentabancaria}" >
+                            <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentabancariaController.itemsAvailableSelectOne}"
+                                           var="idcuentabancariaItem"
+                                           itemValue="#{idcuentabancariaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecajachica.EditReposicioncajachicaLabel_idtipopago}" for="idtipopago" />
+                        <p:selectOneMenu id="idtipopago" value="#{reposicioncajachicaController.selected.idtipopago}" >
+                            <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipopagoController.itemsAvailableSelectOne}"
+                                           var="idtipopagoItem"
+                                           itemValue="#{idtipopagoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecajachica.EditReposicioncajachicaLabel_idrepositor}" for="idrepositor" />
+                        <p:selectOneMenu id="idrepositor" value="#{reposicioncajachicaController.selected.idrepositor}" >
+                            <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="idrepositorItem"
+                                           itemValue="#{idrepositorItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{reposicioncajachicaController.update}" value="#{bundlecajachica.Save}" update="display,:ReposicioncajachicaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ReposicioncajachicaEditDialog');"/>
+                    <p:commandButton value="#{bundlecajachica.Cancel}" onclick="ReposicioncajachicaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

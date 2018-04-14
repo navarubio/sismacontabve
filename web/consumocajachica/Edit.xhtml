@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ConsumocajachicaEditDlg" widgetVar="ConsumocajachicaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecajachica.EditConsumocajachicaTitle}">
+            <h:form id="ConsumocajachicaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{consumocajachicaController.selected != null}">
+                        <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_idconsumocajachica}" for="idconsumocajachica" />
+                        <p:inputText id="idconsumocajachica" value="#{consumocajachicaController.selected.idconsumocajachica}" title="#{bundlecajachica.EditConsumocajachicaTitle_idconsumocajachica}" required="true" requiredMessage="#{bundlecajachica.EditConsumocajachicaRequiredMessage_idconsumocajachica}"/>
+                        <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_serialconsumo}" for="serialconsumo" />
+                        <p:inputText id="serialconsumo" value="#{consumocajachicaController.selected.serialconsumo}" title="#{bundlecajachica.EditConsumocajachicaTitle_serialconsumo}" />
+                        <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_fechaloteconsumo}" for="fechaloteconsumo" />
+                        <p:calendar id="fechaloteconsumo" pattern="MM/dd/yyyy" value="#{consumocajachicaController.selected.fechaloteconsumo}" title="#{bundlecajachica.EditConsumocajachicaTitle_fechaloteconsumo}"  showOn="button"/>
+                        <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_observaciones}" for="observaciones" />
+                        <p:inputText id="observaciones" value="#{consumocajachicaController.selected.observaciones}" title="#{bundlecajachica.EditConsumocajachicaTitle_observaciones}" />
+                        <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_subtotalconsumo}" for="subtotalconsumo" />
+                        <p:inputText id="subtotalconsumo" value="#{consumocajachicaController.selected.subtotalconsumo}" title="#{bundlecajachica.EditConsumocajachicaTitle_subtotalconsumo}" />
+                        <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_ivaconsumo}" for="ivaconsumo" />
+                        <p:inputText id="ivaconsumo" value="#{consumocajachicaController.selected.ivaconsumo}" title="#{bundlecajachica.EditConsumocajachicaTitle_ivaconsumo}" />
+                        <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_totalconsumo}" for="totalconsumo" />
+                        <p:inputText id="totalconsumo" value="#{consumocajachicaController.selected.totalconsumo}" title="#{bundlecajachica.EditConsumocajachicaTitle_totalconsumo}" />
+                        <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_saldocajaactual}" for="saldocajaactual" />
+                        <p:inputText id="saldocajaactual" value="#{consumocajachicaController.selected.saldocajaactual}" title="#{bundlecajachica.EditConsumocajachicaTitle_saldocajaactual}" />
+                        <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_idcajachica}" for="idcajachica" />
+                        <p:selectOneMenu id="idcajachica" value="#{consumocajachicaController.selected.idcajachica}" >
+                            <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
+                            <f:selectItems value="#{cajachicaController.itemsAvailableSelectOne}"
+                                           var="idcajachicaItem"
+                                           itemValue="#{idcajachicaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_idestatusconsumocajachica}" for="idestatusconsumocajachica" />
+                        <p:selectOneMenu id="idestatusconsumocajachica" value="#{consumocajachicaController.selected.idestatusconsumocajachica}" >
+                            <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
+                            <f:selectItems value="#{estatusconsumocajachicaController.itemsAvailableSelectOne}"
+                                           var="idestatusconsumocajachicaItem"
+                                           itemValue="#{idestatusconsumocajachicaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_idusuario}" for="idusuario" />
+                        <p:selectOneMenu id="idusuario" value="#{consumocajachicaController.selected.idusuario}" >
+                            <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="idusuarioItem"
+                                           itemValue="#{idusuarioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{consumocajachicaController.update}" value="#{bundlecajachica.Save}" update="display,:ConsumocajachicaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ConsumocajachicaEditDialog');"/>
+                    <p:commandButton value="#{bundlecajachica.Cancel}" onclick="ConsumocajachicaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

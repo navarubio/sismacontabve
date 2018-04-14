@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"> 
+
+    <body>
+
+        <ui:composition template="/template.xhtml">
+
+            <ui:define name="title">
+                Consumos
+                <h:outputStylesheet library="css" name="index.css" />    
+            </ui:define>
+
+            <ui:define name="body">
+                <p:growl id="msgs" showDetail="true" autoUpdate="true" showSummary="false" /> 
+
+                <h:form id="formulario" >
+
+                    <div id="imag2">
+                        <img src="../resources/images/LogoInpeca2.jpg" width="155" height="58" alt="Logo Inpeca"/>
+                    </div>      
+                    <img src="../resources/images/kwallet.png" width="70" height="70" alt="Ccompras" align="right" />
+
+                    <p:panel id="panel1" header="PROCESAMIENTO CONSUMOS DE CAJA CHICA">
+                        <p:panelGrid columns="1">
+                            <p:fieldset  legend="DATOS GENERALES" >
+                                <p:panelGrid styleClass="ui-custompanelgrid" columns="2">
+                                    <p:outputLabel for="usua" value="Usuario" styleClass="text-ouput"/>
+                                    <p:outputLabel id="usua" value="#{requerimientosController.usa.nombre}" styleClass=""/>
+                                    <p:outputLabel for="depto" value="Departamento" styleClass="text-ouput"/>
+                                    <p:outputLabel id="depto" value="#{requerimientosController.usa.iddepartamento.departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="cajachica" value="Caja Chica" styleClass="text-ouput"/>
+                                    <p:selectOneMenu id="cajachica" value="#{consumoscajachicaController.cajachica}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
+                                        <p:ajax event="change" update="saldo, montomaximo"/>                              
+                                        <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
+                                        <f:selectItems value="#{consumoscajachicaController.listarcajaschicas()}" 
+                                                       var="idcajachicaItem"
+                                                       itemLabel="#{idcajachicaItem.descripcion}"  itemValue="#{idcajachicaItem}" /> 
+                                    </p:selectOneMenu>
+                                    <p:outputLabel for="saldo" value="Saldo Actual: " styleClass="text-ouput"/>
+                                    <p:outputLabel id="saldo" value="#{consumoscajachicaController.cajachica.saldoactual}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="montomaximo" value="Monto Maximo por Consumo" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montomaximo" value="#{consumoscajachicaController.cajachica.montomaximo}" styleClass="optionalLbl"/>                                    
+                                    <p:outputLabel for="fechaconsumo" value="Fecha Procesamiento" styleClass="text-ouput" />
+                                    <p:calendar id="fechacompra" locale="es" pattern="dd/MM/yyyy" value="#{consumoscajachicaController.consumocajachica.fechaloteconsumo}" showOn="button" navigator="true" required="true" />
+                                    <p:outputLabel for="observa" value="Observaciones" styleClass="text-ouput"/>
+                                    <p:inputTextarea id="observa"  rows="2" cols="50" label="Observaciones" value="#{consumoscajachicaController.consumocajachica.observaciones}" required="true"/>
+                                </p:panelGrid>                                
+                            </p:fieldset>
+                        </p:panelGrid>
+
+                        <p:fieldset legend="ANEXAR CONSUMOS DE CAJA CHICA" toggleable="false" toggleSpeed="500" collapsed="true" >
+                            <p:panelGrid styleClass="ui-custompanelgrid5" columns="7">
+                                <p:outputLabel value="Articulo" for="idrequerimiento"  />
+                                <p:selectOneMenu id="idrequerimiento" value="#{comprasController.requer.codigo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
+                                    <p:ajax event="change" listener="#{comprasController.buscarArticulo()}" update="precio"/>                              
+
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                    <f:selectItems value="#{comprasController.articulos}"
+                                                   var="idarticuloItem"
+                                                   itemLabel="#{idarticuloItem.descripcion}"  itemValue="#{idarticuloItem}" /> 
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="cantidad" value="Cantidad" />
+                                <p:inputText id="cantidad" value="#{comprasController.cantidad}" style="text-align:right"/>
+                                <p:outputLabel for="precio"  value="Precio" styleClass="optionalLbl"/>
+                                <p:inputText id="precio" size="20" value="#{comprasController.pcosto}" style="text-align:right"/>
+                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{comprasController.anexar()}" update="listado"/>  
+                            </p:panelGrid>
+                        </p:fieldset>
+                    </p:panel>
+                    <p:panel id="panelart"  >
+                        <p:dataTable id="listado" value="#{comprasController.requerimientosFiltrados}"
+                                     var="req" emptyMessage="No hay articulos para mostrar" >
+                            <p:column style="width:10%"  headerText="Codigo Articulo">
+                                <h:outputText value="#{req.codigo.codigo}" />
+                            </p:column>
+                            <p:column style="width:35%"  headerText="Descripcion del Articulo">
+                                <h:outputText value="#{req.codigo.descripcion}"/>  
+                            </p:column>
+                            <p:column style="text-align:center" headerText="Cantidad">                                
+                                <h:outputText style="width:10px"  value="#{req.cantidad}"/>
+                            </p:column >
+                            <p:column style="text-align:right" headerText="Precio Unitario ">
+                                <h:outputText style="width:10px"  value="#{req.pcosto}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align:right" headerText="SUB TOTAL">
+                                <h:outputText value="#{req.subtotal}"> 
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align:right" headerText="IVA">
+                                <h:outputText value="#{req.tributoiva}"> 
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align:right" headerText="TOTAL">
+                                <h:outputText value="#{req.total}"> 
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align: center" headerText="Editar">                                
+                                <p:commandLink actionListener="#{comprasController.asignarRequerimiento(req)}" value="Editar" styleClass="text-ouputsaldo" update=":dialogo" oncomplete="PF('wdialogo').show();" >
+                                    <h:graphicImage library="images" name="desktop.png" width="30" height="30" alt="Editar Articulo"/> 
+                                </p:commandLink>
+                            </p:column>
+                            <p:column style="text-align: center"  headerText="Eliminar" >
+                                <p:commandLink value="Eliminar" actionListener="#{comprasController.eliminar(req)}" styleClass="text-ouputfact" update=":formulario:listado,:growl" rendered="#{comprasController.listarequerimiento.size()>1 ? true:false}"  />
+                            </p:column>
+                            <p:columnGroup type="footer">
+                                <p:row>
+                                    <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
+                                    <p:column style="text-align: right"  footerText="$ #{comprasController.totalsubtotalform}" /> 
+                                    <p:column style="text-align: right"  footerText="$ #{comprasController.totalivaform}" />
+                                    <p:column style="text-align: right"  footerText="$ #{comprasController.totalgeneralform}" />                                        
+                                </p:row>
+                            </p:columnGroup>       
+                        </p:dataTable> 
+                        <p:commandButton value="Registrar" actionListener="#{comprasController.registrar()}"  action="/compra/List?faces-redirect=true" update="panelart,:formulario:listado,:growl"/>
+                        <p:commandButton value="Cancelar" />
+                    </p:panel>
+
+                </h:form>
+                <p:dialog id="dialogo" widgetVar="wdialogo" header="Modificar cantidad y precio del Articulo" modal="true" closeOnEscape="true" 
+                          resizable="false" showEffect="explode" appendTo="@(body)"  >
+                    <h:form>
+                        <h:panelGrid  id="display" columns="4">
+                            <p:outputLabel for="cantidad" value="Cantidad" />
+                            <p:inputText id="cantidad" label="#{comprasController.requerimiento.cantidad}" value="#{comprasController.requerimiento.cantidad}" style="text-align:right"/>
+                            <p:outputLabel for="precio"  value="Precio sin IVA" styleClass="optionalLbl"/>
+                            <p:inputText id="precio"  label="#{comprasController.requerimiento.pcosto}"  size="20" value="#{comprasController.requerimiento.pcosto}" style="text-align:right"/>
+                            <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{comprasController.modificar()}"  oncomplete="PF('wdialogo').hide();" update="display,:formulario:listado,:growl" />                             
+                            <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
+                        </h:panelGrid>
+                    </h:form>
+                    <h:outputScript library="js" name="spanishLocale.js"/>
+                </p:dialog>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

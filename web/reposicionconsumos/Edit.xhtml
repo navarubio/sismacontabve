@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ReposicionconsumosEditDlg" widgetVar="ReposicionconsumosEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecajachica.EditReposicionconsumosTitle}">
+            <h:form id="ReposicionconsumosEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{reposicionconsumosController.selected != null}">
+                        <p:outputLabel value="#{bundlecajachica.EditReposicionconsumosLabel_idresposicionconsumos}" for="idresposicionconsumos" />
+                        <p:inputText id="idresposicionconsumos" value="#{reposicionconsumosController.selected.idresposicionconsumos}" title="#{bundlecajachica.EditReposicionconsumosTitle_idresposicionconsumos}" required="true" requiredMessage="#{bundlecajachica.EditReposicionconsumosRequiredMessage_idresposicionconsumos}"/>
+                        <p:outputLabel value="#{bundlecajachica.EditReposicionconsumosLabel_idconsumocajachica}" for="idconsumocajachica" />
+                        <p:selectOneMenu id="idconsumocajachica" value="#{reposicionconsumosController.selected.idconsumocajachica}" >
+                            <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
+                            <f:selectItems value="#{consumocajachicaController.itemsAvailableSelectOne}"
+                                           var="idconsumocajachicaItem"
+                                           itemValue="#{idconsumocajachicaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecajachica.EditReposicionconsumosLabel_idreposicioncajachica}" for="idreposicioncajachica" />
+                        <p:selectOneMenu id="idreposicioncajachica" value="#{reposicionconsumosController.selected.idreposicioncajachica}" >
+                            <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
+                            <f:selectItems value="#{reposicioncajachicaController.itemsAvailableSelectOne}"
+                                           var="idreposicioncajachicaItem"
+                                           itemValue="#{idreposicioncajachicaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{reposicionconsumosController.update}" value="#{bundlecajachica.Save}" update="display,:ReposicionconsumosListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ReposicionconsumosEditDialog');"/>
+                    <p:commandButton value="#{bundlecajachica.Cancel}" onclick="ReposicionconsumosEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

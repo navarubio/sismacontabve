@@ -1,12 +1,9 @@
 package Jsf;
 
-import Modelo.Departamento;
+import Modelo.Estatusconsumocajachica;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
-import Jpa.DepartamentoFacadeLocal;
-import Modelo.Auxiliarrequerimiento;
-import Modelo.Empresa;
-import Modelo.Usuario;
+import Jpa.EstatusconsumocajachicaFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,33 +12,30 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
 
-@ManagedBean(name = "departamentoController")
+@Named("estatusconsumocajachicaController")
 @SessionScoped
-public class DepartamentoController implements Serializable {
+public class EstatusconsumocajachicaController implements Serializable {
 
     @EJB
-    private DepartamentoFacadeLocal ejbFacade;
-    private List<Departamento> items = null;
-    private Departamento selected;
-    private Usuario usa;
-    private Auxiliarrequerimiento auxiliarrequerimiento;
+    private Jpa.EstatusconsumocajachicaFacade ejbFacade;
+    private List<Estatusconsumocajachica> items = null;
+    private Estatusconsumocajachica selected;
 
-    public DepartamentoController() {
+    public EstatusconsumocajachicaController() {
     }
 
-    public Departamento getSelected() {
+    public Estatusconsumocajachica getSelected() {
         return selected;
     }
 
-    public void setSelected(Departamento selected) {
+    public void setSelected(Estatusconsumocajachica selected) {
         this.selected = selected;
     }
 
@@ -51,51 +45,36 @@ public class DepartamentoController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private DepartamentoFacadeLocal getFacade() {
+    private EstatusconsumocajachicaFacade getFacade() {
         return ejbFacade;
     }
 
-    public Auxiliarrequerimiento getAuxiliarrequerimiento() {
-        return auxiliarrequerimiento;
-    }
-
-    public void setAuxiliarrequerimiento(Auxiliarrequerimiento auxiliarrequerimiento) {
-        this.auxiliarrequerimiento = auxiliarrequerimiento;
-    }
-
-    public Usuario getUsuario() {
-        Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        usa = us;
-        selected.setIdempresa(usa.getIddepartamento().getIdempresa());
-        return us;
-    }
-
-    public Departamento prepareCreate() {
-        selected = new Departamento();
+    public Estatusconsumocajachica prepareCreate() {
+        selected = new Estatusconsumocajachica();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DepartamentoCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundlecajachica").getString("EstatusconsumocajachicaCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("DepartamentoUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundlecajachica").getString("EstatusconsumocajachicaUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("DepartamentoDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundlecajachica").getString("EstatusconsumocajachicaDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Departamento> getItems() {
+    public List<Estatusconsumocajachica> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -121,38 +100,38 @@ public class DepartamentoController implements Serializable {
                 if (msg.length() > 0) {
                     JsfUtil.addErrorMessage(msg);
                 } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundlecajachica").getString("PersistenceErrorOccured"));
                 }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundlecajachica").getString("PersistenceErrorOccured"));
             }
         }
     }
 
-    public Departamento getDepartamento(java.lang.Integer id) {
+    public Estatusconsumocajachica getEstatusconsumocajachica(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<Departamento> getItemsAvailableSelectMany() {
+    public List<Estatusconsumocajachica> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Departamento> getItemsAvailableSelectOne() {
+    public List<Estatusconsumocajachica> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Departamento.class)
-    public static class DepartamentoControllerConverter implements Converter {
+    @FacesConverter(forClass = Estatusconsumocajachica.class)
+    public static class EstatusconsumocajachicaControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            DepartamentoController controller = (DepartamentoController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "departamentoController");
-            return controller.getFacade().find(getKey(value));
+            EstatusconsumocajachicaController controller = (EstatusconsumocajachicaController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "estatusconsumocajachicaController");
+            return controller.getEstatusconsumocajachica(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -172,11 +151,11 @@ public class DepartamentoController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Departamento) {
-                Departamento o = (Departamento) object;
-                return getStringKey(o.getIddepartamento());
+            if (object instanceof Estatusconsumocajachica) {
+                Estatusconsumocajachica o = (Estatusconsumocajachica) object;
+                return getStringKey(o.getIdestatusconsumocajachica());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Departamento.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Estatusconsumocajachica.class.getName()});
                 return null;
             }
         }

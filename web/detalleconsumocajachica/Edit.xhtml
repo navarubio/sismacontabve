@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalleconsumocajachicaEditDlg" widgetVar="DetalleconsumocajachicaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecajachica.EditDetalleconsumocajachicaTitle}">
+            <h:form id="DetalleconsumocajachicaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detalleconsumocajachicaController.selected != null}">
+                        <p:outputLabel value="#{bundlecajachica.EditDetalleconsumocajachicaLabel_iddetalleconsumocajachica}" for="iddetalleconsumocajachica" />
+                        <p:inputText id="iddetalleconsumocajachica" value="#{detalleconsumocajachicaController.selected.iddetalleconsumocajachica}" title="#{bundlecajachica.EditDetalleconsumocajachicaTitle_iddetalleconsumocajachica}" required="true" requiredMessage="#{bundlecajachica.EditDetalleconsumocajachicaRequiredMessage_iddetalleconsumocajachica}"/>
+                        <p:outputLabel value="#{bundlecajachica.EditDetalleconsumocajachicaLabel_fechaconsumo}" for="fechaconsumo" />
+                        <p:calendar id="fechaconsumo" pattern="MM/dd/yyyy" value="#{detalleconsumocajachicaController.selected.fechaconsumo}" title="#{bundlecajachica.EditDetalleconsumocajachicaTitle_fechaconsumo}"  showOn="button"/>
+                        <p:outputLabel value="#{bundlecajachica.EditDetalleconsumocajachicaLabel_subtotal}" for="subtotal" />
+                        <p:inputText id="subtotal" value="#{detalleconsumocajachicaController.selected.subtotal}" title="#{bundlecajachica.EditDetalleconsumocajachicaTitle_subtotal}" />
+                        <p:outputLabel value="#{bundlecajachica.EditDetalleconsumocajachicaLabel_iva}" for="iva" />
+                        <p:inputText id="iva" value="#{detalleconsumocajachicaController.selected.iva}" title="#{bundlecajachica.EditDetalleconsumocajachicaTitle_iva}" />
+                        <p:outputLabel value="#{bundlecajachica.EditDetalleconsumocajachicaLabel_toalgeneral}" for="toalgeneral" />
+                        <p:inputText id="toalgeneral" value="#{detalleconsumocajachicaController.selected.toalgeneral}" title="#{bundlecajachica.EditDetalleconsumocajachicaTitle_toalgeneral}" />
+                        <p:outputLabel value="#{bundlecajachica.EditDetalleconsumocajachicaLabel_aprobacion}" for="aprobacion" />
+                        <p:inputText id="aprobacion" value="#{detalleconsumocajachicaController.selected.aprobacion}" title="#{bundlecajachica.EditDetalleconsumocajachicaTitle_aprobacion}" />
+                        <p:outputLabel value="#{bundlecajachica.EditDetalleconsumocajachicaLabel_codigocentrocosto}" for="codigocentrocosto" />
+                        <p:selectOneMenu id="codigocentrocosto" value="#{detalleconsumocajachicaController.selected.codigocentrocosto}" >
+                            <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
+                            <f:selectItems value="#{centrodecostoController.itemsAvailableSelectOne}"
+                                           var="codigocentrocostoItem"
+                                           itemValue="#{codigocentrocostoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecajachica.EditDetalleconsumocajachicaLabel_idconsumocajachica}" for="idconsumocajachica" />
+                        <p:selectOneMenu id="idconsumocajachica" value="#{detalleconsumocajachicaController.selected.idconsumocajachica}" >
+                            <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
+                            <f:selectItems value="#{consumocajachicaController.itemsAvailableSelectOne}"
+                                           var="idconsumocajachicaItem"
+                                           itemValue="#{idconsumocajachicaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecajachica.EditDetalleconsumocajachicaLabel_rifproveedor}" for="rifproveedor" />
+                        <p:selectOneMenu id="rifproveedor" value="#{detalleconsumocajachicaController.selected.rifproveedor}" >
+                            <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
+                            <f:selectItems value="#{proveedorController.itemsAvailableSelectOne}"
+                                           var="rifproveedorItem"
+                                           itemValue="#{rifproveedorItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecajachica.EditDetalleconsumocajachicaLabel_idtipogastocajachica}" for="idtipogastocajachica" />
+                        <p:selectOneMenu id="idtipogastocajachica" value="#{detalleconsumocajachicaController.selected.idtipogastocajachica}" >
+                            <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipogastocajachicaController.itemsAvailableSelectOne}"
+                                           var="idtipogastocajachicaItem"
+                                           itemValue="#{idtipogastocajachicaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detalleconsumocajachicaController.update}" value="#{bundlecajachica.Save}" update="display,:DetalleconsumocajachicaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DetalleconsumocajachicaEditDialog');"/>
+                    <p:commandButton value="#{bundlecajachica.Cancel}" onclick="DetalleconsumocajachicaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

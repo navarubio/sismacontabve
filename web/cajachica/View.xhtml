@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CajachicaViewDlg" widgetVar="CajachicaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecajachica.ViewCajachicaTitle}">
+            <h:form id="CajachicaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{cajachicaController.selected != null}">
+                        <h:outputText value="#{bundlecajachica.ViewCajachicaLabel_idempresa}"/>
+                        <h:outputText value="#{cajachicaController.selected.idempresa.razonsocial}" title="#{bundlecajachica.ViewCajachicaTitle_idempresa}"/>
+
+                        <h:outputText value="#{bundlecajachica.ViewCajachicaLabel_idcajachica}"/>
+                        <h:outputText value="#{cajachicaController.selected.idcajachica}" title="#{bundlecajachica.ViewCajachicaTitle_idcajachica}"/>
+                        <h:outputText value="#{bundlecajachica.ViewCajachicaLabel_descripcion}"/>
+                        <h:outputText value="#{cajachicaController.selected.descripcion}" title="#{bundlecajachica.ViewCajachicaTitle_descripcion}"/>
+                        <h:outputText value="#{bundlecajachica.ViewCajachicaLabel_montoasignado}"/>
+                        <h:outputText value="#{cajachicaController.selected.montoasignado}" title="#{bundlecajachica.ViewCajachicaTitle_montoasignado}"/>
+                        <h:outputText value="#{bundlecajachica.ViewCajachicaLabel_montomaximo}"/>
+                        <h:outputText value="#{cajachicaController.selected.montomaximo}" title="#{bundlecajachica.ViewCajachicaTitle_montomaximo}"/>
+                        <h:outputText value="#{bundlecajachica.ViewCajachicaLabel_montominimo}"/>
+                        <h:outputText value="#{cajachicaController.selected.montominimo}" title="#{bundlecajachica.ViewCajachicaTitle_montominimo}"/>
+                        <h:outputText value="#{bundlecajachica.ViewCajachicaLabel_saldoactual}"/>
+                        <h:outputText value="#{cajachicaController.selected.saldoactual}" title="#{bundlecajachica.ViewCajachicaTitle_saldoactual}"/>
+                        <h:outputText value="#{bundlecajachica.ViewCajachicaLabel_estatuscajachica}"/>
+                        <h:outputText value="#{cajachicaController.selected.estatuscajachica}" title="#{bundlecajachica.ViewCajachicaTitle_estatuscajachica}"/>
+                        <h:outputText value="#{bundlecajachica.ViewCajachicaLabel_idplandecuenta}"/>
+                        <h:outputText value="#{cajachicaController.selected.idplandecuenta.idplandecuenta} #{cajachicaController.selected.idplandecuenta.descripcioncuenta}" title="#{bundlecajachica.ViewCajachicaTitle_idplandecuenta}"/>
+                        <h:outputText value="#{bundlecajachica.ViewCajachicaLabel_idcustodio}"/>
+                        <h:outputText value="#{cajachicaController.selected.idcustodio.nombre} #{cajachicaController.selected.idcustodio.cedula}" title="#{bundlecajachica.ViewCajachicaTitle_idcustodio}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlecajachica.Close}" onclick="CajachicaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CajachicaEditDlg" widgetVar="CajachicaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecajachica.EditCajachicaTitle}">
+            <h:form id="CajachicaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{cajachicaController.selected != null}">
+                        <p:outputLabel value="#{bundlecajachica.EditCajachicaLabel_idempresa}" />
+                        <p:outputLabel value="#{cajachicaController.usuario.iddepartamento.idempresa.razonsocial}" />  
+                        <p:outputLabel value="#{bundlecajachica.EditCajachicaLabel_idcajachica}" for="idcajachica" />
+                        <p:inputText id="idcajachica" value="#{cajachicaController.selected.idcajachica}" title="#{bundlecajachica.EditCajachicaTitle_idcajachica}" size="10"  required="true" requiredMessage="#{bundlecajachica.EditCajachicaRequiredMessage_idcajachica}"/>
+                        <p:outputLabel value="#{bundlecajachica.EditCajachicaLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{cajachicaController.selected.descripcion}" title="#{bundlecajachica.EditCajachicaTitle_descripcion}" size="50" />
+                        <p:outputLabel value="#{bundlecajachica.EditCajachicaLabel_montoasignado}" for="montoasignado" />
+                        <p:inputText id="montoasignado" value="#{cajachicaController.selected.montoasignado}" title="#{bundlecajachica.EditCajachicaTitle_montoasignado}" size="10" style="text-align: right" />
+                        <p:outputLabel value="#{bundlecajachica.EditCajachicaLabel_montomaximo}" for="montomaximo" />
+                        <p:inputText id="montomaximo" value="#{cajachicaController.selected.montomaximo}" title="#{bundlecajachica.EditCajachicaTitle_montomaximo}" size="10" style="text-align: right"/>
+                        <p:outputLabel value="#{bundlecajachica.EditCajachicaLabel_montominimo}" for="montominimo" />
+                        <p:inputText id="montominimo" value="#{cajachicaController.selected.montominimo}" title="#{bundlecajachica.EditCajachicaTitle_montominimo}" size="10" style="text-align: right"/>
+                        <p:outputLabel value="#{bundlecajachica.EditCajachicaLabel_idcustodio}" for="idcustodio" />
+                        <p:selectOneMenu id="idcustodio" value="#{cajachicaController.selected.idcustodio}" >
+                            <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="idcustodioItem"
+                                           itemValue="#{idcustodioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlecajachica.EditCajachicaLabel_idplandecuenta}" for="idplandecuenta" />
+                        <p:selectOneMenu id="idplandecuenta" value="#{cajachicaController.selected.idplandecuenta}" filter="true" filterMatchMode="contains"  converter="omnifaces.SelectItemsConverter" >
+                            <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
+                            <f:selectItems value="#{plandecuentaController.itemsordenados}"
+                                           var="idplandecuentaItem"
+                                           itemValue="#{idplandecuentaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cajachicaController.update}" value="#{bundlecajachica.Save}" update="display,:CajachicaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CajachicaEditDialog');"/>
+                    <p:commandButton value="#{bundlecajachica.Cancel}" onclick="CajachicaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

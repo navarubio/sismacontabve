@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipogastocajachicaEditDlg" widgetVar="TipogastocajachicaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecajachica.EditTipogastocajachicaTitle}">
+            <h:form id="TipogastocajachicaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tipogastocajachicaController.selected != null}">
+                       <p:outputLabel value="#{bundlecajachica.EditTipogastocajachicaLabel_tipogastocajachica}" for="tipogastocajachica" />
+                       <p:inputText id="tipogastocajachica" value="#{tipogastocajachicaController.selected.tipogastocajachica}" title="#{bundlecajachica.EditTipogastocajachicaTitle_tipogastocajachica}" size="50" />
+                        <p:outputLabel value="#{bundlecajachica.EditTipogastocajachicaLabel_idplandecuenta}" for="idplandecuenta" />
+                        <p:selectOneMenu id="idplandecuenta" value="#{tipogastocajachicaController.selected.idplandecuenta}" filter="true" filterMatchMode="contains"  converter="omnifaces.SelectItemsConverter" >
+                            <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
+                            <f:selectItems value="#{plandecuentaController.itemsordenados}"
+                                           var="idplandecuentaItem"
+                                           itemValue="#{idplandecuentaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipogastocajachicaController.update}" value="#{bundlecajachica.Save}" update="display,:TipogastocajachicaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TipogastocajachicaEditDialog');"/>
+                    <p:commandButton value="#{bundlecajachica.Cancel}" onclick="TipogastocajachicaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
