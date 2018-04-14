@@ -23,7 +23,7 @@
                     <div id="imag2">
                         <img src="../resources/images/LogoInpeca2.jpg" width="155" height="58" alt="Logo Inpeca"/>
                     </div>      
-                    <img src="../resources/images/kwallet.png" width="70" height="70" alt="Ccompras" align="right" />
+                    <img src="../resources/images/kwallet.png" width="70" height="70" alt="Compras" align="right" />
 
                     <p:panel id="panel1" header="PROCESAMIENTO CONSUMOS DE CAJA CHICA">
                         <p:panelGrid columns="1">
@@ -45,8 +45,8 @@
                                     <p:outputLabel id="saldo" value="#{consumoscajachicaController.cajachica.saldoactual}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="montomaximo" value="Monto Maximo por Consumo" styleClass="text-ouput"/>
                                     <p:outputLabel id="montomaximo" value="#{consumoscajachicaController.cajachica.montomaximo}" styleClass="optionalLbl"/>                                    
-                                    <p:outputLabel for="fechaconsumo" value="Fecha Procesamiento" styleClass="text-ouput" />
-                                    <p:calendar id="fechacompra" locale="es" pattern="dd/MM/yyyy" value="#{consumoscajachicaController.consumocajachica.fechaloteconsumo}" showOn="button" navigator="true" required="true" />
+                                    <p:outputLabel for="fechacarga" value="Fecha Procesamiento" styleClass="text-ouput" />
+                                    <p:calendar id="fechacarga" locale="es" pattern="dd/MM/yyyy" value="#{consumoscajachicaController.consumocajachica.fechaloteconsumo}" showOn="button" navigator="true" required="true" />
                                     <p:outputLabel for="observa" value="Observaciones" styleClass="text-ouput"/>
                                     <p:inputTextarea id="observa"  rows="2" cols="50" label="Observaciones" value="#{consumoscajachicaController.consumocajachica.observaciones}" required="true"/>
                                 </p:panelGrid>                                
@@ -55,6 +55,17 @@
 
                         <p:fieldset legend="ANEXAR CONSUMOS DE CAJA CHICA" toggleable="false" toggleSpeed="500" collapsed="true" >
                             <p:panelGrid styleClass="ui-custompanelgrid5" columns="7">
+                                <p:outputLabel for="fechaconsumo" value="Fecha" styleClass="text-ouput" />
+                                <p:calendar id="fechaconsumo" locale="es" pattern="dd/MM/yyyy" value="#{consumoscajachicaController.detalleconsumocajachica.fechaconsumo}" showOn="button" navigator="true" required="true" />
+                                <p:outputLabel for="proveedor" value="Proveedor" styleClass="text-ouput"/>
+                                <p:selectOneMenu id="provee" value="#{consumoscajachicaController.provee}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
+                                    <f:selectItems value="#{consumoscajachicaController.listarproveedores()}" 
+                                                   var="idproveedorItem"
+                                                   itemLabel="#{idproveedorItem.razonsocial}"  itemValue="#{idproveedorItem}" /> 
+                                </p:selectOneMenu>
+
+
                                 <p:outputLabel value="Articulo" for="idrequerimiento"  />
                                 <p:selectOneMenu id="idrequerimiento" value="#{comprasController.requer.codigo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
                                     <p:ajax event="change" listener="#{comprasController.buscarArticulo()}" update="precio"/>                              

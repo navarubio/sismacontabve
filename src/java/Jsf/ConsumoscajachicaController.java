@@ -23,6 +23,7 @@ import Modelo.Detallecompra;
 import Modelo.Compra;
 import Modelo.Consumocajachica;
 import Modelo.Departamento;
+import Modelo.Detalleconsumocajachica;
 import Modelo.Empresa;
 import Modelo.Estatusfactura;
 import Modelo.Estatusrequerimiento;
@@ -62,6 +63,10 @@ public class ConsumoscajachicaController implements Serializable {
     private Cajachica cajachica;
     @Inject
     private Consumocajachica consumocajachica;
+    @Inject
+    private Detalleconsumocajachica detalleconsumocajachica;
+    @Inject
+    private Proveedor provee;
     
     private java.util.GregorianCalendar fecha1= new GregorianCalendar();
     private Calendar cal = Calendar.getInstance();
@@ -111,8 +116,7 @@ public class ConsumoscajachicaController implements Serializable {
     private Articulo articulo;
     @Inject
     private Empresa empresa;
-    @Inject
-    private Proveedor provee;
+
     @Inject
     private RequerimientosController requerimientosController;
 
@@ -140,6 +144,14 @@ public class ConsumoscajachicaController implements Serializable {
 
     public void setConsumocajachica(Consumocajachica consumocajachica) {
         this.consumocajachica = consumocajachica;
+    }
+
+    public Detalleconsumocajachica getDetalleconsumocajachica() {
+        return detalleconsumocajachica;
+    }
+
+    public void setDetalleconsumocajachica(Detalleconsumocajachica detalleconsumocajachica) {
+        this.detalleconsumocajachica = detalleconsumocajachica;
     }
     
     
@@ -415,25 +427,26 @@ public class ConsumoscajachicaController implements Serializable {
     @PostConstruct
     public void init() {
         cajaschicas = cajachicaEJB.findAll();
-//        consumocajachica.setFechaloteconsumo(fechaactual);
+        consumocajachica.setFechaloteconsumo(fechaactual);
         
         
-        
-        
-//        compra.setFechaorden(fechaactual);
+        compra.setFechaorden(fechaactual);
         auxiliarrequerimientos = auxiliarrequerimientoEJB.findAll();
         requerimientos = requerimientoEJB.findAll();
         proveedores = proveedorEJB.findAll();
         articulos = articuloEJB.findAll();
-        comprasporautorizar = compraEJB.buscarcomprasporAutorizar();
-        comprasporpagar = compraEJB.buscarcomprasporPagar();
-        compraspagadas = compraEJB.buscarcomprasPagadas();
         
         varAutoriza = 0;
         listarequerimiento.clear();
         empresa = empresaEJB.devolverEmpresabase();
 
 //        this.auxiliarrequerimiento=requerimientosController.getAuxrequer();
+    }
+
+    public List<Proveedor> listarproveedores() {
+        List<Proveedor> lista = null;
+        lista = proveedorEJB.findAll();
+        return lista;
     }
 
     public List<Cajachica> listarcajaschicas() {
