@@ -20,74 +20,73 @@
                                  selectionMode="single" selection="#{detalleconsumocajachicaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.iddetalleconsumocajachica}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="20"
+                                 rowsPerPageTemplate="20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_iddetalleconsumocajachica}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.iddetalleconsumocajachica}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_fechaconsumo}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.fechaconsumo}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_subtotal}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.subtotal}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_iva}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.iva}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_toalgeneral}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.toalgeneral}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_aprobacion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.aprobacion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_codigocentrocosto}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.codigocentrocosto}"/>
-                        </p:column>
-                        <p:column>
+                        <p:column style="text-align: center" width="50">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_idconsumocajachica}"/>
                             </f:facet>
                             <h:outputText value="#{item.idconsumocajachica}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center" width="80">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_fechaconsumo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechaconsumo}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column width="250" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_rifproveedor}"/>
                             </f:facet>
-                            <h:outputText value="#{item.rifproveedor}"/>
+                            <h:outputText value="#{item.rifproveedor.razonsocial}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="250">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_idtipogastocajachica}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idtipogastocajachica}"/>
+                            <h:outputText value="#{item.idtipogastocajachica.tipogastocajachica}"/>
+                        </p:column>
+                        <p:column style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_subtotal}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.subtotal}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_iva}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.iva}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>                                
+                        </p:column>
+                        <p:column style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_toalgeneral}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.toalgeneral}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>                                
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_aprobacion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.aprobacion}"/>
+                        </p:column>
+                        <p:column style="text-align: left">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_codigocentrocosto}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codigocentrocosto.descripcion}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlecajachica.Create}" actionListener="#{detalleconsumocajachicaController.prepareCreate}" update=":DetalleconsumocajachicaCreateForm" oncomplete="PF('DetalleconsumocajachicaCreateDialog').show()"/>

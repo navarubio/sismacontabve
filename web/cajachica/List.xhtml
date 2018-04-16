@@ -33,7 +33,7 @@
                             </f:facet>
                             <h:outputText value="#{item.idcajachica}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="250">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecajachica.ListCajachicaTitle_descripcion}"/>
                             </f:facet>
@@ -43,25 +43,33 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecajachica.ListCajachicaTitle_montoasignado}"/>
                             </f:facet>
-                            <h:outputText value="#{item.montoasignado}"/>
+                            <h:outputText value="#{item.montoasignado}">
+                                <f:convertNumber type="currency" currencySymbol=""/>
+                            </h:outputText>
                         </p:column>
                         <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecajachica.ListCajachicaTitle_montomaximo}"/>
                             </f:facet>
-                            <h:outputText value="#{item.montomaximo}"/>
+                            <h:outputText value="#{item.montomaximo}">
+                                <f:convertNumber type="currency" currencySymbol=""/>
+                            </h:outputText>
                         </p:column>
                         <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecajachica.ListCajachicaTitle_montominimo}"/>
                             </f:facet>
-                            <h:outputText value="#{item.montominimo}"/>
+                            <h:outputText value="#{item.montominimo}">
+                                <f:convertNumber type="currency" currencySymbol=""/>
+                            </h:outputText>
                         </p:column>
                         <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecajachica.ListCajachicaTitle_saldoactual}"/>
                             </f:facet>
-                            <h:outputText value="#{item.saldoactual}"/>
+                            <h:outputText value="#{item.saldoactual}">
+                                <f:convertNumber type="currency" currencySymbol=""/>
+                            </h:outputText>
                         </p:column>
                         <!--p:column>
                             <f:facet name="header">
@@ -81,7 +89,7 @@
                             </f:facet>
                             <h:outputText value="#{item.idplandecuenta.idplandecuenta} #{item.idplandecuenta.descripcioncuenta}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="300" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecajachica.ListCajachicaTitle_idcustodio}"/>
                             </f:facet>

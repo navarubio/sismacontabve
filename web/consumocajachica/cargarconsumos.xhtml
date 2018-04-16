@@ -34,7 +34,7 @@
                                     <p:outputLabel for="depto" value="Departamento" styleClass="text-ouput"/>
                                     <p:outputLabel id="depto" value="#{requerimientosController.usa.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="cajachica" value="Caja Chica" styleClass="text-ouput"/>
-                                    <p:selectOneMenu id="cajachica" value="#{consumoscajachicaController.cajachica}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
+                                    <p:selectOneMenu id="cajachica" value="#{consumoscajachicaController.consumocajachica.idcajachica}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
                                         <p:ajax event="change" update="saldo, montomaximo"/>                              
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
                                         <f:selectItems value="#{consumoscajachicaController.listarcajaschicas()}" 
@@ -42,9 +42,13 @@
                                                        itemLabel="#{idcajachicaItem.descripcion}"  itemValue="#{idcajachicaItem}" /> 
                                     </p:selectOneMenu>
                                     <p:outputLabel for="saldo" value="Saldo Actual: " styleClass="text-ouput"/>
-                                    <p:outputLabel id="saldo" value="#{consumoscajachicaController.cajachica.saldoactual}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="saldo" value="#{consumoscajachicaController.consumocajachica.idcajachica.saldoactual}" styleClass="text-ouputsaldo">
+                                        <f:convertNumber type="currency" currencySymbol="$ " />
+                                    </p:outputLabel>
                                     <p:outputLabel for="montomaximo" value="Monto Maximo por Consumo" styleClass="text-ouput"/>
-                                    <p:outputLabel id="montomaximo" value="#{consumoscajachicaController.cajachica.montomaximo}" styleClass="optionalLbl"/>                                    
+                                    <p:outputLabel id="montomaximo" value="#{consumoscajachicaController.consumocajachica.idcajachica.montomaximo}" styleClass="text-ouputfactura" >                                    
+                                    <f:convertNumber type="currency" currencySymbol="$ " />
+                                    </p:outputLabel>
                                     <p:outputLabel for="fechacarga" value="Fecha Procesamiento" styleClass="text-ouput" />
                                     <p:calendar id="fechacarga" locale="es" pattern="dd/MM/yyyy" value="#{consumoscajachicaController.consumocajachica.fechaloteconsumo}" showOn="button" navigator="true" required="true" />
                                     <p:outputLabel for="observa" value="Observaciones" styleClass="text-ouput"/>
@@ -53,12 +57,12 @@
                             </p:fieldset>
                         </p:panelGrid>
 
-                        <p:fieldset legend="ANEXAR CONSUMOS DE CAJA CHICA" toggleable="true" toggleSpeed="500" collapsed="true" >
+                        <p:fieldset legend="ANEXAR CONSUMOS DE CAJA CHICA" toggleable="true" toggleSpeed="500" collapsed="false" >
                             <p:panelGrid styleClass="ui-custompanelgrid5" columns="13">
                                 <p:outputLabel for="fechaconsumo" value="Fecha" />
                                 <p:calendar id="fechaconsumo" style="text-align: right" value="#{consumoscajachicaController.detalleconsumocajachica.fechaconsumo}" pattern="dd/MM/yyyy" locale="es" required="true" size="8"/>
                                 <p:outputLabel for="provee" value="Proveedor" />
-                                <p:selectOneMenu id="provee" value="#{consumoscajachicaController.provee}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
+                                <p:selectOneMenu id="provee" value="#{consumoscajachicaController.detalleconsumocajachica.rifproveedor}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
                                     <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
                                     <f:selectItems value="#{consumoscajachicaController.listarproveedores()}" 
                                                    var="idproveedorItem"
@@ -84,13 +88,15 @@
                     <p:panel id="panelart"  >
                         <p:dataTable id="listado" value="#{consumoscajachicaController.listadetalles}"
                                      var="detal" emptyMessage="No se han ingresado consumos" >
-                            <p:column style="width:10%"  headerText="Fecha">
-                                <h:outputText value="#{detal.fechaconsumo}" />
+                            <p:column style="text-align: center"  headerText="Fecha" width="100" >
+                                <h:outputText value="#{detal.fechaconsumo}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
                             </p:column>
-                            <p:column style="width:35%"  headerText="Proveedor">
+                            <p:column style="width:25%"  headerText="Proveedor">
                                 <h:outputText value="#{detal.rifproveedor.razonsocial}"/>  
                             </p:column>
-                            <p:column style="text-align:center" headerText="Tipo Gasto">                                
+                            <p:column style="text-align:center" headerText="Tipo Gasto" width="250">                                
                                 <h:outputText style="width:10px"  value="#{detal.idtipogastocajachica.tipogastocajachica}"/>
                             </p:column >
                             <p:column style="text-align:right" headerText="Factura">
@@ -117,7 +123,7 @@
                                 </p:commandLink>
                             </p:column>
                             <p:column style="text-align: center"  headerText="Eliminar" >
-                                <p:commandLink value="Eliminar" actionListener="#{consumoscajachicaController.eliminar(req)}" styleClass="text-ouputfact" update=":formulario:listado,:growl" rendered="#{comprasController.listarequerimiento.size()>1 ? true:false}"  />
+                                <p:commandLink value="Eliminar" actionListener="#{consumoscajachicaController.eliminardetalle(detal)}" styleClass="text-ouputfact" update=":formulario:listado,:growl" />
                             </p:column>
                             <p:columnGroup type="footer">
                                 <p:row>
@@ -136,10 +142,28 @@
                 <p:dialog id="dialogo" widgetVar="wdialogo" header="Modificar cantidad y precio del Articulo" modal="true" closeOnEscape="true" 
                           resizable="false" showEffect="explode" appendTo="@(body)"  >
                     <h:form>
-                        <h:panelGrid  id="display" columns="4">
-                            <p:outputLabel for="subt" value="Cantidad" />
+                        <h:panelGrid  id="display" columns="12">
+                            <p:outputLabel for="fechaconsu" value="Fecha" />
+                            <p:calendar id="fechaconsu" style="text-align: right" value="#{consumoscajachicaController.detalleamodif.fechaconsumo}" pattern="dd/MM/yyyy" locale="es" required="true" size="8"/>
+                            <p:outputLabel for="proveed" value="Proveedor" />
+                            <p:selectOneMenu id="proveed" value="#{consumoscajachicaController.detalleamodif.rifproveedor}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
+                                <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
+                                <f:selectItems value="#{consumoscajachicaController.listarproveedores()}" 
+                                               var="idproveedorItem"
+                                               itemLabel="#{idproveedorItem.razonsocial}"  itemValue="#{idproveedorItem}" /> 
+                            </p:selectOneMenu>
+                            <p:outputLabel for="tipog"  value="Gasto"  />
+                            <p:selectOneMenu id="tipog" value="#{consumoscajachicaController.detalleamodif.idtipogastocajachica}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
+                                <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                <f:selectItems value="#{consumoscajachicaController.tiposdegastos}"
+                                               var="idtipogastoItem"
+                                               itemLabel="#{idtipogastoItem.tipogastocajachica}"  itemValue="#{idtipogastoItem}" /> 
+                            </p:selectOneMenu>
+                            <p:outputLabel for="factu" value="Factura" />
+                            <p:inputText id="factu" value="#{consumoscajachicaController.detalleamodif.numerofactura}" style="text-align:right" size="5"/>
+                            <p:outputLabel for="subt" value="Subtotal" />
                             <p:inputText id="subt" label="#{consumoscajachicaController.detalleamodif.subtotal}" value="#{consumoscajachicaController.detalleamodif.subtotal}" style="text-align:right"/>
-                            <p:outputLabel for="impuesto"  value="Precio sin IVA" styleClass="optionalLbl"/>
+                            <p:outputLabel for="impuesto"  value="IVA" styleClass="optionalLbl"/>
                             <p:inputText id="impuesto"  label="#{consumoscajachicaController.detalleamodif.iva}"  size="20" value="#{consumoscajachicaController.detalleamodif.iva}" style="text-align:right"/>
                             <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{consumoscajachicaController.modificar()}"  oncomplete="PF('wdialogo').hide();" update="display,:formulario:listado,:growl" />                             
                             <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 

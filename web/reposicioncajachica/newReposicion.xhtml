@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+        <ui:composition template="./../template.xhtml">
+            <ui:define name="title">
+                Reposición Caja Chica
+                <h:outputStylesheet library="css" name="index.css" />   
+            </ui:define>
+            <ui:define name="body">
+                <p:growl id="msgs" showDetail="true" autoUpdate="true" showSummary="false" />
+
+                <h:form id ="formulario">
+                    <div id="imag2">
+                        <img src="../resources/images/LogoInpeca2.jpg" width="155" height="58" alt="Logo Inpeca"/>
+                    </div>      
+                    <img src="../resources/images/socket.png" width="70" height="70" alt="Reposicion" align="right" />
+
+                    <p:panel header="REPOSICION DE FONDOS DE CAJA CHICA">
+                        <p:panelGrid columns="2">
+                            <p:fieldset style="width: 68%"  legend="Datos de Caja Chica" >
+                                <p:panelGrid columns="2" styleClass="ui-custompanelgrid1" id="datoscontribuyente">
+                                    <p:outputLabel for="usua" value="Usuario" styleClass="text-ouput"/>
+                                    <p:outputLabel id="usua" value="#{requerimientosController.usa.nombre}" styleClass=""/>
+                                    <p:outputLabel for="depto" value="Departamento" styleClass="text-ouput"/>
+                                    <p:outputLabel id="depto" value="#{requerimientosController.usa.iddepartamento.departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel for="fechacarga" value="Fecha Procesamiento" styleClass="text-ouput" />
+                                    <p:calendar id="fechacarga" locale="es" pattern="dd/MM/yyyy" value="#{consumoscajachicaController.consumocajachica.fechaloteconsumo}" showOn="button" navigator="true" required="true" />
+                                    <p:outputLabel for="cajachica" value="Caja Chica" styleClass="text-ouput"/>
+                                    <p:selectOneMenu id="cajachica" value="#{consumoscajachicaController.consumocajachica.idcajachica}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
+                                        <p:ajax event="change" listener="#{consumoscajachicaController.refrescarConsumoscajachica()}" update="saldo,listado"/>                              
+                                        <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
+                                        <f:selectItems value="#{consumoscajachicaController.cajaschicas}" 
+                                                       var="idcajachicaItem"
+                                                       itemLabel="#{idcajachicaItem.descripcion}"  itemValue="#{idcajachicaItem}" /> 
+                                    </p:selectOneMenu>
+                                    <p:outputLabel for="saldo" value="Saldo Actual: " styleClass="text-ouput"/>
+                                    <p:outputLabel id="saldo" value="#{consumoscajachicaController.consumocajachica.idcajachica.saldoactual}" styleClass="text-ouputsaldo">
+                                        <f:convertNumber type="currency" currencySymbol="$ " />
+                                    </p:outputLabel>
+                                </p:panelGrid>
+                            </p:fieldset>
+                            <p:fieldset  legend="Datos del Pago" >
+                                <p:panelGrid styleClass="ui-custompanelgrid2" columns="4">
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>                                    
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel for="montof" value="MONTO REPOSICION" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montof" value="#{pagosController.compra.total}" styleClass="text-ouputfactura" >
+                                        <f:convertNumber type="currency" currencySymbol="$ " />
+                                    </p:outputLabel>  
+                                    <p:outputLabel for="tipopag"  value="Forma de Pago" styleClass="text-ouput"/>
+                                    <p:selectOneMenu id="tipopag" value="#{pagosController.pagocompra.idtipopago}" converter="omnifaces.SelectItemsConverter" > 
+                                        <!--f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/-->
+                                        <f:selectItems value="#{pagosController.tipopagos}"
+                                                       var="idtpagoItem"
+                                                       itemLabel="#{idtpagoItem.tipopago}"  itemValue="#{idtpagoItem}" /> 
+                                    </p:selectOneMenu>
+                                    <p:outputLabel for="banco" value="Banco" styleClass="text-ouput"/>
+                                    <p:selectOneMenu id="banco" value="#{pagosController.banco}" converter="omnifaces.SelectItemsConverter" required="true" > 
+                                        <p:ajax event="change" listener="#{pagosController.refrescarCuentasBancarias()}" update="cuentabanco, saldocuenta"/>
+                                        <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
+                                        <f:selectItems value="#{pagosController.bancos}"
+                                                       var="idbancoItem"
+                                                       itemLabel="#{idbancoItem.nombrebanco}"  itemValue="#{idbancoItem}" /> 
+                                    </p:selectOneMenu>
+                                    <p:outputLabel for="cuentabanco" value="Cuenta Bancaria" styleClass="text-ouput"/>
+                                    <p:selectOneMenu id="cuentabanco" value="#{pagosController.pagocompra.idcuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
+                                        <p:ajax event="change" update="saldocuenta"/>                              
+                                        <f:selectItems value="#{pagosController.lstCuentasSelecc}"
+                                                       var="cuentaporbancoItem"
+                                                       itemLabel="#{cuentaporbancoItem.numerocuenta}" itemValue="#{cuentaporbancoItem}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel for="saldocuenta" value="Saldo Cuenta" styleClass="text-ouput"/>
+                                    <h:outputText id="saldocuenta" value="#{pagosController.pagocompra.idcuentabancaria.saldo}" styleClass="text-ouputsaldo">
+                                        <f:convertNumber type="currency" currencySymbol="$ "   />
+                                    </h:outputText>
+                                    <p:outputLabel for="aprobacion" value="Nro. Aprobacion" styleClass="text-ouput"/>
+                                    <p:inputText id="aprobacion" label="Nro. Aprobacion " size ="15" value="#{pagosController.pagocompra.aprobacion}" />
+                                    <p:outputLabel for="observa2" value="Observaciones" styleClass="text-ouput"/>
+                                    <p:inputTextarea id="observa2"  rows="2" cols="30" label="Observaciones" value="#{pagosController.pagocompra.observacionespago}" />
+                                </p:panelGrid>                                
+                            </p:fieldset>
+                        </p:panelGrid>
+                        <p:panel>
+                            <p:fieldset legend="CONSUMOS POR REPONER">
+                                <p:dataTable id="listado" value="#{consumoscajachicaController.lstConsumos}" 
+                                             var="item" emptyMessage="No hay consumos por reponer" rowKey="#{ret.idcompra.idcompra}"
+                                             >
+                                    <p:column style="text-align: center">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecajachica.ListConsumocajachicaTitle_serialconsumo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.serialconsumo}"/> 
+                                    </p:column>
+                                    <p:column width="150" style="text-align: center" sortBy="#{item.fechaloteconsumo}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_fechaconsumo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fechaloteconsumo}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText> 
+                                    </p:column>
+                                    <p:column style="text-align: center">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecajachica.ListConsumocajachicaTitle_idcajachica}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idcajachica.descripcion}"/> 
+                                    </p:column>
+                                    <p:column width="450" style="text-align: left" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecajachica.ListConsumocajachicaTitle_observaciones}" />
+                                        </f:facet>
+                                        <h:outputText value="#{item.observaciones}"/>
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecajachica.ListConsumocajachicaTitle_subtotalconsumo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.subtotalconsumo}">
+                                            <f:convertNumber type="currency" currencySymbol=" "   />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecajachica.ListConsumocajachicaTitle_ivaconsumo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.ivaconsumo}">
+                                            <f:convertNumber type="currency" currencySymbol=" "   />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecajachica.ListConsumocajachicaTitle_totalconsumo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.totalconsumo}">
+                                            <f:convertNumber type="currency" currencySymbol=" "   />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="width:5%" headerText="Excluir">
+                                        <p:commandLink value="Excluir" actionListener="#{comprobantesivaController.eliminar(ret)}" update="listado" 
+                                                       rendered="#{consumocajachicaController.items.size()>1? true:false}"/> 
+                                    </p:column>
+                                    <p:columnGroup type="footer">
+                                        <p:row>
+                                            <p:column colspan="6" style="text-align:right" footerText="TOTAL REPOSICION" />
+                                            <!--p:column style="text-align: right"  footerText=".{comprobantesivaController.totalgeneral}"/> 
+                                            <p:column style="text-align: right"  footerText=".{comprobantesivaController.totalbaseimponible}" /-->
+                                            <p:column style="text-align: right"  footerText="#{comprobantesivaController.totaliva}" />
+                                        </p:row>
+                                    </p:columnGroup>                            
+                                </p:dataTable>
+                            </p:fieldset>
+                            <p:commandButton value="Registrar" actionListener="#{comprobantesivaController.registrar()}"  update=":formulario,:growl" action="/comprobanteivaef/List?faces-redirect=true" />
+                            <!--p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value=".{bundle.Imprimir}" actionListener=".{facturasController.verReporte()}" ajax="false" onclick="form.target = '_blank'"/-->                            
+                        </p:panel>
+                    </p:panel>
+                </h:form>
+                <h:outputScript library="js" name="spanishLocale.js"/>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
+
+<!-- :formulario, action="/factura/List?faces-redirect=true"-->

@@ -30,4 +30,6 @@ public interface EstatusconsumocajachicaFacadeLocal {
 
     int count();
     
+    Estatusconsumocajachica cambiarestatusConsumo(int tipo); 
+    
 }

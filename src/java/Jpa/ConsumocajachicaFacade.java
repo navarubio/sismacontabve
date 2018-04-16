@@ -6,9 +6,12 @@
 package Jpa;
 
 import Modelo.Consumocajachica;
+import Modelo.Cuentabancaria;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -16,8 +19,11 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ConsumocajachicaFacade extends AbstractFacade<Consumocajachica> implements ConsumocajachicaFacadeLocal {
+
     @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
+    private String consulta;
+    private List<Consumocajachica> lista = null;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -27,5 +33,22 @@ public class ConsumocajachicaFacade extends AbstractFacade<Consumocajachica> imp
     public ConsumocajachicaFacade() {
         super(Consumocajachica.class);
     }
-    
+
+    @Override
+    public List<Consumocajachica> consumosxCaja(int idcaja) {
+        try {
+            consulta = "From Consumocajachica c where c.idcajachica.idcajachica= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, idcaja);
+
+            lista = query.getResultList();
+//            if (!lista.isEmpty()) {
+//                usuario = lista.get(0);
+//            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+
 }

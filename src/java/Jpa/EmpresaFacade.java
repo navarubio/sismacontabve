@@ -46,4 +46,26 @@ public class EmpresaFacade extends AbstractFacade<Empresa> implements EmpresaFac
         }
         return empresa;
     }
+    
+    @Override
+    public int devolverSerialConsumo (Empresa empre) {
+        Empresa empresa=null;
+        int serialconsumo = 0;
+        String consulta;
+        try {
+            consulta = "From Empresa e where e.idempresa = ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
+            List<Empresa> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                empresa = lista.get(0);
+                serialconsumo=empre.getSerialconsumo()+1;
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return serialconsumo;
+    }
+    
+   
 }

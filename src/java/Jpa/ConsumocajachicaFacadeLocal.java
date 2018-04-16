@@ -27,6 +27,8 @@ public interface ConsumocajachicaFacadeLocal {
     List<Consumocajachica> findAll();
 
     List<Consumocajachica> findRange(int[] range);
+    
+    List<Consumocajachica> consumosxCaja(int idcaja);
 
     int count();
     

@@ -4,6 +4,7 @@ import Modelo.Consumocajachica;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.ConsumocajachicaFacade;
+import Jpa.ConsumocajachicaFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +25,7 @@ import javax.faces.convert.FacesConverter;
 public class ConsumocajachicaController implements Serializable {
 
     @EJB
-    private Jpa.ConsumocajachicaFacade ejbFacade;
+    private Jpa.ConsumocajachicaFacadeLocal ejbFacade;
     private List<Consumocajachica> items = null;
     private Consumocajachica selected;
 
@@ -45,7 +46,7 @@ public class ConsumocajachicaController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private ConsumocajachicaFacade getFacade() {
+    private ConsumocajachicaFacadeLocal getFacade() {
         return ejbFacade;
     }
 
