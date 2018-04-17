@@ -78,6 +78,8 @@ public class Reposicioncajachica implements Serializable {
     private Usuario idrepositor;
     @OneToMany(mappedBy = "idreposicioncajachica")
     private Collection<Maestromovimiento> maestromovimientoCollection;    
+    @OneToMany(mappedBy = "idreposicioncajachica")
+    private Collection<Movimientobancario> movimientobancarioCollection; 
 
 
     public Reposicioncajachica() {
@@ -183,6 +185,15 @@ public class Reposicioncajachica implements Serializable {
 
     public void setMaestromovimientoCollection(Collection<Maestromovimiento> maestromovimientoCollection) {
         this.maestromovimientoCollection = maestromovimientoCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Movimientobancario> getMovimientobancarioCollection() {
+        return movimientobancarioCollection;
+    }
+
+    public void setMovimientobancarioCollection(Collection<Movimientobancario> movimientobancarioCollection) {
+        this.movimientobancarioCollection = movimientobancarioCollection;
     }
     
     @Override

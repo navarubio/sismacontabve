@@ -4,6 +4,7 @@ import Modelo.Reposicionconsumos;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.ReposicionconsumosFacade;
+import Jpa.ReposicionconsumosFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +25,7 @@ import javax.faces.convert.FacesConverter;
 public class ReposicionconsumosController implements Serializable {
 
     @EJB
-    private Jpa.ReposicionconsumosFacade ejbFacade;
+    private Jpa.ReposicionconsumosFacadeLocal ejbFacade;
     private List<Reposicionconsumos> items = null;
     private Reposicionconsumos selected;
 
@@ -45,7 +46,7 @@ public class ReposicionconsumosController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private ReposicionconsumosFacade getFacade() {
+    private ReposicionconsumosFacadeLocal getFacade() {
         return ejbFacade;
     }
 

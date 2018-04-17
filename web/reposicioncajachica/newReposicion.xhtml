@@ -30,19 +30,24 @@
                                     <p:outputLabel for="depto" value="Departamento" styleClass="text-ouput"/>
                                     <p:outputLabel id="depto" value="#{requerimientosController.usa.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="fechacarga" value="Fecha Procesamiento" styleClass="text-ouput" />
-                                    <p:calendar id="fechacarga" locale="es" pattern="dd/MM/yyyy" value="#{consumoscajachicaController.consumocajachica.fechaloteconsumo}" showOn="button" navigator="true" required="true" />
+                                    <p:calendar id="fechacarga" locale="es" pattern="dd/MM/yyyy" value="#{consumoscajachicaController.reposicionCajaChica.fecharesposicion}" showOn="button" navigator="true" required="true" />
                                     <p:outputLabel for="cajachica" value="Caja Chica" styleClass="text-ouput"/>
                                     <p:selectOneMenu id="cajachica" value="#{consumoscajachicaController.consumocajachica.idcajachica}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
-                                        <p:ajax event="change" listener="#{consumoscajachicaController.refrescarConsumoscajachica()}" update="saldo,listado"/>                              
+                                        <p:ajax event="change" listener="#{consumoscajachicaController.refrescarConsumoscajachica()}" update="saldo,montoasignado,montof, listado"/>                              
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
                                         <f:selectItems value="#{consumoscajachicaController.cajaschicas}" 
                                                        var="idcajachicaItem"
                                                        itemLabel="#{idcajachicaItem.descripcion}"  itemValue="#{idcajachicaItem}" /> 
                                     </p:selectOneMenu>
+                                    <p:outputLabel for="montoasignado" value="Monto Asignado:" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montoasignado" value="#{consumoscajachicaController.consumocajachica.idcajachica.montoasignado}" styleClass="text-ouputasignado">
+                                        <f:convertNumber type="currency" currencySymbol="$ " />
+                                    </p:outputLabel>                                    
                                     <p:outputLabel for="saldo" value="Saldo Actual: " styleClass="text-ouput"/>
-                                    <p:outputLabel id="saldo" value="#{consumoscajachicaController.consumocajachica.idcajachica.saldoactual}" styleClass="text-ouputsaldo">
+                                    <p:outputLabel id="saldo" value="#{consumoscajachicaController.consumocajachica.idcajachica.saldoactual}" styleClass="text-ouputfactura">
                                         <f:convertNumber type="currency" currencySymbol="$ " />
                                     </p:outputLabel>
+                                    
                                 </p:panelGrid>
                             </p:fieldset>
                             <p:fieldset  legend="Datos del Pago" >
@@ -51,40 +56,40 @@
                                     <p:outputLabel/>                                    
                                     <p:outputLabel/>
                                     <p:outputLabel/>
-                                    <p:outputLabel for="montof" value="MONTO REPOSICION" styleClass="text-ouput"/>
-                                    <p:outputLabel id="montof" value="#{pagosController.compra.total}" styleClass="text-ouputfactura" >
-                                        <f:convertNumber type="currency" currencySymbol="$ " />
-                                    </p:outputLabel>  
+                                    <p:outputLabel for="montof" value="MONTO DE REPOSICION" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montof" value="$ #{consumoscajachicaController.totalgeneralform}" styleClass="text-ouputfactura"/> 
                                     <p:outputLabel for="tipopag"  value="Forma de Pago" styleClass="text-ouput"/>
-                                    <p:selectOneMenu id="tipopag" value="#{pagosController.pagocompra.idtipopago}" converter="omnifaces.SelectItemsConverter" > 
+                                    <p:selectOneMenu id="tipopag" value="#{consumoscajachicaController.reposicionCajaChica.idtipopago}" converter="omnifaces.SelectItemsConverter" > 
                                         <!--f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/-->
                                         <f:selectItems value="#{pagosController.tipopagos}"
                                                        var="idtpagoItem"
                                                        itemLabel="#{idtpagoItem.tipopago}"  itemValue="#{idtpagoItem}" /> 
                                     </p:selectOneMenu>
                                     <p:outputLabel for="banco" value="Banco" styleClass="text-ouput"/>
-                                    <p:selectOneMenu id="banco" value="#{pagosController.banco}" converter="omnifaces.SelectItemsConverter" required="true" > 
-                                        <p:ajax event="change" listener="#{pagosController.refrescarCuentasBancarias()}" update="cuentabanco, saldocuenta"/>
+                                    <p:selectOneMenu id="banco" value="#{consumoscajachicaController.pagosControlador.banco}" converter="omnifaces.SelectItemsConverter" required="true" > 
+                                        <p:ajax event="change" listener="#{consumoscajachicaController.pagosControlador.refrescarCuentasBancarias()}" update="cuentabanco, saldocuenta"/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
-                                        <f:selectItems value="#{pagosController.bancos}"
+                                        <f:selectItems value="#{consumoscajachicaController.pagosControlador.bancos}"
                                                        var="idbancoItem"
                                                        itemLabel="#{idbancoItem.nombrebanco}"  itemValue="#{idbancoItem}" /> 
                                     </p:selectOneMenu>
                                     <p:outputLabel for="cuentabanco" value="Cuenta Bancaria" styleClass="text-ouput"/>
-                                    <p:selectOneMenu id="cuentabanco" value="#{pagosController.pagocompra.idcuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
+                                    <p:selectOneMenu id="cuentabanco" value="#{consumoscajachicaController.pagosControlador.pagocompra.idcuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
                                         <p:ajax event="change" update="saldocuenta"/>                              
-                                        <f:selectItems value="#{pagosController.lstCuentasSelecc}"
+                                        <f:selectItems value="#{consumoscajachicaController.pagosControlador.lstCuentasSelecc}"
                                                        var="cuentaporbancoItem"
                                                        itemLabel="#{cuentaporbancoItem.numerocuenta}" itemValue="#{cuentaporbancoItem}"/>
                                     </p:selectOneMenu>
                                     <p:outputLabel for="saldocuenta" value="Saldo Cuenta" styleClass="text-ouput"/>
-                                    <h:outputText id="saldocuenta" value="#{pagosController.pagocompra.idcuentabancaria.saldo}" styleClass="text-ouputsaldo">
+                                    <h:outputText id="saldocuenta" value="#{consumoscajachicaController.pagosControlador.pagocompra.idcuentabancaria.saldo}" styleClass="text-ouputsaldo">
                                         <f:convertNumber type="currency" currencySymbol="$ "   />
                                     </h:outputText>
-                                    <p:outputLabel for="aprobacion" value="Nro. Aprobacion" styleClass="text-ouput"/>
-                                    <p:inputText id="aprobacion" label="Nro. Aprobacion " size ="15" value="#{pagosController.pagocompra.aprobacion}" />
+                                    <p:outputLabel for="nrodocument" value="Nro. Documento" styleClass="text-ouput"/>
+                                    <p:inputText id="nrodocument" label="Nro. Documento " size ="15" value="#{consumoscajachicaController.reposicionCajaChica.numerodocumento}" />
+                                    <p:outputLabel for="beneficiario" value="Beneficiario" styleClass="text-ouput"/>
+                                    <p:inputText id="beneficiario" label="Beneficiario" size ="35" value="#{consumoscajachicaController.reposicionCajaChica.beneficiario}" />
                                     <p:outputLabel for="observa2" value="Observaciones" styleClass="text-ouput"/>
-                                    <p:inputTextarea id="observa2"  rows="2" cols="30" label="Observaciones" value="#{pagosController.pagocompra.observacionespago}" />
+                                    <p:inputTextarea id="observa2"  rows="2" cols="30" label="Observaciones" value="#{consumoscajachicaController.reposicionCajaChica.observaciones}" />
                                 </p:panelGrid>                                
                             </p:fieldset>
                         </p:panelGrid>
@@ -144,20 +149,18 @@
                                         </h:outputText>
                                     </p:column>
                                     <p:column style="width:5%" headerText="Excluir">
-                                        <p:commandLink value="Excluir" actionListener="#{comprobantesivaController.eliminar(ret)}" update="listado" 
-                                                       rendered="#{consumocajachicaController.items.size()>1? true:false}"/> 
+                                        <p:commandLink value="Excluir" actionListener="#{consumoscajachicaController.excluirconsumo(item)}" update=":formulario" 
+                                                       rendered="#{consumoscajachicaController.lstConsumos.size()>1? true:false}"/> 
                                     </p:column>
                                     <p:columnGroup type="footer">
                                         <p:row>
                                             <p:column colspan="6" style="text-align:right" footerText="TOTAL REPOSICION" />
-                                            <!--p:column style="text-align: right"  footerText=".{comprobantesivaController.totalgeneral}"/> 
-                                            <p:column style="text-align: right"  footerText=".{comprobantesivaController.totalbaseimponible}" /-->
-                                            <p:column style="text-align: right"  footerText="#{comprobantesivaController.totaliva}" />
+                                            <p:column style="text-align: right"  footerText="$ #{consumoscajachicaController.totalgeneralform}" />
                                         </p:row>
                                     </p:columnGroup>                            
                                 </p:dataTable>
                             </p:fieldset>
-                            <p:commandButton value="Registrar" actionListener="#{comprobantesivaController.registrar()}"  update=":formulario,:growl" action="/comprobanteivaef/List?faces-redirect=true" />
+                            <p:commandButton value="Registrar" actionListener="#{consumoscajachicaController.registrarReposicion()}"  update=":formulario,:growl" action="/reposicioncajachica/List?faces-redirect=true" />
                             <!--p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value=".{bundle.Imprimir}" actionListener=".{facturasController.verReporte()}" ajax="false" onclick="form.target = '_blank'"/-->                            
                         </p:panel>
                     </p:panel>

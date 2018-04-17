@@ -11,84 +11,82 @@
 
         <ui:define name="title">
             <h:outputText value="#{bundlecajachica.ListReposicioncajachicaTitle}"></h:outputText>
+            <h:outputStylesheet library="css" name="index.css" />
         </ui:define>
 
         <ui:define name="body">
             <h:form id="ReposicioncajachicaListForm">
+                <div id="imag2">
+                    <img src="../resources/images/LogoInpeca2.jpg" width="155" height="58" alt="Logo Inpeca" />
+                </div>     
+
+                <img src="../resources/images/socket.png" width="70" height="70" alt="Clientes" align="right" />
+
                 <p:panel header="#{bundlecajachica.ListReposicioncajachicaTitle}">
                     <p:dataTable id="datalist" value="#{reposicioncajachicaController.items}" var="item"
                                  selectionMode="single" selection="#{reposicioncajachicaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idreposicioncajachica}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="20"
+                                 rowsPerPageTemplate="20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecajachica.ListReposicioncajachicaTitle_idreposicioncajachica}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idreposicioncajachica}"/>
-                        </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecajachica.ListReposicioncajachicaTitle_serialreposicion}"/>
                             </f:facet>
                             <h:outputText value="#{item.serialreposicion}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecajachica.ListReposicioncajachicaTitle_fecharesposicion}"/>
                             </f:facet>
                             <h:outputText value="#{item.fecharesposicion}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecajachica.ListReposicioncajachicaTitle_montoreposicion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.montoreposicion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecajachica.ListReposicioncajachicaTitle_numerodocumento}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.numerodocumento}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecajachica.ListReposicioncajachicaTitle_beneficiario}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.beneficiario}"/>
-                        </p:column>
-                        <p:column>
+                        <p:column width="250">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecajachica.ListReposicioncajachicaTitle_observaciones}"/>
                             </f:facet>
                             <h:outputText value="#{item.observaciones}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="180">
                             <f:facet name="header">
-                                <h:outputText value="#{bundlecajachica.ListReposicioncajachicaTitle_idcuentabancaria}"/>
+                                <h:outputText value="#{bundlecajachica.ListReposicioncajachicaTitle_idbanco}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idcuentabancaria}"/>
+                            <h:outputText value="#{item.idcuentabancaria.idbanco.nombrebanco}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecajachica.ListReposicioncajachicaTitle_idtipopago}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idtipopago}"/>
+                            <h:outputText value="#{item.idtipopago.tipopago}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
-                                <h:outputText value="#{bundlecajachica.ListReposicioncajachicaTitle_idrepositor}"/>
+                                <h:outputText value="#{bundlecajachica.ListReposicioncajachicaTitle_numerodocumento}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idrepositor}"/>
+                            <h:outputText value="#{item.numerodocumento}"/>
                         </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecajachica.ListReposicioncajachicaTitle_beneficiario}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.beneficiario}"/>
+                        </p:column>
+                        <p:column style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecajachica.ListReposicioncajachicaTitle_montoreposicion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montoreposicion}">
+                                <f:convertNumber type="currency" currencySymbol=" "/>
+                            </h:outputText>
+                        </p:column>
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlecajachica.Create}" actionListener="#{reposicioncajachicaController.prepareCreate}" update=":ReposicioncajachicaCreateForm" oncomplete="PF('ReposicioncajachicaCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlecajachica.View}" update=":ReposicioncajachicaViewForm" oncomplete="PF('ReposicioncajachicaViewDialog').show()" disabled="#{empty reposicioncajachicaController.selected}"/>

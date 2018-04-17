@@ -36,11 +36,12 @@ public class ConsumocajachicaFacade extends AbstractFacade<Consumocajachica> imp
 
     @Override
     public List<Consumocajachica> consumosxCaja(int idcaja) {
+        int idstatus2 =1;
         try {
-            consulta = "From Consumocajachica c where c.idcajachica.idcajachica= ?1";
+            consulta = "From Consumocajachica c where c.idcajachica.idcajachica= ?1 AND c.idestatusconsumocajachica.idestatusconsumocajachica= ?2 order by c.idconsumocajachica";
             Query query = em.createQuery(consulta);
             query.setParameter(1, idcaja);
-
+            query.setParameter(2, idstatus2);
             lista = query.getResultList();
 //            if (!lista.isEmpty()) {
 //                usuario = lista.get(0);

@@ -8,6 +8,7 @@ package Jpa;
 import Modelo.Cuentabancaria;
 import Modelo.Movimientobancario;
 import Modelo.Otroingreso;
+import Modelo.Reposicioncajachica;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -41,6 +42,21 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
             consulta = "From Movimientobancario m where m.idotroingreso.idotroingreso= ?1";
             Query query = em.createQuery(consulta);
             query.setParameter(1, otro.getIdotroingreso());
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Movimientobancario> buscarmovimiento (Reposicioncajachica reposicion) {
+        String consulta;
+        List<Movimientobancario> lista = null;
+        try {
+            consulta = "From Movimientobancario m where m.idreposicioncajachica.idreposicioncajachica= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, reposicion.getIdreposicioncajachica());
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

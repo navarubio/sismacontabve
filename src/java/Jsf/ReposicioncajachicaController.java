@@ -4,6 +4,7 @@ import Modelo.Reposicioncajachica;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.ReposicioncajachicaFacade;
+import Jpa.ReposicioncajachicaFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,13 +19,14 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
 
 @Named("reposicioncajachicaController")
-@SessionScoped
+@ViewScoped
 public class ReposicioncajachicaController implements Serializable {
 
     @EJB
-    private Jpa.ReposicioncajachicaFacade ejbFacade;
+    private Jpa.ReposicioncajachicaFacadeLocal ejbFacade;
     private List<Reposicioncajachica> items = null;
     private Reposicioncajachica selected;
 
@@ -45,7 +47,7 @@ public class ReposicioncajachicaController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private ReposicioncajachicaFacade getFacade() {
+    private ReposicioncajachicaFacadeLocal getFacade() {
         return ejbFacade;
     }
 

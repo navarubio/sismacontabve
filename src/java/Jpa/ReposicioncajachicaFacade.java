@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author sofimar
  */
 @Stateless
-public class ReposicioncajachicaFacade extends AbstractFacade<Reposicioncajachica> {
+public class ReposicioncajachicaFacade extends AbstractFacade<Reposicioncajachica> implements ReposicioncajachicaFacadeLocal{
     @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 

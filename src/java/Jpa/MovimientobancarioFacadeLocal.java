@@ -8,6 +8,7 @@ package Jpa;
 import Modelo.Cuentabancaria;
 import Modelo.Movimientobancario;
 import Modelo.Otroingreso;
+import Modelo.Reposicioncajachica;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
@@ -34,6 +35,8 @@ public interface MovimientobancarioFacadeLocal {
     int count();  
     
     List<Movimientobancario> buscarmovimiento (Otroingreso otro); 
+    
+    List<Movimientobancario> buscarmovimiento (Reposicioncajachica reposicion);
     
     List<Movimientobancario> buscarmovimientoporfecha (Cuentabancaria cuenta, Date fechaini, Date fechafinish);
     

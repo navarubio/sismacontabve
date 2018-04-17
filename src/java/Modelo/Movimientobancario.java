@@ -71,6 +71,9 @@ public class Movimientobancario implements Serializable {
     @JoinColumn(name = "idotroingreso", referencedColumnName = "idotroingreso")
     @ManyToOne
     private Otroingreso idotroingreso;
+    @JoinColumn(name = "idreposicioncajachica", referencedColumnName = "idreposicioncajachica")
+    @ManyToOne
+    private Reposicioncajachica idreposicioncajachica;
 
 
     public Movimientobancario() {
@@ -159,6 +162,14 @@ public class Movimientobancario implements Serializable {
 
     public void setSaldoactual(Double saldoactual) {
         this.saldoactual = saldoactual;
+    }
+
+    public Reposicioncajachica getIdreposicioncajachica() {
+        return idreposicioncajachica;
+    }
+
+    public void setIdreposicioncajachica(Reposicioncajachica idreposicioncajachica) {
+        this.idreposicioncajachica = idreposicioncajachica;
     }
 
     @Override

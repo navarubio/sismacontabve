@@ -3,17 +3,30 @@ package Jsf;
 import Jpa.AuxiliarrequerimientoFacadeLocal;
 import Jpa.CajachicaFacadeLocal;
 import Jpa.ConsumocajachicaFacadeLocal;
+import Jpa.CuentabancariaFacadeLocal;
 import Jpa.DetalleconsumocajachicaFacadeLocal;
 import Jpa.EmpresaFacadeLocal;
 import Jpa.EstatusconsumocajachicaFacadeLocal;
+import Jpa.EstatuscontableFacadeLocal;
+import Jpa.MaestromovimientoFacadeLocal;
+import Jpa.MovimientobancarioFacadeLocal;
 import Jpa.ProveedorFacadeLocal;
+import Jpa.ReposicioncajachicaFacadeLocal;
+import Jpa.ReposicionconsumosFacadeLocal;
+import Jpa.TipoconjuntoFacadeLocal;
 import Jpa.TipogastocajachicaFacadeLocal;
 import Modelo.Cajachica;
 import Modelo.Consumocajachica;
+import Modelo.Cuentabancaria;
 import Modelo.Detalleconsumocajachica;
 import Modelo.Empresa;
 import Modelo.Estatusconsumocajachica;
+import Modelo.Maestromovimiento;
+import Modelo.Movimientobancario;
 import Modelo.Proveedor;
+import Modelo.Reposicioncajachica;
+import Modelo.Reposicionconsumos;
+import Modelo.Tipoconjunto;
 import Modelo.Tipogastocajachica;
 import Modelo.Usuario;
 import java.io.Serializable;
@@ -53,6 +66,20 @@ public class ConsumoscajachicaController implements Serializable {
     private EmpresaFacadeLocal empresaEJB;
     @EJB
     private DetalleconsumocajachicaFacadeLocal detalleconsumoEJB;
+    @EJB
+    private ReposicioncajachicaFacadeLocal reposicionEJB;
+    @EJB
+    private ReposicionconsumosFacadeLocal reposicionconsumosEJB;
+    @EJB
+    private CuentabancariaFacadeLocal cuentabancariaEJB;
+    @EJB
+    private MovimientobancarioFacadeLocal movimientoBancarioEJB;
+    @EJB
+    private TipoconjuntoFacadeLocal tipoconjuntoEJB;
+    @EJB
+    private MaestromovimientoFacadeLocal maestromovimientoEJB;
+    @EJB
+    private EstatuscontableFacadeLocal estatuscontableEJB;
     
     @Inject
     private Cajachica cajachica;
@@ -68,7 +95,21 @@ public class ConsumoscajachicaController implements Serializable {
     private Empresa empresa;
     @Inject
     private RequerimientosController requerimientosController;
-    
+    @Inject
+    private PagosController pagosControlador;
+    @Inject
+    private Reposicioncajachica reposicionCajaChica;
+    @Inject
+    private Reposicionconsumos reposicionConsumos;
+    @Inject
+    private Movimientobancario movimientobancario;
+    @Inject
+    private Cuentabancaria cuentabanco;
+    @Inject
+    private Tipoconjunto tipoconjunto;
+    @Inject
+    private Maestromovimiento maestromovi;
+
     private Calendar cal = Calendar.getInstance();
     private Date fechaactual = cal.getTime();
     private String totalgeneralform;
@@ -78,6 +119,7 @@ public class ConsumoscajachicaController implements Serializable {
     private double totaliva = 0;
     private double totalsubtotal = 0;
     private int id = 0;
+
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     private List<Detalleconsumocajachica> listadetalles = new ArrayList();
     private List<Cajachica> cajaschicas;
@@ -107,7 +149,7 @@ public class ConsumoscajachicaController implements Serializable {
     public void setLstConsumos(List<Consumocajachica> lstConsumos) {
         this.lstConsumos = lstConsumos;
     }
-    
+
     public Cajachica getCajachica() {
         return cajachica;
     }
@@ -220,10 +262,27 @@ public class ConsumoscajachicaController implements Serializable {
         this.requerimientosController = requerimientosController;
     }
 
+    public Reposicioncajachica getReposicionCajaChica() {
+        return reposicionCajaChica;
+    }
+
+    public void setReposicionCajaChica(Reposicioncajachica reposicionCajaChica) {
+        this.reposicionCajaChica = reposicionCajaChica;
+    }
+
+    public PagosController getPagosControlador() {
+        return pagosControlador;
+    }
+
+    public void setPagosControlador(PagosController pagosControlador) {
+        this.pagosControlador = pagosControlador;
+    }
+
     @PostConstruct
     public void init() {
         cajaschicas = cajachicaEJB.findAll();
         consumocajachica.setFechaloteconsumo(fechaactual);
+        reposicionCajaChica.setFecharesposicion(fechaactual);
         tiposdegastos = tipogastocajachicaEJB.findAll();
 //        empresa = consumocajachica.getIdcajachica().getIdempresa();
     }
@@ -251,7 +310,7 @@ public class ConsumoscajachicaController implements Serializable {
         List<Detalleconsumocajachica> detallesactulizados;
         total = detalleamodif.getSubtotal() + detalleamodif.getIva();
         detalleamodif.setToalgeneral(total);
-        
+
         listadetalles.add(detalleamodif);
         totaltotal();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El Consumo fue Modificado satisfactoriamente"));
@@ -273,25 +332,24 @@ public class ConsumoscajachicaController implements Serializable {
             int tipo = 1;
             statusconsumo = estatusconsumoEJB.cambiarestatusConsumo(tipo);
             consumocajachica.setIdestatusconsumocajachica(statusconsumo);
-            double saldoactual= 0;
+            double saldoactual = 0;
             double saldoant = 0;
-            saldoant=consumocajachica.getIdcajachica().getSaldoactual();
+            saldoant = consumocajachica.getIdcajachica().getSaldoactual();
             saldoactual = (saldoant - totalgeneral);
             consumocajachica.setSaldocajaactual(saldoactual);
-            int serial=consumocajachica.getIdcajachica().getIdempresa().getSerialconsumo()+1;
+            int serial = consumocajachica.getIdcajachica().getIdempresa().getSerialconsumo() + 1;
             consumocajachica.setSerialconsumo(serial);
             consumocajachicaEJB.create(consumocajachica);
-            
+
             //--------Actualizando el serial consumo de tabla Empresa ------- \\
-            empresa=consumocajachica.getIdcajachica().getIdempresa();
+            empresa = consumocajachica.getIdcajachica().getIdempresa();
             empresa.setSerialconsumo(serial);
             empresaEJB.edit(empresa);
 
             //--------Actualizando el saldo de la caja chica afectada ------- \\
-            
-            cajachica=consumocajachica.getIdcajachica();
+            cajachica = consumocajachica.getIdcajachica();
             cajachica.setSaldoactual(saldoactual);
-            cajachicaEJB.edit(cajachica); 
+            cajachicaEJB.edit(cajachica);
 
             //--------Almacenando Detallesconsumocajacjica ------- \\
             for (Detalleconsumocajachica dt : listadetalles) {
@@ -305,8 +363,8 @@ public class ConsumoscajachicaController implements Serializable {
                 detalleconsumocajachica.setToalgeneral(dt.getToalgeneral());
                 detalleconsumoEJB.create(detalleconsumocajachica);
             }
-            
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Sus Consumos fueron Almacenado con el Lote Nro " + serial ));
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Sus Consumos fueron Almacenado con el Lote Nro " + serial));
             listadetalles.clear();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Lote de Consumos"));
@@ -367,19 +425,108 @@ public class ConsumoscajachicaController implements Serializable {
         if (detalleaeliminar.hashCode() == 0) {
             id = 0;
         }
-        totaltotal(); 
+        totaltotal();
     }
 
     public List<Consumocajachica> refrescarConsumoscajachica() {
         try {
             lstConsumos = consumocajachicaEJB.consumosxCaja(consumocajachica.getIdcajachica().getIdcajachica());
+            obtenertotaltotales();
         } catch (Exception e) {
- 
+
         }
         return lstConsumos;
     }
-    
 
+    public void obtenertotaltotales() {
+        double montotgeneral = 0;
+        double montotiva = 0;
+        double montotsubtotal = 0;
+        for (Consumocajachica consumos : lstConsumos) {
+            montotgeneral += consumos.getTotalconsumo();
+            montotiva += consumos.getIvaconsumo();
+            montotsubtotal += consumos.getSubtotalconsumo();
+        }
+        totalgeneral = montotgeneral;
+        totalgeneralform = formatearnumero.format(montotgeneral);
+        totalivaform = formatearnumero.format(montotiva);
+        totalsubtotalform = formatearnumero.format(montotsubtotal);
+    }
 
+    public void excluirconsumo(Consumocajachica consumoaexcluir) {
+        int indc = lstConsumos.indexOf(consumoaexcluir);
+        lstConsumos.remove(indc);
+        obtenertotaltotales();
+    }
+
+    public void registrarReposicion() {
+        try {
+            Usuario us = requerimientosController.getUsa();
+            reposicionCajaChica.setIdrepositor(us);
+            reposicionCajaChica.setIdcuentabancaria(pagosControlador.getPagocompra().getIdcuentabancaria());
+            reposicionCajaChica.setMontoreposicion(totalgeneral);
+            int serial = consumocajachica.getIdcajachica().getIdempresa().getSerialreposicion() + 1;
+            reposicionCajaChica.setSerialreposicion(serial);
+            reposicionEJB.create(reposicionCajaChica);
+
+            //--------Actualizando el serial reposicion de tabla Empresa ------- \\
+            empresa = consumocajachica.getIdcajachica().getIdempresa();
+            empresa.setSerialreposicion(serial);
+            empresaEJB.edit(empresa);
+
+            //--------Actualizando el saldo de la caja chica repuesta ------- \\
+            cajachica = consumocajachica.getIdcajachica();
+            double saldofin = consumocajachica.getIdcajachica().getSaldoactual();
+            saldofin += totalgeneral;
+            cajachica.setSaldoactual(saldofin);
+            cajachicaEJB.edit(cajachica);
+
+            //--------Cambiar Estatus de Consumos repuestos ------- \\
+            Estatusconsumocajachica statusconsumo = null;
+            int tipo = 2;
+            statusconsumo = estatusconsumoEJB.cambiarestatusConsumo(tipo);
+            for (Consumocajachica consu : lstConsumos) {
+                consumocajachica = consu;
+                consumocajachica.setIdestatusconsumocajachica(statusconsumo);
+                consumocajachicaEJB.edit(consumocajachica);
+                //--------- Almacenar Tabla puente ReposicionConsumos ------\\
+                reposicionConsumos.setIdconsumocajachica(consumocajachica);
+                reposicionConsumos.setIdreposicioncajachica(reposicionCajaChica);
+                reposicionconsumosEJB.create(reposicionConsumos);
+            }
+            //--------Actualizar Banco y Grabar Movimiento Bancario------- \\
+            double saldoactualbanco = 0;
+            double saldoanteriorbanco = 0;
+            cuentabanco = reposicionCajaChica.getIdcuentabancaria();
+            saldoanteriorbanco = cuentabanco.getSaldo();
+            saldoactualbanco = (saldoanteriorbanco - reposicionCajaChica.getMontoreposicion());
+            cuentabanco.setSaldo(saldoactualbanco);
+            cuentabancariaEJB.edit(cuentabanco);
+            
+            movimientobancario.setFecha(reposicionCajaChica.getFecharesposicion());
+            movimientobancario.setIdcuentabancaria(cuentabanco);
+            movimientobancario.setSaldoanterior(saldoanteriorbanco);
+            movimientobancario.setDebito(reposicionCajaChica.getMontoreposicion());
+            movimientobancario.setSaldoactual(saldoactualbanco);
+            movimientobancario.setCredito(null);
+            movimientobancario.setIdreposicioncajachica(reposicionCajaChica);
+            movimientoBancarioEJB.create(movimientobancario);
+
+            //--------Grabar en el Maestro de Movimiento ---------------- \\
+            int tipoconj = 2;
+            tipoconjunto = tipoconjuntoEJB.cambiartipoConjunto(tipoconj);
+            maestromovi.setIdreposicioncajachica(reposicionCajaChica);
+            maestromovi.setFechamovimiento(reposicionCajaChica.getFecharesposicion());
+            maestromovi.setIdtipoconjunto(tipoconjunto);
+            maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
+            maestromovimientoEJB.create(maestromovi);
+            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Fue procesada la Reposicion de Caja Chica con el Nro " + serial, "Aviso "));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al procesar Reposicion de Caja Chica", "Aviso"));
+        } finally {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        }
+    }
 
 }
