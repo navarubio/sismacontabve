@@ -24,163 +24,180 @@
 
                     <p:panel id="panel1" header="ASIENTO REPOSICION DE CAJA CHICA">
                         <p:panelGrid columns="1">
-                            <p:fieldset  legend="Datos del Ingreso" >
-                                <p:panelGrid columns="4" styleClass="ui-custompanelgrid1">
-                                    <p:outputLabel for="usuario" value="USUARIO" style="font-weight:bold"  styleClass="text-ouput"/>
-                                    <p:outputLabel id="usuario" value="#{asientosotrosingresosController.otroingreso.idusuario.nombre}" />
-                                    <p:outputLabel for="departamento" style="font-weight:bold"  value="DEPARTAMENTO" styleClass="text-ouput"/>
-                                    <p:outputLabel id="departamento" value="#{asientosotrosingresosController.otroingreso.idusuario.iddepartamento.departamento}"/>
-                                    <p:outputLabel for="fechacobro" value="Fecha Ingreso" styleClass="text-ouput" />
-                                    <p:outputLabel id="fechacobro" value="#{asientosotrosingresosController.otroingreso.fechaingreso}" >
-                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            <p:fieldset  legend="Datos de Reposicion" >
+                                <p:panelGrid styleClass="ui-custompanelgrid2" columns="4">
+                                    <p:outputLabel for="repositor"  value="Repositor" styleClass="text-ouput"/>
+                                    <p:outputLabel id="repositor"  value="#{asientosreposicionController.reposicionCajachica.idrepositor.nombre}" />                                    
+                                    <p:outputLabel for="serialrepo"  value="Serial Nro" styleClass="text-ouput"/>
+                                    <p:outputLabel id="serialrepo"  value="#{asientosreposicionController.reposicionCajachica.serialreposicion}" />                                    
+                                    <p:outputLabel for="fecharepo"  value="Recha Reposición" styleClass="text-ouput"/>
+                                    <p:outputLabel id="fecharepo"  value="#{asientosreposicionController.reposicionCajachica.fecharesposicion}" >
+                                        <f:convertDateTime locale="es" pattern="dd/MM/yyyy"/>
                                     </p:outputLabel>
-                                    <p:outputLabel for="montofact" value="MONTO INGRESADO" styleClass="text-ouput"/>
-                                    <p:outputLabel id="montofact" value="#{asientosotrosingresosController.otroingreso.montoingresado}" styleClass="text-ouputcxc" style="text-align: right">
-                                        <f:convertNumber type="currency" currencySymbol=" " />
-                                    </p:outputLabel>
-                                    <p:outputLabel for="tipopago" value="Forma de Pago" styleClass="text-ouput"/>
-                                    <p:outputLabel id="tipopago" value="#{asientosotrosingresosController.otroingreso.idtipopago.tipopago}" /> 
-                                    <p:outputLabel for="tipoingreso" value="Tipo Ingreso" styleClass="text-ouput"/>
-                                    <p:outputLabel id="tipoingreso" value="#{asientosotrosingresosController.otroingreso.idtipoingreso.tipoingreso}" /> 
-                                    <p:outputLabel for="observaciones" value="Observaciones" styleClass="text-ouput"/>
-                                    <p:outputLabel id="observaciones" value="#{asientosotrosingresosController.otroingreso.observaciones}" /> 
-                                </p:panelGrid>
-                            </p:fieldset>
-                            <h:panelGrid>
-
-                            </h:panelGrid>
-                            <h:panelGroup id="contenedorLabel">
-                                <p:panelGrid columns="2" rendered="#{asientosotrosingresosController.vercasilla== 1 ? true:false}" >
-                                    <p:fieldset  legend="Datos Cuenta Emisora" > 
-                                        <p:panelGrid columns="6" styleClass="ui-custompanelgrid">
-                                            <p:outputLabel for="bancoemisor" value="Banco Emisor" style="text-align: right" styleClass="text-ouput"/>
-                                            <p:outputLabel id="bancoemisor" value="#{asientosotrosingresosController.movimientoegreso.idcuentabancaria.idbanco.nombrebanco}"/>  
-                                            <p:outputLabel for="cuentabancoemisor" style="text-align: right" value="Cuenta Emisora" styleClass="text-ouput"/>
-                                            <p:outputLabel id="cuentabancoemisor" value="#{asientosotrosingresosController.movimientoegreso.idcuentabancaria.numerocuenta}" />
-                                            <p:outputLabel for="saldocuentaemisoraant" value="Saldo Anterior" styleClass="text-ouput"/>
-                                            <p:outputLabel id= "saldocuentaemisoraant" value="#{asientosotrosingresosController.movimientoegreso.saldoanterior}" styleClass="text-ouputsaldo">
-                                                <f:convertNumber type="currency" currencySymbol=" " />
-                                            </p:outputLabel>
-                                            <p:outputLabel for="montotrapaso" value="Monto Transpado" styleClass="text-ouput"/>
-                                            <p:outputLabel id= "montotrapaso" value="#{asientosotrosingresosController.movimientoegreso.debito}" styleClass="text-ouputsaldo">
-                                                <f:convertNumber type="currency" currencySymbol=" " />
-                                            </p:outputLabel>
-                                            <p:outputLabel for="saldocuentaemisorapos" value="Saldo Resultante" styleClass="text-ouput"/>
-                                            <p:outputLabel id= "saldocuentaemisorapos" value="#{asientosotrosingresosController.movimientoegreso.saldoactual}" styleClass="text-ouputsaldo">
-                                                <f:convertNumber type="currency" currencySymbol=" " />
-                                            </p:outputLabel>
-                                        </p:panelGrid>
-                                    </p:fieldset>
-                                </p:panelGrid>
-                            </h:panelGroup>
-                            <h:panelGroup id="contenedornormal">
-                                <p:panelGrid columns="2" >
-                                    <p:fieldset  legend="Datos Cuenta Receptora" >
-                                        <p:panelGrid columns="6" styleClass="ui-custompanelgrid2">
-                                            <p:outputLabel for="banco" value="Banco Receptor" style="text-align: right" styleClass="text-ouput"/>
-                                            <p:outputLabel id="banco" value="#{asientosotrosingresosController.movimientoingreso.idcuentabancaria.idbanco.nombrebanco}" />  
-                                            <p:outputLabel for="cuentabanco" style="text-align: right" value="Cuenta Receptora" styleClass="text-ouput"/>
-                                            <p:outputLabel id="cuentabanco" value="#{asientosotrosingresosController.movimientoingreso.idcuentabancaria.numerocuenta}"/>
-                                            <p:outputLabel for="saldoanterior" value="Saldo Anterior" styleClass="text-ouput"/>
-                                            <h:outputText id="saldoanterior" value="#{asientosotrosingresosController.movimientoingreso.saldoanterior}" styleClass="text-ouputsaldo">
-                                                <f:convertNumber type="currency" currencySymbol=" " />
-                                            </h:outputText>
-                                            <p:outputLabel for="montorecibido" value="Monto Recibido" styleClass="text-ouput"/>
-                                            <p:outputLabel id= "montorecibido" value="#{asientosotrosingresosController.movimientoingreso.credito}" styleClass="text-ouputsaldo">
-                                                <f:convertNumber type="currency" currencySymbol=" " />
-                                            </p:outputLabel>
-                                            <p:outputLabel for="saldoposterior" value="Saldo Posterior" styleClass="text-ouput"/>
-                                            <h:outputText id="saldoposterior" value="#{asientosotrosingresosController.movimientoingreso.saldoactual}" styleClass="text-ouputsaldo">
-                                                <f:convertNumber type="currency" currencySymbol=" " />
-                                            </h:outputText>
-                                        </p:panelGrid>
-                                    </p:fieldset>
+                                    <p:outputLabel for="montof" value="MONTO DE REPOSICION" styleClass="text-ouput"/>
+                                    <p:outputLabel id="montof" value="#{asientosreposicionController.reposicionCajachica.montoreposicion}" styleClass="text-ouputfactura"  >
+                                        <f:convertNumber type="currency" currencySymbol="$ "   />
+                                    </p:outputLabel>                                        
+                                    <p:outputLabel for="tipopag"  value="Forma de Pago" styleClass="text-ouput"/>
+                                    <p:outputLabel id="tipopag"  value="#{asientosreposicionController.reposicionCajachica.idtipopago.tipopago}" />                                    
+                                    <p:outputLabel for="bancorepo" value="Banco" styleClass="text-ouput"/>
+                                    <p:outputLabel id="bancorepo"  value="#{asientosreposicionController.reposicionCajachica.idcuentabancaria.idbanco.nombrebanco}" />                                    
+                                    <p:outputLabel for="cuentarepo" value="Cuenta Bancaria" styleClass="text-ouput"/>
+                                    <p:outputLabel id="cuentarepo"  value="#{asientosreposicionController.reposicionCajachica.idcuentabancaria.numerocuenta}" />                                    
+                                    <p:outputLabel for="nrodocument" value="Nro. Documento" styleClass="text-ouput"/>
+                                    <p:outputLabel id="nrodocument"  value="#{asientosreposicionController.reposicionCajachica.numerodocumento}" />                                    
+                                    <p:outputLabel for="beneficiario" value="Beneficiario" styleClass="text-ouput"/>
+                                    <p:outputLabel id="beneficiario"  value="#{asientosreposicionController.reposicionCajachica.beneficiario}" />                                    
+                                    <p:outputLabel for="observa2" value="Observaciones" styleClass="text-ouput"/>
+                                    <p:outputLabel id="observa2"  value="#{asientosreposicionController.reposicionCajachica.observaciones}" />                                    
                                 </p:panelGrid>                                
-                            </h:panelGroup>
+                            </p:fieldset>
                         </p:panelGrid>
-                    </p:panel>
-                    <p:panel id="panelcontab"> 
-                        <p:fieldset legend="Asiento Contable" >
-                            <p:panelGrid columns="6" styleClass="ui-custompanelgrid2" >
-                                <p:outputLabel for="fechaasiento" value="Fecha" styleClass="text-ouput"/>
-                                <p:calendar id="fechaasiento" style="text-align: right" value="#{asientosotrosingresosController.librodiario.fecha}" pattern="dd/MM/yyyy" locale="es" required="true" size="8"/>
-                                <!--p:outputLabel for="ref" styleClass="text-ouput" value="Referencia" />                                 
-                                <p:outputLabel id="ref" styleClass="text-ouputfact" value=".{facturasController.devolversiguientefactura()}" title=".{bundle.CreateFacturaTitle_numerofactura}" /-->
-                                <p:outputLabel for="observac" styleClass="text-ouput" value="Observaciones" />
-                                <p:inputTextarea  id="observac" value="#{asientosotrosingresosController.librodiario.descripcionasiento}" cols="70" rows="2" />
-                            </p:panelGrid>                                
-                        </p:fieldset>
-                        <p:fieldset legend="Registros Contables"  toggleable="true" toggleSpeed="500" collapsed="true" >
-                            <p:panelGrid columns="6" styleClass="ui-custompanelgrid3" > 
-                                <p:outputLabel for="descripcioncta" value="Cuenta" styleClass="text-ouput"/>
-                                <p:outputLabel for="codigocta" value="Codigo" styleClass="text-ouput"/>
-                                <!--p:outputLabel for="saldoactual" value="Saldo Cta" styleClass="text-ouput"/-->
-                                <p:outputLabel for="debe" value="DEBE" style="float:right" styleClass="text-ouput" />
-                                <p:outputLabel for="haber" value="HABER" style="float:right" styleClass="text-ouput" />
-                                <p:outputLabel></p:outputLabel>                                
-                                <p:selectOneMenu id="descripcioncta" value="#{asientosotrosingresosController.cuentaseleccionada}" 
-                                                 converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
-                                    <p:ajax event="change" update="codigocta"/>
-                                    <!--f:selectItem itemLabel="SIN APLICAR" itemValue="0" noSelectionOption="false" /-->
-                                    <f:selectItems value="#{plandecuentaController.itemsordenados}"
-                                                   var="subespecificocontableItem"
-                                                   itemValue="#{subespecificocontableItem.idplandecuenta}" /> 
-                                </p:selectOneMenu>
-                                <p:outputLabel id="codigocta" value="#{asientosotrosingresosController.cuentaseleccionada}" />
-                                <!--p:outputLabel id="saldoactual" value=".{asientosventasController.detalleaanexar.idplandecuenta.saldogeneral}" styleClass="optionalLbl"/-->
-                                <p:inputText id="debe"  size="20" value="#{asientosotrosingresosController.detalleaanexar.debe}" style="text-align:right"/>
-                                <p:inputText id="haber"  size="20" value="#{asientosotrosingresosController.detalleaanexar.haber}" style="text-align:right"/>                               
-                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{asientosotrosingresosController.anexarregistro()}" update=":formulario:listadoasiento,:growl"/>   
-                            </p:panelGrid>                                
-                        </p:fieldset>
+                        <p:panel>
+                            <p:fieldset legend="CONSUMOS INCLUIDOS">
+                                <p:dataTable id="listado" value="#{asientosreposicionController.lstConsumos}" 
+                                             var="item" emptyMessage="No hay consumos por reponer" rowKey="#{item.serialconsumo}"
+                                             >
+                                    <p:column style="text-align: center">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecajachica.ListConsumocajachicaTitle_serialconsumo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.serialconsumo}"/> 
+                                    </p:column>
+                                    <p:column width="150" style="text-align: center" sortBy="#{item.fechaloteconsumo}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_fechaconsumo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fechaloteconsumo}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText> 
+                                    </p:column>
+                                    <p:column style="text-align: center">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecajachica.ListConsumocajachicaTitle_idcajachica}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idcajachica.descripcion}"/> 
+                                    </p:column>
+                                    <p:column width="450" style="text-align: left" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecajachica.ListConsumocajachicaTitle_observaciones}" />
+                                        </f:facet>
+                                        <h:outputText value="#{item.observaciones}"/>
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecajachica.ListConsumocajachicaTitle_subtotalconsumo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.subtotalconsumo}">
+                                            <f:convertNumber type="currency" currencySymbol=" "   />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecajachica.ListConsumocajachicaTitle_ivaconsumo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.ivaconsumo}">
+                                            <f:convertNumber type="currency" currencySymbol=" "   />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecajachica.ListConsumocajachicaTitle_totalconsumo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.totalconsumo}">
+                                            <f:convertNumber type="currency" currencySymbol=" "   />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:columnGroup type="footer">
+                                        <p:row>
+                                            <p:column colspan="6" style="text-align:right" footerText="TOTAL REPOSICION" />
+                                            <p:column style="text-align: right"  footerText="$ #{consumoscajachicaController.totalgeneralform}" />
+                                        </p:row>
+                                    </p:columnGroup>                            
+                                </p:dataTable>
+                            </p:fieldset>
+                        </p:panel>
 
-                    </p:panel>
-                    <p:panel id="contable">
-                        <p:dataTable id="listadoasiento" widgetVar="listadoreq1" value="#{asientosotrosingresosController.listadetalleslibrodiario}" 
-                                     var="req1" emptyMessage="No hay cuentas contables para mostrar" rowStyleClass="#{asientosotrosingresosController.totaldebegeneral==asientosotrosingresosController.totalhabergeneral ? 'asientocuadrado' : null}"
-                                     selectionMode="single" rowKey="#{req1.idplandecuenta.idplandecuenta}">
-                            <!--rowStyleClass=".{req1.idplandecuenta.idplandecuenta== 12620 ? 'facturaabonada' : null}"-->
-                            <p:column style="text-align: center" width="60" headerText="Codigo">
-                                <h:outputText value="#{req1.idplandecuenta.idplandecuenta}" styleClass="text-ouput"/> 
-                            </p:column>
-                            <p:column style="width:35%"  headerText="Cuenta Contable" >
-                                <h:outputText value="#{req1.idplandecuenta.descripcioncuenta}" styleClass="text-ouput"/>
-                            </p:column>
-                            <p:column style="text-align: right" headerText="DEBE">
-                                <h:outputText value="#{req1.debe}" style="width:10px" styleClass="text-debe">
-                                    <f:convertNumber type="currency" currencySymbol=" " />
-                                </h:outputText>
-                            </p:column>
-                            <p:column style="text-align: right" headerText="HABER">
-                                <h:outputText value="#{req1.haber}" styleClass="text-haber">
-                                    <f:convertNumber type="currency" currencySymbol=" " />
-                                </h:outputText>
-                            </p:column> 
-                            <p:column style="text-align: center" headerText="Editar">                                
-                                <p:commandLink actionListener="#{asientosotrosingresosController.asignarDetallelibrodiario(req1)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
-                                    <h:graphicImage library="images" name="apply.png" width="20" height="20" alt="Editar Asiento"/> 
-                                </p:commandLink>
-                            </p:column>
-                            <p:column style="text-align: center" headerText="Eliminar">
-                                <p:commandLink actionListener="#{asientosotrosingresosController.eliminar(req1)}" update=":formulario:contable,listadoasiento" >
-                                    <h:graphicImage library="images" name="button_cancel.png" width="20" height="20" alt="Eliminar Asiento"/> 
-                                </p:commandLink>
-                            </p:column>
+                        <p:panel id="panelcontab"> 
+                            <p:fieldset legend="Asiento Contable" >
+                                <p:panelGrid columns="6" styleClass="ui-custompanelgrid2" >
+                                    <p:outputLabel for="fechaasiento" value="Fecha" styleClass="text-ouput"/>
+                                    <p:calendar id="fechaasiento" style="text-align: right" value="#{asientosreposicionController.librodiario.fecha}" pattern="dd/MM/yyyy" locale="es" required="true" size="8"/>
+                                    <!--p:outputLabel for="ref" styleClass="text-ouput" value="Referencia" />                                 
+                                    <p:outputLabel id="ref" styleClass="text-ouputfact" value=".{facturasController.devolversiguientefactura()}" title=".{bundle.CreateFacturaTitle_numerofactura}" /-->
+                                    <p:outputLabel for="observac" styleClass="text-ouput" value="Observaciones" />
+                                    <p:inputTextarea  id="observac" value="#{asientosreposicionController.librodiario.descripcionasiento}" cols="70" rows="2" />
+                                </p:panelGrid>                                
+                            </p:fieldset>
+                            <p:fieldset legend="Registros Contables"  toggleable="true" toggleSpeed="500" collapsed="true" >
+                                <p:panelGrid columns="6" styleClass="ui-custompanelgrid3" > 
+                                    <p:outputLabel for="descripcioncta" value="Cuenta" styleClass="text-ouput"/>
+                                    <p:outputLabel for="codigocta" value="Codigo" styleClass="text-ouput"/>
+                                    <!--p:outputLabel for="saldoactual" value="Saldo Cta" styleClass="text-ouput"/-->
+                                    <p:outputLabel for="debe" value="DEBE" style="float:right" styleClass="text-ouput" />
+                                    <p:outputLabel for="haber" value="HABER" style="float:right" styleClass="text-ouput" />
+                                    <p:outputLabel></p:outputLabel>                                
+                                    <p:selectOneMenu id="descripcioncta" value="#{asientosreposicionController.cuentaseleccionada}" 
+                                                     converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
+                                        <p:ajax event="change" update="codigocta"/>
+                                        <!--f:selectItem itemLabel="SIN APLICAR" itemValue="0" noSelectionOption="false" /-->
+                                        <f:selectItems value="#{plandecuentaController.itemsordenados}"
+                                                       var="subespecificocontableItem"
+                                                       itemValue="#{subespecificocontableItem.idplandecuenta}" /> 
+                                    </p:selectOneMenu>
+                                    <p:outputLabel id="codigocta" value="#{asientosreposicionController.cuentaseleccionada}" />
+                                    <!--p:outputLabel id="saldoactual" value=".{asientosventasController.detalleaanexar.idplandecuenta.saldogeneral}" styleClass="optionalLbl"/-->
+                                    <p:inputText id="debe"  size="20" value="#{asientosreposicionController.detalleaanexar.debe}" style="text-align:right"/>
+                                    <p:inputText id="haber"  size="20" value="#{asientosreposicionController.detalleaanexar.haber}" style="text-align:right"/>                               
+                                    <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{asientosreposicionController.anexarregistro()}" update=":formulario:listadoasiento,:growl"/>   
+                                </p:panelGrid>                                
+                            </p:fieldset>
+                        </p:panel>
+                        <p:panel id="contable">
+                            <p:dataTable id="listadoasiento" widgetVar="listadoreq1" value="#{asientosreposicionController.listadetalleslibrodiario}" 
+                                         var="req1" emptyMessage="No hay cuentas contables para mostrar" rowStyleClass="#{asientosreposicionController.totaldebegeneral==asientosreposicionController.totalhabergeneral ? 'asientocuadrado' : null}"
+                                         selectionMode="single" rowKey="#{req1.idplandecuenta.idplandecuenta}">
+                                <p:column style="text-align: center" width="60" headerText="Codigo">
+                                    <h:outputText value="#{req1.idplandecuenta.idplandecuenta}" styleClass="text-ouput"/> 
+                                </p:column>
+                                <p:column style="width:35%"  headerText="Cuenta Contable" >
+                                    <h:outputText value="#{req1.idplandecuenta.descripcioncuenta}" styleClass="text-ouput"/>
+                                </p:column>
+                                <p:column style="text-align: right" headerText="DEBE">
+                                    <h:outputText value="#{req1.debe}" style="width:10px" styleClass="text-debe">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right" headerText="HABER">
+                                    <h:outputText value="#{req1.haber}" styleClass="text-haber">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                </p:column> 
+                                <p:column style="text-align: center" headerText="Editar">                                
+                                    <p:commandLink actionListener="#{asientosotrosingresosController.asignarDetallelibrodiario(req1)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
+                                        <h:graphicImage library="images" name="apply.png" width="20" height="20" alt="Editar Asiento"/> 
+                                    </p:commandLink>
+                                </p:column>
+                                <p:column style="text-align: center" headerText="Eliminar">
+                                    <p:commandLink actionListener="#{asientosotrosingresosController.eliminar(req1)}" update=":formulario:contable,listadoasiento" >
+                                        <h:graphicImage library="images" name="button_cancel.png" width="20" height="20" alt="Eliminar Asiento"/> 
+                                    </p:commandLink>
+                                </p:column>
 
-                            <p:columnGroup type="footer">
-                                <p:row>
-                                    <p:column colspan="2" style="text-align:right" footerText="TOTAL ASIENTO" />
-                                    <p:column style="text-align: right"  footerText="BsF #{asientosotrosingresosController.totaldebe()}" />
-                                    <p:column style="text-align: right"  footerText="BsF #{asientosotrosingresosController.totalhaber()}" />
-                                </p:row>
-                            </p:columnGroup>                            
-                        </p:dataTable>
-                        <p:commandButton value="Registrar" actionListener="#{asientosotrosingresosController.registrar()}" action="/maestromovimiento/List?faces-redirect=true" update=":msgs" 
-                                         rendered  ="#{asientosotrosingresosController.totaldebegeneral==asientosotrosingresosController.totalhabergeneral ? true:false}"/>
-                        <p:commandButton id= "exit" value="Salir" action="/maestromovimiento/List?faces-redirect=true"/>
+                                <p:columnGroup type="footer">
+                                    <p:row>
+                                        <p:column colspan="2" style="text-align:right" footerText="TOTAL ASIENTO" />
+                                        <p:column style="text-align: right"  footerText="BsF #{asientosreposicionController.totaldebe()}" />
+                                        <p:column style="text-align: right"  footerText="BsF #{asientosreposicionController.totalhaber()}" />
+                                    </p:row>
+                                </p:columnGroup>                            
+                            </p:dataTable>
+                            <p:commandButton value="Registrar" actionListener="#{asientosotrosingresosController.registrar()}" action="/maestromovimiento/List?faces-redirect=true" update=":msgs" 
+                                             rendered  ="#{asientosreposicionController.totaldebegeneral==asientosreposicionController.totalhabergeneral ? true:false}"/>
+                            <p:commandButton id= "exit" value="Salir" action="/maestromovimiento/List?faces-redirect=true"/>
+                        </p:panel>
                     </p:panel>
                 </h:form>
-
                 <p:dialog id="dialogo" widgetVar="wdialogo" header="Modificar Cuenta Contable" modal="true" closeOnEscape="true" 
                           resizable="false" showEffect="explode" appendTo="@(body)"  >
                     <h:form>

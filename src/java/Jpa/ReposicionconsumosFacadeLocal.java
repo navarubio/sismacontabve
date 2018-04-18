@@ -5,6 +5,9 @@
  */
 package Jpa;
 
+import Modelo.Cajachica;
+import Modelo.Consumocajachica;
+import Modelo.Reposicioncajachica;
 import Modelo.Reposicionconsumos;
 import java.util.List;
 import javax.ejb.Local;
@@ -29,5 +32,11 @@ public interface ReposicionconsumosFacadeLocal {
     List<Reposicionconsumos> findRange(int[] range);
 
     int count();
+    
+    Cajachica devolverCajachica (Reposicioncajachica reposicion);
+    
+    List <Reposicionconsumos> listaReposicionconsumosfiltrada (Reposicioncajachica reposicion);
+    
+    List <Consumocajachica> listaconsumosxReposicion (Reposicioncajachica reposicion);
     
 }

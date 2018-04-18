@@ -121,7 +121,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idreposicioncajachica}"/>
                             </f:facet>
-                            <h:commandLink action="/reposicioncajachcia/asientoreposicion.xhtml" actionListener="#{asientosreposicionController.asignarReposicion(item.idreposicioncajachica, item)}" >
+                            <h:commandLink action="/reposicioncajachica/asientoreposicion.xhtml" actionListener="#{asientosreposicionController.asignarReposicion(item.idreposicioncajachica, item)}" >
                                 <h:graphicImage library="images" name="contable1.png" width="30" height="30" alt="Reposicion"
                                                 rendered="#{item.idreposicioncajachica!= null? true:false}"/>  
                             </h:commandLink>   

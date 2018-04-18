@@ -145,7 +145,7 @@ public class AsientoscontablesController implements Serializable {
     private Usuario usa;
     private Departamento dpto;
     private Compra codCompra;
-    
+
     private int visualizar = 0;
     private int tipocompra = 1;
     private double montoUT = 0;
@@ -181,6 +181,8 @@ public class AsientoscontablesController implements Serializable {
     private Detalleretencionislref detalleretencionislref;
     @Inject
     private Movimientobancario movimientobancario;
+    @Inject
+    private RequerimientosController requerimientosController;
     private double ivaretenido;
     private double islrretenido;
     private double montoapagar;
@@ -213,7 +215,7 @@ public class AsientoscontablesController implements Serializable {
     private Libromayor libromayor;
     @Inject
     private Empresa empresa;
-    
+
     public List<Detallelibrodiario> getListadetalleslibrodiario() {
         return listadetalleslibrodiario;
     }
@@ -561,6 +563,8 @@ public class AsientoscontablesController implements Serializable {
         listadetalleslibrodiario.clear();
         retiva = 0;
         retislr = 0;
+        Usuario us = requerimientosController.getUsa();
+        empresa=us.getIddepartamento().getIdempresa();
         //articulos = articuloEJB.findAll();
         //comprasporautorizar=compraEJB.buscarcomprasporAutorizar();
 
@@ -693,7 +697,7 @@ public class AsientoscontablesController implements Serializable {
         librodiario.setFecha(compra.getFechaorden());
         Detallecompra detal = detallecompraFiltrados.get(0);
         Articulo artic = detal.getCodigo();
-        librodiario.setDescripcionasiento("P/R COMPRA CMP-" + compra.getIdcompra() + " " + artic.getDescripcion()+ ", "+compra.getIdauxiliarrequerimiento().getDescripcion());
+        librodiario.setDescripcionasiento("P/R COMPRA CMP-" + compra.getIdcompra() + " " + artic.getDescripcion() + ", " + compra.getIdauxiliarrequerimiento().getDescripcion());
 //        this.compra.setIdauxiliarrequerimiento(auxiliar);
     }
 
@@ -715,7 +719,7 @@ public class AsientoscontablesController implements Serializable {
         detallecompraFiltrados = detallecompraAuxiliar();
         listadetalleslibrodiario = detallesasientopago();
         librodiario.setFecha(compra.getFechaorden());
-        librodiario.setDescripcionasiento("P/R PAGO DE COMPRA CMP-" + compra.getIdcompra()+", "+pagocompra.getObservacionespago());
+        librodiario.setDescripcionasiento("P/R PAGO DE COMPRA CMP-" + compra.getIdcompra() + ", " + pagocompra.getObservacionespago());
 //        this.compra.setIdauxiliarrequerimiento(auxiliar);
     }
 
@@ -984,7 +988,7 @@ public class AsientoscontablesController implements Serializable {
 
     public void anexar() {
         listadetalleslibrodiario.clear();
-        empresa=empresaEJB.devolverEmpresabase();
+//        empresa = empresaEJB.devolverEmpresabase();
         id = 0;
         visualizar = 0;
         Detallecompra detalle1 = detallecompraFiltrados.get(0);
@@ -1018,10 +1022,10 @@ public class AsientoscontablesController implements Serializable {
 
         Detallelibrodiario detallelibro = new Detallelibrodiario();
         int codctahaber = 0;
-        if (arti.getIdgrupo().getIdgrupo()<3){
+        if (arti.getIdgrupo().getIdgrupo() < 3) {
             codctahaber = empresa.getCtaxpagarproved();
-        }else if (arti.getIdgrupo().getIdgrupo()==3){        
-            codctahaber = empresa.getCtaxpagarinterna();    
+        } else if (arti.getIdgrupo().getIdgrupo() == 3) {
+            codctahaber = empresa.getCtaxpagarinterna();
         }
         Plandecuenta cuentaporpagar = plandecuentaEJB.buscarcuenta(codctahaber);
         detallelibro.setIdplandecuenta(cuentaporpagar);
@@ -1030,10 +1034,10 @@ public class AsientoscontablesController implements Serializable {
         this.listadetalleslibrodiario.add(detallelibro);
         id++;
     }
-    
-        public void anexarComprapago() {
+
+    public void anexarComprapago() {
         listadetalleslibrodiario.clear();
-        empresa=empresaEJB.devolverEmpresabase();
+//        empresa = empresaEJB.devolverEmpresabase();
         id = 0;
         visualizar = 0;
         Detallecompra detalle1 = detallecompraFiltrados.get(0);
@@ -1085,7 +1089,7 @@ public class AsientoscontablesController implements Serializable {
                 detallelibr.setIddetallelibrodiario(id);
                 this.listadetalleslibrodiario.add(detallelibr);
                 id++;
-                
+
                 Detallelibrodiario detallelibr1 = new Detallelibrodiario();
                 int codcta1 = empresa.getRetislrxenterar();
                 Plandecuenta cuentaretencionislr = plandecuentaEJB.buscarcuenta(codcta1);
@@ -1095,7 +1099,7 @@ public class AsientoscontablesController implements Serializable {
                 this.listadetalleslibrodiario.add(detallelibr1);
                 id++;
             }
-            
+
         }
 
         Detallelibrodiario detallelibr = new Detallelibrodiario();
@@ -1106,12 +1110,11 @@ public class AsientoscontablesController implements Serializable {
         id++;
     }
 
-
     public void anexarpagocompra() {
         listadetalleslibrodiario.clear();
         id = 0;
         visualizar = 0;
-        empresa=empresaEJB.devolverEmpresabase();
+        empresa = empresaEJB.devolverEmpresabase();
 
         Detallelibrodiario detallelibro = new Detallelibrodiario();
         int codctadebe = empresa.getCtaxpagarproved();
@@ -1158,7 +1161,7 @@ public class AsientoscontablesController implements Serializable {
                 detallelib.setIddetallelibrodiario(id);
                 this.listadetalleslibrodiario.add(detallelib);
                 id++;
-                
+
                 Detallelibrodiario detallelibr1 = new Detallelibrodiario();
                 int codcta1 = empresa.getRetislrxenterar();
                 Plandecuenta cuentaretencionislr = plandecuentaEJB.buscarcuenta(codcta1);
@@ -1168,7 +1171,7 @@ public class AsientoscontablesController implements Serializable {
                 this.listadetalleslibrodiario.add(detallelibr1);
                 id++;
             }
-            
+
         }
 
         Detallelibrodiario detallelibr = new Detallelibrodiario();
@@ -1192,23 +1195,22 @@ public class AsientoscontablesController implements Serializable {
         return new DecimalFormat("###,###.##").format(montotdebe);
 //        return montotdebe;
     }
-    
-  /*  public String getTotalrequeriminto() {
-        double total = 0;
-        double totalimpuesto = 0;
-        double totalbaseimp = 0;
- 
-        for(Requerimiento inventa : listarequerimiento) {
-            totalbaseimp += inventa.getSubtotal();
-            totalimpuesto += inventa.getTributoiva();
-            total += inventa.getTotal();
-        }
-        totalsubtotal = totalbaseimp;
-        totaliva= totalimpuesto;
-        totalgeneral = total;
-        return new DecimalFormat("###,###.##").format(total);
-    }*/
 
+    /*  public String getTotalrequeriminto() {
+     double total = 0;
+     double totalimpuesto = 0;
+     double totalbaseimp = 0;
+ 
+     for(Requerimiento inventa : listarequerimiento) {
+     totalbaseimp += inventa.getSubtotal();
+     totalimpuesto += inventa.getTributoiva();
+     total += inventa.getTotal();
+     }
+     totalsubtotal = totalbaseimp;
+     totaliva= totalimpuesto;
+     totalgeneral = total;
+     return new DecimalFormat("###,###.##").format(total);
+     }*/
     public String totalhaber() {
         double montothaber = 0;
 

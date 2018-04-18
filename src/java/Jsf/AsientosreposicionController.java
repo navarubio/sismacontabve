@@ -12,6 +12,7 @@ import Jpa.CompraFacadeLocal;
 import Jpa.CuentabancariaFacadeLocal;
 import Jpa.DepartamentoFacadeLocal;
 import Jpa.DetallecompraFacadeLocal;
+import Jpa.DetalleconsumocajachicaFacadeLocal;
 import Jpa.DetallelibrodiarioFacadeLocal;
 import Jpa.DetalleretencionislrefFacade;
 import Jpa.DetalleretencionislrefFacadeLocal;
@@ -26,6 +27,7 @@ import Jpa.MaestromovimientoFacadeLocal;
 import Jpa.MovimientobancarioFacadeLocal;
 import Jpa.PagocompraFacadeLocal;
 import Jpa.PlandecuentaFacadeLocal;
+import Jpa.ReposicionconsumosFacadeLocal;
 import Jpa.RequerimientoFacadeLocal;
 import Jpa.TipoconjuntoFacadeLocal;
 import Jpa.TipopagoFacadeLocal;
@@ -34,11 +36,14 @@ import Modelo.Articulo;
 import Modelo.Autorizacion;
 import Modelo.Auxiliarrequerimiento;
 import Modelo.Banco;
+import Modelo.Cajachica;
 import Modelo.Compra;
 import Modelo.Comprobanteivaef;
+import Modelo.Consumocajachica;
 import Modelo.Cuentabancaria;
 import Modelo.Departamento;
 import Modelo.Detallecompra;
+import Modelo.Detalleconsumocajachica;
 import Modelo.Detallelibrodiario;
 import Modelo.Detalleretencionislref;
 import Modelo.Detalleretencionivaef;
@@ -129,18 +134,26 @@ public class AsientosreposicionController implements Serializable {
     private LibromayorFacadeLocal libromayorEJB;
     @EJB
     private DetallelibrodiarioFacadeLocal detallelibrodiarioEJB;
+    @EJB
+    private ReposicionconsumosFacadeLocal reposicionconsumosEJB;
+    @EJB
+    private DetalleconsumocajachicaFacadeLocal detalleconsumoEJB;
 
     @Inject
     private Reposicioncajachica reposicionCajachica;
     @Inject
     private Movimientobancario movimientoreposicion;
-    private int idReposicion = 0;
-    private List<Movimientobancario> reposicionespecifica;
-
-    private Auxiliarrequerimiento auxiliarrequerimiento;
-    private Compra compra;
+    @Inject
+    private Cajachica cajachica;
     @Inject
     private Otroingreso otroingreso;
+    
+    private int idReposicion = 0;
+    private List<Movimientobancario> reposicionespecifica;
+    private List<Consumocajachica> lstConsumos;
+    private List<Detalleconsumocajachica> lstDetallesConsumos;
+    private Auxiliarrequerimiento auxiliarrequerimiento;
+    private Compra compra;
     private List<Movimientobancario> ingresoespecifico;
     private Maestromovimiento master;
     private Autorizacion autoriza;
@@ -172,6 +185,7 @@ public class AsientosreposicionController implements Serializable {
     private int vercasilla = 0;
     private double retiva = 0;
     private double retislr = 0;
+    private String totalgeneralform;
     private List<Auxiliarrequerimiento> auxiliarrequerimientos;
     private List<Tiporetencionislr> tiporetencionesfiltradasPD = null;
     private List<Cuentabancaria> cuentasbancarias;
@@ -586,6 +600,48 @@ public class AsientosreposicionController implements Serializable {
         this.tipocompra = tipocompra;
     }
 
+    public Cajachica getCajachica() {
+        return cajachica;
+    }
+
+    public void setCajachica(Cajachica cajachica) {
+        this.cajachica = cajachica;
+    }
+
+    public Reposicioncajachica getReposicionCajachica() {
+        return reposicionCajachica;
+    }
+
+    public void setReposicionCajachica(Reposicioncajachica reposicionCajachica) {
+        this.reposicionCajachica = reposicionCajachica;
+    }
+
+    public List<Consumocajachica> getLstConsumos() {
+        return lstConsumos;
+    }
+
+    public void setLstConsumos(List<Consumocajachica> lstConsumos) {
+        this.lstConsumos = lstConsumos;
+    }
+
+    public List<Detalleconsumocajachica> getLstDetallesConsumos() {
+        return lstDetallesConsumos;
+    }
+
+    public void setLstDetallesConsumos(List<Detalleconsumocajachica> lstDetallesConsumos) {
+        this.lstDetallesConsumos = lstDetallesConsumos;
+    }
+
+    public String getTotalgeneralform() {
+        return totalgeneralform;
+    }
+
+    public void setTotalgeneralform(String totalgeneralform) {
+        this.totalgeneralform = totalgeneralform;
+    }
+    
+    
+
     @PostConstruct
     public void init() {
         visualizar = 0;
@@ -643,20 +699,20 @@ public class AsientosreposicionController implements Serializable {
         this.idReposicion = repo.getIdreposicioncajachica();
         this.reposicionespecifica = movimientoBancarioEJB.buscarmovimiento(repo);
         this.movimientoreposicion = reposicionespecifica.get(0);
+        this.cajachica = reposicionconsumosEJB.devolverCajachica(repo);
+        this.lstConsumos = reposicionconsumosEJB.listaconsumosxReposicion(repo);
+        this.lstDetallesConsumos = detalleconsumoEJB.listadetalleconsumosxListaConsumos(lstConsumos);
+        totaltotal();
         tamaño = reposicionespecifica.size();
         if (tamaño > 1) {
             this.vercasilla = 1;
             this.movimientoegreso = reposicionespecifica.get(1);
             librodiario.setDescripcionasiento("P/R REPOSICION REP- " + reposicionCajachica.getIdreposicioncajachica() + " POR TRASPASO DESDE " + movimientoegreso.getIdcuentabancaria().getIdbanco().getNombrebanco() + " AL " + movimientoingreso.getIdcuentabancaria().getIdbanco().getNombrebanco());
         } else {
-            librodiario.setDescripcionasiento("P/R CARGA INICIAL REP- " + otroingreso.getIdotroingreso() + " POR CONCEPTO DE " + otroingreso.getIdtipoingreso().getTipoingreso() + " " + otroingreso.getObservaciones());
+            librodiario.setDescripcionasiento("P/R REPOSICION DE CAJA REP- " + reposicionCajachica.getIdreposicioncajachica() + " POR CONCEPTO DE " + reposicionCajachica.getObservaciones());
         }
         listadetalleslibrodiario = detallesasiento();
-        librodiario.setFecha(otroingreso.getFechaingreso());
-//        Detallecompra detal = detallecompraFiltrados.get(0);
-        //       Articulo artic = detal.getCodigo();
-
-//        this.compra.setIdauxiliarrequerimiento(auxiliar);
+        librodiario.setFecha(reposicionCajachica.getFecharesposicion());
     }
 
     public List<Detallecompra> detallecompraAuxiliar() {
@@ -785,20 +841,27 @@ public class AsientosreposicionController implements Serializable {
         id = 0;
         visualizar = 0;
 
-        Detallelibrodiario detallelibr = new Detallelibrodiario();
+        for (Detalleconsumocajachica detal : lstDetallesConsumos) {
+            Detallelibrodiario detallelibr = new Detallelibrodiario();
 
-        detallelibr.setIdplandecuenta(movimientoingreso.getIdcuentabancaria().getIdplandecuenta());
-        detallelibr.setDebe(movimientoingreso.getCredito());
-        detallelibr.setIddetallelibrodiario(id);
-        this.listadetalleslibrodiario.add(detallelibr);
-        id++;
+            detallelibr.setIdplandecuenta(detal.getIdtipogastocajachica().getIdplandecuenta());
+            detallelibr.setDebe(detal.getToalgeneral());
+            detallelibr.setIddetallelibrodiario(id);
+            this.listadetalleslibrodiario.add(detallelibr);
+            id++;
+        }
 
         if (tamaño > 1) {
 
             Detallelibrodiario detallelibro = new Detallelibrodiario();
+            detallelibro.setIdplandecuenta(cajachica.getIdplandecuenta());
+            detallelibro.setHaber(reposicionCajachica.getMontoreposicion());
+            detallelibro.setIddetallelibrodiario(id);
+            this.listadetalleslibrodiario.add(detallelibro);
+            id++;
 
             detallelibro.setIdplandecuenta(movimientoegreso.getIdcuentabancaria().getIdplandecuenta());
-            detallelibro.setHaber(movimientoegreso.getDebito());
+            detallelibro.setHaber(reposicionCajachica.getMontoreposicion());
             detallelibro.setIddetallelibrodiario(id);
             this.listadetalleslibrodiario.add(detallelibro);
             id++;
@@ -806,13 +869,20 @@ public class AsientosreposicionController implements Serializable {
 
             Detallelibrodiario detallelib = new Detallelibrodiario();
 
-            int codcta2 = 21135;
-            Plandecuenta cuentaprovicional = plandecuentaEJB.buscarcuenta(codcta2);
-            detallelib.setIdplandecuenta(cuentaprovicional);
-            detallelib.setHaber(movimientoingreso.getCredito());
+            detallelib.setIdplandecuenta(cajachica.getIdplandecuenta());
+            detallelib.setHaber(reposicionCajachica.getMontoreposicion());
             detallelib.setIddetallelibrodiario(id);
             this.listadetalleslibrodiario.add(detallelib);
             id++;
+
+            /*
+             Detallelibrodiario detallelibr = new Detallelibrodiario();
+
+             detallelibr.setIdplandecuenta(movimientoingreso.getIdcuentabancaria().getIdplandecuenta());
+             detallelibr.setDebe(movimientoingreso.getCredito());
+             detallelibr.setIddetallelibrodiario(id);
+             this.listadetalleslibrodiario.add(detallelibr);
+             id++;*/
         }
     }
 
@@ -947,6 +1017,17 @@ public class AsientosreposicionController implements Serializable {
         detalleanexo.setHaber(detalleaanexar.getHaber());
         this.listadetalleslibrodiario.add(detalleanexo);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cuenta fue modificada"));
+    }
+    
+    public void totaltotal() {
+        double montotgeneral = 0;
+        double montotiva = 0;
+        double montotsubtotal = 0;
+
+        for (Consumocajachica consutotal : lstConsumos) {
+            montotgeneral += consutotal.getTotalconsumo();
+        }
+        totalgeneralform = formatearnumero.format(montotgeneral);
     }
 
 }

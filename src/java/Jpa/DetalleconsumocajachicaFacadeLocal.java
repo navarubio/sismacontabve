@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Consumocajachica;
 import Modelo.Detalleconsumocajachica;
 import java.util.List;
 import javax.ejb.Local;
@@ -29,5 +30,7 @@ public interface DetalleconsumocajachicaFacadeLocal {
     List<Detalleconsumocajachica> findRange(int[] range);
 
     int count();
+    
+    List <Detalleconsumocajachica> listadetalleconsumosxListaConsumos (List<Consumocajachica> listaconsumos);
     
 }
