@@ -35,7 +35,7 @@
                                     <p:outputLabel id="depto" value="#{requerimientosController.usa.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="cajachica" value="Caja Chica" styleClass="text-ouput"/>
                                     <p:selectOneMenu id="cajachica" value="#{consumoscajachicaController.consumocajachica.idcajachica}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
-                                        <p:ajax event="change" update="saldo, montomaximo"/>                              
+                                        <p:ajax event="change" update="saldo, montomaximo, formulario" listener="#{consumoscajachicaController.verificarSaldoCaja()}"/>                              
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
                                         <f:selectItems value="#{consumoscajachicaController.listarcajaschicas()}" 
                                                        var="idcajachicaItem"
@@ -47,7 +47,7 @@
                                     </p:outputLabel>
                                     <p:outputLabel for="montomaximo" value="Monto Maximo por Consumo" styleClass="text-ouput"/>
                                     <p:outputLabel id="montomaximo" value="#{consumoscajachicaController.consumocajachica.idcajachica.montomaximo}" styleClass="text-ouputfactura" >                                    
-                                    <f:convertNumber type="currency" currencySymbol="$ " />
+                                        <f:convertNumber type="currency" currencySymbol="$ " />
                                     </p:outputLabel>
                                     <p:outputLabel for="fechacarga" value="Fecha Procesamiento" styleClass="text-ouput" />
                                     <p:calendar id="fechacarga" locale="es" pattern="dd/MM/yyyy" value="#{consumoscajachicaController.consumocajachica.fechaloteconsumo}" showOn="button" navigator="true" required="true" />
@@ -76,12 +76,14 @@
                                                    itemLabel="#{idtipogastoItem.tipogastocajachica}"  itemValue="#{idtipogastoItem}" /> 
                                 </p:selectOneMenu>
                                 <p:outputLabel for="factura" value="Factura" />
-                                <p:inputText id="factura" value="#{consumoscajachicaController.detalleconsumocajachica.numerofactura}" style="text-align:right" size="5"/>
+                                <p:inputText id="factura" value="#{consumoscajachicaController.detalleconsumocajachica.numerofactura}" style="text-align:right" size="5" maxlength="10"/>
                                 <p:outputLabel for="subtotal" value="SubTotal" />
-                                <p:inputText id="subtotal" value="#{consumoscajachicaController.detalleconsumocajachica.subtotal}" style="text-align:right" size="7"/>
+                                <p:inputText id="subtotal" value="#{consumoscajachicaController.detalleconsumocajachica.subtotal}" style="text-align:right" size="7"    >
+                                    <f:validateLongRange minimum="0" maximum="#{consumoscajachicaController.consumocajachica.idcajachica.montomaximo}"></f:validateLongRange>
+                                </p:inputText>
                                 <p:outputLabel for="iva"  value="Iva" styleClass="optionalLbl"/>
                                 <p:inputText id="iva" value="#{consumoscajachicaController.detalleconsumocajachica.iva}" style="text-align:right" size="7"/>
-                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{consumoscajachicaController.anexar()}" update="listado"/>  
+                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{consumoscajachicaController.anexar()}" update="listado, formulario"/>  
                             </p:panelGrid>
                         </p:fieldset>
                     </p:panel>
@@ -105,6 +107,7 @@
                             <p:column style="text-align:right" headerText="SUB TOTAL">
                                 <h:outputText value="#{detal.subtotal}"> 
                                     <f:convertNumber type="currency" currencySymbol=" " />
+                                    
                                 </h:outputText>
                             </p:column>
                             <p:column style="text-align:right" headerText="IVA">
@@ -134,8 +137,9 @@
                                 </p:row>
                             </p:columnGroup>       
                         </p:dataTable> 
-                        <p:commandButton value="Registrar" actionListener="#{consumoscajachicaController.registrar()}"  action="/compra/List?faces-redirect=true" update="panelart,:formulario:listado,:growl"/>
-                        <p:commandButton value="Cancelar" />
+                        <p:commandButton value="Registrar" actionListener="#{consumoscajachicaController.registrar()}"  action="/consumocajachica/List?faces-redirect=true" update="panelart,:formulario:listado,:growl"
+                                         rendered  ="#{consumoscajachicaController.visualizar== 0 || consumoscajachicaController.visualizar== 1? true:false}"/>
+                        <p:commandButton value="Cancelar" action="/faces/protegido/menup?faces-redirect=true" immediate="true"/>
                     </p:panel>
 
                 </h:form>

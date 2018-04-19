@@ -120,6 +120,7 @@ public class ConsumoscajachicaController implements Serializable {
     private double totalsubtotal = 0;
     private int id = 0;
     private int aperturacaja = 0;
+    private int visualizar=0;
 
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     private List<Detalleconsumocajachica> listadetalles = new ArrayList();
@@ -279,13 +280,27 @@ public class ConsumoscajachicaController implements Serializable {
         this.pagosControlador = pagosControlador;
     }
 
+    public int getVisualizar() {
+        return visualizar;
+    }
+
+    public void setVisualizar(int visualizar) {
+        this.visualizar = visualizar;
+    }
+
     @PostConstruct
     public void init() {
         cajaschicas = cajachicaEJB.findAll();
+        if (cajaschicas.isEmpty()){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "No existen Cajas Chicas creadas para operar"));
+            visualizar=2;
+        }else{
         consumocajachica.setFechaloteconsumo(fechaactual);
         reposicionCajaChica.setFecharesposicion(fechaactual);
         tiposdegastos = tipogastocajachicaEJB.findAll();
+        visualizar=2;
 //        empresa = consumocajachica.getIdcajachica().getIdempresa();
+        }
     }
 
     public List<Proveedor> listarproveedores() {
@@ -296,7 +311,7 @@ public class ConsumoscajachicaController implements Serializable {
 
     public List<Cajachica> listarcajaschicas() {
         List<Cajachica> lista = null;
-        lista = cajachicaEJB.findAll();
+        lista = cajachicaEJB.cajaschicasAll();
         return lista;
     }
 
@@ -365,12 +380,18 @@ public class ConsumoscajachicaController implements Serializable {
                 detalleconsumoEJB.create(detalleconsumocajachica);
             }
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Sus Consumos fueron Almacenado con el Lote Nro " + serial));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Sus Consumos fueron Almacenados con el Lote Nro " + serial));
             listadetalles.clear();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Lote de Consumos"));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        }
+    }
+    public void verificarSaldoCaja (){
+        if (consumocajachica.getIdcajachica().getSaldoactual()==0){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "", "Caja chica no Presenta SALDO DISPONIBLE"));
+                visualizar=2;
         }
     }
 
@@ -390,6 +411,12 @@ public class ConsumoscajachicaController implements Serializable {
             id++;
             total = 0;
             totaltotal();
+            if (totalgeneral > consumocajachica.getIdcajachica().getMontoasignado()){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Montos de consumos es mayor al Monto Asignado para "+consumocajachica.getIdcajachica().getDescripcion()));
+                visualizar=2;
+            }else{
+                visualizar=0;
+            }
 
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Subtotal en 0.0"));

@@ -8,13 +8,14 @@
 
     <ui:composition template="/template.xhtml">
 
-
         <ui:define name="title">
             <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle}"></h:outputText>
             <h:outputStylesheet library="css" name="index.css" />
         </ui:define>
 
         <ui:define name="body">
+            <p:growl id="msgs" showDetail="true" autoUpdate="true" showSummary="false" /> 
+            
             <h:form id="DetalleconsumocajachicaListForm">
                 <div id="imag2">
                     <img src="../resources/images/LogoInpeca2.jpg" width="155" height="58" alt="Logo Inpeca" />

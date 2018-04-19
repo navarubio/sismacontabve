@@ -36,7 +36,7 @@ public class ItemmenuFacade extends AbstractFacade<Itemmenu> implements Itemmenu
         String consulta;
         List<Itemmenu> lista = null; 
         try { 
-            consulta = "From Itemmenu i order by i.idsubmenu.idsubmenu, i.idsubnivel.idsubnivel";
+            consulta = "From Itemmenu i order by i.idsubmenu.idsubmenu, i.idsubnivel.idsubnivel, i.iditemmenu";
             Query query = em.createQuery(consulta);
             lista = query.getResultList();
         } catch (Exception e) {

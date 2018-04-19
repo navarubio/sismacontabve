@@ -94,16 +94,13 @@ public class AsientosreposicionController implements Serializable {
     private CuentabancariaFacadeLocal cuentabancariaEJB;
     @EJB
     private PagocompraFacadeLocal pagocompraEJB;
-    @EJB
-    private EstatusfacturaFacadeLocal estatusfacturaEJB;
+   
     @EJB
     private EstatuscontableFacadeLocal estatuscontableEJB;
-    @EJB
-    private AutorizacionFacadeLocal autorizacionEJB;
+    
     @EJB
     private AuxiliarrequerimientoFacadeLocal auxiliarrequerimientoEJB;
-    @EJB
-    private CompraFacadeLocal compraEJB;
+    
     @EJB
     private DetallecompraFacadeLocal detallecompraEJB;
     @EJB
@@ -112,18 +109,10 @@ public class AsientosreposicionController implements Serializable {
     private TipopagoFacadeLocal tipopagoEJB;
     @EJB
     private BancoFacadeLocal bancoEJB;
-    @EJB
-    private TiporetencionislrFacadeLocal tiporetencionislrEJB;
-    @EJB
-    private DetalleretencionivaefFacadeLocal detalleretencionivaefEJB;
-    @EJB
-    private DetalleretencionislrefFacadeLocal detalleretencionislrefEJB;
-    @EJB
-    private EmpresaFacadeLocal empresaEJB;
+    
     @EJB
     private MaestromovimientoFacadeLocal maestromovimientoEJB;
-    @EJB
-    private TipoconjuntoFacadeLocal tipoconjuntoEJB;
+
     @EJB
     private MovimientobancarioFacadeLocal movimientoBancarioEJB;
     @EJB
@@ -147,8 +136,8 @@ public class AsientosreposicionController implements Serializable {
     private Cajachica cajachica;
     @Inject
     private Otroingreso otroingreso;
-
     private int idReposicion = 0;
+    
     private List<Movimientobancario> reposicionespecifica;
     private List<Consumocajachica> lstConsumos;
     private List<Detalleconsumocajachica> lstDetallesConsumos;
