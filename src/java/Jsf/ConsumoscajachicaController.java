@@ -80,7 +80,7 @@ public class ConsumoscajachicaController implements Serializable {
     private MaestromovimientoFacadeLocal maestromovimientoEJB;
     @EJB
     private EstatuscontableFacadeLocal estatuscontableEJB;
-    
+
     @Inject
     private Cajachica cajachica;
     @Inject
@@ -119,6 +119,7 @@ public class ConsumoscajachicaController implements Serializable {
     private double totaliva = 0;
     private double totalsubtotal = 0;
     private int id = 0;
+    private int aperturacaja = 0;
 
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     private List<Detalleconsumocajachica> listadetalles = new ArrayList();
@@ -431,7 +432,18 @@ public class ConsumoscajachicaController implements Serializable {
     public List<Consumocajachica> refrescarConsumoscajachica() {
         try {
             lstConsumos = consumocajachicaEJB.consumosxCaja(consumocajachica.getIdcajachica().getIdcajachica());
-            obtenertotaltotales();
+            if (lstConsumos.isEmpty()) {
+                if (consumocajachica.getIdcajachica().getSaldoactual() == 0) {
+                    totalgeneral = consumocajachica.getIdcajachica().getMontoasignado();
+                    totalgeneralform = formatearnumero.format(totalgeneral);
+                    aperturacaja = 1;
+                } else {
+                    totalgeneral = 0;
+                    totalgeneralform = formatearnumero.format(totalgeneral);
+                }
+            } else {
+                obtenertotaltotales();
+            }
         } catch (Exception e) {
 
         }
@@ -461,6 +473,29 @@ public class ConsumoscajachicaController implements Serializable {
 
     public void registrarReposicion() {
         try {
+            if (aperturacaja == 1) {
+                //------Almacenando Consumo por Apertura de Caja----\\
+                consumocajachica.setTotalconsumo(totalgeneral);
+                Usuario us = requerimientosController.getUsa();
+                consumocajachica.setIdusuario(us);
+                Estatusconsumocajachica statusconsumo = null;
+                int tipo = 1;
+                statusconsumo = estatusconsumoEJB.cambiarestatusConsumo(tipo);
+                consumocajachica.setIdestatusconsumocajachica(statusconsumo);
+                consumocajachica.setObservaciones(reposicionCajaChica.getObservaciones());
+                consumocajachica.setSaldocajaactual(totalgeneral);
+                int serial = consumocajachica.getIdcajachica().getIdempresa().getSerialconsumo() + 1;
+                consumocajachica.setSerialconsumo(serial);
+                consumocajachicaEJB.create(consumocajachica);
+                lstConsumos = consumocajachicaEJB.consumosxCaja(consumocajachica.getIdcajachica().getIdcajachica());
+
+                //--------Actualizando el serial consumo de tabla Empresa ------- \\
+                empresa = consumocajachica.getIdcajachica().getIdempresa();
+                empresa.setSerialconsumo(serial);
+                empresaEJB.edit(empresa);
+                aperturacaja = 0;
+            }
+
             Usuario us = requerimientosController.getUsa();
             reposicionCajaChica.setIdrepositor(us);
             reposicionCajaChica.setIdcuentabancaria(pagosControlador.getPagocompra().getIdcuentabancaria());
@@ -481,7 +516,7 @@ public class ConsumoscajachicaController implements Serializable {
             cajachica.setSaldoactual(saldofin);
             cajachicaEJB.edit(cajachica);
 
-            //--------Cambiar Estatus de Consumos repuestos ------- \\
+            //----Cambiar Estatus de Consumos a Repuestos a los Consumos ----- \\
             Estatusconsumocajachica statusconsumo = null;
             int tipo = 2;
             statusconsumo = estatusconsumoEJB.cambiarestatusConsumo(tipo);
@@ -489,6 +524,7 @@ public class ConsumoscajachicaController implements Serializable {
                 consumocajachica = consu;
                 consumocajachica.setIdestatusconsumocajachica(statusconsumo);
                 consumocajachicaEJB.edit(consumocajachica);
+
                 //--------- Almacenar Tabla puente ReposicionConsumos ------\\
                 reposicionConsumos.setIdconsumocajachica(consumocajachica);
                 reposicionConsumos.setIdreposicioncajachica(reposicionCajaChica);
@@ -502,7 +538,7 @@ public class ConsumoscajachicaController implements Serializable {
             saldoactualbanco = (saldoanteriorbanco - reposicionCajaChica.getMontoreposicion());
             cuentabanco.setSaldo(saldoactualbanco);
             cuentabancariaEJB.edit(cuentabanco);
-            
+
             movimientobancario.setFecha(reposicionCajaChica.getFecharesposicion());
             movimientobancario.setIdcuentabancaria(cuentabanco);
             movimientobancario.setSaldoanterior(saldoanteriorbanco);
@@ -520,7 +556,7 @@ public class ConsumoscajachicaController implements Serializable {
             maestromovi.setIdtipoconjunto(tipoconjunto);
             maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
             maestromovimientoEJB.create(maestromovi);
-            
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Fue procesada la Reposicion de Caja Chica con el Nro " + serial, "Aviso "));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al procesar Reposicion de Caja Chica", "Aviso"));

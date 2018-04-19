@@ -30,4 +30,5 @@ public interface CajachicaFacadeLocal {
 
     int count();
     
+    List<Cajachica> cajaschicasAll();
 }

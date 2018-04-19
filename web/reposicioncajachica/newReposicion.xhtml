@@ -23,7 +23,7 @@
 
                     <p:panel header="REPOSICION DE FONDOS DE CAJA CHICA">
                         <p:panelGrid columns="2">
-                            <p:fieldset style="width: 68%"  legend="Datos de Caja Chica" >
+                            <p:fieldset style="width: 100%"  legend="Datos de Caja Chica" >
                                 <p:panelGrid columns="2" styleClass="ui-custompanelgrid1" id="datoscontribuyente">
                                     <p:outputLabel for="usua" value="Usuario" styleClass="text-ouput"/>
                                     <p:outputLabel id="usua" value="#{requerimientosController.usa.nombre}" styleClass=""/>
@@ -87,7 +87,7 @@
                                     <p:outputLabel for="nrodocument" value="Nro. Documento" styleClass="text-ouput"/>
                                     <p:inputText id="nrodocument" label="Nro. Documento " size ="15" value="#{consumoscajachicaController.reposicionCajaChica.numerodocumento}" />
                                     <p:outputLabel for="beneficiario" value="Beneficiario" styleClass="text-ouput"/>
-                                    <p:inputText id="beneficiario" label="Beneficiario" size ="35" value="#{consumoscajachicaController.reposicionCajaChica.beneficiario}" />
+                                    <p:inputText id="beneficiario" label="Beneficiario" size ="35" value="#{consumoscajachicaController.reposicionCajaChica.beneficiario}" required="true"/>
                                     <p:outputLabel for="observa2" value="Observaciones" styleClass="text-ouput"/>
                                     <p:inputTextarea id="observa2"  rows="2" cols="30" label="Observaciones" value="#{consumoscajachicaController.reposicionCajaChica.observaciones}" />
                                 </p:panelGrid>                                

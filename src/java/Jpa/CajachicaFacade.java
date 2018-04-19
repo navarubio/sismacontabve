@@ -6,9 +6,11 @@
 package Jpa;
 
 import Modelo.Cajachica;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,5 +29,20 @@ public class CajachicaFacade extends AbstractFacade<Cajachica> implements Cajach
     public CajachicaFacade() {
         super(Cajachica.class);
     }
+    
+    @Override
+    public List<Cajachica> cajaschicasAll() {
+        String consulta;
+        List<Cajachica> lista = null;
+        try {
+            consulta = "SELECT c FROM Cajachica c order by c.idcajachica";
+            Query query = em.createQuery(consulta);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+    
     
 }

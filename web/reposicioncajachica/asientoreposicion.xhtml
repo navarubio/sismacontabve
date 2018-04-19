@@ -111,7 +111,7 @@
                                     <p:columnGroup type="footer">
                                         <p:row>
                                             <p:column colspan="6" style="text-align:right" footerText="TOTAL REPOSICION" />
-                                            <p:column style="text-align: right"  footerText="$ #{consumoscajachicaController.totalgeneralform}" />
+                                            <p:column style="text-align: right"  footerText="$ #{asientosreposicionController.totalgeneralform}" />
                                         </p:row>
                                     </p:columnGroup>                            
                                 </p:dataTable>
@@ -192,7 +192,7 @@
                                     </p:row>
                                 </p:columnGroup>                            
                             </p:dataTable>
-                            <p:commandButton value="Registrar" actionListener="#{asientosotrosingresosController.registrar()}" action="/maestromovimiento/List?faces-redirect=true" update=":msgs" 
+                            <p:commandButton value="Registrar" actionListener="#{asientosreposicionController.registrar()}" action="/maestromovimiento/List?faces-redirect=true" update=":msgs" 
                                              rendered  ="#{asientosreposicionController.totaldebegeneral==asientosreposicionController.totalhabergeneral ? true:false}"/>
                             <p:commandButton id= "exit" value="Salir" action="/maestromovimiento/List?faces-redirect=true"/>
                         </p:panel>

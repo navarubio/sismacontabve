@@ -34,7 +34,7 @@ public class MaestromovimientoFacade extends AbstractFacade<Maestromovimiento> i
         String consulta;
         List<Maestromovimiento> lista = null;
         try {
-            consulta = "From Maestromovimiento m order by m.fechamovimiento";
+            consulta = "From Maestromovimiento m order by m.fechamovimiento,m.idmaestro";
             Query query = em.createQuery(consulta);
             lista = query.getResultList();
         } catch (Exception e) {

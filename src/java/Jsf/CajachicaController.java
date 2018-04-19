@@ -21,9 +21,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
 
 @Named("cajachicaController")
-@SessionScoped
+@ViewScoped
 public class CajachicaController implements Serializable {
 
     @EJB
@@ -65,7 +66,9 @@ public class CajachicaController implements Serializable {
     public Usuario getUsuario() {
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         usa = us;
+        double monto=0;
         selected.setIdempresa(usa.getIddepartamento().getIdempresa());
+        selected.setSaldoactual(monto);
         return us;
     }
 
@@ -96,7 +99,7 @@ public class CajachicaController implements Serializable {
 
     public List<Cajachica> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().cajaschicasAll();
         }
         return items;
     }
