@@ -77,7 +77,7 @@ public class TipogastocajachicaController implements Serializable  {
 
     public List<Tipogastocajachica> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().tipogastocajachicaAll();
         }
         return items;
     }

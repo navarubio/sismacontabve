@@ -30,4 +30,6 @@ public interface TipogastocajachicaFacadeLocal {
 
     int count();
     
+    List<Tipogastocajachica> tipogastocajachicaAll();
+    
 }

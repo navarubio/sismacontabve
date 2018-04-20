@@ -32,4 +32,6 @@ public interface ConsumocajachicaFacadeLocal {
 
     int count();
     
+    List<Consumocajachica> consumoscajachicaAll();
+    
 }

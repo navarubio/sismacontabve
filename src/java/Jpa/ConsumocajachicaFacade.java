@@ -51,5 +51,19 @@ public class ConsumocajachicaFacade extends AbstractFacade<Consumocajachica> imp
         }
         return lista;
     }
+    
+    @Override
+    public List<Consumocajachica> consumoscajachicaAll() {
+        String consulta;
+        List<Consumocajachica> lista = null;
+        try {
+            consulta = "SELECT c FROM Consumocajachica c order by c.idconsumocajachica";
+            Query query = em.createQuery(consulta);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
 
 }

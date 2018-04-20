@@ -6,9 +6,11 @@
 package Jpa;
 
 import Modelo.Tipogastocajachica;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,6 +28,20 @@ public class TipogastocajachicaFacade extends AbstractFacade<Tipogastocajachica>
 
     public TipogastocajachicaFacade() {
         super(Tipogastocajachica.class);
+    }
+    
+    @Override
+    public List<Tipogastocajachica> tipogastocajachicaAll() {
+        String consulta;
+        List<Tipogastocajachica> lista = null;
+        try {
+            consulta = "SELECT t FROM Tipogastocajachica t order by t.idtipogastocajachica";
+            Query query = em.createQuery(consulta);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
     }
     
 }

@@ -149,7 +149,7 @@
                                         </h:outputText>
                                     </p:column>
                                     <p:column style="width:5%" headerText="Excluir">
-                                        <p:commandLink value="Excluir" actionListener="#{consumoscajachicaController.excluirconsumo(item)}" update=":formulario" 
+                                        <p:commandLink value="Excluir" styleClass="text-ouputfact" actionListener="#{consumoscajachicaController.excluirconsumo(item)}" update=":formulario" 
                                                        rendered="#{consumoscajachicaController.lstConsumos.size()>1? true:false}"/> 
                                     </p:column>
                                     <p:columnGroup type="footer">
@@ -161,6 +161,8 @@
                                 </p:dataTable>
                             </p:fieldset>
                             <p:commandButton value="Registrar" actionListener="#{consumoscajachicaController.registrarReposicion()}"  update=":formulario,:growl" action="/reposicioncajachica/List?faces-redirect=true" />
+                            <p:commandButton value="Cancelar" action="/faces/protegido/menup?faces-redirect=true" immediate="true"/>
+
                             <!--p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value=".{bundle.Imprimir}" actionListener=".{facturasController.verReporte()}" ajax="false" onclick="form.target = '_blank'"/-->                            
                         </p:panel>
                     </p:panel>

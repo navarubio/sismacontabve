@@ -78,7 +78,7 @@ public class ConsumocajachicaController implements Serializable {
 
     public List<Consumocajachica> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().consumoscajachicaAll();
         }
         return items;
     }

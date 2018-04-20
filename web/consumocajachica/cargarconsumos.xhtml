@@ -107,7 +107,7 @@
                             <p:column style="text-align:right" headerText="SUB TOTAL">
                                 <h:outputText value="#{detal.subtotal}"> 
                                     <f:convertNumber type="currency" currencySymbol=" " />
-                                    
+
                                 </h:outputText>
                             </p:column>
                             <p:column style="text-align:right" headerText="IVA">
@@ -126,7 +126,7 @@
                                 </p:commandLink>
                             </p:column>
                             <p:column style="text-align: center"  headerText="Eliminar" >
-                                <p:commandLink value="Eliminar" actionListener="#{consumoscajachicaController.eliminardetalle(detal)}" styleClass="text-ouputfact" update=":formulario:listado,:growl" />
+                                <p:commandLink value="Eliminar" actionListener="#{consumoscajachicaController.eliminardetalle(detal)}" styleClass="text-ouputfact" update=":formulario,listado,:growl" />
                             </p:column>
                             <p:columnGroup type="footer">
                                 <p:row>
@@ -166,7 +166,9 @@
                             <p:outputLabel for="factu" value="Factura" />
                             <p:inputText id="factu" value="#{consumoscajachicaController.detalleamodif.numerofactura}" style="text-align:right" size="5"/>
                             <p:outputLabel for="subt" value="Subtotal" />
-                            <p:inputText id="subt" label="#{consumoscajachicaController.detalleamodif.subtotal}" value="#{consumoscajachicaController.detalleamodif.subtotal}" style="text-align:right"/>
+                            <p:inputText id="subt" label="#{consumoscajachicaController.detalleamodif.subtotal}" value="#{consumoscajachicaController.detalleamodif.subtotal}" size="20" style="text-align:right">
+                                <f:validateLongRange minimum="0" maximum="#{consumoscajachicaController.consumocajachica.idcajachica.montomaximo}"></f:validateLongRange>
+                            </p:inputText>
                             <p:outputLabel for="impuesto"  value="IVA" styleClass="optionalLbl"/>
                             <p:inputText id="impuesto"  label="#{consumoscajachicaController.detalleamodif.iva}"  size="20" value="#{consumoscajachicaController.detalleamodif.iva}" style="text-align:right"/>
                             <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{consumoscajachicaController.modificar()}"  oncomplete="PF('wdialogo').hide();" update="display,:formulario:listado,:growl" />                             

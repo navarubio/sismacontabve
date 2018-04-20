@@ -120,7 +120,7 @@ public class ConsumoscajachicaController implements Serializable {
     private double totalsubtotal = 0;
     private int id = 0;
     private int aperturacaja = 0;
-    private int visualizar=0;
+    private int visualizar = 0;
 
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     private List<Detalleconsumocajachica> listadetalles = new ArrayList();
@@ -291,14 +291,14 @@ public class ConsumoscajachicaController implements Serializable {
     @PostConstruct
     public void init() {
         cajaschicas = cajachicaEJB.findAll();
-        if (cajaschicas.isEmpty()){
+        if (cajaschicas.isEmpty()) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "No existen Cajas Chicas creadas para operar"));
-            visualizar=2;
-        }else{
-        consumocajachica.setFechaloteconsumo(fechaactual);
-        reposicionCajaChica.setFecharesposicion(fechaactual);
-        tiposdegastos = tipogastocajachicaEJB.findAll();
-        visualizar=2;
+            visualizar = 2;
+        } else {
+            consumocajachica.setFechaloteconsumo(fechaactual);
+            reposicionCajaChica.setFecharesposicion(fechaactual);
+            tiposdegastos = tipogastocajachicaEJB.findAll();
+            visualizar = 2;
 //        empresa = consumocajachica.getIdcajachica().getIdempresa();
         }
     }
@@ -320,14 +320,11 @@ public class ConsumoscajachicaController implements Serializable {
     }
 
     public void modificar() {
-//        eliminardetalle(detallin);
-        double montotgeneral = 0;
+        int indc = listadetalles.indexOf(detalleamodif);
         double total = 0;
-        List<Detalleconsumocajachica> detallesactulizados;
         total = detalleamodif.getSubtotal() + detalleamodif.getIva();
         detalleamodif.setToalgeneral(total);
-
-        listadetalles.add(detalleamodif);
+        listadetalles.set(indc, detalleamodif);
         totaltotal();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El Consumo fue Modificado satisfactoriamente"));
     }
@@ -388,10 +385,11 @@ public class ConsumoscajachicaController implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
     }
-    public void verificarSaldoCaja (){
-        if (consumocajachica.getIdcajachica().getSaldoactual()==0){
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "", "Caja chica no Presenta SALDO DISPONIBLE"));
-                visualizar=2;
+
+    public void verificarSaldoCaja() {
+        if (consumocajachica.getIdcajachica().getSaldoactual() == 0) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "", "Caja chica no Presenta SALDO DISPONIBLE"));
+            visualizar = 2;
         }
     }
 
@@ -405,17 +403,18 @@ public class ConsumoscajachicaController implements Serializable {
             detalle.setNumerofactura(detalleconsumocajachica.getNumerofactura());
             detalle.setSubtotal(detalleconsumocajachica.getSubtotal());
             detalle.setIva(detalleconsumocajachica.getIva());
+            detalle.setIddetalleconsumocajachica(id);
             total = detalleconsumocajachica.getSubtotal() + detalleconsumocajachica.getIva();
             detalle.setToalgeneral(total);
             this.listadetalles.add(detalle);
             id++;
             total = 0;
             totaltotal();
-            if (totalgeneral > consumocajachica.getIdcajachica().getMontoasignado()){
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Montos de consumos es mayor al Monto Asignado para "+consumocajachica.getIdcajachica().getDescripcion()));
-                visualizar=2;
-            }else{
-                visualizar=0;
+            if (totalgeneral > consumocajachica.getIdcajachica().getSaldoactual()) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Montos de consumos es mayor al Saldo Actual de la " + consumocajachica.getIdcajachica().getDescripcion()));
+                visualizar = 2;
+            } else {
+                visualizar = 0;
             }
 
         } else {
@@ -443,17 +442,16 @@ public class ConsumoscajachicaController implements Serializable {
     }
 
     public void eliminardetalle(Detalleconsumocajachica detalleaeliminar) {
-        listadetalles.remove(detalleaeliminar.hashCode());
-        int indice = 0;
-        for (Detalleconsumocajachica detalle : listadetalles) {
-            detalle.setIddetalleconsumocajachica(indice);
-            indice++;
-            id = indice;
-        }
-        if (detalleaeliminar.hashCode() == 0) {
-            id = 0;
-        }
+        int indc = listadetalles.indexOf(detalleaeliminar);
+        listadetalles.remove(indc);
         totaltotal();
+        if (totalgeneral > consumocajachica.getIdcajachica().getSaldoactual()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Montos de consumos es mayor al Saldo Actual de la " + consumocajachica.getIdcajachica().getDescripcion()));
+            visualizar = 2;
+        } else {
+            visualizar = 0;
+        }
+
     }
 
     public List<Consumocajachica> refrescarConsumoscajachica() {
