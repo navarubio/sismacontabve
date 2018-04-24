@@ -19,7 +19,7 @@
                         <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_fechaloteconsumo}" for="fechaloteconsumo" />
                         <p:calendar id="fechaloteconsumo" pattern="MM/dd/yyyy" value="#{consumocajachicaController.selected.fechaloteconsumo}" title="#{bundlecajachica.EditConsumocajachicaTitle_fechaloteconsumo}"  showOn="button"/>
                         <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_observaciones}" for="observaciones" />
-                        <p:inputText id="observaciones" value="#{consumocajachicaController.selected.observaciones}" title="#{bundlecajachica.EditConsumocajachicaTitle_observaciones}" />
+                        <p:inputTextarea id="observaciones" rows="2" cols="50" value="#{consumocajachicaController.selected.observaciones}" title="#{bundlecajachica.EditConsumocajachicaTitle_observaciones}" />
                         <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_subtotalconsumo}" for="subtotalconsumo" />
                         <p:inputText id="subtotalconsumo" value="#{consumocajachicaController.selected.subtotalconsumo}" title="#{bundlecajachica.EditConsumocajachicaTitle_subtotalconsumo}" />
                         <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_ivaconsumo}" for="ivaconsumo" />
@@ -33,14 +33,14 @@
                             <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
                             <f:selectItems value="#{cajachicaController.itemsAvailableSelectOne}"
                                            var="idcajachicaItem"
-                                           itemValue="#{idcajachicaItem}"/>
+                                           itemValue="#{idcajachicaItem}" itemLabel="#{idcajachicaItem.descripcion}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_idestatusconsumocajachica}" for="idestatusconsumocajachica" />
                         <p:selectOneMenu id="idestatusconsumocajachica" value="#{consumocajachicaController.selected.idestatusconsumocajachica}" >
                             <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
                             <f:selectItems value="#{estatusconsumocajachicaController.itemsAvailableSelectOne}"
                                            var="idestatusconsumocajachicaItem"
-                                           itemValue="#{idestatusconsumocajachicaItem}"/>
+                                           itemValue="#{idestatusconsumocajachicaItem}" itemLabel="#{idestatusconsumocajachicaItem.estatusconsumocajachica}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundlecajachica.EditConsumocajachicaLabel_idusuario}" for="idusuario" />
                         <p:selectOneMenu id="idusuario" value="#{consumocajachicaController.selected.idusuario}" >

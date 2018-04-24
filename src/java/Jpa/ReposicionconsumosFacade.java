@@ -91,5 +91,30 @@ public class ReposicionconsumosFacade extends AbstractFacade<Reposicionconsumos>
         }
         return listaconsumos;
     }
+    
+    @Override
+    public Reposicioncajachica devolverReposicionxConsumo (Consumocajachica consumo) {
+        Reposicioncajachica repo = null;
+        Reposicionconsumos repoconsu=null;
+        String consulta;
+        try {
+            consulta  = "From Reposicionconsumos r where r.idconsumocajachica.idconsumocajachica = ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, consumo.getIdconsumocajachica());
+
+            List<Reposicionconsumos> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                repoconsu = lista.get(0);
+            }else{
+                repoconsu=null;
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        if (repoconsu!=null){
+            repo = repoconsu.getIdreposicioncajachica();
+        }
+        return repo;
+    }
 
 }

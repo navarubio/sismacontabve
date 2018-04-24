@@ -5,12 +5,19 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.ConsumocajachicaFacade;
 import Jpa.ConsumocajachicaFacadeLocal;
+import Jpa.DetalleconsumocajachicaFacadeLocal;
+import Jpa.ReposicioncajachicaFacadeLocal;
+import Jpa.ReposicionconsumosFacadeLocal;
+import Modelo.Detalleconsumocajachica;
+import Modelo.Reposicioncajachica;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
@@ -20,6 +27,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named("consumocajachicaController")
 @ViewScoped
@@ -27,8 +35,25 @@ public class ConsumocajachicaController implements Serializable {
 
     @EJB
     private Jpa.ConsumocajachicaFacadeLocal ejbFacade;
+    @EJB
+    private DetalleconsumocajachicaFacadeLocal detalleconsumoEJB;
+    @EJB
+    private ReposicionconsumosFacadeLocal reposicionEJB;
+    
     private List<Consumocajachica> items = null;
+    private List<Detalleconsumocajachica> detalles = null;
     private Consumocajachica selected;
+    private String totalgeneralform;
+    private String totalivaform;
+    private String totalsubtotalform;
+    private Consumocajachica consumoseleccionado;
+    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
+    @Inject
+    private ConsumoscajachicaController consumosCotroler;
+    @Inject
+    private Consumocajachica consumoefectuado;
+    @Inject
+    private Reposicioncajachica reposicionefectuada;    
 
     public ConsumocajachicaController() {
     }
@@ -39,6 +64,23 @@ public class ConsumocajachicaController implements Serializable {
 
     public void setSelected(Consumocajachica selected) {
         this.selected = selected;
+        this.consumoefectuado = selected;
+        if (selected != null) {
+            asignar();
+        }
+    }
+
+    public Consumocajachica getConsumoseleccionado() {
+        return consumoseleccionado;
+    }
+
+    public void setConsumoseleccionado(Consumocajachica consumoseleccionado) {
+        if (consumoseleccionado != null) {
+            this.consumoseleccionado = consumoseleccionado;
+            this.selected = consumoseleccionado;
+            asignar();
+        }
+
     }
 
     protected void setEmbeddableKeys() {
@@ -49,6 +91,84 @@ public class ConsumocajachicaController implements Serializable {
 
     private ConsumocajachicaFacadeLocal getFacade() {
         return ejbFacade;
+    }
+
+    public ConsumoscajachicaController getConsumosCotroler() {
+        return consumosCotroler;
+    }
+
+    public void setConsumosCotroler(ConsumoscajachicaController consumosCotroler) {
+        this.consumosCotroler = consumosCotroler;
+    }
+
+    public List<Detalleconsumocajachica> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(List<Detalleconsumocajachica> detalles) {
+        this.detalles = detalles;
+    }
+
+    public String getTotalgeneralform() {
+        return totalgeneralform;
+    }
+
+    public void setTotalgeneralform(String totalgeneralform) {
+        this.totalgeneralform = totalgeneralform;
+    }
+
+    public String getTotalivaform() {
+        return totalivaform;
+    }
+
+    public void setTotalivaform(String totalivaform) {
+        this.totalivaform = totalivaform;
+    }
+
+    public String getTotalsubtotalform() {
+        return totalsubtotalform;
+    }
+
+    public void setTotalsubtotalform(String totalsubtotalform) {
+        this.totalsubtotalform = totalsubtotalform;
+    }
+
+    public Consumocajachica getConsumoefectuado() {
+        return consumoefectuado;
+    }
+
+    public void setConsumoefectuado(Consumocajachica consumoefectuado) {
+        this.consumoefectuado = consumoefectuado;
+    }
+
+    public Reposicioncajachica getReposicionefectuada() {
+        return reposicionefectuada;
+    }
+
+    public void setReposicionefectuada(Reposicioncajachica reposicionefectuada) {
+        this.reposicionefectuada = reposicionefectuada;
+    }
+    
+    
+
+    public void asignar() {
+
+        detalles = detalleconsumoEJB.detallesxConsumo(consumoseleccionado.getIdconsumocajachica());
+        reposicionefectuada=reposicionEJB.devolverReposicionxConsumo(consumoseleccionado);
+        if (detalles.isEmpty()){
+            double montosencero=0;
+            double montox=consumoseleccionado.getIdcajachica().getMontoasignado();
+            consumosCotroler.setTotalgeneral(montox);
+            totalgeneralform = formatearnumero.format(montox);
+            totalivaform=formatearnumero.format(montosencero);
+            totalsubtotalform=formatearnumero.format(montosencero);
+        }else{
+            consumosCotroler.setListadetalles(detalles);
+            consumosCotroler.totaltotal();
+            this.totalgeneralform = consumosCotroler.getTotalgeneralform();
+            this.totalivaform = consumosCotroler.getTotalivaform();
+            this.totalsubtotalform = consumosCotroler.getTotalsubtotalform();
+        }
     }
 
     public Consumocajachica prepareCreate() {

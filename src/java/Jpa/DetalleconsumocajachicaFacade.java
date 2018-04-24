@@ -21,7 +21,8 @@ import javax.persistence.Query;
  * @author sofimar
  */
 @Stateless
-public class DetalleconsumocajachicaFacade extends AbstractFacade<Detalleconsumocajachica> implements  DetalleconsumocajachicaFacadeLocal{
+public class DetalleconsumocajachicaFacade extends AbstractFacade<Detalleconsumocajachica> implements DetalleconsumocajachicaFacadeLocal {
+
     @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
@@ -33,15 +34,15 @@ public class DetalleconsumocajachicaFacade extends AbstractFacade<Detalleconsumo
     public DetalleconsumocajachicaFacade() {
         super(Detalleconsumocajachica.class);
     }
-    
+
     @Override
-    public List <Detalleconsumocajachica> listadetalleconsumosxListaConsumos (List<Consumocajachica> listaconsumos) {
+    public List<Detalleconsumocajachica> listadetalleconsumosxListaConsumos(List<Consumocajachica> listaconsumos) {
         String consulta;
         List<Detalleconsumocajachica> listadetalles = new ArrayList<>();
         List<Detalleconsumocajachica> listadetallescompletos = new ArrayList<>();
 //        List<Consumocajachica> listaconsumos=null;
         try {
-            for (Consumocajachica consumos: listaconsumos){
+            for (Consumocajachica consumos : listaconsumos) {
                 consulta = "From Detalleconsumocajachica d where d.idconsumocajachica.idconsumocajachica= ?1 order by d.idconsumocajachica.idconsumocajachica";
                 Query query = em.createQuery(consulta);
                 query.setParameter(1, consumos.getIdconsumocajachica());
@@ -55,6 +56,21 @@ public class DetalleconsumocajachicaFacade extends AbstractFacade<Detalleconsumo
         }
         return listadetallescompletos;
     }
-    
-    
+
+    @Override
+    public List<Detalleconsumocajachica> detallesxConsumo(int idconsumocajachica) {
+        String consulta;
+        List<Detalleconsumocajachica> lista = null;
+
+        try {
+            consulta = "From Detalleconsumocajachica d where d.idconsumocajachica.idconsumocajachica= ?1 order by d.iddetalleconsumocajachica";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, idconsumocajachica);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+
 }

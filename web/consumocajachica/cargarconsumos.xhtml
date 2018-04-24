@@ -35,7 +35,7 @@
                                     <p:outputLabel id="depto" value="#{requerimientosController.usa.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="cajachica" value="Caja Chica" styleClass="text-ouput"/>
                                     <p:selectOneMenu id="cajachica" value="#{consumoscajachicaController.consumocajachica.idcajachica}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
-                                        <p:ajax event="change" update="saldo, montomaximo, formulario" listener="#{consumoscajachicaController.verificarSaldoCaja()}"/>                              
+                                        <p:ajax event="change" update="saldo, montomaximo, formulario" listener="#{consumoscajachicaController.verificarSaldoCaja()}" rendered="#{consumoscajachicaController.bloquearcaja==1}"/>                              
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
                                         <f:selectItems value="#{consumoscajachicaController.listarcajaschicas()}" 
                                                        var="idcajachicaItem"

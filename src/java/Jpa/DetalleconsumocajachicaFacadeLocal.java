@@ -33,4 +33,5 @@ public interface DetalleconsumocajachicaFacadeLocal {
     
     List <Detalleconsumocajachica> listadetalleconsumosxListaConsumos (List<Consumocajachica> listaconsumos);
     
+    List<Detalleconsumocajachica> detallesxConsumo(int idconsumocajachica);
 }

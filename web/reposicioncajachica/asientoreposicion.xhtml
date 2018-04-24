@@ -64,7 +64,7 @@
                                         </f:facet>
                                         <h:outputText value="#{item.serialconsumo}"/> 
                                     </p:column>
-                                    <p:column width="150" style="text-align: center" sortBy="#{item.fechaloteconsumo}">
+                                    <p:column width="100" style="text-align: center" sortBy="#{item.fechaloteconsumo}">
                                         <f:facet name="header">
                                             <h:outputText value="#{bundlecajachica.ListDetalleconsumocajachicaTitle_fechaconsumo}"/>
                                         </f:facet>
@@ -72,7 +72,7 @@
                                             <f:convertDateTime pattern="dd/MM/yyyy" />
                                         </h:outputText> 
                                     </p:column>
-                                    <p:column style="text-align: center">
+                                    <p:column style="text-align: center" width="200">
                                         <f:facet name="header">
                                             <h:outputText value="#{bundlecajachica.ListConsumocajachicaTitle_idcajachica}"/>
                                         </f:facet>
@@ -108,6 +108,12 @@
                                             <f:convertNumber type="currency" currencySymbol=" "   />
                                         </h:outputText>
                                     </p:column>
+                                    <p:column style="text-align: center" headerText="Consultar">                                
+                                        <p:commandLink actionListener="#{asientosotrosingresosController.asignarDetallelibrodiario(req1)}" update=":dialogo1" oncomplete="PF('wdialogo1').show();" >
+                                            <h:graphicImage library="images" name="build.png" width="30" height="30" alt="Detalles"/> 
+                                        </p:commandLink>
+                                    </p:column>
+
                                     <p:columnGroup type="footer">
                                         <p:row>
                                             <p:column colspan="6" style="text-align:right" footerText="TOTAL REPOSICION" />
@@ -222,6 +228,50 @@
                     </h:form>
                     <h:outputScript library="js" name="spanishLocale.js"/> 
                 </p:dialog>
+                <p:dialog id="dialogo1" widgetVar="wdialogo1" header="Detalles del Consumo" modal="true" closeOnEscape="true" 
+                          resizable="false" showEffect="explode" appendTo="@(body)"  >
+                    <h:form>
+                        <h:panelGrid  id="display" columns="6">
+                            <p:panelGrid columns="1"> 
+                                <p:fieldset legend="Detalles de Consumos Cargados" >
+
+                                    <p:dataTable id="listado" value="#{asientosreposicionController.lstDetallesConsumos}" style="width: 1200px"
+                                                 var="detal" emptyMessage="CONSUMO CORRESPONDE A CARGA INCIAL DE CAJA CHICA" >
+                                        <p:column style="text-align: center"  headerText="Consumo" width="60" >
+                                            <h:outputText value="#{detal.idconsumocajachica.idconsumocajachica}" />
+                                        </p:column>
+                                        <p:column style="width:15%"  headerText="Proveedor">
+                                            <h:outputText value="#{detal.rifproveedor.razonsocial}"/>  
+                                        </p:column>
+                                        <p:column style="text-align:center" headerText="Tipo Gasto" width="250">                                
+                                            <h:outputText style="width:10px"  value="#{detal.idtipogastocajachica.tipogastocajachica}"/>
+                                        </p:column >
+                                        <p:column style="text-align:left" headerText="Cuenta Contable" width="500">                                
+                                            <h:outputText style="width:10px"  value="#{detal.idtipogastocajachica.idplandecuenta} #{detal.idtipogastocajachica.idplandecuenta.descripcioncuenta}"/>
+                                        </p:column >
+                                        <p:column style="text-align:right" headerText="TOTAL">
+                                            <h:outputText value="#{detal.toalgeneral}"> 
+                                                <f:convertNumber type="currency" currencySymbol=" " />
+                                            </h:outputText>
+                                        </p:column>
+                                        <p:columnGroup type="footer">
+                                            <p:row>
+                                                <p:column colspan="4" style="text-align:right" footerText="TOTAL" />
+                                                <p:column style="text-align: right"  footerText="$ #{asientosreposicionController.totalgeneralform}" />                                        
+                                            </p:row>
+                                        </p:columnGroup>       
+
+                                    </p:dataTable> 
+                                    <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo1').hide();" /> 
+
+                                </p:fieldset>
+                            </p:panelGrid>
+
+                        </h:panelGrid>
+                    </h:form>
+                    <h:outputScript library="js" name="spanishLocale.js"/> 
+                </p:dialog>
+
             </ui:define>
         </ui:composition>
     </body>

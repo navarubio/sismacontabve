@@ -11,36 +11,123 @@
         <p:dialog id="ConsumocajachicaViewDlg" widgetVar="ConsumocajachicaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecajachica.ViewConsumocajachicaTitle}">
             <h:form id="ConsumocajachicaViewForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{consumocajachicaController.selected != null}">
-                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_idconsumocajachica}"/>
-                        <h:outputText value="#{consumocajachicaController.selected.idconsumocajachica}" title="#{bundlecajachica.ViewConsumocajachicaTitle_idconsumocajachica}"/>
-                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_serialconsumo}"/>
-                        <h:outputText value="#{consumocajachicaController.selected.serialconsumo}" title="#{bundlecajachica.ViewConsumocajachicaTitle_serialconsumo}"/>
-                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_fechaloteconsumo}"/>
-                        <h:outputText value="#{consumocajachicaController.selected.fechaloteconsumo}" title="#{bundlecajachica.ViewConsumocajachicaTitle_fechaloteconsumo}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
-                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_observaciones}"/>
-                        <h:outputText value="#{consumocajachicaController.selected.observaciones}" title="#{bundlecajachica.ViewConsumocajachicaTitle_observaciones}"/>
-                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_subtotalconsumo}"/>
-                        <h:outputText value="#{consumocajachicaController.selected.subtotalconsumo}" title="#{bundlecajachica.ViewConsumocajachicaTitle_subtotalconsumo}"/>
-                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_ivaconsumo}"/>
-                        <h:outputText value="#{consumocajachicaController.selected.ivaconsumo}" title="#{bundlecajachica.ViewConsumocajachicaTitle_ivaconsumo}"/>
-                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_totalconsumo}"/>
-                        <h:outputText value="#{consumocajachicaController.selected.totalconsumo}" title="#{bundlecajachica.ViewConsumocajachicaTitle_totalconsumo}"/>
-                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_saldocajaactual}"/>
-                        <h:outputText value="#{consumocajachicaController.selected.saldocajaactual}" title="#{bundlecajachica.ViewConsumocajachicaTitle_saldocajaactual}"/>
-                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_idcajachica}"/>
-                        <h:outputText value="#{consumocajachicaController.selected.idcajachica}" title="#{bundlecajachica.ViewConsumocajachicaTitle_idcajachica}"/>
-                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_idestatusconsumocajachica}"/>
-                        <h:outputText value="#{consumocajachicaController.selected.idestatusconsumocajachica}" title="#{bundlecajachica.ViewConsumocajachicaTitle_idestatusconsumocajachica}"/>
-                        <h:outputText value="#{bundlecajachica.ViewConsumocajachicaLabel_idusuario}"/>
-                        <h:outputText value="#{consumocajachicaController.selected.idusuario}" title="#{bundlecajachica.ViewConsumocajachicaTitle_idusuario}"/>
+                    <p:panelGrid columns="2" rendered="#{consumocajachicaController.selected != null}" style= "width: 1200px">
+                        <p:fieldset   legend="Datos Generales " style="width: 100%" >
+                            <p:panelGrid columns="4" styleClass="ui-custompanelgrid">
+                                <p:outputLabel for="usua" value="Usuario " styleClass="text-ouput"/>
+                                <p:outputLabel id="usua" value="#{consumocajachicaController.selected.idusuario.nombre}" title="#{bundlecajachica.ViewConsumocajachicaTitle_idusuario}" styleClass="optionalLbl"/>
+                                <p:outputLabel for="serial" value="#{bundlecajachica.ViewConsumocajachicaLabel_serialconsumo}" styleClass="text-ouput"/>
+                                <p:outputLabel id="serial" value="#{consumocajachicaController.selected.serialconsumo}" title="#{bundlecajachica.ViewConsumocajachicaTitle_serialconsumo}"/>
+                                <p:outputLabel for="fecha" value="#{bundlecajachica.ViewConsumocajachicaLabel_fechaloteconsumo}" styleClass="text-ouput"/>
+                                <p:outputLabel id="fecha" value="#{consumocajachicaController.selected.fechaloteconsumo}" title="#{bundlecajachica.ViewConsumocajachicaTitle_fechaloteconsumo}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:outputLabel>
+                                <p:outputLabel for="idcaja" value="#{bundlecajachica.ViewConsumocajachicaLabel_idcajachica}" styleClass="text-ouput"/>
+                                <p:outputLabel id="idcaja" value="#{consumocajachicaController.selected.idcajachica.descripcion}" title="#{bundlecajachica.ViewConsumocajachicaTitle_idcajachica}"/>
+                                <p:outputLabel for="saldo"  value="#{bundlecajachica.ViewConsumocajachicaLabel_saldocajaactual}" styleClass="text-ouput"/>
+                                <p:outputLabel id="saldo" value="#{consumocajachicaController.selected.saldocajaactual}" title="#{bundlecajachica.ViewConsumocajachicaTitle_saldocajaactual}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </p:outputLabel>
+                                <p:outputLabel for="subt" value="#{bundlecajachica.ViewConsumocajachicaLabel_subtotalconsumo}" styleClass="text-ouput" style="text-align: right"/>
+                                <p:outputLabel id="subt" value="#{consumocajachicaController.selected.subtotalconsumo}" title="#{bundlecajachica.ViewConsumocajachicaTitle_subtotalconsumo}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </p:outputLabel>
+                                <p:outputLabel/>
+                                <p:outputLabel/>
+                                <p:outputLabel for="iva" value="#{bundlecajachica.ViewConsumocajachicaLabel_ivaconsumo}" styleClass="text-ouput" style="text-align: right"/>
+                                <p:outputLabel id="iva" value="#{consumocajachicaController.selected.ivaconsumo}" title="#{bundlecajachica.ViewConsumocajachicaTitle_ivaconsumo}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </p:outputLabel>
+                                <p:outputLabel/>
+                                <p:outputLabel/>
+                                <p:outputLabel for="total" value="#{bundlecajachica.ViewConsumocajachicaLabel_totalconsumo}" styleClass="text-ouput" style="text-align: right"/>
+                                <p:outputLabel id="total" value="#{consumocajachicaController.selected.totalconsumo}" title="#{bundlecajachica.ViewConsumocajachicaTitle_totalconsumo}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </p:outputLabel>
+                                <p:outputLabel for="observa" value="#{bundlecajachica.ViewConsumocajachicaLabel_observaciones}" styleClass="text-ouput"/>
+                                <p:outputLabel id="observa" value="#{consumocajachicaController.selected.observaciones}" title="#{bundlecajachica.ViewConsumocajachicaTitle_observaciones}"/>
+                            </p:panelGrid>
+                        </p:fieldset>
+                        <p:fieldset  legend="Datos del Pago" style="width: 100%">
+                            <p:panelGrid styleClass="ui-custompanelgrid2" columns="4">
+                                <p:outputLabel for="montof" value="MONTO DE REPOSICION" styleClass="text-ouput"/>
+                                <p:outputLabel id="montof" value="#{consumocajachicaController.reposicionefectuada.montoreposicion}" styleClass="text-ouputfactura">
+                                    <f:convertNumber type="currency" currencySymbol="$ "/>
+                                </p:outputLabel>
+                                <p:outputLabel for="tipopag"  value="Forma de Pago" styleClass="text-ouput"/>
+                                <p:outputLabel id="tipopag" value="#{consumocajachicaController.reposicionefectuada.idtipopago.tipopago}" /> 
+                                <p:outputLabel for="banco" value="Banco" styleClass="text-ouput"/>
+                                <p:outputLabel id="banco" value="#{consumocajachicaController.reposicionefectuada.idcuentabancaria.idbanco.nombrebanco}" /> 
+                                <p:outputLabel for="cuentabanco" value="Cuenta Bancaria" styleClass="text-ouput"/>
+                                <p:outputLabel id="cuentabanco" value="#{consumocajachicaController.reposicionefectuada.idcuentabancaria.numerocuenta}" />
+                                <p:outputLabel for="nrodocument" value="Nro. Documento" styleClass="text-ouput"/>
+                                <p:outputLabel id="nrodocument" value ="#{consumocajachicaController.reposicionefectuada.numerodocumento}" />
+                                <p:outputLabel for="beneficiario" value="Beneficiario" styleClass="text-ouput"/>
+                                <p:outputLabel id="beneficiario" value="#{consumocajachicaController.reposicionefectuada.beneficiario}"/>
+                                <p:outputLabel for="observa2" value="Observaciones" styleClass="text-ouput"/>
+                                <p:outputLabel id="observa2"  value="#{consumocajachicaController.reposicionefectuada.observaciones}"/>
+                            </p:panelGrid>                                
+                        </p:fieldset>
                     </p:panelGrid>
-                    <p:commandButton value="#{bundlecajachica.Close}" onclick="ConsumocajachicaViewDialog.hide()"/>
+                    <h1>Estatus : #{consumocajachicaController.consumoseleccionado.idestatusconsumocajachica.estatusconsumocajachica} </h1>
+                   
+                    <p:panelGrid columns="1"> 
+                        <p:fieldset legend="Detalles de Consumos Cargados" >
+                           
+                            <p:dataTable id="listado" value="#{consumocajachicaController.detalles}" style="width: 1200px"
+                                         var="detal" emptyMessage="CONSUMO CORRESPONDE A CARGA INCIAL DE CAJA CHICA" >
+                                <p:column style="text-align: center"  headerText="Fecha" width="100" >
+                                    <h:outputText value="#{detal.fechaconsumo}" >
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="width:25%"  headerText="Proveedor">
+                                    <h:outputText value="#{detal.rifproveedor.razonsocial}"/>  
+                                </p:column>
+                                <p:column style="text-align:center" headerText="Tipo Gasto" width="250">                                
+                                    <h:outputText style="width:10px"  value="#{detal.idtipogastocajachica.tipogastocajachica}"/>
+                                </p:column >
+                                <p:column style="text-align:right" headerText="Factura">
+                                    <h:outputText style="width:10px"  value="#{detal.numerofactura}"/>
+                                </p:column>
+                                <p:column style="text-align:right" headerText="SUB TOTAL">
+                                    <h:outputText value="#{detal.subtotal}"> 
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align:right" headerText="IVA">
+                                    <h:outputText value="#{detal.iva}"> 
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align:right" headerText="TOTAL">
+                                    <h:outputText value="#{detal.toalgeneral}"> 
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </h:outputText>
+                                </p:column>
+                                <!--p:column style="text-align: center" headerText="Editar">                                
+                                    <p:commandLink actionListener=".{consumoscajachicaController.asignarDetalle(detal)}" value="Editar" styleClass="text-ouputsaldo" >
+                                        <h:graphicImage library="images" name="desktop.png" width="30" height="30" alt="Editar Articulo"/> 
+                                    </p:commandLink>
+                                </p:column>
+                                <p:column style="text-align: center"  headerText="Eliminar" >
+                                    <p:commandLink value="Eliminar" actionListener=".{consumoscajachicaController.eliminardetalle(detal)}" styleClass="text-ouputfact" />
+                                </p:column-->
+                                <p:columnGroup type="footer">
+                                    <p:row>
+                                        <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
+                                        <p:column style="text-align: right"  footerText="$ #{consumocajachicaController.totalsubtotalform}" /> 
+                                        <p:column style="text-align: right"  footerText="$ #{consumocajachicaController.totalivaform}" />
+                                        <p:column style="text-align: right"  footerText="$ #{consumocajachicaController.totalgeneralform}" />                                        
+                                    </p:row>
+                                </p:columnGroup>       
+                            </p:dataTable> 
+                        </p:fieldset>
+                        <p:commandButton value="#{bundlecajachica.Close}" onclick="ConsumocajachicaViewDialog.hide()"/>
+                    </p:panelGrid>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
-
     </ui:composition>
 </html>

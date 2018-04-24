@@ -27,11 +27,11 @@
 
                 <p:panel header="#{bundlecajachica.ListConsumocajachicaTitle}">
                     <p:dataTable id="datalist" value="#{consumocajachicaController.items}" var="item"
-                                 selectionMode="single" selection="#{consumocajachicaController.selected}"
+                                 selectionMode="single" selection="#{consumocajachicaController.consumoseleccionado}"
                                  paginator="true"
                                  rowKey="#{item.idconsumocajachica}"
                                  rows="20"
-                                 rowStyleClass="#{item.idestatusconsumocajachica.idestatusconsumocajachica== 1 ? 'facturaabonada' : null} #{item.idestatusconsumocajachica.idestatusconsumocajachica== 2 ? 'facturacobrada' : null} "> 
+                                 rowStyleClass="#{item.idestatusconsumocajachica.idestatusconsumocajachica== 1 ? 'facturaabonada' : null} #{item.idestatusconsumocajachica.idestatusconsumocajachica== 2 ? 'facturacobrada' : null} "
                                  rowsPerPageTemplate="20,30,40,50"
                                  >
 

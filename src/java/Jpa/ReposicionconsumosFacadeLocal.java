@@ -39,4 +39,5 @@ public interface ReposicionconsumosFacadeLocal {
     
     List <Consumocajachica> listaconsumosxReposicion (Reposicioncajachica reposicion);
     
+    Reposicioncajachica devolverReposicionxConsumo (Consumocajachica consumo);
 }

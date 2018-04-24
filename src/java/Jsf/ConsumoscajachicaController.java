@@ -121,6 +121,7 @@ public class ConsumoscajachicaController implements Serializable {
     private int id = 0;
     private int aperturacaja = 0;
     private int visualizar = 0;
+    int bloquearcaja=0;
 
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     private List<Detalleconsumocajachica> listadetalles = new ArrayList();
@@ -288,6 +289,14 @@ public class ConsumoscajachicaController implements Serializable {
         this.visualizar = visualizar;
     }
 
+    public int getBloquearcaja() {
+        return bloquearcaja;
+    }
+
+    public void setBloquearcaja(int bloquearcaja) {
+        this.bloquearcaja = bloquearcaja;
+    }
+
     @PostConstruct
     public void init() {
         cajaschicas = cajachicaEJB.findAll();
@@ -395,28 +404,34 @@ public class ConsumoscajachicaController implements Serializable {
 
     public void anexar() {
         if (detalleconsumocajachica.getSubtotal() != 0) {
-            double total = 0;
-            Detalleconsumocajachica detalle = new Detalleconsumocajachica();
-            detalle.setFechaconsumo(detalleconsumocajachica.getFechaconsumo());
-            detalle.setRifproveedor(detalleconsumocajachica.getRifproveedor());
-            detalle.setIdtipogastocajachica(detalleconsumocajachica.getIdtipogastocajachica());
-            detalle.setNumerofactura(detalleconsumocajachica.getNumerofactura());
-            detalle.setSubtotal(detalleconsumocajachica.getSubtotal());
-            detalle.setIva(detalleconsumocajachica.getIva());
-            detalle.setIddetalleconsumocajachica(id);
-            total = detalleconsumocajachica.getSubtotal() + detalleconsumocajachica.getIva();
-            detalle.setToalgeneral(total);
-            this.listadetalles.add(detalle);
-            id++;
-            total = 0;
-            totaltotal();
-            if (totalgeneral > consumocajachica.getIdcajachica().getSaldoactual()) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Montos de consumos es mayor al Saldo Actual de la " + consumocajachica.getIdcajachica().getDescripcion()));
-                visualizar = 2;
+            double totalg = detalleconsumocajachica.getSubtotal() + detalleconsumocajachica.getIva();
+            double montomax=consumocajachica.getIdcajachica().getMontomaximo();
+            if (totalg <= montomax) {
+                double total = 0;
+                Detalleconsumocajachica detalle = new Detalleconsumocajachica();
+                detalle.setFechaconsumo(detalleconsumocajachica.getFechaconsumo());
+                detalle.setRifproveedor(detalleconsumocajachica.getRifproveedor());
+                detalle.setIdtipogastocajachica(detalleconsumocajachica.getIdtipogastocajachica());
+                detalle.setNumerofactura(detalleconsumocajachica.getNumerofactura());
+                detalle.setSubtotal(detalleconsumocajachica.getSubtotal());
+                detalle.setIva(detalleconsumocajachica.getIva());
+                detalle.setIddetalleconsumocajachica(id);
+                total = detalleconsumocajachica.getSubtotal() + detalleconsumocajachica.getIva();
+                detalle.setToalgeneral(total);
+                this.listadetalles.add(detalle);
+                id++;
+                total = 0;
+                bloquearcaja=1;
+                totaltotal();
+                if (totalgeneral > consumocajachica.getIdcajachica().getSaldoactual()) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Montos de consumos es mayor al Saldo Actual de la " + consumocajachica.getIdcajachica().getDescripcion()));
+                    visualizar = 2;
+                } else {
+                    visualizar = 0;
+                }
             } else {
-                visualizar = 0;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Monto del consumo supera el monto maximo permitido por caja"));
             }
-
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Subtotal en 0.0"));
         }
@@ -432,6 +447,9 @@ public class ConsumoscajachicaController implements Serializable {
             montotiva += detalles.getIva();
             montotsubtotal += detalles.getSubtotal();
         }
+        if (listadetalles.isEmpty()){
+            montotgeneral=consumocajachica.getIdcajachica().getMontoasignado();
+        }
         totalgeneral = montotgeneral;
         totaliva = montotiva;
         totalsubtotal = montotsubtotal;
@@ -439,6 +457,19 @@ public class ConsumoscajachicaController implements Serializable {
         totalivaform = formatearnumero.format(totaliva);
         totalsubtotalform = formatearnumero.format(totalsubtotal);
 
+    }
+    
+    public void totalesInicial(double montoini){
+        double montotgeneral = montoini;
+        double montotiva=0;
+        double montotsubtotal=0;
+        totalgeneral = montotgeneral;
+        totaliva = montotiva;
+        totalsubtotal = montotsubtotal;
+        totalgeneralform = formatearnumero.format(totalgeneral);
+        totalivaform = formatearnumero.format(totaliva);
+        totalsubtotalform = formatearnumero.format(totalsubtotal);
+        
     }
 
     public void eliminardetalle(Detalleconsumocajachica detalleaeliminar) {
@@ -461,13 +492,15 @@ public class ConsumoscajachicaController implements Serializable {
                 if (consumocajachica.getIdcajachica().getSaldoactual() == 0) {
                     totalgeneral = consumocajachica.getIdcajachica().getMontoasignado();
                     totalgeneralform = formatearnumero.format(totalgeneral);
-                    aperturacaja = 1;
+                    visualizar = 0;
                 } else {
                     totalgeneral = 0;
                     totalgeneralform = formatearnumero.format(totalgeneral);
+                    visualizar = 2;
                 }
             } else {
                 obtenertotaltotales();
+                visualizar = 0;
             }
         } catch (Exception e) {
 

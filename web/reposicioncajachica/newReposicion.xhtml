@@ -33,7 +33,7 @@
                                     <p:calendar id="fechacarga" locale="es" pattern="dd/MM/yyyy" value="#{consumoscajachicaController.reposicionCajaChica.fecharesposicion}" showOn="button" navigator="true" required="true" />
                                     <p:outputLabel for="cajachica" value="Caja Chica" styleClass="text-ouput"/>
                                     <p:selectOneMenu id="cajachica" value="#{consumoscajachicaController.consumocajachica.idcajachica}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
-                                        <p:ajax event="change" listener="#{consumoscajachicaController.refrescarConsumoscajachica()}" update="saldo,montoasignado,montof, listado"/>                              
+                                        <p:ajax event="change" listener="#{consumoscajachicaController.refrescarConsumoscajachica()}" update="saldo,montoasignado,montof, listado,formulario"/>                              
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
                                         <f:selectItems value="#{consumoscajachicaController.cajaschicas}" 
                                                        var="idcajachicaItem"
@@ -47,7 +47,7 @@
                                     <p:outputLabel id="saldo" value="#{consumoscajachicaController.consumocajachica.idcajachica.saldoactual}" styleClass="text-ouputfactura">
                                         <f:convertNumber type="currency" currencySymbol="$ " />
                                     </p:outputLabel>
-                                    
+
                                 </p:panelGrid>
                             </p:fieldset>
                             <p:fieldset  legend="Datos del Pago" >
@@ -160,9 +160,9 @@
                                     </p:columnGroup>                            
                                 </p:dataTable>
                             </p:fieldset>
-                            <p:commandButton value="Registrar" actionListener="#{consumoscajachicaController.registrarReposicion()}"  update=":formulario,:growl" action="/reposicioncajachica/List?faces-redirect=true" />
+                            <p:commandButton value="Registrar" actionListener="#{consumoscajachicaController.registrarReposicion()}"  update=":formulario,:growl" action="/reposicioncajachica/List?faces-redirect=true" 
+                                             rendered  ="#{consumoscajachicaController.visualizar== 0 || consumoscajachicaController.visualizar== 1? true:false}"/>
                             <p:commandButton value="Cancelar" action="/faces/protegido/menup?faces-redirect=true" immediate="true"/>
-
                             <!--p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value=".{bundle.Imprimir}" actionListener=".{facturasController.verReporte()}" ajax="false" onclick="form.target = '_blank'"/-->                            
                         </p:panel>
                     </p:panel>

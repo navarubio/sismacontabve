@@ -3,17 +3,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <body>
-        <h:form>
-            <ui:composition template="./../template.xhtml">
 
-                <ui:define name="title">
-                    <h:outputStylesheet library="css" name="index.css"/>                
-                    <h:outputText value="#{bundle.Menup}"></h:outputText>
-                </ui:define>
+        <ui:composition template="./../template.xhtml">
 
-                <ui:define name="body">
+            <ui:define name="title">
+                <h:outputStylesheet library="css" name="index.css"/>                
+                <h:outputText value="#{bundle.Menup}"/>
+            </ui:define>
+
+            <ui:define name="body">
+                <h:form>
                     <a href="../cliente/List.xhtml"> <img src="../resources/images/kuser.png" width="100" height="100" alt="Clientes" title="Clientes Registrados"/></a>
                     <br/> 
                     <a href="../proveedor/List.xhtml"><img src="../resources/images/kdmconfig.png" width="100" height="100" alt="Proveedores" title="Proveedores Registrados"/></a>
@@ -29,15 +31,69 @@
                     <div id="imag1">
                         <img src="../resources/images/LogoInpeca5.png" width="310" height="310" alt="Sismacontab Ecuador" />
                     </div>
-                    <p:outputLabel id="etiqueta" value="Calendario de pagos SRI 2017" styleClass="etiqueta1" />   
-                    <h:panelGrid columnClasses="value">
-                        <!--h3 id="etiqueta" styleclass="etiqueta1">Calendario de Contribuyentes Especiales 2017</h3-->
+                    <!--p:outputLabel id="etiqueta" value="Calendario de pagos SRI 2017" styleClass="etiqueta1" /-->   
 
-                        <p:schedule id="schedule" value="#{scheduleView.eventModel}" allDaySlot="false" resizable="true" styleClass="calendario" />
+                    <h:panelGroup id="display">
+                        <h:panelGrid columns="2" columnClasses="value" >
+                            <p:fieldset style="width: 70%" legend="Requerimientos Pendientes"  >
+                                <p:dataTable id="datalist" value="#{auxiliarrequerimientoController1.buscarRequerimientosActivos()}" var="item" widgetVar="requerimientos"
+                                             selectionMode="single" selection="#{auxiliarrequerimientoController.selected}"
+                                             rowKey="#{item.idauxiliarrequerimiento}"
+                                             rowStyleClass="requerimientoactivo"
+                                             >
 
-                    </h:panelGrid>
-                </ui:define>
-            </ui:composition>
-        </h:form>
+                                    <p:column width="50" filterBy="#{item.idauxiliarrequerimiento}" filterMatchMode="exact" filterStyle="width:20px;">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_idauxiliarrequerimiento}"/>
+                                        </f:facet>
+                                        <h:outputText value="REQ-#{item.idauxiliarrequerimiento}"/>
+                                    </p:column >
+                                    <p:column width="200" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_posibleproveedor}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.posibleproveedor}"/>
+                                    </p:column>
+                                    <p:column width="200" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_descripcion}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.descripcion}"/>
+                                    </p:column>
+                                    <p:column style="text-align: center" width="80" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_fecharequerimiento}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fecharequerimiento}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right" width="80" sortBy="#{item.montototal}" >                    
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_montototal}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.montototal}">
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column width="150" filterBy="#{item.iddepartamento.departamento}" headerText="#{bundle.ListAuxiliarrequerimientoTitle_iddepartamento}" filterMatchMode="exact" style="text-align: center">
+                                        <f:facet name="filter">
+                                            <p:selectOneMenu onchange="PF('requerimientos').filter()" >
+                                                <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                                <f:selectItems value="#{departamentoController.items}" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                        <h:outputText value="#{item.iddepartamento.departamento}" />
+                                    </p:column>                       
+                                </p:dataTable>
+                            </p:fieldset>
+                            <p:fieldset style="width: 90%" legend="Calendario de Pagos SRI">
+                                <p:schedule id="schedule" value="#{scheduleView.eventModel}" allDaySlot="false" resizable="true"/>                        
+                            </p:fieldset>
+                        </h:panelGrid>
+                    </h:panelGroup>
+                </h:form>
+            </ui:define>
+        </ui:composition>
     </body>
 </html>
