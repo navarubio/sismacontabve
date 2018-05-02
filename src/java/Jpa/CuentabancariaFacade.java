@@ -59,5 +59,16 @@ public class CuentabancariaFacade extends AbstractFacade<Cuentabancaria> impleme
         return saldo;
     }
     
-   
+    @Override
+    public List<Cuentabancaria> cuentasAll() {
+        try { 
+            consulta = "From Cuentabancaria c order by c.idbanco";
+            Query query = em.createQuery(consulta);
+            
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+}
+        return lista;
+    }
 }

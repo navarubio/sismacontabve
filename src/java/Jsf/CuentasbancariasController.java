@@ -77,7 +77,7 @@ public class CuentasbancariasController implements Serializable {
 
     public List<Cuentabancaria> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().cuentasAll();
         }
         return items;
     }

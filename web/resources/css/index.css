@@ -42,6 +42,11 @@
     background-color:  #FFFFD4;
 }
 
+.ui-custompanelgrid1, .ui-custompanelgrid9 td {
+    //font-weight: bold;
+    background-color:  #D0FA58;
+}
+
 .ui-custompanelgrid2, .ui-custompanelgrid2 td {
     //font-weight: bold;
     background-color:  #E5FFEA ;
@@ -129,7 +134,10 @@ ui-custompanelgrid5, .ui-custompanelgrid5 td {
     font-weight:  bold;
     color:black;
 }
-
+#dialogo .text-ouput{
+    font-weight:  bold;
+    color:black;
+}
 #formulario .text-ouputfact{
     font-weight:  bold;
     color:red;

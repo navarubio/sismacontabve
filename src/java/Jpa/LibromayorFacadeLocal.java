@@ -34,4 +34,6 @@ public interface LibromayorFacadeLocal {
     
     List<Libromayor> listacuentaespecifica(int codcta);
     
+    Libromayor buscarLibro (Integer id);
+    
 }

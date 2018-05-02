@@ -34,8 +34,10 @@
                         <h:outputText value="#{empresaController.selected.serialconsumo}" title="#{bundleEmpresa.ViewEmpresaTitle_serialconsumo}"/>
                         <h:outputText value="#{bundleEmpresa.ViewEmpresaLabel_serialreposicion}"/>
                         <h:outputText value="#{empresaController.selected.serialreposicion}" title="#{bundleEmpresa.ViewEmpresaTitle_serialreposicion}"/>                        
+                        <h:outputText value="#{bundleEmpresa.ViewEmpresaLabel_idpersonalidajuridica}"/>
+                        <h:outputText value="#{empresaController.selected.idpersonalidad.personalidad}" title="#{bundleEmpresa.ViewEmpresaTitle_idpersonalidad}"/>
                         <h:outputText value="#{bundleEmpresa.ViewEmpresaLabel_idcontribuyente}"/>
-                        <h:outputText value="#{empresaController.selected.idcontribuyente}" title="#{bundleEmpresa.ViewEmpresaTitle_idcontribuyente}"/>
+                        <h:outputText value="#{empresaController.selected.idcontribuyente.contribuyente}" title="#{bundleEmpresa.ViewEmpresaTitle_idcontribuyente}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundleEmpresa.Close}" onclick="EmpresaViewDialog.hide()"/>
                 </h:panelGroup>

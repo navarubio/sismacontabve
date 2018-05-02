@@ -48,19 +48,19 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column style="text-align: center" filterBy="#{item.idlibrodiario.idlibrodiario}" filterMatchMode="exact">
+                        <p:column style="text-align: center" filterBy="#{item.idlibrodiario.idlibrodiario}" filterMatchMode="exact" filterStyle="width:50px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_idasiento}"/>
                             </f:facet>
                             <h:outputText value="#{item.idlibrodiario}"/>
                         </p:column>
-                        <p:column style="text-align: center" filterBy="#{item.idplandecuenta.idplandecuenta}" filterMatchMode="exact">
+                        <p:column style="text-align: center" filterBy="#{item.idplandecuenta.idplandecuenta}" filterMatchMode="exact" filterStyle="width:50px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_idplandecuenta}"/>
                             </f:facet>
                             <h:outputText value="#{item.idplandecuenta}"/>
                         </p:column>
-                        <p:column width="300">
+                        <p:column width="450">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_cuenta}"/>
                             </f:facet>

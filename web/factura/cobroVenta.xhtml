@@ -228,7 +228,7 @@
                                     </p:outputLabel>
                                 </p:panelGrid>
                             </p:fieldset>
-                            <p:fieldset legend="Retencion I.S.L.R." rendered="#{cobroventasController.visualizar<= 2 || cobroventasController.visualizar== 3 || cobroventasController.visualizar== 4 ? true:false}"> 
+                            <p:fieldset legend="Retencion I.S.L.R." rendered="#{cobroventasController.visualizar== 2 || cobroventasController.visualizar== 3 || cobroventasController.visualizar== 4 ? true:false}"> 
                                 <p:panelGrid columns="2" styleClass="ui-custompanelgrid2" >
                                     <p:outputLabel for="totalcompra" value="Total Factura" />
                                     <p:inputText id="totalcompra" value="#{cobroventasController.factura.totalgeneral}" style="text-align:right">

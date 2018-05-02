@@ -5,7 +5,10 @@
  */
 package Jpa;
 
+import Modelo.Articulo;
 import Modelo.Libromayor;
+import Modelo.Plandecuenta;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -48,5 +51,25 @@ public class LibromayorFacade extends AbstractFacade<Libromayor> implements Libr
         }
         return lista;
     }
+    
+    @Override
+    public Libromayor buscarLibro (Integer id) {
+        Libromayor may = null;
+        String consulta;
+        try {
+            consulta = "From Libromayor l where l.idlibromayor = ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, id);
+
+            List<Libromayor> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                may = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return may;
+    }
+    
     
 }

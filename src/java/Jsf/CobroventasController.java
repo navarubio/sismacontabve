@@ -43,6 +43,7 @@ import Modelo.Tipoconjunto;
 import Modelo.Tipopago;
 import Modelo.Tiporetencionislr;
 import Modelo.Tiporetencioniva;
+import Modelo.Usuario;
 import java.sql.SQLException;
 import java.sql.SQLException;
 import java.io.Serializable;
@@ -133,6 +134,7 @@ public class CobroventasController implements Serializable {
     private int edad = 0;
     private String mensaje;
     private Empresa empresa;
+    private Usuario usa;
     private Date fechaactual = new Date();
     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
@@ -361,9 +363,17 @@ public class CobroventasController implements Serializable {
         bancos = bancoEJB.findAll();
         cobro = new Cobroventa();
         cobro.setFechacobro(fechaactual);
+        usa= getUsuario();
         visualizar = 0;
+        
+        
     }
 
+    public Usuario getUsuario() {
+        Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        usa = us;
+        return us;
+    }
     public List<Cuentabancaria> refrescarCuentasBancarias() {
         try {
             lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco());

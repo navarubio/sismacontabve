@@ -157,6 +157,7 @@ public class PagosController implements Serializable {
     private String totalsubtotalform;
     private String correo;
     private String mensaje;
+    private String tipoarticulo;
     private double montoUT = 0;
     private double montopisoretiva = 0;
     private double montopisoretislr = 0;
@@ -164,6 +165,9 @@ public class PagosController implements Serializable {
     private double islrretenido;
     private double montoapagar;
     private double totalretenido;
+    private double retencionivabienes;
+    private double retencionaplicar;
+    private double retencionivaservicios;
     private int idAuxiliar = 0;
     private int idCompra = 0;
     private int formapago = 0;
@@ -477,6 +481,37 @@ public class PagosController implements Serializable {
         this.totalsubtotalform = totalsubtotalform;
     }
 
+    public double getRetencionivabienes() {
+        return retencionivabienes;
+    }
+
+    public void setRetencionivabienes(double retencionivabienes) {
+        this.retencionivabienes = retencionivabienes;
+    }
+
+    public double getRetencionivaservicios() {
+        return retencionivaservicios;
+    }
+
+    public void setRetencionivaservicios(double retencionivaservicios) {
+        this.retencionivaservicios = retencionivaservicios;
+    }
+
+    public double getRetencionaplicar() {
+        return retencionaplicar;
+    }
+
+    public void setRetencionaplicar(double retencionaplicar) {
+        this.retencionaplicar = retencionaplicar;
+    }
+
+    public String getTipoarticulo() {
+        return tipoarticulo;
+    }
+
+    public void setTipoarticulo(String tipoarticulo) {
+        this.tipoarticulo = tipoarticulo;
+    }
 
     @PostConstruct
     public void init() {
@@ -487,6 +522,7 @@ public class PagosController implements Serializable {
         bancos = bancoEJB.findAll();
         pagosefectuados = pagocompraEJB.findAll();
         pago = new Pagocompra();
+        usa= getUsuario();
         //articulos = articuloEJB.findAll();
         //comprasporautorizar=compraEJB.buscarcomprasporAutorizar();
 
@@ -499,6 +535,7 @@ public class PagosController implements Serializable {
         this.totalretenido=0;
         this.ivaretenido=0;
         this.islrretenido=0;
+        this.retencionaplicar=0;
         this.compra = compr;
         this.pagocompra.setTotalpago(compra.getTotal());
         this.montoapagar = compra.getTotal();
@@ -514,7 +551,7 @@ public class PagosController implements Serializable {
 //        this.auxiliar = aux;
         detallecompraFiltrados = detallecompraAuxiliar();
 //        tiporetencionesfiltradasPD = subgrupoEJB.tiporetfiltradaPJyD(compra.getRifproveedor().getIdpersonalidad(), compra.getRifproveedor().getIdresidencia());
-        empresa = empresaEJB.devolverEmpresabase();
+        empresa = usa.getIddepartamento().getIdempresa();
         double montocompra = compra.getTotal();
         double montoiva = compra.getIva();
         this.totalgeneralform=formatearnumero.format(compra.getTotal());
@@ -532,16 +569,20 @@ public class PagosController implements Serializable {
         String codigoret=contriempresa+""+contribproveedor;
         int codigoretencion=Integer.parseInt(codigoret);
         Retencionivasri retencionprevista=retencionesivasriEJB.buscarcoPorcentajes(codigoretencion);
-        double retencionivabienes=retencionprevista.getPorcentajeivabienes();
+        retencionivabienes=retencionprevista.getPorcentajeivabienes();
         retencionesivadisponible.add(retencionprevista);
-        double retencionivaservicios=retencionprevista.getPorcentajeivaservicios();
+        retencionivaservicios=retencionprevista.getPorcentajeivaservicios();
         int tipo1;
         for (Detallecompra tipoc : detallecompraFiltrados) {
             tipo1 = tipoc.getCodigo().getIdgrupo().getIdgrupo();
             if (tipo1 == 1 && tipocompra == 1) {
                 tipocompra = 1;
+                tipoarticulo="BIENES";
+                retencionaplicar=retencionivabienes;
             } else if (tipo1 == 2) {
                 tipocompra = 2;
+                tipoarticulo="SERVICIOS";
+                retencionaplicar=retencionivaservicios;
             } else if (tipo1 == 3) {
                 tipocompra = 3;
             }

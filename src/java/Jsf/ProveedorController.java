@@ -8,6 +8,7 @@ import Jpa.ProveedorFacade;
 import Jpa.ProveedorFacadeLocal;
 import Jpa.ResidenciajuridicaFacadeLocal;
 import Modelo.Contribuyente;
+import Modelo.Empresa;
 import Modelo.Residenciajuridica;
 import Modelo.Usuario;
 
@@ -48,6 +49,8 @@ public class ProveedorController implements Serializable {
     private List<Residenciajuridica> listadoResidencia = null;
     @Inject
     private Usuario usa;
+    @Inject 
+    private Empresa empresa;    
     private Date fechaactual = new Date();
     private ValidarRUC validarucspv = new ValidarRUC();
     private ValidaRUCep validarrucep = new ValidaRUCep();
@@ -257,6 +260,17 @@ public class ProveedorController implements Serializable {
         try {
             listadoContri = contribuyenteEJB.contribuyentexPersona(selected.getIdpersonalidad().getIdpersonalidad());
             listadoResidencia = residenciajuridicaEJB.residenciaxPersona(selected.getIdpersonalidad().getIdpersonalidad());
+        } catch (Exception e) {
+        }
+        return listadoContri;
+    }
+    public List<Contribuyente> ContribuyentesXpersonalidad(Empresa empre) {
+        this.empresa=empre;
+ //       if (!listadoContri.isEmpty()){
+ //           listadoContri.clear();
+//        }
+        try {
+            listadoContri = contribuyenteEJB.contribuyentexPersona(empresa.getIdpersonalidad().getIdpersonalidad());
         } catch (Exception e) {
         }
         return listadoContri;

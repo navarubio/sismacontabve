@@ -35,13 +35,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Contribuyente.findByIdcontribuyente", query = "SELECT c FROM Contribuyente c WHERE c.idcontribuyente = :idcontribuyente"),
     @NamedQuery(name = "Contribuyente.findByContribuyente", query = "SELECT c FROM Contribuyente c WHERE c.contribuyente = :contribuyente")})
 public class Contribuyente implements Serializable {
+
     @OneToMany(mappedBy = "idcontribuyente")
     private Collection<Tiporetencionislr> tiporetencionislrCollection;
     @OneToMany(mappedBy = "idcontribuyente")
     private Collection<Empresa> empresaCollection;
     @OneToMany(mappedBy = "idcontribuyente")
     private Collection<Proveedor> proveedorCollection;
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,6 +57,9 @@ public class Contribuyente implements Serializable {
     @JoinColumn(name = "idpersonalidad", referencedColumnName = "idpersonalidad")
     @ManyToOne
     private Personalidadjuridica idpersonalidad;
+    @Size(max = 5)
+    @Column(name = "abreviatura")
+    private String abreviatura;
 
     public Contribuyente() {
     }
@@ -83,9 +87,17 @@ public class Contribuyente implements Serializable {
     public void setIdpersonalidad(Personalidadjuridica idpersonalidad) {
         this.idpersonalidad = idpersonalidad;
     }
-    
+
     public void setContribuyente(String contribuyente) {
         this.contribuyente = contribuyente;
+    }
+
+    public String getAbreviatura() {
+        return abreviatura;
+    }
+
+    public void setAbreviatura(String abreviatura) {
+        this.abreviatura = abreviatura;
     }
 
     @XmlTransient
@@ -130,7 +142,7 @@ public class Contribuyente implements Serializable {
     public void setTiporetencionislrCollection(Collection<Tiporetencionislr> tiporetencionislrCollection) {
         this.tiporetencionislrCollection = tiporetencionislrCollection;
     }
-    
+
     @XmlTransient
     public Collection<Empresa> getEmpresaCollection() {
         return empresaCollection;

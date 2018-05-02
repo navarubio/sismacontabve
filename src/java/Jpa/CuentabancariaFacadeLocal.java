@@ -32,5 +32,7 @@ public interface CuentabancariaFacadeLocal  {
     
     List<Cuentabancaria> espxBanco(int idbank);
     
-    public double saldoencuenta(List <Cuentabancaria> lista);
+    double saldoencuenta(List <Cuentabancaria> lista);
+   
+    List<Cuentabancaria> cuentasAll();
 }

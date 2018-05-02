@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundlecontabilidad.ListLibromayoranaliticoTitle}"></h:outputText>
+            <h:outputStylesheet library="css" name="index.css" />
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="LibromayorListForm">
+                <div id="imag2">
+                    <img src="../resources/images/LogoInpeca.jpg" width="155" height="58" alt="Logo Inpeca" />
+                </div>     
+                <img src="../resources/images/contabilidadblank.png" width="70" height="70" alt="Clientes" align="right" />
+                <p:panel id="panel1" header="#{bundlecontabilidad.ListLibromayoranaliticoTitle}">
+                    <p:panelGrid columns="1" >
+                        <p:fieldset  legend="Anilizar por Fecha"  toggleable="true" toggleSpeed="500" collapsed="false" >
+                            <p:panelGrid columns="6" styleClass="ui-custompanelgrid9" style="width: 100%">
+                                <p:outputLabel for="cuentacontable" value="Cuenta Contable" styleClass="text-ouput"/>
+                                <p:selectOneMenu id="cuentacontable" value="#{libromayorController.cuentacontab}" converter="omnifaces.SelectItemsConverter" required="true" filter="true" filterMatchMode="contains"> 
+                                    <f:selectItem noSelectionOption="true" itemLabel="SELECCIONE CUENTA"/>
+                                    <f:selectItems value="#{plandecuentasController.itemsordenados}"
+                                           var="itemplancuenta"
+                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                                </p:selectOneMenu>                               
+                                
+                                <p:outputLabel for="fechadesde" value="Fecha Desde" />
+                                <p:calendar size="10"  locale="es" id="fechadesde" pattern="dd/MM/yyyy" value="#{libromayorController.fechadesde}" showOn="button" navigator="true" required="true"/>                                
+                                <p:outputLabel for="fechahasta" value="Fecha Hasta" />
+                                <p:calendar size="10"  locale="es" id="fechahasta" pattern="dd/MM/yyyy" value="#{libromayorController.fechahasta}" showOn="button" navigator="true" required="true"/>                                
+
+                                <p:commandButton value="Buscar" icon="ui-icon-check" actionListener="#{libromayorController.actualizar()}" update="panelart"/>
+                                <p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value="#{bundle.Imprimir}" actionListener="#{movimientobancarioController.verMovimiento()}" ajax="false" onclick="form.target = '_blank'"/>
+                                <p:outputLabel/>
+                                <p:outputLabel/>                                
+                                <p:outputLabel/>
+                                <p:outputLabel/>                                
+                            </p:panelGrid>
+                        </p:fieldset>
+                    </p:panelGrid>
+                </p:panel>
+                <p:panel id="panelart">
+                    <p:panel header="#{bundlecontabilidad.ListLibromayorTitle}">
+                        <p:dataTable id="datalist" value="#{libromayorController.itemsfiltrados}" var="item"
+                                     selectionMode="single" selection="#{libromayorController.selected}"
+                                     paginator="true"
+                                     rowKey="#{item.idlibromayor}"
+                                     rows="25"
+                                     rowsPerPageTemplate="25,30,40,50"
+                                     >
+
+                            <!--p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                            <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/-->
+
+                            <p:column style="text-align: center">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_idlibromayor}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idlibromayor}"/>
+                            </p:column>
+                            <p:column style="text-align: center" filterBy="#{item.idlibrodiario.idlibrodiario}" filterMatchMode="exact" filterStyle="width:50px;">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_idlibrodiario}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idlibrodiario}"/>
+                            </p:column>    
+                            <p:column style="text-align: center" >
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundlecontabilidad.ListLibrodiarioTitle_fecha}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.fecha}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>    
+                            <p:column style="text-align: center" filterBy="#{item.idplandecuenta.idplandecuenta}" filterMatchMode="exact" filterStyle="width:50px;">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_idplandecuenta}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idplandecuenta}"/>
+                            </p:column>
+                            <p:column width="450">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_cuenta}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.descripcioncuenta}"/>
+                            </p:column>
+                            <p:column style="text-align: right">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_saldoanterior}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.saldoanterior}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align: right">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_debe}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.debe}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align: right">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_haber}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.haber}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align: right">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_saldoposterior}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.saldoposterior}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:columnGroup type="footer">
+                                <p:row>
+                                    <p:column colspan="5" style="text-align:right" footerText="Totales:" />
+                                    <p:column></p:column>
+                                    <p:column footerText="#{libromayorController.mayTotalDebe}" style="text-align: right" />
+
+                                    <p:column footerText="#{libromayorController.mayTotalHaber}" style="text-align: right" />
+                                </p:row>
+                            </p:columnGroup>
+                            <!--f:facet name="footer">
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   value=".{bundlecontabilidad.Create}" actionListener="#{libromayorController.prepareCreate}" update=":LibromayorCreateForm" oncomplete="PF('LibromayorCreateDialog').show()"/>
+                                <p:commandButton id="viewButton"   icon="ui-icon-search" value=".{bundlecontabilidad.View}" update=":LibromayorViewForm" oncomplete="PF('LibromayorViewDialog').show()" disabled="#{empty libromayorController.selected}"/>
+                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value=".{bundlecontabilidad.Edit}" update=":LibromayorEditForm" oncomplete="PF('LibromayorEditDialog').show()" disabled="#{empty libromayorController.selected}"/>
+                                <p:commandButton id="deleteButton" icon="ui-icon-trash"  value=".{bundlecontabilidad.Delete}" actionListener="#{libromayorController.destroy}" update=":growl,datalist" disabled="#{empty libromayorController.selected}"/>
+                            </f:facet-->
+                        </p:dataTable>
+                    </p:panel>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

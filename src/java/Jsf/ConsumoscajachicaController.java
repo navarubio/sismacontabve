@@ -121,7 +121,8 @@ public class ConsumoscajachicaController implements Serializable {
     private int id = 0;
     private int aperturacaja = 0;
     private int visualizar = 0;
-    int bloquearcaja=0;
+    int bloquearcaja = 0;
+    private double saldoactualcaja=0;
 
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     private List<Detalleconsumocajachica> listadetalles = new ArrayList();
@@ -330,12 +331,20 @@ public class ConsumoscajachicaController implements Serializable {
 
     public void modificar() {
         int indc = listadetalles.indexOf(detalleamodif);
-        double total = 0;
-        total = detalleamodif.getSubtotal() + detalleamodif.getIva();
-        detalleamodif.setToalgeneral(total);
-        listadetalles.set(indc, detalleamodif);
-        totaltotal();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El Consumo fue Modificado satisfactoriamente"));
+        if (detalleamodif.getSubtotal() != 0) {
+            double totalg = detalleamodif.getSubtotal() + detalleamodif.getIva();
+            double montomax = consumocajachica.getIdcajachica().getMontomaximo();
+            if (totalg <= montomax) {
+                detalleamodif.setToalgeneral(totalg);
+                listadetalles.set(indc, detalleamodif);
+                totaltotal();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El Consumo fue Modificado satisfactoriamente"));
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Monto del consumo supera el monto maximo permitido por caja"));
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Subtotal en 0.0"));
+        }
     }
 
     public void asignarDetalle(Detalleconsumocajachica detalleaeditar) {
@@ -396,6 +405,7 @@ public class ConsumoscajachicaController implements Serializable {
     }
 
     public void verificarSaldoCaja() {
+        saldoactualcaja=consumocajachica.getIdcajachica().getSaldoactual();
         if (consumocajachica.getIdcajachica().getSaldoactual() == 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "", "Caja chica no Presenta SALDO DISPONIBLE"));
             visualizar = 2;
@@ -405,7 +415,7 @@ public class ConsumoscajachicaController implements Serializable {
     public void anexar() {
         if (detalleconsumocajachica.getSubtotal() != 0) {
             double totalg = detalleconsumocajachica.getSubtotal() + detalleconsumocajachica.getIva();
-            double montomax=consumocajachica.getIdcajachica().getMontomaximo();
+            double montomax = consumocajachica.getIdcajachica().getMontomaximo();
             if (totalg <= montomax) {
                 double total = 0;
                 Detalleconsumocajachica detalle = new Detalleconsumocajachica();
@@ -421,7 +431,7 @@ public class ConsumoscajachicaController implements Serializable {
                 this.listadetalles.add(detalle);
                 id++;
                 total = 0;
-                bloquearcaja=1;
+                bloquearcaja = 1;
                 totaltotal();
                 if (totalgeneral > consumocajachica.getIdcajachica().getSaldoactual()) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Montos de consumos es mayor al Saldo Actual de la " + consumocajachica.getIdcajachica().getDescripcion()));
@@ -447,8 +457,10 @@ public class ConsumoscajachicaController implements Serializable {
             montotiva += detalles.getIva();
             montotsubtotal += detalles.getSubtotal();
         }
-        if (listadetalles.isEmpty()){
-            montotgeneral=consumocajachica.getIdcajachica().getMontoasignado();
+        if (listadetalles.isEmpty()) {
+            if (saldoactualcaja == 0) {
+                montotgeneral = consumocajachica.getIdcajachica().getMontoasignado();
+            }
         }
         totalgeneral = montotgeneral;
         totaliva = montotiva;
@@ -458,18 +470,18 @@ public class ConsumoscajachicaController implements Serializable {
         totalsubtotalform = formatearnumero.format(totalsubtotal);
 
     }
-    
-    public void totalesInicial(double montoini){
+
+    public void totalesInicial(double montoini) {
         double montotgeneral = montoini;
-        double montotiva=0;
-        double montotsubtotal=0;
+        double montotiva = 0;
+        double montotsubtotal = 0;
         totalgeneral = montotgeneral;
         totaliva = montotiva;
         totalsubtotal = montotsubtotal;
         totalgeneralform = formatearnumero.format(totalgeneral);
         totalivaform = formatearnumero.format(totaliva);
         totalsubtotalform = formatearnumero.format(totalsubtotal);
-        
+
     }
 
     public void eliminardetalle(Detalleconsumocajachica detalleaeliminar) {

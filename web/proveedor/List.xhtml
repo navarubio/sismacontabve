@@ -85,9 +85,9 @@
                         </p:column>
                         <p:column width="80" style="text-align: center">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProveedorTitle_idresidencia}"/>
+                                <h:outputText value="#{bundle.ListProveedorTitle_idcontribuyente}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idresidencia.residencia}"/>
+                            <h:outputText value="#{item.idcontribuyente.contribuyente}"/>
                         </p:column>                        
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{proveedorController.prepareCreate}" update=":ProveedorCreateForm" oncomplete="PF('ProveedorCreateDialog').show()"/>
