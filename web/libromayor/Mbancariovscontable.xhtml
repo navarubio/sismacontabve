@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="/template.xhtml">
+
+            <ui:define name="title">
+                <h:outputText value="#{bundlebancario.ListMovimientoanalsisbancarioTitle}"></h:outputText>
+                <h:outputStylesheet library="css" name="index.css" />  
+
+            </ui:define>
+
+            <ui:define name="body">
+                <h:form id="MovimientobancarioListForm">
+                    <div id="imag2">
+                        <img src="../resources/images/LogoInpeca2.jpg" width="155" height="58" alt="Logo Inpeca" />
+                    </div>     
+                    <img src="../resources/images/sharemanager.png" width="70" height="70" alt="Movimientos" align="right" />
+
+                    <p:panel id="panel11" header="#{bundlebancario.ListMovimientobancariovscontableTitle}">
+                        <p:panelGrid columns="1" >
+                            <p:fieldset  legend="Seleccion por Fecha"  toggleable="true" toggleSpeed="500" collapsed="false" >
+                                <p:panelGrid id="conciliar" columns="8" styleClass="ui-custompanelgrid9">
+                                    <p:outputLabel for="banco" value="Banco" styleClass="text-ouputnormal"/>
+                                    <p:selectOneMenu id="banco" value="#{libromayorController.movimientobancarioControler.bancoselec}" converter="omnifaces.SelectItemsConverter" required="true" > 
+                                        <p:ajax event="change" listener="#{libromayorController.movimientobancarioControler.refrescarCuentasBancarias()}" update="cuentabanco "/>
+                                        <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
+                                        <f:selectItems value="#{libromayorController.movimientobancarioControler.bancos}"
+                                                       var="idbancoItem"
+                                                       itemLabel="#{idbancoItem.nombrebanco}"  itemValue="#{idbancoItem}" /> 
+                                    </p:selectOneMenu>
+                                    <p:outputLabel for="cuentabanco" value="Cuenta Bancaria" styleClass="text-ouputnormal"/>
+                                    <p:selectOneMenu id="cuentabanco" value="#{libromayorController.movimientobancarioControler.selected.idcuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
+                                        <f:selectItems value="#{libromayorController.movimientobancarioControler.lstCuentasSelecc}"
+                                                       var="cuentaporbancoItem"
+                                                       itemLabel="#{cuentaporbancoItem.numerocuenta}" itemValue="#{cuentaporbancoItem}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel for="fechadesde" value="Fecha Desde" styleClass="text-ouputnormal"/>
+                                    <p:calendar size="10"  locale="es" id="fechadesde" pattern="dd/MM/yyyy" value="#{libromayorController.movimientobancarioControler.fechadesde}" showOn="button" navigator="true" required="true"/>                                
+                                    <p:outputLabel for="fechahasta" value="Fecha Hasta" styleClass="text-ouputnormal"/>
+                                    <p:calendar size="10"  locale="es" id="fechahasta" pattern="dd/MM/yyyy" value="#{libromayorController.movimientobancarioControler.fechahasta}" showOn="button" navigator="true" required="true"/>                                
+
+                                    <p:commandButton value="Buscar" icon="ui-icon-check" actionListener="#{libromayorController.actualizarBanco()}" update="panelart,panel11"/>
+                                    <p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value="#{bundle.Imprimir}" actionListener="#{movimientobancarioController.verMovimiento()}" ajax="false" onclick="form.target = '_blank'"/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel for="saldobanco" value="Saldo Mov.Bancario" styleClass="text-ouputnormal"/>
+                                    <p:outputLabel id="saldobanco" value="#{libromayorController.movimientobancarioControler.saldomovbancario}" styleClass="text-ouput">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+                                    <p:outputLabel for="saldocontable" value="Saldo Libro Mayor" styleClass="text-ouputnormal"/> 
+                                    <p:outputLabel id="saldocontable" value="#{libromayorController.saldocontable}" styleClass="text-ouput">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel value="SALDO ACTUAL" styleClass="text-ouput"/>
+                                    <p:outputLabel value="Saldo Cuenta Bancaria"/>
+                                    <p:outputLabel value="#{libromayorController.movimientobancarioControler.saldocuenta}" styleClass="text-ouput">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+                                    <p:outputLabel value="Saldo Plan de Cuenta"/>
+                                    <p:outputLabel value="#{libromayorController.saldogeneral}" styleClass="text-ouput">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+
+                                </p:panelGrid>
+                            </p:fieldset>
+                        </p:panelGrid>
+                    </p:panel>
+                    <p:panel id="panelart">
+                        <p:panelGrid columns="2">
+                            <p:panel header="#{bundlebancario.ListMovimientobancarioTitle}">
+                                <p:dataTable id="datalist" value="#{libromayorController.movimientobancarioControler.itemsfiltrados}" var="item" widgetVar="movimientosencta" style="width: 850px"
+                                             paginator="true" emptyMessage="No hay movimientos para cuenta seleccionada"
+                                             rows="25"
+                                             rowsPerPageTemplate="25,30,40,50"
+                                             >
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_idmovimiento}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idmovimiento}"/>
+                                    </p:column>
+                                    <p:column style="text-align: center">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_fecha}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fecha}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column width="150" headerText="#{bundlebancario.ListMovimientobancarioTitle_banco}" style="text-align: center">
+                                        <h:outputText value="#{item.idcuentabancaria.idbanco.nombrebanco}" />
+                                    </p:column>
+                                    <p:column width="150" headerText="#{bundlebancario.ListMovimientobancarioTitle_idcuentabancaria}" style="text-align: center">
+                                        <h:outputText value="#{item.idcuentabancaria.numerocuenta}" />
+                                    </p:column>                        
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_saldoanterior}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.saldoanterior}">
+                                            <f:convertNumber type="currency" currencySymbol="$ " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_debito}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.debito}">
+                                            <f:convertNumber type="currency" currencySymbol="$ " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_credito}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.credito}">
+                                            <f:convertNumber type="currency" currencySymbol="$ " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_saldoactual}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.saldoactual}" >
+                                            <f:convertNumber type="currency" currencySymbol="$ "  />
+                                        </h:outputText>
+                                    </p:column>
+                                    <f:facet name="footer">
+                                    </f:facet>
+                                </p:dataTable>
+                            </p:panel>
+
+                            <p:panel header="#{bundlecontabilidad.ListLibromayorTitle}">
+                                <p:dataTable id="datalist2" value="#{libromayorController.itemsfiltrados}" var="item"
+                                             paginator="true" emptyMessage="No hay asientos contabilizado para esta cuenta"
+                                             rows="25"
+                                             rowsPerPageTemplate="25,30,40,50"
+                                             >
+
+                                    <!--p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                                    <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/-->
+
+                                    <p:column style="text-align: center">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_idlibromayor}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idlibromayor}"/>
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_saldoanterior}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.saldoanterior}">
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_debe}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.debe}">
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_haber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.haber}">
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_saldoposterior}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.saldoposterior}">
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:columnGroup type="footer">
+                                        <p:row>
+                                            <p:column colspan="2" style="text-align:right" footerText="Totales:" />
+                                            <p:column footerText="#{libromayorController.mayTotalDebe}" style="text-align: right" />
+                                            <p:column footerText="#{libromayorController.mayTotalHaber}" style="text-align: right" />
+                                        </p:row>
+                                    </p:columnGroup>
+                                </p:dataTable>
+                            </p:panel>
+                        </p:panelGrid>
+                    </p:panel>
+                </h:form>
+                <h:outputScript library="js" name="spanishLocale.js"/>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

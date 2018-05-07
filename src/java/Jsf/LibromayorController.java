@@ -5,6 +5,9 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.LibromayorFacade;
 import Jpa.LibromayorFacadeLocal;
+import Jpa.PlandecuentaFacadeLocal;
+import Modelo.Caja_;
+import Modelo.Cuentabancaria;
 import Modelo.Libromayorcompuesto;
 import Modelo.Movimientobancario;
 import Modelo.Plandecuenta;
@@ -12,6 +15,7 @@ import Modelo.Plandecuenta;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -28,6 +32,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named("libromayorController")
 @ViewScoped
@@ -37,15 +42,28 @@ public class LibromayorController implements Serializable {
     private Jpa.LibromayorFacadeLocal ejbFacade;
     @EJB
     private Jpa.LibromayorcompuestoFacadeLocal libromayorcompuestoEJB;
+    @EJB
+    private PlandecuentaFacadeLocal plandecuentaEJB;
 
     private List<Libromayor> items = null;
     private List<Libromayorcompuesto> itemsfiltrados = null;
+    private List<Libromayorcompuesto> itemsfiltrados2 = null;
     private Libromayor selected;
     private Plandecuenta cuentaseleccionada;
+    private Cuentabancaria cuentabancaria;
     private Integer cuentacontab;
     private Date fechadesde;
     private Date fechahasta;
     private List<Libromayor> listado = new ArrayList();
+    ArrayList<Libromayor> listaerrores1 = new ArrayList();
+    DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
+    private Double saldocontable=0.0;
+    private Double saldogeneral=0.0;
+ 
+    
+    @Inject
+    private MovimientobancarioController movimientobancarioControler;
+    
 
     public LibromayorController() {
     }
@@ -108,6 +126,46 @@ public class LibromayorController implements Serializable {
         this.cuentacontab = cuentacontab;
     }
 
+    public ArrayList<Libromayor> getListaerrores1() {
+        return listaerrores1;
+    }
+
+    public void setListaerrores1(ArrayList<Libromayor> listaerrores1) {
+        this.listaerrores1 = listaerrores1;
+    }
+
+    public MovimientobancarioController getMovimientobancarioControler() {
+        return movimientobancarioControler;
+    }
+
+    public void setMovimientobancarioCotroler(MovimientobancarioController movimientobancarioControler) {
+        this.movimientobancarioControler = movimientobancarioControler;
+    }
+
+    public List<Libromayorcompuesto> getItemsfiltrados2() {
+        return itemsfiltrados2;
+    }
+
+    public void setItemsfiltrados2(List<Libromayorcompuesto> itemsfiltrados2) {
+        this.itemsfiltrados2 = itemsfiltrados2;
+    }
+
+    public Double getSaldocontable() {
+        return saldocontable;
+    }
+
+    public void setSaldocontable(Double saldocontable) {
+        this.saldocontable = saldocontable;
+    }
+
+    public Double getSaldogeneral() {
+        return saldogeneral;
+    }
+
+    public void setSaldogeneral(Double saldogeneral) {
+        this.saldogeneral = saldogeneral;
+    }
+       
     @PostConstruct
     public void init() {
 
@@ -116,13 +174,38 @@ public class LibromayorController implements Serializable {
         }
     }
 
+    public void actualizarBanco() {
+//        itemsfiltrados.clear();
+        movimientobancarioControler.actualizar();
+        cuentacontab=movimientobancarioControler.getSelected().getIdcuentabancaria().getIdplandecuenta().getIdplandecuenta();
+        fechadesde=movimientobancarioControler.getFechadesde();
+        fechahasta=movimientobancarioControler.getFechahasta();
+        actualizar();
+    }
     public void actualizar() {
         itemsfiltrados = libromayorcompuestoEJB.buscarmayorporfecha(cuentacontab, fechadesde, fechahasta);
-    }
+        Libromayorcompuesto movimiento;
+        int ultimo=itemsfiltrados.size()-1;
 
+        if (!itemsfiltrados.isEmpty()) {
+            movimiento = itemsfiltrados.get(ultimo);
+            saldocontable = movimiento.getSaldoposterior();
+        }
+        cuentaseleccionada=plandecuentaEJB.buscarcuenta(cuentacontab);
+        saldogeneral=cuentaseleccionada.getSaldogeneral();
+    }
+    
     public void conciliar() {
-//        listaerrores1.clear();
+        listaerrores1.clear();
+        Libromayorcompuesto movimiento;
+        cuentaseleccionada=plandecuentaEJB.buscarcuenta(cuentacontab);
+        saldogeneral=cuentaseleccionada.getSaldogeneral();
         itemsfiltrados = libromayorcompuestoEJB.buscarmayorporfecha(cuentacontab, fechadesde, fechahasta);
+        int ultimo=itemsfiltrados.size()-1;
+        if (!itemsfiltrados.isEmpty()) {
+            movimiento = itemsfiltrados.get(ultimo);
+            saldocontable = movimiento.getSaldoposterior();
+        }
         if (listado != null) {
             listado.clear();
         }
@@ -133,90 +216,83 @@ public class LibromayorController implements Serializable {
             librmay = ejbFacade.buscarLibro(idlibromay);
             listado.add(librmay);
         }
-
-//        conciliarSaldos();
+        Collections.reverse(listado);
+        
+        conciliarSaldos();
     }
 
-    /*   public void conciliarSaldos() {
-     double saldoant = 0;
-     double saldoact = 0;
-     double saldopost = 0;
-     int marcador = 0;
-     int sinnovedad = 0;
-     String cadena = null;
-     String cadenaactual;
-     String anterior;
-     for (Movimientobancario seleccion : itemsfiltrados) {
-     saldoant = seleccion.getSaldoanterior();
-     anterior = formatearnumero.format(saldoant);
-     cadena = formatearnumero.format(saldopost);
-     if (marcador == 0) {
-     cadena = anterior;
-     }
+    public void conciliarSaldos() {
+        double saldoant = 0;
+        double saldoact = 0;
+        double saldopost = 0;
+        int tiposaldocontab = 0;
+        int marcador = 0;
+        int sinnovedad = 0;
+        String stringposterior = null;
+        String stringanterior = null;
+        String stringactual;
 
-     if (anterior.equals(cadena)) {
-     if (seleccion.getDebito() == null) {
-     saldopost = saldoant + seleccion.getCredito();
-     } else {
-     saldopost = saldoant - seleccion.getDebito();
+        for (Libromayor seleccion : listado) {
+            saldopost = seleccion.getSaldoposterior();
+            stringposterior = formatearnumero.format(saldopost);
 
-     }
-     cadena = formatearnumero.format(saldopost);
-     saldoact = seleccion.getSaldoactual();
-     cadenaactual = formatearnumero.format(saldoact);
+            if (marcador == 0) {
+                stringanterior = stringposterior;
+                //1)DEUDOR    2)ACREEDOR //
+                tiposaldocontab = seleccion.getIdplandecuenta().getIdtiposaldocontable().getIdtiposaldocontable();
+            }
+            if (!stringanterior.equals(stringposterior)) {
+                saldopost = saldoant;
+                seleccion.setSaldoposterior(saldopost);
+                sinnovedad = 1;
+            }
+            if (seleccion.getDebe() == 0) {
+                if (tiposaldocontab == 1) {
+                    saldoant = saldopost + seleccion.getHaber();
+                } else {
+                    saldoant = saldopost + seleccion.getHaber();
+                }
+            } else {
+                if (tiposaldocontab == 1) {
+                    saldoant = saldopost - seleccion.getDebe();
+                } else {
+                    saldoant = saldopost - seleccion.getDebe();
+                }
+            }
+            stringanterior = formatearnumero.format(saldoant);
+            saldoact = seleccion.getSaldoanterior();
+            stringactual = formatearnumero.format(saldoact);
 
-     if (cadena.equals(cadenaactual)) {
+            if (stringanterior.equals(stringactual)) {
 
-     } else {
-     seleccion.setSaldoactual(saldopost);
-     sinnovedad = 1;
-     }
-     listaerrores1.add(seleccion);
-     } else {
-     saldoant = saldopost;
-     seleccion.setSaldoanterior(saldopost);
-     if (seleccion.getDebito() == null) {
-     saldopost = saldoant + seleccion.getCredito();
-     } else {
-     saldopost = saldoant - seleccion.getDebito();
+            } else {
+                seleccion.setSaldoanterior(saldoant);
+                sinnovedad = 1;
+            }
+            listaerrores1.add(seleccion);
 
-     }
-     cadena = formatearnumero.format(saldopost);
-     saldoact = seleccion.getSaldoactual();
-     cadenaactual = formatearnumero.format(saldoact);
+            if (marcador == 0) {
+                marcador++;
+            }
+        }
+        if (sinnovedad == 0) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "LOS SALDOS DEL MAYOR ESTAN AJUSTADOS"));
+        } else {
+            corregirSaldos();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "LOS SALDOS FUERON AJUSTADOS SATISFACTORIAMENTE"));
+        }
+    }
 
-     if (cadena.equals(cadenaactual)) {
+    public void corregirSaldos() {
+        Libromayor movimientoListo;
+        for (Libromayor movicorreg : listaerrores1) {
+            movimientoListo = movicorreg;
+            ejbFacade.edit(movimientoListo);
+        }
+        listaerrores1.clear();
+        itemsfiltrados = libromayorcompuestoEJB.buscarmayorporfecha(cuentacontab, fechadesde, fechahasta);
+    }
 
-     } else {
-     seleccion.setSaldoactual(saldopost);
-     sinnovedad = 1;
-     }
-     listaerrores1.add(seleccion);
-     }
-     if (marcador == 0) {
-     marcador++;
-     }
-     }
-     if (marcador == 0) {
-     marcador++;
-     }
-     if (sinnovedad == 0) {
-     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "LOS SALDOS ESTAN AJUSTADOS"));
-     } else {
-     corregirSaldos();
-     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "LOS SALDOS FUERON AJUSTADOS SATISFACTORIAMENTE"));
-     }
-
-     }
-
-     public void corregirSaldos() {
-     Movimientobancario movimientoListo;
-     for (Movimientobancario movicorreg : listaerrores1) {
-     movimientoListo = movicorreg;
-     movimientobancarioEJB.edit(movimientoListo);
-     }
-     }
-     */
     public Libromayor prepareCreate() {
         selected = new Libromayor();
         initializeEmbeddableKey();
@@ -325,6 +401,7 @@ public class LibromayorController implements Serializable {
 
     public List<Libromayor> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+
     }
 
     @FacesConverter(forClass = Libromayor.class)

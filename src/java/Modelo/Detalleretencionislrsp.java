@@ -61,6 +61,10 @@ public class Detalleretencionislrsp implements Serializable {
     @JoinColumn(name = "numerofact", referencedColumnName = "numerofact")
     @ManyToOne
     private Factura numerofact;
+    @JoinColumn(name = "idsubgrupo", referencedColumnName = "idsubgrupo")
+    @ManyToOne
+    private Subgrupo idsubgrupo;
+    
 
     public Detalleretencionislrsp() {
     }
@@ -139,6 +143,14 @@ public class Detalleretencionislrsp implements Serializable {
 
     public void setNumerofact(Factura numerofact) {
         this.numerofact = numerofact;
+    }
+    
+    public Subgrupo getIdsubgrupo() {
+        return idsubgrupo;
+    }
+
+    public void setIdsubgrupo(Subgrupo idsubgrupo) {
+        this.idsubgrupo = idsubgrupo;
     }
 
     @Override

@@ -44,6 +44,8 @@
                                     <p:outputLabel id="tipoingreso" value="#{asientosotrosingresosController.otroingreso.idtipoingreso.tipoingreso}" /> 
                                     <p:outputLabel for="observaciones" value="Observaciones" styleClass="text-ouput"/>
                                     <p:outputLabel id="observaciones" value="#{asientosotrosingresosController.otroingreso.observaciones}" /> 
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
                                 </p:panelGrid>
                             </p:fieldset>
                             <h:panelGrid>
@@ -170,8 +172,8 @@
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="2" style="text-align:right" footerText="TOTAL ASIENTO" />
-                                    <p:column style="text-align: right"  footerText="BsF #{asientosotrosingresosController.totaldebe()}" />
-                                    <p:column style="text-align: right"  footerText="BsF #{asientosotrosingresosController.totalhaber()}" />
+                                    <p:column style="text-align: right"  footerText="$ #{asientosotrosingresosController.totaldebe()}" />
+                                    <p:column style="text-align: right"  footerText="$ #{asientosotrosingresosController.totalhaber()}" />
                                 </p:row>
                             </p:columnGroup>                            
                         </p:dataTable>

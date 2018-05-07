@@ -42,10 +42,22 @@
     background-color:  #FFFFD4;
 }
 
-.ui-custompanelgrid1, .ui-custompanelgrid9 td {
+.ui-custompanelgrid9, .ui-custompanelgrid9 td {
     //font-weight: bold;
     background-color:  #D0FA58;
 }
+
+.ui-custompanelgrid9 .text-ouput, .ui-custompanelgrid1 .text-ouput{
+    font-weight:  bold;
+    color:black;
+    font-size: 150% !important;
+}
+.ui-custompanelgrid9, .ui-custompanelgrid1 .text-ouputnormal{
+    font-weight:  bold;
+    color:black;
+    font-size: 110% !important;
+}
+
 
 .ui-custompanelgrid2, .ui-custompanelgrid2 td {
     //font-weight: bold;

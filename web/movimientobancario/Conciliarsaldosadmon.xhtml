@@ -26,8 +26,8 @@
                     <p:panel id="panel1" header="#{bundlebancario.ListMovimientobancarioTitleConcilia}">
                         <p:panelGrid columns="1" >
                             <p:fieldset  legend="Seleccion por Fecha"  toggleable="true" toggleSpeed="500" collapsed="false" >
-                                <p:panelGrid columns="8" styleClass="ui-custompanelgrid1">
-                                    <p:outputLabel for="banco" value="Banco" styleClass="text-ouput"/>
+                                <p:panelGrid columns="8" styleClass="ui-custompanelgrid9">
+                                    <p:outputLabel for="banco" value="Banco" styleClass="text-ouputnormal"/>
                                     <p:selectOneMenu id="banco" value="#{movimientobancarioController.bancoselec}" converter="omnifaces.SelectItemsConverter" required="true" > 
                                         <p:ajax event="change" listener="#{movimientobancarioController.refrescarCuentasBancarias()}" update="cuentabanco "/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
@@ -35,19 +35,27 @@
                                                        var="idbancoItem"
                                                        itemLabel="#{idbancoItem.nombrebanco}"  itemValue="#{idbancoItem}" /> 
                                     </p:selectOneMenu>
-                                    <p:outputLabel for="cuentabanco" value="Cuenta Bancaria" styleClass="text-ouput"/>
+                                    <p:outputLabel for="cuentabanco" value="Cuenta Bancaria" styleClass="text-ouputnormal"/>
                                     <p:selectOneMenu id="cuentabanco" value="#{movimientobancarioController.selected.idcuentabancaria}" converter="omnifaces.SelectItemsConverter"  required="true">
                                         <f:selectItems value="#{movimientobancarioController.lstCuentasSelecc}"
                                                        var="cuentaporbancoItem"
                                                        itemLabel="#{cuentaporbancoItem.numerocuenta}" itemValue="#{cuentaporbancoItem}"/>
                                     </p:selectOneMenu>
-                                    <p:outputLabel for="fechadesde" value="Fecha Desde" />
+                                    <p:outputLabel for="fechadesde" value="Fecha Desde" styleClass="text-ouputnormal"/>
                                     <p:calendar size="10"  locale="es" id="fechadesde" pattern="dd/MM/yyyy" value="#{movimientobancarioController.fechadesde}" showOn="button" navigator="true" required="true"/>                                
-                                    <p:outputLabel for="fechahasta" value="Fecha Hasta" />
+                                    <p:outputLabel for="fechahasta" value="Fecha Hasta" styleClass="text-ouputnormal"/>
                                     <p:calendar size="10"  locale="es" id="fechahasta" pattern="dd/MM/yyyy" value="#{movimientobancarioController.fechahasta}" showOn="button" navigator="true" required="true"/>                                
-
-                                    <p:commandButton value="Conciliar" icon="ui-icon-check" actionListener="#{movimientobancarioController.conciliar()}" update="panelart,:msgs"/>
+                                    <p:commandButton value="Conciliar" icon="ui-icon-check" actionListener="#{movimientobancarioController.conciliar()}" update="panelart,panel1,:msgs"/>
                                     <p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value="#{bundle.Imprimir}" actionListener="#{movimientobancarioController.verMovimiento()}" ajax="false" onclick="form.target = '_blank'"/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel for="saldobanco" value="Saldo Cuenta" styleClass="text-ouputnormal"/>
+                                    <p:outputLabel id="saldobanco" value="#{movimientobancarioController.saldomovbancario}" styleClass="text-ouput">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:outputLabel>
+
                                 </p:panelGrid>
                             </p:fieldset>
                         </p:panelGrid>
@@ -73,25 +81,12 @@
                                     <f:convertDateTime pattern="dd/MM/yyyy" />
                                 </h:outputText>
                             </p:column>
-                            <p:column width="150" filterBy="#{item.idcuentabancaria.idbanco.nombrebanco}" headerText="#{bundlebancario.ListMovimientobancarioTitle_banco}" filterMatchMode="exact" style="text-align: center">
-                                <f:facet name="filter">
-                                    <p:selectOneMenu onchange="PF('movimientosencta').filter()" >
-                                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
-                                        <f:selectItems value="#{bancoController.items}" />
-                                    </p:selectOneMenu>
-                                </f:facet>
+                            <p:column width="150" headerText="#{bundlebancario.ListMovimientobancarioTitle_banco}" style="text-align: center">
                                 <h:outputText value="#{item.idcuentabancaria.idbanco.nombrebanco}" />
                             </p:column>
-                            <p:column width="200" filterBy="#{item.idcuentabancaria.numerocuenta}" headerText="#{bundlebancario.ListMovimientobancarioTitle_idcuentabancaria}" filterMatchMode="exact" style="text-align: center">
-                                <f:facet name="filter">
-                                    <p:selectOneMenu onchange="PF('movimientosencta').filter()" >
-                                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
-                                        <f:selectItems value="#{cuentabancariaController.items}" />
-                                    </p:selectOneMenu>
-                                </f:facet>
+                            <p:column width="200" headerText="#{bundlebancario.ListMovimientobancarioTitle_idcuentabancaria}" style="text-align: center">
                                 <h:outputText value="#{item.idcuentabancaria.numerocuenta}" />
                             </p:column>                        
-
                             <p:column style="text-align: right">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundlebancario.ListMovimientobancarioTitle_saldoanterior}"/>

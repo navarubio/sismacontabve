@@ -27,6 +27,7 @@
                                  paginator="true"
                                  rowKey="#{item.idcuentabancaria}"
                                  rows="20"
+                                 rowStyleClass="#{item.saldo==item.idplandecuenta.saldogeneral ? 'asientocuadrado' : null} #{item.saldo!=item.idplandecuenta.saldogeneral ? 'facturaabonada' : null}"
                                  rowsPerPageTemplate="20,30,40,50"
                                  >
 
@@ -66,6 +67,15 @@
                             </f:facet>
                             <h:outputText value="#{item.idplandecuenta.idplandecuenta} #{item.idplandecuenta.descripcioncuenta}"/>
                         </p:column>
+                        <p:column width="150" style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlebanco.ListCuentabancariaTitle_saldocontable}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idplandecuenta.saldogeneral}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
+                        </p:column>
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlebanco.Create}" actionListener="#{cuentabancariaController.prepareCreate}" update=":CuentabancariaCreateForm" oncomplete="PF('CuentabancariaCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundlebanco.View}" update=":CuentabancariaViewForm" oncomplete="PF('CuentabancariaViewDialog').show()" disabled="#{empty cuentabancariaController.selected}"/>

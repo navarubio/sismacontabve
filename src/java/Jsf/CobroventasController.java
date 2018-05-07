@@ -638,30 +638,30 @@ public class CobroventasController implements Serializable {
     }
 
     public void calcularislrretenido() {
-        int personal = 1; 
-        int residenc = 3;
-        int tiposervicio = detalleretencionislrsp.getIdtiporetencionislr().getIdsubgrupo().getIdsubgrupo();
-        Tiporetencionislr tiporetencion = tiporetencionislrEJB.retencionislrFiltrada(personal, residenc, tiposervicio);
+//        int personal = 1; 
+//        int residenc = 3;
+//        int tiposervicio = detalleretencionislrsp.getIdtiporetencionislr().getIdsubgrupo().getIdsubgrupo();
+//        Tiporetencionislr tiporetencion = tiporetencionislrEJB.retencionislrFiltrada(personal, residenc, tiposervicio);
         double bimponibletotal = factura.getBimponiblefact();
-        double porcentbimponible = tiporetencion.getPorcentajebimponible();
-        double porcentislr = tiporetencion.getPorcentajeretencion();
-        double sustraendo = tiporetencion.getSustraendo();
-        islrretenido = (((((porcentbimponible * bimponibletotal) / 100) * porcentislr) / 100) - sustraendo);
+//        double porcentbimponible = tiporetencion.getPorcentajebimponible();
+        double porcentislr = detalleretencionislrsp.getIdsubgrupo().getProcentajeretencion();
+//        double sustraendo = tiporetencion.getSustraendo();
+        islrretenido = ((bimponibletotal * porcentislr) / 100);
         detalleretencionislrsp.setProcentajeretencion(porcentislr);
         detalleretencionislrsp.setTotalislrretenido(islrretenido);
-        detalleretencionislrsp.setSustraendo(sustraendo);
+        detalleretencionislrsp.setSustraendo(0.0);
     }
 
     public void grabarRetencion() {
         try {
-            if (detalleretencionivasp.getTotalivaretenido() >= 1) {
+            if (detalleretencionivasp.getTotalivaretenido() > 0 ) {
                 detalleretencionivasp.setNumerofact(factura);
                 detalleretencionivasp.setBimponible(factura.getBimponiblefact());
                 detalleretencionivasp.setTotalventa(factura.getTotalgeneral());
                 detalleretencionivasp.setTotalivaretenido(ivaretenido);
                 detalleretencionivaspEJB.create(detalleretencionivasp);
             }
-            if (detallefactu.getCodigo().getIdgrupo().getIdgrupo() == 2) {
+            if (detallefactu.getCodigo().getIdgrupo().getIdgrupo() > 0) {
                 detalleretencionislrsp.setNumerofact(factura);
                 detalleretencionislrsp.setTotalventa(factura.getTotalgeneral());
                 detalleretencionislrsp.setBimponible(factura.getBimponiblefact());

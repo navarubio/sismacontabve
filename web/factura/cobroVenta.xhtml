@@ -237,13 +237,13 @@
                                     <p:inputText id="baseimponible"  size="20" value="#{cobroventasController.factura.bimponiblefact}" style="text-align:right">
                                     </p:inputText>
                                     <p:outputLabel for="tiporetencionislr" value="Porcentaje Retencion ISLR" />
-                                    <p:selectOneMenu id="tiporetencionislr" value="#{cobroventasController.detalleretencionislrsp.idtiporetencionislr}" converter="omnifaces.SelectItemsConverter" 
+                                    <p:selectOneMenu id="tiporetencionislr" value="#{cobroventasController.detalleretencionislrsp.idsubgrupo}" converter="omnifaces.SelectItemsConverter" 
                                                      rendered="#{cobroventasController.tipocompra==1  ? true:false}">  
                                         <p:ajax event="change" listener="#{cobroventasController.calcularislrretenido()}" update="islrretenido,sustraendo,display"/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                                         <f:selectItems value="#{cobroventasController.subgruposfiltrados}"
                                                        var="idtiporetencionItem"
-                                                       itemLabel="#{idtiporetencionItem.descripcionservicio}"  itemValue="#{idtiporetencionItem}" /> 
+                                                       itemLabel="#{idtiporetencionItem.subgrupo}"  itemValue="#{idtiporetencionItem}" /> 
                                     </p:selectOneMenu>
                                     <p:outputLabel for="porcentajeretislr"  value="Porcenta Retencion: " styleClass="optionalLbl"/>
                                     <p:inputText id="porcentajeretislr"  size="20" value="#{cobroventasController.detalleretencionislrsp.procentajeretencion}" style="text-align:right" />

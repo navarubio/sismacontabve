@@ -24,17 +24,17 @@
                     <p:panel id="reque" header="CARGA DE REQUERIMIENTOS">
                         <p:fieldset  style="width: 39%" legend="Datos Generales"  >
                             <p:panelGrid columns="2" styleClass="ui-custompanelgrid1">
-                                <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouput" />
+                                <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouputnormal" />
                                 <p:outputLabel id="usuario" value="#{requerimientosController.usa.nombre}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="departamento"  value="Departamento" styleClass="text-ouput"/>
+                                <p:outputLabel for="departamento"  value="Departamento" styleClass="text-ouputnormal"/>
                                 <p:outputLabel id="departamento" value="#{requerimientosController.usa.iddepartamento.departamento}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="proveedor" value="Proveedor" styleClass="text-ouput"/>
+                                <p:outputLabel for="proveedor" value="Proveedor" styleClass="text-ouputnormal"/>
                                 <p:inputText id="proveedor" label="Proveedor" size ="50" value="#{requerimientosController.auxrequer.posibleproveedor}" />
-                                <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouput"/>
+                                <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouputnormal"/>
                                 <p:inputText id="telefono" label="Telefonos" size="40" value="#{requerimientosController.auxrequer.telefonoproveedor}"/>
-                                <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" styleClass="text-ouput" />
+                                <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" styleClass="text-ouputnormal" />
                                 <p:calendar id="fechasolicitud" locale="es" pattern="dd/MM/yyyy" value="#{requerimientosController.auxrequer.fecharequerimiento}" showOn="button" navigator="true" required="true" requiredMessage="Debe elegir una fecha para su requerimiento" size="8"/>
-                                <p:outputLabel for="resena" value="Breve Reseña" styleClass="text-ouput"/>
+                                <p:outputLabel for="resena" value="Breve Reseña" styleClass="text-ouputnormal"/>
                                 <p:inputTextarea id="resena"  rows="3" cols="50" label="breve resena" value="#{requerimientosController.auxrequer.descripcion}" required="true" requiredMessage="Se requiere anexar una reseña para este requerimiento" />
                             </p:panelGrid>
                         </p:fieldset>

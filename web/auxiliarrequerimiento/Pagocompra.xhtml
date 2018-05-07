@@ -30,22 +30,22 @@
                         <p:panelGrid columns="3">
                             <p:fieldset  legend="Datos Requerimiento" >
                                 <p:panelGrid columns="2" styleClass="ui-custompanelgrid1">
-                                    <p:outputLabel for="numero" value="Solicitud" styleClass="text-ouput"/>
+                                    <p:outputLabel for="numero" value="Solicitud" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="numero" value="REQ- #{pagosController.auxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouput"/>
+                                    <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="usuario" value="#{pagosController.auxiliarrequerimiento.idusuario.nombre}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="departamento" value="Departamento" styleClass="text-ouput"/>
+                                    <p:outputLabel for="departamento" value="Departamento" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="departamento" value="#{pagosController.auxiliarrequerimiento.iddepartamento.departamento}" styleClass="optionalLbl"/>
 
-                                    <p:outputLabel for="proveedor" value="Proveedor Referido" styleClass="text-ouput"/>
+                                    <p:outputLabel for="proveedor" value="Proveedor Referido" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="proveedor" value="#{pagosController.auxiliarrequerimiento.posibleproveedor}"/>
-                                    <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouput"/>
+                                    <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="telefono" value="#{pagosController.auxiliarrequerimiento.telefonoproveedor}"/>
-                                    <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" styleClass="text-ouput" />
+                                    <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" styleClass="text-ouputnormal" />
                                     <p:outputLabel id="fechasolicitud" value="#{pagosController.auxiliarrequerimiento.fecharequerimiento}">
                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </p:outputLabel>
-                                    <p:outputLabel for="resena" value="Breve Reseña" styleClass="text-ouput"/>
+                                    <p:outputLabel for="resena" value="Breve Reseña" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="resena" value="#{pagosController.auxiliarrequerimiento.descripcion}" />
                                 </p:panelGrid>
                             </p:fieldset>

@@ -55,6 +55,8 @@ public class Subgrupo implements Serializable {
     private Collection<Articulo> articuloCollection;
     @OneToMany(mappedBy = "idsubgrupo") 
     private Collection<Detalleretencionislref> detalleretencionislrefCollection;
+    @OneToMany(mappedBy = "idsubgrupo") 
+    private Collection<Detalleretencionislrsp> detalleretencionislrspCollection;
     
         public Subgrupo() {
     }
@@ -145,5 +147,14 @@ public class Subgrupo implements Serializable {
 
     public void setDetalleretencionislrefCollection(Collection<Detalleretencionislref> detalleretencionislrefCollection) {
         this.detalleretencionislrefCollection = detalleretencionislrefCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Detalleretencionislrsp> getDetalleretencionislrspCollection() {
+        return detalleretencionislrspCollection;
+    }
+
+    public void setDetalleretencionislrspCollection(Collection<Detalleretencionislrsp> detalleretencionislrspCollection) {
+        this.detalleretencionislrspCollection = detalleretencionislrspCollection;
     }
 }

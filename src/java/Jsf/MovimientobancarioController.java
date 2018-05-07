@@ -9,11 +9,13 @@ import Jpa.MovimientobancarioFacade;
 import Jpa.MovimientobancarioFacadeLocal;
 import Modelo.Banco;
 import Modelo.Cuentabancaria;
+import Modelo.Plandecuenta_;
 
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -44,7 +46,7 @@ public class MovimientobancarioController implements Serializable {
     private BancoFacadeLocal bancoEJB;
     @EJB
     private MovimientobancarioFacadeLocal movimientobancarioEJB;
-    
+
     private List<Movimientobancario> items = null;
     private List<Movimientobancario> itemsfiltrados = null;
     private Movimientobancario selected = new Movimientobancario();
@@ -56,6 +58,8 @@ public class MovimientobancarioController implements Serializable {
     private List<Cuentabancaria> lstCuentasSelecc;
     ArrayList<Movimientobancario> listaerrores1 = new ArrayList();
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
+    double saldomovbancario = 0.0;
+    double saldocuenta=0.0;
 
     public MovimientobancarioController() {
     }
@@ -142,6 +146,23 @@ public class MovimientobancarioController implements Serializable {
         this.listaerrores1 = listaerrores1;
     }
 
+    public double getSaldomovbancario() {
+        return saldomovbancario;
+    }
+
+    public void setSaldomovbancario(double saldomovbancario) {
+        this.saldomovbancario = saldomovbancario;
+    }
+
+    public double getSaldocuenta() {
+        return saldocuenta;
+    }
+
+    public void setSaldocuenta(double saldocuenta) {
+        this.saldocuenta = saldocuenta;
+    }
+    
+
     public Movimientobancario prepareCreate() {
         selected = new Movimientobancario();
         initializeEmbeddableKey();
@@ -168,6 +189,13 @@ public class MovimientobancarioController implements Serializable {
     public void actualizar() {
 //        itemsfiltrados.clear();
         itemsfiltrados = ejbFacade.buscarmovimientoporfecha(selected.getIdcuentabancaria(), fechadesde, fechahasta);
+        int ultimo=itemsfiltrados.size()-1;
+        saldocuenta=selected.getIdcuentabancaria().getSaldo();
+        Movimientobancario movimiento;
+        if (!itemsfiltrados.isEmpty()) {
+            movimiento = itemsfiltrados.get(ultimo);
+            saldomovbancario = movimiento.getSaldoactual();
+        }
 
     }
 
@@ -246,6 +274,13 @@ public class MovimientobancarioController implements Serializable {
             corregirSaldos();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "LOS SALDOS FUERON AJUSTADOS SATISFACTORIAMENTE"));
         }
+        
+        int ultimo=listaerrores1.size()-1;
+        Movimientobancario movimiento;
+        if (!listaerrores1.isEmpty()) {
+            movimiento = listaerrores1.get(ultimo);
+            saldomovbancario = movimiento.getSaldoactual();
+        }
 
     }
 
@@ -255,6 +290,7 @@ public class MovimientobancarioController implements Serializable {
             movimientoListo = movicorreg;
             movimientobancarioEJB.edit(movimientoListo);
         }
+        
     }
 
     public void create() {

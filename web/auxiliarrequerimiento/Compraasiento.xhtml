@@ -46,6 +46,8 @@
                                     </p:outputLabel>
                                     <p:outputLabel for="resena" value="Breve Reseña" styleClass="optionalLbl"/>
                                     <p:outputLabel id="resena" value="#{asientoscontablesController.auxiliarrequerimiento.descripcion}" />
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>                                   
                                 </p:panelGrid>
                             </p:fieldset>
                             <p:fieldset  legend="Datos Compra" >
@@ -258,8 +260,8 @@
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="2" style="text-align:right" footerText="TOTAL ASIENTO" />
-                                    <p:column style="text-align: right"  footerText="BsF #{asientoscontablesController.totaldebe()}" />
-                                    <p:column style="text-align: right"  footerText="BsF #{asientoscontablesController.totalhaber()}" />
+                                    <p:column style="text-align: right"  footerText="$ #{asientoscontablesController.totaldebe()}" />
+                                    <p:column style="text-align: right"  footerText="$ #{asientoscontablesController.totalhaber()}" />
                                 </p:row>
                             </p:columnGroup>                            
                         </p:dataTable>
