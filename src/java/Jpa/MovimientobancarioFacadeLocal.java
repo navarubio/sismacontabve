@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Cobroventa;
 import Modelo.Cuentabancaria;
 import Modelo.Movimientobancario;
 import Modelo.Otroingreso;
@@ -40,4 +41,5 @@ public interface MovimientobancarioFacadeLocal {
     
     List<Movimientobancario> buscarmovimientoporfecha (Cuentabancaria cuenta, Date fechaini, Date fechafinish);
     
+    Movimientobancario buscarmovimientoxIdcobro(Cobroventa cobro);
 }

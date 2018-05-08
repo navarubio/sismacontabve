@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Cobroventa;
 import Modelo.Cuentabancaria;
 import Modelo.Movimientobancario;
 import Modelo.Otroingreso;
@@ -21,7 +22,8 @@ import javax.persistence.Query;
  * @author Inpeca
  */
 @Stateless
-public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario> implements MovimientobancarioFacadeLocal{
+public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario> implements MovimientobancarioFacadeLocal {
+
     @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
@@ -33,9 +35,9 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
     public MovimientobancarioFacade() {
         super(Movimientobancario.class);
     }
-    
+
     @Override
-    public List<Movimientobancario> buscarmovimiento (Otroingreso otro) {
+    public List<Movimientobancario> buscarmovimiento(Otroingreso otro) {
         String consulta;
         List<Movimientobancario> lista = null;
         try {
@@ -48,9 +50,28 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
         }
         return lista;
     }
-    
+
     @Override
-    public List<Movimientobancario> buscarmovimiento (Reposicioncajachica reposicion) {
+    public Movimientobancario buscarmovimientoxIdcobro(Cobroventa cobro) {
+        String consulta;
+        Movimientobancario movimientobanc = null;
+        List<Movimientobancario> lista = null;
+        try {
+            consulta = "From Movimientobancario m where m.idcobroventa.idcobroventa= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, cobro.getIdcobroventa());
+            if (!lista.isEmpty()) {
+                movimientobanc = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+
+        }
+        return movimientobanc;
+    }
+
+    @Override
+    public List<Movimientobancario> buscarmovimiento(Reposicioncajachica reposicion) {
         String consulta;
         List<Movimientobancario> lista = null;
         try {
@@ -63,9 +84,9 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
         }
         return lista;
     }
-    
+
     @Override
-    public List<Movimientobancario> buscarmovimientoporfecha (Cuentabancaria cuenta, Date fechaini, Date fechafinish) {
+    public List<Movimientobancario> buscarmovimientoporfecha(Cuentabancaria cuenta, Date fechaini, Date fechafinish) {
         String consulta;
         List<Movimientobancario> lista = null;
         try {
@@ -81,5 +102,5 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
         }
         return lista;
     }
-    
+
 }

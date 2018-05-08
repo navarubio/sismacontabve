@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Tipopago.findByIdtipopago", query = "SELECT t FROM Tipopago t WHERE t.idtipopago = :idtipopago"),
     @NamedQuery(name = "Tipopago.findByTipopago", query = "SELECT t FROM Tipopago t WHERE t.tipopago = :tipopago")})
 public class Tipopago implements Serializable {
+
     @OneToMany(mappedBy = "idtipopago")
     private Collection<Reposicioncajachica> reposicioncajachicaCollection;
     @OneToMany(mappedBy = "idtipopago")
@@ -52,6 +53,12 @@ public class Tipopago implements Serializable {
     @Size(max = 20)
     @Column(name = "tipopago")
     private String tipopago;
+    @Size(max = 5)
+    @Column(name = "abreviatura")
+    private String abreviatura;
+    @OneToMany(mappedBy = "idtipopago")
+    private Collection<Movimientobancario> movimientobancarioCollection;
+
 
     public Tipopago() {
     }
@@ -74,6 +81,14 @@ public class Tipopago implements Serializable {
 
     public void setTipopago(String tipopago) {
         this.tipopago = tipopago;
+    }
+
+    public String getAbreviatura() {
+        return abreviatura;
+    }
+
+    public void setAbreviatura(String abreviatura) {
+        this.abreviatura = abreviatura;
     }
 
     @Override
@@ -135,6 +150,15 @@ public class Tipopago implements Serializable {
 
     public void setReposicioncajachicaCollection(Collection<Reposicioncajachica> reposicioncajachicaCollection) {
         this.reposicioncajachicaCollection = reposicioncajachicaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Movimientobancario> getMovimientobancarioCollection() {
+        return movimientobancarioCollection;
+    }
+
+    public void setMovimientobancarioCollection(Collection<Movimientobancario> movimientobancarioCollection) {
+        this.movimientobancarioCollection = movimientobancarioCollection;
     }
 
 }

@@ -148,7 +148,7 @@ public class AsientosventasController implements Serializable {
     private int cuentaseleccionada;
     private int indicearreglo = 0;
     private Librodiario codlibrodiario;
-
+    private Libromayor codlibromayor;
     
     
     private Date fechaactual = new Date();
@@ -886,7 +886,7 @@ public class AsientosventasController implements Serializable {
             double saldototaltotal = 0;
             librodiarioEJB.create(librodiario);
             codlibrodiario = librodiarioEJB.ultimoInsertado();
-
+            
             Detallelibrodiario detalleld = new Detallelibrodiario();
             Libromayor libromy = new Libromayor();
             Plandecuenta cuentacontable = new Plandecuenta();
@@ -924,6 +924,14 @@ public class AsientosventasController implements Serializable {
                 cuentacontable.setSaldogeneral(saldototaltotal);
                 detallelibrodiarioEJB.create(detalleld);
                 libromayorEJB.create(libromy);
+                codlibromayor = libromayorEJB.ultimoInsertado();
+                
+                if (cobro.getIdcuentabancaria().getIdplandecuenta().getIdplandecuenta() == cuentacontable.getIdplandecuenta()){
+                    movimientobancario=movimientoBancarioEJB.buscarmovimientoxIdcobro(cobro);
+//                    movimientobancario.setidlibromayor=codlibromayor;
+                    
+                }
+                
                 plandecuentaEJB.edit(cuentacontable);
                 master.setIdestatuscontable(estatuscontableEJB.estatusContableRegistrada());
                 master.setIdlibrodiario(codlibrodiario);

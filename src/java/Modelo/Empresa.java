@@ -86,6 +86,8 @@ public class Empresa implements Serializable {
     private Integer serialconsumo;
     @Column(name = "serialreposicion")
     private Integer serialreposicion;
+    @Column(name = "serialconciliacion")
+    private Integer serialconciliacion;
     @Column(name = "ctaxpagarproveed")
     private Integer ctaxpagarproved;
     @Column(name = "credfiscal")
@@ -226,6 +228,14 @@ public class Empresa implements Serializable {
 
     public Integer getSerialreposicion() {
         return serialreposicion;
+    }
+
+    public Integer getSerialconciliacion() {
+        return serialconciliacion;
+    }
+
+    public void setSerialconciliacion(Integer serialconciliacion) {
+        this.serialconciliacion = serialconciliacion;
     }
 
     public void setSerialreposicion(Integer serialreposicion) {

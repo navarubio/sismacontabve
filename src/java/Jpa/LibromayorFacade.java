@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Articulo;
+import Modelo.Librodiario;
 import Modelo.Libromayor;
 import Modelo.Plandecuenta;
 import java.util.Date;
@@ -69,6 +70,23 @@ public class LibromayorFacade extends AbstractFacade<Libromayor> implements Libr
             throw e;
         }
         return may;
+    }
+    
+    @Override
+    public Libromayor ultimoInsertado() {
+        String consulta = null;
+        Libromayor ultimo = new Libromayor();
+        try {
+            consulta = "Select l From Libromayor l Order By l.idlibromayor Desc";
+            Query query = em.createQuery(consulta);
+            List<Libromayor> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                ultimo = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return ultimo;
     }
     
     

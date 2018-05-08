@@ -6,6 +6,7 @@
 package Modelo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -55,6 +58,8 @@ public class Libromayor implements Serializable {
     @JoinColumn(name = "idplandecuenta", referencedColumnName = "idplandecuenta")
     @ManyToOne
     private Plandecuenta idplandecuenta;
+    @OneToMany(mappedBy = "idlibromayor")
+    private Collection<Movimientobancario> movimientobancarioCollection;
 
     public Libromayor() {
     }
@@ -142,6 +147,15 @@ public class Libromayor implements Serializable {
     @Override
     public String toString() {
         return "Modelo.Libromayor[ idlibromayor=" + idlibromayor + " ]";
+    }
+    
+    @XmlTransient
+    public Collection<Movimientobancario> getMovimientobancarioCollection() {
+        return movimientobancarioCollection;
+    }
+
+    public void setMovimientobancarioCollection(Collection<Movimientobancario> movimientobancarioCollection) {
+        this.movimientobancarioCollection = movimientobancarioCollection;
     }
     
 }

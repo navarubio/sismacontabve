@@ -36,4 +36,6 @@ public interface LibromayorFacadeLocal {
     
     Libromayor buscarLibro (Integer id);
     
+    Libromayor ultimoInsertado();
+    
 }

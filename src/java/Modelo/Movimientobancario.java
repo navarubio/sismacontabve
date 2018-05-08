@@ -20,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -74,6 +75,14 @@ public class Movimientobancario implements Serializable {
     @JoinColumn(name = "idreposicioncajachica", referencedColumnName = "idreposicioncajachica")
     @ManyToOne
     private Reposicioncajachica idreposicioncajachica;
+    @Size(max = 15)
+    @Column(name = "referencia")
+    private String referencia;
+    @JoinColumn(name = "idlibromayot", referencedColumnName = "idlibromayor")
+    @ManyToOne
+    private Libromayor idlibromayor;
+    @Column(name = "conciliado")
+    private Boolean conciliado;
 
 
     public Movimientobancario() {
@@ -172,6 +181,30 @@ public class Movimientobancario implements Serializable {
         this.idreposicioncajachica = idreposicioncajachica;
     }
 
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
+    }
+
+    public Libromayor getIdlibromayor() {
+        return idlibromayor;
+    }
+
+    public void setIdlibromayor(Libromayor idlibromayor) {
+        this.idlibromayor = idlibromayor;
+    }
+
+    public Boolean getConciliado() {
+        return conciliado;
+    }
+
+    public void setConciliado(Boolean conciliado) {
+        this.conciliado = conciliado;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
