@@ -9,7 +9,7 @@ import Jpa.MovimientobancarioFacade;
 import Jpa.MovimientobancarioFacadeLocal;
 import Modelo.Banco;
 import Modelo.Cuentabancaria;
-import Modelo.Plandecuenta_;
+import Modelo.Plandecuenta;
 
 import java.io.Serializable;
 import java.sql.SQLException;

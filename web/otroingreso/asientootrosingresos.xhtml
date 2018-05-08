@@ -26,23 +26,23 @@
                         <p:panelGrid columns="1">
                             <p:fieldset  legend="Datos del Ingreso" >
                                 <p:panelGrid columns="4" styleClass="ui-custompanelgrid1">
-                                    <p:outputLabel for="usuario" value="USUARIO" style="font-weight:bold"  styleClass="text-ouput"/>
+                                    <p:outputLabel for="usuario" value="USUARIO" style="font-weight:bold"  styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="usuario" value="#{asientosotrosingresosController.otroingreso.idusuario.nombre}" />
-                                    <p:outputLabel for="departamento" style="font-weight:bold"  value="DEPARTAMENTO" styleClass="text-ouput"/>
+                                    <p:outputLabel for="departamento" style="font-weight:bold"  value="DEPARTAMENTO" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="departamento" value="#{asientosotrosingresosController.otroingreso.idusuario.iddepartamento.departamento}"/>
-                                    <p:outputLabel for="fechacobro" value="Fecha Ingreso" styleClass="text-ouput" />
+                                    <p:outputLabel for="fechacobro" value="Fecha Ingreso" styleClass="text-ouputnormal" />
                                     <p:outputLabel id="fechacobro" value="#{asientosotrosingresosController.otroingreso.fechaingreso}" >
                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </p:outputLabel>
-                                    <p:outputLabel for="montofact" value="MONTO INGRESADO" styleClass="text-ouput"/>
+                                    <p:outputLabel for="montofact" value="MONTO INGRESADO" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="montofact" value="#{asientosotrosingresosController.otroingreso.montoingresado}" styleClass="text-ouputcxc" style="text-align: right">
                                         <f:convertNumber type="currency" currencySymbol=" " />
                                     </p:outputLabel>
-                                    <p:outputLabel for="tipopago" value="Forma de Pago" styleClass="text-ouput"/>
+                                    <p:outputLabel for="tipopago" value="Forma de Pago" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="tipopago" value="#{asientosotrosingresosController.otroingreso.idtipopago.tipopago}" /> 
-                                    <p:outputLabel for="tipoingreso" value="Tipo Ingreso" styleClass="text-ouput"/>
+                                    <p:outputLabel for="tipoingreso" value="Tipo Ingreso" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="tipoingreso" value="#{asientosotrosingresosController.otroingreso.idtipoingreso.tipoingreso}" /> 
-                                    <p:outputLabel for="observaciones" value="Observaciones" styleClass="text-ouput"/>
+                                    <p:outputLabel for="observaciones" value="Observaciones" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="observaciones" value="#{asientosotrosingresosController.otroingreso.observaciones}" /> 
                                     <p:outputLabel/>
                                     <p:outputLabel/>

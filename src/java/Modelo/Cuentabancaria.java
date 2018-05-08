@@ -37,6 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cuentabancaria.findBySaldo", query = "SELECT c FROM Cuentabancaria c WHERE c.saldo = :saldo")})
 public class Cuentabancaria implements Serializable {
     @OneToMany(mappedBy = "idcuentabancaria")
+    private Collection<Conciliacion> conciliacionCollection;
+    @OneToMany(mappedBy = "idcuentabancaria")
     private Collection<Reposicioncajachica> reposicioncajachicaCollection;
     @OneToMany(mappedBy = "idcuentabancaria")
     private Collection<Otroingreso> otroingresoCollection;
@@ -170,6 +172,15 @@ public class Cuentabancaria implements Serializable {
 
     public void setReposicioncajachicaCollection(Collection<Reposicioncajachica> reposicioncajachicaCollection) {
         this.reposicioncajachicaCollection = reposicioncajachicaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Conciliacion> getConciliacionCollection() {
+        return conciliacionCollection;
+    }
+
+    public void setConciliacionCollection(Collection<Conciliacion> conciliacionCollection) {
+        this.conciliacionCollection = conciliacionCollection;
     }
     
 

@@ -554,7 +554,8 @@ public class CobroventasController implements Serializable {
 
                 int tipoconj = 1;
                 tipoconjunto = tipoconjuntoEJB.cambiartipoConjunto(tipoconj);
-                maestromovi.setIdcobroventa(cobroventaEJB.ultimocobroInsertado());
+                Cobroventa ultimocobro=cobroventaEJB.ultimocobroInsertado();
+                maestromovi.setIdcobroventa(ultimocobro);
                 maestromovi.setFechamovimiento(cobro.getFechacobro());
                 maestromovi.setIdtipoconjunto(tipoconjunto);
                 maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
@@ -572,6 +573,10 @@ public class CobroventasController implements Serializable {
                 movimientobancario.setSaldoanterior(saldoanteriorbanco);
                 movimientobancario.setCredito(cobro.getMontocobrado());
                 movimientobancario.setSaldoactual(saldoactualbanco);
+                movimientobancario.setReferencia(cobro.getAprobacion());
+                movimientobancario.setIdtipopago(cobro.getIdtipopago());
+                movimientobancario.setConciliado(Boolean.FALSE);
+                movimientobancario.setIdcobroventa(ultimocobro);
                 movimientoBancarioEJB.create(movimientobancario);
 
                 if (factura.getSaldopendiente() < 1) {

@@ -60,6 +60,7 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
             consulta = "From Movimientobancario m where m.idcobroventa.idcobroventa= ?1";
             Query query = em.createQuery(consulta);
             query.setParameter(1, cobro.getIdcobroventa());
+            lista = query.getResultList();
             if (!lista.isEmpty()) {
                 movimientobanc = lista.get(0);
             }

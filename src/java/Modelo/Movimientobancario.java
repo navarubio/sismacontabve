@@ -78,11 +78,17 @@ public class Movimientobancario implements Serializable {
     @Size(max = 15)
     @Column(name = "referencia")
     private String referencia;
-    @JoinColumn(name = "idlibromayot", referencedColumnName = "idlibromayor")
+    @JoinColumn(name = "idlibromayor", referencedColumnName = "idlibromayor")
     @ManyToOne
     private Libromayor idlibromayor;
     @Column(name = "conciliado")
     private Boolean conciliado;
+    @JoinColumn(name = "idconciliacion", referencedColumnName = "idconciliacion")
+    @ManyToOne
+    private Conciliacion idconciliacion;
+    @JoinColumn(name = "idtipopago", referencedColumnName = "idtipopago")
+    @ManyToOne
+    private Tipopago idtipopago;
 
 
     public Movimientobancario() {
@@ -203,6 +209,22 @@ public class Movimientobancario implements Serializable {
 
     public void setConciliado(Boolean conciliado) {
         this.conciliado = conciliado;
+    }
+
+    public Conciliacion getIdconciliacion() {
+        return idconciliacion;
+    }
+
+    public void setIdconciliacion(Conciliacion idconciliacion) {
+        this.idconciliacion = idconciliacion;
+    }
+
+    public Tipopago getIdtipopago() {
+        return idtipopago;
+    }
+
+    public void setIdtipopago(Tipopago idtipopago) {
+        this.idtipopago = idtipopago;
     }
     
     @Override

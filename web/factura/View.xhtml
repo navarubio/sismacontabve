@@ -13,31 +13,31 @@
                     <p:panelGrid columns="1" rendered="#{facturaController.selected != null}" >
                         <p:fieldset  legend="Datos de Facturación"  >
                             <p:panelGrid columns="2" style="width: 600px" styleClass="ui-custompanelgrid1">
-                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_numerofact}" styleClass="text-ouput" />
+                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_numerofact}" styleClass="text-ouputnormal" />
                                 <h:outputText value="#{facturaController.selected.numerofact}" title="#{bundlefactura.ViewFacturaTitle_numerofact}" styleClass="text-ouputfact">
                                     <f:convertNumber pattern="00000000" type="number"/>
                                 </h:outputText>                            
-                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_numerocontrol}" styleClass="text-ouput"/>
+                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_numerocontrol}" styleClass="text-ouputnormal"/>
                                 <h:outputText value="#{facturaController.selected.numerocontrol}" title="#{bundlefactura.ViewFacturaTitle_numerocontrol}"/>
-                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_idestatusfacturaventa}" styleClass="text-ouput"/>
+                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_idestatusfacturaventa}" styleClass="text-ouputnormal"/>
                                 <h:outputText value="#{facturaController.selected.idestatusfacturaventa.estatusfacturaventa}" title="#{bundlefactura.ViewFacturaTitle_idestatusfacturaventa}"/>
-                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_idestatuscontable}" styleClass="text-ouput"/>
+                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_idestatuscontable}" styleClass="text-ouputnormal"/>
                                 <h:outputText value="#{facturaController.selected.idestatuscontable.estatuscontable}" title="#{bundlefactura.ViewFacturaTitle_idestatuscontable}"/>                        
-                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_idcaja}" styleClass="text-ouput"/>
+                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_idcaja}" styleClass="text-ouputnormal"/>
                                 <h:outputText value="#{facturaController.selected.idcaja}" title="#{bundlefactura.ViewFacturaTitle_idcaja}"/>
-                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_idusuario}" styleClass="text-ouput"/>
+                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_idusuario}" styleClass="text-ouputnormal"/>
                                 <h:outputText value="#{facturaController.selected.idusuario.nombre}" title="#{bundlefactura.ViewFacturaTitle_idusuario}"/>
-                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_fecha}" styleClass="text-ouput"/>
+                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_fecha}" styleClass="text-ouputnormal"/>
                                 <h:outputText value="#{facturaController.selected.fecha}" title="#{bundlefactura.ViewFacturaTitle_fecha}">
                                     <f:convertDateTime pattern="dd/MM/yyyy" />
                                 </h:outputText>
-                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_hora}" styleClass="text-ouput"/>
+                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_hora}" styleClass="text-ouputnormal"/>
                                 <h:outputText value="#{facturaController.selected.hora}" title="#{bundlefactura.ViewFacturaTitle_hora}"/>
-                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_rifcliente}" styleClass="text-ouput"/>
+                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_rifcliente}" styleClass="text-ouputnormal"/>
                                 <h:outputText value="#{facturaController.selected.rifcliente}" title="#{bundlefactura.ViewFacturaTitle_rifcliente}"/>
-                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_razonsocial}" styleClass="text-ouput"/>
+                                <h:outputText style="float:right" value="#{bundlefactura.ViewFacturaLabel_razonsocial}" styleClass="text-ouputnormal"/>
                                 <h:outputText value="#{facturaController.selected.rifcliente.razonsocial}" title="#{bundlefactura.ViewFacturaTitle_rifcliente}"/>
-                                <h:outputText style="float:right"  value="#{bundlefactura.ViewFacturaLabel_observacionesfact}" styleClass="text-ouput"/>
+                                <h:outputText style="float:right"  value="#{bundlefactura.ViewFacturaLabel_observacionesfact}" styleClass="text-ouputnormal"/>
                                 <h:outputText style="width: 150px" value="#{facturaController.selected.observacionesfact}" title="#{bundlefactura.ViewFacturaTitle_observacionesfact}"/>
                             </p:panelGrid>
                             <p:panelGrid id="saldos" style="width: 600px" columns="10" styleClass="ui-custompanelgrid2">

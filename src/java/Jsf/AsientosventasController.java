@@ -59,7 +59,8 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;import javax.servlet.ServletContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -133,24 +134,24 @@ public class AsientosventasController implements Serializable {
     private List<Cuentabancaria> lstCuentasSelecc;
     private List<Banco> bancos;
     private int edad = 0;
-    
+    private int control=0;
+
     private int vercasilla = 0;
     private Maestromovimiento master;
-    private double retiva =0;
-    private double retislr=0;
+    private double retiva = 0;
+    private double retislr = 0;
     private String mensaje;
     private List<Detallelibrodiario> listadetalleslibrodiario = new ArrayList();
     private int id = 0;
     private double totaldebegeneral = 0;
     private double totalhabergeneral = 0;
     private Detallelibrodiario detalleamodificar;
-    private Detallelibrodiario detalleaanexar= new Detallelibrodiario();
+    private Detallelibrodiario detalleaanexar = new Detallelibrodiario();
     private int cuentaseleccionada;
     private int indicearreglo = 0;
     private Librodiario codlibrodiario;
     private Libromayor codlibromayor;
-    
-    
+
     private Date fechaactual = new Date();
     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
@@ -215,6 +216,7 @@ public class AsientosventasController implements Serializable {
     public Librodiario getLibrodiario() {
         return librodiario;
     }
+
     public int getCuentaseleccionada() {
         return cuentaseleccionada;
     }
@@ -222,6 +224,7 @@ public class AsientosventasController implements Serializable {
     public void setCuentaseleccionada(int cuentaseleccionada) {
         this.cuentaseleccionada = cuentaseleccionada;
     }
+
     public Detallelibrodiario getDetalleamodificar() {
         return detalleamodificar;
     }
@@ -229,7 +232,7 @@ public class AsientosventasController implements Serializable {
     public void setDetalleamodificar(Detallelibrodiario detalleamodificar) {
         this.detalleamodificar = detalleamodificar;
     }
-    
+
     public void setLibrodiario(Librodiario librodiario) {
         this.librodiario = librodiario;
     }
@@ -446,7 +449,7 @@ public class AsientosventasController implements Serializable {
     public void setMontocobrado(double montocobrado) {
         this.montocobrado = montocobrado;
     }
-    
+
     public Empresa getEmpresa() {
         return empresa;
     }
@@ -465,10 +468,10 @@ public class AsientosventasController implements Serializable {
 //        cobro = new Cobroventa();
         cobro.setFechacobro(fechaactual);
         visualizar = 0;
-        vercasilla=0;
+        vercasilla = 0;
         listadetalleslibrodiario.clear();
         Usuario us = requerimientosController.getUsa();
-        empresa=us.getIddepartamento().getIdempresa();
+        empresa = us.getIddepartamento().getIdempresa();
     }
 
     public List<Cuentabancaria> refrescarCuentasBancarias() {
@@ -493,7 +496,7 @@ public class AsientosventasController implements Serializable {
         double montoiva = factura.getIvafact();
         this.tipofactura = 1;
         this.totalretenido = 0;
-        this.montocobrado =factura.getSaldopendiente();
+        this.montocobrado = factura.getSaldopendiente();
         this.ivaretenido = 0;
         this.islrretenido = 0;
         double totalfactu = factura.getTotalgeneral();
@@ -572,47 +575,48 @@ public class AsientosventasController implements Serializable {
         }
     }
 
-    public void asignarfactura (Factura factu, Maestromovimiento maestro){
+    public void asignarfactura(Factura factu, Maestromovimiento maestro) {
         this.factura = factu;
         this.numeroFact = factura.getNumerofact();
         detallesfacturafiltrados = detallesenfacturaEJB.buscardetallefactura(factura);
         this.master = maestro;
         this.vercasilla = 1;
-        this.retiva=0;
-        this.retislr=0;
+        this.retiva = 0;
+        this.retislr = 0;
         listadetalleslibrodiario = detallesasiento();
         librodiario.setFecha(factura.getFecha());
         Detallefactura detal = detallesfacturafiltrados.get(0);
         Articulo artic = detal.getCodigo();
-        librodiario.setDescripcionasiento("P/R EMISION DE FACTURA N° "+factura.getNumerofact()+" CORRESPONDIENTE A "+artic.getDescripcion());
+        librodiario.setDescripcionasiento("P/R EMISION DE FACTURA N° " + factura.getNumerofact() + " CORRESPONDIENTE A " + artic.getDescripcion());
     }
-    
-    public void asignarpagofactura (Cobroventa cobro, Maestromovimiento maestro){
-        this.cobro=cobro; 
+
+    public void asignarpagofactura(Cobroventa cobro, Maestromovimiento maestro) {
+        control=1;
+        this.cobro = cobro;
         this.factura = cobro.getNumerofact();
         detallesfacturafiltrados = detallesenfacturaEJB.buscardetallefactura(factura);
         this.master = maestro;
         this.vercasilla = 2;
-        this.retiva=0;
-        this.retislr=0;
+        this.retiva = 0;
+        this.retislr = 0;
         librodiario.setFecha(cobro.getFechacobro());
-        
-        if (cobro.getMontoretenido()>0){
-            this.retiva=detalleretencionivaspEJB.retencionivaencobro(cobro.getNumerofact().getNumerofact());
-            this.retislr=detalleretencionislrspEJB.retencionislrencobro(cobro.getNumerofact().getNumerofact());
+
+        if (cobro.getMontoretenido() > 0) {
+            this.retiva = detalleretencionivaspEJB.retencionivaencobro(cobro.getNumerofact().getNumerofact());
+            this.retislr = detalleretencionislrspEJB.retencionislrencobro(cobro.getNumerofact().getNumerofact());
         }
         listadetalleslibrodiario = detallesasientocobro();
-        librodiario.setDescripcionasiento("P/R COBRO N° "+  cobro.getIdcobroventa()+" CORRESPONDIENTE A LA FACTURA N° "+factura.getNumerofact());
+        librodiario.setDescripcionasiento("P/R COBRO N° " + cobro.getIdcobroventa() + " CORRESPONDIENTE A LA FACTURA N° " + factura.getNumerofact());
 
     }
-    
+
     public List<Detallelibrodiario> detallesasiento() {
         List<Detallelibrodiario> detallesasiento = null;
         anexar();
         detallesasiento = listadetalleslibrodiario;
         return detallesasiento;
     }
-    
+
     public List<Detallelibrodiario> detallesasientocobro() {
         List<Detallelibrodiario> detallesasiento = null;
         anexarcobro();
@@ -634,19 +638,19 @@ public class AsientosventasController implements Serializable {
         detallelibro.setIddetallelibrodiario(id);
         this.listadetalleslibrodiario.add(detallelibro);
         id++;
-        
+
         Detallelibrodiario detallelibr = new Detallelibrodiario();
-        
+
         int codcta = empresa.getDebfiscal();
         Plandecuenta cuentadebfiscal = plandecuentaEJB.buscarcuenta(codcta);
         detallelibr.setIdplandecuenta(cuentadebfiscal);
         detallelibr.setHaber(factura.getIvafact());
         detallelibr.setIddetallelibrodiario(id);
         this.listadetalleslibrodiario.add(detallelibr);
-        id++;      
-        
+        id++;
+
         Detallefactura detalle1 = detallesfacturafiltrados.get(0);
-        
+
         Articulo arti = detalle1.getCodigo();
         Detallelibrodiario detallelib = new Detallelibrodiario();
         if (arti.getIdplandecuenta() != null) {
@@ -664,12 +668,11 @@ public class AsientosventasController implements Serializable {
         id++;
 
     }
-    
-        public void anexarcobro() {
+
+    public void anexarcobro() {
         listadetalleslibrodiario.clear();
         id = 0;
         visualizar = 0;
-
 
         Detallelibrodiario detallelibr = new Detallelibrodiario();
         detallelibr.setIdplandecuenta(cobro.getIdcuentabancaria().getIdplandecuenta());
@@ -677,10 +680,10 @@ public class AsientosventasController implements Serializable {
         detallelibr.setIddetallelibrodiario(id);
         this.listadetalleslibrodiario.add(detallelibr);
         id++;
-        
+
         if (cobro.getMontoretenido() > 0) {
-            
-            if (cobro.getMontoretenido()==retiva){
+
+            if (cobro.getMontoretenido() == retiva) {
                 Detallelibrodiario detallelib = new Detallelibrodiario();
                 int codcta = empresa.getRetivacliente();
                 Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);
@@ -688,8 +691,8 @@ public class AsientosventasController implements Serializable {
                 detallelib.setDebe(cobro.getMontoretenido());
                 detallelib.setIddetallelibrodiario(id);
                 this.listadetalleslibrodiario.add(detallelib);
-                id++;                
-            }else if (cobro.getMontoretenido()>retiva){
+                id++;
+            } else if (cobro.getMontoretenido() > retiva) {
                 Detallelibrodiario detallelib = new Detallelibrodiario();
                 int codcta = empresa.getRetivacliente();
                 Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);
@@ -709,26 +712,25 @@ public class AsientosventasController implements Serializable {
                 id++;
             }
         }
-        
+
         Detallelibrodiario detallelibro = new Detallelibrodiario();
 
         int codctahaber = empresa.getCtasxcobrar();
         Plandecuenta cuentaporcobrar = plandecuentaEJB.buscarcuenta(codctahaber);
         detallelibro.setIdplandecuenta(cuentaporcobrar);
-        if (cobro.getMontopendiente()>0){
-            if (cobro.getMontoretenido()>0){
-                detallelibro.setHaber(cobro.getMontocobrado()+retiva+retislr);
-            }else{  
+        if (cobro.getMontopendiente() > 0) {
+            if (cobro.getMontoretenido() > 0) {
+                detallelibro.setHaber(cobro.getMontocobrado() + retiva + retislr);
+            } else {
                 detallelibro.setHaber(cobro.getMontocobrado());
             }
-        }else {
-            detallelibro.setHaber(cobro.getMontocobrado()+retiva+retislr);
+        } else {
+            detallelibro.setHaber(cobro.getMontocobrado() + retiva + retislr);
         }
         detallelibro.setIddetallelibrodiario(id);
         this.listadetalleslibrodiario.add(detallelibro);
         id++;
     }
-
 
     public List<Detallefactura> detallefacturaAuxiliar() {
         List<Detallefactura> listado = null;
@@ -741,18 +743,19 @@ public class AsientosventasController implements Serializable {
         cuentaseleccionada = detallelbr.getIdplandecuenta().getIdplandecuenta();
         indicearreglo = detallelbr.hashCode();
     }
-    
+
     public void modificar() {
-        
+
         detalleamodificar.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada));
         listadetalleslibrodiario.set(indicearreglo, detalleamodificar);
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cuenta fue modificada"));
     }
+
     public void anexarregistro() {
         Detallelibrodiario detalleanexo = new Detallelibrodiario();
-        detalleaanexar.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada));        
-        int indic = listadetalleslibrodiario.size();        
+        detalleaanexar.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada));
+        int indic = listadetalleslibrodiario.size();
         detalleaanexar.setIddetallelibrodiario(indic);
         detalleanexo.setIddetallelibrodiario(indic);
         detalleanexo.setIdplandecuenta(detalleaanexar.getIdplandecuenta());
@@ -761,7 +764,7 @@ public class AsientosventasController implements Serializable {
         this.listadetalleslibrodiario.add(detalleanexo);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cuenta fue modificada"));
     }
-    
+
     public void eliminar(Detallelibrodiario detalleld) {
         listadetalleslibrodiario.remove(detalleld.hashCode());
         int indice = 0;
@@ -774,122 +777,24 @@ public class AsientosventasController implements Serializable {
             id = 0;
         }
     }
-/**    public void registrar() {
-        if (visualizar == 7 || visualizar == 6 || visualizar == 5) {
-            try {
-                estatuscontab = estatuscontableEJB.estatusContablePorRegistrar();
-                if (formacobro == 1) {
-                    double saldo = 0;
-                    cobro.setMontocobrado(montoacobrar);
-                    factura.setSaldopendiente(saldo);
-                    int tipo = 1;
-                    statusfactu = estatusfacturaventaEJB.estatusfacturaPagada(tipo);
-                } else {
-                    int tipo = 0;
-                    double saldop = 0;
-                    if (totalretenido>0) {
-                        saldop = ((factura.getSaldopendiente()-totalretenido) - montocobrado);
-                    }else{
-                        saldop = factura.getSaldopendiente() - montocobrado;
-                    }
-                    if (saldop < 1) {
-                        tipo = 1;
-                    } else {
-                        tipo = 3;
-                    }
 
-                    factura.setSaldopendiente(saldop);
-                    statusfactu = estatusfacturaventaEJB.estatusfacturaAbonada(tipo);
-                }
-                factura.setIdestatusfacturaventa(statusfactu);
-                facturaEJB.edit(factura);
-                //codCompra = compraEJB.ultimacompraInsertada();
-
-                if (visualizar == 6) {
-                    cobro.setMontoretenido(0.0);
-                    cobro.setMontocobrado(montocobrado);
-                }else if (visualizar == 7) {
-                    cobro.setMontoretenido((detalleretencionivasp.getTotalivaretenido() + detalleretencionislrsp.getTotalislrretenido()));
-                    if (formacobro == 1) {
-                        cobro.setMontocobrado(montoacobrar);
-                    }else if (formacobro == 2){
-                        cobro.setMontocobrado(montocobrado);                        
-                    }
-                } else if (visualizar == 5) {
-                    cobro.setMontoretenido(0.0);
-                }
-
-                cobro.setNumerofact(factura);
-                cobro.setIdestatuscontable(estatuscontab);
-                cuentabancaria = cobro.getIdcuentabancaria();
-                cobro.setMontopendiente(factura.getSaldopendiente());
-                cobroventaEJB.create(cobro);
-
-                int tipoconj = 1;
-                tipoconjunto = tipoconjuntoEJB.cambiartipoConjunto(tipoconj);
-                maestromovi.setIdcobroventa(cobroventaEJB.ultimocobroInsertado());
-                maestromovi.setFechamovimiento(cobro.getFechacobro());
-                maestromovi.setIdtipoconjunto(tipoconjunto);
-                maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
-                maestromovimientoEJB.create(maestromovi);
-
-                double saldoactualbanco = 0;
-                double saldoanteriorbanco = 0;
-                saldoanteriorbanco = cobro.getIdcuentabancaria().getSaldo();
-                saldoactualbanco = montocobrado + cobro.getIdcuentabancaria().getSaldo();
-                cuentabancaria.setSaldo(saldoactualbanco);
-                cuentabancariaEJB.edit(cuentabancaria);
-                
-                movimientobancario.setFecha(cobro.getFechacobro());
-                movimientobancario.setIdcuentabancaria(cuentabancaria);
-                movimientobancario.setSaldoanterior(saldoanteriorbanco);
-                movimientobancario.setCredito(cobro.getMontocobrado());
-                movimientobancario.setSaldoactual(saldoactualbanco);
-                movimientoBancarioEJB.create(movimientobancario);
-
-                if (factura.getSaldopendiente() < 1) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cobro fue Almacenado"));
-                } else {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El Abono recibido fue Almacenado"));
-                }
-                String subject;
-                String ultimafactura = "" + factura.getNumerofact();
-                String fechafactu = formateador.format(cobro.getFechacobro());
-                correo = "FACTURA NRO: " + ultimafactura
-                        + "  CONTROL: " + factura.getNumerocontrol()
-                        + "  FECHA COBRO: " + fechafactu
-                        + "  CLIENTE: " + factura.getRifcliente().getRazonsocial()
-                        + "  RIF: " + factura.getRifcliente().getRifcliente()
-                        + "  FORMA PAGO: " + cobro.getIdtipopago().getTipopago()
-                        + "  BANCO: " + cobro.getIdcuentabancaria().getIdbanco().getNombrebanco()
-                        + "  MONTO COBRADO: " + formatearnumero.format(cobro.getMontocobrado())
-                        + "  MONTO PENDIENTE: " + formatearnumero.format(cobro.getMontopendiente())
-                        + "  OBSERVACIONES: " + cobro.getObservacionescobro();
-
-                subject = "Cobro N° " + cobro.getIdcobroventa();
-                enviomail = new envioCorreo(correo, subject);
-                enviomail.start();
-            } catch (Exception e) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Cobro", "Aviso"));
-            } finally {
-                FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-            }
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Debe efectuar la retención sobre el pago", "Aviso"));
-        }
-    }**/
-    
     public void registrar() {
         try {
             double debe = 0;
             double haber = 0;
             double saldototaltotal = 0;
             librodiarioEJB.create(librodiario);
+
             codlibrodiario = librodiarioEJB.ultimoInsertado();
-            
+
             Detallelibrodiario detalleld = new Detallelibrodiario();
             Libromayor libromy = new Libromayor();
             Plandecuenta cuentacontable = new Plandecuenta();
+            int cuentacobro = 0;
+            int cuentamovi = 0;
+            if (control==1){
+                cuentacobro=cobro.getIdcuentabancaria().getIdplandecuenta().getIdplandecuenta();
+            }
 
             for (Detallelibrodiario dld : listadetalleslibrodiario) {
                 detalleld.setIdlibrodiario(codlibrodiario);
@@ -925,13 +830,14 @@ public class AsientosventasController implements Serializable {
                 detallelibrodiarioEJB.create(detalleld);
                 libromayorEJB.create(libromy);
                 codlibromayor = libromayorEJB.ultimoInsertado();
-                
-                if (cobro.getIdcuentabancaria().getIdplandecuenta().getIdplandecuenta() == cuentacontable.getIdplandecuenta()){
-                    movimientobancario=movimientoBancarioEJB.buscarmovimientoxIdcobro(cobro);
-//                    movimientobancario.setidlibromayor=codlibromayor;
-                    
-                }
-                
+                cuentamovi = cuentacontable.getIdplandecuenta();
+                if (control==1){
+                    if (cuentacobro == cuentamovi) {
+                        movimientobancario = movimientoBancarioEJB.buscarmovimientoxIdcobro(cobro);
+                        movimientobancario.setIdlibromayor(codlibromayor);
+                        movimientoBancarioEJB.edit(movimientobancario);
+                    }
+                }    
                 plandecuentaEJB.edit(cuentacontable);
                 master.setIdestatuscontable(estatuscontableEJB.estatusContableRegistrada());
                 master.setIdlibrodiario(codlibrodiario);
@@ -941,6 +847,7 @@ public class AsientosventasController implements Serializable {
                 haber = 0;
                 saldototaltotal = 0;
             }
+            control=0;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Asiento fue Almacenado Codigo" + codlibrodiario.getIdlibrodiario(), ""));
             listadetalleslibrodiario.clear();
         } catch (Exception e) {
