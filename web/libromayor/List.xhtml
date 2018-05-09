@@ -46,13 +46,22 @@
                             </f:facet>
                             <h:outputText value="#{item.idlibrodiario}"/>
                         </p:column>    
+                        <p:column style="text-align: center" >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlecontabilidad.ListLibrodiarioTitle_fecha}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idlibrodiario.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>    
+
                         <p:column style="text-align: center" filterBy="#{item.idplandecuenta.idplandecuenta}" filterMatchMode="exact" filterStyle="width:50px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_idplandecuenta}"/>
                             </f:facet>
                             <h:outputText value="#{item.idplandecuenta}"/>
                         </p:column>
-                        <p:column width="450">
+                        <p:column width="450" filterBy="#{item.idplandecuenta.descripcioncuenta}" filterMatchMode="contains" filterStyle="width:200px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_cuenta}"/>
                             </f:facet>

@@ -212,7 +212,7 @@
                                 </p:row>
                             </p:columnGroup>                            
                         </p:dataTable>
-                        <p:commandButton value="Registrar" actionListener="#{asientosventasController.registrar()}" action="/maestromovimiento/List?faces-redirect=true" update=":msgs" 
+                            <p:commandButton value="Registrar" actionListener="#{asientosventasController.registrar()}" action="/maestromovimiento/List?faces-redirect=true" update=":msgs" 
                                          rendered  ="#{asientosventasController.totaldebegeneral==asientosventasController.totalhabergeneral ? true:false}"/>
                         <p:commandButton id= "exit" value="Salir" action="/maestromovimiento/List?faces-redirect=true"/>
                     </p:panel>

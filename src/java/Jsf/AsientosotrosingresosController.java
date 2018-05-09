@@ -194,9 +194,12 @@ public class AsientosotrosingresosController implements Serializable {
     private Tipoconjunto tipoconjunto = null;
     private List<Detallelibrodiario> listadetalleslibrodiario = new ArrayList();
     private Detallelibrodiario detalleamodificar;
+    private List<Movimientobancario> movimientosBancarios=null;
     private int cuentaseleccionada;
     private Librodiario codlibrodiario;
     int tamaño = 0;
+    private Libromayor codlibromayor;
+    private Movimientobancario movimientobanc;
 
     @Inject
     private Auxiliarrequerimiento auxiliar;
@@ -683,7 +686,8 @@ public class AsientosotrosingresosController implements Serializable {
             double saldototaltotal = 0;
             librodiarioEJB.create(librodiario);
             codlibrodiario = librodiarioEJB.ultimoInsertado();
-
+//            movimientosBancarios=movimientoBancarioEJB.buscarmovimiento(otroingreso);
+            
             Detallelibrodiario detalleld = new Detallelibrodiario();
             Libromayor libromy = new Libromayor();
             Plandecuenta cuentacontable = new Plandecuenta();
@@ -721,6 +725,13 @@ public class AsientosotrosingresosController implements Serializable {
                 cuentacontable.setSaldogeneral(saldototaltotal);
                 detallelibrodiarioEJB.create(detalleld);
                 libromayorEJB.create(libromy);
+                codlibromayor = libromayorEJB.ultimoInsertado();
+                movimientobanc=movimientoBancarioEJB.buscarmovimientoxIdotroingresoCtaContable(otroingreso, cuentacontable);
+                if (movimientobanc!=null){
+                    movimientobanc.setIdlibromayor(codlibromayor);
+                    movimientoBancarioEJB.edit(movimientobanc);                    
+                }
+                
                 plandecuentaEJB.edit(cuentacontable);
                 master.setIdestatuscontable(estatuscontableEJB.estatusContableRegistrada());
                 master.setIdlibrodiario(codlibrodiario);

@@ -9,6 +9,7 @@ import Modelo.Cobroventa;
 import Modelo.Cuentabancaria;
 import Modelo.Movimientobancario;
 import Modelo.Otroingreso;
+import Modelo.Plandecuenta;
 import Modelo.Reposicioncajachica;
 import java.util.Date;
 import java.util.List;
@@ -49,6 +50,28 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
             throw e;
         }
         return lista;
+    }
+    
+    
+    @Override
+    public Movimientobancario buscarmovimientoxIdotroingresoCtaContable(Otroingreso otro, Plandecuenta cuentacontab) {
+        String consulta;
+        Movimientobancario movimientobanc = null;
+        List<Movimientobancario> lista = null;
+        try {
+            consulta = "From Movimientobancario m where m.idotroingreso.idotroingreso= ?1 and m.idcuentabancaria.idplandecuenta.idplandecuenta= ?2";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, otro.getIdotroingreso());
+            query.setParameter(2, cuentacontab.getIdplandecuenta());
+            lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                movimientobanc = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+
+        }
+        return movimientobanc;
     }
 
     @Override

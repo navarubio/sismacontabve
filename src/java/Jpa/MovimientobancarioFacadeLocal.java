@@ -9,6 +9,7 @@ import Modelo.Cobroventa;
 import Modelo.Cuentabancaria;
 import Modelo.Movimientobancario;
 import Modelo.Otroingreso;
+import Modelo.Plandecuenta;
 import Modelo.Reposicioncajachica;
 import java.util.Date;
 import java.util.List;
@@ -42,4 +43,7 @@ public interface MovimientobancarioFacadeLocal {
     List<Movimientobancario> buscarmovimientoporfecha (Cuentabancaria cuenta, Date fechaini, Date fechafinish);
     
     Movimientobancario buscarmovimientoxIdcobro(Cobroventa cobro);
-}
+    
+    Movimientobancario buscarmovimientoxIdotroingresoCtaContable(Otroingreso otro, Plandecuenta cuentacontab);
+    
+  }
