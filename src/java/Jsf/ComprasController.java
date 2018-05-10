@@ -421,9 +421,9 @@ public class ComprasController implements Serializable {
         alicuota = requerimiento.getCodigo().getIdgravamen().getAlicuota();
         iva = (subtotal * alicuota) / 100;
         total = subtotal + iva;
-        requerimiento.setSubtotal(subtotal);
-        requerimiento.setTributoiva(iva);
-        requerimiento.setTotal(total);
+        requerimiento.setSubtotal(requerimientosController.redondearDecimales(subtotal));
+        requerimiento.setTributoiva(requerimientosController.redondearDecimales(iva));
+        requerimiento.setTotal(requerimientosController.redondearDecimales(total));
 
         requerimientoEJB.edit(requerimiento);
 
@@ -434,9 +434,9 @@ public class ComprasController implements Serializable {
             montotsubtotal += requeri.getSubtotal();
         }
 
-        auxiliarrequerimiento.setSubtotal(montotsubtotal);
-        auxiliarrequerimiento.setMontoiva(montotiva);
-        auxiliarrequerimiento.setMontototal(montotgeneral);
+        auxiliarrequerimiento.setSubtotal(requerimientosController.redondearDecimales(montotsubtotal));
+        auxiliarrequerimiento.setMontoiva(requerimientosController.redondearDecimales(montotiva));
+        auxiliarrequerimiento.setMontototal(requerimientosController.redondearDecimales(montotgeneral));
 
         auxiliarrequerimientoEJB.edit(auxiliarrequerimiento);
         totaltotal();
@@ -519,10 +519,10 @@ public class ComprasController implements Serializable {
     public void registrar() {
         try {
             compra.setRifproveedor(provee);
-            compra.setSubtotal(auxiliar.getSubtotal());
-            compra.setIva(auxiliar.getMontoiva());
-            compra.setTotal(auxiliar.getMontototal());
-            compra.setMontopendiente(auxiliar.getMontototal());
+            compra.setSubtotal(requerimientosController.redondearDecimales(auxiliar.getSubtotal()));
+            compra.setIva(requerimientosController.redondearDecimales(auxiliar.getMontoiva()));
+            compra.setTotal(requerimientosController.redondearDecimales(auxiliar.getMontototal()));
+            compra.setMontopendiente(requerimientosController.redondearDecimales(auxiliar.getMontototal()));
             Usuario us = requerimientosController.getUsa();
             compra.setIdusuario(us);
             Estatusfactura statusfactu = null;
@@ -620,12 +620,12 @@ public class ComprasController implements Serializable {
             reque.setCantidad(cantidad);
             reque.setPcosto(pcosto);
             subtotal = cantidad * pcosto;
-            reque.setSubtotal(subtotal);
+            reque.setSubtotal(requerimientosController.redondearDecimales(subtotal));
             alicuota = reque.getCodigo().getIdgravamen().getAlicuota();
             iva = (subtotal * alicuota) / 100;
             total = subtotal + iva;
-            reque.setTributoiva(iva);
-            reque.setTotal(total);
+            reque.setTributoiva(requerimientosController.redondearDecimales(iva));
+            reque.setTotal(requerimientosController.redondearDecimales(total));
             reque.setIdrequerimiento(id);
             this.listarequerimiento.add(reque);
             reque.setIdauxiliarrequerimiento(auxiliarrequerimiento);
@@ -637,9 +637,9 @@ public class ComprasController implements Serializable {
             cantidad = 0;
             requer.setCodigo(null);
             totaltotal();
-            auxiliarrequerimiento.setSubtotal(totalsubtotal);
-            auxiliarrequerimiento.setMontoiva(totaliva);
-            auxiliarrequerimiento.setMontototal(totalgeneral);
+            auxiliarrequerimiento.setSubtotal(requerimientosController.redondearDecimales(totalsubtotal));
+            auxiliarrequerimiento.setMontoiva(requerimientosController.redondearDecimales(totaliva));
+            auxiliarrequerimiento.setMontototal(requerimientosController.redondearDecimales(totalgeneral));
             auxiliarrequerimientoEJB.edit(auxiliarrequerimiento);
 
 //            visualizar=1;

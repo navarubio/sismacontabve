@@ -9,6 +9,7 @@ import Modelo.Cobroventa;
 import Modelo.Cuentabancaria;
 import Modelo.Movimientobancario;
 import Modelo.Otroingreso;
+import Modelo.Pagocompra;
 import Modelo.Plandecuenta;
 import Modelo.Reposicioncajachica;
 import java.util.Date;
@@ -51,8 +52,7 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
         }
         return lista;
     }
-    
-    
+
     @Override
     public Movimientobancario buscarmovimientoxIdotroingresoCtaContable(Otroingreso otro, Plandecuenta cuentacontab) {
         String consulta;
@@ -110,6 +110,25 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
     }
 
     @Override
+    public Movimientobancario buscarmovimientoxreposicion(Reposicioncajachica reposicion) {
+        String consulta;
+        List<Movimientobancario> lista = null;
+        Movimientobancario movimientobanc = null;
+        try {
+            consulta = "From Movimientobancario m where m.idreposicioncajachica.idreposicioncajachica= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, reposicion.getIdreposicioncajachica());
+            lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                movimientobanc = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return movimientobanc;
+    }
+
+    @Override
     public List<Movimientobancario> buscarmovimientoporfecha(Cuentabancaria cuenta, Date fechaini, Date fechafinish) {
         String consulta;
         List<Movimientobancario> lista = null;
@@ -127,4 +146,23 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
         return lista;
     }
 
+    @Override
+    public Movimientobancario buscarmovimientoxIdpago(Pagocompra pago) {
+        String consulta;
+        Movimientobancario movimientobanc = null;
+        List<Movimientobancario> lista = null;
+        try {
+            consulta = "From Movimientobancario m where m.idpagocompra.idpagocompra= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, pago.getIdpagocompra());
+            lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                movimientobanc = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+
+        }
+        return movimientobanc;
+    }
 }

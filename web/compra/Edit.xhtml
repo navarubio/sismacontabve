@@ -14,22 +14,22 @@
                     <p:panelGrid columns="1" rendered="#{compraController.selected != null}">
                         <p:fieldset   legend="Datos Requerimiento" >
                             <p:panelGrid columns="2" styleClass="ui-custompanelgrid1" >
-                                <p:outputLabel for="numero" value="Solicitud" styleClass="text-ouput"/>
+                                <p:outputLabel for="numero" value="Solicitud" styleClass="text-ouputnormal"/>
                                 <p:outputLabel id="numero" value="REQ- #{compraController.selected.idauxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouput"/>
+                                <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouputnormal"/>
                                 <p:outputLabel id="usuario" value="#{compraController.selected.idauxiliarrequerimiento.idusuario.nombre}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="departamento" value="Departamento" styleClass="text-ouput"/>
+                                <p:outputLabel for="departamento" value="Departamento" styleClass="text-ouputnormal"/>
                                 <p:outputLabel id="departamento" value="#{compraController.selected.idauxiliarrequerimiento.iddepartamento.departamento}" styleClass="optionalLbl"/>
 
-                                <p:outputLabel for="proveedor" value="Proveedor Referido" styleClass="text-ouput"/>
+                                <p:outputLabel for="proveedor" value="Proveedor Referido" styleClass="text-ouputnormal"/>
                                 <p:outputLabel id="proveedor" value="#{compraController.selected.idauxiliarrequerimiento.posibleproveedor}"/>
-                                <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouput"/>
+                                <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouputnormal"/>
                                 <p:outputLabel id="telefono" value="#{compraController.selected.idauxiliarrequerimiento.telefonoproveedor}"/>
-                                <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" styleClass="text-ouput" />
+                                <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" styleClass="text-ouputnormal" />
                                 <p:outputLabel id="fechasolicitud" value="#{compraController.selected.idauxiliarrequerimiento.fecharequerimiento}">
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                                 </p:outputLabel>
-                                <p:outputLabel for="resena" value="Breve Reseña" styleClass="text-ouput"/>
+                                <p:outputLabel for="resena" value="Breve Reseña" styleClass="text-ouputnormal"/>
                                 <p:outputLabel id="resena" value="#{compraController.selected.idauxiliarrequerimiento.descripcion}" />
                             </p:panelGrid>
                         </p:fieldset>

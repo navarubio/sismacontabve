@@ -94,13 +94,13 @@ public class AsientosreposicionController implements Serializable {
     private CuentabancariaFacadeLocal cuentabancariaEJB;
     @EJB
     private PagocompraFacadeLocal pagocompraEJB;
-   
+
     @EJB
     private EstatuscontableFacadeLocal estatuscontableEJB;
-    
+
     @EJB
     private AuxiliarrequerimientoFacadeLocal auxiliarrequerimientoEJB;
-    
+
     @EJB
     private DetallecompraFacadeLocal detallecompraEJB;
     @EJB
@@ -109,7 +109,7 @@ public class AsientosreposicionController implements Serializable {
     private TipopagoFacadeLocal tipopagoEJB;
     @EJB
     private BancoFacadeLocal bancoEJB;
-    
+
     @EJB
     private MaestromovimientoFacadeLocal maestromovimientoEJB;
 
@@ -137,7 +137,11 @@ public class AsientosreposicionController implements Serializable {
     @Inject
     private Otroingreso otroingreso;
     private int idReposicion = 0;
-    
+    @Inject
+    private Movimientobancario movimientobancario;
+    @Inject
+    private RequerimientosController requerimientosController;
+
     private List<Movimientobancario> reposicionespecifica;
     private List<Consumocajachica> lstConsumos;
     private List<Detalleconsumocajachica> lstDetallesConsumos;
@@ -178,6 +182,7 @@ public class AsientosreposicionController implements Serializable {
     private List<Auxiliarrequerimiento> auxiliarrequerimientos;
     private List<Tiporetencionislr> tiporetencionesfiltradasPD = null;
     private List<Cuentabancaria> cuentasbancarias;
+    private Libromayor codlibromayor;
 
     private List<Tipopago> tipopagos;
     private List<Detallecompra> detallecompraFiltrados;
@@ -708,13 +713,13 @@ public class AsientosreposicionController implements Serializable {
         this.lstConsumos = reposicionconsumosEJB.listaconsumosxReposicion(repo);
         this.lstDetallesConsumos = detalleconsumoEJB.listadetalleconsumosxListaConsumos(lstConsumos);
         totaltotal();
-        if (lstDetallesConsumos.isEmpty()){
+        if (lstDetallesConsumos.isEmpty()) {
             tamaño = 0;
             this.vercasilla = 1;
             librodiario.setDescripcionasiento("P/R APERTURA DE CAJA REP- " + reposicionCajachica.getIdreposicioncajachica() + " POR TRASPASO DESDE " + reposicionCajachica.getObservaciones());
-        }else{
-            tamaño=1;
-            librodiario.setDescripcionasiento("P/R REPOSICION DE CAJA REP- " + reposicionCajachica.getIdreposicioncajachica() + " POR CONCEPTO DE " + reposicionCajachica.getObservaciones());            
+        } else {
+            tamaño = 1;
+            librodiario.setDescripcionasiento("P/R REPOSICION DE CAJA REP- " + reposicionCajachica.getIdreposicioncajachica() + " POR CONCEPTO DE " + reposicionCajachica.getObservaciones());
         }
         listadetalleslibrodiario = detallesasiento();
         librodiario.setFecha(reposicionCajachica.getFecharesposicion());
@@ -784,6 +789,9 @@ public class AsientosreposicionController implements Serializable {
             Detallelibrodiario detalleld = new Detallelibrodiario();
             Libromayor libromy = new Libromayor();
             Plandecuenta cuentacontable = new Plandecuenta();
+            int cuentareposiciom = 0;
+            int cuentamovi = 0;
+            cuentareposiciom = reposicionCajachica.getIdcuentabancaria().getIdplandecuenta().getIdplandecuenta();
 
             for (Detallelibrodiario dld : listadetalleslibrodiario) {
                 detalleld.setIdlibrodiario(codlibrodiario);
@@ -808,16 +816,23 @@ public class AsientosreposicionController implements Serializable {
                     libromy.setHaber(dld.getHaber());
                 }
                 double saldoant = plandecuentaEJB.buscarsaldoanterior(dld.getIdplandecuenta().getIdplandecuenta());
-                libromy.setSaldoanterior(saldoant);
+                libromy.setSaldoanterior(requerimientosController.redondearDecimales(saldoant));
                 if (dld.getIdplandecuenta().getIdtiposaldocontable().getIdtiposaldocontable() == 1) {
                     saldototaltotal = (((saldoant) + debe) - haber);
                 } else if (dld.getIdplandecuenta().getIdtiposaldocontable().getIdtiposaldocontable() == 2) {
                     saldototaltotal = (((saldoant) - haber) + debe);
                 }
-                libromy.setSaldoposterior(saldototaltotal);
-                cuentacontable.setSaldogeneral(saldototaltotal);
+                libromy.setSaldoposterior(requerimientosController.redondearDecimales(saldototaltotal));
+                cuentacontable.setSaldogeneral(requerimientosController.redondearDecimales(saldototaltotal));
+                cuentamovi = cuentacontable.getIdplandecuenta();
                 detallelibrodiarioEJB.create(detalleld);
                 libromayorEJB.create(libromy);
+                codlibromayor = libromayorEJB.ultimoInsertado();
+                if (cuentareposiciom == cuentamovi) {
+                    movimientobancario = movimientoBancarioEJB.buscarmovimientoxreposicion(reposicionCajachica);
+                    movimientobancario.setIdlibromayor(codlibromayor);
+                    movimientoBancarioEJB.edit(movimientobancario);
+                }
                 plandecuentaEJB.edit(cuentacontable);
                 master.setIdestatuscontable(estatuscontableEJB.estatusContableRegistrada());
                 master.setIdlibrodiario(codlibrodiario);

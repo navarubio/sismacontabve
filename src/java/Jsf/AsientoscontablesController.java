@@ -145,6 +145,7 @@ public class AsientoscontablesController implements Serializable {
     private Usuario usa;
     private Departamento dpto;
     private Compra codCompra;
+    private Libromayor codlibromayor;
 
     private int visualizar = 0;
     private int tipocompra = 1;
@@ -193,6 +194,7 @@ public class AsientoscontablesController implements Serializable {
     private Detallelibrodiario detalleamodificar;
     private int cuentaseleccionada;
     private Librodiario codlibrodiario;
+    private int control=0;
 
     @Inject
     private Auxiliarrequerimiento auxiliar;
@@ -702,6 +704,7 @@ public class AsientoscontablesController implements Serializable {
     }
 
     public void asignarPagoCompra(Pagocompra pagocompr, Maestromovimiento maestro) {
+        control=1;
         this.retiva = 0;
         this.retislr = 0;
         this.vercasilla = 2;
@@ -812,7 +815,12 @@ public class AsientoscontablesController implements Serializable {
             Detallelibrodiario detalleld = new Detallelibrodiario();
             Libromayor libromy = new Libromayor();
             Plandecuenta cuentacontable = new Plandecuenta();
-
+            int cuentapago = 0;
+            int cuentamovi = 0;
+            if (control==1){
+                cuentapago=pagocompra.getIdcuentabancaria().getIdplandecuenta().getIdplandecuenta();
+            }
+            
             for (Detallelibrodiario dld : listadetalleslibrodiario) {
                 detalleld.setIdlibrodiario(codlibrodiario);
                 libromy.setIdlibrodiario(codlibrodiario);
@@ -842,10 +850,20 @@ public class AsientoscontablesController implements Serializable {
                 } else if (dld.getIdplandecuenta().getIdtiposaldocontable().getIdtiposaldocontable() == 2) {
                     saldototaltotal = (((saldoant) - haber) + debe);
                 }
-                libromy.setSaldoposterior(saldototaltotal);
-                cuentacontable.setSaldogeneral(saldototaltotal);
+                libromy.setSaldoposterior(requerimientosController.redondearDecimales(saldototaltotal));
+                cuentacontable.setSaldogeneral(requerimientosController.redondearDecimales(saldototaltotal));
                 detallelibrodiarioEJB.create(detalleld);
                 libromayorEJB.create(libromy);
+                codlibromayor = libromayorEJB.ultimoInsertado();
+                cuentamovi = cuentacontable.getIdplandecuenta();
+                if (control==1){
+                    if (cuentapago == cuentamovi) {
+                        movimientobancario = movimientoBancarioEJB.buscarmovimientoxIdpago(pagocompra);
+                        movimientobancario.setIdlibromayor(codlibromayor);
+                        movimientoBancarioEJB.edit(movimientobancario);
+                    }
+                }    
+               
                 plandecuentaEJB.edit(cuentacontable);
                 master.setIdestatuscontable(estatuscontableEJB.estatusContableRegistrada());
                 master.setIdlibrodiario(codlibrodiario);
@@ -855,6 +873,7 @@ public class AsientoscontablesController implements Serializable {
                 haber = 0;
                 saldototaltotal = 0;
             }
+            control=0;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Asiento fue Almacenado Codigo" + codlibrodiario.getIdlibrodiario(), ""));
             listadetalleslibrodiario.clear();
         } catch (Exception e) {

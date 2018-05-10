@@ -227,6 +227,18 @@
                                         <f:convertNumber type="currency" currencySymbol=" "  />    
                                     </p:outputLabel>
                                 </p:panelGrid>
+                                <p:panelGrid columns="4" styleClass="ui-custompanelgrid4" style="width: 100%">
+                                <p:outputLabel value="VENDE"/>
+                                    <p:outputLabel value="COMPRA"/> 
+                                    <p:outputLabel value="Tipo Articulos"/>
+                                    <p:outputLabel value="%"/>                                    
+                                    <p:outputLabel value="#{cobroventasController.empresa.idcontribuyente.abreviatura}" styleClass="text-ouput"/>
+                                    <p:outputLabel value="#{cobroventasController.factura.rifcliente.idcontribuyente.abreviatura}" styleClass="text-ouput"/>
+                                    <p:outputLabel value="#{cobroventasController.tipoarticulo}" styleClass="text-ouput"/>                                    
+                                    <p:outputLabel value="#{cobroventasController.retencionaplicar}" styleClass="text-ouput">
+                                        <f:convertNumber type="currency" currencySymbol=" "   />
+                                    </p:outputLabel>
+                            </p:panelGrid>
                             </p:fieldset>
                             <p:fieldset legend="Retencion I.S.L.R." rendered="#{cobroventasController.visualizar== 2 || cobroventasController.visualizar== 3 || cobroventasController.visualizar== 4 ? true:false}"> 
                                 <p:panelGrid columns="2" styleClass="ui-custompanelgrid2" >

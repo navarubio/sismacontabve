@@ -65,7 +65,7 @@ public class RequerimientosController implements Serializable {
     private double totaliva = 0;
     private double totalsubtotal = 0;
     private int id = 0;
-    private int visualizar=0;
+    private int visualizar = 0;
     private int statu = 1;
     private envioCorreo enviomail;
     private Auxiliarrequerimiento codAux;
@@ -74,7 +74,6 @@ public class RequerimientosController implements Serializable {
     private Date fechaactual = new Date();
     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
-
 
     public Auxiliarrequerimiento getAuxiliar() {
         return auxiliar;
@@ -233,16 +232,16 @@ public class RequerimientosController implements Serializable {
         articulos = articuloEJB.findAll();
         auxrequer.setFecharequerimiento(fechaactual);
         listarequerimiento.clear();
-        visualizar=0;
+        visualizar = 0;
         ObtenerUsuario();
     }
-   
+
     public void ObtenerUsuario() {
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        usa=us;
+        usa = us;
         statusreq.setIdestatusrequerimiento(statu);
     }
-    
+
     public void buscarArticulo() {
         articulo = requer.getCodigo();
         pcosto = articulo.getPcosto();
@@ -274,7 +273,7 @@ public class RequerimientosController implements Serializable {
             pventa = 0;
             cantidad = 0;
             requer.setCodigo(null);
-            visualizar=1;
+            visualizar = 1;
             id++;
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "No puede dejar el campo Cantidad en 0.0"));
@@ -323,84 +322,93 @@ public class RequerimientosController implements Serializable {
         if (requerim.hashCode() == 0) {
             id = 0;
         }
-        visualizar=0;
+        visualizar = 0;
     }
 
     public String getTotalrequeriminto() {
         double total = 0;
         double totalimpuesto = 0;
         double totalbaseimp = 0;
- 
-        for(Requerimiento inventa : listarequerimiento) {
+
+        for (Requerimiento inventa : listarequerimiento) {
             totalbaseimp += inventa.getSubtotal();
             totalimpuesto += inventa.getTributoiva();
             total += inventa.getTotal();
         }
         totalsubtotal = totalbaseimp;
-        totaliva= totalimpuesto;
+        totaliva = totalimpuesto;
         totalgeneral = total;
         return new DecimalFormat("###,###.##").format(total);
     }
-    
-/*     public double totaltotal() {
-        double montotgeneral = 0;
-        double montotiva = 0;
-        double montotsubtotal = 0;
 
-        for (Requerimiento requeri : listarequerimiento) {
-            montotgeneral += requeri.getTotal();
-            montotiva += requeri.getTributoiva();
-            montotsubtotal += requeri.getSubtotal();
-        }
-        totalgeneral = montotgeneral;
-        totaliva = montotiva;
-        totalsubtotal = montotsubtotal;
+    /*     public double totaltotal() {
+     double montotgeneral = 0;
+     double montotiva = 0;
+     double montotsubtotal = 0;
 
-        return montotgeneral;
+     for (Requerimiento requeri : listarequerimiento) {
+     montotgeneral += requeri.getTotal();
+     montotiva += requeri.getTributoiva();
+     montotsubtotal += requeri.getSubtotal();
+     }
+     totalgeneral = montotgeneral;
+     totaliva = montotiva;
+     totalsubtotal = montotsubtotal;
+
+     return montotgeneral;
+     }
+
+     public double totaliva() {
+     double montotgeneral = 0;
+     double montotiva = 0;
+     double montotsubtotal = 0;
+
+     for (Requerimiento requeri : listarequerimiento) {
+     montotgeneral += requeri.getTotal();
+     montotiva += requeri.getTributoiva();
+     montotsubtotal += requeri.getSubtotal();
+     }
+     totalgeneral = montotgeneral;
+     totaliva = montotiva;
+     totalsubtotal = montotsubtotal;
+
+     return montotiva;
+     }
+
+     public double totalbaseimponible() {
+     double montotgeneral = 0;
+     double montotiva = 0;
+     double montotsubtotal = 0;
+
+     for (Requerimiento requeri : listarequerimiento) {
+     montotgeneral += requeri.getTotal();
+     montotiva += requeri.getTributoiva();
+     montotsubtotal += requeri.getSubtotal();
+     }
+     totalgeneral = montotgeneral;
+     totaliva = montotiva;
+     totalsubtotal = montotsubtotal;
+
+     return montotsubtotal;
+     }*/
+    public double redondearDecimales(double valorInicial) {
+        double parteEntera, resultado;
+        resultado = valorInicial;
+        parteEntera = Math.floor(resultado);
+        resultado = (resultado - parteEntera) * Math.pow(10, 2);
+        resultado = Math.round(resultado);
+        resultado = (resultado / Math.pow(10, 2)) + parteEntera;
+        return resultado;
     }
-
-   public double totaliva() {
-        double montotgeneral = 0;
-        double montotiva = 0;
-        double montotsubtotal = 0;
-
-        for (Requerimiento requeri : listarequerimiento) {
-            montotgeneral += requeri.getTotal();
-            montotiva += requeri.getTributoiva();
-            montotsubtotal += requeri.getSubtotal();
-        }
-        totalgeneral = montotgeneral;
-        totaliva = montotiva;
-        totalsubtotal = montotsubtotal;
-
-        return montotiva;
-    }
-
-    public double totalbaseimponible() {
-        double montotgeneral = 0;
-        double montotiva = 0;
-        double montotsubtotal = 0;
-
-        for (Requerimiento requeri : listarequerimiento) {
-            montotgeneral += requeri.getTotal();
-            montotiva += requeri.getTributoiva();
-            montotsubtotal += requeri.getSubtotal();
-        }
-        totalgeneral = montotgeneral;
-        totaliva = montotiva;
-        totalsubtotal = montotsubtotal;
-
-        return montotsubtotal;
-    }*/
 
     public void registrar() {
         try {
             auxrequer.setIddepartamento(usa.getIddepartamento());
             auxrequer.setIdusuario(usa);
             auxrequer.setIdestatusrequerimiento(statusreq);
-            auxrequer.setSubtotal(totalsubtotal);
-            auxrequer.setMontoiva(totaliva);
-            auxrequer.setMontototal(totalgeneral);
+            auxrequer.setSubtotal(redondearDecimales(totalsubtotal));
+            auxrequer.setMontoiva(redondearDecimales(totaliva));
+            auxrequer.setMontototal(redondearDecimales(totalgeneral));
 
             auxiliarrequerimientoEJB.create(auxrequer);
             totalsubtotal = 0;
@@ -410,29 +418,29 @@ public class RequerimientosController implements Serializable {
             codAux = requerimientoEJB.ultimoInsertado();
             String subject;
             String material = " ";
-            
+
             for (Requerimiento rq : listarequerimiento) {
                 Articulo arti = rq.getCodigo();
                 requer.setIdauxiliarrequerimiento(codAux);
                 requer.setCodigo(arti);
                 requer.setCantidad(rq.getCantidad());
-                requer.setPcosto(rq.getPcosto());
-                requer.setSubtotal(rq.getSubtotal());
-                requer.setTributoiva(rq.getTributoiva());
-                requer.setTotal(rq.getTotal());
-                material = material + requer.getCodigo().getDescripcion() + 
-                       " CANTIDAD: " + requer.getCantidad()+ " PRECIO: "+requer.getPcosto() +"  ";
+                requer.setPcosto(redondearDecimales(rq.getPcosto()));
+                requer.setSubtotal(redondearDecimales(rq.getSubtotal()));
+                requer.setTributoiva(redondearDecimales(rq.getTributoiva()));
+                requer.setTotal(redondearDecimales(rq.getTotal()));
+                material = material + requer.getCodigo().getDescripcion()
+                        + " CANTIDAD: " + requer.getCantidad() + " PRECIO: " + requer.getPcosto() + "  ";
                 requerimientoEJB.create(requer);
             }
             String fechareque = formateador.format(auxrequer.getFecharequerimiento());
-            empresa= empresaEJB.devolverEmpresabase();
+            empresa = empresaEJB.devolverEmpresabase();
             correo = "CODIGO: REQ-" + auxrequer.getIdauxiliarrequerimiento()
                     + "  SOLICITANTE: " + auxrequer.getIdusuario().getNombre()
                     + "  DEPARTAMENTO: " + auxrequer.getIddepartamento()
                     + "  FECHA: " + fechareque
-                    + "  MATERIAL O SERVICIO: "+material
+                    + "  MATERIAL O SERVICIO: " + material
                     + "  SOLICITUD: " + auxrequer.getDescripcion();
-            subject = empresa.getNombrecomercial()+" Requerimiento REQ-" + requer.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento();
+            subject = empresa.getNombrecomercial() + " Requerimiento REQ-" + requer.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento();
             enviomail = new envioCorreo(correo, subject);
             enviomail.start();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Requerimiento fue Almacenado Codigo " + requer.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento(), ""));

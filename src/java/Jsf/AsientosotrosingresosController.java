@@ -218,6 +218,8 @@ public class AsientosotrosingresosController implements Serializable {
     private Librodiario librodiario;
     @Inject
     private Detallelibrodiario detallelibroventa;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     @Inject
     private Libromayor libromayor;
@@ -715,14 +717,14 @@ public class AsientosotrosingresosController implements Serializable {
                     libromy.setHaber(dld.getHaber());
                 }
                 double saldoant = plandecuentaEJB.buscarsaldoanterior(dld.getIdplandecuenta().getIdplandecuenta());
-                libromy.setSaldoanterior(saldoant);
+                libromy.setSaldoanterior(requerimientosController.redondearDecimales(saldoant));
                 if (dld.getIdplandecuenta().getIdtiposaldocontable().getIdtiposaldocontable() == 1) {
                     saldototaltotal = (((saldoant) + debe) - haber);
                 } else if (dld.getIdplandecuenta().getIdtiposaldocontable().getIdtiposaldocontable() == 2) {
                     saldototaltotal = (((saldoant) - haber) + debe);
                 }
-                libromy.setSaldoposterior(saldototaltotal);
-                cuentacontable.setSaldogeneral(saldototaltotal);
+                libromy.setSaldoposterior(requerimientosController.redondearDecimales(saldototaltotal));
+                cuentacontable.setSaldogeneral(requerimientosController.redondearDecimales(saldototaltotal));
                 detallelibrodiarioEJB.create(detalleld);
                 libromayorEJB.create(libromy);
                 codlibromayor = libromayorEJB.ultimoInsertado();

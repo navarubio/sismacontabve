@@ -139,6 +139,8 @@ public class PagosController implements Serializable {
     private Cuentabancaria cuentabancaria;
     @Inject
     private Maestromovimiento maestromovi;
+    @Inject
+    private RequerimientosController requerimientosController;
     private List<Auxiliarrequerimiento> auxiliarrequerimientos;
     private List<Tiporetencionislr> tiporetencionesfiltradasPD = null;
     private List<Subgrupo> subgruposfiltrados= null; 
@@ -714,7 +716,7 @@ public class PagosController implements Serializable {
         double ivatotal = compra.getIva();
         double porcent = detalleretencionivaef.getIdtiporetencioniva().getPorcentajeiva();
         ivaretenido = (ivatotal * porcent) / 100;
-        detalleretencionivaef.setTotalivaretenido(ivaretenido);
+        detalleretencionivaef.setTotalivaretenido(requerimientosController.redondearDecimales(ivaretenido));
         ivatotal = 0;
         porcent = 0;
     }
@@ -730,7 +732,7 @@ public class PagosController implements Serializable {
 //        double sustraendo = tiporetencion.getSustraendo();
         islrretenido = ((bimponibletotal * porcentislr) / 100);
         detalleretencionislref.setProcentajeretencion(porcentislr);
-        detalleretencionislref.setTotalislrretenido(islrretenido);
+        detalleretencionislref.setTotalislrretenido(requerimientosController.redondearDecimales(islrretenido));
         detalleretencionislref.setSustraendo(0.0);
     }
 
@@ -751,15 +753,15 @@ public class PagosController implements Serializable {
                 if (formapago == 1) {
                     double saldo = 0;
                     if (montoapagar == compra.getTotal()) {
-                        pagocompra.setTotalpago(montoapagar);
+                        pagocompra.setTotalpago(requerimientosController.redondearDecimales(montoapagar));
                         compra.setMontopendiente(saldo);
                         pagocompra.setMontoretenido(saldo);
                         int tipo = 3;
                         statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
                     } else {
-                        pagocompra.setTotalpago(montoapagar);
+                        pagocompra.setTotalpago(requerimientosController.redondearDecimales(montoapagar));
                         compra.setMontopendiente(saldo);
-                        pagocompra.setMontoretenido(compra.getTotal() - montoapagar);
+                        pagocompra.setMontoretenido(requerimientosController.redondearDecimales(compra.getTotal() - montoapagar));
                         int tipo = 3;
                         statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
                     }
@@ -817,15 +819,18 @@ public class PagosController implements Serializable {
                 double saldoanteriorbanco = 0;
                 saldoanteriorbanco = pagocompra.getIdcuentabancaria().getSaldo();
                 saldoactualbanco = (pagocompra.getIdcuentabancaria().getSaldo() - pagocompra.getTotalpago());
-                cuentabanco.setSaldo(saldoactualbanco);
+                cuentabanco.setSaldo(requerimientosController.redondearDecimales(saldoactualbanco));
                 cuentabancariaEJB.edit(cuentabanco);
                 
                 movimientobancario.setFecha(pagocompra.getFechapago());
                 movimientobancario.setIdcuentabancaria(cuentabanco);
-                movimientobancario.setSaldoanterior(saldoanteriorbanco);
-                movimientobancario.setDebito(pagocompra.getTotalpago());
-                movimientobancario.setSaldoactual(saldoactualbanco);
+                movimientobancario.setSaldoanterior(requerimientosController.redondearDecimales(saldoanteriorbanco));
+                movimientobancario.setDebito(requerimientosController.redondearDecimales(pagocompra.getTotalpago()));
+                movimientobancario.setSaldoactual(requerimientosController.redondearDecimales(saldoactualbanco));
                 movimientobancario.setIdpagocompra(pagocompra);
+                movimientobancario.setReferencia(pagocompra.getAprobacion());
+                movimientobancario.setIdtipopago(pagocompra.getIdtipopago());
+                movimientobancario.setConciliado(Boolean.FALSE);
                 movimientoBancarioEJB.create(movimientobancario);
                 
                 String subject;
@@ -860,7 +865,7 @@ public class PagosController implements Serializable {
                 detalleretencionivaef.setIdcompra(compra);
                 detalleretencionivaef.setBimponible(compra.getSubtotal());
                 detalleretencionivaef.setTotalcompra(compra.getTotal());
-                detalleretencionivaef.setTotalivaretenido(ivaretenido);
+                detalleretencionivaef.setTotalivaretenido(requerimientosController.redondearDecimales(ivaretenido));
                 detalleretencionivaef.setTotalivacompra(compra.getIva());
                 detalleretencionivaefEJB.create(detalleretencionivaef);
             }
@@ -871,7 +876,7 @@ public class PagosController implements Serializable {
                 detalleretencionislrefEJB.create(detalleretencionislref);
             }
             calcularMontoapagar();
-            totalretenido=ivaretenido+islrretenido;
+            totalretenido=requerimientosController.redondearDecimales(ivaretenido+islrretenido);
             visualizar = 7;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Retencion fue Almacenada", ""));
         } catch (Exception e) {
@@ -887,7 +892,7 @@ public class PagosController implements Serializable {
             pagocompra.setTotalpago(montoapagar);
         } else {
             montoapagar = (compra.getTotal() - detalleretencionivaef.getTotalivaretenido() - detalleretencionislref.getTotalislrretenido());
-            pagocompra.setTotalpago(montoapagar);
+            pagocompra.setTotalpago(requerimientosController.redondearDecimales(montoapagar));
         }
     }
 

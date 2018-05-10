@@ -77,8 +77,6 @@ public class FacturasController implements Serializable {
     private RequerimientoFacadeLocal requerimientoEJB;
     @EJB
     private EmpresaFacadeLocal empresaEJB;
-    
- 
 
     private Detallefactura detallefactura;
     //private RequerimientosController reque = new RequerimientosController();
@@ -122,7 +120,9 @@ public class FacturasController implements Serializable {
     @Inject
     private Articulo articulo;
     @Inject
-    private Empresa empresa;        
+    private Empresa empresa;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     Numeroaletras numletras = new Numeroaletras();
 
@@ -264,15 +264,15 @@ public class FacturasController implements Serializable {
     public void setTotalsubtotalform(String totalsubtotalform) {
         this.totalsubtotalform = totalsubtotalform;
     }
-    
+
     @PostConstruct
     public void init() {
         clientes = clienteEJB.findAll();
         articulos = articuloEJB.findAll();
         factura.setFecha(fechaactual);
         listarequerimiento.clear();
-        number=0;
-        empresa= empresaEJB.devolverEmpresabase();
+        number = 0;
+        empresa = empresaEJB.devolverEmpresabase();
     }
 
     public void registrarventa() {
@@ -287,13 +287,13 @@ public class FacturasController implements Serializable {
             factura.setNumerofact(number);
             factura.setIdusuario(usua);
             factura.setRifcliente(cliente);
-            factura.setBimponiblefact(totalbaseimponible());
-            factura.setIvafact(totaliva());
-            factura.setTotalgeneral(totaltotal());
+            factura.setBimponiblefact(requerimientosController.redondearDecimales(totalbaseimponible()));
+            factura.setIvafact(requerimientosController.redondearDecimales(totaliva()));
+            factura.setTotalgeneral(requerimientosController.redondearDecimales(totaltotal()));
             numero = numformat.format(factura.getTotalgeneral());
             cantidadenletras = numletras.Convertir(numero, true);
             factura.setCantidadenletras(cantidadenletras);
-            factura.setSaldopendiente(totaltotal());
+            factura.setSaldopendiente(requerimientosController.redondearDecimales(totaltotal()));
             factura.setHora(fechaCadena);
             factura.setIdcaja(cajaEJB.ubicarCaja());
             factura.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
@@ -317,11 +317,11 @@ public class FacturasController implements Serializable {
                 detalle.setCodigo(arti);
                 detalle.setUnidades(rq.getCantidad());
                 detalle.setPrecioventa(rq.getPcosto());
-                detalle.setSubtotal(rq.getSubtotal());
-                detalle.setTributoiva(rq.getTributoiva());
-                detalle.setTotal(rq.getTotal());
-                material = material + detalle.getCodigo().getDescripcion() + 
-                         " CANTIDAD: " + detalle.getUnidades()+ " "+detalle.getCodigo().getIdmedida().getMedida()+" PRECIO: "+ detalle.getPrecioventa()+"  ";
+                detalle.setSubtotal(requerimientosController.redondearDecimales(rq.getSubtotal()));
+                detalle.setTributoiva(requerimientosController.redondearDecimales(rq.getTributoiva()));
+                detalle.setTotal(requerimientosController.redondearDecimales(rq.getTotal()));
+                material = material + detalle.getCodigo().getDescripcion()
+                        + " CANTIDAD: " + detalle.getUnidades() + " " + detalle.getCodigo().getIdmedida().getMedida() + " PRECIO: " + detalle.getPrecioventa() + "  ";
                 detallefacturaEJB.create(detalle);
             }
             String subject;
@@ -340,7 +340,7 @@ public class FacturasController implements Serializable {
                     + "  TOTAL: " + formatearnumero.format(factura.getTotalgeneral())
                     + "  OBSERVACIONES: " + factura.getObservacionesfact();
 
-            subject = empresa.getNombrecomercial()+ " Factura N° " + ultimafactura;
+            subject = empresa.getNombrecomercial() + " Factura N° " + ultimafactura;
             enviomail = new envioCorreo(correo, subject);
             enviomail.start();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "La Factura se registro exitosamente con el numero " + facturaEJB.ultimafacturaformat()));
@@ -376,12 +376,12 @@ public class FacturasController implements Serializable {
 //            pcosto = reque.getCodigo().getPcosto();
             reque1.setPcosto(pventa);
             subtotal = cantidad * pventa;
-            reque1.setSubtotal(subtotal);
+            reque1.setSubtotal(requerimientosController.redondearDecimales(subtotal));
             alicuota = reque1.getCodigo().getIdgravamen().getAlicuota();
             iva = (subtotal * alicuota) / 100;
             total = subtotal + iva;
-            reque1.setTributoiva(iva);
-            reque1.setTotal(total);
+            reque1.setTributoiva(requerimientosController.redondearDecimales(iva));
+            reque1.setTotal(requerimientosController.redondearDecimales(total));
             reque1.setIdrequerimiento(id);
             this.listarequerimiento.add(reque1);
             id++;
@@ -397,7 +397,7 @@ public class FacturasController implements Serializable {
         }
 
     }
-    
+
     public void totaltotales() {
         double montotgeneral = 0;
         double montotiva = 0;

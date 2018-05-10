@@ -139,6 +139,7 @@ public class CobroventasController implements Serializable {
     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     private String correo;
+    private String tipoarticulo;
     private envioCorreo enviomail;
     private Tipoconjunto tipoconjunto = null;
     private int tipofactura = 1;
@@ -150,6 +151,7 @@ public class CobroventasController implements Serializable {
     private double montoacobrar;
     private double totalretenido;
     private double montocobrado;
+    private double retencionaplicar;
     private int tipocompra = 1;
     private List<Tiporetencionislr> tiporetencionesfiltradasPD = null;
 
@@ -163,6 +165,8 @@ public class CobroventasController implements Serializable {
     private Detalleretencionivasp detalleretencionivasp;
     @Inject
     private Detalleretencionislrsp detalleretencionislrsp;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     public double getSaldocuenta() {
         return saldocuenta;
@@ -353,6 +357,24 @@ public class CobroventasController implements Serializable {
         this.montocobrado = montocobrado;
     }
     
+    
+    public double getRetencionaplicar() {
+        return retencionaplicar;
+    }
+
+    public void setRetencionaplicar(double retencionaplicar) {
+        this.retencionaplicar = retencionaplicar;
+    }
+
+    public String getTipoarticulo() {
+        return tipoarticulo;
+    }
+
+    public void setTipoarticulo(String tipoarticulo) {
+        this.tipoarticulo = tipoarticulo;
+    }
+
+    
 
     @PostConstruct
     public void init() {
@@ -433,8 +455,12 @@ public class CobroventasController implements Serializable {
             tipo1 = tipoc.getCodigo().getIdgrupo().getIdgrupo();
             if (tipo1 == 1 && tipocompra == 1) {
                 tipocompra = 1;
+                tipoarticulo="BIENES";
+                retencionaplicar=retencionivabienes;
             } else if (tipo1 == 2) {
                 tipocompra = 2;
+                tipoarticulo="SERVICIOS";
+                retencionaplicar=retencionivaservicios;
             } else if (tipo1 == 3) {
                 tipocompra = 3;
             }
@@ -442,7 +468,7 @@ public class CobroventasController implements Serializable {
         subgruposfiltrados = subgrupoEJB.subgrupoxGrupo(tipocompra);
         tiporetencionivafiltrada=tiporetencionivaEJB.tiporetencionivaxGrupo(tipocompra);
 
-        if (retencionivabienes==0 ) {
+        if (retencionivabienes>0 ) {
             if (totalfactu >= montopisoretiva) {
                 if (tipocompra == 3) {
                     visualizar = 5;
@@ -476,10 +502,15 @@ public class CobroventasController implements Serializable {
                     visualizar = 5;
                 }
             }
-        } else if (factura.getRifcliente().getIdcontribuyente().getIdcontribuyente() == 1 || factura.getRifcliente().getIdcontribuyente().getIdcontribuyente() == 3) {
+            
+        }else{
+            visualizar=0;
+        } 
+        
+        if (factura.getRifcliente().getIdcontribuyente().getIdcontribuyente() == 2 ) {
             if (tipocompra == 2) {
                 if (totalfactu >= montopisoretislr) {
-                    visualizar = 4;
+                    visualizar = 5;
                 } else {
                     visualizar = 5;
                 }
@@ -507,7 +538,7 @@ public class CobroventasController implements Serializable {
                 estatuscontab = estatuscontableEJB.estatusContablePorRegistrar();
                 if (formacobro == 1) {
                     double saldo = 0;
-                    cobro.setMontocobrado(montoacobrar);
+                    cobro.setMontocobrado(requerimientosController.redondearDecimales(montoacobrar));
                     factura.setSaldopendiente(saldo);
                     int tipo = 1;
                     statusfactu = estatusfacturaventaEJB.estatusfacturaPagada(tipo);
@@ -525,7 +556,7 @@ public class CobroventasController implements Serializable {
                         tipo = 3;
                     }
 
-                    factura.setSaldopendiente(saldop);
+                    factura.setSaldopendiente(requerimientosController.redondearDecimales(saldop));
                     statusfactu = estatusfacturaventaEJB.estatusfacturaAbonada(tipo);
                 }
                 factura.setIdestatusfacturaventa(statusfactu);
@@ -534,13 +565,13 @@ public class CobroventasController implements Serializable {
 
                 if (visualizar == 6) {
                     cobro.setMontoretenido(0.0);
-                    cobro.setMontocobrado(montocobrado);
+                    cobro.setMontocobrado(requerimientosController.redondearDecimales(montocobrado));
                 }else if (visualizar == 7) {
                     cobro.setMontoretenido((detalleretencionivasp.getTotalivaretenido() + detalleretencionislrsp.getTotalislrretenido()));
                     if (formacobro == 1) {
-                        cobro.setMontocobrado(montoacobrar);
+                        cobro.setMontocobrado(requerimientosController.redondearDecimales(montoacobrar));
                     }else if (formacobro == 2){
-                        cobro.setMontocobrado(montocobrado);                        
+                        cobro.setMontocobrado(requerimientosController.redondearDecimales(montocobrado));                        
                     }
                 } else if (visualizar == 5) {
                     cobro.setMontoretenido(0.0);
@@ -565,7 +596,7 @@ public class CobroventasController implements Serializable {
                 double saldoanteriorbanco = 0;
                 saldoanteriorbanco = cobro.getIdcuentabancaria().getSaldo();
                 saldoactualbanco = montocobrado + cobro.getIdcuentabancaria().getSaldo();
-                cuentabancaria.setSaldo(saldoactualbanco);
+                cuentabancaria.setSaldo(requerimientosController.redondearDecimales(saldoactualbanco));
                 cuentabancariaEJB.edit(cuentabancaria);
                 
                 movimientobancario.setFecha(cobro.getFechacobro());
@@ -577,6 +608,9 @@ public class CobroventasController implements Serializable {
                 movimientobancario.setIdtipopago(cobro.getIdtipopago());
                 movimientobancario.setConciliado(Boolean.FALSE);
                 movimientobancario.setIdcobroventa(ultimocobro);
+                movimientobancario.setReferencia(cobro.getAprobacion());
+                movimientobancario.setIdtipopago(cobro.getIdtipopago());
+                movimientobancario.setConciliado(Boolean.FALSE);
                 movimientoBancarioEJB.create(movimientobancario);
 
                 if (factura.getSaldopendiente() < 1) {
@@ -629,7 +663,7 @@ public class CobroventasController implements Serializable {
             cobro.setMontocobrado(montoacobrar);
         } else {
             montoacobrar = (factura.getTotalgeneral() - detalleretencionivasp.getTotalivaretenido() - detalleretencionislrsp.getTotalislrretenido());
-            cobro.setMontocobrado(montoacobrar);
+            cobro.setMontocobrado(requerimientosController.redondearDecimales(montoacobrar));
         }
     }
 
@@ -637,7 +671,7 @@ public class CobroventasController implements Serializable {
         double ivatotal = factura.getIvafact();
         double porcent = detalleretencionivasp.getIdtiporetencioniva().getPorcentajeiva();
         ivaretenido = (ivatotal * porcent) / 100;
-        detalleretencionivasp.setTotalivaretenido(ivaretenido);
+        detalleretencionivasp.setTotalivaretenido(requerimientosController.redondearDecimales(ivaretenido));
         ivatotal = 0;
         porcent = 0;
     }
@@ -653,7 +687,7 @@ public class CobroventasController implements Serializable {
 //        double sustraendo = tiporetencion.getSustraendo();
         islrretenido = ((bimponibletotal * porcentislr) / 100);
         detalleretencionislrsp.setProcentajeretencion(porcentislr);
-        detalleretencionislrsp.setTotalislrretenido(islrretenido);
+        detalleretencionislrsp.setTotalislrretenido(requerimientosController.redondearDecimales(islrretenido));
         detalleretencionislrsp.setSustraendo(0.0);
     }
 
@@ -663,7 +697,7 @@ public class CobroventasController implements Serializable {
                 detalleretencionivasp.setNumerofact(factura);
                 detalleretencionivasp.setBimponible(factura.getBimponiblefact());
                 detalleretencionivasp.setTotalventa(factura.getTotalgeneral());
-                detalleretencionivasp.setTotalivaretenido(ivaretenido);
+                detalleretencionivasp.setTotalivaretenido(requerimientosController.redondearDecimales(ivaretenido));
                 detalleretencionivaspEJB.create(detalleretencionivasp);
             }
             if (detallefactu.getCodigo().getIdgrupo().getIdgrupo() > 0) {
@@ -673,7 +707,7 @@ public class CobroventasController implements Serializable {
                 detalleretencionislrefEJB.create(detalleretencionislrsp);
             }
             calcularMontoacobrar();
-            totalretenido = ivaretenido + islrretenido;
+            totalretenido = requerimientosController.redondearDecimales(ivaretenido + islrretenido);
             montocobrado = montoacobrar;
             visualizar = 7;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Retencion fue Almacenada", "Su Retencion fue Almacenada"));
