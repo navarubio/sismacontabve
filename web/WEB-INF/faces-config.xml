@@ -84,5 +84,9 @@
             <base-name>/Bundlecajachica</base-name>
             <var>bundlecajachica</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/Bundleconciliacion</base-name>
+            <var>bundleconciliacion</var>
+        </resource-bundle>
     </application>
 </faces-config>

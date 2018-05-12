@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ConciliacionViewDlg" widgetVar="ConciliacionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleconciliacion.ViewConciliacionTitle}">
+            <h:form id="ConciliacionViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{conciliacionController.selected != null}">
+                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_idconciliacion}"/>
+                        <h:outputText value="#{conciliacionController.selected.idconciliacion}" title="#{bundleconciliacion.ViewConciliacionTitle_idconciliacion}"/>
+                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_serialconciliacion}"/>
+                        <h:outputText value="#{conciliacionController.selected.serialconciliacion}" title="#{bundleconciliacion.ViewConciliacionTitle_serialconciliacion}"/>
+                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_fecharegistro}"/>
+                        <h:outputText value="#{conciliacionController.selected.fecharegistro}" title="#{bundleconciliacion.ViewConciliacionTitle_fecharegistro}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_fechaconciliacion}"/>
+                        <h:outputText value="#{conciliacionController.selected.fechaconciliacion}" title="#{bundleconciliacion.ViewConciliacionTitle_fechaconciliacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_saldoedocuenta}"/>
+                        <h:outputText value="#{conciliacionController.selected.saldoedocuenta}" title="#{bundleconciliacion.ViewConciliacionTitle_saldoedocuenta}"/>
+                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_debitoscontables}"/>
+                        <h:outputText value="#{conciliacionController.selected.debitoscontables}" title="#{bundleconciliacion.ViewConciliacionTitle_debitoscontables}"/>
+                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_creditoscontables}"/>
+                        <h:outputText value="#{conciliacionController.selected.creditoscontables}" title="#{bundleconciliacion.ViewConciliacionTitle_creditoscontables}"/>
+                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_saldocontable}"/>
+                        <h:outputText value="#{conciliacionController.selected.saldocontable}" title="#{bundleconciliacion.ViewConciliacionTitle_saldocontable}"/>
+                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_saldocontableajustado}"/>
+                        <h:outputText value="#{conciliacionController.selected.saldocontableajustado}" title="#{bundleconciliacion.ViewConciliacionTitle_saldocontableajustado}"/>
+                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_saldobancarioajustado}"/>
+                        <h:outputText value="#{conciliacionController.selected.saldobancarioajustado}" title="#{bundleconciliacion.ViewConciliacionTitle_saldobancarioajustado}"/>
+                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_idusuario}"/>
+                        <h:outputText value="#{conciliacionController.selected.idusuario}" title="#{bundleconciliacion.ViewConciliacionTitle_idusuario}"/>
+                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_idcuentabancaria}"/>
+                        <h:outputText value="#{conciliacionController.selected.idcuentabancaria}" title="#{bundleconciliacion.ViewConciliacionTitle_idcuentabancaria}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleconciliacion.Close}" onclick="ConciliacionViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

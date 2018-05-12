@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ConciliacionEditDlg" widgetVar="ConciliacionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleconciliacion.EditConciliacionTitle}">
+            <h:form id="ConciliacionEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{conciliacionController.selected != null}">
+                        <p:outputLabel value="#{bundleconciliacion.EditConciliacionLabel_idconciliacion}" for="idconciliacion" />
+                        <p:inputText id="idconciliacion" value="#{conciliacionController.selected.idconciliacion}" title="#{bundleconciliacion.EditConciliacionTitle_idconciliacion}" required="true" requiredMessage="#{bundleconciliacion.EditConciliacionRequiredMessage_idconciliacion}"/>
+                        <p:outputLabel value="#{bundleconciliacion.EditConciliacionLabel_serialconciliacion}" for="serialconciliacion" />
+                        <p:inputText id="serialconciliacion" value="#{conciliacionController.selected.serialconciliacion}" title="#{bundleconciliacion.EditConciliacionTitle_serialconciliacion}" />
+                        <p:outputLabel value="#{bundleconciliacion.EditConciliacionLabel_fecharegistro}" for="fecharegistro" />
+                        <p:calendar id="fecharegistro" pattern="MM/dd/yyyy" value="#{conciliacionController.selected.fecharegistro}" title="#{bundleconciliacion.EditConciliacionTitle_fecharegistro}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleconciliacion.EditConciliacionLabel_fechaconciliacion}" for="fechaconciliacion" />
+                        <p:calendar id="fechaconciliacion" pattern="MM/dd/yyyy" value="#{conciliacionController.selected.fechaconciliacion}" title="#{bundleconciliacion.EditConciliacionTitle_fechaconciliacion}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleconciliacion.EditConciliacionLabel_saldoedocuenta}" for="saldoedocuenta" />
+                        <p:inputText id="saldoedocuenta" value="#{conciliacionController.selected.saldoedocuenta}" title="#{bundleconciliacion.EditConciliacionTitle_saldoedocuenta}" />
+                        <p:outputLabel value="#{bundleconciliacion.EditConciliacionLabel_debitoscontables}" for="debitoscontables" />
+                        <p:inputText id="debitoscontables" value="#{conciliacionController.selected.debitoscontables}" title="#{bundleconciliacion.EditConciliacionTitle_debitoscontables}" />
+                        <p:outputLabel value="#{bundleconciliacion.EditConciliacionLabel_creditoscontables}" for="creditoscontables" />
+                        <p:inputText id="creditoscontables" value="#{conciliacionController.selected.creditoscontables}" title="#{bundleconciliacion.EditConciliacionTitle_creditoscontables}" />
+                        <p:outputLabel value="#{bundleconciliacion.EditConciliacionLabel_saldocontable}" for="saldocontable" />
+                        <p:inputText id="saldocontable" value="#{conciliacionController.selected.saldocontable}" title="#{bundleconciliacion.EditConciliacionTitle_saldocontable}" />
+                        <p:outputLabel value="#{bundleconciliacion.EditConciliacionLabel_saldocontableajustado}" for="saldocontableajustado" />
+                        <p:inputText id="saldocontableajustado" value="#{conciliacionController.selected.saldocontableajustado}" title="#{bundleconciliacion.EditConciliacionTitle_saldocontableajustado}" />
+                        <p:outputLabel value="#{bundleconciliacion.EditConciliacionLabel_saldobancarioajustado}" for="saldobancarioajustado" />
+                        <p:inputText id="saldobancarioajustado" value="#{conciliacionController.selected.saldobancarioajustado}" title="#{bundleconciliacion.EditConciliacionTitle_saldobancarioajustado}" />
+                        <p:outputLabel value="#{bundleconciliacion.EditConciliacionLabel_idusuario}" for="idusuario" />
+                        <p:inputText id="idusuario" value="#{conciliacionController.selected.idusuario}" title="#{bundleconciliacion.EditConciliacionTitle_idusuario}" />
+                        <p:outputLabel value="#{bundleconciliacion.EditConciliacionLabel_idcuentabancaria}" for="idcuentabancaria" />
+                        <p:selectOneMenu id="idcuentabancaria" value="#{conciliacionController.selected.idcuentabancaria}" >
+                            <f:selectItem itemLabel="#{bundleconciliacion.SelectOneMessage}"/>
+                            <f:selectItems value="#{cuentabancariaController.itemsAvailableSelectOne}"
+                                           var="idcuentabancariaItem"
+                                           itemValue="#{idcuentabancariaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{conciliacionController.update}" value="#{bundleconciliacion.Save}" update="display,:ConciliacionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ConciliacionEditDialog');"/>
+                    <p:commandButton value="#{bundleconciliacion.Cancel}" onclick="ConciliacionEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

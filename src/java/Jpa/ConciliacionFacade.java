@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author sofimar
  */
 @Stateless
-public class ConciliacionFacade extends AbstractFacade<Conciliacion> implements ConciliacionFacadeLocal {
+public class ConciliacionFacade extends AbstractFacade<Conciliacion> implements ConciliacionFacadeLocal{
     @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
