@@ -116,7 +116,7 @@
                         <p:panel id="lista" rendered="#{conciliacionController.saldovar== 1? true:false}">
                             <p:dataTable id="listado" widgetVar="listadoreq" value="#{conciliacionController.movimientosseleccionados}"  style="width: 1000px"
                                          var="req" emptyMessage="No hay movimientos para mostrar" rowKey="#{req.idmovimiento}"
-                                         selectionMode="single" selection="#{conciliacionController.selected}" 
+                                         selectionMode="single" selection="#{conciliacionController.seleccion}" 
                                          rowStyleClass="#{req.conciliado==true ? 'asientocuadrado' : null} #{req.conciliado==false? 'facturaabonada' : null}">
                                 <p:column style="width:10%"  headerText="fecha">
                                     <h:outputText value="#{req.fecha}">
@@ -163,7 +163,7 @@
                                     </p:cellEditor>
                                 </p:column-->
                                 <p:column style="text-align: center" headerText="Excluir">
-                                    <p:commandLink actionListener="#{conciliacionController.excluirmovimiento(req)}" update="listado,:formulario:saldos" >
+                                    <p:commandLink actionListener="#{conciliacionController.excluirmovimiento(req)}" update="listado,:formulario:saldos" rendered="#{req.conciliado== false? true:false}" >
                                         <h:graphicImage library="images" name="button_cancel.png" width="10" height="10" alt="Excluir Movimiento"/> 
                                     </p:commandLink>
                                 </p:column>

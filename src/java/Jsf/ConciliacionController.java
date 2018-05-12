@@ -47,8 +47,9 @@ public class ConciliacionController implements Serializable {
     private ConsumoscajachicaController consumoscajachicaController;
 
     private List<Conciliacion> items = null;
-    private List<Movimientobancario> movimientosseleccionados;
+    private List<Movimientobancario> movimientosseleccionados = null;
     private Conciliacion selected;
+    private Movimientobancario seleccion;
     private Movimientobancario movimientoseleccionado;
 
     private Date fecharegistro;
@@ -76,12 +77,19 @@ public class ConciliacionController implements Serializable {
 
     @PostConstruct
     public void init() {
-        movimientosseleccionados = movimientobancarioEJB.findAll();
         saldovar = 0;
         listavar = 0;
 
     }
 
+    public Movimientobancario getSeleccion() {
+        return seleccion;
+    }
+
+    public void setSeleccion(Movimientobancario seleccion) {
+        this.seleccion = seleccion;
+    }
+    
     public Conciliacion getSelected() {
         return selected;
     }
@@ -374,9 +382,7 @@ public class ConciliacionController implements Serializable {
     }
 
     public void buscarDatos() {
-        if (!movimientosseleccionados.isEmpty()) {
-            movimientosseleccionados.clear();
-        }
+
         movimientosseleccionados = movimientobancarioEJB.buscarmovimientosConciliacion(conciliacionbancaria.getIdcuentabancaria(), conciliacionbancaria.getFechaconciliacion());
         if (!movimientosseleccionados.isEmpty()) {
             saldovar = 1;
@@ -393,8 +399,8 @@ public class ConciliacionController implements Serializable {
     }
 
     public void actualizarsaldos(Movimientobancario movi) {
-        if (movi != null) {
-            this.movimientoseleccionado = movi;
+        this.movimientoseleccionado = movi;
+        if (movimientoseleccionado.getConciliado() == false) {
             if (movi.getCredito() != null) {
                 depositochange = movimientoseleccionado.getCredito();
                 depositos = depositos - depositochange;
@@ -409,19 +415,38 @@ public class ConciliacionController implements Serializable {
             ajusteedocta = saldoedoctaajustado - saldocontabajustado;
             movi.setConciliado(Boolean.TRUE);
 
+        } else {
+            if (movi.getCredito() != null ) {
+                depositochange = movimientoseleccionado.getCredito();
+                depositos = depositos + depositochange;
+
+            } else {
+                retiroschange = movimientoseleccionado.getDebito();
+                retiros = retiros + retiroschange;
+            }
+            saldoedoctaajustado = requerimientosController.redondearDecimales(saldoedocta + depositos - retiros);
+            saldocontable = requerimientosController.redondearDecimales(CalcularSaldocontable());
+            ajustecontable = saldocontabajustado - saldoedoctaajustado;
+            ajusteedocta = saldoedoctaajustado - saldocontabajustado;
+            movi.setConciliado(Boolean.FALSE);
         }
     }
 
     public void excluirmovimiento(Movimientobancario movi) {
+        saldoedoctaajustado = 0;
+        saldocontabajustado = 0;
+        retiroschange = 0;
+        depositochange = 0;
         int indc = movimientosseleccionados.indexOf(movi);
         if (movi.getCredito() == null) {
-            retiroschange= movi.getDebito();
-            saldocontable=saldocontable+retiroschange;
+            retiroschange = movi.getDebito();
+            retiros = retiros - retiroschange;
+            saldocontable = saldocontable + retiroschange;
 
         } else {
             depositochange = movi.getCredito();
             depositos = depositos - depositochange;
-            saldocontable=saldocontable-depositos;
+            saldocontable = saldocontable - depositochange;
         }
         saldoedoctaajustado = requerimientosController.redondearDecimales(saldoedocta + depositos - retiros);
         saldocontable = requerimientosController.redondearDecimales(saldocontable);
