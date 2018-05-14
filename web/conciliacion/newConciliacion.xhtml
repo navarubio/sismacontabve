@@ -102,78 +102,140 @@
                                 </p:panelGrid>
                             </p:fieldset>
                         </p:panelGrid>
-                        <p:fieldset styleClass="ui-custompanelgrid5" legend="BUSQUEDA ASISTIDA" toggleable="true" collapsed="true" rendered="#{conciliacionController.saldovar== 1? true:false}">
-                            <p:panelGrid id= "saldosaconci" columns="7">
-                                <p:outputLabel for="fechamovi" value="Fecha Transacción" />
-                                <p:calendar id="fechamovi" style="text-align: right" value="#{consumoscajachicaController.detalleconsumocajachica.fechaconsumo}" pattern="dd/MM/yyyy" locale="es" size="8"/>
-                                <p:outputLabel for="debitobusq" style="font-weight:bold" value="Debito" />
-                                <p:inputText id="debitobusq" value="#{notacargaController.cantidad}" style="text-align:right" size="5"  />
-                                <p:outputLabel for="creditobusq"  style="font-weight:bold" value="Credito" />
-                                <p:inputText id="creditobusq"   size="5" value="#{notacargaController.pventa}" style="text-align:right" />
-                                <p:commandButton value="Buscar" icon="ui-icon-search"  action="#{notacargaController.anexaraNota()}" update="listado,datosarticulo"/>   
+                        <p:fieldset styleClass="ui-custompanelgrid9" legend="CARGA MASIVA" toggleable="true" collapsed="true" rendered="#{conciliacionController.saldovar== 1? true:false}">
+                            <p:panelGrid id= "saldosaconci" columns="3">
+                                <p:commandButton value="Cargar Datos" icon="ui-icon-checked"  action="#{conciliacionController.cargarMasiva()}" update="listado,datosarticulo,:formulario:cargamasiva,:growl"/>   
+                                <!--p:commandButton value="Start" id="Cargar" type="button" onclick="start()" widgetVar="startButton1" action=".{conciliacionController.cargarMasiva()}" update="listado,datosarticulo,:formulario:listadomasivo,:growl"/>
+                                <p:commandButton value="Cancel" id="cancel" type="button" onclick="cancel()" /-->
                             </p:panelGrid>
                         </p:fieldset>
-                        <p:panel id="lista" rendered="#{conciliacionController.saldovar== 1? true:false}">
-                            <p:dataTable id="listado" widgetVar="listadoreq" value="#{conciliacionController.movimientosseleccionados}"  style="width: 1000px"
-                                         var="req" emptyMessage="No hay movimientos para mostrar" rowKey="#{req.idmovimiento}"
-                                         selectionMode="single" selection="#{conciliacionController.seleccion}" 
-                                         rowStyleClass="#{req.conciliado==true ? 'asientocuadrado' : null} #{req.conciliado==false? 'facturaabonada' : null}">
-                                <p:column style="width:10%"  headerText="fecha">
-                                    <h:outputText value="#{req.fecha}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                                    </h:outputText>
-                                </p:column>
-                                <p:column style="text-align: center"  headerText="Cuenta " width="200">
-                                    #{req.idcuentabancaria.numerocuenta} 
-                                </p:column>
-                                <p:column style="text-align: center"  headerText="Referecia">
-                                    #{req.referencia} 
-                                </p:column>
-                                <p:column style="text-align: center" headerText="Tipo Movimiento">
-                                    #{req.idtipopago.tipopago} 
-                                </p:column >
-                                <p:column style="text-align: right" headerText="Debito">
-                                    <h:outputText value="#{req.debito}">
-                                        <f:convertNumber type="currency" currencySymbol=" " />
-                                    </h:outputText>
-                                </p:column>
-                                <p:column style="text-align: right" headerText="Credito">
-                                    <h:outputText value="#{req.credito}">
-                                        <f:convertNumber type="currency" currencySymbol=" " />
-                                    </h:outputText>
-                                </p:column>                 
-                                <p:column style="text-align: center" headerText="Conciliar">
-                                    <p:commandLink actionListener="#{conciliacionController.actualizarsaldos(req)}" update="listado,:formulario:saldos" >
-                                        <h:graphicImage library="images" name="apply.png" width="10" height="10" alt="Conciliar Movimiento"/> 
-                                    </p:commandLink>
-                                </p:column>
+                        <p:panelGrid id="versus" columns="3">
+                            <p:panel id="lista" rendered="#{conciliacionController.saldovar== 1? true:false}">
+                                <p:dataTable id="listado" widgetVar="listadoreq" value="#{conciliacionController.movimientosseleccionados}"  style="width: 750px"
+                                             var="req" emptyMessage="No hay movimientos para mostrar" rowKey="#{req.idmovimiento}"
+                                             selectionMode="single" selection="#{conciliacionController.seleccion}" 
+                                             rowStyleClass="#{req.conciliado==true ? 'asientocuadrado' : null} #{req.conciliado==false? 'facturaabonada' : null}">
+                                    <p:column style="width:10%"  headerText="fecha">
+                                        <h:outputText value="#{req.fecha}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <!--p:column style="text-align: center"  headerText="Cuenta " width="200">
+                                        .{req.idcuentabancaria.numerocuenta} 
+                                    </p:column-->
+                                    <p:column style="text-align: center"  headerText="Referecia">
+                                        #{req.referencia} 
+                                    </p:column>
+                                    <p:column style="text-align: center" headerText="Tipo Movimiento">
+                                        #{req.idtipopago.tipopago} 
+                                    </p:column >
+                                    <p:column style="text-align: right" headerText="Debito">
+                                        <h:outputText value="#{req.debito}">
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right" headerText="Credito">
+                                        <h:outputText value="#{req.credito}">
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>                 
+                                    <p:column style="text-align: center" headerText="Conciliar">
+                                        <p:commandLink actionListener="#{conciliacionController.actualizarsaldos(req)}" update=":formulario:lista,listado,:formulario:saldos" >
+                                            <h:graphicImage library="images" name="apply.png" width="10" height="10" alt="Conciliar Movimiento"/> 
+                                        </p:commandLink>
+                                    </p:column>
 
-                                <!--p:column style="text-align: center" >
-                                    <f:facet name="header">
-                                        <h:outputText value="CONCILIADO"/>
-                                    </f:facet>
-                                    <p:cellEditor>  
-                                        <f:facet name="output">  
-                                            <h:selectBooleanCheckbox value=".{req.conciliado}"/>  
-                                        </f:facet>  
-                                        <f:facet name="input">
-                                            <h:inputHidden value=".{req.conciliado}" /> 
-                                            <h:selectBooleanCheckbox value=".{req.conciliado}" onclick="$(this).prev().val(this.checked)" onselect="#" />
-                                        </f:facet>     
-                                    </p:cellEditor>
-                                </p:column-->
-                                <p:column style="text-align: center" headerText="Excluir">
-                                    <p:commandLink actionListener="#{conciliacionController.excluirmovimiento(req)}" update="listado,:formulario:saldos" rendered="#{req.conciliado== false? true:false}" >
-                                        <h:graphicImage library="images" name="button_cancel.png" width="10" height="10" alt="Excluir Movimiento"/> 
-                                    </p:commandLink>
-                                </p:column>
-                            </p:dataTable>
-                            <p:commandButton value="Registrar" actionListener="#{notacargaController.registrarnota()}"  update=":formulario,:growl" action="/notacarga/List?faces-redirect=true" />
-                            <!--p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value=".{bundle.Imprimir}" actionListener=".{facturasController.verReporte()}" ajax="false" onclick="form.target = '_blank'"/-->                            
-                        </p:panel>
+                                    <!--p:column style="text-align: center" >
+                                        <f:facet name="header">
+                                            <h:outputText value="CONCILIADO"/>
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:selectBooleanCheckbox value=".{req.conciliado}"/>  
+                                            </f:facet>  
+                                            <f:facet name="input">
+                                                <h:inputHidden value=".{req.conciliado}" /> 
+                                                <h:selectBooleanCheckbox value=".{req.conciliado}" onclick="$(this).prev().val(this.checked)" onselect="#" />
+                                            </f:facet>     
+                                        </p:cellEditor>
+                                    </p:column-->
+                                    <p:column style="text-align: center" headerText="Excluir">
+                                        <p:commandLink actionListener="#{conciliacionController.excluirmovimiento(req)}" update="listado,:formulario:saldos" rendered="#{req.conciliado== false? true:false}" >
+                                            <h:graphicImage library="images" name="button_cancel.png" width="10" height="10" alt="Excluir Movimiento"/> 
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>
+                            <!--rendered="'{conciliacionController.saldovar== 2? true:false}"-->
+                            <p:panel id="cargamasiva"  >
+                                <p:dataTable id="listadomasivo" widgetVar="listadoreq1" value="#{lectorexcelController.movimientosNuevos}"  style="width: 500px"
+                                             var="req" emptyMessage="No hay movimientos para mostrar" rowKey="#{req.idmovimiento}" rendered="#{conciliacionController.saldovar== 2? true:false}"
+                                             rowStyleClass="#{req.conciliado==true ? 'asientocuadrado' : null} #{req.conciliado==false? 'facturaabonada' : null}">
+                                    <p:column style="width:15%"  headerText="fecha">
+                                        <h:outputText value="#{req.fecha}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right" headerText="Debito">
+                                        <h:outputText value="#{req.debito}">
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right" headerText="Credito">
+                                        <h:outputText value="#{req.credito}">
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>     
+                                    <p:column style="text-align: right" headerText="Saldo">
+                                        <h:outputText value="#{req.saldoactual}">
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>                                         
+                                    <p:column style="text-align: center" headerText="Conciliar">
+                                        <p:commandLink actionListener="#{conciliacionController.actualizarsaldos(req)}" update=":formulario:cargamasiva,:formulario:saldos" >
+                                            <h:graphicImage library="images" name="apply.png" width="10" height="10" alt="Conciliar Movimiento"/> 
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+
+                                <p:commandButton value="Registrar" actionListener="#{conciliacionController.registraconciliacion()}"  update=":formulario,:growl" action="/conciliacion/List?faces-redirect=true"  rendered="#{conciliacionController.ajustecontable==0 ? true:false}"/>
+                                <!--p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value=".{bundle.Imprimir}" actionListener=".{facturasController.verReporte()}" ajax="false" onclick="form.target = '_blank'"/-->                            
+                            </p:panel>
+                        </p:panelGrid>
                     </p:panel>
                 </h:form>
                 <h:outputScript library="js" name="spanishLocale.js"/>
+                <style tyle="text/css">
+                    .animated .ui-progressbar-value { 
+                        background-image: url("/showcase/javax.faces.resource/demo/images/pbar-ani.gif.xhtml"); 
+                    }
+                </style>
+
+                <script type="text/javascript">
+                    function start() {
+                        PF('startButton1').disable();
+
+                        window['progress'] = setInterval(function () {
+                            var pbClient = PF('pbClient'),
+                                    oldValue = pbClient.getValue(),
+                                    newValue = oldValue + 10;
+
+                            pbClient.setValue(pbClient.getValue() + 10);
+
+                            if (newValue === 100) {
+                                clearInterval(window['progress']);
+                            }
+
+
+                        }, 1000);
+                    }
+
+                    function cancel() {
+                        clearInterval(window['progress']);
+                        PF('pbClient').setValue(0);
+                        PF('startButton1').enable();
+                    }
+                </script>
 
             </ui:define>
         </ui:composition>

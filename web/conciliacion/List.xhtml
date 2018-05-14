@@ -20,88 +20,86 @@
                                  selectionMode="single" selection="#{conciliacionController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idconciliacion}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="20"
+                                 rowsPerPageTemplate="20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_idconciliacion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idconciliacion}"/>
-                        </p:column>
-                        <p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_serialconciliacion}"/>
                             </f:facet>
                             <h:outputText value="#{item.serialconciliacion}"/>
                         </p:column>
-                        <p:column>
+
+                        <p:column width="150">
                             <f:facet name="header">
-                                <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_fecharegistro}"/>
+                                <h:outputText value="#{bundlebanco.ListBancoTitle_nombrebanco}"/>
                             </f:facet>
-                            <h:outputText value="#{item.fecharegistro}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
+                            <h:outputText value="#{item.idcuentabancaria.idbanco.nombrebanco}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: center" width="150">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_idcuentabancaria}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idcuentabancaria.numerocuenta}"/>
+                        </p:column>
+                        <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_fechaconciliacion}"/>
                             </f:facet>
                             <h:outputText value="#{item.fechaconciliacion}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_saldoedocuenta}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.saldoedocuenta}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_debitoscontables}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.debitoscontables}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_creditoscontables}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.creditoscontables}"/>
-                        </p:column>
-                        <p:column>
+                        <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_saldocontable}"/>
                             </f:facet>
-                            <h:outputText value="#{item.saldocontable}"/>
+                            <h:outputText value="#{item.saldocontable}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_saldoedocuenta}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.saldoedocuenta}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>   
+                        </p:column>
+                        <p:column style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_debitoscontables}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.debitoscontables}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>   
+                        </p:column>
+                        <p:column style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_creditoscontables}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.creditoscontables}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>   
+                        </p:column>
+                        <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_saldocontableajustado}"/>
                             </f:facet>
-                            <h:outputText value="#{item.saldocontableajustado}"/>
+                            <h:outputText value="#{item.saldocontableajustado}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>   
                         </p:column>
-                        <p:column>
+                        <p:column style="text-align: right">
                             <f:facet name="header">
                                 <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_saldobancarioajustado}"/>
                             </f:facet>
-                            <h:outputText value="#{item.saldobancarioajustado}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_idusuario}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idusuario}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundleconciliacion.ListConciliacionTitle_idcuentabancaria}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idcuentabancaria}"/>
+                            <h:outputText value="#{item.saldobancarioajustado}">
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>   
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleconciliacion.Create}" actionListener="#{conciliacionController.prepareCreate}" update=":ConciliacionCreateForm" oncomplete="PF('ConciliacionCreateDialog').show()"/>

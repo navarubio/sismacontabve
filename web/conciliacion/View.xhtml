@@ -16,30 +16,45 @@
                         <h:outputText value="#{conciliacionController.selected.idconciliacion}" title="#{bundleconciliacion.ViewConciliacionTitle_idconciliacion}"/>
                         <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_serialconciliacion}"/>
                         <h:outputText value="#{conciliacionController.selected.serialconciliacion}" title="#{bundleconciliacion.ViewConciliacionTitle_serialconciliacion}"/>
+                        <h:outputText value="#{bundlebanco.ViewBancoLabel_nombrebanco}"/>
+                        <h:outputText value="#{conciliacionController.selected.idcuentabancaria.idbanco.nombrebanco}" title="#{bundleconciliacion.ViewConciliacionTitle_idcuentabancaria}"/>
+                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_idcuentabancaria}"/>
+                        <h:outputText value="#{conciliacionController.selected.idcuentabancaria.numerocuenta}" title="#{bundleconciliacion.ViewConciliacionTitle_idcuentabancaria}"/>
                         <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_fecharegistro}"/>
                         <h:outputText value="#{conciliacionController.selected.fecharegistro}" title="#{bundleconciliacion.ViewConciliacionTitle_fecharegistro}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
                         <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_fechaconciliacion}"/>
                         <h:outputText value="#{conciliacionController.selected.fechaconciliacion}" title="#{bundleconciliacion.ViewConciliacionTitle_fechaconciliacion}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_saldocontable}"/>
+                        <h:outputText value="#{conciliacionController.selected.saldocontable}" title="#{bundleconciliacion.ViewConciliacionTitle_saldocontable}">
+                            <f:convertNumber type="currency" currencySymbol=" "/>
                         </h:outputText>
                         <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_saldoedocuenta}"/>
-                        <h:outputText value="#{conciliacionController.selected.saldoedocuenta}" title="#{bundleconciliacion.ViewConciliacionTitle_saldoedocuenta}"/>
+                        <h:outputText value="#{conciliacionController.selected.saldoedocuenta}" title="#{bundleconciliacion.ViewConciliacionTitle_saldoedocuenta}">
+                            <f:convertNumber type="currency" currencySymbol=" "/>
+                        </h:outputText>
                         <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_debitoscontables}"/>
-                        <h:outputText value="#{conciliacionController.selected.debitoscontables}" title="#{bundleconciliacion.ViewConciliacionTitle_debitoscontables}"/>
+                        <h:outputText value="#{conciliacionController.selected.debitoscontables}" title="#{bundleconciliacion.ViewConciliacionTitle_debitoscontables}">
+                            <f:convertNumber type="currency" currencySymbol=" "/>
+                        </h:outputText>
                         <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_creditoscontables}"/>
-                        <h:outputText value="#{conciliacionController.selected.creditoscontables}" title="#{bundleconciliacion.ViewConciliacionTitle_creditoscontables}"/>
-                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_saldocontable}"/>
-                        <h:outputText value="#{conciliacionController.selected.saldocontable}" title="#{bundleconciliacion.ViewConciliacionTitle_saldocontable}"/>
+                        <h:outputText value="#{conciliacionController.selected.creditoscontables}" title="#{bundleconciliacion.ViewConciliacionTitle_creditoscontables}">
+                            <f:convertNumber type="currency" currencySymbol=" "/>
+                        </h:outputText>                                                        
                         <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_saldocontableajustado}"/>
-                        <h:outputText value="#{conciliacionController.selected.saldocontableajustado}" title="#{bundleconciliacion.ViewConciliacionTitle_saldocontableajustado}"/>
+                        <h:outputText value="#{conciliacionController.selected.saldocontableajustado}" title="#{bundleconciliacion.ViewConciliacionTitle_saldocontableajustado}">
+                            <f:convertNumber type="currency" currencySymbol=" "/>
+                        </h:outputText>                                                        
                         <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_saldobancarioajustado}"/>
-                        <h:outputText value="#{conciliacionController.selected.saldobancarioajustado}" title="#{bundleconciliacion.ViewConciliacionTitle_saldobancarioajustado}"/>
+                        <h:outputText value="#{conciliacionController.selected.saldobancarioajustado}" title="#{bundleconciliacion.ViewConciliacionTitle_saldobancarioajustado}" >
+                            <f:convertNumber type="currency" currencySymbol=" "/>
+                        </h:outputText>                                                        
                         <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_idusuario}"/>
-                        <h:outputText value="#{conciliacionController.selected.idusuario}" title="#{bundleconciliacion.ViewConciliacionTitle_idusuario}"/>
-                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_idcuentabancaria}"/>
-                        <h:outputText value="#{conciliacionController.selected.idcuentabancaria}" title="#{bundleconciliacion.ViewConciliacionTitle_idcuentabancaria}"/>
+                        <h:outputText value="#{conciliacionController.selected.idusuario.nombre}" title="#{bundleconciliacion.ViewConciliacionTitle_idusuario}"/>
+
                     </p:panelGrid>
                     <p:commandButton value="#{bundleconciliacion.Close}" onclick="ConciliacionViewDialog.hide()"/>
                 </h:panelGroup>

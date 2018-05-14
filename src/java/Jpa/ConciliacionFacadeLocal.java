@@ -30,4 +30,6 @@ public interface ConciliacionFacadeLocal {
 
     int count();
     
+    Conciliacion ultimaConciliacionInsertada();
+    
 }

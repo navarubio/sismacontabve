@@ -5,14 +5,18 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.ConciliacionFacade;
 import Jpa.ConciliacionFacadeLocal;
+import Jpa.EmpresaFacadeLocal;
 import Jpa.MovimientobancarioFacadeLocal;
 import Modelo.Banco;
 import Modelo.Cuentabancaria;
 import Modelo.Detallelibrodiario;
+import Modelo.Empresa;
 import Modelo.Movimientobancario;
+import Modelo.Usuario;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,6 +27,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -38,6 +43,9 @@ public class ConciliacionController implements Serializable {
     private Jpa.ConciliacionFacadeLocal ejbFacade;
     @EJB
     private MovimientobancarioFacadeLocal movimientobancarioEJB;
+    @EJB
+    private EmpresaFacadeLocal empresaEJB;
+    
 
     @Inject
     private Conciliacion conciliacionbancaria;
@@ -45,9 +53,16 @@ public class ConciliacionController implements Serializable {
     private RequerimientosController requerimientosController;
     @Inject
     private ConsumoscajachicaController consumoscajachicaController;
+    @Inject
+    private Empresa empresa;
+    @Inject
+    private LectorexcelController lector;
 
     private List<Conciliacion> items = null;
     private List<Movimientobancario> movimientosseleccionados = null;
+//    private List<Movimientobancario> movimientosmasivos=null;
+    private List<Movimientobancario> movimientosmasivos = new ArrayList();
+    
     private Conciliacion selected;
     private Movimientobancario seleccion;
     private Movimientobancario movimientoseleccionado;
@@ -89,7 +104,7 @@ public class ConciliacionController implements Serializable {
     public void setSeleccion(Movimientobancario seleccion) {
         this.seleccion = seleccion;
     }
-    
+
     public Conciliacion getSelected() {
         return selected;
     }
@@ -268,6 +283,15 @@ public class ConciliacionController implements Serializable {
         this.listavar = listavar;
     }
 
+    public List<Movimientobancario> getMovimientosmasivos() {
+        return movimientosmasivos;
+    }
+
+    public void setMovimientosmasivos(List<Movimientobancario> movimientosmasivos) {
+        this.movimientosmasivos = movimientosmasivos;
+    }
+        
+
     public Conciliacion prepareCreate() {
         selected = new Conciliacion();
         initializeEmbeddableKey();
@@ -397,6 +421,17 @@ public class ConciliacionController implements Serializable {
             ajusteedocta = saldoedoctaajustado - saldocontabajustado;
         }
     }
+    
+    public void cargarMasiva(){
+        if (!movimientosmasivos.isEmpty()){
+            movimientosmasivos.clear();
+        }
+        String archivo ="c://excelconciliacion1.xls";
+        lector.leerArchivoExcel(archivo);
+        movimientosmasivos=lector.getMovimientosNuevos();
+        saldovar=2;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso" , "La carga se realizo correctamente"));
+    }
 
     public void actualizarsaldos(Movimientobancario movi) {
         this.movimientoseleccionado = movi;
@@ -416,7 +451,7 @@ public class ConciliacionController implements Serializable {
             movi.setConciliado(Boolean.TRUE);
 
         } else {
-            if (movi.getCredito() != null ) {
+            if (movi.getCredito() != null) {
                 depositochange = movimientoseleccionado.getCredito();
                 depositos = depositos + depositochange;
 
@@ -486,6 +521,39 @@ public class ConciliacionController implements Serializable {
         mov = movimientosseleccionados.get(marcador);
         total = mov.getSaldoactual();
         return total;
+    }
+
+    public void registraconciliacion() {
+        try {
+            Usuario usua = requerimientosController.getUsa();
+            conciliacionbancaria.setIdusuario(usua);
+            int serial = usua.getIddepartamento().getIdempresa().getSerialconciliacion() + 1;
+            conciliacionbancaria.setSerialconciliacion(serial);
+            conciliacionbancaria.setDebitoscontables(requerimientosController.redondearDecimales(retiros));
+            conciliacionbancaria.setCreditoscontables(requerimientosController.redondearDecimales(depositos));
+            conciliacionbancaria.setSaldocontable(saldocontable);
+            conciliacionbancaria.setSaldocontableajustado(saldocontabajustado);
+            conciliacionbancaria.setSaldobancarioajustado(saldoedoctaajustado);
+            ejbFacade.create(conciliacionbancaria);
+            
+            empresa = usua.getIddepartamento().getIdempresa();
+            empresa.setSerialconciliacion(serial);
+            empresaEJB.edit(empresa);
+
+            Conciliacion ultimaconciliacion = ejbFacade.ultimaConciliacionInsertada();
+
+            for (Movimientobancario mov : movimientosseleccionados) {
+                Movimientobancario movimientoactualizado;
+                movimientoactualizado = mov;
+                movimientoactualizado.setIdconciliacion(ultimaconciliacion);
+                movimientobancarioEJB.edit(movimientoactualizado);
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "La Conciliación se registro exitosamente", "Aviso"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar la Conciliación", "Aviso"));
+        } finally {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        }
     }
 
 }

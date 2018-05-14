@@ -60,6 +60,8 @@ public class Usuario implements Serializable {
     private Collection<Factura> facturaCollection;
     @OneToMany(mappedBy = "idusuario")
     private Collection<Compra> compraCollection;
+    @OneToMany(mappedBy = "idusuario")
+    private Collection<Conciliacion> conciliacionCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -342,5 +344,14 @@ public class Usuario implements Serializable {
 
     public void setReposicioncajachicaCollection(Collection<Reposicioncajachica> reposicioncajachicaCollection) {
         this.reposicioncajachicaCollection = reposicioncajachicaCollection;
+    }
+    
+    @XmlTransient
+    public Collection<Conciliacion> getConciliacionCollection() {
+        return conciliacionCollection;
+    }
+
+    public void setConciliacionCollection(Collection<Conciliacion> conciliacionCollection) {
+        this.conciliacionCollection = conciliacionCollection;
     }
 }

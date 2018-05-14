@@ -5,11 +5,13 @@
  */
 package Jsf;
 
+import java.io.Serializable;
+
 /**
  *
  * @author sofimar
  */
-public class ValidaRUCep {
+public class ValidaRUCep implements Serializable{
 
     public static final int num_provincias = 24;
 

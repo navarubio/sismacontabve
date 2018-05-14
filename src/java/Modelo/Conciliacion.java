@@ -73,8 +73,9 @@ public class Conciliacion implements Serializable {
     private Double saldocontableajustado;
     @Column(name = "saldobancarioajustado")
     private Double saldobancarioajustado;
-    @Column(name = "idusuario")
-    private Integer idusuario;
+    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
+    @ManyToOne
+    private Usuario idusuario;
     @JoinColumn(name = "idcuentabancaria", referencedColumnName = "idcuentabancaria")
     @ManyToOne
     private Cuentabancaria idcuentabancaria;
@@ -168,11 +169,11 @@ public class Conciliacion implements Serializable {
         this.saldobancarioajustado = saldobancarioajustado;
     }
 
-    public Integer getIdusuario() {
+    public Usuario getIdusuario() {
         return idusuario;
     }
 
-    public void setIdusuario(Integer idusuario) {
+    public void setIdusuario(Usuario idusuario) {
         this.idusuario = idusuario;
     }
 
