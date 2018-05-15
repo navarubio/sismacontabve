@@ -55,7 +55,7 @@
                                     <p:outputLabel/>
                                 </p:panelGrid>
                             </p:fieldset>
-                            <p:fieldset id="saldos" legend="SALDOS A CONCILIAR" rendered="#{conciliacionController.saldovar== 1? true:false}"  >
+                            <p:fieldset id="saldos" legend="SALDOS A CONCILIAR" rendered="#{conciliacionController.saldovar== 1 ||conciliacionController.saldovar == 2? true:false}"  >
                                 <p:panelGrid id= "datosarticulo" columns="4" styleClass="ui-custompanelgrid3"  >
                                     <p:outputLabel for="saldocontab" value="Saldo Contable" style="font-weight:bold" />
                                     <p:inputText id="saldocontab" value="#{conciliacionController.saldocontable}" style="text-align:right" size="10" disabled="true" styleClass="text-ouputsaldos"/>
@@ -104,13 +104,13 @@
                         </p:panelGrid>
                         <p:fieldset styleClass="ui-custompanelgrid9" legend="CARGA MASIVA" toggleable="true" collapsed="true" rendered="#{conciliacionController.saldovar== 1? true:false}">
                             <p:panelGrid id= "saldosaconci" columns="3">
-                                <p:commandButton value="Cargar Datos" icon="ui-icon-checked"  action="#{conciliacionController.cargarMasiva()}" update="listado,datosarticulo,:formulario:cargamasiva,:growl"/>   
+                                <p:commandButton value="Cargar Datos" icon="ui-icon-checked"  action="#{conciliacionController.cargarMasiva()}" update="formulario,saldos,listado,datosarticulo,:formulario:cargamasiva,:growl"/>   
                                 <!--p:commandButton value="Start" id="Cargar" type="button" onclick="start()" widgetVar="startButton1" action=".{conciliacionController.cargarMasiva()}" update="listado,datosarticulo,:formulario:listadomasivo,:growl"/>
                                 <p:commandButton value="Cancel" id="cancel" type="button" onclick="cancel()" /-->
                             </p:panelGrid>
                         </p:fieldset>
                         <p:panelGrid id="versus" columns="3">
-                            <p:panel id="lista" rendered="#{conciliacionController.saldovar== 1? true:false}">
+                            <p:panel id="lista" rendered="#{conciliacionController.saldovar == 1 ||conciliacionController.saldovar == 2  ? true:false}">
                                 <p:dataTable id="listado" widgetVar="listadoreq" value="#{conciliacionController.movimientosseleccionados}"  style="width: 750px"
                                              var="req" emptyMessage="No hay movimientos para mostrar" rowKey="#{req.idmovimiento}"
                                              selectionMode="single" selection="#{conciliacionController.seleccion}" 
@@ -168,7 +168,7 @@
                             </p:panel>
                             <!--rendered="'{conciliacionController.saldovar== 2? true:false}"-->
                             <p:panel id="cargamasiva"  >
-                                <p:dataTable id="listadomasivo" widgetVar="listadoreq1" value="#{lectorexcelController.movimientosNuevos}"  style="width: 500px"
+                                <p:dataTable id="listadomasivo" widgetVar="listadoreq1" value="#{conciliacionController.movimientosmasivos}"  style="width: 500px"
                                              var="req" emptyMessage="No hay movimientos para mostrar" rowKey="#{req.idmovimiento}" rendered="#{conciliacionController.saldovar== 2? true:false}"
                                              rowStyleClass="#{req.conciliado==true ? 'asientocuadrado' : null} #{req.conciliado==false? 'facturaabonada' : null}">
                                     <p:column style="width:15%"  headerText="fecha">
@@ -192,9 +192,7 @@
                                         </h:outputText>
                                     </p:column>                                         
                                     <p:column style="text-align: center" headerText="Conciliar">
-                                        <p:commandLink actionListener="#{conciliacionController.actualizarsaldos(req)}" update=":formulario:cargamasiva,:formulario:saldos" >
                                             <h:graphicImage library="images" name="apply.png" width="10" height="10" alt="Conciliar Movimiento"/> 
-                                        </p:commandLink>
                                     </p:column>
                                 </p:dataTable>
 

@@ -45,7 +45,6 @@ public class ConciliacionController implements Serializable {
     private MovimientobancarioFacadeLocal movimientobancarioEJB;
     @EJB
     private EmpresaFacadeLocal empresaEJB;
-    
 
     @Inject
     private Conciliacion conciliacionbancaria;
@@ -62,7 +61,7 @@ public class ConciliacionController implements Serializable {
     private List<Movimientobancario> movimientosseleccionados = null;
 //    private List<Movimientobancario> movimientosmasivos=null;
     private List<Movimientobancario> movimientosmasivos = new ArrayList();
-    
+
     private Conciliacion selected;
     private Movimientobancario seleccion;
     private Movimientobancario movimientoseleccionado;
@@ -83,6 +82,7 @@ public class ConciliacionController implements Serializable {
     private double ajusteedocta = 0.0;
     private int saldovar;
     private int listavar;
+    private int control=0;
 
     private double depositochange = 0.0;
     private double retiroschange = 0.0;
@@ -290,7 +290,6 @@ public class ConciliacionController implements Serializable {
     public void setMovimientosmasivos(List<Movimientobancario> movimientosmasivos) {
         this.movimientosmasivos = movimientosmasivos;
     }
-        
 
     public Conciliacion prepareCreate() {
         selected = new Conciliacion();
@@ -411,6 +410,7 @@ public class ConciliacionController implements Serializable {
         if (!movimientosseleccionados.isEmpty()) {
             saldovar = 1;
             listavar = 1;
+            control=0;
             saldoedocta = conciliacionbancaria.getSaldoedocuenta();
             retiros = requerimientosController.redondearDecimales(TotalDebitos());
             depositos = requerimientosController.redondearDecimales(TotalCreditos());
@@ -421,22 +421,56 @@ public class ConciliacionController implements Serializable {
             ajusteedocta = saldoedoctaajustado - saldocontabajustado;
         }
     }
-    
-    public void cargarMasiva(){
-        if (!movimientosmasivos.isEmpty()){
+
+    public void cargarMasiva() {
+        if (!movimientosmasivos.isEmpty()) {
             movimientosmasivos.clear();
         }
-        String archivo ="c://excelconciliacion1.xls";
+        String archivo = "c://excelconciliacion1.xls";
         lector.leerArchivoExcel(archivo);
-        movimientosmasivos=lector.getMovimientosNuevos();
-        saldovar=2;
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso" , "La carga se realizo correctamente"));
+        movimientosmasivos = lector.getMovimientosNuevos();
+        saldovar = 2;
+        conciliarautomatico();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "La carga se realizo correctamente"));
+    } 
+
+    public void conciliarautomatico() {
+        for (Movimientobancario movBanc : movimientosmasivos) {
+            for (Movimientobancario movContab : movimientosseleccionados) {
+                if (movBanc.getFecha().equals(movContab.getFecha())||movBanc.getFecha().after(movContab.getFecha())){
+                    if (movBanc.getFecha().equals(movContab.getFecha())){
+                        if (movContab.getDebito()==null){
+                            movContab.setDebito(0.0);
+                        }
+                        if (movContab.getCredito()==null){
+                            movContab.setCredito(0.0);
+                        }
+                        if(movBanc.getDebito().equals(movContab.getDebito())){
+                            movBanc.setConciliado(Boolean.TRUE);
+//                            movContab.setConciliado(Boolean.TRUE);
+//                            control=1;
+                            if(movContab.getConciliado()==false){
+                                actualizarsaldos(movContab);                            
+                            }
+                        }else if (movBanc.getCredito().equals(movContab.getCredito())){
+                            movBanc.setConciliado(Boolean.TRUE);
+//                            movContab.setConciliado(Boolean.TRUE);
+//                            control=1;
+                            if(movContab.getConciliado()==false){
+                                actualizarsaldos(movContab);
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
     }
 
     public void actualizarsaldos(Movimientobancario movi) {
         this.movimientoseleccionado = movi;
         if (movimientoseleccionado.getConciliado() == false) {
-            if (movi.getCredito() != null) {
+            if (movi.getCredito() >0 ) {
                 depositochange = movimientoseleccionado.getCredito();
                 depositos = depositos - depositochange;
 
@@ -451,7 +485,7 @@ public class ConciliacionController implements Serializable {
             movi.setConciliado(Boolean.TRUE);
 
         } else {
-            if (movi.getCredito() != null) {
+            if (movi.getCredito() >0 ) {
                 depositochange = movimientoseleccionado.getCredito();
                 depositos = depositos + depositochange;
 
@@ -466,6 +500,7 @@ public class ConciliacionController implements Serializable {
             movi.setConciliado(Boolean.FALSE);
         }
     }
+
 
     public void excluirmovimiento(Movimientobancario movi) {
         saldoedoctaajustado = 0;
@@ -535,7 +570,7 @@ public class ConciliacionController implements Serializable {
             conciliacionbancaria.setSaldocontableajustado(saldocontabajustado);
             conciliacionbancaria.setSaldobancarioajustado(saldoedoctaajustado);
             ejbFacade.create(conciliacionbancaria);
-            
+
             empresa = usua.getIddepartamento().getIdempresa();
             empresa.setSerialconciliacion(serial);
             empresaEJB.edit(empresa);

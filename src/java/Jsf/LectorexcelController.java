@@ -122,6 +122,7 @@ public class LectorexcelController implements Serializable {
                         data = "";
                     }
                     movi.setIdmovimiento(fila);
+                    movi.setConciliado(Boolean.FALSE);
                     this.movimientosNuevos.add(movi);
                     //System.out.println("\n");
                 }
