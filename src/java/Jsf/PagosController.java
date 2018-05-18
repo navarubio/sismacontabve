@@ -826,6 +826,7 @@ public class PagosController implements Serializable {
                 movimientobancario.setIdcuentabancaria(cuentabanco);
                 movimientobancario.setSaldoanterior(requerimientosController.redondearDecimales(saldoanteriorbanco));
                 movimientobancario.setDebito(requerimientosController.redondearDecimales(pagocompra.getTotalpago()));
+                movimientobancario.setCredito(0.0);
                 movimientobancario.setSaldoactual(requerimientosController.redondearDecimales(saldoactualbanco));
                 movimientobancario.setIdpagocompra(pagocompra);
                 movimientobancario.setReferencia(pagocompra.getAprobacion());

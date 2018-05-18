@@ -127,7 +127,7 @@ public class DetalleretencionislrefController implements Serializable {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Detalleretencionislref.class)
+   /*@FacesConverter(forClass = Detalleretencionislref.class)
     public static class DetalleretencionislrefControllerConverter implements Converter {
 
         @Override
@@ -166,6 +166,6 @@ public class DetalleretencionislrefController implements Serializable {
             }
         }
 
-    }
+    }*/
 
 }

@@ -56,6 +56,8 @@ public class ConciliacionController implements Serializable {
     private Empresa empresa;
     @Inject
     private LectorexcelController lector;
+    @Inject
+    private UploadController uploadController;
 
     private List<Conciliacion> items = null;
     private List<Movimientobancario> movimientosseleccionados = null;
@@ -82,7 +84,7 @@ public class ConciliacionController implements Serializable {
     private double ajusteedocta = 0.0;
     private int saldovar;
     private int listavar;
-    private int control=0;
+    private int control = 0;
 
     private double depositochange = 0.0;
     private double retiroschange = 0.0;
@@ -291,6 +293,14 @@ public class ConciliacionController implements Serializable {
         this.movimientosmasivos = movimientosmasivos;
     }
 
+    public UploadController getUploadController() {
+        return uploadController;
+    }
+
+    public void setUploadController(UploadController uploadController) {
+        this.uploadController = uploadController;
+    }
+
     public Conciliacion prepareCreate() {
         selected = new Conciliacion();
         initializeEmbeddableKey();
@@ -407,18 +417,28 @@ public class ConciliacionController implements Serializable {
     public void buscarDatos() {
 
         movimientosseleccionados = movimientobancarioEJB.buscarmovimientosConciliacion(conciliacionbancaria.getIdcuentabancaria(), conciliacionbancaria.getFechaconciliacion());
-        if (!movimientosseleccionados.isEmpty()) {
-            saldovar = 1;
-            listavar = 1;
-            control=0;
-            saldoedocta = conciliacionbancaria.getSaldoedocuenta();
-            retiros = requerimientosController.redondearDecimales(TotalDebitos());
-            depositos = requerimientosController.redondearDecimales(TotalCreditos());
-            saldoedoctaajustado = requerimientosController.redondearDecimales(saldoedocta + depositos - retiros);
-            saldocontable = requerimientosController.redondearDecimales(CalcularSaldocontable());
-            saldocontabajustado = saldocontable + notacredito - notadebito;
-            ajustecontable = saldocontabajustado - saldoedoctaajustado;
-            ajusteedocta = saldoedoctaajustado - saldocontabajustado;
+        try {
+
+            if (!movimientosseleccionados.isEmpty()) {
+                saldovar = 1;
+                listavar = 1;
+                control = 0;
+                saldoedocta = conciliacionbancaria.getSaldoedocuenta();
+                retiros = requerimientosController.redondearDecimales(TotalDebitos());
+                depositos = requerimientosController.redondearDecimales(TotalCreditos());
+                saldoedoctaajustado = requerimientosController.redondearDecimales(saldoedocta + depositos - retiros);
+                saldocontable = requerimientosController.redondearDecimales(CalcularSaldocontable());
+                saldocontabajustado = saldocontable + notacredito - notadebito;
+                ajustecontable = saldocontabajustado - saldoedoctaajustado;
+                ajusteedocta = saldoedoctaajustado - saldocontabajustado;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "La busqueda se realizo correctamente"));
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "No existenc movimientos cargados para esta Conciliación"));
+            }
+        } catch (Exception e) {
+
+        } finally {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
     }
 
@@ -432,34 +452,25 @@ public class ConciliacionController implements Serializable {
         saldovar = 2;
         conciliarautomatico();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "La carga se realizo correctamente"));
-    } 
+    }
 
     public void conciliarautomatico() {
         for (Movimientobancario movBanc : movimientosmasivos) {
             for (Movimientobancario movContab : movimientosseleccionados) {
-                if (movBanc.getFecha().equals(movContab.getFecha())||movBanc.getFecha().after(movContab.getFecha())){
-                    if (movBanc.getFecha().equals(movContab.getFecha())){
-                        if (movContab.getDebito()==null){
+                if (movBanc.getFecha().equals(movContab.getFecha()) || movBanc.getFecha().after(movContab.getFecha())) {
+                    if (movBanc.getFecha().equals(movContab.getFecha())) {
+                        if (movContab.getDebito() == null) {
                             movContab.setDebito(0.0);
                         }
-                        if (movContab.getCredito()==null){
+                        if (movContab.getCredito() == null) {
                             movContab.setCredito(0.0);
                         }
-                        if(movBanc.getDebito().equals(movContab.getDebito())){
+                        if (movBanc.getDebito().equals(movContab.getDebito()) && movBanc.getCredito().equals(movContab.getCredito())) {                           
                             movBanc.setConciliado(Boolean.TRUE);
-//                            movContab.setConciliado(Boolean.TRUE);
-//                            control=1;
-                            if(movContab.getConciliado()==false){
-                                actualizarsaldos(movContab);                            
-                            }
-                        }else if (movBanc.getCredito().equals(movContab.getCredito())){
-                            movBanc.setConciliado(Boolean.TRUE);
-//                            movContab.setConciliado(Boolean.TRUE);
-//                            control=1;
-                            if(movContab.getConciliado()==false){
+                            if (movContab.getConciliado() == false) {
                                 actualizarsaldos(movContab);
                             }
-                        }
+                        } 
                     }
                 }
             }
@@ -470,7 +481,7 @@ public class ConciliacionController implements Serializable {
     public void actualizarsaldos(Movimientobancario movi) {
         this.movimientoseleccionado = movi;
         if (movimientoseleccionado.getConciliado() == false) {
-            if (movi.getCredito() >0 ) {
+            if (movi.getCredito() > 0) {
                 depositochange = movimientoseleccionado.getCredito();
                 depositos = depositos - depositochange;
 
@@ -485,7 +496,7 @@ public class ConciliacionController implements Serializable {
             movi.setConciliado(Boolean.TRUE);
 
         } else {
-            if (movi.getCredito() >0 ) {
+            if (movi.getCredito() > 0) {
                 depositochange = movimientoseleccionado.getCredito();
                 depositos = depositos + depositochange;
 
@@ -500,7 +511,6 @@ public class ConciliacionController implements Serializable {
             movi.setConciliado(Boolean.FALSE);
         }
     }
-
 
     public void excluirmovimiento(Movimientobancario movi) {
         saldoedoctaajustado = 0;

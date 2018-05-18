@@ -614,7 +614,7 @@ public class ConsumoscajachicaController implements Serializable {
             movimientobancario.setSaldoanterior(saldoanteriorbanco);
             movimientobancario.setDebito(reposicionCajaChica.getMontoreposicion());
             movimientobancario.setSaldoactual(saldoactualbanco);
-            movimientobancario.setCredito(null);
+            movimientobancario.setCredito(0.0);
             movimientobancario.setIdreposicioncajachica(reposicionCajaChica);
             movimientoBancarioEJB.create(movimientobancario);
 

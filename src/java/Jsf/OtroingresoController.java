@@ -365,7 +365,7 @@ public class OtroingresoController implements Serializable {
             movimientobancario.setFecha(ingreso.getFechaingreso());
             movimientobancario.setIdcuentabancaria(cuentabancaria);
             movimientobancario.setSaldoanterior(saldoanteriorbanco);
-            movimientobancario.setDebito(null);
+            movimientobancario.setDebito(0.0);
             movimientobancario.setCredito(ingreso.getMontoingresado());
             movimientobancario.setSaldoactual(saldoactualbanco);
             movimientobancario.setIdotroingreso(ingreso);
@@ -375,7 +375,7 @@ public class OtroingresoController implements Serializable {
                 movimientobancario.setIdcuentabancaria(cuentaemisora);
                 movimientobancario.setSaldoanterior(saldoanterioremisor);
                 movimientobancario.setDebito(ingreso.getMontoingresado());
-                movimientobancario.setCredito(null);
+                movimientobancario.setCredito(0.0);
                 movimientobancario.setSaldoactual(saldoactualbancoemisor);
                 movimientobancario.setIdotroingreso(ingreso);
                 movimientoBancarioEJB.create(movimientobancario);

@@ -24,19 +24,19 @@
                     <p:panel header="COMPROBANTE DE RETENCION DE I.S.L.R.">
                         <p:fieldset style="width: 68%"  legend="Datos del Contribuyente" >
                             <p:panelGrid columns="4" styleClass="ui-custompanelgrid2" id="datoscontribuyente">
-                                <p:outputLabel for="razonsocial" style="float:right" styleClass="text-ouput" value="Razon Social :"/>
-                                <p:outputLabel id="razonsocial"  styleClass="text-ouput" value="#{comprobantesislrController.detalleretencionislref.idcompra.rifproveedor.razonsocial}"/>
+                                <p:outputLabel for="razonsocial" style="float:right" styleClass="text-ouputnormal" value="Razon Social :"/>
+                                <p:outputLabel id="razonsocial"  styleClass="text-ouputnormal" value="#{comprobantesislrController.detalleretencionislref.idcompra.rifproveedor.razonsocial}"/>
                                 <p:outputLabel for="numero" style="float:right" styleClass="text-ouput" value="Correlativo:" />                                 
                                 <p:outputLabel id="numero" styleClass="text-ouputfact" value="#{comprobantesislrController.devolversiguientecomprobante()}" title="#{bundle.CreateFacturaTitle_numerofactura}" />
-                                <p:outputLabel for="rif" style="float:right" styleClass="text-ouput" value="R.I.F. :" />
+                                <p:outputLabel for="rif" style="float:right" styleClass="text-ouputnormal" value="R.I.F. :" />
                                 <p:outputLabel id="rif" value="#{comprobantesislrController.detalleretencionislref.idcompra.rifproveedor.rifproveedor}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="fechacomprob" style="float:right" styleClass="text-ouput"  value="Fecha Comprobante :"  />
+                                <p:outputLabel for="fechacomprob" style="float:right" styleClass="text-ouputnormal"  value="Fecha Comprobante :"  />
                                 <p:calendar id="fechacomprob" locale="es" value="#{comprobantesislrController.fechacomprobante}"  pattern="dd/MM/yyyy" size="10" required="true" showOn="button" navigator="true" style="size: 10px"  />
-                                <p:outputLabel for="direccioncliente" style="float:right" styleClass="text-ouput"  value="Direccion Fiscal :" />
+                                <p:outputLabel for="direccioncliente" style="float:right" styleClass="text-ouputnormal"  value="Direccion Fiscal :" />
                                 <p:outputLabel id="direccioncliente" value="#{comprobantesislrController.detalleretencionislref.idcompra.rifproveedor.direccionfiscal}"/>
                                 <p:outputLabel></p:outputLabel>  
                                 <p:outputLabel></p:outputLabel>                                  
-                                <p:outputLabel for="telefono" style="float:right" styleClass="text-ouput" value="Telefonos" />
+                                <p:outputLabel for="telefono" style="float:right" styleClass="text-ouputnormal" value="Telefonos" />
                                 <p:outputLabel id="telefono" value="#{comprobantesislrController.detalleretencionislref.idcompra.rifproveedor.telefonos}" />
                             </p:panelGrid>
                         </p:fieldset>

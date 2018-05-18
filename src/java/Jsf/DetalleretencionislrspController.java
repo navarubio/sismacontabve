@@ -1,10 +1,12 @@
 package Jsf;
 
+import Jpa.DetalleretencionislrefFacadeLocal;
 import Modelo.Detalleretencionislrsp;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.DetalleretencionislrspFacade;
 import Jpa.DetalleretencionislrspFacadeLocal;
+import Modelo.Detalleretencionislref;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,8 +28,12 @@ public class DetalleretencionislrspController implements Serializable {
 
     @EJB
     private Jpa.DetalleretencionislrspFacadeLocal ejbFacade;
+    @EJB
+    private DetalleretencionislrefFacadeLocal detalleretencionislrefEJB;
+
     private List<Detalleretencionislrsp> items = null;
     private Detalleretencionislrsp selected;
+    private List<Detalleretencionislref> listaactiva = null;
 
     public DetalleretencionislrspController() {
     }
@@ -61,6 +67,11 @@ public class DetalleretencionislrspController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+    }
+
+    public List<Detalleretencionislref> buscarlistaactiva() {
+        listaactiva = detalleretencionislrefEJB.buscarretencionesActivas();
+        return listaactiva;
     }
 
     public void update() {

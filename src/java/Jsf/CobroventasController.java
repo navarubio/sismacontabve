@@ -603,6 +603,7 @@ public class CobroventasController implements Serializable {
                 movimientobancario.setIdcuentabancaria(cuentabancaria);
                 movimientobancario.setSaldoanterior(saldoanteriorbanco);
                 movimientobancario.setCredito(cobro.getMontocobrado());
+                movimientobancario.setDebito(0.0);
                 movimientobancario.setSaldoactual(saldoactualbanco);
                 movimientobancario.setReferencia(cobro.getAprobacion());
                 movimientobancario.setIdtipopago(cobro.getIdtipopago());

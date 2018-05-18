@@ -24,27 +24,27 @@
                     <p:panel header="COMPROBANTE DE RETENCION DE IVA">
                         <p:fieldset style="width: 68%"  legend="Datos del Contribuyente" >
                             <p:panelGrid columns="4" styleClass="ui-custompanelgrid1" id="datoscontribuyente">
-                                <p:outputLabel for="razonsocial" style="float:right" styleClass="text-ouput" value="Razon Social :"/>
-                                <p:outputLabel id="razonsocial"  styleClass="text-ouput" value="#{comprobantesivaController.detalleretencionivaef.idcompra.rifproveedor.razonsocial}"/>
-                                <p:outputLabel for="numero" style="float:right" styleClass="text-ouput" value="Correlativo:" />                                 
+                                <p:outputLabel for="razonsocial" style="float:right" styleClass="text-ouputnormal" value="Razon Social :"/>
+                                <p:outputLabel id="razonsocial"  styleClass="text-ouputnormal" value="#{comprobantesivaController.detalleretencionivaef.idcompra.rifproveedor.razonsocial}"/>
+                                <p:outputLabel for="numero" style="float:right" styleClass="text-ouputnormal" value="Correlativo:" />                                 
                                 <p:outputLabel id="numero" styleClass="text-ouputfact" value="#{comprobantesivaController.devolversiguientecomprobante()}" title="#{bundle.CreateFacturaTitle_numerofactura}" />
-                                <p:outputLabel for="rif" style="float:right" styleClass="text-ouput" value="R.I.F. :" />
+                                <p:outputLabel for="rif" style="float:right" styleClass="text-ouputnormal" value="R.I.F. :" />
                                 <p:outputLabel id="rif" value="#{comprobantesivaController.detalleretencionivaef.idcompra.rifproveedor.rifproveedor}" styleClass="optionalLbl"/>
-                                <p:outputLabel for="fechacomprob" style="float:right" styleClass="text-ouput"  value="Fecha Comprobante :"  />
+                                <p:outputLabel for="fechacomprob" style="float:right" styleClass="text-ouputnormal"  value="Fecha Comprobante :"  />
                                 <p:calendar id="fechacomprob" locale="es" value="#{comprobantesivaController.fechacomprobante}"  pattern="dd/MM/yyyy" size="10" required="true"  >
                                     <p:ajax event="dateSelect" listener="#{comprobantesivaController.onDateSelect}"  update="aniofiscal,mesfiscal,serialcomprobante" /> 
                                 </p:calendar>                              
-                                <p:outputLabel for="direccioncliente" style="float:right" styleClass="text-ouput"  value="Direccion Fiscal :" />
+                                <p:outputLabel for="direccioncliente" style="float:right" styleClass="text-ouputnormal"  value="Direccion Fiscal :" />
                                 <p:outputLabel id="direccioncliente" value="#{comprobantesivaController.detalleretencionivaef.idcompra.rifproveedor.direccionfiscal}"/>
-                                <p:outputLabel for="aniofiscal" style="float:right" styleClass="text-ouput" value="AÑO :"  />
+                                <p:outputLabel for="aniofiscal" style="float:right" styleClass="text-ouputnormal" value="AÑO :"  />
                                 <p:outputLabel id="aniofiscal" value="#{comprobantesivaController.anio}" title="#{bundle.CreateFacturaTitle_controlfactura}" />
-                                <p:outputLabel for="telefono" style="float:right" styleClass="text-ouput" value="Telefonos" />
+                                <p:outputLabel for="telefono" style="float:right" styleClass="text-ouputnormal" value="Telefonos" />
                                 <p:outputLabel id="telefono" value="#{comprobantesivaController.detalleretencionivaef.idcompra.rifproveedor.telefonos}" />
-                                <p:outputLabel for="mesfiscal" style="float:right" styleClass="text-ouput" value="MES :" />
+                                <p:outputLabel for="mesfiscal" style="float:right" styleClass="text-ouputnormal" value="MES :" />
                                 <p:outputLabel id="mesfiscal" value="#{comprobantesivaController.mesfiscal}" />
                                 <p:outputLabel></p:outputLabel>
                                 <p:outputLabel></p:outputLabel>
-                                <p:outputLabel for="serialcomprobante" style="float:right" styleClass="text-ouput" value="SERIAL COMPROBANTE :" />
+                                <p:outputLabel for="serialcomprobante" style="float:right" styleClass="text-ouputnormal" value="SERIAL COMPROBANTE :" />
                                 <p:outputLabel id="serialcomprobante" value="#{comprobantesivaController.serialcomprobante}" styleClass="text-ouputsaldo" />
 
                             </p:panelGrid>

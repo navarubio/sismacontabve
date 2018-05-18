@@ -57,13 +57,11 @@ public class LibromayorController implements Serializable {
     private List<Libromayor> listado = new ArrayList();
     ArrayList<Libromayor> listaerrores1 = new ArrayList();
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
-    private Double saldocontable=0.0;
-    private Double saldogeneral=0.0;
- 
-    
+    private Double saldocontable = 0.0;
+    private Double saldogeneral = 0.0;
+
     @Inject
     private MovimientobancarioController movimientobancarioControler;
-    
 
     public LibromayorController() {
     }
@@ -165,7 +163,7 @@ public class LibromayorController implements Serializable {
     public void setSaldogeneral(Double saldogeneral) {
         this.saldogeneral = saldogeneral;
     }
-       
+
     @PostConstruct
     public void init() {
 
@@ -177,31 +175,32 @@ public class LibromayorController implements Serializable {
     public void actualizarBanco() {
 //        itemsfiltrados.clear();
         movimientobancarioControler.actualizar();
-        cuentacontab=movimientobancarioControler.getSelected().getIdcuentabancaria().getIdplandecuenta().getIdplandecuenta();
-        fechadesde=movimientobancarioControler.getFechadesde();
-        fechahasta=movimientobancarioControler.getFechahasta();
+        cuentacontab = movimientobancarioControler.getSelected().getIdcuentabancaria().getIdplandecuenta().getIdplandecuenta();
+        fechadesde = movimientobancarioControler.getFechadesde();
+        fechahasta = movimientobancarioControler.getFechahasta();
         actualizar();
     }
+
     public void actualizar() {
         itemsfiltrados = libromayorcompuestoEJB.buscarmayorporfecha(cuentacontab, fechadesde, fechahasta);
         Libromayorcompuesto movimiento;
-        int ultimo=itemsfiltrados.size()-1;
+        int ultimo = itemsfiltrados.size() - 1;
 
         if (!itemsfiltrados.isEmpty()) {
             movimiento = itemsfiltrados.get(ultimo);
             saldocontable = movimiento.getSaldoposterior();
         }
-        cuentaseleccionada=plandecuentaEJB.buscarcuenta(cuentacontab);
-        saldogeneral=cuentaseleccionada.getSaldogeneral();
+        cuentaseleccionada = plandecuentaEJB.buscarcuenta(cuentacontab);
+        saldogeneral = cuentaseleccionada.getSaldogeneral();
     }
-    
+
     public void conciliar() {
         listaerrores1.clear();
         Libromayorcompuesto movimiento;
-        cuentaseleccionada=plandecuentaEJB.buscarcuenta(cuentacontab);
-        saldogeneral=cuentaseleccionada.getSaldogeneral();
+        cuentaseleccionada = plandecuentaEJB.buscarcuenta(cuentacontab);
+        saldogeneral = cuentaseleccionada.getSaldogeneral();
         itemsfiltrados = libromayorcompuestoEJB.buscarmayorporfecha(cuentacontab, fechadesde, fechahasta);
-        int ultimo=itemsfiltrados.size()-1;
+        int ultimo = itemsfiltrados.size() - 1;
         if (!itemsfiltrados.isEmpty()) {
             movimiento = itemsfiltrados.get(ultimo);
             saldocontable = movimiento.getSaldoposterior();
@@ -217,7 +216,7 @@ public class LibromayorController implements Serializable {
             listado.add(librmay);
         }
         Collections.reverse(listado);
-        
+
         conciliarSaldos();
     }
 
@@ -411,7 +410,7 @@ public class LibromayorController implements Serializable {
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
-            }
+}
             LibromayorController controller = (LibromayorController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "libromayorController");
             return controller.getLibromayor(getKey(value));
