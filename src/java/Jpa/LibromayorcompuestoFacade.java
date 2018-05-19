@@ -51,4 +51,20 @@ public class LibromayorcompuestoFacade extends AbstractFacade<Libromayorcompuest
         return lista;
     }
     
+    @Override
+    public List<Libromayorcompuesto> buscarmayorporfechafinal (Integer cuentacontable, Date fechafinish) {
+        String consulta;
+        List<Libromayorcompuesto> lista = null;
+        try {
+            consulta = "From Libromayorcompuesto l where l.idplandecuenta= ?1 and l.fecha <= ?2 order by l.fecha, l.idlibromayor";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, cuentacontable);
+            query.setParameter(2, fechafinish);
+
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
 }

@@ -52,5 +52,6 @@ public interface MovimientobancarioFacadeLocal {
     Movimientobancario buscarmovimientoxreposicion(Reposicioncajachica reposicion);
     
     List<Movimientobancario> buscarmovimientosConciliacion(Cuentabancaria cuenta, Date fechafinish);
-    
+
+    List<Movimientobancario> movimientosparaConciliacionInterna (Cuentabancaria cuenta, Date fechafinish);
   }

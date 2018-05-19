@@ -93,6 +93,7 @@ public class UploadController implements Serializable {
             out.close();
 
             System.out.println("New file created!");
+            System.out.println("nombre del archivo "+archivo );
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

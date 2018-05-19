@@ -146,6 +146,8 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
         return lista;
     }
 
+    
+    
     @Override
     public Movimientobancario buscarmovimientoxIdpago(Pagocompra pago) {
         String consulta;
@@ -179,6 +181,22 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
             query.setParameter(2, fechafinish);
             query.setParameter(3, condicion);
             query.setParameter(4, libromayor);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Movimientobancario> movimientosparaConciliacionInterna (Cuentabancaria cuenta, Date fechafinish) {
+        String consulta;
+        List<Movimientobancario> lista = null;
+        try {
+            consulta = "From Movimientobancario m where m.idcuentabancaria.idcuentabancaria= ?1 and m.fecha <= ?2 order by m.fecha, m.idmovimiento";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, cuenta.getIdcuentabancaria());
+            query.setParameter(2, fechafinish);
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

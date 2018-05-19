@@ -35,4 +35,5 @@ public interface LibromayorcompuestoFacadeLocal {
     
     List<Libromayorcompuesto> buscarmayorporfecha (Integer cuentacontable, Date fechaini, Date fechafinish);
     
+    List<Libromayorcompuesto> buscarmayorporfechafinal (Integer cuentacontable, Date fechafinish);
 }

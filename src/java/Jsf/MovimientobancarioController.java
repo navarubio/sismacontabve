@@ -201,7 +201,7 @@ public class MovimientobancarioController implements Serializable {
 
     public void conciliar() {
         listaerrores1.clear();
-        itemsfiltrados = ejbFacade.buscarmovimientoporfecha(selected.getIdcuentabancaria(), fechadesde, fechahasta);
+        itemsfiltrados = ejbFacade.movimientosparaConciliacionInterna(selected.getIdcuentabancaria(), fechahasta);
         conciliarSaldos();
     }
 
@@ -223,7 +223,7 @@ public class MovimientobancarioController implements Serializable {
             }
 
             if (anterior.equals(cadena)) {
-                if (seleccion.getDebito() == null) {
+                if (seleccion.getDebito() == 0) {
                     saldopost = saldoant + seleccion.getCredito();
                 } else {
                     saldopost = saldoant - seleccion.getDebito();
@@ -243,7 +243,7 @@ public class MovimientobancarioController implements Serializable {
             } else {
                 saldoant = saldopost;
                 seleccion.setSaldoanterior(saldopost);
-                if (seleccion.getDebito() == null) {
+                if (seleccion.getDebito() == 0) {
                     saldopost = saldoant + seleccion.getCredito();
                 } else {
                     saldopost = saldoant - seleccion.getDebito();

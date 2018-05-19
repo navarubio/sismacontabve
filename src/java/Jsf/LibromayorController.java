@@ -199,12 +199,8 @@ public class LibromayorController implements Serializable {
         Libromayorcompuesto movimiento;
         cuentaseleccionada = plandecuentaEJB.buscarcuenta(cuentacontab);
         saldogeneral = cuentaseleccionada.getSaldogeneral();
-        itemsfiltrados = libromayorcompuestoEJB.buscarmayorporfecha(cuentacontab, fechadesde, fechahasta);
+        itemsfiltrados = libromayorcompuestoEJB.buscarmayorporfechafinal(cuentacontab, fechahasta);
         int ultimo = itemsfiltrados.size() - 1;
-        if (!itemsfiltrados.isEmpty()) {
-            movimiento = itemsfiltrados.get(ultimo);
-            saldocontable = movimiento.getSaldoposterior();
-        }
         if (listado != null) {
             listado.clear();
         }
@@ -215,11 +211,77 @@ public class LibromayorController implements Serializable {
             librmay = ejbFacade.buscarLibro(idlibromay);
             listado.add(librmay);
         }
-        Collections.reverse(listado);
+//        Collections.reverse(listado);
 
         conciliarSaldos();
+        if (!itemsfiltrados.isEmpty()) {
+            movimiento = itemsfiltrados.get(ultimo);
+            saldocontable = movimiento.getSaldoposterior();
+        }
+
     }
 
+    /*public void conciliarSaldos() {
+     double saldoant = 0;
+     double saldoact = 0;
+     double saldopost = 0;
+     int tiposaldocontab = 0;
+     int marcador = 0;
+     int sinnovedad = 0;
+     String stringposterior = null;
+     String stringanterior = null;
+     String stringactual;
+
+     for (Libromayor seleccion : listado) {
+     saldopost = seleccion.getSaldoposterior();
+     stringposterior = formatearnumero.format(saldopost);
+
+     if (marcador == 0) {
+     stringanterior = stringposterior;
+     //1)DEUDOR    2)ACREEDOR //
+     tiposaldocontab = seleccion.getIdplandecuenta().getIdtiposaldocontable().getIdtiposaldocontable();
+     }
+     if (!stringanterior.equals(stringposterior)) {
+     saldopost = saldoant;
+     seleccion.setSaldoposterior(saldopost);
+     sinnovedad = 1;
+     }
+     if (seleccion.getDebe() == 0) {
+     if (tiposaldocontab == 1) {
+     saldoant = saldopost + seleccion.getHaber();
+     } else {
+     saldoant = saldopost + seleccion.getHaber();
+     }
+     } else {
+     if (tiposaldocontab == 1) {
+     saldoant = saldopost - seleccion.getDebe();
+     } else {
+     saldoant = saldopost - seleccion.getDebe();
+     }
+     }
+     stringanterior = formatearnumero.format(saldoant);
+     saldoact = seleccion.getSaldoanterior();
+     stringactual = formatearnumero.format(saldoact);
+
+     if (stringanterior.equals(stringactual)) {
+
+     } else {
+     seleccion.setSaldoanterior(saldoant);
+     sinnovedad = 1;
+     }
+     listaerrores1.add(seleccion);
+
+     if (marcador == 0) {
+     marcador++;
+     }
+     }
+     if (sinnovedad == 0) {
+     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "LOS SALDOS DEL MAYOR ESTAN AJUSTADOS"));
+     } else {
+     corregirSaldos();
+     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "LOS SALDOS FUERON AJUSTADOS SATISFACTORIAMENTE"));
+     }
+     }*/
     public void conciliarSaldos() {
         double saldoant = 0;
         double saldoact = 0;
@@ -232,40 +294,40 @@ public class LibromayorController implements Serializable {
         String stringactual;
 
         for (Libromayor seleccion : listado) {
-            saldopost = seleccion.getSaldoposterior();
-            stringposterior = formatearnumero.format(saldopost);
-
+            saldoant = seleccion.getSaldoanterior();
+//            saldoant = seleccion.getSaldoanterior();
+            stringanterior = formatearnumero.format(saldoant);
+            stringposterior= formatearnumero.format(saldopost);
+            
             if (marcador == 0) {
-                stringanterior = stringposterior;
+                stringposterior = stringanterior;
                 //1)DEUDOR    2)ACREEDOR //
                 tiposaldocontab = seleccion.getIdplandecuenta().getIdtiposaldocontable().getIdtiposaldocontable();
             }
             if (!stringanterior.equals(stringposterior)) {
-                saldopost = saldoant;
-                seleccion.setSaldoposterior(saldopost);
+                saldoant = saldopost;
+                seleccion.setSaldoanterior(saldoant);
                 sinnovedad = 1;
             }
             if (seleccion.getDebe() == 0) {
                 if (tiposaldocontab == 1) {
-                    saldoant = saldopost + seleccion.getHaber();
+                    saldopost = saldoant - seleccion.getHaber();
                 } else {
-                    saldoant = saldopost + seleccion.getHaber();
+                    saldopost = saldoant + seleccion.getHaber();
                 }
             } else {
                 if (tiposaldocontab == 1) {
-                    saldoant = saldopost - seleccion.getDebe();
+                    saldopost = saldoant + seleccion.getDebe();
                 } else {
-                    saldoant = saldopost - seleccion.getDebe();
+                    saldopost = saldoant - seleccion.getDebe();
                 }
             }
-            stringanterior = formatearnumero.format(saldoant);
-            saldoact = seleccion.getSaldoanterior();
+            stringposterior = formatearnumero.format(saldopost);
+            saldoact = seleccion.getSaldoposterior();
             stringactual = formatearnumero.format(saldoact);
 
-            if (stringanterior.equals(stringactual)) {
-
-            } else {
-                seleccion.setSaldoanterior(saldoant);
+            if (!stringposterior.equals(stringactual)) {
+                seleccion.setSaldoposterior(saldopost);
                 sinnovedad = 1;
             }
             listaerrores1.add(seleccion);
@@ -410,7 +472,7 @@ public class LibromayorController implements Serializable {
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
-}
+            }
             LibromayorController controller = (LibromayorController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "libromayorController");
             return controller.getLibromayor(getKey(value));
