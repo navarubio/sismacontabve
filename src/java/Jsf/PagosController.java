@@ -778,7 +778,7 @@ public class PagosController implements Serializable {
                     } else {
                         tipo = 4;
                     }
-                    compra.setMontopendiente(saldop);
+                    compra.setMontopendiente(requerimientosController.redondearDecimales(saldop));
                     statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
                 }
                 pagocompra.setSaldopendiente(compra.getMontopendiente());
@@ -864,16 +864,16 @@ public class PagosController implements Serializable {
         try {
             if (detalleretencionivaef.getTotalivaretenido() > 0) {
                 detalleretencionivaef.setIdcompra(compra);
-                detalleretencionivaef.setBimponible(compra.getSubtotal());
-                detalleretencionivaef.setTotalcompra(compra.getTotal());
+                detalleretencionivaef.setBimponible(requerimientosController.redondearDecimales(compra.getSubtotal()));
+                detalleretencionivaef.setTotalcompra(requerimientosController.redondearDecimales(compra.getTotal()));
                 detalleretencionivaef.setTotalivaretenido(requerimientosController.redondearDecimales(ivaretenido));
-                detalleretencionivaef.setTotalivacompra(compra.getIva());
+                detalleretencionivaef.setTotalivacompra(requerimientosController.redondearDecimales(compra.getIva()));
                 detalleretencionivaefEJB.create(detalleretencionivaef);
             }
             if (detalleretencionislref.getTotalislrretenido()>0){
                 detalleretencionislref.setIdcompra(compra);
-                detalleretencionislref.setTotalcompra(compra.getTotal());
-                detalleretencionislref.setBimponible(compra.getSubtotal());
+                detalleretencionislref.setTotalcompra(requerimientosController.redondearDecimales(compra.getTotal()));
+                detalleretencionislref.setBimponible(requerimientosController.redondearDecimales(compra.getSubtotal()));
                 detalleretencionislrefEJB.create(detalleretencionislref);
             }
             calcularMontoapagar();

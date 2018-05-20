@@ -518,7 +518,7 @@ public class ConciliacionController implements Serializable {
         retiroschange = 0;
         depositochange = 0;
         int indc = movimientosseleccionados.indexOf(movi);
-        if (movi.getCredito() == null) {
+        if (movi.getCredito() == 0) {
             retiroschange = movi.getDebito();
             retiros = retiros - retiroschange;
             saldocontable = saldocontable + retiroschange;

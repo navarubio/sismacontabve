@@ -167,7 +167,7 @@
                             <p:column style="text-align: center" headerText="Retenciones">                                
                                 <p:commandLink actionListener="#{cobroventasController.asignarDetalleFactura(req)}" update=":dialogo" oncomplete="PF('wdialogo').show();" >
                                     <h:graphicImage library="images" name="balanzapago.png" width="30" height="30" alt="Editar Articulo" 
-                                                    rendered="#{cobroventasController.visualizar== 1 || cobroventasController.visualizar== 2 || cobroventasController.visualizar== 3 || cobroventasController.visualizar== 4? true:false}"/>  
+                                                    rendered="#{cobroventasController.visualizar== 1 || cobroventasController.visualizar== 2 || cobroventasController.visualizar== 3 || cobroventasController.visualizar== 4  ? true:false}"/>  
                                 </p:commandLink>
                             </p:column>
 
@@ -264,7 +264,8 @@
                                     </p:inputText>
                                     <p:outputLabel for="islrretenido"  value="I.S.L.R. Retenido" styleClass="optionalLbl"/>
                                     <p:inputText id="islrretenido"  size="20" value="#{cobroventasController.detalleretencionislrsp.totalislrretenido}" style="text-align:right">
-                                    </p:inputText>
+                                        <f:convertNumber type="currency" currencySymbol=""/>
+                                    </p:inputText>       
                                 </p:panelGrid>
                             </p:fieldset>
                         </h:panelGrid>

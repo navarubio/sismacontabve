@@ -50,6 +50,8 @@ public class RequerimientosController implements Serializable {
     private Empresa empresa;
     @Inject
     private Estatusrequerimiento statusreq;
+    @Inject
+    private RequerimientosController requerimientosController;
     private List<Articulo> articulos = null;
     private List<Requerimiento> requerimientos = null;
     private List<Requerimiento> requerimientosfiltrados;
@@ -260,12 +262,12 @@ public class RequerimientosController implements Serializable {
             reque.setCantidad(cantidad);
             reque.setPcosto(pcosto);
             subtotal = cantidad * pcosto;
-            reque.setSubtotal(subtotal);
+            reque.setSubtotal(requerimientosController.redondearDecimales(subtotal));
             alicuota = reque.getCodigo().getIdgravamen().getAlicuota();
             iva = (subtotal * alicuota) / 100;
             total = subtotal + iva;
-            reque.setTributoiva(iva);
-            reque.setTotal(total);
+            reque.setTributoiva(requerimientosController.redondearDecimales(iva));
+            reque.setTotal(requerimientosController.redondearDecimales(total));
             reque.setIdrequerimiento(id);
             this.listarequerimiento.add(reque);
             requerimientos = requerimientoEJB.findAll();

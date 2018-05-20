@@ -865,7 +865,7 @@ public class AsientosventasController implements Serializable {
                 montotdebe += detall.getDebe();
             }
         }
-        totaldebegeneral = montotdebe;
+        totaldebegeneral = requerimientosController.redondearDecimales(montotdebe);
         return new DecimalFormat("###,###.##").format(montotdebe);
 //        return montotdebe;
     }
@@ -878,7 +878,7 @@ public class AsientosventasController implements Serializable {
                 montothaber += detall.getHaber();
             }
         }
-        totalhabergeneral = montothaber;
+        totalhabergeneral = requerimientosController.redondearDecimales(montothaber);
         return new DecimalFormat("###,###.##").format(montothaber);
 //        return montothaber;
     }

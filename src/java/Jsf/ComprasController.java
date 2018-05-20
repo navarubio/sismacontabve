@@ -131,6 +131,7 @@ public class ComprasController implements Serializable {
     private Tipoconjunto tipoconjunto = null;
     private Date fechaactual = new Date();
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
+    private Usuario usua;
 
     public Compra getCompra() {
         return compra;
@@ -376,7 +377,8 @@ public class ComprasController implements Serializable {
         compra.setFechaorden(fechaactual);
         varAutoriza = 0;
         listarequerimiento.clear();
-        empresa = empresaEJB.devolverEmpresabase();
+        usua = requerimientosController.getUsa();
+        empresa = usua.getIddepartamento().getIdempresa();
 
 //        this.auxiliarrequerimiento=requerimientosController.getAuxrequer();
     }
@@ -511,9 +513,9 @@ public class ComprasController implements Serializable {
         alicuota = requerimiento.getCodigo().getIdgravamen().getAlicuota();
         iva = subtotal * alicuota;
         total = subtotal + iva;
-        requerimiento.setSubtotal(subtotal);
-        requerimiento.setTributoiva(iva);
-        requerimiento.setTotal(total);
+        requerimiento.setSubtotal(requerimientosController.redondearDecimales(subtotal));
+        requerimiento.setTributoiva(requerimientosController.redondearDecimales(iva));
+        requerimiento.setTotal(requerimientosController.redondearDecimales(total));
     }
 
     public void registrar() {
@@ -523,8 +525,7 @@ public class ComprasController implements Serializable {
             compra.setIva(requerimientosController.redondearDecimales(auxiliar.getMontoiva()));
             compra.setTotal(requerimientosController.redondearDecimales(auxiliar.getMontototal()));
             compra.setMontopendiente(requerimientosController.redondearDecimales(auxiliar.getMontototal()));
-            Usuario us = requerimientosController.getUsa();
-            compra.setIdusuario(us);
+            compra.setIdusuario(usua);
             Estatusfactura statusfactu = null;
             int tipo = 0;
             //Para fijar monto minimo de de aprobacion para compras directas
@@ -562,9 +563,9 @@ public class ComprasController implements Serializable {
                 detallecompra.setCodigo(arti);
                 detallecompra.setCantidad(rq.getCantidad());
                 detallecompra.setPcosto(rq.getPcosto());
-                detallecompra.setSubtotal(rq.getSubtotal());
-                detallecompra.setTributoiva(rq.getTributoiva());
-                detallecompra.setTotalapagar(rq.getTotal());
+                detallecompra.setSubtotal(requerimientosController.redondearDecimales(rq.getSubtotal()));
+                detallecompra.setTributoiva(requerimientosController.redondearDecimales(rq.getTributoiva()));
+                detallecompra.setTotalapagar(requerimientosController.redondearDecimales(rq.getTotal()));
                 detallecompraEJB.create(detallecompra);
             }
             if (tipo == 1) {

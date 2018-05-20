@@ -27,9 +27,9 @@
                                  selectionMode="single" selection="#{maestromovimientoController.selected}"
                                  paginator="true"
                                  rowKey="#{item.idmaestro}"
-                                 rows="30" scrollable="true" scrollHeight="650"
-                                 rowsPerPageTemplate="30,40,50"
-                                 rowStyleClass="#{item.idestatuscontable.idestatuscontable== 2 ? 'facturaabonada' : null} " 
+                                 rows="50" scrollable="true" scrollHeight="650"
+                                 rowsPerPageTemplate="50,50,100"
+                                 rowStyleClass="#{item.idestatuscontable.idestatuscontable== 2 ? 'asientocuadrado' : null} " 
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -68,7 +68,7 @@
                             <h:outputText value="#{item.idcompra}"/>
                             <h:commandLink action="/auxiliarrequerimiento/Compraasiento.xhtml" actionListener="#{asientoscontablesController.asignarCompra(item.idcompra, item)}" > 
                                 <h:graphicImage library="images" name="contable1.png" width="30" height="30" alt="Compras"
-                                                rendered="#{item.idcompra!= null? true:false}"/>  
+                                                rendered="#{item.idcompra!= null and item.idestatuscontable.idestatuscontable==1 ? true:false}"/>  
                             </h:commandLink>      
                         </p:column>
                         <p:column style="text-align: center">
@@ -83,7 +83,7 @@
                             </f:facet>
                             <h:commandLink action="/auxiliarrequerimiento/Compraasiento.xhtml" actionListener="#{asientoscontablesController.asignarPagoCompra(item.idpagocompra, item)}" > 
                                 <h:graphicImage library="images" name="contable1.png" width="30" height="30" alt="Compras"
-                                                rendered="#{item.idpagocompra!= null? true:false}"/>  
+                                                rendered="#{item.idpagocompra!= null and item.idestatuscontable.idestatuscontable==1 ? true:false}"/>  
                             </h:commandLink>  
                             <h:outputText value="#{item.idpagocompra.idcompra}"/>
                         </p:column>                        
@@ -94,7 +94,7 @@
                             <h:outputText value="#{item.numerofact}"/>
                             <h:commandLink action="/factura/facturaasiento.xhtml" actionListener="#{asientosventasController.asignarfactura(item.numerofact, item)}" > 
                                 <h:graphicImage library="images" name="contable1.png" width="30" height="30" alt="Facturas"
-                                                rendered="#{item.numerofact!= null? true:false}"/>  
+                                                rendered="#{item.numerofact!= null and item.idestatuscontable.idestatuscontable==1 ? true:false}"/>  
                             </h:commandLink>      
                         </p:column>
                         <p:column style="text-align: center">
@@ -103,7 +103,7 @@
                             </f:facet>
                             <h:commandLink action="/factura/facturaasiento.xhtml" actionListener="#{asientosventasController.asignarpagofactura(item.idcobroventa, item)}" >
                                 <h:graphicImage library="images" name="contable1.png" width="30" height="30" alt="Cobros"
-                                                rendered="#{item.idcobroventa!= null? true:false}"/>  
+                                                rendered="#{item.idcobroventa!= null and item.idestatuscontable.idestatuscontable==1 ? true:false}"/>  
                             </h:commandLink>                            
                             <h:outputText value="#{item.idcobroventa.numerofact.numerofact}"/>
                         </p:column>
@@ -113,7 +113,7 @@
                             </f:facet>
                             <h:commandLink action="/otroingreso/asientootrosingresos.xhtml" actionListener="#{asientosotrosingresosController.asignarOtroingreso(item.idotroingreso, item)}" >
                                 <h:graphicImage library="images" name="contable1.png" width="30" height="30" alt="Cobros"
-                                                rendered="#{item.idotroingreso!= null? true:false}"/>  
+                                                rendered="#{item.idotroingreso!= null and item.idestatuscontable.idestatuscontable==1 ? true:false}"/>  
                             </h:commandLink>   
                             <h:outputText value="#{item.idotroingreso}"/>
                         </p:column>
@@ -123,7 +123,7 @@
                             </f:facet>
                             <h:commandLink action="/reposicioncajachica/asientoreposicion.xhtml" actionListener="#{asientosreposicionController.asignarReposicion(item.idreposicioncajachica, item)}" >
                                 <h:graphicImage library="images" name="contable1.png" width="30" height="30" alt="Reposicion"
-                                                rendered="#{item.idreposicioncajachica!= null? true:false}"/>  
+                                                rendered="#{item.idreposicioncajachica!= null and item.idestatuscontable.idestatuscontable==1 ? true:false}"/>  
                             </h:commandLink>   
                             <h:outputText value="#{item.idreposicioncajachica}"/>
                         </p:column>

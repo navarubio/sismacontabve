@@ -1222,7 +1222,8 @@ public class AsientoscontablesController implements Serializable {
                 montotdebe += detall.getDebe();
             }
         }
-        totaldebegeneral = montotdebe;
+//        totaldebegeneral = montotdebe;
+        totaldebegeneral = requerimientosController.redondearDecimales(montotdebe);
         return new DecimalFormat("###,###.##").format(montotdebe);
 //        return montotdebe;
     }
