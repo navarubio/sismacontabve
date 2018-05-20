@@ -720,12 +720,12 @@ public class AsientosventasController implements Serializable {
         detallelibro.setIdplandecuenta(cuentaporcobrar);
         if (cobro.getMontopendiente() > 0) {
             if (cobro.getMontoretenido() > 0) {
-                detallelibro.setHaber(cobro.getMontocobrado() + retiva + retislr);
+                detallelibro.setHaber(requerimientosController.redondearDecimales(cobro.getMontocobrado() + retiva + retislr));
             } else {
                 detallelibro.setHaber(cobro.getMontocobrado());
             }
         } else {
-            detallelibro.setHaber(cobro.getMontocobrado() + retiva + retislr);
+            detallelibro.setHaber(requerimientosController.redondearDecimales(cobro.getMontocobrado() + retiva + retislr));
         }
         detallelibro.setIddetallelibrodiario(id);
         this.listadetalleslibrodiario.add(detallelibro);

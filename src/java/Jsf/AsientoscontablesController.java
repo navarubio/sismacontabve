@@ -1055,11 +1055,13 @@ public class AsientoscontablesController implements Serializable {
     }
 
     public void anexarComprapago() {
+        
         listadetalleslibrodiario.clear();
 //        empresa = empresaEJB.devolverEmpresabase();
         id = 0;
         visualizar = 0;
         Detallecompra detalle1 = detallecompraFiltrados.get(0);
+        Articulo arti = detalle1.getCodigo();
         Detallelibrodiario detallelib = new Detallelibrodiario();
 //////////////////////////// ASIENTO DE PAGO COMPUESTO /////////////////////////////
 /*        Articulo arti = detalle1.getCodigo();
@@ -1086,16 +1088,20 @@ public class AsientoscontablesController implements Serializable {
             id++;
         }*/
         //////////////////// ASIENTO DE PAGO EN 2 TIEMPOS CONTABLES ////////////////
-        int codcta100 = empresa.getCtaxpagarproved();
-        Plandecuenta cuentaporpagarprovee = plandecuentaEJB.buscarcuenta(codcta100);
-        detallelib.setIdplandecuenta(cuentaporpagarprovee);
-        
-        if (compra.getMontopendiente()>0){
-            
-        }else{
-            
+        int codctadebe = 0;
+        if (arti.getIdgrupo().getIdgrupo() < 3) {
+            codctadebe = empresa.getCtaxpagarproved();
+        } else if (arti.getIdgrupo().getIdgrupo() == 3) {
+            codctadebe = empresa.getCtaxpagarinterna();
         }
-        detallelib.setDebe(compra.getTotal());
+        Plandecuenta cuentaporcobrar = plandecuentaEJB.buscarcuenta(codctadebe);
+        detallelib.setIdplandecuenta(cuentaporcobrar);
+        detallelib.setDebe(requerimientosController.redondearDecimales(pagocompra.getTotalpago()+pagocompra.getMontoretenido()));
+//        int codcta100 = empresa.getCtaxpagarproved();
+//        Plandecuenta cuentaporpagarprovee = plandecuentaEJB.buscarcuenta(codcta100);       
+//        detallelib.setIdplandecuenta(cuentaporpagarprovee);        
+
+//        detallelib.setDebe(compra.getTotal());
         detallelib.setIddetallelibrodiario(id);
         this.listadetalleslibrodiario.add(detallelib);
         id++;
@@ -1145,7 +1151,7 @@ public class AsientoscontablesController implements Serializable {
         listadetalleslibrodiario.clear();
         id = 0;
         visualizar = 0;
-        empresa = empresaEJB.devolverEmpresabase();
+//        empresa = empresaEJB.devolverEmpresabase();
 
         Detallelibrodiario detallelibro = new Detallelibrodiario();
         int codctadebe = empresa.getCtaxpagarproved();
@@ -1157,13 +1163,13 @@ public class AsientoscontablesController implements Serializable {
         double totalcp = compra.getTotal();
         if (saldop > 0) {
             if (montor > 0) {
-                detallelibro.setDebe(pagocompra.getTotalpago() + retiva + retislr);
+                detallelibro.setDebe(requerimientosController.redondearDecimales(pagocompra.getTotalpago() + retiva + retislr));
             } else {
                 detallelibro.setDebe(pagocompra.getTotalpago());
             }
         } else {
             if (totalpg < totalcp) {
-                detallelibro.setDebe(pagocompra.getTotalpago() + retiva + retislr);
+                detallelibro.setDebe(requerimientosController.redondearDecimales(pagocompra.getTotalpago() + retiva + retislr));
             } else {
                 detallelibro.setDebe(compra.getTotal());
             }
