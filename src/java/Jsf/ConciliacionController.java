@@ -446,7 +446,7 @@ public class ConciliacionController implements Serializable {
         if (!movimientosmasivos.isEmpty()) {
             movimientosmasivos.clear();
         }
-        String archivo = "c://excelconciliacion1.xls";
+        String archivo = uploadController.getArchivo();
         lector.leerArchivoExcel(archivo);
         movimientosmasivos = lector.getMovimientosNuevos();
         saldovar = 2;

@@ -25,7 +25,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
 
 @Named("uploadController")
-@SessionScoped
+@ViewScoped
 public class UploadController implements Serializable {
 
     private UploadedFile file;
