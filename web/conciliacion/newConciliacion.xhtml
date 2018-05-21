@@ -107,23 +107,15 @@
                                 </p:panelGrid>
                             </p:fieldset>
                         </p:panelGrid>
-                        <!--h:form id="manejofile" enctype="multipart/form-data"-->
                         <p:fieldset  legend="CARGA MASIVA" toggleable="true" collapsed="true" rendered="#{conciliacionController.saldovar== 1? true:false}" style="width: 500px;">
                             <p:panelGrid columns="3" styleClass="ui-custompanelgrid3" >
                                 <p:commandButton id="subir" icon="ui-icon-circle-triangle-n" value="Subir" oncomplete="PF('SubirficheroDialog').show()"/>
                                 <p:outputLabel value="Archivo a Conciliar #{conciliacionController.uploadController.archivo}" style="font-weight:bold"/>
-                                <p:commandButton id="chequear" icon="ui-icon-circle-check" value="Comparar" action="#{conciliacionController.cargarMasiva()}" update="formulario,saldos,listado,datosarticulo,:formulario:cargamasiva,:growl"/> 
-                                <!--p:commandButton value="Subir" icon="ui-icon-checked"  action=".{conciliacionController.cargarMasiva()}" update="formulario,saldos,listado,datosarticulo,:formulario:cargamasiva,:growl"/>  
-                                <p:fileUpload value=".{uploadController.file}" mode="simple"  allowTypes="/(\.|\/)(xls)$/" sizeLimit="100000" />
-                                <p:fileUpload  mode="advanced" allowTypes="/(\.|\/)(xls)$/" sizeLimit="100000" cancelLabel="Cancelar" label="Seleccionar" uploadLabel="Subir" fileUploadListener=".{conciliacionController.uploadController.upload}"  
-                                               id="accion"  update=":growl"/>
-                                <p:commandButton value="Subir" icon="ui-icon-checked" actionListener=".{uploadController.upload()}" update="msgs"/>
-                                <h:commandButton id="subir" actionListener=".{uploadController.uploadArchivo()}" value="Subir"   >
-                                    <f:ajax execute="@all" render="@form"/>
-                                </h:commandButton> /-->
+                                <p:commandButton id="chequear" icon="ui-icon-circle-check" value="Comparar" action="#{conciliacionController.cargarMasiva()}" update="formulario,saldos,listado,datosarticulo,:formulario:cargamasiva,:growl"/>
+                                    <!--p:ajax rendered=".{conciliacionController.uploadController.archivo!=null ? true:false }"/>
+                                </p:commandButton-->
                             </p:panelGrid>
                         </p:fieldset>
-                        <!--/h:form-->
 
                         <p:panelGrid id="versus" columns="3">
                             <p:panel id="lista" rendered="#{conciliacionController.saldovar == 1 ||conciliacionController.saldovar == 2  ? true:false}">

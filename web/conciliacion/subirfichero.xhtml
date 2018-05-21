@@ -15,7 +15,7 @@
                         <p:outputLabel value="Seleccione el Archivo Excel a subir "/>
                     </p:panelGrid>
                     <p:fileUpload  mode="advanced" allowTypes="/(\.|\/)(xls)$/" sizeLimit="100000" cancelLabel="Cancelar" label="Seleccionar" uploadLabel="Subir" 
-                                   fileUploadListener="#{conciliacionController.uploadController.upload}"  id="accion"  update="SubirficheroForm,:growl"/>
+                                   fileUploadListener="#{conciliacionController.uploadController.upload}" id="accion"  update="SubirficheroForm,:growl"/>
                         <!--p:ajax rendered=".{conciliacionController.uploadController.archivo}!=''"
                     </p:outputLabel-->
                     <!--p:commandButton actionListener=".{cajachicaController.update}" value=".{bundlecajachica.Save}" update="display,:CajachicaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CajachicaEditDialog');"/-->

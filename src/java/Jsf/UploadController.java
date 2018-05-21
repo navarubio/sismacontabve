@@ -29,7 +29,7 @@ import javax.faces.view.ViewScoped;
 public class UploadController implements Serializable {
 
     private UploadedFile file;
-    private String archivo;
+    private String archivo=null;
 
     public UploadedFile getFile() {
         return file;
