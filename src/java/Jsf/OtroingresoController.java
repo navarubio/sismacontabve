@@ -336,11 +336,11 @@ public class OtroingresoController implements Serializable {
             double saldoactualbancoemisor = 0;
 
             saldoanteriorbanco = cuentabancaria.getSaldo();
-            saldoactualbanco = montoingreso + saldoanteriorbanco;
+            saldoactualbanco = requer.redondearDecimales(montoingreso + saldoanteriorbanco);
 
             if (visual == 1) {
                 saldoanterioremisor = cuentaemisora.getSaldo();
-                saldoactualbancoemisor = saldoanterioremisor - montoingreso;
+                saldoactualbancoemisor = requer.redondearDecimales(saldoanterioremisor - montoingreso);
             }
 
             cuentabancaria.setSaldo(saldoactualbanco);

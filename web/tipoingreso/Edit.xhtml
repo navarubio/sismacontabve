@@ -15,7 +15,7 @@
                         <p:outputLabel value="#{bundleingreso.EditTipoingresoLabel_idtipoingreso}" for="idtipoingreso" />
                         <p:inputText id="idtipoingreso" value="#{tipoingresoController.selected.idtipoingreso}" title="#{bundleingreso.EditTipoingresoTitle_idtipoingreso}" required="true" requiredMessage="#{bundleingreso.EditTipoingresoRequiredMessage_idtipoingreso}"/>
                         <p:outputLabel value="#{bundleingreso.EditTipoingresoLabel_tipoingreso}" for="tipoingreso" />
-                        <p:inputText id="tipoingreso" value="#{tipoingresoController.selected.tipoingreso}" title="#{bundleingreso.EditTipoingresoTitle_tipoingreso}" />
+                        <p:inputText id="tipoingreso" size="50" value="#{tipoingresoController.selected.tipoingreso}" title="#{bundleingreso.EditTipoingresoTitle_tipoingreso}" />
                         <p:outputLabel value="#{bundle.EditArticuloLabel_cuentacontable}" for="idplandecuenta" />
                         <p:selectOneMenu id="idplandecuenta" value="#{tipoingresoController.selected.idplandecuenta}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>

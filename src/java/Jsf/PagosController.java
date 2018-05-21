@@ -790,7 +790,7 @@ public class PagosController implements Serializable {
                 if (visualizar == 6) {
                     pagocompra.setMontoretenido(0.0);
                 } else if (visualizar == 7) {
-                    pagocompra.setMontoretenido((compra.getTotal() - montoapagar));
+                    pagocompra.setMontoretenido(requerimientosController.redondearDecimales(compra.getTotal() - montoapagar));
                 } else if (visualizar == 5) {
                     pagocompra.setMontoretenido(0.0);
                 }

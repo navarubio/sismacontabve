@@ -596,6 +596,8 @@ public class AsientosotrosingresosController implements Serializable {
         listadetalleslibrodiario.clear();
         retiva = 0;
         retislr = 0;
+        Usuario us = requerimientosController.getUsa();
+        empresa = us.getIddepartamento().getIdempresa();
         //articulos = articuloEJB.findAll();
         //comprasporautorizar=compraEJB.buscarcomprasporAutorizar();
 
@@ -782,10 +784,8 @@ public class AsientosotrosingresosController implements Serializable {
         } else {
 
             Detallelibrodiario detallelib = new Detallelibrodiario();
-
-            int codcta2 = 21135;
-            Plandecuenta cuentaprovicional = plandecuentaEJB.buscarcuenta(codcta2);
-            detallelib.setIdplandecuenta(cuentaprovicional);
+            Plandecuenta cuentaingreso = otroingreso.getIdtipoingreso().getIdplandecuenta();
+            detallelib.setIdplandecuenta(cuentaingreso);
             detallelib.setHaber(movimientoingreso.getCredito());
             detallelib.setIddetallelibrodiario(id);
             this.listadetalleslibrodiario.add(detallelib);

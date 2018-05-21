@@ -6,7 +6,7 @@ import Jsf.util.JsfUtil.PersistAction;
 import Jpa.LibromayorFacade;
 import Jpa.LibromayorFacadeLocal;
 import Jpa.PlandecuentaFacadeLocal;
-import Modelo.Caja_;
+import Modelo.Caja;
 import Modelo.Cuentabancaria;
 import Modelo.Libromayorcompuesto;
 import Modelo.Movimientobancario;

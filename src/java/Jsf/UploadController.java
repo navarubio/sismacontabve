@@ -75,6 +75,30 @@ public class UploadController implements Serializable {
         }
     }
 
+        public void uploadArchivo() {
+        String extValidate;
+        FacesMessage msg = new FacesMessage("Aviso! ", file.getFileName() + " fue subido.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        // Do what you want with the file        
+        if (getFile() != null) {
+            this.archivo=destination+getFile().getFileName();
+            try {
+                copyFile(getFile().getFileName(), getFile().getInputstream());
+
+            } catch (IOException e) {
+                Logger.getLogger(UploadController.class.getName()).log(Level.SEVERE, null, e);
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, new FacesMessage("Wrong", "Error Uploading     file..."));
+
+                e.printStackTrace();
+            }
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Wrong", "Select File!"));
+        }
+    }
+
+    
     public void copyFile(String fileName, InputStream in) {
         try {
 
