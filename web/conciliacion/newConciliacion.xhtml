@@ -111,7 +111,7 @@
                             <p:panelGrid columns="3" styleClass="ui-custompanelgrid3" >
                                 <p:commandButton id="subir" icon="ui-icon-circle-triangle-n" value="Subir" oncomplete="PF('SubirficheroDialog').show()"/>
                                 <p:outputLabel value="Archivo a Conciliar #{conciliacionController.uploadController.archivo}" style="font-weight:bold"/>
-                                <p:commandButton id="chequear" icon="ui-icon-circle-check" value="Comparar" action="#{conciliacionController.cargarMasiva()}" update="formulario,saldos,listado,datosarticulo,:formulario:cargamasiva,:growl"/>
+                                <p:commandButton id="chequear" icon="ui-icon-circle-check" value="Comparar" action="#{conciliacionController.cargarMasiva()}" update="formulario,saldos,:formulario:lista,listado,datosarticulo,:formulario:cargamasiva,:growl"/>
                                     <!--p:ajax rendered=".{conciliacionController.uploadController.archivo!=null ? true:false }"/>
                                 </p:commandButton-->
                             </p:panelGrid>
@@ -173,7 +173,7 @@
                                         </p:cellEditor>
                                     </p:column-->
                                     <p:column style="text-align: center" headerText="Excluir">
-                                        <p:commandLink actionListener="#{conciliacionController.excluirmovimiento(req)}" update="listado,:formulario:saldos" rendered="#{req.conciliado== false? true:false}" >
+                                        <p:commandLink actionListener="#{conciliacionController.excluirmovimiento(req)}" update=":formulario:versus,listado,:formulario:saldos" rendered="#{req.conciliado== false? true:false}" >
                                             <h:graphicImage library="images" name="button_cancel.png" width="10" height="10" alt="Excluir Movimiento"/> 
                                         </p:commandLink>
                                     </p:column>
@@ -209,7 +209,7 @@
                                     </p:column>
                                 </p:dataTable>                                
                             </p:panel>
-                            <p:commandButton value="Registrar" actionListener="#{conciliacionController.registraconciliacion()}"  update=":formulario,:growl" action="/conciliacion/List?faces-redirect=true"  rendered="#{conciliacionController.ajustecontable==0 and conciliacionController.listavar==1 ? true:false}"/>
+                            <p:commandButton value="Registrar" actionListener="#{conciliacionController.registraconciliacion()}"  update=":formulario,:growl" action="/conciliacion/List?faces-redirect=true"  rendered="#{conciliacionController.ajustecontable==0 and conciliacionController.listavar==1  and conciliacionController.tamaño==0 ? true:false}"/>
                             <!--p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value=".{bundle.Imprimir}" actionListener=".{facturasController.verReporte()}" ajax="false" onclick="form.target = '_blank'"/-->                            
                         </p:panelGrid>
                     </p:panel>

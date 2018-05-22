@@ -85,6 +85,7 @@ public class ConciliacionController implements Serializable {
     private int saldovar;
     private int listavar;
     private int control = 0;
+    private int tamaño=0;
 
     private double depositochange = 0.0;
     private double retiroschange = 0.0;
@@ -301,13 +302,21 @@ public class ConciliacionController implements Serializable {
         this.uploadController = uploadController;
     }
 
+    public int getTamaño() {
+        return tamaño;
+    }
+
+    public void setTamaño(int tamaño) {
+        this.tamaño = tamaño;
+    }
+    
     public Conciliacion prepareCreate() {
         selected = new Conciliacion();
         initializeEmbeddableKey();
         return selected;
     }
-
-    public void create() {
+    
+        public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundleconciliacion").getString("ConciliacionCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -423,6 +432,7 @@ public class ConciliacionController implements Serializable {
                 saldovar = 1;
                 listavar = 1;
                 control = 0;
+                tamaño=movimientosseleccionados.size();
                 saldoedocta = conciliacionbancaria.getSaldoedocuenta();
                 retiros = requerimientosController.redondearDecimales(TotalDebitos());
                 depositos = requerimientosController.redondearDecimales(TotalCreditos());
@@ -494,6 +504,7 @@ public class ConciliacionController implements Serializable {
             ajustecontable = saldocontabajustado - saldoedoctaajustado;
             ajusteedocta = saldoedoctaajustado - saldocontabajustado;
             movi.setConciliado(Boolean.TRUE);
+            tamaño=tamaño-1;
 
         } else {
             if (movi.getCredito() > 0) {
@@ -509,6 +520,7 @@ public class ConciliacionController implements Serializable {
             ajustecontable = saldocontabajustado - saldoedoctaajustado;
             ajusteedocta = saldoedoctaajustado - saldocontabajustado;
             movi.setConciliado(Boolean.FALSE);
+            tamaño=tamaño+1;
         }
     }
 
@@ -528,6 +540,7 @@ public class ConciliacionController implements Serializable {
             depositos = depositos - depositochange;
             saldocontable = saldocontable - depositochange;
         }
+        tamaño=tamaño-1;
         saldoedoctaajustado = requerimientosController.redondearDecimales(saldoedocta + depositos - retiros);
         saldocontable = requerimientosController.redondearDecimales(saldocontable);
         saldocontabajustado = saldocontable + notacredito - notadebito;

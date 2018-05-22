@@ -369,6 +369,7 @@ public class OtroingresoController implements Serializable {
             movimientobancario.setCredito(ingreso.getMontoingresado());
             movimientobancario.setSaldoactual(saldoactualbanco);
             movimientobancario.setIdotroingreso(ingreso);
+            movimientobancario.setConciliado(Boolean.FALSE);
             movimientoBancarioEJB.create(movimientobancario);
             if (visual == 1) {
                 movimientobancario.setFecha(ingreso.getFechaingreso());
@@ -378,6 +379,7 @@ public class OtroingresoController implements Serializable {
                 movimientobancario.setCredito(0.0);
                 movimientobancario.setSaldoactual(saldoactualbancoemisor);
                 movimientobancario.setIdotroingreso(ingreso);
+                movimientobancario.setConciliado(Boolean.FALSE);
                 movimientoBancarioEJB.create(movimientobancario);
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Ingreso fue Almacenado", "Su Ingreso fue Almacenado"));
