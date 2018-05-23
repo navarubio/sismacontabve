@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Cobroventa;
+import Modelo.Conciliacion;
 import Modelo.Cuentabancaria;
 import Modelo.Movimientobancario;
 import Modelo.Otroingreso;
@@ -54,4 +55,6 @@ public interface MovimientobancarioFacadeLocal {
     List<Movimientobancario> buscarmovimientosConciliacion(Cuentabancaria cuenta, Date fechafinish);
 
     List<Movimientobancario> movimientosparaConciliacionInterna (Cuentabancaria cuenta, Date fechafinish);
+    
+    List<Movimientobancario> movimientosConciliados(Conciliacion concilia);
   }

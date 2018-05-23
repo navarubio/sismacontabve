@@ -11,52 +11,134 @@
         <p:dialog id="ConciliacionViewDlg" widgetVar="ConciliacionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleconciliacion.ViewConciliacionTitle}">
             <h:form id="ConciliacionViewForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{conciliacionController.selected != null}">
-                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_idconciliacion}"/>
-                        <h:outputText value="#{conciliacionController.selected.idconciliacion}" title="#{bundleconciliacion.ViewConciliacionTitle_idconciliacion}"/>
-                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_serialconciliacion}"/>
-                        <h:outputText value="#{conciliacionController.selected.serialconciliacion}" title="#{bundleconciliacion.ViewConciliacionTitle_serialconciliacion}"/>
-                        <h:outputText value="#{bundlebanco.ViewBancoLabel_nombrebanco}"/>
-                        <h:outputText value="#{conciliacionController.selected.idcuentabancaria.idbanco.nombrebanco}" title="#{bundleconciliacion.ViewConciliacionTitle_idcuentabancaria}"/>
-                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_idcuentabancaria}"/>
-                        <h:outputText value="#{conciliacionController.selected.idcuentabancaria.numerocuenta}" title="#{bundleconciliacion.ViewConciliacionTitle_idcuentabancaria}"/>
-                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_fecharegistro}"/>
-                        <h:outputText value="#{conciliacionController.selected.fecharegistro}" title="#{bundleconciliacion.ViewConciliacionTitle_fecharegistro}">
-                            <f:convertDateTime pattern="dd/MM/yyyy" />
-                        </h:outputText>
-                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_fechaconciliacion}"/>
-                        <h:outputText value="#{conciliacionController.selected.fechaconciliacion}" title="#{bundleconciliacion.ViewConciliacionTitle_fechaconciliacion}">
-                            <f:convertDateTime pattern="dd/MM/yyyy" />
-                        </h:outputText>
-                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_saldocontable}"/>
-                        <h:outputText value="#{conciliacionController.selected.saldocontable}" title="#{bundleconciliacion.ViewConciliacionTitle_saldocontable}">
-                            <f:convertNumber type="currency" currencySymbol=" "/>
-                        </h:outputText>
-                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_saldoedocuenta}"/>
-                        <h:outputText value="#{conciliacionController.selected.saldoedocuenta}" title="#{bundleconciliacion.ViewConciliacionTitle_saldoedocuenta}">
-                            <f:convertNumber type="currency" currencySymbol=" "/>
-                        </h:outputText>
-                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_debitoscontables}"/>
-                        <h:outputText value="#{conciliacionController.selected.debitoscontables}" title="#{bundleconciliacion.ViewConciliacionTitle_debitoscontables}">
-                            <f:convertNumber type="currency" currencySymbol=" "/>
-                        </h:outputText>
-                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_creditoscontables}"/>
-                        <h:outputText value="#{conciliacionController.selected.creditoscontables}" title="#{bundleconciliacion.ViewConciliacionTitle_creditoscontables}">
-                            <f:convertNumber type="currency" currencySymbol=" "/>
-                        </h:outputText>                                                        
-                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_saldocontableajustado}"/>
-                        <h:outputText value="#{conciliacionController.selected.saldocontableajustado}" title="#{bundleconciliacion.ViewConciliacionTitle_saldocontableajustado}">
-                            <f:convertNumber type="currency" currencySymbol=" "/>
-                        </h:outputText>                                                        
-                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_saldobancarioajustado}"/>
-                        <h:outputText value="#{conciliacionController.selected.saldobancarioajustado}" title="#{bundleconciliacion.ViewConciliacionTitle_saldobancarioajustado}" >
-                            <f:convertNumber type="currency" currencySymbol=" "/>
-                        </h:outputText>                                                        
-                        <h:outputText value="#{bundleconciliacion.ViewConciliacionLabel_idusuario}"/>
-                        <h:outputText value="#{conciliacionController.selected.idusuario.nombre}" title="#{bundleconciliacion.ViewConciliacionTitle_idusuario}"/>
 
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundleconciliacion.Close}" onclick="ConciliacionViewDialog.hide()"/>
+                    <p:panel id="datoscuenta" header="CONCILIACION BANCARIA PROCESADA">
+                        <p:panelGrid columns="2" rendered="#{conciliacionController.selected != null}">
+                            <p:fieldset style="width: 100%"  legend="Datos de la Cuenta a Conciliar" >
+                                <p:panelGrid columns="2" styleClass="ui-custompanelgrid4">
+                                    <p:outputLabel for="serial" styleClass="text-ouput" value="SERIAL "/>
+                                    <p:outputLabel id="serial"  value="#{conciliacionController.selected.serialconciliacion}"/>
+                                    <p:outputLabel for="usuario" styleClass="text-ouput" value="USUARIO"/>
+                                    <p:outputLabel id="usuario"  value="#{conciliacionController.selected.idusuario.nombre}"/>
+                                    <p:outputLabel for="departamento" styleClass="text-ouput" value="DEPARTAMENTO" />
+                                    <p:outputLabel id="departamento" value="#{conciliacionController.selected.idusuario.iddepartamento.departamento}" />
+                                    <p:outputLabel for="fecharegistro" styleClass="text-ouput"  value="Fecha Registro"  />
+                                    <p:outputLabel id="fecharegistro" value="#{conciliacionController.selected.fecharegistro}" >
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                    <p:outputLabel for="banco" value="Banco" styleClass="text-ouput"/>
+                                    <p:outputLabel id="banco" value="#{conciliacionController.selected.idcuentabancaria.idbanco.nombrebanco}" styleClass="text-ouput"/>
+                                    <p:outputLabel for="cuentabanco" value="Cuenta Bancaria" styleClass="text-ouput"/>
+                                    <p:outputLabel id="cuentabanco" value="#{conciliacionController.selected.idcuentabancaria.numerocuenta}" styleClass="text-ouput"/>
+                                    <p:outputLabel for="fechaconciliacion" styleClass="text-ouput"  value="Fecha Conciliacion"  />
+                                    <p:outputLabel id="fechaconciliacion" value="#{conciliacionController.selected.fechaconciliacion}" >
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                    <p:outputLabel for="montoedocta" styleClass="text-ouput"  value="Saldo Estado de Cuenta"  />
+                                    <p:inputText id="montoedocta"  label="Observaciones" value="#{conciliacionController.selected.saldoedocuenta}" style="text-align:right" size="10" disabled="true" styleClass="text-ouputsaldosfin">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:inputText>
+                                </p:panelGrid>
+                            </p:fieldset>
+                            <p:fieldset id="saldos" legend="SALDOS A CONCILIAR"  >
+                                <p:panelGrid id= "datosarticulo" columns="4" styleClass="ui-custompanelgrid3"  >
+                                    <p:outputLabel for="saldocontab" value="Saldo Contable" style="font-weight:bold" />
+                                    <p:inputText id="saldocontab" value="#{conciliacionController.selected.saldocontable}" style="text-align:right" size="10" disabled="true" styleClass="text-ouputsaldos">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:inputText>
+                                    <p:outputLabel for="saldoedocta" value="Saldo Estado de Cuenta" style="font-weight:bold"   />
+                                    <p:inputText id="saldoedocta" value="#{conciliacionController.selected.saldoedocuenta}" style="text-align:right" size="10" disabled="true" styleClass="text-ouputsaldos" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:inputText>
+                                    <p:outputLabel for="notacred" value="Notas de Credito" style="font-weight:bold"   />
+                                    <p:inputText id="notacred" value="#{conciliacionController.datogenerico}" style="text-align:right" size="10" disabled="true" styleClass="text-ouputsaldos"  >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:inputText>
+                                    <p:outputLabel for="depositos" value="Depositos o Entradas" style="font-weight:bold"   />
+                                    <p:inputText id="depositos" value="#{conciliacionController.datogenerico}" style="text-align:right" size="10" disabled="true" styleClass="text-ouputsaldos" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:inputText>
+                                    <p:outputLabel for="notadeb" value="Notas de Debito" style="font-weight:bold"   />
+                                    <p:inputText id="notadeb" value="#{conciliacionController.datogenerico}" style="text-align:right" size="10" disabled="true" styleClass="text-ouputsaldos" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:inputText>
+                                    <p:outputLabel for="retiros" value="Retiros o Salidas" style="font-weight:bold"   />
+                                    <p:inputText id="retiros" value="#{conciliacionController.datogenerico}" style="text-align:right" size="10" disabled="true" styleClass="text-ouputsaldos" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:inputText>
+                                    <p:outputLabel for="saldocontabajus" value="Saldo Contable Ajustado" style="font-weight:bold"   />
+                                    <p:inputText id="saldocontabajus" value="#{conciliacionController.selected.saldocontableajustado}" style="text-align:right" size="10" disabled="true" styleClass="text-ouputsaldos" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:inputText>
+                                    <p:outputLabel for="saldobancajus" value="Saldo Edo Cta Ajustado" style="font-weight:bold"   />
+                                    <p:inputText id="saldobancajus" value="#{conciliacionController.selected.saldobancarioajustado}" style="text-align:right" size="10" disabled="true" styleClass="text-ouputsaldos" >
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:inputText>
+                                    <p:separator/>
+                                    <p:separator/>
+                                    <p:separator/>
+                                    <p:separator/>
+                                    <p:outputLabel for="ajustecontab" value="AJUSTE SALDO CONTABLE" style="font-weight:bold"   />
+                                    <p:inputText id="ajustecontab" value="#{conciliacionController.datogenerico}" style="text-align:right" size="10" disabled="true" styleClass="text-ouputsaldosfin">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:inputText>
+                                    <p:outputLabel for="ajusteedocta" value="AJUSTE SALDO BANCARIO" style="font-weight:bold"   />
+                                    <p:inputText id="ajusteedocta" value="#{conciliacionController.datogenerico}" style="text-align:right" size="10" disabled="true" styleClass="text-ouputsaldosfin">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:inputText>
+                                </p:panelGrid>
+                            </p:fieldset>                            
+                        </p:panelGrid>
+                        <p:panelGrid id="versus" columns="1">
+                            <p:panel id="lista" header="Movimientos Contables Conciliados">
+                                <p:dataTable id="listado" widgetVar="listadoreq" value="#{conciliacionController.movimientosconciliados}"  style="width: 1050px"
+                                             var="req" emptyMessage="No hay movimientos para mostrar" rowKey="#{req.idmovimiento}"
+                                             rowStyleClass="#{req.conciliado==true ? 'asientocuadrado' : null}"
+                                             paginator="true"
+                                             rows="15"
+                                             rowsPerPageTemplate="15,20,30"
+                                             >
+
+                                    <p:column style="text-align: center"  headerText="Banco" width="200">
+                                        #{req.idcuentabancaria.idbanco.nombrebanco} 
+                                    </p:column>
+                                    <p:column style="text-align: center"  headerText="Cuenta " width="150">
+                                        #{req.idcuentabancaria.numerocuenta} 
+                                    </p:column>
+                                    <p:column style="text-align: center"  headerText="fecha" >
+                                        <h:outputText value="#{req.fecha}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: center"  headerText="Referecia">
+                                        #{req.referencia} 
+                                    </p:column>
+                                    <p:column style="text-align: center" headerText="Tipo Movimiento">
+                                        #{req.idtipopago.abreviatura} 
+                                    </p:column >
+                                    <p:column style="text-align: right" headerText="Debito">
+                                        <h:outputText value="#{req.debito}">
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="text-align: right" headerText="Credito">
+                                        <h:outputText value="#{req.credito}">
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>       
+                                    <p:column style="text-align: right" headerText="Saldo">
+                                        <h:outputText value="#{req.saldoactual}">
+                                            <f:convertNumber type="currency" currencySymbol=" " />
+                                        </h:outputText>
+                                    </p:column>    
+                                    <p:column style="text-align: center" headerText="Conciliar">
+                                        <h:graphicImage library="images" name="apply.png" width="10" height="10" alt="Conciliar Movimiento"/> 
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>
+                            <p:commandButton value="#{bundleconciliacion.Close}" onclick="ConciliacionViewDialog.hide()"/>
+                        </p:panelGrid>
+                    </p:panel>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

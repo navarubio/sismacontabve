@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Cobroventa;
+import Modelo.Conciliacion;
 import Modelo.Cuentabancaria;
 import Modelo.Movimientobancario;
 import Modelo.Otroingreso;
@@ -146,8 +147,6 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
         return lista;
     }
 
-    
-    
     @Override
     public Movimientobancario buscarmovimientoxIdpago(Pagocompra pago) {
         String consulta;
@@ -187,9 +186,9 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
         }
         return lista;
     }
-    
+
     @Override
-    public List<Movimientobancario> movimientosparaConciliacionInterna (Cuentabancaria cuenta, Date fechafinish) {
+    public List<Movimientobancario> movimientosparaConciliacionInterna(Cuentabancaria cuenta, Date fechafinish) {
         String consulta;
         List<Movimientobancario> lista = null;
         try {
@@ -203,4 +202,20 @@ public class MovimientobancarioFacade extends AbstractFacade<Movimientobancario>
         }
         return lista;
     }
+
+    @Override
+    public List<Movimientobancario> movimientosConciliados(Conciliacion concilia) {
+        String consulta;
+        List<Movimientobancario> lista = null;
+        try {
+            consulta = "From Movimientobancario m where m.idconciliacion.idconciliacion= ?1 order by m.fecha, m.idmovimiento";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, concilia.getIdconciliacion());
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+
 }

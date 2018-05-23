@@ -63,7 +63,9 @@
                             <p:fieldset id="saldos" legend="SALDOS A CONCILIAR" rendered="#{conciliacionController.saldovar== 1 ||conciliacionController.saldovar == 2? true:false}"  >
                                 <p:panelGrid id= "datosarticulo" columns="4" styleClass="ui-custompanelgrid3"  >
                                     <p:outputLabel for="saldocontab" value="Saldo Contable" style="font-weight:bold" />
-                                    <p:inputText id="saldocontab" value="#{conciliacionController.saldocontable}" style="text-align:right" size="10" disabled="true" styleClass="text-ouputsaldos"/>
+                                    <p:inputText id="saldocontab" value="#{conciliacionController.saldocontable}" style="text-align:right" size="10" disabled="true" styleClass="text-ouputsaldos">
+                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                    </p:inputText>                                    
                                     <p:outputLabel for="saldoedocta" value="Saldo Estado de Cuenta" style="font-weight:bold"   />
                                     <p:inputText id="saldoedocta" value="#{conciliacionController.saldoedocta}" style="text-align:right" size="10" disabled="true" styleClass="text-ouputsaldos" >
                                         <f:convertNumber type="currency" currencySymbol=" " />

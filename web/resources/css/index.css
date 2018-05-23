@@ -156,13 +156,13 @@ ui-custompanelgrid5, .ui-custompanelgrid5 td {
     font-size: 16px;
 }
 
-#formulario .text-ouputsaldos{
+#formulario .text-ouputsaldos, #ConciliacionViewForm .text-ouputsaldos{
     font-weight:  bold;
     color:red;
     font-size: 150% !important;
 }
 
-#formulario .text-ouputsaldosfin{
+#formulario .text-ouputsaldosfin, #ConciliacionViewForm .text-ouputsaldosfin{
     font-weight:  bold;
     color:green;
     font-size: 150% !important;
