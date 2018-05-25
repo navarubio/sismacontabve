@@ -32,4 +32,6 @@ public interface DetallelibrodiarioFacadeLocal {
 
     int count();
     
+    List<Detallelibrodiario> detalleslibrodiarioAll(); 
+    
 }

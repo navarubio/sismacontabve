@@ -51,9 +51,11 @@
                                                    itemValue="#{subespecificocontableItem.idplandecuenta}" /> 
                                 </p:selectOneMenu>
                                 <p:outputLabel id="codigocta" value="#{asientosespecificosController.cuentaseleccionada}" />
-                                <!--p:outputLabel id="saldoactual" value=".{asientosventasController.detalleaanexar.idplandecuenta.saldogeneral}" styleClass="optionalLbl"/-->
-                                <p:inputText id="debe"  size="20" value="#{asientosespecificosController.detalleaanexar.debe}" style="text-align:right" />
-                                <p:inputText id="haber"  size="20" value="#{asientosespecificosController.detalleaanexar.haber}" style="text-align:right" />                               
+                                <p:outputLabel id="saldoactual" value="#{asientosventasController.detalleaanexar.idplandecuenta.saldogeneral}" styleClass="optionalLbl">
+                                    <f:convertNumber type="currency" currencySymbol=" "/>
+                                </p:outputLabel>
+                                <p:inputText id="debe"  size="10" value="#{asientosespecificosController.detalleaanexar.debe}" style="text-align:right" />
+                                <p:inputText id="haber"  size="10" value="#{asientosespecificosController.detalleaanexar.haber}" style="text-align:right" />                               
                                 <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{asientosespecificosController.anexarregistro()}" update="listadoasiento,panelcontab,:growl"/>   
                             </p:panelGrid>                                
                         </p:fieldset>

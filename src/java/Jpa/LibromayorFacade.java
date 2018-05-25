@@ -89,5 +89,18 @@ public class LibromayorFacade extends AbstractFacade<Libromayor> implements Libr
         return ultimo;
     }
     
+    @Override
+    public List<Libromayor> libromayorAll() {
+        String consulta;
+        List<Libromayor> lista = null;
+        try {
+            consulta = "SELECT l FROM Libromayor l order by l.idlibromayor";
+            Query query = em.createQuery(consulta);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
     
 }

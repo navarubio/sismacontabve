@@ -79,7 +79,7 @@ public class DetallelibrodiarioController implements Serializable {
 
     public List<Detallelibrodiario> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().detalleslibrodiarioAll();
         }
         return items;
     }

@@ -5,10 +5,13 @@
  */
 package Jpa;
 
+import Modelo.Consumocajachica;
 import Modelo.Detallelibrodiario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,6 +29,20 @@ public class DetallelibrodiarioFacade extends AbstractFacade<Detallelibrodiario>
 
     public DetallelibrodiarioFacade() {
         super(Detallelibrodiario.class);
+    }
+    
+    @Override
+    public List<Detallelibrodiario> detalleslibrodiarioAll() {
+        String consulta;
+        List<Detallelibrodiario> lista = null;
+        try {
+            consulta = "SELECT d FROM Detallelibrodiario d order by d.iddetallelibrodiario";
+            Query query = em.createQuery(consulta);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
     }
     
 }

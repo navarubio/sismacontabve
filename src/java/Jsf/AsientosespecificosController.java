@@ -697,14 +697,14 @@ public class AsientosespecificosController implements Serializable {
                 detalleld.setIdplandecuenta(dld.getIdplandecuenta());
                 libromy.setIdplandecuenta(dld.getIdplandecuenta());
 
-                if (dld.getDebe() != null) {
+                if (dld.getDebe() != 0) {
                     detalleld.setDebe(dld.getDebe());
                     detalleld.setHaber(0.0);
                     debe = dld.getDebe();
                     libromy.setHaber(0.0);
                     libromy.setDebe(dld.getDebe());
                 }
-                if (dld.getHaber() != null) {
+                if (dld.getHaber() != 0) {
                     detalleld.setHaber(dld.getHaber());
                     detalleld.setDebe(0.0);
                     haber = dld.getHaber();

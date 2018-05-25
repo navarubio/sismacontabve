@@ -25,13 +25,13 @@
                         <p:panelGrid columns="2">
                             <p:fieldset style="width: 100%"  legend="Datos de Caja Chica" >
                                 <p:panelGrid columns="2" styleClass="ui-custompanelgrid1" id="datoscontribuyente">
-                                    <p:outputLabel for="usua" value="Usuario" styleClass="text-ouput"/>
+                                    <p:outputLabel for="usua" value="Usuario" styleClass="text-ouputnortmal"/>
                                     <p:outputLabel id="usua" value="#{requerimientosController.usa.nombre}" styleClass=""/>
-                                    <p:outputLabel for="depto" value="Departamento" styleClass="text-ouput"/>
+                                    <p:outputLabel for="depto" value="Departamento" styleClass="text-ouputnortmal"/>
                                     <p:outputLabel id="depto" value="#{requerimientosController.usa.iddepartamento.departamento}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="fechacarga" value="Fecha Procesamiento" styleClass="text-ouput" />
+                                    <p:outputLabel for="fechacarga" value="Fecha Procesamiento" styleClass="text-ouputnortmal" />
                                     <p:calendar id="fechacarga" locale="es" pattern="dd/MM/yyyy" value="#{consumoscajachicaController.reposicionCajaChica.fecharesposicion}" showOn="button" navigator="true" required="true" />
-                                    <p:outputLabel for="cajachica" value="Caja Chica" styleClass="text-ouput"/>
+                                    <p:outputLabel for="cajachica" value="Caja Chica" styleClass="text-ouputnortmal"/>
                                     <p:selectOneMenu id="cajachica" value="#{consumoscajachicaController.consumocajachica.idcajachica}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
                                         <p:ajax event="change" listener="#{consumoscajachicaController.refrescarConsumoscajachica()}" update="saldo,montoasignado,montof, listado,formulario"/>                              
                                         <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}" />
@@ -39,11 +39,11 @@
                                                        var="idcajachicaItem"
                                                        itemLabel="#{idcajachicaItem.descripcion}"  itemValue="#{idcajachicaItem}" /> 
                                     </p:selectOneMenu>
-                                    <p:outputLabel for="montoasignado" value="Monto Asignado:" styleClass="text-ouput"/>
+                                    <p:outputLabel for="montoasignado" value="Monto Asignado:" styleClass="text-ouputnortmal"/>
                                     <p:outputLabel id="montoasignado" value="#{consumoscajachicaController.consumocajachica.idcajachica.montoasignado}" styleClass="text-ouputasignado">
                                         <f:convertNumber type="currency" currencySymbol="$ " />
                                     </p:outputLabel>                                    
-                                    <p:outputLabel for="saldo" value="Saldo Actual: " styleClass="text-ouput"/>
+                                    <p:outputLabel for="saldo" value="Saldo Actual: " styleClass="text-ouputnortmal"/>
                                     <p:outputLabel id="saldo" value="#{consumoscajachicaController.consumocajachica.idcajachica.saldoactual}" styleClass="text-ouputfactura">
                                         <f:convertNumber type="currency" currencySymbol="$ " />
                                     </p:outputLabel>

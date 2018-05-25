@@ -38,4 +38,6 @@ public interface LibromayorFacadeLocal {
     
     Libromayor ultimoInsertado();
     
+    List<Libromayor> libromayorAll();
+    
 }

@@ -381,7 +381,7 @@ public class LibromayorController implements Serializable {
 
     public List<Libromayor> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().libromayorAll();
         }
         return items;
     }
