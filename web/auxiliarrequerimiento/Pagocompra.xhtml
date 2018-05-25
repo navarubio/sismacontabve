@@ -50,7 +50,7 @@
                                 </p:panelGrid>
                             </p:fieldset>
                             <p:fieldset legend="Datos Compra" >
-                                <p:panelGrid styleClass="ui-custompanelgrid" columns="2">
+                                <p:panelGrid styleClass="ui-custompanelgrid" columns="2"> 
                                     <p:outputLabel for="numeroc" value="Compra" styleClass="text-ouput" />
                                     <p:outputLabel id="numeroc" value="CMP- #{pagosController.compra.idcompra}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="usua" value="Usuario" styleClass="text-ouput"/>
@@ -172,7 +172,7 @@
                                     </p:selectOneMenu>
                                     <p:outputLabel for="saldocuenta" value="Saldo Cuenta" styleClass="text-ouput"/>
                                     <h:outputText id="saldocuenta" value="#{pagosController.pagocompra.idcuentabancaria.saldo}" styleClass="text-ouputsaldo">
-                                        <f:convertNumber type="currency" currencySymbol="$ "   />
+                                        <f:convertNumber type="currency" currencySymbol="Bs "   />
                                     </h:outputText>
                                     <p:outputLabel for="ctareceptora" value="Cta. Receptora" styleClass="text-ouput"/>
                                     <p:inputMask id="ctareceptora" label="Cta. Receptora" mask="9999-9999-99-9999999999" size ="25" value="#{pagosController.pagocompra.cuentareceptora}" />                                    
