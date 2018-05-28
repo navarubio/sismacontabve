@@ -94,6 +94,9 @@ public class Articulo implements Serializable {
     @JoinColumn(name = "idplandecuenta", referencedColumnName = "idplandecuenta")
     @ManyToOne
     private Plandecuenta idplandecuenta;
+    @JoinColumn(name = "idcuentaventa", referencedColumnName = "idplandecuenta")
+    @ManyToOne
+    private Plandecuenta idcuentaventa;
 
     
     public Articulo() {
@@ -199,6 +202,15 @@ public class Articulo implements Serializable {
         this.idplandecuenta = idplandecuenta;
     }
 
+    public Plandecuenta getIdcuentaventa() {
+        return idcuentaventa;
+    }
+
+    public void setIdcuentaventa(Plandecuenta idcuentaventa) {
+        this.idcuentaventa = idcuentaventa;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -653,9 +653,9 @@ public class AsientosventasController implements Serializable {
 
         Articulo arti = detalle1.getCodigo();
         Detallelibrodiario detallelib = new Detallelibrodiario();
-        if (arti.getIdplandecuenta() != null) {
-            detallelib.setIdplandecuenta(arti.getIdplandecuenta());
-            detallelibroventa.setIdplandecuenta(arti.getIdplandecuenta());
+        if (arti.getIdcuentaventa()!= null) {
+            detallelib.setIdplandecuenta(arti.getIdcuentaventa());
+            detallelibroventa.setIdplandecuenta(arti.getIdcuentaventa());
         } else {
             codcta = 411115;
             Plandecuenta cuentaprovicional = plandecuentaEJB.buscarcuenta(codcta);

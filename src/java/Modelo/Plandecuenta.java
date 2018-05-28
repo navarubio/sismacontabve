@@ -52,6 +52,9 @@ public class Plandecuenta implements Serializable {
     @OneToMany(mappedBy = "idplandecuenta")
     private Collection<Articulo> articuloCollection;
     @OneToMany(mappedBy = "idplandecuenta")
+    private Collection<Articulo> articuloventaCollection;
+
+    @OneToMany(mappedBy = "idplandecuenta")
     private Collection<Retencionpago> retencionpagoCollection;
     @OneToMany(mappedBy = "idplandecuenta")
     private Collection<Pagocompra> pagocompraCollection;
@@ -258,6 +261,15 @@ public class Plandecuenta implements Serializable {
         this.articuloCollection = articuloCollection;
     }
 
+    @XmlTransient
+    public Collection<Articulo> getArticuloventaCollection() {
+        return articuloventaCollection;
+    }
+
+    public void setArticuloventaCollection(Collection<Articulo> articuloventaCollection) {
+        this.articuloventaCollection = articuloventaCollection;
+    }
+    
     @XmlTransient
     public Collection<Libromayor> getLibromayorCollection() {
         return libromayorCollection;
