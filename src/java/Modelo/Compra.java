@@ -45,6 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Compra.findByControlfactura", query = "SELECT c FROM Compra c WHERE c.controlfactura = :controlfactura"),
     @NamedQuery(name = "Compra.findByFechafactura", query = "SELECT c FROM Compra c WHERE c.fechafactura = :fechafactura")})
 public class Compra implements Serializable {
+
     @JoinColumn(name = "idmaestro", referencedColumnName = "idmaestro")
     @ManyToOne
     private Maestromovimiento idmaestro;
@@ -102,6 +103,11 @@ public class Compra implements Serializable {
     private Estatusfactura idestatusfactura;
     @OneToMany(mappedBy = "idcompra")
     private Collection<Detallecompra> detallecompraCollection;
+    @Column(name = "serialcompra")
+    private Integer serialcompra;
+    @JoinColumn(name = "iddepartamento", referencedColumnName = "iddepartamento")
+    @ManyToOne
+    private Departamento iddepartamento;
 
     public Compra() {
     }
@@ -222,6 +228,22 @@ public class Compra implements Serializable {
         this.idestatusfactura = idestatusfactura;
     }
 
+    public Integer getSerialcompra() {
+        return serialcompra;
+    }
+
+    public void setSerialcompra(Integer serialcompra) {
+        this.serialcompra = serialcompra;
+    }
+
+    public Departamento getIddepartamento() {
+        return iddepartamento;
+    }
+
+    public void setIddepartamento(Departamento iddepartamento) {
+        this.iddepartamento = iddepartamento;
+    }
+
     @XmlTransient
     public Collection<Detallecompra> getDetallecompraCollection() {
         return detallecompraCollection;
@@ -308,5 +330,5 @@ public class Compra implements Serializable {
     public void setMaestromovimientoCollection(Collection<Maestromovimiento> maestromovimientoCollection) {
         this.maestromovimientoCollection = maestromovimientoCollection;
     }
-    
+
 }

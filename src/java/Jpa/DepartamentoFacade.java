@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Departamento;
+import Modelo.Empresa;
 import Modelo.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -49,5 +50,21 @@ public class DepartamentoFacade extends AbstractFacade<Departamento> implements 
             throw e;
         }
         return dpto;
+    }
+    
+    @Override
+    public List<Departamento> devolverDepartamentos (Empresa empre) {
+        Empresa empresa = null;
+        String consulta;
+        List<Departamento> lista = null;
+        try {
+            consulta = "From Departamento d where d.idempresa.idempresa = ?1 Order By d.departamento";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+}
+        return lista;
     }
 }

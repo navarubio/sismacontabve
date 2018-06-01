@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Compra;
+import Modelo.Empresa;
 import Modelo.Estatusfactura;
 import java.util.Date;
 import java.util.List;
@@ -34,9 +35,9 @@ public interface CompraFacadeLocal {
     
     Compra ultimacompraInsertada();
     
-    List<Compra> buscarcomprasporAutorizar ();
+    List<Compra> buscarcomprasporAutorizar (Empresa empre);
     
-    List<Compra> buscarcomprasporPagar();
+    List<Compra> buscarcomprasporPagar(Empresa empre);
     
     List<Compra> buscarcomprasPagadas();
     

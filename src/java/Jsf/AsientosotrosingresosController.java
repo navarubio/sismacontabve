@@ -597,7 +597,7 @@ public class AsientosotrosingresosController implements Serializable {
         retiva = 0;
         retislr = 0;
         Usuario us = requerimientosController.getUsa();
-        empresa = us.getIddepartamento().getIdempresa();
+        empresa = requerimientosController.getEmpresa();
         //articulos = articuloEJB.findAll();
         //comprasporautorizar=compraEJB.buscarcomprasporAutorizar();
 
@@ -676,7 +676,7 @@ public class AsientosotrosingresosController implements Serializable {
 
     public List<Cuentabancaria> refrescarCuentasBancarias() {
         try {
-            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco());
+            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco(), empresa);
         } catch (Exception e) {
         }
         pagocompra.setIdcuentabancaria(lstCuentasSelecc.get(0));

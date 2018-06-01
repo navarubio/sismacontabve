@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named("maestromovimientoController")
 @ViewScoped
@@ -29,6 +30,8 @@ public class MaestromovimientoController implements Serializable {
     private Jpa.MaestromovimientoFacadeLocal ejbFacade;
     private List<Maestromovimiento> items = null;
     private Maestromovimiento selected;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     public MaestromovimientoController() {
     }
@@ -85,7 +88,7 @@ public class MaestromovimientoController implements Serializable {
     
         public List<Maestromovimiento> getItemsordenados() {
         if (items == null) {
-            items = getFacade().MovimientosOrdenadosFecha();
+            items = getFacade().MovimientosOrdenadosFecha(requerimientosController.getEmpresa());
         }
         return items;
     }

@@ -5,6 +5,7 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.AuxiliarrequerimientoFacade;
 import Jpa.AuxiliarrequerimientoFacadeLocal;
+import Modelo.Empresa;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -36,10 +37,14 @@ public class AuxiliarrequerimientosController implements Serializable {
     private List<Auxiliarrequerimiento> requerimientosactivos = null;
     @Inject
     private Auxiliarrequerimiento selected;
+    private Empresa empresa;
+    @Inject
+    private AuxiliarrequerimientoController auxiliar;
 
     @PostConstruct
     public void init (){
-        requerimientosactivos = auxiliarrequerimientoEJB.buscarrequerimientosActivos();
+        empresa = auxiliar.getEmpresa();
+        requerimientosactivos = auxiliarrequerimientoEJB.buscarrequerimientosActivos(empresa);
     }
    
     public AuxiliarrequerimientosController() {
@@ -72,7 +77,7 @@ public class AuxiliarrequerimientosController implements Serializable {
     }
     
     public List<Auxiliarrequerimiento> buscarRequerimientosActivos() {
-        requerimientosactivos = auxiliarrequerimientoEJB.buscarrequerimientosActivos();
+        requerimientosactivos = auxiliarrequerimientoEJB.buscarrequerimientosActivos(empresa);
         return requerimientosactivos;
     }
 

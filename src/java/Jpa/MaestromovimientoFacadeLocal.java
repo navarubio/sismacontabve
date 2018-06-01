@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
 import Modelo.Maestromovimiento;
 import Modelo.Medida;
 import java.util.List;
@@ -31,6 +32,6 @@ public interface MaestromovimientoFacadeLocal {
 
     int count();
     
-    List<Maestromovimiento> MovimientosOrdenadosFecha();
+    List<Maestromovimiento> MovimientosOrdenadosFecha(Empresa empre);
     
 }

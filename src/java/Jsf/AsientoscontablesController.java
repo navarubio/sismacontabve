@@ -594,7 +594,7 @@ public class AsientoscontablesController implements Serializable {
 //        this.auxiliar = aux;
         detallecompraFiltrados = detallecompraAuxiliar();
         tiporetencionesfiltradasPD = tiporetencionislrEJB.tiporetfiltradaPJyD(compra.getRifproveedor().getIdpersonalidad(), compra.getRifproveedor().getIdresidencia());
-        empresa = empresaEJB.devolverEmpresabase();
+        empresa = requerimientosController.getEmpresa();
         double montocompra = compra.getTotal();
         double montoiva = compra.getIva();
 
@@ -773,7 +773,7 @@ public class AsientoscontablesController implements Serializable {
 
     public List<Cuentabancaria> refrescarCuentasBancarias() {
         try {
-            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco());
+            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco(), empresa);
         } catch (Exception e) {
         }
         pagocompra.setIdcuentabancaria(lstCuentasSelecc.get(0));

@@ -11,6 +11,7 @@ import Modelo.Empresa;
 import Modelo.Estatusrequerimiento;
 import Modelo.Requerimiento;
 import Modelo.Usuario;
+import Modelo.Usuariodeprol;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -48,6 +49,8 @@ public class RequerimientosController implements Serializable {
     private Usuario usa;
     @Inject
     private Empresa empresa;
+    @Inject
+    private Usuariodeprol usuariodeprol;
     @Inject
     private Estatusrequerimiento statusreq;
     @Inject
@@ -229,6 +232,22 @@ public class RequerimientosController implements Serializable {
         this.usa = usa;
     }
 
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public Usuariodeprol getUsuariodeprol() {
+        return usuariodeprol;
+    }
+
+    public void setUsuariodeprol(Usuariodeprol usuariodeprol) {
+        this.usuariodeprol = usuariodeprol;
+    }
+
     @PostConstruct
     public void init() {
         articulos = articuloEJB.findAll();
@@ -240,7 +259,11 @@ public class RequerimientosController implements Serializable {
 
     public void ObtenerUsuario() {
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        Empresa empre = (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        Usuariodeprol usdeprol = (Usuariodeprol) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuariodeprol");
+        empresa = empre;
         usa = us;
+        usuariodeprol = usdeprol;
         statusreq.setIdestatusrequerimiento(statu);
     }
 
@@ -405,14 +428,21 @@ public class RequerimientosController implements Serializable {
 
     public void registrar() {
         try {
-            auxrequer.setIddepartamento(usa.getIddepartamento());
+            auxrequer.setIddepartamento(usuariodeprol.getIddepartamento());
             auxrequer.setIdusuario(usa);
             auxrequer.setIdestatusrequerimiento(statusreq);
             auxrequer.setSubtotal(redondearDecimales(totalsubtotal));
             auxrequer.setMontoiva(redondearDecimales(totaliva));
             auxrequer.setMontototal(redondearDecimales(totalgeneral));
-
+            int serial = auxrequer.getIddepartamento().getIdempresa().getSerialrequerimiento() + 1;
+            auxrequer.setSerialrequerimiento(serial);
             auxiliarrequerimientoEJB.create(auxrequer);
+
+            //--------Actualizando el serial requerimiento de tabla Empresa ------- \\
+            Empresa empre=empresa;
+            empre.setSerialrequerimiento(serial);
+            empresaEJB.edit(empre);
+
             totalsubtotal = 0;
             totaliva = 0;
             totalgeneral = 0;
@@ -436,13 +466,13 @@ public class RequerimientosController implements Serializable {
             }
             String fechareque = formateador.format(auxrequer.getFecharequerimiento());
             empresa = empresaEJB.devolverEmpresabase();
-            correo = "CODIGO: REQ-" + auxrequer.getIdauxiliarrequerimiento()
+            correo = "CODIGO: REQ-" + auxrequer.getSerialrequerimiento()
                     + "  SOLICITANTE: " + auxrequer.getIdusuario().getNombre()
                     + "  DEPARTAMENTO: " + auxrequer.getIddepartamento()
                     + "  FECHA: " + fechareque
                     + "  MATERIAL O SERVICIO: " + material
                     + "  SOLICITUD: " + auxrequer.getDescripcion();
-            subject = empresa.getNombrecomercial() + " Requerimiento REQ-" + requer.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento();
+            subject = empresa.getNombrecomercial() + " Requerimiento REQ-" + requer.getIdauxiliarrequerimiento().getSerialrequerimiento();
             enviomail = new envioCorreo(correo, subject);
             enviomail.start();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Requerimiento fue Almacenado Codigo " + requer.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento(), ""));

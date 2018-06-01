@@ -32,6 +32,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 
 @Named("movimientobancarioController")
@@ -60,6 +61,8 @@ public class MovimientobancarioController implements Serializable {
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     double saldomovbancario = 0.0;
     double saldocuenta=0.0;
+    @Inject 
+    private RequerimientosController requerimientosController;
 
     public MovimientobancarioController() {
     }
@@ -179,7 +182,7 @@ public class MovimientobancarioController implements Serializable {
 
     public List<Cuentabancaria> refrescarCuentasBancarias() {
         try {
-            lstCuentasSelecc = cuentabancariaEJB.espxBanco(bancoselec.getIdbanco());
+            lstCuentasSelecc = cuentabancariaEJB.espxBanco(bancoselec.getIdbanco(), requerimientosController.getEmpresa());
         } catch (Exception e) {
         }
         selected.setIdcuentabancaria(lstCuentasSelecc.get(0));

@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Compra;
+import Modelo.Empresa;
 import Modelo.Estatusfactura;
 import java.util.Date;
 import java.util.List;
@@ -50,39 +51,40 @@ public class CompraFacade extends AbstractFacade<Compra> implements CompraFacade
         return ultimo;
     }
     @Override
-    public List<Compra> buscarcomprasporAutorizar() {
+    public List<Compra> buscarcomprasporAutorizar(Empresa empre) {
         String consulta;
         int idstatus = 1;
         List<Compra> lista = null;
         try {
-            consulta = "From Compra c where c.idestatusfactura.idestatusfactura= ?1";
+            consulta = "From Compra c where c.iddepartamento.idempresa.idempresa= ?1 and c.idestatusfactura.idestatusfactura= ?2";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, idstatus);
+            query.setParameter(1, empre.getIdempresa());
+            query.setParameter(2, idstatus);
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;
         }
         return lista;
     }
+    
     @Override
-    public List<Compra> buscarcomprasporPagar() {
+    public List<Compra> buscarcomprasporPagar(Empresa empre) {
         String consulta;
-        int idstatus = 0;
-        int idstatus2 =2;
-        int idstatus3 =4;
+        int idstatus = 3;
         List<Compra> lista = null;
         try {
-            consulta = "From Compra c where c.idestatusfactura.idestatusfactura= ?1 or c.idestatusfactura.idestatusfactura= ?2 or c.idestatusfactura.idestatusfactura= ?3";
+            consulta = "From Compra c where c.idauxiliarrequerimiento.iddepartamento.idempresa.idempresa = ?1 and c.idestatusfactura.idestatusfactura < ?2 order by c.serialcompra";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, idstatus);
-            query.setParameter(2, idstatus2);
-            query.setParameter(3, idstatus3);            
+            query.setParameter(1, empre.getIdempresa());
+            query.setParameter(2, idstatus);
+            
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;
         }
         return lista;
     }
+    
     @Override
     public List<Compra> buscarcomprasPagadas() {
         String consulta;

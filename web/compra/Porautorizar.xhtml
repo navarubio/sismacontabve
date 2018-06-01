@@ -49,7 +49,7 @@
                                 </f:facet>
                                 <h:outputText value="#{item.idusuario.iddepartamento.departamento}"/>
                             </p:column>
-                            <p:column width="60" style="text-align: center" filterBy="#{item.idauxiliarrequerimiento.idauxiliarrequerimiento}" sortBy="#{item.idauxiliarrequerimiento.idauxiliarrequerimiento}" filterMatchMode="exact" filterStyle="width: 60px;" >
+                            <p:column width="100" style="text-align: center" filterBy="#{item.idauxiliarrequerimiento.idauxiliarrequerimiento}" sortBy="#{item.idauxiliarrequerimiento.idauxiliarrequerimiento}" filterMatchMode="exact" filterStyle="width: 60px;" >
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListCompraTitle_idauxiliarrequerimiento}"/>
                                 </f:facet>
@@ -132,7 +132,7 @@
                                 </f:facet>
                                 <h:outputText value="#{item.idestatusfactura.estatusfactura}"/>
                             </p:column>                        
-                            <p:column style="text-align: center" headerText="Autorizar">
+                            <p:column style="text-align: center" headerText="Autorizar" width="80" >
                                 <p:commandLink actionListener="#{comprasController.asignarCompraAutorizada(item)}"  update=":dialogo" oncomplete="PF('wdialogo').show();" >
                                     <h:graphicImage library="images" name="candadopen.png" width="30" height="30" alt="Autorizar Compra"/> 
                                 </p:commandLink>
@@ -156,22 +156,22 @@
                         <h:panelGrid  id="display" columns="2" style="vertical-align:top" width="900">
                             <p:fieldset  legend="Requerimiento" >
                                 <h:panelGrid styleClass="ui-custompanelgrid1" columns="2" width="450">
-                                    <p:outputLabel for="numero" value="Solicitud" styleClass="text-ouput"/>
+                                    <p:outputLabel for="numero" value="Solicitud" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="numero" value="REQ- #{comprasController.compraautorizada.idauxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouput"/>
+                                    <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="usuario" value="#{comprasController.compraautorizada.idauxiliarrequerimiento.idusuario.nombre}" styleClass="optionalLbl"/>
-                                    <p:outputLabel for="departamento" value="Departamento" styleClass="text-ouput"/>
+                                    <p:outputLabel for="departamento" value="Departamento" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="departamento" value="#{comprasController.compraautorizada.idauxiliarrequerimiento.iddepartamento.departamento}" styleClass="optionalLbl"/>
 
-                                    <p:outputLabel for="proveedor" value="Proveedor Referido" styleClass="text-ouput"/>
+                                    <p:outputLabel for="proveedor" value="Proveedor Referido" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="proveedor" value="#{comprasController.compraautorizada.idauxiliarrequerimiento.posibleproveedor}"/>
-                                    <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouput"/>
+                                    <p:outputLabel for="telefono" value="Telefonos" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="telefono" value="#{comprasController.compraautorizada.idauxiliarrequerimiento.telefonoproveedor}"/>
-                                    <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" styleClass="text-ouput" />
+                                    <p:outputLabel for="fechasolicitud" value="Fecha Solicitud" styleClass="text-ouputnormal" />
                                     <p:outputLabel id="fechasolicitud" value="#{comprasController.compraautorizada.idauxiliarrequerimiento.fecharequerimiento}">
                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </p:outputLabel>
-                                    <p:outputLabel for="resena" value="Breve Reseña" styleClass="text-ouput"/>
+                                    <p:outputLabel for="resena" value="Breve Reseña" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="resena" value="#{comprasController.compraautorizada.idauxiliarrequerimiento.descripcion}" />
                                 </h:panelGrid>
                             </p:fieldset>
@@ -200,7 +200,7 @@
                                     <p:outputLabel for="usuaauto" value="Usuario" styleClass="text-ouput"/>
                                     <p:outputLabel id="usuaauto" value="#{comprasController.auxiliarrequerimiento.idusuario.nombre}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="deptoauto" value="Departamento" styleClass="text-ouput"/>
-                                    <p:outputLabel id="deptoauto" value="#{comprasController.auxiliarrequerimiento.idusuario.iddepartamento.departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="deptoauto" value="#{comprasController.requerimientosController.usuariodeprol.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="observaauto" value="Observaciones" styleClass="text-ouput"/>
                                     <p:inputTextarea id="observaauto"  rows="2" cols="50" label="Observaciones" value="#{comprasController.autorizacion.observaciones}"/>
                                 </h:panelGrid>                                

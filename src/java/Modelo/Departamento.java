@@ -35,6 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Departamento.findByIddepartamento", query = "SELECT d FROM Departamento d WHERE d.iddepartamento = :iddepartamento"),
     @NamedQuery(name = "Departamento.findByDepartamento", query = "SELECT d FROM Departamento d WHERE d.departamento = :departamento")})
 public class Departamento implements Serializable {
+
+    @OneToMany(mappedBy = "iddepartamento")
+    private Collection<Usuariodeprol> usuariodeprolCollection;
     @OneToMany(mappedBy = "iddepartamento")
     private Collection<Centrodecosto> centrodecostoCollection;
     private static final long serialVersionUID = 1L;
@@ -55,7 +58,11 @@ public class Departamento implements Serializable {
     @JoinColumn(name = "idempresa", referencedColumnName = "idempresa")
     @ManyToOne
     private Empresa idempresa;
-    
+    @OneToMany(mappedBy = "iddepartamento")
+    private Collection<Compra> compraCollection;
+    @OneToMany(mappedBy = "iddepartamento")
+    private Collection<Pagocompra> pagocompraCollection;
+
     public Departamento() {
     }
 
@@ -147,5 +154,32 @@ public class Departamento implements Serializable {
     public void setCentrodecostoCollection(Collection<Centrodecosto> centrodecostoCollection) {
         this.centrodecostoCollection = centrodecostoCollection;
     }
-    
+
+    @XmlTransient
+    public Collection<Usuariodeprol> getUsuariodeprolCollection() {
+        return usuariodeprolCollection;
+    }
+
+    public void setUsuariodeprolCollection(Collection<Usuariodeprol> usuariodeprolCollection) {
+        this.usuariodeprolCollection = usuariodeprolCollection;
+    }
+
+    @XmlTransient
+    public Collection<Compra> getCompraCollection() {
+        return compraCollection;
+    }
+
+    public void setCompraCollection(Collection<Compra> compraCollection) {
+        this.compraCollection = compraCollection;
+    }
+
+    @XmlTransient
+    public Collection<Pagocompra> getPagocompraCollection() {
+        return pagocompraCollection;
+    }
+
+    public void setPagocompraCollection(Collection<Pagocompra> pagocompraCollection) {
+        this.pagocompraCollection = pagocompraCollection;
+    }
+
 }

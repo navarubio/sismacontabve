@@ -66,6 +66,8 @@ public class OtroingresoController implements Serializable {
     private Cobroventa cobro;
     @Inject
     private Cobroventa cobroauxiliar;
+    @Inject
+    private RequerimientosController requerimientosController;
     private List<Otroingreso> items = null;
     private List<Banco> bancos;
     private List<Cuentabancaria> lstCuentasSelecc;
@@ -85,7 +87,7 @@ public class OtroingresoController implements Serializable {
 
     public OtroingresoController() {
     }
-
+    
     public Otroingreso getSelected() {
         return selected;
     }
@@ -401,7 +403,7 @@ public class OtroingresoController implements Serializable {
 
     public List<Cuentabancaria> refrescarCuentasBancarias() {
         try {
-            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco());
+            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco(), requerimientosController.getEmpresa());
         } catch (Exception e) {
         }
         cobro.setIdcuentabancaria(lstCuentasSelecc.get(0));
@@ -410,7 +412,7 @@ public class OtroingresoController implements Serializable {
 
     public List<Cuentabancaria> refrescarCuentasBancariasemisoras() {
         try {
-            lstCuentasSeleccemisor = cuentabancariaEJB.espxBanco(bancoemisor.getIdbanco());
+            lstCuentasSeleccemisor = cuentabancariaEJB.espxBanco(bancoemisor.getIdbanco(), requerimientosController.getEmpresa());
         } catch (Exception e) {
         }
         cuentaemisora = (lstCuentasSeleccemisor.get(0));

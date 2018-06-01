@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Maestromovimiento.findByIdmaestro", query = "SELECT m FROM Maestromovimiento m WHERE m.idmaestro = :idmaestro"),
     @NamedQuery(name = "Maestromovimiento.findByFechamovimiento", query = "SELECT m FROM Maestromovimiento m WHERE m.fechamovimiento = :fechamovimiento")})
 public class Maestromovimiento implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -87,6 +88,8 @@ public class Maestromovimiento implements Serializable {
     private Collection<Autorizacion> autorizacionCollection;
     @OneToMany(mappedBy = "idmaestro")
     private Collection<Pagocompra> pagocompraCollection;
+    @Column(name = "idempresa")
+    private Integer idempresa;
 
     public Maestromovimiento() {
     }
@@ -209,6 +212,14 @@ public class Maestromovimiento implements Serializable {
         this.idreposicioncajachica = idreposicioncajachica;
     }
 
+    public Integer getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(Integer idempresa) {
+        this.idempresa = idempresa;
+    }
+ 
     @XmlTransient
     public Collection<Cobroventa> getCobroventaCollection() {
         return cobroventaCollection;
@@ -260,5 +271,5 @@ public class Maestromovimiento implements Serializable {
     public String toString() {
         return "Modelo.Maestromovimiento[ idmaestro=" + idmaestro + " ]";
     }
-    
+
 }

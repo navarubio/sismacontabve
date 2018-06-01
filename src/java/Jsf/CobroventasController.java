@@ -397,7 +397,7 @@ public class CobroventasController implements Serializable {
 
     public List<Cuentabancaria> refrescarCuentasBancarias() {
         try {
-            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco());
+            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco(), empresa);
         } catch (Exception e) {
         }
         cobro.setIdcuentabancaria(lstCuentasSelecc.get(0));

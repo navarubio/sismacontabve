@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Auxiliarrequerimiento;
+import Modelo.Empresa;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -28,7 +29,7 @@ public interface AuxiliarrequerimientoFacadeLocal {
 
     List<Auxiliarrequerimiento> findRange(int[] range);
 
-    List<Auxiliarrequerimiento> buscarrequerimientosActivos ();
+    List<Auxiliarrequerimiento> buscarrequerimientosActivos (Empresa empre);
     
     int count();
 }

@@ -6,7 +6,8 @@
 package Jpa;
 
 import Modelo.Empresa;
-import Modelo.Maestromovimiento;
+import Modelo.Usuario;
+import Modelo.Usuariodeprol;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,7 +19,7 @@ import javax.persistence.Query;
  * @author sofimar
  */
 @Stateless
-public class MaestromovimientoFacade extends AbstractFacade<Maestromovimiento> implements MaestromovimientoFacadeLocal{
+public class UsuariodeprolFacade extends AbstractFacade<Usuariodeprol> implements UsuariodeprolFacadeLocal {
     @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
@@ -27,23 +28,28 @@ public class MaestromovimientoFacade extends AbstractFacade<Maestromovimiento> i
         return em;
     }
 
-    public MaestromovimientoFacade() {
-        super(Maestromovimiento.class);
+    public UsuariodeprolFacade() {
+        super(Usuariodeprol.class);
     }
     
     @Override
-    public List<Maestromovimiento> MovimientosOrdenadosFecha(Empresa empre) {
+    public Usuariodeprol UsuarioDptoRol (Usuario us, Empresa empre) {
+        Usuariodeprol usuariodeprol = null;
         String consulta;
-        List<Maestromovimiento> lista = null;
         try {
-            consulta = "From Maestromovimiento m where m.idempresa = ?1 order by m.fechamovimiento, m.idmaestro";
+            consulta  = "From Usuariodeprol u where u.idusuario.idusuario = ?1 and u.iddepartamento.idempresa.idempresa = ?2";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, empre.getIdempresa());
-            lista = query.getResultList();
+            query.setParameter(1, us.getIdusuario());
+            query.setParameter(2, empre.getIdempresa());
+
+            List<Usuariodeprol> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                usuariodeprol = lista.get(0);
+}
         } catch (Exception e) {
             throw e;
         }
-        return lista;
+        return usuariodeprol;
     }
     
 }

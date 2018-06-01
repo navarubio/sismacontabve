@@ -771,7 +771,7 @@ public class AsientosreposicionController implements Serializable {
 
     public List<Cuentabancaria> refrescarCuentasBancarias() {
         try {
-            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco());
+            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco(), requerimientosController.getEmpresa());
         } catch (Exception e) {
         }
         pagocompra.setIdcuentabancaria(lstCuentasSelecc.get(0));

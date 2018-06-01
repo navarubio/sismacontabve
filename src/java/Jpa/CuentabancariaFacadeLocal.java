@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Cuentabancaria;
+import Modelo.Empresa;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,9 +31,9 @@ public interface CuentabancariaFacadeLocal  {
 
     int count();
     
-    List<Cuentabancaria> espxBanco(int idbank);
+    List<Cuentabancaria> espxBanco(int idbank, Empresa empre);
     
     double saldoencuenta(List <Cuentabancaria> lista);
    
-    List<Cuentabancaria> cuentasAll();
+    List<Cuentabancaria> cuentasAll(Empresa empre);
 }

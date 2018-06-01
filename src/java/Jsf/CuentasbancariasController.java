@@ -4,11 +4,13 @@ import Modelo.Cuentabancaria;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.CuentabancariaFacadeLocal;
+import Modelo.Empresa;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException; 
 import javax.inject.Named;
@@ -19,6 +21,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @ManagedBean(name = "cuentasbancariasController")
 @ViewScoped
@@ -28,10 +31,18 @@ public class CuentasbancariasController implements Serializable {
     private Jpa.CuentabancariaFacadeLocal ejbFacade;
     private List<Cuentabancaria> items = null;
     private Cuentabancaria selected;
+    @Inject
+    private RequerimientosController requerimientosController;
+    private Empresa empresa;
 
     public CuentasbancariasController() {
     }
 
+    @PostConstruct
+    public void init (){
+        empresa=requerimientosController.getEmpresa();
+    }
+    
     public Cuentabancaria getSelected() {
         return selected;
     }
@@ -77,7 +88,7 @@ public class CuentasbancariasController implements Serializable {
 
     public List<Cuentabancaria> getItems() {
         if (items == null) {
-            items = getFacade().cuentasAll();
+            items = getFacade().cuentasAll(empresa);
         }
         return items;
     }

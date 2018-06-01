@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Departamento;
+import Modelo.Empresa;
 import Modelo.Usuario;
 import java.util.List;
 import javax.ejb.Local;
@@ -32,5 +33,7 @@ public interface DepartamentoFacadeLocal {
     Departamento buscarDepartamento (Usuario us);
 
     int count();
+    
+    List<Departamento> devolverDepartamentos (Empresa empre);
     
 }

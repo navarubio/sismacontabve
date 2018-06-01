@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
@@ -33,9 +34,17 @@ public class DepartamentoController implements Serializable {
     private Departamento selected;
     private Usuario usa;
     private Auxiliarrequerimiento auxiliarrequerimiento;
+    @Inject
+    private AuxiliarrequerimientoController auxiliar;
 
     public DepartamentoController() {
     }
+    
+    @PostConstruct
+    public void init() {
+        
+    }
+    
 
     public Departamento getSelected() {
         return selected;
@@ -72,6 +81,7 @@ public class DepartamentoController implements Serializable {
 
     public Departamento prepareCreate() {
         selected = new Departamento();
+        selected.setIdempresa(auxiliar.getEmpresa());
         initializeEmbeddableKey();
         return selected;
     }
@@ -97,7 +107,7 @@ public class DepartamentoController implements Serializable {
 
     public List<Departamento> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().devolverDepartamentos(auxiliar.getEmpresa());
         }
         return items;
     }

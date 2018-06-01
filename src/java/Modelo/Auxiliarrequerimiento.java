@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Auxiliarrequerimiento.findByDescripcion", query = "SELECT a FROM Auxiliarrequerimiento a WHERE a.descripcion = :descripcion"),
     @NamedQuery(name = "Auxiliarrequerimiento.findByFecharequerimiento", query = "SELECT a FROM Auxiliarrequerimiento a WHERE a.fecharequerimiento = :fecharequerimiento")})
 public class Auxiliarrequerimiento implements Serializable {
+
     @OneToMany(mappedBy = "idauxiliarrequerimiento")
     private Collection<Compra> compraCollection;
     private static final long serialVersionUID = 1L;
@@ -67,7 +68,9 @@ public class Auxiliarrequerimiento implements Serializable {
     private Double montoiva;
     @Column(name = "montototal")
     private Double montototal;
-    
+    @Column(name = "serialrequerimiento")
+    private Integer serialrequerimiento;
+
     @JoinColumn(name = "idestatusrequerimiento", referencedColumnName = "idestatusrequerimiento")
     @ManyToOne
     private Estatusrequerimiento idestatusrequerimiento;
@@ -141,7 +144,6 @@ public class Auxiliarrequerimiento implements Serializable {
         this.montoiva = montoiva;
     }
 
-    
     public Double getMontototal() {
         return montototal;
     }
@@ -150,7 +152,6 @@ public class Auxiliarrequerimiento implements Serializable {
         this.montototal = montototal;
     }
 
-    
     public Estatusrequerimiento getIdestatusrequerimiento() {
         return idestatusrequerimiento;
     }
@@ -173,6 +174,14 @@ public class Auxiliarrequerimiento implements Serializable {
 
     public void setIddepartamento(Departamento iddepartamento) {
         this.iddepartamento = iddepartamento;
+    }
+
+    public Integer getSerialrequerimiento() {
+        return serialrequerimiento;
+    }
+
+    public void setSerialrequerimiento(Integer serialrequerimiento) {
+        this.serialrequerimiento = serialrequerimiento;
     }
 
     @Override
@@ -208,5 +217,5 @@ public class Auxiliarrequerimiento implements Serializable {
     public void setCompraCollection(Collection<Compra> compraCollection) {
         this.compraCollection = compraCollection;
     }
-    
+
 }

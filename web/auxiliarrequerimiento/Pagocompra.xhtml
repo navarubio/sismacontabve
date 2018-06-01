@@ -54,9 +54,9 @@
                                     <p:outputLabel for="numeroc" value="Compra" styleClass="text-ouput" />
                                     <p:outputLabel id="numeroc" value="CMP- #{pagosController.compra.idcompra}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="usua" value="Usuario" styleClass="text-ouput"/>
-                                    <p:outputLabel id="usua" value="#{pagosController.usuario.nombre}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="usua" value="#{pagosController.compra.idusuario.nombre}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="depto" value="Departamento" styleClass="text-ouput"/>
-                                    <p:outputLabel id="depto" value="#{pagosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="depto" value="#{pagosController.compra.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="proveedor1" value="Proveedor" styleClass="text-ouput"/>
                                     <p:outputLabel id="proveedor1" value="#{pagosController.compra.rifproveedor.razonsocial}"   /> 
                                     <p:outputLabel for="rif" value="R.U.C." styleClass="text-ouput"/>
@@ -92,11 +92,11 @@
                             <p:fieldset  legend="Datos del Pago" style="width: 100%"  >
                                 <p:panelGrid styleClass="ui-custompanelgrid2" columns="4">
                                     <p:outputLabel for="usua1" value="Usuario" styleClass="text-ouput"/>
-                                    <p:outputLabel id="usua1" value="#{pagosController.usuario.nombre}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="usua1" value="#{requerimientosController.usa.nombre}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="numerofact" value="Factura" styleClass="text-ouput"/>
                                     <p:inputText id="numerofact" label="Factura" size ="10" value="#{pagosController.compra.numerofactura}" required="true" />
                                     <p:outputLabel for="depto1" value="Departamento" styleClass="text-ouput"/>
-                                    <p:outputLabel id="depto1" value="#{pagosController.buscarDepartamento().departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="depto1" value="#{comprasController.requerimientosController.usuariodeprol.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="numerocontrol" value="Control" styleClass="text-ouput"/>
                                     <p:inputText id="numerocontrol" label="Control" size ="10" value="#{pagosController.compra.controlfactura}" />
                                     <p:outputLabel for="montof" value="Monto Factura" styleClass="text-ouput"/>

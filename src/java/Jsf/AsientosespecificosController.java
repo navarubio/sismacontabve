@@ -133,6 +133,8 @@ public class AsientosespecificosController implements Serializable {
     private Compra compra;
     @Inject
     private Otroingreso otroingreso;
+    @Inject
+    private RequerimientosController requerimientosController;
     private Maestromovimiento master;
     private Autorizacion autoriza;
     private Detallecompra detallecompras;
@@ -670,7 +672,7 @@ public class AsientosespecificosController implements Serializable {
 
     public List<Cuentabancaria> refrescarCuentasBancarias() {
         try {
-            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco());
+            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco(), requerimientosController.getEmpresa());
         } catch (Exception e) {
         }
         pagocompra.setIdcuentabancaria(lstCuentasSelecc.get(0));

@@ -5,7 +5,9 @@
  */
 package Jpa;
 
+import Modelo.Banco;
 import Modelo.Cuentabancaria;
+import Modelo.Empresa;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,11 +37,12 @@ public class CuentabancariaFacade extends AbstractFacade<Cuentabancaria> impleme
     }
     
     @Override
-    public List<Cuentabancaria> espxBanco(int idbank) {
+    public List<Cuentabancaria> espxBanco(int idbank, Empresa empre) {
         try { 
-            consulta = "From Cuentabancaria c where c.idbanco.idbanco= ?1";
+            consulta = "From Cuentabancaria c where c.idbanco.idbanco= ?1 and c.idempresa.idempresa= ?2";
             Query query = em.createQuery(consulta);
             query.setParameter(1, idbank);
+            query.setParameter(2, empre.getIdempresa());
             
             lista = query.getResultList();
 //            if (!lista.isEmpty()) {
@@ -60,15 +63,38 @@ public class CuentabancariaFacade extends AbstractFacade<Cuentabancaria> impleme
     }
     
     @Override
-    public List<Cuentabancaria> cuentasAll() {
+    public List<Cuentabancaria> cuentasAll(Empresa empre) {
         try { 
-            consulta = "From Cuentabancaria c order by c.idbanco";
+            consulta = "From Cuentabancaria c where c.idempresa.idempresa = ?1 order by c.idbanco";
             Query query = em.createQuery(consulta);
-            
+            query.setParameter(1, empre.getIdempresa());
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;
-}
+        }
         return lista;
     }
+    
+//    @Override
+//    public List<Banco> bancosEmpresa (Empresa empre) {
+//        List<Banco> listabancos=null;
+//        try { 
+//            consulta = "From Cuentabancaria c where c.idempresa.idempresa = ?1 order by c.idbanco";
+//            Query query = em.createQuery(consulta);
+//            query.setParameter(1, empre.getIdempresa());
+//            
+//            lista = query.getResultList();
+//            
+//            for (Cuentabancaria cuenta:lista){
+//                
+//            }
+//            
+//        } catch (Exception e) {
+//            throw e;
+//        }
+//        return listabancos;
+    //}
+    
+    
+    
 }

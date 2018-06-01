@@ -116,7 +116,7 @@ public class PagosController implements Serializable {
     private TipoconjuntoFacadeLocal tipoconjuntoEJB;
     @EJB
     private MovimientobancarioFacadeLocal movimientoBancarioEJB;
-    @EJB 
+    @EJB
     private RetencionivasriFacadeLocal retencionesivasriEJB;
     @EJB
     private SubgrupoFacadeLocal subgrupoEJB;
@@ -143,8 +143,8 @@ public class PagosController implements Serializable {
     private RequerimientosController requerimientosController;
     private List<Auxiliarrequerimiento> auxiliarrequerimientos;
     private List<Tiporetencionislr> tiporetencionesfiltradasPD = null;
-    private List<Subgrupo> subgruposfiltrados= null; 
-    private List<Tiporetencioniva> tiporetencionivafiltrada= null; 
+    private List<Subgrupo> subgruposfiltrados = null;
+    private List<Tiporetencioniva> tiporetencionivafiltrada = null;
     private List<Cuentabancaria> cuentasbancarias;
     private List<Tipopago> tipopagos;
     private List<Detallecompra> detallecompraFiltrados;
@@ -196,7 +196,6 @@ public class PagosController implements Serializable {
     private Date fechaactual = new Date();
     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
-
 
     public List<Cuentabancaria> getLstCuentasSelecc() {
         return lstCuentasSelecc;
@@ -524,7 +523,8 @@ public class PagosController implements Serializable {
         bancos = bancoEJB.findAll();
         pagosefectuados = pagocompraEJB.findAll();
         pago = new Pagocompra();
-        usa= getUsuario();
+        usa = getUsuario();
+        empresa = requerimientosController.getEmpresa();
         //articulos = articuloEJB.findAll();
         //comprasporautorizar=compraEJB.buscarcomprasporAutorizar();
 
@@ -534,10 +534,10 @@ public class PagosController implements Serializable {
     public void asignar(Compra compr) {
         this.tipocompra = 1;
         this.visualizar = 0;
-        this.totalretenido=0;
-        this.ivaretenido=0;
-        this.islrretenido=0;
-        this.retencionaplicar=0;
+        this.totalretenido = 0;
+        this.ivaretenido = 0;
+        this.islrretenido = 0;
+        this.retencionaplicar = 0;
         this.compra = compr;
         this.pagocompra.setTotalpago(compra.getTotal());
         this.montoapagar = compra.getTotal();
@@ -553,86 +553,87 @@ public class PagosController implements Serializable {
 //        this.auxiliar = aux;
         detallecompraFiltrados = detallecompraAuxiliar();
 //        tiporetencionesfiltradasPD = subgrupoEJB.tiporetfiltradaPJyD(compra.getRifproveedor().getIdpersonalidad(), compra.getRifproveedor().getIdresidencia());
-        empresa = usa.getIddepartamento().getIdempresa();
+        empresa = requerimientosController.getEmpresa();
+        dpto = requerimientosController.getUsuariodeprol().getIddepartamento();
         double montocompra = compra.getTotal();
         double montoiva = compra.getIva();
-        this.totalgeneralform=formatearnumero.format(compra.getTotal());
-        this.totalivaform=formatearnumero.format(compra.getIva());
-        this.totalsubtotalform=formatearnumero.format(compra.getSubtotal()); 
+        this.totalgeneralform = formatearnumero.format(compra.getTotal());
+        this.totalivaform = formatearnumero.format(compra.getIva());
+        this.totalsubtotalform = formatearnumero.format(compra.getSubtotal());
         // OJO CON ESTAS VARIABLES PARA CUANDO CAMBIE LA UNIDAD TRIBUTARIA CAMBIARLAS
         montopisoretiva = (0.1);
         montopisoretislr = 0.1;
         //////////////////////////////////////////////////////////////////////////////
-        
+
         int personaj = compra.getRifproveedor().getIdpersonalidad().getIdpersonalidad();
         int residencia = compra.getRifproveedor().getIdresidencia().getIdresidencia();
-        int contribproveedor=compra.getRifproveedor().getIdcontribuyente().getIdcontribuyente();
-        int contriempresa=empresa.getIdcontribuyente().getIdcontribuyente();
-        String codigoret=contriempresa+""+contribproveedor;
-        int codigoretencion=Integer.parseInt(codigoret);
-        Retencionivasri retencionprevista=retencionesivasriEJB.buscarcoPorcentajes(codigoretencion);
-        retencionivabienes=retencionprevista.getPorcentajeivabienes();
+        int contribproveedor = compra.getRifproveedor().getIdcontribuyente().getIdcontribuyente();
+        int contriempresa = empresa.getIdcontribuyente().getIdcontribuyente();
+        String codigoret = contriempresa + "" + contribproveedor;
+        int codigoretencion = Integer.parseInt(codigoret);
+        Retencionivasri retencionprevista = retencionesivasriEJB.buscarcoPorcentajes(codigoretencion);
+        retencionivabienes = retencionprevista.getPorcentajeivabienes();
         retencionesivadisponible.add(retencionprevista);
-        retencionivaservicios=retencionprevista.getPorcentajeivaservicios();
+        retencionivaservicios = retencionprevista.getPorcentajeivaservicios();
         int tipo1;
         for (Detallecompra tipoc : detallecompraFiltrados) {
             tipo1 = tipoc.getCodigo().getIdgrupo().getIdgrupo();
             if (tipo1 == 1 && tipocompra == 1) {
                 tipocompra = 1;
-                tipoarticulo="BIENES";
-                retencionaplicar=retencionivabienes;
+                tipoarticulo = "BIENES";
+                retencionaplicar = retencionivabienes;
             } else if (tipo1 == 2) {
                 tipocompra = 2;
-                tipoarticulo="SERVICIOS";
-                retencionaplicar=retencionivaservicios;
+                tipoarticulo = "SERVICIOS";
+                retencionaplicar = retencionivaservicios;
             } else if (tipo1 == 3) {
                 tipocompra = 3;
             }
         }
         subgruposfiltrados = subgrupoEJB.subgrupoxGrupo(tipocompra);
-        tiporetencionivafiltrada=tiporetencionivaEJB.tiporetencionivaxGrupo(tipocompra);
-        if (empresa.getIdcontribuyente().getIdcontribuyente() == 3 || empresa.getIdcontribuyente().getIdcontribuyente() == 6 ) {
+        tiporetencionivafiltrada = tiporetencionivaEJB.tiporetencionivaxGrupo(tipocompra);
+        if (empresa.getIdcontribuyente().getIdcontribuyente() == 3 || empresa.getIdcontribuyente().getIdcontribuyente() == 6) {
             if (montocompra >= montopisoretiva) {
                 if (tipocompra == 3) {
                     visualizar = 5;
-                }else if (tipocompra == 1) {
+                } else if (tipocompra == 1) {
                     if (montoiva > 0) {
-                        visualizar = 2;                    
-                    }else {
-                        visualizar=2;
+                        visualizar = 2;
+                    } else {
+                        visualizar = 2;
                     }
-                }else if ((tipocompra == 2) && (personaj == 2) && (residencia == 1)) {
+                } else if ((tipocompra == 2) && (personaj == 2) && (residencia == 1)) {
                     if (montocompra >= montopisoretislr) {
                         if (montoiva > 0) {
-                            visualizar=2;
-                        }else{
-                            visualizar=3;
+                            visualizar = 2;
+                        } else {
+                            visualizar = 3;
                         }
-                    }else {
+                    } else {
                         if (montoiva > 0) {
-                            visualizar=1;
-                        }else{
-                            visualizar=5;
+                            visualizar = 1;
+                        } else {
+                            visualizar = 5;
                         }
                     }
-                }else{
+                } else {
                     if (montoiva > 0) {
-                        visualizar=2;
-                    }else{
-                        visualizar=3;
+                        visualizar = 2;
+                    } else {
+                        visualizar = 3;
                     }
                 }
-            }else {
+            } else {
                 if (tipocompra == 2) {
                     if ((personaj == 2) && (residencia == 1)) {
-                        visualizar=5;
-                    }else{
-                        visualizar = 3;                    
+                        visualizar = 5;
+                    } else {
+                        visualizar = 3;
                     }
                 } else if (tipocompra == 3) {
                     visualizar = 5;
-                } else if (tipocompra ==1){
-                    visualizar=5;
+                } else if (tipocompra == 1) {
+                    visualizar = 5;
                 }
             }
         } else if (empresa.getIdcontribuyente().getIdcontribuyente() == 1 || empresa.getIdcontribuyente().getIdcontribuyente() == 4 || empresa.getIdcontribuyente().getIdcontribuyente() == 5) {
@@ -643,13 +644,13 @@ public class PagosController implements Serializable {
                     } else {
                         visualizar = 5;
                     }
-                }else{
-                    visualizar=4;
+                } else {
+                    visualizar = 4;
                 }
-            }else if (tipocompra == 3) {
+            } else if (tipocompra == 3) {
                 visualizar = 5;
-            } else if (tipocompra ==1){
-                visualizar=5;
+            } else if (tipocompra == 1) {
+                visualizar = 5;
             }
         }
         calcularMontoapagar();
@@ -686,7 +687,7 @@ public class PagosController implements Serializable {
         usa = us;
         return us;
     }
- 
+
     public Departamento buscarDepartamento() {
         Usuario usua = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         dpto = departamentoEJB.buscarDepartamento(usua);
@@ -701,13 +702,13 @@ public class PagosController implements Serializable {
 
     public List<Cuentabancaria> refrescarCuentasBancarias() {
         try {
-            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco());
+            lstCuentasSelecc = cuentabancariaEJB.espxBanco(banco.getIdbanco(), empresa);
         } catch (Exception e) {
         }
-        if (lstCuentasSelecc.size()>0){
+        if (lstCuentasSelecc.size() > 0) {
             pagocompra.setIdcuentabancaria(lstCuentasSelecc.get(0));
-        }else{
-            lstCuentasSelecc=null;
+        } else {
+            lstCuentasSelecc = null;
         }
         return lstCuentasSelecc;
     }
@@ -795,16 +796,27 @@ public class PagosController implements Serializable {
                     pagocompra.setMontoretenido(0.0);
                 }
                 cuentabanco = pagocompra.getIdcuentabancaria();
+                pagocompra.setIdusuario(usa);
+                pagocompra.setIddepartamento(dpto);
+                int serial = empresa.getSerialpagocompra() + 1;
+                pagocompra.setSerialpagocompra(serial);
+
 //              pagocompra.setTotalpago(compra.getTotal());
 //              pagocompra.setSaldopendiente(compra.getMontopendiente());
                 pagocompraEJB.create(pagocompra);
-                
+
+                //--------Actualizando el serial pagocompra de tabla Empresa ------- \\
+                Empresa empre = empresa;
+                empre.setSerialpagocompra(serial);
+                empresaEJB.edit(empre);
+
                 int tipoconj = 2;
                 tipoconjunto = tipoconjuntoEJB.cambiartipoConjunto(tipoconj);
                 pagocompra.setIdpagocompra(pagocompraEJB.ultimopago());
                 maestromovi.setIdpagocompra(pagocompra);
                 maestromovi.setFechamovimiento(pagocompra.getFechapago());
                 maestromovi.setIdtipoconjunto(tipoconjunto);
+                maestromovi.setIdempresa(empresa.getIdempresa());
                 maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
                 maestromovimientoEJB.create(maestromovi);
 
@@ -821,7 +833,7 @@ public class PagosController implements Serializable {
                 saldoactualbanco = (pagocompra.getIdcuentabancaria().getSaldo() - pagocompra.getTotalpago());
                 cuentabanco.setSaldo(requerimientosController.redondearDecimales(saldoactualbanco));
                 cuentabancariaEJB.edit(cuentabanco);
-                
+
                 movimientobancario.setFecha(pagocompra.getFechapago());
                 movimientobancario.setIdcuentabancaria(cuentabanco);
                 movimientobancario.setSaldoanterior(requerimientosController.redondearDecimales(saldoanteriorbanco));
@@ -833,7 +845,7 @@ public class PagosController implements Serializable {
                 movimientobancario.setIdtipopago(pagocompra.getIdtipopago());
                 movimientobancario.setConciliado(Boolean.FALSE);
                 movimientoBancarioEJB.create(movimientobancario);
-                
+
                 String subject;
                 String fechapag = formateador.format(pagocompra.getFechapago());
                 correo = "COMPRA NRO: " + compra.getIdcompra()
@@ -846,7 +858,7 @@ public class PagosController implements Serializable {
                         + "  SALDO PENDIENTE: $" + formatearnumero.format(pagocompra.getSaldopendiente())
                         + "  OBSERVACIONES: " + pagocompra.getObservacionespago();
 
-                subject = empresa.getNombrecomercial()+ " Pago N° " + pagocompra.getIdpagocompra();
+                subject = empresa.getNombrecomercial() + " Pago N° " + pagocompra.getIdpagocompra();
                 enviomail = new envioCorreo(correo, subject);
                 enviomail.start();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Pago fue Almacenado"));
@@ -870,14 +882,14 @@ public class PagosController implements Serializable {
                 detalleretencionivaef.setTotalivacompra(requerimientosController.redondearDecimales(compra.getIva()));
                 detalleretencionivaefEJB.create(detalleretencionivaef);
             }
-            if (detalleretencionislref.getTotalislrretenido()>0){
+            if (detalleretencionislref.getTotalislrretenido() > 0) {
                 detalleretencionislref.setIdcompra(compra);
                 detalleretencionislref.setTotalcompra(requerimientosController.redondearDecimales(compra.getTotal()));
                 detalleretencionislref.setBimponible(requerimientosController.redondearDecimales(compra.getSubtotal()));
                 detalleretencionislrefEJB.create(detalleretencionislref);
             }
             calcularMontoapagar();
-            totalretenido=requerimientosController.redondearDecimales(ivaretenido+islrretenido);
+            totalretenido = requerimientosController.redondearDecimales(ivaretenido + islrretenido);
             visualizar = 7;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Retencion fue Almacenada", ""));
         } catch (Exception e) {
@@ -907,7 +919,7 @@ public class PagosController implements Serializable {
         }
 
     }
-    
+
     public Date fechaactual() {
         Date fecha = new Date();
         return fecha;

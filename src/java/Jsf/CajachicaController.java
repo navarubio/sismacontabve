@@ -6,6 +6,7 @@ import Jsf.util.JsfUtil.PersistAction;
 import Jpa.CajachicaFacade;
 import Jpa.CajachicaFacadeLocal;
 import Modelo.Auxiliarrequerimiento;
+import Modelo.Empresa;
 import Modelo.Usuario;
 
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
@@ -22,6 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named("cajachicaController")
 @ViewScoped
@@ -33,13 +36,22 @@ public class CajachicaController implements Serializable {
     private Cajachica selected;
     private Usuario usa;
     private Auxiliarrequerimiento auxiliarrequerimiento;
-
+    @Inject
+    private RequerimientosController requerimientosController;
+    private Empresa empresa;
+    
     public CajachicaController() {
     }
 
+    @PostConstruct
+    public void init (){
+        empresa=requerimientosController.getEmpresa();
+    }
     public Cajachica getSelected() {
         return selected;
     }
+    
+    
 
     public void setSelected(Cajachica selected) {
         this.selected = selected;
@@ -74,6 +86,7 @@ public class CajachicaController implements Serializable {
 
     public Cajachica prepareCreate() {
         selected = new Cajachica();
+
         initializeEmbeddableKey();
         return selected;
     }

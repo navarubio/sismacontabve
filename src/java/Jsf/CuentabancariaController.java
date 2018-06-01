@@ -4,11 +4,13 @@ import Modelo.Cuentabancaria;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.CuentabancariaFacadeLocal;
+import Modelo.Empresa;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException; 
 import javax.inject.Named;
@@ -19,6 +21,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @ManagedBean(name = "cuentabancariaController")
 @SessionScoped
@@ -28,8 +31,16 @@ public class CuentabancariaController implements Serializable {
     private Jpa.CuentabancariaFacadeLocal ejbFacade;
     private List<Cuentabancaria> items = null;
     private Cuentabancaria selected;
+    @Inject
+    private RequerimientosController requerimientosController;
+    private Empresa empresa;
 
     public CuentabancariaController() {
+    }
+    
+    @PostConstruct
+    public void init (){
+        empresa=requerimientosController.getEmpresa();
     }
 
     public Cuentabancaria getSelected() {
@@ -50,9 +61,18 @@ public class CuentabancariaController implements Serializable {
         return ejbFacade;
     }
 
+    public RequerimientosController getRequerimientosController() {
+        return requerimientosController;
+    }
+
+    public void setRequerimientosController(RequerimientosController requerimientosController) {
+        this.requerimientosController = requerimientosController;
+    }
+
     public Cuentabancaria prepareCreate() {
         selected = new Cuentabancaria();
         initializeEmbeddableKey();
+        selected.setIdempresa(empresa);
         return selected;
     }
 

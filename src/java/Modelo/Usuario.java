@@ -45,6 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByClave", query = "SELECT u FROM Usuario u WHERE u.clave = :clave")})
 public class Usuario implements Serializable {
     @OneToMany(mappedBy = "idusuario")
+    private Collection<Usuariodeprol> usuariodeprolCollection;
+    @OneToMany(mappedBy = "idusuario")
     private Collection<Consumocajachica> consumocajachicaCollection;
     @OneToMany(mappedBy = "idcustodio")
     private Collection<Cajachica> cajachicaCollection;
@@ -60,6 +62,9 @@ public class Usuario implements Serializable {
     private Collection<Factura> facturaCollection;
     @OneToMany(mappedBy = "idusuario")
     private Collection<Compra> compraCollection;
+    @OneToMany(mappedBy = "idusuario")
+    private Collection<Pagocompra> pagocompraCollection;
+
     @OneToMany(mappedBy = "idusuario")
     private Collection<Conciliacion> conciliacionCollection;
     private static final long serialVersionUID = 1L;
@@ -266,6 +271,15 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
+    public Collection<Pagocompra> getPagocompraCollection() {
+        return pagocompraCollection;
+    }
+
+    public void setPagocompraCollection(Collection<Pagocompra> pagocompraCollection) {
+        this.pagocompraCollection = pagocompraCollection;
+    }
+
+    @XmlTransient
     public Collection<Factura> getFacturaCollection() {
         return facturaCollection;
     }
@@ -353,5 +367,14 @@ public class Usuario implements Serializable {
 
     public void setConciliacionCollection(Collection<Conciliacion> conciliacionCollection) {
         this.conciliacionCollection = conciliacionCollection;
+    }
+
+    @XmlTransient
+    public Collection<Usuariodeprol> getUsuariodeprolCollection() {
+        return usuariodeprolCollection;
+    }
+
+    public void setUsuariodeprolCollection(Collection<Usuariodeprol> usuariodeprolCollection) {
+        this.usuariodeprolCollection = usuariodeprolCollection;
     }
 }

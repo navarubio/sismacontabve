@@ -30,7 +30,7 @@
                             <p:fieldset  legend="Datos Requerimiento" >
                                 <p:panelGrid styleClass="ui-custompanelgrid1" columns="2">
                                     <p:outputLabel for="numero" value="Solicitud" styleClass="text-ouputnormal"/>
-                                    <p:outputLabel id="numero" value="REQ- #{comprasController.auxiliarrequerimiento.idauxiliarrequerimiento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="numero" value="REQ- #{comprasController.auxiliarrequerimiento.serialrequerimiento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="usuario" value="Usuario" styleClass="text-ouputnormal"/>
                                     <p:outputLabel id="usuario" value="#{comprasController.auxiliarrequerimiento.idusuario.nombre}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="departamento" value="Departamento" styleClass="text-ouputnormal"/>
@@ -52,7 +52,7 @@
                                     <p:outputLabel for="usua" value="Usuario" styleClass="text-ouput"/>
                                     <p:outputLabel id="usua" value="#{requerimientosController.usa.nombre}" styleClass=""/>
                                     <p:outputLabel for="depto" value="Departamento" styleClass="text-ouput"/>
-                                    <p:outputLabel id="depto" value="#{requerimientosController.usa.iddepartamento.departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="depto" value="#{comprasController.requerimientosController.usuariodeprol.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="proveedor" value="Proveedor" styleClass="text-ouput"/>
                                     <p:selectOneMenu id="provee" value="#{comprasController.provee}" required="true" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains"> 
                                         <p:ajax event="change" update="rif, telef"/>                              

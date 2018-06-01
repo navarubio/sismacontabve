@@ -5,6 +5,7 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.AuxiliarrequerimientoFacade;
 import Jpa.AuxiliarrequerimientoFacadeLocal;
+import Modelo.Empresa;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -33,10 +34,12 @@ public class AuxiliarrequerimientoController implements Serializable {
     private List<Auxiliarrequerimiento> items = null; 
     private List<Auxiliarrequerimiento> requerimientosactivos = null;
     private Auxiliarrequerimiento selected;
+    private Empresa empresa;
 
     @PostConstruct
     public void init (){
-        requerimientosactivos = ejbFacade.buscarrequerimientosActivos();
+        empresa= (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        requerimientosactivos = ejbFacade.buscarrequerimientosActivos(empresa);
     }
    
     public AuxiliarrequerimientoController() {
@@ -50,6 +53,15 @@ public class AuxiliarrequerimientoController implements Serializable {
         this.selected = selected;
     }
 
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    
     protected void setEmbeddableKeys() {
     }
 
@@ -69,7 +81,7 @@ public class AuxiliarrequerimientoController implements Serializable {
     }
     
     public List<Auxiliarrequerimiento> buscarRequerimientosActivos() {
-        requerimientosactivos = ejbFacade.buscarrequerimientosActivos();
+        requerimientosactivos = ejbFacade.buscarrequerimientosActivos(empresa);
         return requerimientosactivos;
     }
 

@@ -12,6 +12,8 @@
             <h:form id="CuentabancariaEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{cuentabancariaController.selected != null}">
+                        <p:outputLabel value="#{bundlecajachica.CreateCajachicaLabel_idempresa}" />
+                        <p:outputLabel value="#{cuentabancariaController.requerimientosController.empresa.razonsocial}" />  
                         <p:outputLabel value="#{bundlebanco.EditCuentabancariaLabel_idbanco}" for="idbanco" />
                         <p:selectOneMenu id="idbanco" value="#{cuentabancariaController.selected.idbanco}" converter="omnifaces.SelectItemsConverter"  >
                             <f:selectItem itemLabel="#{bundlebanco.SelectOneMessage}"/>

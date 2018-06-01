@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cuentabancaria.findByNumerocuenta", query = "SELECT c FROM Cuentabancaria c WHERE c.numerocuenta = :numerocuenta"),
     @NamedQuery(name = "Cuentabancaria.findBySaldo", query = "SELECT c FROM Cuentabancaria c WHERE c.saldo = :saldo")})
 public class Cuentabancaria implements Serializable {
+
     @OneToMany(mappedBy = "idcuentabancaria")
     private Collection<Conciliacion> conciliacionCollection;
     @OneToMany(mappedBy = "idcuentabancaria")
@@ -65,6 +66,9 @@ public class Cuentabancaria implements Serializable {
     @JoinColumn(name = "idplandecuenta", referencedColumnName = "idplandecuenta")
     @ManyToOne
     private Plandecuenta idplandecuenta;
+    @JoinColumn(name = "idempresa", referencedColumnName = "idempresa")
+    @ManyToOne
+    private Empresa idempresa;
 
     public Cuentabancaria() {
     }
@@ -122,6 +126,14 @@ public class Cuentabancaria implements Serializable {
         this.idplandecuenta = idplandecuenta;
     }
 
+    public Empresa getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(Empresa idempresa) {
+        this.idempresa = idempresa;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -146,7 +158,7 @@ public class Cuentabancaria implements Serializable {
     public String toString() {
         return numerocuenta;
     }
-    
+
     @XmlTransient
     public Collection<Cobroventa> getCobroventaCollection() {
         return cobroventaCollection;
@@ -182,6 +194,5 @@ public class Cuentabancaria implements Serializable {
     public void setConciliacionCollection(Collection<Conciliacion> conciliacionCollection) {
         this.conciliacionCollection = conciliacionCollection;
     }
-    
 
 }

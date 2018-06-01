@@ -9,6 +9,7 @@ import Jpa.DetallecompraFacadeLocal;
 import Jpa.EstatusfacturaFacadeLocal;
 import Jpa.PagocompraFacadeLocal;
 import Modelo.Detallecompra;
+import Modelo.Empresa;
 import Modelo.Estatusfactura;
 import Modelo.Pagocompra;
 
@@ -66,6 +67,7 @@ public class CompraController implements Serializable {
     private Date fechadesde;
     private Date fechahasta;    
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
+    private Empresa empresa;
 
 
     public CompraController() {
@@ -73,8 +75,9 @@ public class CompraController implements Serializable {
 
     @PostConstruct
     public void init() {
-        comprasactivas = ejbFacade.buscarcomprasporPagar();
-        comprasporautorizar = ejbFacade.buscarcomprasporAutorizar();
+        empresa= (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        comprasactivas = ejbFacade.buscarcomprasporPagar(empresa);
+        comprasporautorizar = ejbFacade.buscarcomprasporAutorizar(empresa);
         compraspagadas = ejbFacade.buscarcomprasPagadas();
     }
 
@@ -203,12 +206,12 @@ public class CompraController implements Serializable {
     }
 
     public List<Compra> buscarComprasActivas() {
-        comprasactivas = ejbFacade.buscarcomprasporPagar();
+        comprasactivas = ejbFacade.buscarcomprasporPagar(empresa);
         return comprasactivas;
     }
 
     public List<Compra> buscarComprasporAutorizar() {
-        comprasporautorizar = ejbFacade.buscarcomprasporAutorizar();
+        comprasporautorizar = ejbFacade.buscarcomprasporAutorizar(empresa);
         return comprasporautorizar;
     }
 

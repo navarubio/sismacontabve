@@ -28,6 +28,7 @@ import Modelo.Proveedor;
 import Modelo.Requerimiento;
 import Modelo.Tipoconjunto;
 import Modelo.Usuario;
+import Modelo.Usuariodeprol;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -132,6 +133,7 @@ public class ComprasController implements Serializable {
     private Date fechaactual = new Date();
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
     private Usuario usua;
+    private Usuariodeprol usuariodeprol;
 
     public Compra getCompra() {
         return compra;
@@ -367,19 +369,19 @@ public class ComprasController implements Serializable {
 
     @PostConstruct
     public void init() {
+        empresa = requerimientosController.getEmpresa();
         auxiliarrequerimientos = auxiliarrequerimientoEJB.findAll();
         requerimientos = requerimientoEJB.findAll();
         proveedores = proveedorEJB.findAll();
         articulos = articuloEJB.findAll();
-        comprasporautorizar = compraEJB.buscarcomprasporAutorizar();
-        comprasporpagar = compraEJB.buscarcomprasporPagar();
+        comprasporautorizar = compraEJB.buscarcomprasporAutorizar(empresa);
+        comprasporpagar = compraEJB.buscarcomprasporPagar(empresa);
         compraspagadas = compraEJB.buscarcomprasPagadas();
         compra.setFechaorden(fechaactual);
         varAutoriza = 0;
         listarequerimiento.clear();
         usua = requerimientosController.getUsa();
-        empresa = usua.getIddepartamento().getIdempresa();
-
+        dpto=requerimientosController.getUsuariodeprol().getIddepartamento();
 //        this.auxiliarrequerimiento=requerimientosController.getAuxrequer();
     }
 
@@ -477,6 +479,7 @@ public class ComprasController implements Serializable {
         maestromovi.setIdtipoconjunto(tipoconjunto);
         maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
         maestromovi.setIdcompra(compraautorizada);
+        maestromovi.setIdempresa(empresa.getIdempresa());
         maestromovimientoEJB.create(maestromovi);
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Compra Autorizada por Gerencia"));
@@ -526,6 +529,7 @@ public class ComprasController implements Serializable {
             compra.setTotal(requerimientosController.redondearDecimales(auxiliar.getMontototal()));
             compra.setMontopendiente(requerimientosController.redondearDecimales(auxiliar.getMontototal()));
             compra.setIdusuario(usua);
+            compra.setIddepartamento(dpto);
             Estatusfactura statusfactu = null;
             int tipo = 0;
             //Para fijar monto minimo de de aprobacion para compras directas
@@ -538,7 +542,15 @@ public class ComprasController implements Serializable {
             }
             statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
             compra.setIdestatusfactura(statusfactu);
+            int serial = compra.getIdauxiliarrequerimiento().getIddepartamento().getIdempresa().getSerialcompra()+ 1;
+            compra.setSerialcompra(serial);
             compraEJB.create(compra);
+            
+            //--------Actualizando el serial compra de tabla Empresa ------- \\
+            Empresa empre=empresa;
+            empre.setSerialcompra(serial);
+            empresaEJB.edit(empre);
+
 
             Estatusrequerimiento statusreque = null;
             statusreque = estatusrequerimientoEJB.cambiarestatusaProcesado();
@@ -553,6 +565,7 @@ public class ComprasController implements Serializable {
                 maestromovi.setFechamovimiento(compra.getFechaorden());
                 maestromovi.setIdtipoconjunto(tipoconjunto);
                 maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
+                maestromovi.setIdempresa(empresa.getIdempresa());
                 maestromovimientoEJB.create(maestromovi);
             }
 
@@ -591,12 +604,12 @@ public class ComprasController implements Serializable {
     }
 
     public List<Compra> buscarComprasporAutorizar() {
-        comprasporautorizar = compraEJB.buscarcomprasporAutorizar();
+        comprasporautorizar = compraEJB.buscarcomprasporAutorizar(empresa);
         return comprasporautorizar;
     }
 
     public List<Compra> buscarComprasporPagar() {
-        comprasporpagar = compraEJB.buscarcomprasporPagar();
+        comprasporpagar = compraEJB.buscarcomprasporPagar(empresa);
         return comprasporpagar;
     }
 

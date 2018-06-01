@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empresa.findByAdministrador", query = "SELECT e FROM Empresa e WHERE e.administrador = :administrador"),
     @NamedQuery(name = "Empresa.findByContador", query = "SELECT e FROM Empresa e WHERE e.contador = :contador")})
 public class Empresa implements Serializable {
+
     @OneToMany(mappedBy = "idempresa")
     private Collection<Cajachica> cajachicaCollection;
     private static final long serialVersionUID = 1L;
@@ -88,6 +89,13 @@ public class Empresa implements Serializable {
     private Integer serialreposicion;
     @Column(name = "serialconciliacion")
     private Integer serialconciliacion;
+    @Column(name = "serialrequerimiento")
+    private Integer serialrequerimiento;
+    @Column(name = "serialcompra")
+    private Integer serialcompra;
+    @Column(name = "serialpagocompra")
+    private Integer serialpagocompra;
+    
     @Column(name = "ctaxpagarproveed")
     private Integer ctaxpagarproved;
     @Column(name = "credfiscal")
@@ -108,21 +116,22 @@ public class Empresa implements Serializable {
     private Integer retivaxenterar;
     @Column(name = "ctaxpagarinterna")
     private Integer ctaxpagarinterna;
-    
+
     @OneToMany(mappedBy = "idempresa")
     private Collection<Departamento> departamentoCollection;
     @OneToMany(mappedBy = "idempresa")
     private Collection<Centrodecosto> centrodecostoCollection;
-
+    @OneToMany(mappedBy = "idempresa")
+    private Collection<Cuentabancaria> cuentabancariaCollection;
 
     public Empresa() {
     }
 
-    public Empresa (Integer idempresa) {
-        this.idempresa=idempresa;
+    public Empresa(Integer idempresa) {
+        this.idempresa = idempresa;
     }
-    
-    public Integer getIdempresa(){
+
+    public Integer getIdempresa() {
         return idempresa;
     }
 
@@ -241,7 +250,7 @@ public class Empresa implements Serializable {
     public void setSerialreposicion(Integer serialreposicion) {
         this.serialreposicion = serialreposicion;
     }
-    
+
     public Integer getCtaxpagarproved() {
         return ctaxpagarproved;
     }
@@ -322,6 +331,30 @@ public class Empresa implements Serializable {
         this.ctaxpagarinterna = ctaxpagarinterna;
     }
 
+    public Integer getSerialrequerimiento() {
+        return serialrequerimiento;
+    }
+
+    public void setSerialrequerimiento(Integer serialrequerimiento) {
+        this.serialrequerimiento = serialrequerimiento;
+    }
+
+    public Integer getSerialcompra() {
+        return serialcompra;
+    }
+
+    public void setSerialcompra(Integer serialcompra) {
+        this.serialcompra = serialcompra;
+    }
+
+    public Integer getSerialpagocompra() {
+        return serialpagocompra;
+    }
+
+    public void setSerialpagocompra(Integer serialpagocompra) {
+        this.serialpagocompra = serialpagocompra;
+    }
+    
     @XmlTransient
     public Collection<Departamento> getDepartamentoCollection() {
         return departamentoCollection;
@@ -331,6 +364,15 @@ public class Empresa implements Serializable {
         this.departamentoCollection = departamentoCollection;
     }
     
+    @XmlTransient
+    public Collection<Cuentabancaria> getCuentabacnariaCollection() {
+        return cuentabancariaCollection;
+    }
+
+    public void setCuentabancariaCollection(Collection<Cuentabancaria> cuentabancariaCollection) {
+        this.cuentabancariaCollection = cuentabancariaCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -373,5 +415,5 @@ public class Empresa implements Serializable {
     public void setCajachicaCollection(Collection<Cajachica> cajachicaCollection) {
         this.cajachicaCollection = cajachicaCollection;
     }
-    
+
 }

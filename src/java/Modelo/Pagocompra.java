@@ -43,6 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pagocompra.findByObservacionespago", query = "SELECT p FROM Pagocompra p WHERE p.observacionespago= :observacionespago"),
     @NamedQuery(name = "Pagocompra.findByFechapago", query = "SELECT p FROM Pagocompra p WHERE p.fechapago = :fechapago")})
 public class Pagocompra implements Serializable {
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "montoretenido")
@@ -94,6 +95,15 @@ public class Pagocompra implements Serializable {
     @JoinColumn(name = "idplandecuenta", referencedColumnName = "idplandecuenta")
     @ManyToOne
     private Plandecuenta idplandecuenta;
+    @JoinColumn(name = "iddepartamento", referencedColumnName = "iddepartamento")
+    @ManyToOne
+    private Departamento iddepartamento;
+    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
+    @ManyToOne
+    private Usuario idusuario;
+    @Column(name = "serialpagocompra")
+    private Integer serialpagocompra;
+    
 
     public Pagocompra() {
     }
@@ -138,7 +148,6 @@ public class Pagocompra implements Serializable {
         this.saldopendiente = saldopendiente;
     }
 
-
     public String getObservacionespago() {
         return observacionespago;
     }
@@ -176,7 +185,7 @@ public class Pagocompra implements Serializable {
     public void setDetalleretencionivaefCollection(Collection<Detalleretencionivaef> detalleretencionivaefCollection) {
         this.detalleretencionivaefCollection = detalleretencionivaefCollection;
     }
-    
+
     public Compra getIdcompra() {
         return idcompra;
     }
@@ -215,6 +224,30 @@ public class Pagocompra implements Serializable {
 
     public void setIdplandecuenta(Plandecuenta idplandecuenta) {
         this.idplandecuenta = idplandecuenta;
+    }
+
+    public Departamento getIddepartamento() {
+        return iddepartamento;
+    }
+
+    public void setIddepartamento(Departamento iddepartamento) {
+        this.iddepartamento = iddepartamento;
+    }
+
+    public Usuario getIdusuario() {
+        return idusuario;
+    }
+
+    public void setIdusuario(Usuario idusuario) {
+        this.idusuario = idusuario;
+    }
+
+    public Integer getSerialpagocompra() {
+        return serialpagocompra;
+    }
+
+    public void setSerialpagocompra(Integer serialpagocompra) {
+        this.serialpagocompra = serialpagocompra;
     }
 
     @Override
@@ -266,5 +299,5 @@ public class Pagocompra implements Serializable {
     public void setIdmaestro(Maestromovimiento idmaestro) {
         this.idmaestro = idmaestro;
     }
-    
+
 }
