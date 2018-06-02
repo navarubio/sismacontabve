@@ -106,18 +106,7 @@ public class AsientosespecificosController implements Serializable {
     private TipopagoFacadeLocal tipopagoEJB;
     @EJB
     private BancoFacadeLocal bancoEJB;
-    @EJB
-    private TiporetencionislrFacadeLocal tiporetencionislrEJB;
-    @EJB
-    private DetalleretencionivaefFacadeLocal detalleretencionivaefEJB;
-    @EJB
-    private DetalleretencionislrefFacadeLocal detalleretencionislrefEJB;
-    @EJB
-    private EmpresaFacadeLocal empresaEJB;
-    @EJB
-    private MaestromovimientoFacadeLocal maestromovimientoEJB;
-    @EJB
-    private TipoconjuntoFacadeLocal tipoconjuntoEJB;
+
     @EJB
     private MovimientobancarioFacadeLocal movimientoBancarioEJB;
     @EJB

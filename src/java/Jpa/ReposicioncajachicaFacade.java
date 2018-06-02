@@ -5,10 +5,14 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
+import Modelo.Otroingreso;
 import Modelo.Reposicioncajachica;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,6 +30,21 @@ public class ReposicioncajachicaFacade extends AbstractFacade<Reposicioncajachic
 
     public ReposicioncajachicaFacade() {
         super(Reposicioncajachica.class);
+    }
+    
+    @Override
+    public List<Reposicioncajachica> reposicionesAll(Empresa empre) {
+        String consulta;
+        List<Reposicioncajachica> lista = null;
+        try {
+            consulta = "From Reposicioncajachica r where r.idcuentabancaria.idempresa.idempresa = ?1 order by r.idreposicioncajachica";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
     }
     
 }

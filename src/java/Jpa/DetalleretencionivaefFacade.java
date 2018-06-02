@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Detalleretencionivaef;
+import Modelo.Empresa;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -32,14 +33,15 @@ public class DetalleretencionivaefFacade extends AbstractFacade<Detalleretencion
     }
 
     @Override
-    public List<Detalleretencionivaef> buscarretencionesporPreveedor(String rif) {
+    public List<Detalleretencionivaef> buscarretencionesporPreveedor(String rif, Empresa empre) {
         String consulta;
         String rifprovee = rif;
         List<Detalleretencionivaef> lista = null;
         try {
-            consulta = "From Detalleretencionivaef d where d.idcompra.rifproveedor.rifproveedor= ?1 AND d.idcomprobanteivaef=null";
+            consulta = "From Detalleretencionivaef d where d.idcompra.iddepartamento.idempresa.idempresa= ?1 and d.idcompra.rifproveedor.rifproveedor= ?2 AND d.idcomprobanteivaef=null";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, rifprovee);
+            query.setParameter(1, empre.getIdempresa());
+            query.setParameter(2, rifprovee);
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;
@@ -48,12 +50,13 @@ public class DetalleretencionivaefFacade extends AbstractFacade<Detalleretencion
     }
     
     @Override
-    public List<Detalleretencionivaef> buscarretencionesActivas() {
+    public List<Detalleretencionivaef> buscarretencionesActivas(Empresa empre) {
         String consulta;
         List<Detalleretencionivaef> lista = null;
         try {
-            consulta = "From Detalleretencionivaef d where d.idcomprobanteivaef= null";
+            consulta = "From Detalleretencionivaef d where d.idcompra.iddepartamento.idempresa.idempresa= ?1 and  d.idcomprobanteivaef= null";
             Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

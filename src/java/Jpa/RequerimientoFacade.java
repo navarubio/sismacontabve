@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Auxiliarrequerimiento;
+import Modelo.Empresa;
 import Modelo.Requerimiento;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -74,6 +75,21 @@ public class RequerimientoFacade extends AbstractFacade<Requerimiento> implement
             consulta = "From Requerimiento r where r.idauxiliarrequerimiento.idauxiliarrequerimiento = ?1";
             Query query = em.createQuery(consulta);
             query.setParameter(1, idaux);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Requerimiento> requerimientosAll(Empresa empre) {
+        String consulta;
+        List<Requerimiento> lista = null;
+        try {
+            consulta = "From Requerimiento r where r.idauxiliarrequerimiento.iddepartamento.idempresa.idempresa= ?1 order by r.idrequerimiento";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

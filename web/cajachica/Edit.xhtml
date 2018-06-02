@@ -13,7 +13,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{cajachicaController.selected != null}">
                         <p:outputLabel value="#{bundlecajachica.EditCajachicaLabel_idempresa}" />
-                        <p:outputLabel value="#{cajachicaController.usuario.iddepartamento.idempresa.razonsocial}" />  
+                        <p:outputLabel value="#{cajachicaController.empresa.razonsocial}" />  
                         <p:outputLabel value="#{bundlecajachica.EditCajachicaLabel_idcajachica}" for="idcajachica" />
                         <p:inputText id="idcajachica" value="#{cajachicaController.selected.idcajachica}" title="#{bundlecajachica.EditCajachicaTitle_idcajachica}" size="10"  required="true" requiredMessage="#{bundlecajachica.EditCajachicaRequiredMessage_idcajachica}"/>
                         <p:outputLabel value="#{bundlecajachica.EditCajachicaLabel_descripcion}" for="descripcion" />

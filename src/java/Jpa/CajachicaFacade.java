@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Cajachica;
+import Modelo.Empresa;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -31,12 +32,13 @@ public class CajachicaFacade extends AbstractFacade<Cajachica> implements Cajach
     }
     
     @Override
-    public List<Cajachica> cajaschicasAll() {
+    public List<Cajachica> cajaschicasAll(Empresa empre) {
         String consulta;
         List<Cajachica> lista = null;
         try {
-            consulta = "SELECT c FROM Cajachica c order by c.idcajachica";
+            consulta = "SELECT c FROM Cajachica c where c.idempresa.idempresa = ?1 order by c.idcajachica";
             Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

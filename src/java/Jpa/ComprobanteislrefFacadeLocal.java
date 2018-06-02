@@ -7,6 +7,7 @@ package Jpa;
 
 import Modelo.Comprobanteislref;
 import Modelo.Comprobanteivaef;
+import Modelo.Empresa;
 import Modelo.Factura;
 import java.util.List;
 import javax.ejb.Local;
@@ -32,7 +33,11 @@ public interface ComprobanteislrefFacadeLocal {
 
     int count();
     
-    String  siguientecomprobanteformat(); 
+    String  siguientecomprobanteformat(Empresa empre);
+    
+    List<Comprobanteislref> comprobantesislrAll(Empresa empre);
+    
+    Comprobanteislref ultimacomprobanteInsertado(Empresa empre);
     
     
 }

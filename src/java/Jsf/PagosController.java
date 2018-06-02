@@ -858,10 +858,10 @@ public class PagosController implements Serializable {
                         + "  SALDO PENDIENTE: $" + formatearnumero.format(pagocompra.getSaldopendiente())
                         + "  OBSERVACIONES: " + pagocompra.getObservacionespago();
 
-                subject = empresa.getNombrecomercial() + " Pago N° " + pagocompra.getIdpagocompra();
+                subject = empresa.getNombrecomercial() + " Pago N° " + pagocompra.getSerialpagocompra();
                 enviomail = new envioCorreo(correo, subject);
                 enviomail.start();
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Pago fue Almacenado"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Pago fue Almacenado con el N° " + pagocompra.getSerialpagocompra()));
             } catch (Exception e) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error al Grabar Pago"));
             } finally {

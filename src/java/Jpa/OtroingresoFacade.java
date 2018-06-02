@@ -5,6 +5,8 @@
  */
 package Jpa;
 
+import Modelo.Comprobanteivaef;
+import Modelo.Empresa;
 import Modelo.Otroingreso;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -48,5 +50,20 @@ public class OtroingresoFacade extends AbstractFacade<Otroingreso> implements Ot
             throw e;
         }
         return ultimo;
+    }
+    
+    @Override
+    public List<Otroingreso> otrosingresosAll(Empresa empre) {
+        String consulta;
+        List<Otroingreso> lista = null;
+        try {
+            consulta = "From Otroingreso o where o.idcuentabancaria.idempresa.idempresa = ?1 order by o.idotroingreso";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
     }
 }

@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named("comprobanteivaefController")
 @ViewScoped
@@ -29,6 +30,8 @@ public class ComprobanteivaefController implements Serializable {
     private Jpa.ComprobanteivaefFacadeLocal ejbFacade;
     private List<Comprobanteivaef> items = null;
     private Comprobanteivaef selected;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     public ComprobanteivaefController() {
     }
@@ -78,7 +81,7 @@ public class ComprobanteivaefController implements Serializable {
 
     public List<Comprobanteivaef> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().comprobantesAll(requerimientosController.getEmpresa());
         }
         return items;
     }

@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Auxiliarrequerimiento;
+import Modelo.Empresa;
 import Modelo.Requerimiento;
 import java.util.List;
 import javax.ejb.Local;
@@ -36,4 +37,6 @@ public interface RequerimientoFacadeLocal {
     List<Requerimiento> buscarrequerimientos (Auxiliarrequerimiento auxireq);
     
     List<Requerimiento> requerimientosAuxiliar (int idaux);
+    
+    List<Requerimiento> requerimientosAll(Empresa empre);
 }

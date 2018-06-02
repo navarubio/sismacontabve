@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Cajachica;
+import Modelo.Empresa;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,5 +31,5 @@ public interface CajachicaFacadeLocal {
 
     int count();
     
-    List<Cajachica> cajaschicasAll();
+    List<Cajachica> cajaschicasAll(Empresa empre);
 }

@@ -45,7 +45,7 @@
                 </p:panel>
 
                 <p:panel id="panelart" header="#{bundle.ListCompraTitle}">
-                    <p:dataTable id="datalist" value="#{compraController.comprasPagadas}" var="item"
+                    <p:dataTable id="datalist" value="#{compraController.comprasfiltradas}" var="item"
                                  selectionMode="single" selection="#{compraController.compraseleccionada}"
                                  paginator="true"
                                  rowKey="#{item.idcompra}"

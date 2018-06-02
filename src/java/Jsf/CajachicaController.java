@@ -67,6 +67,14 @@ public class CajachicaController implements Serializable {
         return ejbFacade;
     }
 
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
     public Auxiliarrequerimiento getAuxiliarrequerimiento() {
         return auxiliarrequerimiento;
     }
@@ -78,16 +86,16 @@ public class CajachicaController implements Serializable {
     public Usuario getUsuario() {
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         usa = us;
-        double monto=0;
-        selected.setIdempresa(usa.getIddepartamento().getIdempresa());
-        selected.setSaldoactual(monto);
         return us;
     }
 
     public Cajachica prepareCreate() {
         selected = new Cajachica();
-
         initializeEmbeddableKey();
+        selected.setIdempresa(empresa);
+        double monto=0;
+        selected.setSaldoactual(monto);
+
         return selected;
     }
 
@@ -112,7 +120,7 @@ public class CajachicaController implements Serializable {
 
     public List<Cajachica> getItems() {
         if (items == null) {
-            items = getFacade().cajaschicasAll();
+            items = getFacade().cajaschicasAll(empresa);
         }
         return items;
     }

@@ -4,6 +4,7 @@ import Modelo.Pagocompra;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.PagocompraFacadeLocal;
+import Modelo.Empresa;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
@@ -20,6 +21,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 
 @ManagedBean(name ="pagocompraController")
@@ -35,10 +37,13 @@ public class PagocompraController implements Serializable {
     private List<Pagocompra> pagosporcompra;
     private Pagocompra pagocompra;
     private List<Pagocompra> pagocomprasactivas=null;
-    
+    @Inject
+    private RequerimientosController requerimientosController;
+    private Empresa empresa;
 
     public PagocompraController() {
     }
+    
 
     public Pagocompra getSelected() {
         return selected;
@@ -100,11 +105,12 @@ public class PagocompraController implements Serializable {
 
     @PostConstruct
     public void init() {
-        pagosefectuados = ejbFacade.buscarPagosefectuados();
-        pagocomprasactivas=ejbFacade.buscarPagosefectuados();
+        empresa=requerimientosController.getEmpresa();
+        pagosefectuados = ejbFacade.buscarPagosefectuados(empresa);
+        pagocomprasactivas=ejbFacade.buscarPagosefectuados(empresa);
     }
     public List<Pagocompra> buscarPagoComprasActivas() {
-        pagocomprasactivas = ejbFacade.buscarPagosefectuados();
+        pagocomprasactivas = ejbFacade.buscarPagosefectuados(empresa);
         return pagocomprasactivas;
     }
 

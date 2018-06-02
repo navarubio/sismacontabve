@@ -78,7 +78,7 @@ public class CompraController implements Serializable {
         empresa= (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
         comprasactivas = ejbFacade.buscarcomprasporPagar(empresa);
         comprasporautorizar = ejbFacade.buscarcomprasporAutorizar(empresa);
-        compraspagadas = ejbFacade.buscarcomprasPagadas();
+        compraspagadas = ejbFacade.buscarcomprasPagadas(empresa);
     }
 
     public void setSelected(Compra selected) {
@@ -216,7 +216,7 @@ public class CompraController implements Serializable {
     }
 
     public List<Compra> buscarComprasPagadas() {
-        comprasporautorizar = ejbFacade.buscarcomprasPagadas();
+        comprasporautorizar = ejbFacade.buscarcomprasPagadas(empresa);
         return compraspagadas;
     }
 
@@ -267,7 +267,7 @@ public class CompraController implements Serializable {
     }
 
     public void actualizar(){
-        comprasfiltradas= ejbFacade.buscarcomprasFiltradas(estatusfact, fechadesde, fechahasta);
+        comprasfiltradas= ejbFacade.buscarcomprasFiltradas(estatusfact, fechadesde, fechahasta, empresa);
     }
     
     public void create() {

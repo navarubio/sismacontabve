@@ -69,6 +69,10 @@ public class Comprobanteislref implements Serializable {
     private Proveedor rifproveedor;
     @OneToMany(mappedBy = "idcomprobanteislref")
     private Collection<Detalleretencionislref> detalleretencionislrefCollection;
+    @Column(name = "idempresa")
+    private Integer idempresa;
+    @Column(name = "serialcomprobanteislr")
+    private Integer serialcomprobanteislr;
 
     public Comprobanteislref() {
     }
@@ -139,6 +143,22 @@ public class Comprobanteislref implements Serializable {
 
     public void setRifproveedor(Proveedor rifproveedor) {
         this.rifproveedor = rifproveedor;
+    }
+
+    public Integer getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(Integer idempresa) {
+        this.idempresa = idempresa;
+    }
+
+    public Integer getSerialcomprobanteislr() {
+        return serialcomprobanteislr;
+    }
+
+    public void setSerialcomprobanteislr(Integer serialcomprobanteislr) {
+        this.serialcomprobanteislr = serialcomprobanteislr;
     }
 
     @XmlTransient

@@ -45,6 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Comprobanteivaef.findByTotaliva", query = "SELECT c FROM Comprobanteivaef c WHERE c.totaliva = :totaliva"),
     @NamedQuery(name = "Comprobanteivaef.findByTotalivaretenido", query = "SELECT c FROM Comprobanteivaef c WHERE c.totalivaretenido = :totalivaretenido")})
 public class Comprobanteivaef implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,6 +79,10 @@ public class Comprobanteivaef implements Serializable {
     private Proveedor rifproveedor;
     @OneToMany(mappedBy = "idcomprobanteivaef")
     private Collection<Detalleretencionivaef> detalleretencionivaefCollection;
+    @Column(name = "idempresa")
+    private Integer idempresa;
+    @Column(name = "serialcomprobanteiva")
+    private Integer serialcomprobanteiva;
 
     public Comprobanteivaef() {
     }
@@ -174,6 +179,22 @@ public class Comprobanteivaef implements Serializable {
         this.rifproveedor = rifproveedor;
     }
 
+    public Integer getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(Integer idempresa) {
+        this.idempresa = idempresa;
+    }
+
+    public Integer getSerialcomprobanteiva() {
+        return serialcomprobanteiva;
+    }
+
+    public void setSerialcomprobanteiva(Integer serialcomprobanteiva) {
+        this.serialcomprobanteiva = serialcomprobanteiva;
+    }
+    
     @XmlTransient
     public Collection<Detalleretencionivaef> getDetalleretencionivaefCollection() {
         return detalleretencionivaefCollection;
@@ -207,5 +228,5 @@ public class Comprobanteivaef implements Serializable {
     public String toString() {
         return "Modelo.Comprobanteivaef[ idcomprobanteivaef=" + idcomprobanteivaef + " ]";
     }
-    
+
 }

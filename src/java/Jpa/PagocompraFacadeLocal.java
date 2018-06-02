@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Compra;
+import Modelo.Empresa;
 import Modelo.Pagocompra;
 import java.util.List;
 import javax.ejb.Local;
@@ -31,7 +32,7 @@ public interface PagocompraFacadeLocal {
 
     int count();
     
-    List<Pagocompra> buscarPagosefectuados();
+    List<Pagocompra> buscarPagosefectuados(Empresa empre);
     
     public List<Pagocompra> buscarpago(Compra compr);
     

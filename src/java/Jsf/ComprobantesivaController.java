@@ -2,8 +2,10 @@ package Jsf;
 
 import Jpa.ComprobanteivaefFacadeLocal;
 import Jpa.DetalleretencionivaefFacadeLocal;
+import Jpa.EmpresaFacadeLocal;
 import Modelo.Comprobanteivaef;
 import Modelo.Detalleretencionivaef;
+import Modelo.Empresa;
 import Modelo.Estatuscomprobanteretencion;
 import Modelo.Factura;
 import java.io.Serializable;
@@ -40,6 +42,9 @@ public class ComprobantesivaController implements Serializable {
     private ComprobanteivaefFacadeLocal comprobanteivaefEJB;
     @EJB
     private DetalleretencionivaefFacadeLocal detalleretencionivaefEJB;
+    @EJB
+    private EmpresaFacadeLocal empresaEJB;
+    
             
     private Detalleretencionivaef detalleretencionivaef;
     private String correlativo="";
@@ -60,6 +65,9 @@ public class ComprobantesivaController implements Serializable {
     private Estatuscomprobanteretencion estatuscomprobanteretencion;
     @Inject
     private Comprobanteivaef comprobanteivaef;
+    @Inject
+    private RequerimientosController requerimientosController;
+    private Comprobanteivaef ultimocomprobante;
 
     ///////////////////////////////////////////
 
@@ -173,6 +181,16 @@ public class ComprobantesivaController implements Serializable {
         return siguiente;
     }
     
+    public String devolvernumsiguientecomprobante() {
+        String siguiente;
+        serialcomprob=requerimientosController.getEmpresa().getSerialcomprobanteiva()+1;
+        DecimalFormat myFormatter = new DecimalFormat("00000000"); 
+        siguiente = myFormatter.format(serialcomprob);
+        correlativo=siguiente;
+        return siguiente;
+    }
+    
+    
     public void separarperiodofiscal(){
         //fechacomprobante=comprobanteivaef.getFecha();
         mes=0;
@@ -201,15 +219,15 @@ public class ComprobantesivaController implements Serializable {
             montotsubtotal += detalleretiva.getBimponible();
             montoretenido  += detalleretiva.getTotalivaretenido();
         }
-        totalgeneral = montotgeneral;
-        totaliva = montotiva;
-        totalbaseimponible = montotsubtotal;
-        totalivaretenido = montoretenido;
+        totalgeneral = requerimientosController.redondearDecimales(montotgeneral);
+        totaliva = requerimientosController.redondearDecimales(montotiva);
+        totalbaseimponible = requerimientosController.redondearDecimales(montotsubtotal);
+        totalivaretenido = requerimientosController.redondearDecimales(montoretenido);
     }
     
     public void asignar(Detalleretencionivaef detalleretivaef) {
         this.detalleretencionivaef = detalleretivaef;
-        this.detalleretivafiltrados=detalleretencionivaefEJB.buscarretencionesporPreveedor(detalleretivaef.getIdcompra().getRifproveedor().getRifproveedor()); 
+        this.detalleretivafiltrados=detalleretencionivaefEJB.buscarretencionesporPreveedor(detalleretivaef.getIdcompra().getRifproveedor().getRifproveedor(), requerimientosController.getEmpresa()); 
         obtenertotaltotales();
     }
     public void eliminar(Detalleretencionivaef detalleaeliminar) {
@@ -231,16 +249,21 @@ public class ComprobantesivaController implements Serializable {
             comprobanteivaef.setTotaliva(totaliva);
             comprobanteivaef.setTotalivaretenido(totalivaretenido);
             comprobanteivaef.setIdestatuscomprobante(estatuscomprobanteretencion);
+            comprobanteivaef.setIdempresa(requerimientosController.getEmpresa().getIdempresa());
+            comprobanteivaef.setSerialcomprobanteiva(serialcomprob);
             comprobanteivaefEJB.create(comprobanteivaef);
-            
-
-            idcomprobanteretiva = Integer.parseInt(comprobanteivaefEJB.siguientecomprobanteformat());
-            comprobanteivaef.setIdcomprobanteivaef(idcomprobanteretiva-1);
+            ultimocomprobante = comprobanteivaefEJB.ultimacomprobanteInsertado(requerimientosController.getEmpresa());
+            comprobanteivaef.setIdcomprobanteivaef(ultimocomprobante.getIdcomprobanteivaef());
             for (Detalleretencionivaef detalle : detalleretivafiltrados) {
                 detalle.setIdcomprobanteivaef(comprobanteivaef);
                 detalleretencionivaefEJB.edit(detalle);
             }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Fue generado el Comprobante de Retencion de Iva ", "Aviso "));
+            //--------Actualizando el serial comprobanteiva de tabla Empresa ------- \\
+            Empresa empre=requerimientosController.getEmpresa();
+            empre.setSerialcomprobanteiva(serialcomprob);
+            empresaEJB.edit(empre);
+            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Fue generado el Comprobante de Retencion de Iva N° "+comprobanteivaef.getSerialcomprobanteiva(), "Aviso "));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Generar el Comprobante de Retencion de IVA", "Aviso"));
         } finally {

@@ -32,11 +32,11 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton "/>
                         <p:ajax event="rowUnselect" update="createButton viewButton "/>
 
-                        <p:column width="80" filterBy="#{item.idcompra.idcompra}" filterMatchMode="exact" filterStyle="width:40px;" style="text-align: center">
+                        <p:column width="80" filterBy="#{item.idcompra.serialcompra}" filterMatchMode="exact" filterStyle="width:40px;" style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_idcompra}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idcompra.idcompra}"/> 
+                            <h:outputText value="#{item.idcompra.serialcompra}"/> 
                         </p:column>
                         <p:column width="80" style="text-align: center" sortBy="#{item.idpagocompra.fechapago}">
                             <f:facet name="header">

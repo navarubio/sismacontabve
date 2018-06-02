@@ -2,6 +2,7 @@ package Jpa;
 
 import Modelo.Compra;
 import Modelo.Detallecompra;
+import Modelo.Empresa;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -25,4 +26,6 @@ public interface DetallecompraFacadeLocal {
     Detallecompra ultimodetalleInsertado ();
     
     List<Detallecompra> buscardetallecompra (Compra compra);
+    
+    List<Detallecompra> articuloscompradosAll(Empresa empre);
 }

@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Comprobanteivaef;
+import Modelo.Empresa;
 import Modelo.Factura;
 import java.util.List;
 import javax.ejb.Local;
@@ -33,5 +34,8 @@ public interface ComprobanteivaefFacadeLocal {
     
     String  siguientecomprobanteformat(); 
     
+    List<Comprobanteivaef> comprobantesAll(Empresa empre);
+    
+    Comprobanteivaef ultimacomprobanteInsertado(Empresa empre);
     
 }

@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named("detallecompraController")
 @ViewScoped
@@ -29,6 +30,8 @@ public class DetallecompraController implements Serializable {
     private Jpa.DetallecompraFacadeLocal ejbFacade;
     private List<Detallecompra> items = null;
     private Detallecompra selected;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     public DetallecompraController() {
     }
@@ -58,7 +61,7 @@ public class DetallecompraController implements Serializable {
     }
     
     public List<Detallecompra> devolverlistado(){
-        List <Detallecompra> listaactualizada =ejbFacade.findAll();
+        List <Detallecompra> listaactualizada =ejbFacade.articuloscompradosAll(requerimientosController.getEmpresa());
         return listaactualizada;
     } 
 

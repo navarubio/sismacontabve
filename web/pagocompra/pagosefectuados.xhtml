@@ -34,17 +34,17 @@
                         <p:ajax event="rowSelect"   update="createButton "/>
                         <p:ajax event="rowUnselect" update="createButton "/>
 
-                        <p:column filterBy="#{item.idpagocompra}"  filterMatchMode="exact" width="70" filterStyle="width:50px;" >
+                        <p:column filterBy="#{item.serialpagocompra}"  filterMatchMode="exact" width="70" filterStyle="width:50px;" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_idpago}"/>
                             </f:facet>
-                            <h:outputText value="PGC-#{item.idpagocompra}"/>
+                            <h:outputText value="PGC-#{item.serialpagocompra}"/>
                         </p:column>
-                        <p:column width="80" style="text-align: center" filterBy="#{item.idcompra.idcompra}" filterMatchMode="exact" filterStyle="width:50px;" >
+                        <p:column width="80" style="text-align: center" filterBy="#{item.idcompra.serialcompra}" filterMatchMode="exact" filterStyle="width:50px;" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPagoCompraTitle_idrequerimiento}"/>
                             </f:facet>
-                            <h:outputText value="CMP-#{item.idcompra.idcompra}"/>
+                            <h:outputText value="CMP-#{item.idcompra.serialcompra}"/>
                         </p:column>
                         <p:column width="180" filterBy="#{item.idcompra.rifproveedor.razonsocial}" filterMatchMode="contains" >
                             <f:facet name="header">
@@ -69,7 +69,7 @@
                             </f:facet>
                             <h:outputText value="#{item.idtipopago.tipopago}"/>
                         </p:column>
-                        <p:column width="110" filterBy="#{item.idbanco.nombrebanco}" headerText="Banco" filterMatchMode="exact" style="text-align: center">
+                        <p:column width="250" filterBy="#{item.idbanco.nombrebanco}" headerText="Banco" filterMatchMode="exact" style="text-align: center">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('pagos').filter()" >
                                     <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />

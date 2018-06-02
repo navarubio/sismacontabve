@@ -86,14 +86,15 @@ public class CompraFacade extends AbstractFacade<Compra> implements CompraFacade
     }
     
     @Override
-    public List<Compra> buscarcomprasPagadas() {
+    public List<Compra> buscarcomprasPagadas(Empresa empre) {
         String consulta;
         int idstatus = 3;
         List<Compra> lista = null;
         try {
-            consulta = "From Compra c where c.idestatusfactura.idestatusfactura= ?1";
+            consulta = "From Compra c where c.iddepartamento.idempresa.idempresa= ?1 and c.idestatusfactura.idestatusfactura= ?2";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, idstatus);
+            query.setParameter(1, empre.getIdempresa());
+            query.setParameter(2, idstatus);
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;
@@ -102,15 +103,16 @@ public class CompraFacade extends AbstractFacade<Compra> implements CompraFacade
     }  
     
     @Override
-    public List<Compra> buscarcomprasFiltradas (Estatusfactura status, Date fechaini, Date fechafinish) {
+    public List<Compra> buscarcomprasFiltradas (Estatusfactura status, Date fechaini, Date fechafinish, Empresa empre) {
         String consulta;
         List<Compra> lista = null;
         try {
-            consulta = "From Compra c where c.idestatusfactura.idestatusfactura= ?1 and c.fechaorden between ?2 and ?3 order by c.fechaorden";
+            consulta = "From Compra c where c.iddepartamento.idempresa.idempresa= ?1 and c.idestatusfactura.idestatusfactura= ?2 and c.fechaorden between ?3 and ?4 order by c.fechaorden";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, status.getIdestatusfactura());
-            query.setParameter(2, fechaini);
-            query.setParameter(3, fechafinish);
+            query.setParameter(1, empre.getIdempresa());
+            query.setParameter(2, status.getIdestatusfactura());
+            query.setParameter(3, fechaini);
+            query.setParameter(4, fechafinish);
 
             lista = query.getResultList();
         } catch (Exception e) {

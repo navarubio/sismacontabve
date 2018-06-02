@@ -7,6 +7,7 @@ package Jpa;
 
 import Modelo.Consumocajachica;
 import Modelo.Cuentabancaria;
+import Modelo.Empresa;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -53,12 +54,13 @@ public class ConsumocajachicaFacade extends AbstractFacade<Consumocajachica> imp
     }
     
     @Override
-    public List<Consumocajachica> consumoscajachicaAll() {
+    public List<Consumocajachica> consumoscajachicaAll(Empresa empre) {
         String consulta;
         List<Consumocajachica> lista = null;
         try {
-            consulta = "SELECT c FROM Consumocajachica c order by c.idconsumocajachica";
+            consulta = "FROM Consumocajachica c where c.idcajachica.idempresa.idempresa= ?1 order by c.idconsumocajachica";
             Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

@@ -7,6 +7,7 @@ package Jpa;
 
 import Modelo.Consumocajachica;
 import Modelo.Detalleconsumocajachica;
+import Modelo.Empresa;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -34,4 +35,6 @@ public interface DetalleconsumocajachicaFacadeLocal {
     List <Detalleconsumocajachica> listadetalleconsumosxListaConsumos (List<Consumocajachica> listaconsumos);
     
     List<Detalleconsumocajachica> detallesxConsumo(int idconsumocajachica);
+    
+    List<Detalleconsumocajachica> detallesconsumoscajachicaAll(Empresa empre);
 }

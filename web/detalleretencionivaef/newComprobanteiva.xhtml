@@ -27,7 +27,7 @@
                                 <p:outputLabel for="razonsocial" style="float:right" styleClass="text-ouputnormal" value="Razon Social :"/>
                                 <p:outputLabel id="razonsocial"  styleClass="text-ouputnormal" value="#{comprobantesivaController.detalleretencionivaef.idcompra.rifproveedor.razonsocial}"/>
                                 <p:outputLabel for="numero" style="float:right" styleClass="text-ouputnormal" value="Correlativo:" />                                 
-                                <p:outputLabel id="numero" styleClass="text-ouputfact" value="#{comprobantesivaController.devolversiguientecomprobante()}" title="#{bundle.CreateFacturaTitle_numerofactura}" />
+                                <p:outputLabel id="numero" styleClass="text-ouputfact" value="#{comprobantesivaController.devolvernumsiguientecomprobante()}" title="#{bundle.CreateFacturaTitle_numerofactura}" />
                                 <p:outputLabel for="rif" style="float:right" styleClass="text-ouputnormal" value="R.I.F. :" />
                                 <p:outputLabel id="rif" value="#{comprobantesivaController.detalleretencionivaef.idcompra.rifproveedor.rifproveedor}" styleClass="optionalLbl"/>
                                 <p:outputLabel for="fechacomprob" style="float:right" styleClass="text-ouputnormal"  value="Fecha Comprobante :"  />
@@ -58,7 +58,7 @@
                                         <f:facet name="header">
                                             <h:outputText value="#{bundletributos.ListDetalleretencionivaefTitle_idcompra}"/>
                                         </f:facet>
-                                        <h:outputText value="#{ret.idcompra.idcompra}"/> 
+                                        <h:outputText value="#{ret.idcompra.serialcompra}"/> 
                                     </p:column>
                                     <p:column width="80" style="text-align: center" sortBy="#{item.idpagocompra.fechapago}">
                                         <f:facet name="header">

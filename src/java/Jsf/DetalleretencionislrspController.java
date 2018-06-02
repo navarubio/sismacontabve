@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("detalleretencionislrspController")
 @SessionScoped
@@ -34,6 +35,8 @@ public class DetalleretencionislrspController implements Serializable {
     private List<Detalleretencionislrsp> items = null;
     private Detalleretencionislrsp selected;
     private List<Detalleretencionislref> listaactiva = null;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     public DetalleretencionislrspController() {
     }
@@ -70,7 +73,7 @@ public class DetalleretencionislrspController implements Serializable {
     }
 
     public List<Detalleretencionislref> buscarlistaactiva() {
-        listaactiva = detalleretencionislrefEJB.buscarretencionesActivas();
+        listaactiva = detalleretencionislrefEJB.buscarretencionesActivas(requerimientosController.getEmpresa());
         return listaactiva;
     }
 

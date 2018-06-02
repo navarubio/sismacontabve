@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Compra;
+import Modelo.Empresa;
 import Modelo.Pagocompra;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -33,12 +34,13 @@ public class PagocompraFacade extends AbstractFacade<Pagocompra> implements Pago
     }
 
     @Override
-    public List<Pagocompra> buscarPagosefectuados() {
+    public List<Pagocompra> buscarPagosefectuados(Empresa empre) {
         String consulta;
         List<Pagocompra> lista = null;
         try {
-            consulta = "SELECT p FROM Pagocompra p";
+            consulta = "SELECT p FROM Pagocompra p where p.iddepartamento.idempresa.idempresa= ?1 order by p.idpagocompra";
             Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

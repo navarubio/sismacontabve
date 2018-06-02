@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named("comprobanteislrefController")
 @ViewScoped
@@ -29,6 +30,8 @@ public class ComprobanteislrefController implements Serializable {
     private Jpa.ComprobanteislrefFacadeLocal ejbFacade;
     private List<Comprobanteislref> items = null;
     private Comprobanteislref selected;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     public ComprobanteislrefController() {
     }
@@ -78,7 +81,7 @@ public class ComprobanteislrefController implements Serializable {
 
     public List<Comprobanteislref> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().comprobantesislrAll(requerimientosController.getEmpresa());
         }
         return items;
     }

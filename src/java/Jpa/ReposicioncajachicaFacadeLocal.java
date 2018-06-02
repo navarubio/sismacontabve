@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
 import Modelo.Reposicioncajachica;
 import java.util.List;
 import javax.ejb.Local;
@@ -29,5 +30,7 @@ public interface ReposicioncajachicaFacadeLocal {
     List<Reposicioncajachica> findRange(int[] range);
 
     int count();
+    
+    List<Reposicioncajachica> reposicionesAll(Empresa empre);
     
 }

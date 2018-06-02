@@ -39,7 +39,7 @@ public interface CompraFacadeLocal {
     
     List<Compra> buscarcomprasporPagar(Empresa empre);
     
-    List<Compra> buscarcomprasPagadas();
+    List<Compra> buscarcomprasPagadas(Empresa empre);
     
-    List<Compra> buscarcomprasFiltradas (Estatusfactura status, Date fechaini, Date fechafinish);
+    List<Compra> buscarcomprasFiltradas (Estatusfactura status, Date fechaini, Date fechafinish, Empresa empre);
 }

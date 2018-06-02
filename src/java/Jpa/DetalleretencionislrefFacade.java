@@ -7,6 +7,7 @@ package Jpa;
 
 import Modelo.Comprobanteislref;
 import Modelo.Detalleretencionislref;
+import Modelo.Empresa;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -32,14 +33,15 @@ public class DetalleretencionislrefFacade extends AbstractFacade<Detalleretencio
     }
     
     @Override
-    public List<Detalleretencionislref> buscarretencionesporPreveedor(String rif) {
+    public List<Detalleretencionislref> buscarretencionesporPreveedor(String rif, Empresa empre) {
         String consulta;
         String rifprovee = rif;
         List<Detalleretencionislref> lista = null;
         try {
-            consulta = "From Detalleretencionislref d where d.idcompra.rifproveedor.rifproveedor= ?1 AND d.idcomprobanteislref=null";
+            consulta = "From Detalleretencionislref d where d.idcompra.iddepartamento.idempresa.idempresa= ?1 and d.idcompra.rifproveedor.rifproveedor= ?2 AND d.idcomprobanteislref=null";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, rifprovee);
+            query.setParameter(1, empre.getIdempresa());
+            query.setParameter(2, rifprovee);
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;
@@ -48,12 +50,13 @@ public class DetalleretencionislrefFacade extends AbstractFacade<Detalleretencio
     }
 
     @Override
-    public List<Detalleretencionislref> buscarretencionesActivas() {
+    public List<Detalleretencionislref> buscarretencionesActivas(Empresa empre) {
         String consulta;
         List<Detalleretencionislref> lista = null;
         try {
-            consulta = "From Detalleretencionislref d where d.idcomprobanteislref= null";
+            consulta = "From Detalleretencionislref d where d.idcompra.iddepartamento.idempresa.idempresa= ?1 AND d.idcomprobanteislref= null";
             Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

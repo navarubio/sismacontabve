@@ -8,6 +8,8 @@ package Jpa;
 import Modelo.Auxiliarrequerimiento;
 import Modelo.Compra;
 import Modelo.Detallecompra;
+import Modelo.Empresa;
+import Modelo.Requerimiento;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,7 +21,7 @@ import javax.persistence.Query;
  * @author Inpeca
  */
 @Stateless
-public class DetallecompraFacade extends AbstractFacade<Detallecompra> implements DetallecompraFacadeLocal{
+public class DetallecompraFacade extends AbstractFacade<Detallecompra> implements DetallecompraFacadeLocal {
 
     @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
@@ -64,4 +66,20 @@ public class DetallecompraFacade extends AbstractFacade<Detallecompra> implement
         }
         return lista;
     }
+
+    @Override
+    public List<Detallecompra> articuloscompradosAll(Empresa empre) {
+        String consulta;
+        List<Detallecompra> lista = null;
+        try {
+            consulta = "From Detallecompra d where d.idcompra.iddepartamento.idempresa.idempresa= ?1 order by d.iddetallecompra";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+
 }

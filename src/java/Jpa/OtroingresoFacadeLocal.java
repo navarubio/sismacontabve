@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
 import Modelo.Otroingreso;
 import java.util.List;
 import javax.ejb.Local;
@@ -31,5 +32,7 @@ public interface OtroingresoFacadeLocal {
     int count();
     
     Otroingreso ultimoingreso(); 
+    
+    List<Otroingreso> otrosingresosAll(Empresa empre);
     
 }

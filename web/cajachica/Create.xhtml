@@ -13,9 +13,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{cajachicaController.selected != null}">
                         <p:outputLabel value="#{bundlecajachica.CreateCajachicaLabel_idempresa}" />
-                        <p:outputLabel value="#{cajachicaController.usuario.iddepartamento.idempresa.razonsocial}" />  
-                        <p:outputLabel value="#{bundlecajachica.CreateCajachicaLabel_idcajachica}" for="idcajachica" />
-                        <p:inputText id="idcajachica" value="#{cajachicaController.selected.idcajachica}" title="#{bundlecajachica.CreateCajachicaTitle_idcajachica}" required="true" requiredMessage="#{bundlecajachica.CreateCajachicaRequiredMessage_idcajachica}" size="10"/>
+                        <p:outputLabel value="#{cajachicaController.selected.idempresa.razonsocial}" />  
                         <p:outputLabel value="#{bundlecajachica.CreateCajachicaLabel_descripcion}" for="descripcion" />
                         <p:inputText id="descripcion" value="#{cajachicaController.selected.descripcion}" title="#{bundlecajachica.CreateCajachicaTitle_descripcion}" size="50" />
                         <p:outputLabel value="#{bundlecajachica.CreateCajachicaLabel_montoasignado}" for="montoasignado" />

@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named("reposicioncajachicaController")
 @ViewScoped
@@ -29,6 +30,8 @@ public class ReposicioncajachicaController implements Serializable {
     private Jpa.ReposicioncajachicaFacadeLocal ejbFacade;
     private List<Reposicioncajachica> items = null;
     private Reposicioncajachica selected;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     public ReposicioncajachicaController() {
     }
@@ -78,7 +81,7 @@ public class ReposicioncajachicaController implements Serializable {
 
     public List<Reposicioncajachica> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().reposicionesAll(requerimientosController.getEmpresa());
         }
         return items;
     }

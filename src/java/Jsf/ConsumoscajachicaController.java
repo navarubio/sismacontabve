@@ -300,7 +300,8 @@ public class ConsumoscajachicaController implements Serializable {
 
     @PostConstruct
     public void init() {
-        cajaschicas = cajachicaEJB.findAll();
+        empresa=requerimientosController.getEmpresa();
+        cajaschicas = cajachicaEJB.cajaschicasAll(empresa);
         if (cajaschicas.isEmpty()) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "No existen Cajas Chicas creadas para operar"));
             visualizar = 2;
@@ -321,7 +322,7 @@ public class ConsumoscajachicaController implements Serializable {
 
     public List<Cajachica> listarcajaschicas() {
         List<Cajachica> lista = null;
-        lista = cajachicaEJB.cajaschicasAll();
+        lista = cajachicaEJB.cajaschicasAll(empresa);
         return lista;
     }
 
@@ -625,6 +626,7 @@ public class ConsumoscajachicaController implements Serializable {
             maestromovi.setFechamovimiento(reposicionCajaChica.getFecharesposicion());
             maestromovi.setIdtipoconjunto(tipoconjunto);
             maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
+            maestromovi.setIdempresa(empresa.getIdempresa());
             maestromovimientoEJB.create(maestromovi);
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Fue procesada la Reposicion de Caja Chica con el Nro " + serial, "Aviso "));

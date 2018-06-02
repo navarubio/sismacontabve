@@ -7,6 +7,7 @@ package Jpa;
 
 import Modelo.Comprobanteivaef;
 import Modelo.Detalleretencionivaef;
+import Modelo.Empresa;
 import Modelo.Factura;
 import java.util.List;
 import javax.ejb.Local;
@@ -32,9 +33,9 @@ public interface DetalleretencionivaefFacadeLocal {
 
     int count();
     
-    List<Detalleretencionivaef> buscarretencionesporPreveedor(String rif); 
+    List<Detalleretencionivaef> buscarretencionesporPreveedor(String rif, Empresa empre); 
     
-    List<Detalleretencionivaef> buscarretencionesActivas();
+    List<Detalleretencionivaef> buscarretencionesActivas(Empresa empre);
     
     double retencionivaporpago(int pago);
 }

@@ -21,6 +21,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @ManagedBean(name = "requerimientoController")
 @ViewScoped
@@ -32,6 +33,8 @@ public class RequerimientoController implements Serializable {
     private DepartamentoFacadeLocal ejbDepartamento;
     private List<Requerimiento> items = null;
     private Requerimiento selected;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     private List<Departamento> departamentos=null;
     
@@ -99,7 +102,7 @@ public class RequerimientoController implements Serializable {
 
     public List<Requerimiento> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().requerimientosAll(requerimientosController.getEmpresa());
         }
         return items;
     }

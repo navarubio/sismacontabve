@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named("detalleretencionivaefController")
 @ViewScoped
@@ -30,6 +31,8 @@ public class DetalleretencionivaefController implements Serializable {
     private List<Detalleretencionivaef> items = null;
     private Detalleretencionivaef selected;
     private List<Detalleretencionivaef> listaactiva = null;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     public DetalleretencionivaefController() {
     }
@@ -85,7 +88,7 @@ public class DetalleretencionivaefController implements Serializable {
     }
 
     public List<Detalleretencionivaef> buscarlistaactiva() {
-        listaactiva = ejbFacade.buscarretencionesActivas();
+        listaactiva = ejbFacade.buscarretencionesActivas(requerimientosController.getEmpresa());
         return listaactiva;
     }
 

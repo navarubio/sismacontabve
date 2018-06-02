@@ -7,6 +7,7 @@ package Jpa;
 
 import Modelo.Consumocajachica;
 import Modelo.Detalleconsumocajachica;
+import Modelo.Empresa;
 import Modelo.Reposicioncajachica;
 import Modelo.Reposicionconsumos;
 import java.util.ArrayList;
@@ -66,6 +67,21 @@ public class DetalleconsumocajachicaFacade extends AbstractFacade<Detalleconsumo
             consulta = "From Detalleconsumocajachica d where d.idconsumocajachica.idconsumocajachica= ?1 order by d.iddetalleconsumocajachica";
             Query query = em.createQuery(consulta);
             query.setParameter(1, idconsumocajachica);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Detalleconsumocajachica> detallesconsumoscajachicaAll(Empresa empre) {
+        String consulta;
+        List<Detalleconsumocajachica> lista = null;
+        try {
+            consulta = "From Detalleconsumocajachica d where d.idconsumocajachica.idcajachica.idempresa.idempresa= ?1 order by d.iddetalleconsumocajachica";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa()); 
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

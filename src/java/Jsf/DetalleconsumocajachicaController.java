@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named("detalleconsumocajachicaController")
 @ViewScoped
@@ -29,6 +30,8 @@ public class DetalleconsumocajachicaController implements Serializable {
     private Jpa.DetalleconsumocajachicaFacadeLocal ejbFacade;
     private List<Detalleconsumocajachica> items = null;
     private Detalleconsumocajachica selected;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     public DetalleconsumocajachicaController() {
     }
@@ -78,7 +81,7 @@ public class DetalleconsumocajachicaController implements Serializable {
 
     public List<Detalleconsumocajachica> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().detallesconsumoscajachicaAll(requerimientosController.getEmpresa());
         }
         return items;
     }

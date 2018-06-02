@@ -7,6 +7,7 @@ package Jpa;
 
 import Modelo.Detallefactura;
 import Modelo.Detalleretencionislref;
+import Modelo.Empresa;
 import Modelo.Factura;
 import java.util.List;
 import javax.ejb.Local;
@@ -32,9 +33,9 @@ public interface DetalleretencionislrefFacadeLocal {
 
     int count();
     
-    List<Detalleretencionislref> buscarretencionesporPreveedor(String rif);
+    List<Detalleretencionislref> buscarretencionesporPreveedor(String rif, Empresa empre);
     
-    List<Detalleretencionislref> buscarretencionesActivas(); 
+    List<Detalleretencionislref> buscarretencionesActivas(Empresa empre); 
     
     double retencionislrporpago(int compra);
     

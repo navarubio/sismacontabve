@@ -4,10 +4,12 @@ import Jpa.ComprobanteislrefFacadeLocal;
 import Jpa.ComprobanteivaefFacadeLocal;
 import Jpa.DetalleretencionislrefFacadeLocal;
 import Jpa.DetalleretencionivaefFacadeLocal;
+import Jpa.EmpresaFacadeLocal;
 import Modelo.Comprobanteislref;
 import Modelo.Comprobanteivaef;
 import Modelo.Detalleretencionislref;
 import Modelo.Detalleretencionivaef;
+import Modelo.Empresa;
 import Modelo.Estatuscomprobanteretencion;
 import Modelo.Factura;
 import java.io.Serializable;
@@ -44,9 +46,12 @@ public class ComprobantesislrController implements Serializable {
     private ComprobanteislrefFacadeLocal comprobanteislrefEJB;
     @EJB
     private DetalleretencionislrefFacadeLocal detalleretencionislrefEJB;
-            
+    @EJB
+    private EmpresaFacadeLocal empresaEJB;
+
     private Detalleretencionislref detalleretencionislref;
-    private String correlativo="";
+    private String correlativo = "";
+    private int serialcomprob = 0;
     private int anio;
     private int mes;
     private String mesfiscal;
@@ -57,20 +62,20 @@ public class ComprobantesislrController implements Serializable {
     private double totalbaseimponible;
     private double totaliva;
     private double totalislrretenido;
-    private int id=0;
+    private int id = 0;
     private int idcomprobanteretislr;
+    private Comprobanteislref ultimocomprobante;
     @Inject
     private Estatuscomprobanteretencion estatuscomprobanteretencion;
     @Inject
     private Comprobanteislref comprobanteislref;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     ///////////////////////////////////////////
-
-    
     private Date fechaactual = new Date();
     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
     DecimalFormat formatearnumero = new DecimalFormat("###,###.##");
-
 
     public Detalleretencionislref getDetalleretencionislref() {
         return detalleretencionislref;
@@ -111,7 +116,7 @@ public class ComprobantesislrController implements Serializable {
     public void setMesfiscal(String mesfiscal) {
         this.mesfiscal = mesfiscal;
     }
-    
+
     public String getSerialcomprobante() {
         return serialcomprobante;
     }
@@ -167,88 +172,105 @@ public class ComprobantesislrController implements Serializable {
     public void setTotalislrretenido(double totalislrretenido) {
         this.totalislrretenido = totalislrretenido;
     }
-    
+
     public String devolversiguientecomprobante() {
         String siguiente;
-        siguiente = comprobanteislrefEJB.siguientecomprobanteformat();
-        correlativo=siguiente;
+        siguiente = comprobanteislrefEJB.siguientecomprobanteformat(requerimientosController.getEmpresa());
+        correlativo = siguiente;
         return siguiente;
     }
-    
-    public void separarperiodofiscal(){
+
+    public String devolvernumsiguientecomprobante() {
+        String siguiente;
+        serialcomprob = requerimientosController.getEmpresa().getSerialcomprobanteislr() + 1;
+        DecimalFormat myFormatter = new DecimalFormat("00000");
+        siguiente = myFormatter.format(serialcomprob);
+        correlativo = siguiente;
+        return siguiente;
+    }
+
+    public void separarperiodofiscal() {
         //fechacomprobante=comprobanteivaef.getFecha();
-        mes=0;
+        mes = 0;
         Calendar cal = Calendar.getInstance();
         cal.setTime(fechacomprobante);
         anio = cal.get(Calendar.YEAR);
-        mes = cal.get(Calendar.MONTH)+1;
-        String year= Integer.toString(anio);
-        String month= String.format("%02d",mes);
-        mesfiscal=month;        
-        serialcomprobante=year + month + correlativo;
-    }    
+        mes = cal.get(Calendar.MONTH) + 1;
+        String year = Integer.toString(anio);
+        String month = String.format("%02d", mes);
+        mesfiscal = month;
+        serialcomprobante = year + month + correlativo;
+    }
 
-    public void onDateSelect(SelectEvent event) {    
+    public void onDateSelect(SelectEvent event) {
         separarperiodofiscal();
     }
-    
+
     public void obtenertotaltotales() {
         double montotgeneral = 0;
         double montotsubtotal = 0;
-        double montoretenido=0;
+        double montoretenido = 0;
         for (Detalleretencionislref detalleretislr : detalleretislrfiltrados) {
             montotgeneral += detalleretislr.getTotalcompra();
             montotsubtotal += detalleretislr.getBimponible();
-            montoretenido  += detalleretislr.getTotalislrretenido();
+            montoretenido += detalleretislr.getTotalislrretenido();
         }
-        totalgeneral = montotgeneral;
-        totalbaseimponible = montotsubtotal;
-        totalislrretenido = montoretenido;
+        totalgeneral = requerimientosController.redondearDecimales(montotgeneral);
+        totalbaseimponible = requerimientosController.redondearDecimales(montotsubtotal);
+        totalislrretenido = requerimientosController.redondearDecimales(montoretenido);
     }
-    
+
     public void asignar(Detalleretencionislref detalleretislref) {
         this.detalleretencionislref = detalleretislref;
-        this.detalleretislrfiltrados=detalleretencionislrefEJB.buscarretencionesporPreveedor(detalleretislref.getIdcompra().getRifproveedor().getRifproveedor()); 
+        this.detalleretislrfiltrados = detalleretencionislrefEJB.buscarretencionesporPreveedor(detalleretislref.getIdcompra().getRifproveedor().getRifproveedor(), requerimientosController.getEmpresa());
         obtenertotaltotales();
     }
+
     public void eliminar(Detalleretencionislref detalleaeliminar) {
-        int indc= detalleretislrfiltrados.indexOf(detalleaeliminar);
+        int indc = detalleretislrfiltrados.indexOf(detalleaeliminar);
         detalleretislrfiltrados.remove(indc);
         obtenertotaltotales();
     }
+
     public void registrar() {
         try {
             estatuscomprobanteretencion.setIdestatuscomprobante(1);
             comprobanteislref.setComprobante(correlativo);
             comprobanteislref.setFecha(fechacomprobante);
             comprobanteislref.setRifproveedor(detalleretencionislref.getIdcompra().getRifproveedor());
-            
+
             comprobanteislref.setTotalgeneral(totalgeneral);
             comprobanteislref.setTotalbimponible(totalbaseimponible);
             comprobanteislref.setTotalislrretenido(totalislrretenido);
             comprobanteislref.setIdestatuscomprobante(estatuscomprobanteretencion);
+            comprobanteislref.setIdempresa(requerimientosController.getEmpresa().getIdempresa());
+            comprobanteislref.setSerialcomprobanteislr(serialcomprob);
             comprobanteislrefEJB.create(comprobanteislref);
-            
-
-            idcomprobanteretislr = Integer.parseInt(comprobanteislrefEJB.siguientecomprobanteformat());
-            comprobanteislref.setIdcomprobanteislref(idcomprobanteretislr-1);
+            ultimocomprobante = comprobanteislrefEJB.ultimacomprobanteInsertado(requerimientosController.getEmpresa());
+            comprobanteislref.setIdcomprobanteislref(ultimocomprobante.getIdcomprobanteislref());
             for (Detalleretencionislref detalle : detalleretislrfiltrados) {
                 detalle.setIdcomprobanteislref(comprobanteislref);
                 detalleretencionislrefEJB.edit(detalle);
             }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Fue generado el Comprobante de Retencion de ISLR", "Aviso"));
+
+            //--------Actualizando el serial comprobanteislr de tabla Empresa ------- \\
+            Empresa empre = requerimientosController.getEmpresa();
+            empre.setSerialcomprobanteislr(serialcomprob);
+            empresaEJB.edit(empre);
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Fue generado el Comprobante de Retencion de ISLR N° "+comprobanteislref.getSerialcomprobanteislr(), "Aviso"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Generar el Comprobante de Retencion de ISLR", "Aviso"));
         } finally {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
     }
-    
+
     @PostConstruct
     public void init() {
         detalleretislrfiltrados.clear();
     }
-    
+
     public void verComprobanteretislr(Comprobanteislref item) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 
         //Instancia hacia la clase reporteClientes        
@@ -262,10 +284,6 @@ public class ComprobantesislrController implements Serializable {
         rArticulo.getComprobanteRetIva(ruta, codigocomprobante);
         FacesContext.getCurrentInstance().responseComplete();
     }
-    
+
 ///////////////////////////////////    
-    
-    
-    
-    
 }

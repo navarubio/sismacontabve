@@ -475,7 +475,7 @@ public class RequerimientosController implements Serializable {
             subject = empresa.getNombrecomercial() + " Requerimiento REQ-" + requer.getIdauxiliarrequerimiento().getSerialrequerimiento();
             enviomail = new envioCorreo(correo, subject);
             enviomail.start();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Requerimiento fue Almacenado Codigo " + requer.getIdauxiliarrequerimiento().getIdauxiliarrequerimiento(), ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Requerimiento fue Almacenado Codigo " + requer.getIdauxiliarrequerimiento().getSerialrequerimiento(), ""));
             listarequerimiento.clear();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Requerimiento", "Aviso"));

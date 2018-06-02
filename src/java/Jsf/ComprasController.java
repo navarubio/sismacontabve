@@ -376,7 +376,7 @@ public class ComprasController implements Serializable {
         articulos = articuloEJB.findAll();
         comprasporautorizar = compraEJB.buscarcomprasporAutorizar(empresa);
         comprasporpagar = compraEJB.buscarcomprasporPagar(empresa);
-        compraspagadas = compraEJB.buscarcomprasPagadas();
+        compraspagadas = compraEJB.buscarcomprasPagadas(empresa);
         compra.setFechaorden(fechaactual);
         varAutoriza = 0;
         listarequerimiento.clear();
@@ -569,7 +569,7 @@ public class ComprasController implements Serializable {
                 maestromovimientoEJB.create(maestromovi);
             }
 
-            int numerocompra = codCompra.getIdcompra();
+            int numerocompra = codCompra.getSerialcompra();
             for (Requerimiento rq : listarequerimiento) {
                 Articulo arti = rq.getCodigo();
                 detallecompra.setIdcompra(codCompra);
@@ -614,7 +614,7 @@ public class ComprasController implements Serializable {
     }
 
     public List<Compra> buscarComprasPagadas() {
-        compraspagadas = compraEJB.buscarcomprasPagadas();
+        compraspagadas = compraEJB.buscarcomprasPagadas(empresa);
         return comprasporpagar;
     }
 

@@ -53,7 +53,9 @@ public class ConsumocajachicaController implements Serializable {
     @Inject
     private Consumocajachica consumoefectuado;
     @Inject
-    private Reposicioncajachica reposicionefectuada;    
+    private Reposicioncajachica reposicionefectuada;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     public ConsumocajachicaController() {
     }
@@ -198,7 +200,7 @@ public class ConsumocajachicaController implements Serializable {
 
     public List<Consumocajachica> getItems() {
         if (items == null) {
-            items = getFacade().consumoscajachicaAll();
+            items = getFacade().consumoscajachicaAll(requerimientosController.getEmpresa());
         }
         return items;
     }

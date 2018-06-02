@@ -45,7 +45,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDetallecompraTitle_idcompra}"/>
                             </f:facet>
-                            <h:outputText value="CMP-#{item.idcompra.idcompra}"/>
+                            <h:outputText value="CMP-#{item.idcompra.serialcompra}"/>
                         </p:column>
                         <p:column width="80" style="text-align: center" sortBy="#{item.idcompra.fechaorden}">
                             <f:facet name="header">
@@ -55,7 +55,7 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column width="60" filterBy="#{item.codigo.codigo}" filterMatchMode="contains" filterStyle="width:60px;">
+                        <p:column width="120" filterBy="#{item.codigo.codigo}" filterMatchMode="contains" filterStyle="width:60px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDetallecompraTitle_codigo}"/>
                             </f:facet>
@@ -98,7 +98,7 @@
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>
                         </p:column>
-                        <p:column width="100">
+                        <p:column width="200">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDetallecompraTitle_idplandecuenta}"/>
                             </f:facet>

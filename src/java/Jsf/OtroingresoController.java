@@ -240,7 +240,7 @@ public class OtroingresoController implements Serializable {
 
     public List<Otroingreso> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().otrosingresosAll(requerimientosController.getEmpresa());
         }
         return items;
     }
@@ -348,7 +348,9 @@ public class OtroingresoController implements Serializable {
             cuentabancaria.setSaldo(saldoactualbanco);
             
             ingreso.setMontoingresado(montoingreso);
+            ingreso.setIdusuario(requerimientosController.getUsuariodeprol().getIdusuario());
             ejbFacade.create(ingreso);
+            
             cuentabancariaEJB.edit(cuentabancaria);
 
             if (visual == 1) {
@@ -362,6 +364,7 @@ public class OtroingresoController implements Serializable {
             maestromovi.setFechamovimiento(ingreso.getFechaingreso());
             maestromovi.setIdtipoconjunto(tipoconjunto);
             maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
+            maestromovi.setIdempresa(requerimientosController.getEmpresa().getIdempresa());
             maestromovimientoEJB.create(maestromovi);
 
             movimientobancario.setFecha(ingreso.getFechaingreso());
