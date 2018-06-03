@@ -265,6 +265,15 @@ public class FacturasController implements Serializable {
         this.totalsubtotalform = totalsubtotalform;
     }
 
+    public RequerimientosController getRequerimientosController() {
+        return requerimientosController;
+    }
+
+    public void setRequerimientosController(RequerimientosController requerimientosController) {
+        this.requerimientosController = requerimientosController;
+    }
+    
+
     @PostConstruct
     public void init() {
         clientes = clienteEJB.findAll();
@@ -272,7 +281,7 @@ public class FacturasController implements Serializable {
         factura.setFecha(fechaactual);
         listarequerimiento.clear();
         number = 0;
-        empresa = empresaEJB.devolverEmpresabase();
+        empresa = requerimientosController.getEmpresa();
     }
 
     public void registrarventa() {
@@ -423,9 +432,9 @@ public class FacturasController implements Serializable {
             montotiva += requeri.getTributoiva();
             montotsubtotal += requeri.getSubtotal();
         }
-        totalgeneral = montotgeneral;
-        totaliva = montotiva;
-        totalsubtotal = montotsubtotal;
+        totalgeneral = requerimientosController.redondearDecimales(montotgeneral);
+        totaliva = requerimientosController.redondearDecimales(montotiva);
+        totalsubtotal = requerimientosController.redondearDecimales(montotsubtotal);
 
         return montotgeneral;
     }
@@ -440,9 +449,9 @@ public class FacturasController implements Serializable {
             montotiva += requeri.getTributoiva();
             montotsubtotal += requeri.getSubtotal();
         }
-        totalgeneral = montotgeneral;
-        totaliva = montotiva;
-        totalsubtotal = montotsubtotal;
+        totalgeneral = requerimientosController.redondearDecimales(montotgeneral);
+        totaliva = requerimientosController.redondearDecimales(montotiva);
+        totalsubtotal = requerimientosController.redondearDecimales(montotsubtotal);
 
         return montotiva;
     }
@@ -457,9 +466,9 @@ public class FacturasController implements Serializable {
             montotiva += requeri.getTributoiva();
             montotsubtotal += requeri.getSubtotal();
         }
-        totalgeneral = montotgeneral;
-        totaliva = montotiva;
-        totalsubtotal = montotsubtotal;
+        totalgeneral = requerimientosController.redondearDecimales(montotgeneral);
+        totaliva = requerimientosController.redondearDecimales(montotiva);
+        totalsubtotal = requerimientosController.redondearDecimales(montotsubtotal);
 
         return montotsubtotal;
     }

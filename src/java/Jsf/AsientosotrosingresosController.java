@@ -194,7 +194,7 @@ public class AsientosotrosingresosController implements Serializable {
     private Tipoconjunto tipoconjunto = null;
     private List<Detallelibrodiario> listadetalleslibrodiario = new ArrayList();
     private Detallelibrodiario detalleamodificar;
-    private List<Movimientobancario> movimientosBancarios=null;
+    private List<Movimientobancario> movimientosBancarios = null;
     private int cuentaseleccionada;
     private Librodiario codlibrodiario;
     int tamaño = 0;
@@ -618,9 +618,9 @@ public class AsientosotrosingresosController implements Serializable {
         if (tamaño > 1) {
             this.vercasilla = 1;
             this.movimientoegreso = ingresoespecifico.get(1);
-            librodiario.setDescripcionasiento("P/R INGRESO ING- " + otroingreso.getIdotroingreso() + " POR TRASPASO DESDE " + movimientoegreso.getIdcuentabancaria().getIdbanco().getNombrebanco()  + " AL " + movimientoingreso.getIdcuentabancaria().getIdbanco().getNombrebanco());
+            librodiario.setDescripcionasiento("P/R INGRESO ING- " + otroingreso.getIdotroingreso() + " POR TRASPASO DESDE " + movimientoegreso.getIdcuentabancaria().getIdbanco().getNombrebanco() + " AL " + movimientoingreso.getIdcuentabancaria().getIdbanco().getNombrebanco());
         } else {
-            librodiario.setDescripcionasiento("P/R INGRESO ING- " + otroingreso.getIdotroingreso() + " POR CONCEPTO DE " + otroingreso.getIdtipoingreso().getTipoingreso() +" "+ otroingreso.getObservaciones());
+            librodiario.setDescripcionasiento("P/R INGRESO ING- " + otroingreso.getIdotroingreso() + " POR CONCEPTO DE " + otroingreso.getIdtipoingreso().getTipoingreso() + " " + otroingreso.getObservaciones());
         }
         listadetalleslibrodiario = detallesasiento();
         librodiario.setFecha(otroingreso.getFechaingreso());
@@ -691,7 +691,7 @@ public class AsientosotrosingresosController implements Serializable {
             librodiarioEJB.create(librodiario);
             codlibrodiario = librodiarioEJB.ultimoInsertado();
 //            movimientosBancarios=movimientoBancarioEJB.buscarmovimiento(otroingreso);
-            
+
             Detallelibrodiario detalleld = new Detallelibrodiario();
             Libromayor libromy = new Libromayor();
             Plandecuenta cuentacontable = new Plandecuenta();
@@ -730,12 +730,12 @@ public class AsientosotrosingresosController implements Serializable {
                 detallelibrodiarioEJB.create(detalleld);
                 libromayorEJB.create(libromy);
                 codlibromayor = libromayorEJB.ultimoInsertado();
-                movimientobanc=movimientoBancarioEJB.buscarmovimientoxIdotroingresoCtaContable(otroingreso, cuentacontable);
-                if (movimientobanc!=null){
+                movimientobanc = movimientoBancarioEJB.buscarmovimientoxIdotroingresoCtaContable(otroingreso, cuentacontable);
+                if (movimientobanc != null) {
                     movimientobanc.setIdlibromayor(codlibromayor);
-                    movimientoBancarioEJB.edit(movimientobanc);                    
+                    movimientoBancarioEJB.edit(movimientobanc);
                 }
-                
+
                 plandecuentaEJB.edit(cuentacontable);
                 master.setIdestatuscontable(estatuscontableEJB.estatusContableRegistrada());
                 master.setIdlibrodiario(codlibrodiario);
@@ -785,11 +785,16 @@ public class AsientosotrosingresosController implements Serializable {
 
             Detallelibrodiario detallelib = new Detallelibrodiario();
             Plandecuenta cuentaingreso = otroingreso.getIdtipoingreso().getIdplandecuenta();
-            detallelib.setIdplandecuenta(cuentaingreso);
-            detallelib.setHaber(movimientoingreso.getCredito());
-            detallelib.setIddetallelibrodiario(id);
-            this.listadetalleslibrodiario.add(detallelib);
-            id++;
+            if (cuentaingreso != null) {
+                detallelib.setIdplandecuenta(cuentaingreso);
+                detallelib.setHaber(movimientoingreso.getCredito());
+                detallelib.setIddetallelibrodiario(id);
+                this.listadetalleslibrodiario.add(detallelib);
+                id++;
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "", "Cuenta Ingreso no esta Vinculada al Plan de Cuentas "));
+ 
+            }
         }
     }
 

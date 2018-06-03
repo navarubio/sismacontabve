@@ -33,7 +33,7 @@
                                     <p:outputLabel for="fechacobro" value="Fecha Ingreso" styleClass="text-ouputnormal"/>
                                     <p:calendar size="15" id="fechacobro" locale="es" pattern="dd/MM/yyyy" value="#{otroingresoController.ingreso.fechaingreso}" showOn="button" navigator="true" required="true"/>                                      
                                     <p:outputLabel for="montofact" value="MONTO A INGRESAR" styleClass="text-ouputnormal"/>
-                                    <p:inputText id="montofact" size="15" value="#{otroingresoController.montoingreso}" styleClass="text-ouputcxc" style="text-align: right" required="true" >
+                                    <p:inputText id="montofact" size="15" value="#{otroingresoController.montoingreso}" styleClass="text-ouputfactura" style="text-align: right" required="true" >
                                         <f:validateLongRange minimum="1"></f:validateLongRange>
                                     </p:inputText>
                                     <p:outputLabel for="tipopago" value="Forma de Pago" styleClass="text-ouputnormal"/>

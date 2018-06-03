@@ -506,6 +506,7 @@ public class ConsumoscajachicaController implements Serializable {
                     totalgeneral = consumocajachica.getIdcajachica().getMontoasignado();
                     totalgeneralform = formatearnumero.format(totalgeneral);
                     visualizar = 0;
+                    aperturacaja=1;
                 } else {
                     totalgeneral = 0;
                     totalgeneralform = formatearnumero.format(totalgeneral);
@@ -617,6 +618,7 @@ public class ConsumoscajachicaController implements Serializable {
             movimientobancario.setSaldoactual(saldoactualbanco);
             movimientobancario.setCredito(0.0);
             movimientobancario.setIdreposicioncajachica(reposicionCajaChica);
+            movimientobancario.setConciliado(Boolean.FALSE);
             movimientoBancarioEJB.create(movimientobancario);
 
             //--------Grabar en el Maestro de Movimiento ---------------- \\
