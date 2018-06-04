@@ -45,6 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Factura.findBySaldopendiente", query = "SELECT f FROM Factura f WHERE f.saldopendiente= :saldopendiente"),
     @NamedQuery(name = "Factura.findByCantidadenletras", query = "SELECT f FROM Factura f WHERE f.cantidadenletras = :cantidadenletras")})
 public class Factura implements Serializable {
+
     @JoinColumn(name = "idmaestro", referencedColumnName = "idmaestro")
     @ManyToOne
     private Maestromovimiento idmaestro;
@@ -60,7 +61,7 @@ public class Factura implements Serializable {
     private Collection<Cobroventa> cobroventaCollection;
     @OneToMany(mappedBy = "numerofact")
     private Collection<Despachopicadora> despachopicadoraCollection;
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -106,6 +107,11 @@ public class Factura implements Serializable {
     @JoinColumn(name = "idestatuscontable", referencedColumnName = "idestatuscontable")
     @ManyToOne
     private Estatuscontable idestatuscontable;
+    @Column(name = "serialfactura")
+    private Integer serialfactura;
+    @Column(name = "idempresa")
+    private Integer idempresa;
+    
 
     public Factura() {
     }
@@ -185,7 +191,7 @@ public class Factura implements Serializable {
     public void setSaldopendiente(Double saldopendiente) {
         this.saldopendiente = saldopendiente;
     }
-    
+
     public String getCantidadenletras() {
         return cantidadenletras;
     }
@@ -234,6 +240,22 @@ public class Factura implements Serializable {
         this.idestatuscontable = idestatuscontable;
     }
 
+    public Integer getSerialfactura() {
+        return serialfactura;
+    }
+
+    public void setSerialfactura(Integer serialfactura) {
+        this.serialfactura = serialfactura;
+    }
+
+    public Integer getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(Integer idempresa) {
+        this.idempresa = idempresa;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -267,7 +289,7 @@ public class Factura implements Serializable {
     public void setDetallefacturaCollection(Collection<Detallefactura> detallefacturaCollection) {
         this.detallefacturaCollection = detallefacturaCollection;
     }
-    
+
     @XmlTransient
     public Collection<Cobroventa> getCobroventaCollection() {
         return cobroventaCollection;
@@ -285,7 +307,7 @@ public class Factura implements Serializable {
     public void setDespachopicadoraCollection(Collection<Despachopicadora> despachopicadoraCollection) {
         this.despachopicadoraCollection = despachopicadoraCollection;
     }
-    
+
     @XmlTransient
     public Collection<Detalleretencionivasp> getDetalleretencionivaspCollection() {
         return detalleretencionivaspCollection;
@@ -320,5 +342,5 @@ public class Factura implements Serializable {
     public void setMaestromovimientoCollection(Collection<Maestromovimiento> maestromovimientoCollection) {
         this.maestromovimientoCollection = maestromovimientoCollection;
     }
-    
+
 }

@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Cobroventa;
+import Modelo.Empresa;
 import Modelo.Factura;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -48,7 +49,8 @@ public class CobroventaFacade extends AbstractFacade<Cobroventa> implements Cobr
         }
         return lista;
     }
-@Override
+
+    @Override
     public Cobroventa ultimocobroInsertado() {
         String consulta = null;
         Cobroventa ultimo = new Cobroventa();
@@ -58,10 +60,25 @@ public class CobroventaFacade extends AbstractFacade<Cobroventa> implements Cobr
             List<Cobroventa> lista = query.getResultList();
             if (!lista.isEmpty()) {
                 ultimo = lista.get(0);
-}
+            }
         } catch (Exception e) {
             throw e;
         }
         return ultimo;
+    }
+
+    @Override
+    public List<Cobroventa> cobrosAll(Empresa empre) {
+        String consulta;
+        List<Cobroventa> lista = null;
+        try {
+            consulta = "From Cobroventa c where c.idcuentabancaria.idempresa.idempresa= ?1 order by c.idcobroventa";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
     }
 }

@@ -1108,16 +1108,16 @@ public class AsientoscontablesController implements Serializable {
         
         if (pagocompra.getMontoretenido() > 0) {
 
-            if (pagocompra.getMontoretenido() == retiva) {
+            if (pagocompra.getMontoretenido() == retislr) {
                 Detallelibrodiario detallelibr = new Detallelibrodiario();
-                int codcta = empresa.getRetivaxenterar();
-                Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);
-                detallelibr.setIdplandecuenta(cuentaretencioniva);
+                int codcta = empresa.getRetislrxenterar();
+                Plandecuenta cuentaretencionislr = plandecuentaEJB.buscarcuenta(codcta);
+                detallelibr.setIdplandecuenta(cuentaretencionislr);
                 detallelibr.setHaber(pagocompra.getMontoretenido());
                 detallelibr.setIddetallelibrodiario(id);
                 this.listadetalleslibrodiario.add(detallelibr);
                 id++;
-            } else if (pagocompra.getMontoretenido() > retiva) {
+            } else if (pagocompra.getMontoretenido() > retislr) {
                 Detallelibrodiario detallelibr = new Detallelibrodiario();
                 int codcta = empresa.getRetivaxenterar();
                 Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);

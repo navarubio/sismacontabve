@@ -19,6 +19,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named("cobroventaController")
 @ViewScoped
@@ -28,6 +29,8 @@ public class CobroventaController implements Serializable {
     private Jpa.CobroventaFacadeLocal ejbFacade;
     private List<Cobroventa> items = null;
     private List<Cobroventa> cobrosporfactura = null;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     private Cobroventa selected;
 
@@ -80,7 +83,7 @@ public class CobroventaController implements Serializable {
 
     public List<Cobroventa> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().cobrosAll(requerimientosController.getEmpresa());
         }
         return items;
     }

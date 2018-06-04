@@ -384,7 +384,7 @@ public class CobroventasController implements Serializable {
         cobro = new Cobroventa();
         cobro.setFechacobro(fechaactual);
         usa = getUsuario();
-        empresa = usa.getIddepartamento().getIdempresa();
+        empresa = requerimientosController.getEmpresa();
         visualizar = 0;
 
     }
@@ -591,6 +591,7 @@ public class CobroventasController implements Serializable {
                 maestromovi.setFechamovimiento(cobro.getFechacobro());
                 maestromovi.setIdtipoconjunto(tipoconjunto);
                 maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
+                maestromovi.setIdempresa(empresa.getIdempresa());
                 maestromovimientoEJB.create(maestromovi);
 
                 double saldoactualbanco = 0;
@@ -616,12 +617,12 @@ public class CobroventasController implements Serializable {
                 movimientoBancarioEJB.create(movimientobancario);
 
                 if (factura.getSaldopendiente() < 1) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cobro fue Almacenado"));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cobro fue Almacenado Exitosamente"));
                 } else {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El Abono recibido fue Almacenado"));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "El Abono recibido fue Almacenado Exitosamente"));
                 }
                 String subject;
-                String ultimafactura = "" + factura.getNumerofact();
+                String ultimafactura = "" + factura.getSerialfactura();
                 String fechafactu = formateador.format(cobro.getFechacobro());
                 correo = "FACTURA NRO: " + ultimafactura
                         + "  CONTROL: " + factura.getNumerocontrol()

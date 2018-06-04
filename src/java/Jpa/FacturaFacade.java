@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
 import Modelo.Factura;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -117,16 +118,17 @@ public class FacturaFacade extends AbstractFacade<Factura> implements FacturaFac
     }
 
     @Override
-    public List<Factura> buscarfacturasporCobrar() {
+    public List<Factura> buscarfacturasporCobrar(Empresa empre) {
         String consulta;
-        int idstatus = 2;
-        int idstatus2 =3;
+        int idstatus = 1;
+        int idstatus2 =4;
         List<Factura> lista = null;
         try {
-            consulta = "From Factura f where f.idestatusfacturaventa.idestatusfacturaventa= ?1 or f.idestatusfacturaventa.idestatusfacturaventa= ?2";
+            consulta = "From Factura f where f.idempresa= ?1 and f.idestatusfacturaventa.idestatusfacturaventa>?2 and f.idestatusfacturaventa.idestatusfacturaventa< ?3";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, idstatus);
-            query.setParameter(2, idstatus2);            
+            query.setParameter(1,empre.getIdempresa());
+            query.setParameter(2, idstatus);
+            query.setParameter(3, idstatus2);            
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;
@@ -143,6 +145,21 @@ public class FacturaFacade extends AbstractFacade<Factura> implements FacturaFac
             consulta = "From Factura f where f.idestatusfacturaventa.idestatusfacturaventa= ?1";
             Query query = em.createQuery(consulta);
             query.setParameter(1, idstatus);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Factura> facturasAll(Empresa empre) {
+        String consulta;
+        List<Factura> lista = null;
+        try {
+            consulta = "From Factura f where f.idempresa= ?1 order by f.serialfactura";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

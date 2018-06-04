@@ -106,7 +106,7 @@ public class FacturasController implements Serializable {
     private String totalgeneralform;
     private String totalivaform;
     private String totalsubtotalform;
-
+    
     @Inject
     private Factura factura;
     @Inject
@@ -272,7 +272,6 @@ public class FacturasController implements Serializable {
     public void setRequerimientosController(RequerimientosController requerimientosController) {
         this.requerimientosController = requerimientosController;
     }
-    
 
     @PostConstruct
     public void init() {
@@ -282,6 +281,7 @@ public class FacturasController implements Serializable {
         listarequerimiento.clear();
         number = 0;
         empresa = requerimientosController.getEmpresa();
+        
     }
 
     public void registrarventa() {
@@ -307,17 +307,24 @@ public class FacturasController implements Serializable {
             factura.setIdcaja(cajaEJB.ubicarCaja());
             factura.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
             factura.setIdestatusfacturaventa(estatusfacturaventaEJB.estatusFacturaPorCobrar());
+            factura.setIdempresa(empresa.getIdempresa());
             facturaEJB.create(factura);
 
+            //--------Actualizando el serial factura de tabla Empresa ------- \\
             codfactura = facturaEJB.ultimaInsertada();
-            number = codfactura.getNumerofact();
+            Empresa empre = empresa;
+            empre.setSerialfactura(codfactura.getSerialfactura());
+            empresaEJB.edit(empre);
+
+//            number = codfactura.getSerialfactura();
 
             int tipoconj = 1;
             tipoconjunto = tipoconjuntoEJB.cambiartipoConjunto(tipoconj);
             maestromovi.setNumerofact(codfactura);
-            maestromovi.setFechamovimiento(factura.getFecha());
+            maestromovi.setFechamovimiento(codfactura.getFecha());
             maestromovi.setIdtipoconjunto(tipoconjunto);
             maestromovi.setIdestatuscontable(estatuscontableEJB.estatusContablePorRegistrar());
+            maestromovi.setIdempresa(empresa.getIdempresa());
             maestromovimientoEJB.create(maestromovi);
             String material = " ";
             for (Requerimiento rq : listarequerimiento) {
@@ -334,9 +341,8 @@ public class FacturasController implements Serializable {
                 detallefacturaEJB.create(detalle);
             }
             String subject;
-            String ultimafactura = facturaEJB.ultimafacturaformat();
             String fechafactu = formateador.format(factura.getFecha());
-            correo = "FACTURA NRO: " + ultimafactura
+            correo = "FACTURA NRO: " + codfactura.getSerialfactura()
                     + "  CONTROL: " + factura.getNumerocontrol()
                     + "  USUARIO: " + factura.getIdusuario().getNombre()
                     + "  DEPARTAMENTO: " + factura.getIdusuario().getIddepartamento().getDepartamento()
@@ -349,7 +355,7 @@ public class FacturasController implements Serializable {
                     + "  TOTAL: " + formatearnumero.format(factura.getTotalgeneral())
                     + "  OBSERVACIONES: " + factura.getObservacionesfact();
 
-            subject = empresa.getNombrecomercial() + " Factura N° " + ultimafactura;
+            subject = empresa.getNombrecomercial() + " Factura N° " + codfactura.getSerialfactura();
             enviomail = new envioCorreo(correo, subject);
             enviomail.start();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "La Factura se registro exitosamente con el numero " + facturaEJB.ultimafacturaformat()));
@@ -369,8 +375,14 @@ public class FacturasController implements Serializable {
 
     public String devolversiguientefactura() {
         String siguiente;
-        siguiente = facturaEJB.siguientefacturaformat();
-        number = Integer.parseInt(siguiente);
+        String proximo;
+        int serial = 0;
+        DecimalFormat myFormatter = new DecimalFormat("00000000");
+        serial = empresa.getSerialfactura() + 1;
+        siguiente = myFormatter.format(serial);
+        proximo = facturaEJB.siguientefacturaformat();
+        number = Integer.parseInt(proximo);
+        factura.setSerialfactura(serial);
         return siguiente;
     }
 

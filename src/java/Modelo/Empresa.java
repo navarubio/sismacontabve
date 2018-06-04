@@ -99,7 +99,9 @@ public class Empresa implements Serializable {
     private Integer serialcomprobanteiva;
     @Column(name = "serialcomprobanteislr")
     private Integer serialcomprobanteislr;
-    
+    @Column(name = "serialfactura")
+    private Integer serialfactura;
+        
     @Column(name = "ctaxpagarproveed")
     private Integer ctaxpagarproved;
     @Column(name = "credfiscal")
@@ -373,6 +375,14 @@ public class Empresa implements Serializable {
 
     public void setSerialcomprobanteislr(Integer serialcomprobanteislr) {
         this.serialcomprobanteislr = serialcomprobanteislr;
+    }
+
+    public Integer getSerialfactura() {
+        return serialfactura;
+    }
+
+    public void setSerialfactura(Integer serialfactura) {
+        this.serialfactura = serialfactura;
     }
     
     @XmlTransient

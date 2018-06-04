@@ -602,7 +602,9 @@ public class AsientosventasController implements Serializable {
         librodiario.setFecha(cobro.getFechacobro());
 
         if (cobro.getMontoretenido() > 0) {
-            this.retiva = detalleretencionivaspEJB.retencionivaencobro(cobro.getNumerofact().getNumerofact());
+            if (detalleretencionivaspEJB.retencionivaencobro(cobro.getNumerofact().getNumerofact())>0){
+                this.retiva = detalleretencionivaspEJB.retencionivaencobro(cobro.getNumerofact().getNumerofact());            
+            }
             this.retislr = detalleretencionislrspEJB.retencionislrencobro(cobro.getNumerofact().getNumerofact());
         }
         listadetalleslibrodiario = detallesasientocobro();
@@ -683,16 +685,16 @@ public class AsientosventasController implements Serializable {
 
         if (cobro.getMontoretenido() > 0) {
 
-            if (cobro.getMontoretenido() == retiva) {
+            if (cobro.getMontoretenido() == retislr) {
                 Detallelibrodiario detallelib = new Detallelibrodiario();
-                int codcta = empresa.getRetivacliente();
-                Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);
-                detallelib.setIdplandecuenta(cuentaretencioniva);
+                int codcta = empresa.getRetislrcliente();
+                Plandecuenta cuentaretencionislr = plandecuentaEJB.buscarcuenta(codcta);
+                detallelib.setIdplandecuenta(cuentaretencionislr);
                 detallelib.setDebe(cobro.getMontoretenido());
                 detallelib.setIddetallelibrodiario(id);
                 this.listadetalleslibrodiario.add(detallelib);
                 id++;
-            } else if (cobro.getMontoretenido() > retiva) {
+            } else if (cobro.getMontoretenido() > retislr) {
                 Detallelibrodiario detallelib = new Detallelibrodiario();
                 int codcta = empresa.getRetivacliente();
                 Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);

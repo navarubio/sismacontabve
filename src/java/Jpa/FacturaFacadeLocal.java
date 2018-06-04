@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
 import Modelo.Factura;
 import java.util.List;
 import javax.ejb.Local;
@@ -36,10 +37,12 @@ public interface FacturaFacadeLocal {
     
     String  siguientefacturaformat(); 
     
-    List<Factura> buscarfacturasporCobrar();
+    List<Factura> buscarfacturasporCobrar(Empresa empre);
     
     List<Factura> buscarfacturasCobradas();
     
     String  ultimafacturaformat();
+    
+    List<Factura> facturasAll(Empresa empre);
     
 }

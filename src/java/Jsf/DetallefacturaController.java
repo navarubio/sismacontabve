@@ -21,6 +21,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named("detallefacturaController")
 @ViewScoped
@@ -31,6 +32,8 @@ public class DetallefacturaController implements Serializable {
     private List<Detallefactura> items = null;
     private Detallefactura selected;
     private List<Detallefactura> detallesporfactura= null;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     public DetallefacturaController() {
     }
@@ -60,7 +63,7 @@ public class DetallefacturaController implements Serializable {
     }
     
     public List<Detallefactura> devolverlistado(){
-        List <Detallefactura> listaactualizada =ejbFacade.findAll();
+        List <Detallefactura> listaactualizada =ejbFacade.detallesfacturaAll(requerimientosController.getEmpresa());
         return listaactualizada;
     } 
 

@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Cobroventa;
+import Modelo.Empresa;
 import Modelo.Factura;
 import java.util.List;
 import javax.ejb.Local;
@@ -36,4 +37,6 @@ public interface CobroventaFacadeLocal {
     List<Cobroventa> buscarcobrosporfactura(int factu);
     
     Cobroventa ultimocobroInsertado();
+    
+    List<Cobroventa> cobrosAll(Empresa empre);
 }

@@ -29,6 +29,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 
 @Named("facturaController")
@@ -50,13 +51,14 @@ public class FacturaController implements Serializable {
     private List<Cobroventa> cobrosporfactura = null;
     private Factura selected;
     private List<Detallefactura> detallesporfactura = null;
-
+    @Inject
+    private RequerimientosController requerimientosController;
     public FacturaController() {
     }
 
     @PostConstruct
     public void init() {
-        facturasactivas = ejbFacade.buscarfacturasporCobrar();
+        facturasactivas = ejbFacade.buscarfacturasporCobrar(requerimientosController.getEmpresa());
     }
 
     public Factura getSelected() {
@@ -122,7 +124,7 @@ public class FacturaController implements Serializable {
     }
 
     public List<Factura> buscarFacturasActivas() {
-        facturasactivas = ejbFacade.buscarfacturasporCobrar();
+        facturasactivas = ejbFacade.buscarfacturasporCobrar(requerimientosController.getEmpresa());
         return facturasactivas;
     }
 
@@ -167,7 +169,7 @@ public class FacturaController implements Serializable {
 
     public List<Factura> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().facturasAll(requerimientosController.getEmpresa());
         }
         return items;
     }
