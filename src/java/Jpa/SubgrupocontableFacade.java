@@ -5,6 +5,8 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
+import Modelo.Grupocontable;
 import Modelo.Subgrupocontable;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -44,6 +46,37 @@ public class SubgrupocontableFacade extends AbstractFacade<Subgrupocontable> imp
 //            if (!lista.isEmpty()) {
 //                usuario = lista.get(0);
 //            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Subgrupocontable> subgrupocontableAll(Empresa empre) {
+        String consulta;
+        List<Subgrupocontable> lista = null;
+        try {
+            consulta = "From Subgrupocontable sg where sg.idempresa= ?1 order by sg.codigocuenta";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Subgrupocontable> subgrupocontableModelo() {
+        String consulta;
+        int empresamodelo=0;
+        List<Subgrupocontable> lista = null;
+        try {
+            consulta = "From Subgrupocontable sg where sg.idempresa= ?1 order by sg.codigocuenta";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empresamodelo);
+            lista = query.getResultList();
         } catch (Exception e) {
             throw e;
         }

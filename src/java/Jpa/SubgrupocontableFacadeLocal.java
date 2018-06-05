@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
 import Modelo.Subgrupocontable;
 import java.util.List;
 import javax.ejb.Local;
@@ -31,5 +32,9 @@ public interface SubgrupocontableFacadeLocal {
     List<Subgrupocontable> subgxGrupo(int idgrupo);
 
     int count();
+    
+    List<Subgrupocontable> subgrupocontableAll(Empresa empre);
+    
+    List<Subgrupocontable> subgrupocontableModelo();
     
 }

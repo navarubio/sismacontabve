@@ -8,18 +8,18 @@
 
     <ui:composition>
 
-        <p:dialog id="SubgrupocontableEditDlg" widgetVar="SubgrupocontableEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecontable.EditSubgrupocontableTitle}">
+        <p:dialog id="SubgrupocontableEditDlg" widgetVar="SubgrupocontableEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecontable.EditSubgrupoContableTitle}">
             <h:form id="SubgrupocontableEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{subgrupocontableController.selected != null}">
-                        <p:outputLabel value="#{bundlecontable.EditSubgrupocontableLabel_codigocuenta}" for="codigocuenta" />
-                        <p:inputText id="codigocuenta" value="#{subgrupocontableController.selected.codigocuenta}" title="#{bundlecontable.EditSubgrupocontableTitle_codigocuenta}" required="true" requiredMessage="#{bundlecontable.EditSubgrupocontableRequiredMessage_codigocuenta}"/>
-                        <p:outputLabel value="#{bundlecontable.EditSubgrupocontableLabel_idgrupocontable}" for="idgrupocontable" />
-                        <p:inputText id="idgrupocontable" value="#{subgrupocontableController.selected.idgrupocontable}" title="#{bundlecontable.EditSubgrupocontableTitle_idgrupocontable}" />
-                        <p:outputLabel value="#{bundlecontable.EditSubgrupocontableLabel_idsubgrupocontable}" for="idsubgrupocontable" />
-                        <p:inputText id="idsubgrupocontable" value="#{subgrupocontableController.selected.idsubgrupocontable}" title="#{bundlecontable.EditSubgrupocontableTitle_idsubgrupocontable}" />
-                        <p:outputLabel value="#{bundlecontable.EditSubgrupocontableLabel_subgrupocontable}" for="subgrupocontable" />
-                        <p:inputText id="subgrupocontable" value="#{subgrupocontableController.selected.subgrupocontable}" title="#{bundlecontable.EditSubgrupocontableTitle_subgrupocontable}" />
+                        <p:outputLabel value="#{bundlecontable.EditSubgrupoContableLabel_codigocuenta}" for="codigocuenta" />
+                        <p:inputText id="codigocuenta" value="#{subgrupocontableController.selected.codigocuenta}" title="#{bundlecontable.EditSubgrupoContableTitle_codigocuenta}" required="true" requiredMessage="#{bundlecontable.EditSubgrupocontableRequiredMessage_codigocuenta}"/>
+                        <p:outputLabel value="#{bundlecontable.EditSubgrupoContableLabel_idgrupocontable}" for="idgrupocontable" />
+                        <p:inputText id="idgrupocontable" value="#{subgrupocontableController.selected.idgrupocontable}" title="#{bundlecontable.EditSubgrupoContableTitle_idgrupocontable}" />
+                        <p:outputLabel value="#{bundlecontable.EditSubgrupoContableLabel_idsubgrupocontable}" for="idsubgrupocontable" />
+                        <p:inputText id="idsubgrupocontable" value="#{subgrupocontableController.selected.idsubgrupocontable}" title="#{bundlecontable.EditSubgrupoContableTitle_idsubgrupocontable}" />
+                        <p:outputLabel value="#{bundlecontable.EditSubgrupoContableLabel_subgrupocontable}" for="subgrupocontable" />
+                        <p:inputText id="subgrupocontable" value="#{subgrupocontableController.selected.subgrupocontable}" title="#{bundlecontable.EditSubgrupoContableTitle_subgrupocontable}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{subgrupocontableController.update}" value="#{bundlecontable.Save}" update="display,:SubgrupocontableListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SubgrupocontableEditDialog');"/>
                     <p:commandButton value="#{bundlecontable.Cancel}" onclick="SubgrupocontableEditDialog.hide()"/>

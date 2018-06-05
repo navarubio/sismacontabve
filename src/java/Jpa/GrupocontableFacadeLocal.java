@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
 import Modelo.Grupocontable;
 import java.util.List;
 import javax.ejb.Local;
@@ -29,5 +30,7 @@ public interface GrupocontableFacadeLocal {
     List<Grupocontable> findRange(int[] range);
 
     int count();
+    
+    List<Grupocontable> grupocontableAll(Empresa empre);
     
 }

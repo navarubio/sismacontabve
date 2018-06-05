@@ -19,6 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("grupocontableController")
 @SessionScoped
@@ -28,6 +29,8 @@ public class GrupocontableController implements Serializable {
     private Jpa.GrupocontableFacadeLocal ejbFacade;
     private List<Grupocontable> items = null;
     private Grupocontable selected;
+    @Inject
+    RequerimientosController requerimientosController;
 
     public GrupocontableController() {
     }
@@ -52,6 +55,7 @@ public class GrupocontableController implements Serializable {
 
     public Grupocontable prepareCreate() {
         selected = new Grupocontable();
+        selected.setIdempresa(requerimientosController.getEmpresa().getIdempresa());
         initializeEmbeddableKey();
         return selected;
     }
@@ -77,10 +81,12 @@ public class GrupocontableController implements Serializable {
 
     public List<Grupocontable> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().grupocontableAll(requerimientosController.getEmpresa());
         }
         return items;
     }
+    
+    
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
@@ -119,7 +125,7 @@ public class GrupocontableController implements Serializable {
     }
 
     public List<Grupocontable> getItemsAvailableSelectOne() {
-        return getFacade().findAll();
+        return getFacade().grupocontableAll(requerimientosController.getEmpresa());
     }
 
     @FacesConverter(forClass = Grupocontable.class)

@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -31,7 +33,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Grupocontable.findByGrupocontable", query = "SELECT g FROM Grupocontable g WHERE g.grupocontable = :grupocontable")})
 public class Grupocontable implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "codigocuenta")
@@ -41,7 +42,15 @@ public class Grupocontable implements Serializable {
     @Size(max = 100)
     @Column(name = "grupocontable")
     private String grupocontable;
-
+    @Column(name = "idempresa")
+    private Integer idempresa;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idgcontable")
+    private Integer idgcontable;
+    
     public Grupocontable() {
     }
 
@@ -73,6 +82,22 @@ public class Grupocontable implements Serializable {
         this.grupocontable = grupocontable;
     }
 
+    public Integer getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(Integer idempresa) {
+        this.idempresa = idempresa;
+    }
+
+    public Integer getIdgcontable() {
+        return idgcontable;
+    }
+
+    public void setIdgcontable(Integer idgcontable) {
+        this.idgcontable = idgcontable;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
