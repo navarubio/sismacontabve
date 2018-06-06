@@ -5,20 +5,26 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.EspecificocontableFacade;
 import Jpa.EspecificocontableFacadeLocal;
+import Modelo.Empresa;
+import Modelo.Grupocontable;
+import Modelo.Subgrupocontable;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("especificocontableController")
 @SessionScoped
@@ -26,12 +32,29 @@ public class EspecificocontableController implements Serializable {
 
     @EJB
     private Jpa.EspecificocontableFacadeLocal ejbFacade;
+    @EJB
+    private Jpa.SubgrupocontableFacadeLocal ejbFacadeSG;
+    @EJB
+    private Jpa.GrupocontableFacadeLocal ejbFacadeG;
+
     private List<Especificocontable> items = null;
+    private List<Especificocontable> itemsmodelo = null;
     private Especificocontable selected;
+    @Inject
+    private RequerimientosController requerimientosController;
+    @Inject
+    private Especificocontable especif;
+
+    private List<Grupocontable> lstGrupos;
+    private List<Subgrupocontable> lstSubgrupos;
 
     public EspecificocontableController() {
     }
 
+    @PostConstruct
+    public void init () {
+        lstGrupos=ejbFacadeG.grupocontableAll(requerimientosController.getEmpresa());
+    }
     public Especificocontable getSelected() {
         return selected;
     }
@@ -50,10 +73,46 @@ public class EspecificocontableController implements Serializable {
         return ejbFacade;
     }
 
+    public List<Especificocontable> getItemsmodelo() {
+        return itemsmodelo;
+    }
+
+    public void setItemsmodelo(List<Especificocontable> itemsmodelo) {
+        this.itemsmodelo = itemsmodelo;
+    }
+
+    public List<Grupocontable> getLstGrupos() {
+        return lstGrupos;
+    }
+
+    public void setLstGrupos(List<Grupocontable> lstGrupos) {
+        this.lstGrupos = lstGrupos;
+    }
+
+    public List<Subgrupocontable> getLstSubgrupos() {
+        return lstSubgrupos;
+    }
+
+    public void setLstSubgrupos(List<Subgrupocontable> lstSubgrupos) {
+        this.lstSubgrupos = lstSubgrupos;
+    }
+    
+
     public Especificocontable prepareCreate() {
         selected = new Especificocontable();
+        selected.setIdempresa(requerimientosController.getEmpresa().getIdempresa());
         initializeEmbeddableKey();
         return selected;
+    }
+
+    public List<Subgrupocontable> refrescarSubgrupos() {
+        try {
+            if (selected != null) {
+                lstSubgrupos = ejbFacadeSG.subgxGrupo(selected.getIdgrupocontable(), requerimientosController.getEmpresa());
+            }
+        } catch (Exception e) {
+        }
+        return lstSubgrupos;
     }
 
     public void create() {
@@ -77,9 +136,31 @@ public class EspecificocontableController implements Serializable {
 
     public List<Especificocontable> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().especificocontableAll(requerimientosController.getEmpresa());
         }
         return items;
+    }
+
+    public List<Especificocontable> getItemsModelo() {
+        if (itemsmodelo == null) {
+            itemsmodelo = getFacade().especificocontableModelo();
+        }
+        return itemsmodelo;
+    }
+
+    public void clonarEspecifico() {
+        try {
+            Empresa empresa = requerimientosController.getEmpresa();
+            for (Especificocontable espmodelo : itemsmodelo) {
+                especif = espmodelo;
+                especif.setIdempresa(empresa.getIdempresa());
+                ejbFacade.create(especif);
+            }
+            items = ejbFacade.especificocontableAll(empresa);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Especifico Modelo Clonado Satisfactoriamente", ""));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Clonar Especifico Modelo", ""));
+        }
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

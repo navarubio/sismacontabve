@@ -5,6 +5,7 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.SubespecificocontableFacadeLocal;
 import Jpa.SubgrupocontableFacadeLocal;
+import Modelo.Empresa;
 import Modelo.Especificocontable;
 import Modelo.Grupocontable;
 import Modelo.Subgrupocontable;
@@ -19,10 +20,12 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("subespecificocontableController")
 @SessionScoped
@@ -36,21 +39,27 @@ public class SubespecificocontableController implements Serializable {
     private Jpa.SubgrupocontableFacadeLocal ejbFacadeSG;
     @EJB
     private Jpa.GrupocontableFacadeLocal ejbFacadeG;
-    
+
     private List<Subespecificocontable> items = null;
     private Subespecificocontable selected;
-    
+
     private int idgrupo;
     private int idsubgrupo;
     private int idespecifico;
     private int idsubespecifico;
     private String codigoc;
-    
-    private List <Grupocontable> lstGrupos;
-    private List <Subgrupocontable> lstSubgrupos;
-    private List <Especificocontable> lstEspecificos;
-    private List <Subespecificocontable> lstSubespecificos;
-    
+    @Inject
+    private RequerimientosController requerimientosController;
+    @Inject
+    private Subespecificocontable subespecif;
+
+    private List<Grupocontable> lstGrupos;
+    private List<Subgrupocontable> lstSubgrupos;
+    private List<Especificocontable> lstEspecificos;
+    private List<Subespecificocontable> lstSubespecificos;
+
+    private List<Subespecificocontable> itemsmodelo = null;
+
     @PostConstruct
     public void init() {
         lstGrupos = ejbFacadeG.findAll();
@@ -87,8 +96,7 @@ public class SubespecificocontableController implements Serializable {
     public void setLstEspecificos(List<Especificocontable> lstEspecificos) {
         this.lstEspecificos = lstEspecificos;
     }
-    
-    
+
     public SubespecificocontableController() {
     }
 
@@ -113,18 +121,42 @@ public class SubespecificocontableController implements Serializable {
     public SubgrupocontableFacadeLocal getEjbFacadeSG() {
         return ejbFacadeSG;
     }
-    
+
+    public List<Subespecificocontable> getItemsmodelo() {
+        return itemsmodelo;
+    }
+
+    public void setItemsmodelo(List<Subespecificocontable> itemsmodelo) {
+        this.itemsmodelo = itemsmodelo;
+
+    }
+
+    public void clonarEspecifico() {
+        try {
+            Empresa empresa = requerimientosController.getEmpresa();
+            for (Subespecificocontable subespmodelo : itemsmodelo) {
+                subespecif = subespmodelo;
+                subespecif.setIdempresa(empresa.getIdempresa());
+                ejbFacade.create(subespecif);
+            }
+            items = ejbFacade.subespecificocontableAll(empresa);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "SubEspecifico Modelo Clonado Satisfactoriamente", ""));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Clonar SubEspecifico Modelo", ""));
+        }
+    }
 
     public Subespecificocontable prepareCreate() {
         selected = new Subespecificocontable();
+        selected.setIdempresa(requerimientosController.getEmpresa().getIdempresa());
         initializeEmbeddableKey();
         return selected;
     }
-    
+
     public List<Subgrupocontable> refrescarSubgrupos() {
-        try { 
-            if (selected!=null){
-            lstSubgrupos = ejbFacadeSG.subgxGrupo(selected.getIdgrupocontable());
+        try {
+            if (selected != null) {
+                lstSubgrupos = ejbFacadeSG.subgxGrupo(selected.getIdgrupocontable(), requerimientosController.getEmpresa());
             }
         } catch (Exception e) {
         }
@@ -133,9 +165,10 @@ public class SubespecificocontableController implements Serializable {
 
     public List<Especificocontable> refrescarEspecificos() {
         try {
-            if (selected!=null){
-                lstEspecificos = ejbFacadeES.espxSGrupo(selected.getIdgrupocontable(), selected.getIdsubgrupocontable());
-            }    
+            if (selected != null) {
+                lstEspecificos = ejbFacadeES.espxSGrupo(selected.getIdgrupocontable(),
+                        selected.getIdsubgrupocontable(), requerimientosController.getEmpresa());
+            }
         } catch (Exception e) {
         }
         return lstEspecificos;
@@ -162,9 +195,16 @@ public class SubespecificocontableController implements Serializable {
 
     public List<Subespecificocontable> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().subespecificocontableAll(requerimientosController.getEmpresa());
         }
         return items;
+    }
+
+    public List<Subespecificocontable> getItemsModelo() {
+        if (itemsmodelo == null) {
+            itemsmodelo = getFacade().subespecificocontableModelo();
+        }
+        return itemsmodelo;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

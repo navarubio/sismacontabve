@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
 import Modelo.Especificocontable;
 import java.util.List;
 import javax.ejb.Local;
@@ -30,5 +31,9 @@ public interface EspecificocontableFacadeLocal {
 
     int count();
 
-    List<Especificocontable> espxSGrupo(int idgrupo, int idsubg);
+    List<Especificocontable> espxSGrupo(int idgrupo, int idsubg, Empresa empre);
+    
+    List<Especificocontable> especificocontableAll(Empresa empre);
+    
+    List<Especificocontable> especificocontableModelo();
 }

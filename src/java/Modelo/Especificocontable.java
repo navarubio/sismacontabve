@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -33,7 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Especificocontable.findByEspecificocontable", query = "SELECT e FROM Especificocontable e WHERE e.especificocontable = :especificocontable")})
 public class Especificocontable implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "codigocuenta")
@@ -47,6 +48,14 @@ public class Especificocontable implements Serializable {
     @Size(max = 100)
     @Column(name = "especificocontable")
     private String especificocontable;
+    @Column(name = "idempresa")
+    private Integer idempresa;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idespcontable")
+    private Integer idespcontable;
 
     public Especificocontable() {
     }
@@ -93,6 +102,22 @@ public class Especificocontable implements Serializable {
 
     public void setEspecificocontable(String especificocontable) {
         this.especificocontable = especificocontable;
+    }
+
+    public Integer getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(Integer idempresa) {
+        this.idempresa = idempresa;
+    }
+
+    public Integer getIdespcontable() {
+        return idespcontable;
+    }
+
+    public void setIdespcontable(Integer idespcontable) {
+        this.idespcontable = idespcontable;
     }
 
     @Override

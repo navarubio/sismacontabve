@@ -5,6 +5,8 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
+import Modelo.Especificocontable;
 import Modelo.Subespecificocontable;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -47,6 +49,37 @@ public class SubespecificocontableFacade extends AbstractFacade<Subespecificocon
 //            if (!lista.isEmpty()) {
 //                usuario = lista.get(0);
 //            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Subespecificocontable> subespecificocontableAll(Empresa empre) {
+        String consulta;
+        List<Subespecificocontable> lista = null;
+        try {
+            consulta = "From Subespecificocontable sec where sec.idempresa= ?1 order by sec.codigocuenta";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Subespecificocontable> subespecificocontableModelo() {
+        String consulta;
+        int empresamodelo=0;
+        List<Subespecificocontable> lista = null;
+        try {
+            consulta = "From Subespecificocontable sec where sec.idempresa= ?1 order by sec.codigocuenta";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empresamodelo);
+            lista = query.getResultList();
         } catch (Exception e) {
             throw e;
         }

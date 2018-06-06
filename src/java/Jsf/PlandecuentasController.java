@@ -26,6 +26,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named("plandecuentasController")
 @ViewScoped
@@ -49,6 +50,8 @@ public class PlandecuentasController implements Serializable {
     private List<Subgrupocontable> lstSubgrupos;
     private List<Especificocontable> lstEspecificos;
     private List<Subespecificocontable> lstSubespecificos;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     public List<Grupocontable> getLstGrupos() {
         return lstGrupos;
@@ -60,7 +63,7 @@ public class PlandecuentasController implements Serializable {
 
     @PostConstruct
     public void init() {
-        lstGrupos = ejbFacadeG.findAll();
+        lstGrupos = ejbFacadeG.grupocontableAll(requerimientosController.getEmpresa());
     }
 
     public List<Subgrupocontable> getLstSubgrupos() {
@@ -116,7 +119,7 @@ public class PlandecuentasController implements Serializable {
 
     public List<Subgrupocontable> refrescarSubgrupos() {
         try {
-            lstSubgrupos = ejbFacadeSG.subgxGrupo(selected.getIdgrupocontable());
+            lstSubgrupos = ejbFacadeSG.subgxGrupo(selected.getIdgrupocontable(), requerimientosController.getEmpresa());
         } catch (Exception e) {
         }
         return lstSubgrupos;
@@ -124,7 +127,7 @@ public class PlandecuentasController implements Serializable {
 
     public List<Especificocontable> refrescarEspecificos() {
         try {
-            lstEspecificos = ejbFacadeES.espxSGrupo(selected.getIdgrupocontable(), selected.getIdsubgrupocontable());
+            lstEspecificos = ejbFacadeES.espxSGrupo(selected.getIdgrupocontable(), selected.getIdsubgrupocontable(), requerimientosController.getEmpresa());
         } catch (Exception e) {
         }
         return lstEspecificos;

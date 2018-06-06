@@ -33,4 +33,6 @@ public interface GrupocontableFacadeLocal {
     
     List<Grupocontable> grupocontableAll(Empresa empre);
     
+    List<Grupocontable> grupocontableModelo();
+    
 }

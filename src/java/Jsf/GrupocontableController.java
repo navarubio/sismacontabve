@@ -5,6 +5,8 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.GrupocontableFacade;
 import Jpa.GrupocontableFacadeLocal;
+import Modelo.Empresa;
+import Modelo.Subgrupocontable;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,6 +17,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -28,10 +31,13 @@ public class GrupocontableController implements Serializable {
     @EJB
     private Jpa.GrupocontableFacadeLocal ejbFacade;
     private List<Grupocontable> items = null;
+    private List<Grupocontable> itemsmodelo = null;
     private Grupocontable selected;
     @Inject
     RequerimientosController requerimientosController;
-
+    @Inject
+    private Grupocontable grup;
+    
     public GrupocontableController() {
     }
 
@@ -53,19 +59,44 @@ public class GrupocontableController implements Serializable {
         return ejbFacade;
     }
 
+    public List<Grupocontable> getItemsmodelo() {
+        return itemsmodelo;
+    }
+
+    public void setItemsmodelo(List<Grupocontable> itemsmodelo) {
+        this.itemsmodelo = itemsmodelo;
+    }
+
     public Grupocontable prepareCreate() {
         selected = new Grupocontable();
         selected.setIdempresa(requerimientosController.getEmpresa().getIdempresa());
+        selected.setCodigocuenta(0);
         initializeEmbeddableKey();
         return selected;
     }
 
+    public void clonarGrupos(){
+        try {
+            Empresa empresa=requerimientosController.getEmpresa();
+            for (Grupocontable grupmodelo : itemsmodelo){
+                grup=grupmodelo;
+                grup.setIdempresa(empresa.getIdempresa());
+                ejbFacade.create(grup);
+            }
+            items=ejbFacade.grupocontableAll(empresa);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Grupo Modelo Clonado Satisfactoriamente", ""));
+        }catch(Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Clonar Grupo Modelo", ""));
+        }
+    }
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundlecontable").getString("GrupocontableCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
+    
+    
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundlecontable").getString("GrupocontableUpdated"));
@@ -86,6 +117,12 @@ public class GrupocontableController implements Serializable {
         return items;
     }
     
+    public List<Grupocontable> getItemsModelo() {
+        if (itemsmodelo == null) {
+            itemsmodelo = getFacade().grupocontableModelo();
+        }
+        return itemsmodelo;
+    }
     
 
     private void persist(PersistAction persistAction, String successMessage) {

@@ -37,11 +37,12 @@ public class SubgrupocontableFacade extends AbstractFacade<Subgrupocontable> imp
     }
  
     @Override
-    public List<Subgrupocontable> subgxGrupo(int idgrupo) {
+    public List<Subgrupocontable> subgxGrupo(int idgrupo, Empresa empre) {
         try {
-            consulta = "From Subgrupocontable s where s.idgrupocontable = ?1";
+            consulta = "From Subgrupocontable s where s.idempresa= ?1 and s.idgrupocontable = ?2";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, idgrupo);
+            query.setParameter(1, empre.getIdempresa());
+            query.setParameter(2, idgrupo);            
             lista = query.getResultList();
 //            if (!lista.isEmpty()) {
 //                usuario = lista.get(0);

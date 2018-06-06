@@ -11,16 +11,55 @@
         <p:dialog id="GrupocontableCreateDlg" widgetVar="GrupocontableCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateGrupocontableTitle}">
             <h:form id="GrupocontableCreateForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{grupocontableController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateGrupocontableLabel_codigocuenta}" for="codigocuenta" />
-                        <p:inputText id="codigocuenta" value="#{grupocontableController.selected.codigocuenta}" title="#{bundlecontable.CreateGrupocontableTitle_codigocuenta}" required="true" requiredMessage="#{bundlecontable.CreateGrupocontableRequiredMessage_codigocuenta}"/>
-                        <p:outputLabel value="#{bundle.CreateGrupocontableLabel_idgrupocontable}" for="idgrupocontable" />
-                        <p:inputText id="idgrupocontable" value="#{grupocontableController.selected.idgrupocontable}" title="#{bundlecontable.CreateGrupocontableTitle_idgrupocontable}" />
-                        <p:outputLabel value="#{bundle.CreateGrupocontableLabel_grupocontable}" for="grupocontable" />
-                        <p:inputText id="grupocontable" value="#{grupocontableController.selected.grupocontable}" title="#{bundlecontable.CreateGrupocontableTitle_grupocontable}" />
+                    <p:panelGrid columns="2" id="panelmodelo">
+                        <p:panel header="Grupo Contable Modelo">
+                            <p:dataTable id="datalist1" value="#{grupocontableController.itemsModelo}" var="item" style="width:500px"
+                                         paginator="true"
+                                         rowKey="#{item.codigocuenta}"
+                                         rows="10"
+                                         rowsPerPageTemplate="10,20,30,40,50"
+                                         rowStyleClass="#{item.idempresa == 0 ? 'asientocuadrado' : null}"
+                                         >
+
+
+                                <p:column style="text-align: center">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlecontable.ListGrupoContableTitle_codigocuenta}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.codigocuenta}"/>
+                                </p:column>
+                                <p:column style="text-align: center">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlecontable.ListGrupoContableTitle_idgrupocontable}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.idgrupocontable}"/>
+                                </p:column>
+                                <p:column width="220">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlecontable.ListGrupoContableTitle_grupocontable}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.grupocontable}"/>
+                                </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton id="clonarButton" icon="ui-icon-copy"   value="Clonar" actionListener="#{grupocontableController.clonarGrupos()}" 
+                                                     update="datalist1,:GrupocontableListForm:datalist,:growl" oncomplete="handleSubmit(args,'GrupocontableCreateDialog');"/>                        
+                                </f:facet>
+                            </p:dataTable>
+                        </p:panel>
+
+                        <p:panelGrid columns="2" >
+
+                            <p:outputLabel value="#{bundle.CreateGrupocontableLabel_codigocuenta}" for="codigocuenta" />
+                            <p:inputText id="codigocuenta" value="#{grupocontableController.selected.codigocuenta}" title="#{bundlecontable.CreateGrupocontableTitle_codigocuenta}"/>
+                            <p:outputLabel value="#{bundle.CreateGrupocontableLabel_idgrupocontable}" for="idgrupocontable" />
+                            <p:inputText id="idgrupocontable" value="#{grupocontableController.selected.idgrupocontable}" title="#{bundlecontable.CreateGrupocontableTitle_idgrupocontable}" />
+                            <p:outputLabel value="#{bundle.CreateGrupocontableLabel_grupocontable}" for="grupocontable" />
+                            <p:inputText id="grupocontable" value="#{grupocontableController.selected.grupocontable}" title="#{bundlecontable.CreateGrupocontableTitle_grupocontable}" />
+                            <p:commandButton actionListener="#{grupocontableController.create}" value="#{bundlecontable.Save}" update="display,:GrupocontableListForm:datalist,:growl" oncomplete="handleSubmit(args,'GrupocontableCreateDialog');"/>
+                            <p:commandButton value="#{bundlecontable.Cancel}" onclick="GrupocontableCreateDialog.hide()"/>
+
+                        </p:panelGrid>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{grupocontableController.create}" value="#{bundlecontable.Save}" update="display,:GrupocontableListForm:datalist,:growl" oncomplete="handleSubmit(args,'GrupocontableCreateDialog');"/>
-                    <p:commandButton value="#{bundlecontable.Cancel}" onclick="GrupocontableCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

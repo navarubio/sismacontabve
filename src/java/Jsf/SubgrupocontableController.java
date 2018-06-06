@@ -104,13 +104,14 @@ public class SubgrupocontableController implements Serializable {
             items=ejbFacade.subgrupocontableAll(empresa);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Subgrupo Modelo Clonado Satisfactoriamente", ""));
         }catch(Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Clonar Subgrupo Montable", ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Clonar Subgrupo Mondelo", ""));
         }
     }
 
     public Subgrupocontable prepareCreate() {
         selected = new Subgrupocontable();
         selected.setIdempresa(requerimientosController.getEmpresa().getIdempresa());
+        selected.setCodigocuenta(0);
         initializeEmbeddableKey();
         return selected;
     }

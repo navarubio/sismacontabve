@@ -11,36 +11,91 @@
         <p:dialog id="EspecificocontableCreateDlg" widgetVar="EspecificocontableCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlecontable.CreateEspecificocontableTitle}">
             <h:form id="EspecificocontableCreateForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{especificocontableController.selected != null}">
+                    <p:panelGrid columns="2" id="panelmodelo">
+                        <p:panel header="Especifico Contable Modelo">
+                            <p:dataTable id="datalist1" value="#{especificocontableController.itemsModelo}" var="item" style="width:600px"
+                                         paginator="true"
+                                         rowKey="#{item.codigocuenta}"
+                                         rows="25"
+                                         rowsPerPageTemplate="25,30,40,50"
+                                         >
 
-                        <p:outputLabel value="#{bundlecontable.CreateEspecificocontableLabel_idgrupocontable}" for="idgrupocontable" />
-                        <p:selectOneMenu id="idgrupocontable" value="#{especificocontableController.selected.idgrupocontable}" converter="omnifaces.SelectItemsConverter" >
-                            <!--p:ajax event="change" update="codigocuenta"/-->   
-                            <f:selectItems value="#{grupocontableController.itemsAvailableSelectOne}"
-                                           var="grupocontableItem"
-                                           itemLabel="#{grupocontableItem.grupocontable}"  itemValue="#{grupocontableItem.idgrupocontable}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundlecontable.CreatePlandecuentaLabel_subgrupocontable}" for="subgrupocontable" />
-                        <p:selectOneMenu id="subgrupocontable" value="#{especificocontableController.selected.idsubgrupocontable}" converter="omnifaces.SelectItemsConverter" requiredMessage="#{bundlecontable.EditPlandecuentaRequiredMessage_subgrupocontable}">
-                            <f:selectItem itemLabel="SIN APLICAR" itemValue="0" noSelectionOption="false" />
-                            <f:selectItems value="#{subgrupocontableController.itemsAvailableSelectOne}"
-                                           var="subgrupocontableItem"
-                                           itemValue="#{subgrupocontableItem.idsubgrupocontable}"/>
-                        </p:selectOneMenu>
+                                <p:column style="text-align: center" width="70">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlecontable.ListEspecificoTitle_codigocuenta}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.codigocuenta}"/>
+                                </p:column>
+                                <p:column style="text-align: center"> 
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlecontable.ListEspecificoTitle_idgrupocontable}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.idgrupocontable}"/>
+                                </p:column>
+                                <p:column style="text-align: center">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlecontable.ListEspecificoTitle_idsubgrupocontable}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.idsubgrupocontable}"/>
+                                </p:column>
+                                <p:column style="text-align: center">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlecontable.ListEspecificoTitle_idespecificocontable}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.idespecificocontable}"/>
+                                </p:column>
+                                <p:column width="300">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundlecontable.ListEspecificoTitle_especificocontable}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.especificocontable}"/>
+                                </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton id="clonarButton" icon="ui-icon-copy"   value="Clonar" actionListener="#{especificocontableController.clonarEspecifico()}" 
+                                                     update="datalist1,:EspecificocontableListForm:datalist,:growl" oncomplete="handleSubmit(args,'EspecificocontableCreateDialog');"/>
+                                </f:facet>
+                            </p:dataTable>
+                        </p:panel>
+
+                        <p:panelGrid columns="2" >  
 
 
-                        <p:outputLabel value="#{bundlecontable.CreateEspecificocontableLabel_idespecificocontable}" for="idespecificocontable" />
-                        <p:inputText id="idespecificocontable" value="#{especificocontableController.selected.idespecificocontable}" title="#{bundlecontable.CreateEspecificocontableTitle_idespecificocontable}" />
+                            <p:outputLabel value="#{bundlecontable.CreateEspecificocontableLabel_idgrupocontable}" for="idgrupocontable" />
+                            <p:selectOneMenu id="idgrupocontable" value="#{especificocontableController.selected.idgrupocontable}" converter="omnifaces.SelectItemsConverter" >
+                                <p:ajax event="change" listener="#{especificocontableController.refrescarSubgrupos()}"  update="subgrupocontable,out1"/>   
+                                <f:selectItem itemLabel="GRUPO CONTABLE" noSelectionOption="false" />
+                                <f:selectItems value="#{especificocontableController.lstGrupos}"
+                                               var="grupocontableItem"
+                                               itemLabel="#{grupocontableItem.grupocontable}"  itemValue="#{grupocontableItem.idgrupocontable}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="#{bundlecontable.CreatePlandecuentaLabel_subgrupocontable}" for="subgrupocontable" />
+                            <p:selectOneMenu id="subgrupocontable" value="#{especificocontableController.selected.idsubgrupocontable}" converter="omnifaces.SelectItemsConverter" requiredMessage="#{bundlecontable.EditPlandecuentaRequiredMessage_subgrupocontable}">
+                                <p:ajax event="change" update="out1"/>   
+                                <f:selectItem itemLabel="SUB GRUPO"  noSelectionOption="false" />
+                                <f:selectItems value="#{especificocontableController.lstSubgrupos}"
+                                               var="subgrupocontableItem"
+                                               itemValue="#{subgrupocontableItem.idsubgrupocontable}"/>
+                            </p:selectOneMenu>
 
-                        <p:outputLabel value="#{bundlecontable.CreateEspecificocontableLabel_especificocontable}" for="especificocontable" />
-                        <p:inputText size="40" id="especificocontable" value="#{especificocontableController.selected.especificocontable}" title="#{bundlecontable.CreateEspecificocontableTitle_especificocontable}" />
 
-                        <p:outputLabel value="#{bundlecontable.CreateEspecificocontableLabel_codigocuenta}" for="codigocuenta" />
-                        <p:inputText id="codigocuenta" value="#{especificocontableController.selected.codigocuenta}" title="#{bundlecontable.CreateEspecificocontableTitle_codigocuenta}" required="true" requiredMessage="#{bundlecontable.CreateEspecificocontableRequiredMessage_codigocuenta}"/>
+                            <p:outputLabel value="#{bundlecontable.CreateEspecificocontableLabel_idespecificocontable}" for="idespecificocontable" />
+                            <p:inputText id="idespecificocontable" value="#{especificocontableController.selected.idespecificocontable}" title="#{bundlecontable.CreateEspecificocontableTitle_idespecificocontable}" >
+                                <p:ajax event="keyup" update="out1" />
+                            </p:inputText>
 
+                            <p:outputLabel value="#{bundlecontable.CreateSubespecificocontableLabel_codigocuenta}" for="out1"/> 
+                            <h:outputText id="out1" value="#{especificocontableController.selected.idgrupocontable} #{especificocontableController.selected.idsubgrupocontable} #{especificocontableController.selected.idespecificocontable} 0 0 "  />
+
+                            <p:outputLabel value="#{bundlecontable.CreateEspecificocontableLabel_codigocuenta}" for="codigocuenta" />
+                            <p:inputText id="codigocuenta" value="#{especificocontableController.selected.codigocuenta}" title="#{bundlecontable.CreateEspecificocontableTitle_codigocuenta}" required="true" requiredMessage="#{bundlecontable.CreateEspecificocontableRequiredMessage_codigocuenta}"/>
+                            <p:outputLabel value="#{bundlecontable.CreateEspecificocontableLabel_especificocontable}" for="especificocontable" />
+                            <p:inputText size="40" id="especificocontable" value="#{especificocontableController.selected.especificocontable}" title="#{bundlecontable.CreateEspecificocontableTitle_especificocontable}" />
+
+                            
+                            <p:commandButton actionListener="#{especificocontableController.create}" value="#{bundlecontable.Save}" update="display,:EspecificocontableListForm:datalist,:growl" oncomplete="handleSubmit(args,'EspecificocontableCreateDialog');"/>
+                            <p:commandButton value="#{bundlecontable.Cancel}" onclick="EspecificocontableCreateDialog.hide()"/>
+                        </p:panelGrid>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{especificocontableController.create}" value="#{bundlecontable.Save}" update="display,:EspecificocontableListForm:datalist,:growl" oncomplete="handleSubmit(args,'EspecificocontableCreateDialog');"/>
-                    <p:commandButton value="#{bundlecontable.Cancel}" onclick="EspecificocontableCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

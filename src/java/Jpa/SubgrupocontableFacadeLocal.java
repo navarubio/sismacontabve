@@ -29,7 +29,7 @@ public interface SubgrupocontableFacadeLocal {
 
     List<Subgrupocontable> findRange(int[] range);
     
-    List<Subgrupocontable> subgxGrupo(int idgrupo);
+    List<Subgrupocontable> subgxGrupo(int idgrupo, Empresa empre);
 
     int count();
     

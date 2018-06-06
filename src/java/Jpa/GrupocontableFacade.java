@@ -47,6 +47,21 @@ public class GrupocontableFacade extends AbstractFacade<Grupocontable> implement
         return lista;
     }
     
+    @Override
+    public List<Grupocontable> grupocontableModelo() {
+        String consulta;
+        int empresamodelo=0;
+        List<Grupocontable> lista = null;
+        try {
+            consulta = "From Grupocontable g where g.idempresa= ?1 order by g.codigocuenta";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empresamodelo);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
     
     
 }
