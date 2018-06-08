@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
 import Modelo.Plandecuenta;
 import java.util.List;
 import javax.ejb.Local;
@@ -28,7 +29,7 @@ public interface PlandecuentaFacadeLocal {
 
     List<Plandecuenta> findRange(int[] range);
     
-    List<Plandecuenta> itemsordenados();
+    List<Plandecuenta> itemsordenados(Empresa empresa);
 
     int count();
     

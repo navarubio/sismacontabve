@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
 import Modelo.Tipoingreso;
 import Modelo.Tipopago;
 import java.util.List;
@@ -30,5 +31,7 @@ public interface TipoingresoFacadeLocal {
     List<Tipoingreso> findRange(int[] range);
 
     int count();
+    
+    List<Tipoingreso> tipoingresoAll(Empresa empre);
     
 }

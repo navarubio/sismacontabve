@@ -49,6 +49,8 @@ public class Tipogastocajachica implements Serializable {
     @JoinColumn(name = "idplandecuenta", referencedColumnName = "idplandecuenta")
     @ManyToOne
     private Plandecuenta idplandecuenta;
+    @Column(name = "idempresa")
+    private Integer idempresa;
 
     public Tipogastocajachica() {
     }
@@ -88,6 +90,14 @@ public class Tipogastocajachica implements Serializable {
 
     public void setIdplandecuenta(Plandecuenta idplandecuenta) {
         this.idplandecuenta = idplandecuenta;
+    }
+
+    public Integer getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(Integer idempresa) {
+        this.idempresa = idempresa;
     }
 
     @Override

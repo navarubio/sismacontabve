@@ -13,7 +13,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{articuloController.selected != null}">
                         <h:outputText value="#{bundle.ViewArticuloLabel_codigo}"/>
-                        <h:outputText value="#{articuloController.selected.codigo}" title="#{bundle.ViewArticuloTitle_codigo}"/>
+                        <h:outputText value="#{articuloController.selected.idarticulo}" title="#{bundle.ViewArticuloTitle_codigo}"/>
                         <h:outputText value="#{bundle.ViewArticuloLabel_descripcion}"/>
                         <h:outputText value="#{articuloController.selected.descripcion}" title="#{bundle.ViewArticuloTitle_descripcion}"/>
                         <h:outputText value="#{bundle.ViewArticuloLabel_pcosto}"/>

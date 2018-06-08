@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
 import Modelo.Plandecuenta;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -36,11 +37,11 @@ public class PlandecuentaFacade extends AbstractFacade<Plandecuenta> implements 
     }
 
     @Override
-    public List<Plandecuenta> itemsordenados() {
+    public List<Plandecuenta> itemsordenados(Empresa empre) {
         try {
-            consulta = "SELECT p FROM Plandecuenta p order by p.idgrupocontable,p.idsubgrupocontable,p.idespecificocontable,p.idsubespecificocontable,p.idgeneralcuenta";
+            consulta = "SELECT p FROM Plandecuenta p where p.idempresa= ?1 order by p.idgrupocontable,p.idsubgrupocontable,p.idespecificocontable,p.idsubespecificocontable,p.idgeneralcuenta";
             Query query = em.createQuery(consulta);
-
+            query.setParameter(1, empre.getIdempresa());
             lista = query.getResultList();
 //            if (!lista.isEmpty()) {
 //                usuario = lista.get(0);

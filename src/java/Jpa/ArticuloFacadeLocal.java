@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Articulo;
+import Modelo.Empresa;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -28,7 +29,7 @@ public interface ArticuloFacadeLocal {
 
     List<Articulo> findRange(int[] range);
     
-    Articulo buscarArticulo(String codigo);
+    Articulo buscarArticulo(Integer codigo);
 
     int count();
    
@@ -36,5 +37,7 @@ public interface ArticuloFacadeLocal {
     
     List<Articulo> listadoAgregadospicadora();
     
-    Articulo buscarXcodigo(String codigo);
+    Articulo buscarXcodigo(Integer codigo);
+    
+    List<Articulo> articulosAll(Empresa empre);
 }

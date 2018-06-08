@@ -172,7 +172,7 @@ public class PlandecuentaController implements Serializable {
 
     public List<Plandecuenta> getItemsordenados() {
         if (items == null) {
-            items = getFacade().itemsordenados();
+            items = getFacade().itemsordenados(requerimientosController.getEmpresa());
         }
         return items;
     }

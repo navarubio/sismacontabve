@@ -19,6 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("tipogastocajachicaController")
 @SessionScoped
@@ -28,6 +29,8 @@ public class TipogastocajachicaController implements Serializable  {
     private Jpa.TipogastocajachicaFacadeLocal ejbFacade;
     private List<Tipogastocajachica> items = null;
     private Tipogastocajachica selected;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     public TipogastocajachicaController() {
     }
@@ -52,6 +55,7 @@ public class TipogastocajachicaController implements Serializable  {
 
     public Tipogastocajachica prepareCreate() {
         selected = new Tipogastocajachica();
+        selected.setIdempresa(requerimientosController.getEmpresa().getIdempresa());
         initializeEmbeddableKey();
         return selected;
     }
@@ -77,7 +81,7 @@ public class TipogastocajachicaController implements Serializable  {
 
     public List<Tipogastocajachica> getItems() {
         if (items == null) {
-            items = getFacade().tipogastocajachicaAll();
+            items = getFacade().tipogastocajachicaAll(requerimientosController.getEmpresa());
         }
         return items;
     }

@@ -1,6 +1,9 @@
 package Jpa;
 
 import Modelo.Articulo;
+import Modelo.Cajachica;
+import Modelo.Cuentabancaria;
+import Modelo.Empresa;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -32,7 +35,7 @@ public class ArticuloFacade extends AbstractFacade<Articulo> implements Articulo
     }
 
     @Override
-    public Articulo buscarArticulo(String codigo) {
+    public Articulo buscarArticulo(Integer codigo) {
         Articulo art = null;
         String consulta;
         try {
@@ -51,7 +54,7 @@ public class ArticuloFacade extends AbstractFacade<Articulo> implements Articulo
     }
     
     @Override
-    public Articulo buscarXcodigo(String codigo) {
+    public Articulo buscarXcodigo(Integer codigo) {
         Articulo art = null;
         String consulta;
         try {
@@ -139,6 +142,21 @@ public class ArticuloFacade extends AbstractFacade<Articulo> implements Articulo
             consulta = "From Articulo a where a.idsubgrupo.idsubgrupo = ?1";
             Query query = em.createQuery(consulta);
             query.setParameter(1, subgrupo);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Articulo> articulosAll(Empresa empre) {
+        String consulta;
+        List<Articulo> lista = null;
+        try {
+            consulta = "From Articulo a where a.idempresa = ?1 order by a.descripcion";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

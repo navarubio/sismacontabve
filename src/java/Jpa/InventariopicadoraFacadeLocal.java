@@ -32,6 +32,6 @@ public interface InventariopicadoraFacadeLocal {
 
     int count();
     
-    Inventariopicadora buscarAgregado (String codigo);
+    Inventariopicadora buscarAgregado (Integer codigo);
     
 }

@@ -13,7 +13,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{articuloController.selected != null}">
                         <p:outputLabel value="#{bundle.EditArticuloLabel_codigo}" for="codigo" />
-                        <p:inputText id="codigo" value="#{articuloController.selected.codigo}" title="#{bundle.EditArticuloTitle_codigo}" required="true" requiredMessage="#{bundle.EditArticuloRequiredMessage_codigo}"/>
+                        <p:inputText id="codigo" value="#{articuloController.selected.idarticulo}" title="#{bundle.EditArticuloTitle_codigo}" required="true" requiredMessage="#{bundle.EditArticuloRequiredMessage_codigo}"/>
                         <p:outputLabel value="#{bundle.EditArticuloLabel_descripcion}" for="descripcion" />
                         <p:inputText size="50" id="descripcion" value="#{articuloController.selected.descripcion}" title="#{bundle.EditArticuloTitle_descripcion}" required="true" />
                         <p:outputLabel value="#{bundle.EditArticuloLabel_pcosto}" for="pcosto" />

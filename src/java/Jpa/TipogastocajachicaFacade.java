@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
 import Modelo.Tipogastocajachica;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -31,12 +32,13 @@ public class TipogastocajachicaFacade extends AbstractFacade<Tipogastocajachica>
     }
     
     @Override
-    public List<Tipogastocajachica> tipogastocajachicaAll() {
+    public List<Tipogastocajachica> tipogastocajachicaAll(Empresa empre) {
         String consulta;
         List<Tipogastocajachica> lista = null;
         try {
-            consulta = "SELECT t FROM Tipogastocajachica t order by t.idtipogastocajachica";
+            consulta = "SELECT t FROM Tipogastocajachica t  where t.idempresa= ?1 order by t.idtipogastocajachica";
             Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

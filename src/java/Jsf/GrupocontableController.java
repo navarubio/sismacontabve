@@ -5,7 +5,9 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.GrupocontableFacade;
 import Jpa.GrupocontableFacadeLocal;
+import Jpa.PlandecuentaFacadeLocal;
 import Modelo.Empresa;
+import Modelo.Plandecuenta;
 import Modelo.Subgrupocontable;
 
 import java.io.Serializable;
@@ -30,6 +32,8 @@ public class GrupocontableController implements Serializable {
 
     @EJB
     private Jpa.GrupocontableFacadeLocal ejbFacade;
+    @EJB
+    private PlandecuentaFacadeLocal plandecuentaEJB;
     private List<Grupocontable> items = null;
     private List<Grupocontable> itemsmodelo = null;
     private Grupocontable selected;
@@ -37,6 +41,8 @@ public class GrupocontableController implements Serializable {
     RequerimientosController requerimientosController;
     @Inject
     private Grupocontable grup;
+    @Inject
+    private Plandecuenta plandecuenta;
     
     public GrupocontableController() {
     }
@@ -78,10 +84,27 @@ public class GrupocontableController implements Serializable {
     public void clonarGrupos(){
         try {
             Empresa empresa=requerimientosController.getEmpresa();
+            int estructura=0;
             for (Grupocontable grupmodelo : itemsmodelo){
                 grup=grupmodelo;
                 grup.setIdempresa(empresa.getIdempresa());
                 ejbFacade.create(grup);
+                
+                plandecuenta.setCodigocuenta(grupmodelo.getCodigocuenta());
+                plandecuenta.setIdgrupocontable(grupmodelo.getIdgrupocontable());
+                plandecuenta.setIdsubgrupocontable(estructura);
+                plandecuenta.setIdespecificocontable(estructura);
+                plandecuenta.setIdsubespecificocontable(estructura);
+                plandecuenta.setIdgeneralcuenta(estructura);
+                plandecuenta.setIdempresa(empresa.getIdempresa());
+                plandecuenta.setDescripcioncuenta(grupmodelo.getGrupocontable());
+                
+                plandecuentaEJB.create(plandecuenta);
+                
+                
+                
+                
+                
             }
             items=ejbFacade.grupocontableAll(empresa);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Grupo Modelo Clonado Satisfactoriamente", ""));

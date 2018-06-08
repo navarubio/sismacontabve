@@ -32,7 +32,7 @@ public class InventariopicadoraFacade extends AbstractFacade<Inventariopicadora>
     }
     
     @Override
-    public Inventariopicadora buscarAgregado (String codigo) {
+    public Inventariopicadora buscarAgregado (Integer codigo) {
         Inventariopicadora inv = null;
         String consulta;
         try {

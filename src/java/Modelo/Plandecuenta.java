@@ -10,6 +10,8 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -41,6 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Plandecuenta.findBySaldogeneral", query = "SELECT p FROM Plandecuenta p WHERE p.saldogeneral = :saldogeneral"),
     @NamedQuery(name = "Plandecuenta.findByFujodeefectivo", query = "SELECT p FROM Plandecuenta p WHERE p.fujodeefectivo = :fujodeefectivo")})
 public class Plandecuenta implements Serializable {
+
     @OneToMany(mappedBy = "idplandecuenta")
     private Collection<Tipogastocajachica> tipogastocajachicaCollection;
     @OneToMany(mappedBy = "idplandecuenta")
@@ -64,11 +67,10 @@ public class Plandecuenta implements Serializable {
     private Collection<Tipoingreso> tipoingresoCollection;
 
     private static final long serialVersionUID = 1L;
-    @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "idplandecuenta")
-    private Integer idplandecuenta;
+    @Column(name = "codigocuenta")
+    private Integer codigocuenta;
     @Column(name = "idgrupocontable")
     private Integer idgrupocontable;
     @Column(name = "idsubgrupocontable")
@@ -96,6 +98,14 @@ public class Plandecuenta implements Serializable {
     @JoinColumn(name = "idtipopartidacontable", referencedColumnName = "idtipopartidacontable")
     @ManyToOne
     private Tipopartidacontable idtipopartidacontable;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idplandecuenta")
+    private Integer idplandecuenta;
+    @Column(name = "idempresa")
+    private Integer idempresa;
 
     public Plandecuenta() {
     }
@@ -200,6 +210,22 @@ public class Plandecuenta implements Serializable {
         this.idtipopartidacontable = idtipopartidacontable;
     }
 
+    public Integer getCodigocuenta() {
+        return codigocuenta;
+    }
+
+    public void setCodigocuenta(Integer codigocuenta) {
+        this.codigocuenta = codigocuenta;
+    }
+
+    public Integer getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(Integer idempresa) {
+        this.idempresa = idempresa;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -222,7 +248,7 @@ public class Plandecuenta implements Serializable {
 
     @Override
     public String toString() {
-        return  idplandecuenta + " " +descripcioncuenta;
+        return idplandecuenta + " " + descripcioncuenta;
     }
 
     @XmlTransient
@@ -269,7 +295,7 @@ public class Plandecuenta implements Serializable {
     public void setArticuloventaCollection(Collection<Articulo> articuloventaCollection) {
         this.articuloventaCollection = articuloventaCollection;
     }
-    
+
     @XmlTransient
     public Collection<Libromayor> getLibromayorCollection() {
         return libromayorCollection;
@@ -278,7 +304,7 @@ public class Plandecuenta implements Serializable {
     public void setLibromayorCollection(Collection<Libromayor> libromayorCollection) {
         this.libromayorCollection = libromayorCollection;
     }
-    
+
     @XmlTransient
     public Collection<Tipoingreso> getTipoingresoCollection() {
         return tipoingresoCollection;
@@ -314,5 +340,5 @@ public class Plandecuenta implements Serializable {
     public void setCajachicaCollection(Collection<Cajachica> cajachicaCollection) {
         this.cajachicaCollection = cajachicaCollection;
     }
-    
+
 }

@@ -12,8 +12,11 @@
             <h:form id="TipoingresoCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{tipoingresoController.selected != null}">
-                        <p:outputLabel value="#{bundleingreso.CreateTipoingresoLabel_idtipoingreso}" for="idtipoingreso" />
-                        <p:inputText id="idtipoingreso" value="#{tipoingresoController.selected.idtipoingreso}" title="#{bundleingreso.CreateTipoingresoTitle_idtipoingreso}" required="true" requiredMessage="#{bundleingreso.CreateTipoingresoRequiredMessage_idtipoingreso}"/>
+                        
+                        <p:outputLabel value="#{bundlecajachica.CreateConsumocajachicaTitle_idusuario}" />
+                        <p:outputLabel value="#{requerimientosController.usa.nombre}" />
+                        <p:outputLabel value="#{bundle.ListUsuarioTitle_iddepartamento}" />
+                        <p:outputLabel value="#{requerimientosController.usuariodeprol.iddepartamento.departamento}" />                       
                         <p:outputLabel value="#{bundleingreso.CreateTipoingresoLabel_tipoingreso}" for="tipoingreso" />
                         <p:inputText id="tipoingreso" size="50" value="#{tipoingresoController.selected.tipoingreso}" title="#{bundleingreso.CreateTipoingresoTitle_tipoingreso}" />
                         <p:outputLabel value="#{bundle.EditArticuloLabel_cuentacontable}" for="idplandecuenta" />

@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Tipoingreso.findByIdtipoingreso", query = "SELECT t FROM Tipoingreso t WHERE t.idtipoingreso = :idtipoingreso"),
     @NamedQuery(name = "Tipoingreso.findByTipoingreso", query = "SELECT t FROM Tipoingreso t WHERE t.tipoingreso = :tipoingreso")})
 public class Tipoingreso implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +50,8 @@ public class Tipoingreso implements Serializable {
     @JoinColumn(name = "idplandecuenta", referencedColumnName = "idplandecuenta")
     @ManyToOne
     private Plandecuenta idplandecuenta;
+    @Column(name = "idempresa")
+    private Integer idempresa;
 
     public Tipoingreso() {
     }
@@ -80,7 +83,15 @@ public class Tipoingreso implements Serializable {
     public void setIdplandecuenta(Plandecuenta idplandecuenta) {
         this.idplandecuenta = idplandecuenta;
     }
-    
+
+    public Integer getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(Integer idempresa) {
+        this.idempresa = idempresa;
+    }
+
     @XmlTransient
     public Collection<Otroingreso> getOtroingresoCollection() {
         return otroingresoCollection;
@@ -114,5 +125,5 @@ public class Tipoingreso implements Serializable {
     public String toString() {
         return "Modelo.Tipoingreso[ idtipoingreso=" + idtipoingreso + " ]";
     }
-    
+
 }

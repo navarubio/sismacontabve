@@ -10,6 +10,8 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -56,12 +58,11 @@ public class Articulo implements Serializable {
     private Collection<Detallenotacarga> detallenotacargaCollection;
 
     private static final long serialVersionUID = 1L;
-    @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 14)
-    @Column(name = "codigo")
-    private String codigo;
+    @Column(name = "idarticulo")
+    private String idarticulo;
     @Size(max = 100)
     @Column(name = "descripcion")
     private String descripcion;
@@ -97,20 +98,27 @@ public class Articulo implements Serializable {
     @JoinColumn(name = "idcuentaventa", referencedColumnName = "idplandecuenta")
     @ManyToOne
     private Plandecuenta idcuentaventa;
-
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "codigo")
+    private Integer codigo;
+    @Column(name = "idempresa")
+    private Integer idempresa;
     
     public Articulo() {
     }
 
-    public Articulo(String codigo) {
+    public Articulo(Integer codigo) {
         this.codigo = codigo;
     }
 
-    public String getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
 
@@ -210,6 +218,21 @@ public class Articulo implements Serializable {
         this.idcuentaventa = idcuentaventa;
     }
 
+    public String getIdarticulo() {
+        return idarticulo;
+    }
+
+    public void setIdarticulo(String idarticulo) {
+        this.idarticulo = idarticulo;
+    }
+
+    public Integer getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(Integer idempresa) {
+        this.idempresa = idempresa;
+    }
     
     @Override
     public int hashCode() {

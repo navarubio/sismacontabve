@@ -153,7 +153,7 @@
                                      var="req" emptyMessage="No hay articulos para mostrar" 
                                      rowStyleClass="#{req.codigo.idplandecuenta.idplandecuenta != null ? 'articulosinclasificar' : null}">
                             <p:column style="width:8%"  headerText="Codigo Articulo">
-                                <h:outputText value="#{req.codigo.codigo}" />
+                                <h:outputText value="#{req.codigo.idarticulo}" />
                             </p:column>
                             <p:column style="width:35%"  headerText="Descripcion del Articulo">
                                 <h:outputText value="#{req.codigo.descripcion}"/>  

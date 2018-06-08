@@ -207,7 +207,7 @@
                                      var="req" emptyMessage="No hay articulos para mostrar" 
                                      rowStyleClass="#{pagosController.visualizar== 6 || pagosController.visualizar== 7 ? 'facturaabonadaporcobrar' : null}">
                             <p:column style="width:10%"  headerText="Codigo Articulo">
-                                <h:outputText value="#{req.codigo.codigo}" />
+                                <h:outputText value="#{req.codigo.idarticulo}" />
                             </p:column>
                             <p:column style="width:35%"  headerText="Descripcion del Articulo">
                                 <h:outputText value="#{req.codigo.descripcion}"/>  

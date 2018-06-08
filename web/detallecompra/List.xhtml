@@ -55,11 +55,11 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column width="120" filterBy="#{item.codigo.codigo}" filterMatchMode="contains" filterStyle="width:60px;">
+                        <p:column width="120" filterBy="#{item.codigo.idarticulo}" filterMatchMode="contains" filterStyle="width:60px;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDetallecompraTitle_codigo}"/>
                             </f:facet>
-                            <h:outputText value="#{item.codigo}"/>
+                            <h:outputText value="#{item.codigo.idarticulo}"/>
                         </p:column>
                         <p:column width="300" filterBy="#{item.codigo.descripcion}" filterMatchMode="contains">
                             <f:facet name="header">

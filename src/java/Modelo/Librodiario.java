@@ -55,6 +55,8 @@ public class Librodiario implements Serializable {
     private Collection<Libromayor> libromayorCollection;
     @OneToMany(mappedBy = "idlibrodiario")
     private Collection<Detallelibrodiario> detallelibrodiarioCollection;
+    @Column(name = "idempresa")
+    private Integer idempresa;
 
     public Librodiario() {
     }
@@ -95,6 +97,14 @@ public class Librodiario implements Serializable {
     public void setLibromayorCollection(Collection<Libromayor> libromayorCollection) {
         this.libromayorCollection = libromayorCollection;
     }
+
+    public Integer getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(Integer idempresa) {
+        this.idempresa = idempresa;
+    } 
 
     @XmlTransient
     public Collection<Detallelibrodiario> getDetallelibrodiarioCollection() {

@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
 import Modelo.Tipogastocajachica;
 import java.util.List;
 import javax.ejb.Local;
@@ -30,6 +31,6 @@ public interface TipogastocajachicaFacadeLocal {
 
     int count();
     
-    List<Tipogastocajachica> tipogastocajachicaAll();
+    List<Tipogastocajachica> tipogastocajachicaAll(Empresa empre);
     
 }

@@ -19,6 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("tipoingresoController")
 @SessionScoped
@@ -28,6 +29,8 @@ public class TipoingresoController implements Serializable {
     private Jpa.TipoingresoFacadeLocal ejbFacade;
     private List<Tipoingreso> items = null;
     private Tipoingreso selected;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     public TipoingresoController() {
     }
@@ -50,8 +53,17 @@ public class TipoingresoController implements Serializable {
         return ejbFacade;
     }
 
+    public RequerimientosController getRequerimientosController() {
+        return requerimientosController;
+    }
+
+    public void setRequerimientosController(RequerimientosController requerimientosController) {
+        this.requerimientosController = requerimientosController;
+    }
+
     public Tipoingreso prepareCreate() {
         selected = new Tipoingreso();
+        selected.setIdempresa(requerimientosController.getEmpresa().getIdempresa());
         initializeEmbeddableKey();
         return selected;
     }
@@ -77,7 +89,7 @@ public class TipoingresoController implements Serializable {
 
     public List<Tipoingreso> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().tipoingresoAll(requerimientosController.getEmpresa());
         }
         return items;
     }
