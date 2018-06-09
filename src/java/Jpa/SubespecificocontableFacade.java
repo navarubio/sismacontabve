@@ -37,13 +37,14 @@ public class SubespecificocontableFacade extends AbstractFacade<Subespecificocon
     }
     
     @Override
-    public List<Subespecificocontable> subespxEspecifico(int idgrupo, int idsubg, int idespec) {
+    public List<Subespecificocontable> subespxEspecifico(int idgrupo, int idsubg, int idespec, Empresa empre) {
         try {
-            consulta = "From Subespecificocontable s where s.idgrupocontable = ?1 and  s.idsubgrupocontable= ?2 and  s.idespecificocontable= ?3";
+            consulta = "From Subespecificocontable s where s.idempresa= ?1 and s.idgrupocontable = ?2 and  s.idsubgrupocontable= ?3 and  s.idespecificocontable= ?4";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, idgrupo);
-            query.setParameter(2, idsubg);
-            query.setParameter(3, idespec);
+            query.setParameter(1, empre.getIdempresa());
+            query.setParameter(2, idgrupo);
+            query.setParameter(3, idsubg);
+            query.setParameter(4, idespec);
             
             lista = query.getResultList();
 //            if (!lista.isEmpty()) {

@@ -31,7 +31,7 @@ public interface SubespecificocontableFacadeLocal {
 
     int count();
     
-    List<Subespecificocontable> subespxEspecifico(int idgrupo, int idsubg, int idespec);
+    List<Subespecificocontable> subespxEspecifico(int idgrupo, int idsubg, int idespec, Empresa empre);
     
     List<Subespecificocontable> subespecificocontableAll(Empresa empre);
     

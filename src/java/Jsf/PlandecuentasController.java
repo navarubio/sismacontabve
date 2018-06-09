@@ -113,6 +113,8 @@ public class PlandecuentasController implements Serializable {
 
     public Plandecuenta prepareCreate() {
         selected = new Plandecuenta();
+        selected.setCodigocuenta(0);
+        selected.setIdempresa(requerimientosController.getEmpresa().getIdempresa());
         initializeEmbeddableKey();
         return selected;
     }
@@ -135,7 +137,7 @@ public class PlandecuentasController implements Serializable {
 
     public List<Subespecificocontable> refrescarSubespecificos() {
         try {
-            lstSubespecificos = ejbFacadeSE.subespxEspecifico(selected.getIdgrupocontable(), selected.getIdsubgrupocontable(), selected.getIdespecificocontable());
+            lstSubespecificos = ejbFacadeSE.subespxEspecifico(selected.getIdgrupocontable(), selected.getIdsubgrupocontable(), selected.getIdespecificocontable(),requerimientosController.getEmpresa());
         } catch (Exception e) {
         }
         return lstSubespecificos;

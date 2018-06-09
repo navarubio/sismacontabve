@@ -1,5 +1,6 @@
 package Jsf;
 
+import Jpa.PlandecuentaFacadeLocal;
 import Modelo.Subespecificocontable;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
@@ -8,6 +9,7 @@ import Jpa.SubgrupocontableFacadeLocal;
 import Modelo.Empresa;
 import Modelo.Especificocontable;
 import Modelo.Grupocontable;
+import Modelo.Plandecuenta;
 import Modelo.Subgrupocontable;
 
 import java.io.Serializable;
@@ -39,6 +41,8 @@ public class SubespecificocontableController implements Serializable {
     private Jpa.SubgrupocontableFacadeLocal ejbFacadeSG;
     @EJB
     private Jpa.GrupocontableFacadeLocal ejbFacadeG;
+    @EJB
+    private PlandecuentaFacadeLocal plandecuentaEJB;
 
     private List<Subespecificocontable> items = null;
     private Subespecificocontable selected;
@@ -52,6 +56,8 @@ public class SubespecificocontableController implements Serializable {
     private RequerimientosController requerimientosController;
     @Inject
     private Subespecificocontable subespecif;
+    @Inject
+    private Plandecuenta plandecuenta;
 
     private List<Grupocontable> lstGrupos;
     private List<Subgrupocontable> lstSubgrupos;
@@ -62,7 +68,7 @@ public class SubespecificocontableController implements Serializable {
 
     @PostConstruct
     public void init() {
-        lstGrupos = ejbFacadeG.findAll();
+         lstGrupos = ejbFacadeG.grupocontableAll(requerimientosController.getEmpresa());
     }
 
     public String getCodigoc() {
@@ -131,13 +137,25 @@ public class SubespecificocontableController implements Serializable {
 
     }
 
-    public void clonarEspecifico() {
+    public void clonarSubespecifico() {
         try {
             Empresa empresa = requerimientosController.getEmpresa();
+            int estructura = 0;
             for (Subespecificocontable subespmodelo : itemsmodelo) {
                 subespecif = subespmodelo;
                 subespecif.setIdempresa(empresa.getIdempresa());
                 ejbFacade.create(subespecif);
+
+                plandecuenta.setCodigocuenta(subespmodelo.getCodigocuenta());
+                plandecuenta.setIdgrupocontable(subespmodelo.getIdgrupocontable());
+                plandecuenta.setIdsubgrupocontable(subespmodelo.getIdsubgrupocontable());
+                plandecuenta.setIdespecificocontable(subespmodelo.getIdespecificocontable());
+                plandecuenta.setIdsubespecificocontable(subespmodelo.getIdsubespecificocontable());
+                plandecuenta.setIdgeneralcuenta(estructura);
+                plandecuenta.setIdempresa(empresa.getIdempresa());
+                plandecuenta.setDescripcioncuenta(subespmodelo.getSubespecificocontable());
+
+                plandecuentaEJB.create(plandecuenta);
             }
             items = ejbFacade.subespecificocontableAll(empresa);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "SubEspecifico Modelo Clonado Satisfactoriamente", ""));
@@ -149,6 +167,7 @@ public class SubespecificocontableController implements Serializable {
     public Subespecificocontable prepareCreate() {
         selected = new Subespecificocontable();
         selected.setIdempresa(requerimientosController.getEmpresa().getIdempresa());
+        selected.setCodigocuenta(0);
         initializeEmbeddableKey();
         return selected;
     }

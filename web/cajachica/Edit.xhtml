@@ -15,7 +15,7 @@
                         <p:outputLabel value="#{bundlecajachica.EditCajachicaLabel_idempresa}" />
                         <p:outputLabel value="#{cajachicaController.empresa.razonsocial}" />  
                         <p:outputLabel value="#{bundlecajachica.EditCajachicaLabel_idcajachica}" for="idcajachica" />
-                        <p:inputText id="idcajachica" value="#{cajachicaController.selected.idcajachica}" title="#{bundlecajachica.EditCajachicaTitle_idcajachica}" size="10"  required="true" requiredMessage="#{bundlecajachica.EditCajachicaRequiredMessage_idcajachica}"/>
+                        <p:inputText id="idcajachica" value="#{cajachicaController.selected.idcajachica}" title="#{bundlecajachica.EditCajachicaTitle_idcajachica}" size="10"  required="true" requiredMessage="#{bundlecajachica.EditCajachicaRequiredMessage_idcajachica}" style="text-align: right" disabled="true"  />
                         <p:outputLabel value="#{bundlecajachica.EditCajachicaLabel_descripcion}" for="descripcion" />
                         <p:inputText id="descripcion" value="#{cajachicaController.selected.descripcion}" title="#{bundlecajachica.EditCajachicaTitle_descripcion}" size="50" />
                         <p:outputLabel value="#{bundlecajachica.EditCajachicaLabel_montoasignado}" for="montoasignado" />
@@ -36,7 +36,7 @@
                             <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
                             <f:selectItems value="#{plandecuentaController.itemsordenados}"
                                            var="idplandecuentaItem"
-                                           itemValue="#{idplandecuentaItem}"/>
+                                           itemValue="#{idplandecuentaItem}" itemLabel="#{idplandecuentaItem.codigocuenta} #{idplandecuentaItem.descripcioncuenta} "/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{cajachicaController.update}" value="#{bundlecajachica.Save}" update="display,:CajachicaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CajachicaEditDialog');"/>

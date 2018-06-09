@@ -1,11 +1,13 @@
 package Jsf;
 
+import Jpa.PlandecuentaFacadeLocal;
 import Modelo.Subgrupocontable;
 import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.SubgrupocontableFacade;
 import Jpa.SubgrupocontableFacadeLocal;
 import Modelo.Empresa;
+import Modelo.Plandecuenta;
 import Modelo.Subgrupo;
 
 import java.io.Serializable;
@@ -31,14 +33,18 @@ public class SubgrupocontableController implements Serializable {
 
     @EJB
     private Jpa.SubgrupocontableFacadeLocal ejbFacade;
+    @EJB
+    private PlandecuentaFacadeLocal plandecuentaEJB;
     private List<Subgrupocontable> items = null;
     private List<Subgrupocontable> itemsmodelo = null;
-    
+
     private Subgrupocontable selected;
     @Inject
     private RequerimientosController requerimientosController;
     @Inject
     private Subgrupocontable subg;
+    @Inject
+    private Plandecuenta plandecuenta;
 
     public SubgrupocontableController() {
     }
@@ -60,7 +66,7 @@ public class SubgrupocontableController implements Serializable {
     private SubgrupocontableFacadeLocal getFacade() {
         return ejbFacade;
     }
-    
+
     private String text;
     private String fragmento;
 
@@ -79,9 +85,9 @@ public class SubgrupocontableController implements Serializable {
     public void setText(String text) {
         this.text = text;
     }
-    
-    public String codigocuentaarmado(){
-        text=text+fragmento+000;
+
+    public String codigocuentaarmado() {
+        text = text + fragmento + 000;
         return text;
     }
 
@@ -92,18 +98,30 @@ public class SubgrupocontableController implements Serializable {
     public void setItemsmodelo(List<Subgrupocontable> itemsmodelo) {
         this.itemsmodelo = itemsmodelo;
     }
-    
-    public void clonarSubgrupos(){
+
+    public void clonarSubgrupos() {
         try {
-            Empresa empresa=requerimientosController.getEmpresa();
-            for (Subgrupocontable submodelo : itemsmodelo){
-                subg=submodelo;
+            Empresa empresa = requerimientosController.getEmpresa();
+            int estructura=0;
+            for (Subgrupocontable submodelo : itemsmodelo) {
+                subg = submodelo;
                 subg.setIdempresa(empresa.getIdempresa());
                 ejbFacade.create(subg);
+                
+                plandecuenta.setCodigocuenta(submodelo.getCodigocuenta());
+                plandecuenta.setIdgrupocontable(submodelo.getIdgrupocontable());
+                plandecuenta.setIdsubgrupocontable(submodelo.getIdsubgrupocontable());
+                plandecuenta.setIdespecificocontable(estructura);
+                plandecuenta.setIdsubespecificocontable(estructura);
+                plandecuenta.setIdgeneralcuenta(estructura);
+                plandecuenta.setIdempresa(empresa.getIdempresa());
+                plandecuenta.setDescripcioncuenta(submodelo.getSubgrupocontable());
+
+                plandecuentaEJB.create(plandecuenta);
             }
-            items=ejbFacade.subgrupocontableAll(empresa);
+            items = ejbFacade.subgrupocontableAll(empresa);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Subgrupo Modelo Clonado Satisfactoriamente", ""));
-        }catch(Exception e) {
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Clonar Subgrupo Mondelo", ""));
         }
     }
@@ -141,14 +159,13 @@ public class SubgrupocontableController implements Serializable {
         }
         return items;
     }
-    
+
     public List<Subgrupocontable> getItemsModelo() {
         if (itemsmodelo == null) {
             itemsmodelo = getFacade().subgrupocontableModelo();
         }
         return itemsmodelo;
     }
-
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {

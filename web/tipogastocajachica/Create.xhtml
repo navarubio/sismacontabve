@@ -19,7 +19,7 @@
                             <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
                             <f:selectItems value="#{plandecuentaController.itemsordenados}"
                                            var="idplandecuentaItem"
-                                           itemValue="#{idplandecuentaItem}"/>
+                                           itemValue="#{idplandecuentaItem}" itemLabel="#{idplandecuentaItem.codigocuenta} #{idplandecuentaItem.descripcioncuenta} "/>
                         </p:selectOneMenu>                    </p:panelGrid>
                     <p:commandButton actionListener="#{tipogastocajachicaController.create}" value="#{bundlecajachica.Save}" update="display,:TipogastocajachicaListForm:datalist,:growl" oncomplete="handleSubmit(args,'TipogastocajachicaCreateDialog');"/>
                     <p:commandButton value="#{bundlecajachica.Cancel}" onclick="TipogastocajachicaCreateDialog.hide()"/>

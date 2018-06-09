@@ -19,7 +19,7 @@
                                          rowKey="#{item.codigocuenta}"
                                          rows="25"
                                          rowsPerPageTemplate="20,30,40,50"
-                                         rowStyleClass="#{item.idempresa== 0 ? 'asientocuadrado' : null}"
+                                         rowStyleClass="#{item.idempresa== 2 ? 'asientocuadrado' : null}"
                                          >
 
                                 <p:column style="text-align: center" width="70">
@@ -59,7 +59,7 @@
                                     <h:outputText value="#{item.subespecificocontable}"/>
                                 </p:column>
                                 <f:facet name="footer">
-                                    <p:commandButton id="clonarButton" icon="ui-icon-copy"   value="Clonar" actionListener="#{grupocontableController.clonarSubgrupos()}" 
+                                    <p:commandButton id="clonarButton" icon="ui-icon-copy"   value="Clonar" actionListener="#{subespecificocontableController.clonarSubespecifico()}" 
                                                      update="datalist1,:SubespecificocontableListForm:datalist,:growl" oncomplete="handleSubmit(args,'SubespecificocontableCreateDialog');"/>
                                 </f:facet>
                             </p:dataTable>
@@ -77,7 +77,7 @@
                             <p:outputLabel value="#{bundlecontable.CreatePlandecuentaLabel_subgrupocontable}" for="subgrupocontable" />
                             <p:selectOneMenu id="subgrupocontable" value="#{subespecificocontableController.selected.idsubgrupocontable}" converter="omnifaces.SelectItemsConverter" requiredMessage="#{bundlecontable.EditPlandecuentaRequiredMessage_subgrupocontable}">
                                 <p:ajax event="change" listener="#{subespecificocontableController.refrescarEspecificos()}" update="especificocontable,out1"/>
-                                <f:selectItem itemLabel="SUB GRUPO" itemValue="0" noSelectionOption="false" />
+                                <f:selectItem itemLabel="SUB GRUPO" noSelectionOption="false" />
                                 <f:selectItems value="#{subespecificocontableController.lstSubgrupos}"
                                                var="subgrupocontableItem"
                                                itemValue="#{subgrupocontableItem.idsubgrupocontable}"/>
@@ -85,7 +85,7 @@
                             <p:outputLabel value="#{bundlecontable.CreatePlandecuentaLabel_especificocontable}" for="especificocontable" />
                             <p:selectOneMenu id="especificocontable" value="#{subespecificocontableController.selected.idespecificocontable}" converter="omnifaces.SelectItemsConverter"  required="true" requiredMessage="#{bundlecontable.EditPlandecuentaRequiredMessage_especificocontable}">
                                 <p:ajax event="change" update="out1"/>
-                                <f:selectItem itemLabel="ESPECIFICO" itemValue="0" noSelectionOption="false" />
+                                <f:selectItem itemLabel="ESPECIFICO" noSelectionOption="false" />
                                 <f:selectItems value="#{subespecificocontableController.lstEspecificos}"
                                                var="especificocontableItem"
                                                itemValue="#{especificocontableItem.idespecificocontable}"/>

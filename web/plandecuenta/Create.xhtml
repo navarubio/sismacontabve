@@ -52,7 +52,7 @@
                         <p:outputLabel value="#{bundlecontable.CreateSubespecificocontableLabel_codigocuenta}" for="out1"/> 
                         <h:outputText id="out1" value="#{plandecuentaController.selected.idgrupocontable}  #{plandecuentaController.selected.idsubgrupocontable} #{plandecuentaController.selected.idespecificocontable} #{plandecuentaController.selected.idsubespecificocontable} #{plandecuentaController.selected.idgeneralcuenta}"/>
                         <p:outputLabel value="#{bundlecontable.CreatePlandecuentaLabel_idplandecuenta}" for="idplandecuenta" />
-                        <p:inputText id="idplandecuenta" value="#{plandecuentaController.selected.idplandecuenta}" title="#{bundlecontable.CreatePlandecuentaTitle_idplandecuenta}" required="true" requiredMessage="#{bundlecontable.CreatePlandecuentaRequiredMessage_idplandecuenta}"/>
+                        <p:inputText id="idplandecuenta" value="#{plandecuentaController.selected.codigocuenta}" title="#{bundlecontable.CreatePlandecuentaTitle_idplandecuenta}" required="true" requiredMessage="#{bundlecontable.CreatePlandecuentaRequiredMessage_idplandecuenta}"/>
                         <p:outputLabel value="#{bundlecontable.CreatePlandecuentaLabel_descripcioncuenta}" for="descripcioncuenta" />
                         <p:inputText size="60" id="descripcioncuenta" value="#{plandecuentaController.selected.descripcioncuenta}" title="#{bundlecontable.CreatePlandecuentaTitle_descripcioncuenta}" />
 
