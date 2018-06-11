@@ -51,16 +51,35 @@ public class PlandecuentaFacade extends AbstractFacade<Plandecuenta> implements 
         }
         return lista;
     }
+    
+    @Override
+    public List<Plandecuenta> cuentasdeMovimiento() {
+        int empresamodelo=0;
+        try {
+            consulta = "SELECT p FROM Plandecuenta p where p.idempresa= ?1 and p.idgeneralcuenta>0 order by p.idgrupocontable,p.idsubgrupocontable,p.idespecificocontable,p.idsubespecificocontable,p.idgeneralcuenta";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empresamodelo);
+            lista = query.getResultList();
+//            if (!lista.isEmpty()) {
+//                usuario = lista.get(0);
+//            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
 
     @Override
-    public Plandecuenta buscarcuenta(int codcta) {
+    public Plandecuenta buscarcuenta(int codcta, Empresa empre) {
         String consulta;
         Plandecuenta cuenta = null;
         List<Plandecuenta> lista = null;
         try {
-            consulta = "From Plandecuenta p where p.idplandecuenta= ?1";
+            consulta = "From Plandecuenta p where p.idempresa= ?1 and p.codigocuenta= ?2";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, codcta);
+            query.setParameter(1, empre.getIdempresa());
+            query.setParameter(2, codcta);
+            
             lista = query.getResultList();
             if (!lista.isEmpty()) {
                 cuenta = lista.get(0);

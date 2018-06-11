@@ -30,7 +30,7 @@
                             <f:selectItem itemLabel="#{bundlebanco.SelectOneMessage}"/>
                             <f:selectItems value="#{plandecuentaController.itemsordenados}"
                                            var="idplandecuentaItem"
-                                           itemValue="#{idplandecuentaItem}"/>
+                                           itemValue="#{idplandecuentaItem}" itemLabel="#{idplandecuentaItem.codigocuenta} #{idplandecuentaItem.descripcioncuenta} "/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{cuentabancariaController.update}" value="#{bundlebanco.Save}" update="display,:CuentabancariaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CuentabancariaEditDialog');"/>

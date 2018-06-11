@@ -373,7 +373,7 @@ public class ComprasController implements Serializable {
         auxiliarrequerimientos = auxiliarrequerimientoEJB.findAll();
         requerimientos = requerimientoEJB.findAll();
         proveedores = proveedorEJB.findAll();
-        articulos = articuloEJB.findAll();
+        articulos = articuloEJB.articulosAll(empresa);
         comprasporautorizar = compraEJB.buscarcomprasporAutorizar(empresa);
         comprasporpagar = compraEJB.buscarcomprasporPagar(empresa);
         compraspagadas = compraEJB.buscarcomprasPagadas(empresa);

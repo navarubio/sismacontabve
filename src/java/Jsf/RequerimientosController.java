@@ -250,11 +250,12 @@ public class RequerimientosController implements Serializable {
 
     @PostConstruct
     public void init() {
-        articulos = articuloEJB.findAll();
+
         auxrequer.setFecharequerimiento(fechaactual);
         listarequerimiento.clear();
         visualizar = 0;
         ObtenerUsuario();
+        articulos = articuloEJB.articulosAll(empresa);
     }
 
     public void ObtenerUsuario() {

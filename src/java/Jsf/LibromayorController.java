@@ -62,6 +62,8 @@ public class LibromayorController implements Serializable {
 
     @Inject
     private MovimientobancarioController movimientobancarioControler;
+    @Inject
+    private RequerimientosController requerimientosController;
 
     public LibromayorController() {
     }
@@ -170,6 +172,7 @@ public class LibromayorController implements Serializable {
         if (itemsfiltrados != null) {
             itemsfiltrados.clear();
         }
+        
     }
 
     public void actualizarBanco() {
@@ -190,14 +193,14 @@ public class LibromayorController implements Serializable {
             movimiento = itemsfiltrados.get(ultimo);
             saldocontable = movimiento.getSaldoposterior();
         }
-        cuentaseleccionada = plandecuentaEJB.buscarcuenta(cuentacontab);
+        cuentaseleccionada = plandecuentaEJB.buscarcuenta(cuentacontab, requerimientosController.getEmpresa());
         saldogeneral = cuentaseleccionada.getSaldogeneral();
     }
 
     public void conciliar() {
         listaerrores1.clear();
         Libromayorcompuesto movimiento;
-        cuentaseleccionada = plandecuentaEJB.buscarcuenta(cuentacontab);
+        cuentaseleccionada = plandecuentaEJB.buscarcuenta(cuentacontab, requerimientosController.getEmpresa());
         saldogeneral = cuentaseleccionada.getSaldogeneral();
         itemsfiltrados = libromayorcompuestoEJB.buscarmayorporfechafinal(cuentacontab, fechahasta);
         int ultimo = itemsfiltrados.size() - 1;

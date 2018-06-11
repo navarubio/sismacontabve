@@ -113,7 +113,7 @@ public class ArticuloController implements Serializable {
     }
 
         public void modificar() {
-        selected.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada));
+        selected.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada, requerimientosController.getEmpresa()));
         ejbFacade.edit(selected);
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Articulo fue Asociado"));

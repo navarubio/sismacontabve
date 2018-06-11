@@ -21,7 +21,7 @@
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{plandecuentaController.itemsordenados}"
                                            var="idplandecuentaItem"
-                                           itemValue="#{idplandecuentaItem}"/>
+                                           itemValue="#{idplandecuentaItem}" itemLabel="#{idplandecuentaItem.codigocuenta} #{idplandecuentaItem.descripcioncuenta} "/>
                         </p:selectOneMenu>
                         
                     </p:panelGrid>

@@ -688,6 +688,7 @@ public class AsientosotrosingresosController implements Serializable {
             double debe = 0;
             double haber = 0;
             double saldototaltotal = 0;
+            librodiario.setIdempresa(empresa.getIdempresa());
             librodiarioEJB.create(librodiario);
             codlibrodiario = librodiarioEJB.ultimoInsertado();
 //            movimientosBancarios=movimientoBancarioEJB.buscarmovimiento(otroingreso);
@@ -699,7 +700,7 @@ public class AsientosotrosingresosController implements Serializable {
             for (Detallelibrodiario dld : listadetalleslibrodiario) {
                 detalleld.setIdlibrodiario(codlibrodiario);
                 libromy.setIdlibrodiario(codlibrodiario);
-                cuentacontable = plandecuentaEJB.buscarcuenta(dld.getIdplandecuenta().getIdplandecuenta());
+                cuentacontable = plandecuentaEJB.buscarcuenta(dld.getIdplandecuenta().getCodigocuenta(), empresa);
 
                 detalleld.setIdplandecuenta(dld.getIdplandecuenta());
                 libromy.setIdplandecuenta(dld.getIdplandecuenta());
@@ -806,7 +807,7 @@ public class AsientosotrosingresosController implements Serializable {
         Detallelibrodiario detallelibro = new Detallelibrodiario();
 
         int codctadebe = 21115;
-        Plandecuenta cuentaporpagar = plandecuentaEJB.buscarcuenta(codctadebe);
+        Plandecuenta cuentaporpagar = plandecuentaEJB.buscarcuenta(codctadebe, empresa);
         detallelibro.setIdplandecuenta(cuentaporpagar);
         if (pagocompra.getSaldopendiente() > 0) {
             if (pagocompra.getMontoretenido() > 0) {
@@ -830,7 +831,7 @@ public class AsientosotrosingresosController implements Serializable {
             if (pagocompra.getMontoretenido() == retiva) {
                 Detallelibrodiario detallelib = new Detallelibrodiario();
                 int codcta = 21235;
-                Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);
+                Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta, empresa);
                 detallelib.setIdplandecuenta(cuentaretencioniva);
                 detallelib.setHaber(pagocompra.getMontoretenido());
                 detallelib.setIddetallelibrodiario(id);
@@ -839,7 +840,7 @@ public class AsientosotrosingresosController implements Serializable {
             } else if (pagocompra.getMontoretenido() > retiva) {
                 Detallelibrodiario detallelib = new Detallelibrodiario();
                 int codcta = 21235;
-                Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta);
+                Plandecuenta cuentaretencioniva = plandecuentaEJB.buscarcuenta(codcta, empresa);
                 detallelib.setIdplandecuenta(cuentaretencioniva);
                 detallelib.setHaber(retiva);
                 detallelib.setIddetallelibrodiario(id);
@@ -848,7 +849,7 @@ public class AsientosotrosingresosController implements Serializable {
 
                 Detallelibrodiario detallelibr1 = new Detallelibrodiario();
                 int codcta1 = 212310;
-                Plandecuenta cuentaretencionislr = plandecuentaEJB.buscarcuenta(codcta1);
+                Plandecuenta cuentaretencionislr = plandecuentaEJB.buscarcuenta(codcta1, empresa);
                 detallelibr1.setIdplandecuenta(cuentaretencionislr);
                 detallelibr1.setHaber(retislr);
                 detallelibr1.setIddetallelibrodiario(id);
@@ -912,7 +913,7 @@ public class AsientosotrosingresosController implements Serializable {
     }
 
     public void modificar() {
-        detalleamodificar.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada));
+        detalleamodificar.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada, empresa));
         listadetalleslibrodiario.set(indicearreglo, detalleamodificar);
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cuenta fue modificada"));
@@ -920,7 +921,7 @@ public class AsientosotrosingresosController implements Serializable {
 
     public void anexarregistro() {
         Detallelibrodiario detalleanexo = new Detallelibrodiario();
-        detalleaanexar.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada));
+        detalleaanexar.setIdplandecuenta(plandecuentaEJB.buscarcuenta(cuentaseleccionada, empresa));
         int indic = listadetalleslibrodiario.size();
         detalleaanexar.setIddetallelibrodiario(indic);
         detalleanexo.setIddetallelibrodiario(indic);

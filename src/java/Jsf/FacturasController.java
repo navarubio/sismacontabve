@@ -276,11 +276,11 @@ public class FacturasController implements Serializable {
     @PostConstruct
     public void init() {
         clientes = clienteEJB.findAll();
-        articulos = articuloEJB.findAll();
         factura.setFecha(fechaactual);
         listarequerimiento.clear();
         number = 0;
         empresa = requerimientosController.getEmpresa();
+        articulos = articuloEJB.articulosAll(empresa);
         
     }
 

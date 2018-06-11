@@ -63,28 +63,28 @@
                             <f:selectItem itemLabel="SELECCIONE CUENTA"/>
                             <f:selectItems value="#{plandecuentasController.itemsordenados}"
                                            var="itemplancuenta"
-                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                                           itemLabel="#{itemplancuenta.codigocuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.codigocuenta}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Retenciones Iva efectuadas por Clientes" for="retivacliente" />
                         <p:selectOneMenu id="retivacliente" value="#{empresaController.selected.retivacliente}" filter="true" filterMatchMode="contains">
                             <f:selectItem itemLabel="SELECCIONE CUENTA"/>
                             <f:selectItems value="#{plandecuentasController.itemsordenados}"
                                            var="itemplancuenta"
-                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                                           itemLabel="#{itemplancuenta.codigocuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.codigocuenta}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Reteciones ISLR efectuadas por Clientes" for="retislrcliente" />
                         <p:selectOneMenu id="retislrcliente" value="#{empresaController.selected.retislrcliente}" filter="true" filterMatchMode="contains">
                             <f:selectItem itemLabel="SELECCIONE CUENTA"/>
                             <f:selectItems value="#{plandecuentasController.itemsordenados}"
                                            var="itemplancuenta"
-                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                                           itemLabel="#{itemplancuenta.codigocuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.codigocuenta}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Cuentas por Cobrar Comerciales" for="ctaxcobrar" />
                         <p:selectOneMenu id="ctaxcobrar" value="#{empresaController.selected.ctasxcobrar}" filter="true" filterMatchMode="contains">
                             <f:selectItem itemLabel="SELECCIONE CUENTA"/>
                             <f:selectItems value="#{plandecuentasController.itemsordenados}"
                                            var="itemplancuenta"
-                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                                           itemLabel="#{itemplancuenta.codigocuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.codigocuenta}"/>
                         </p:selectOneMenu>
                         <p:outputLabel></p:outputLabel>
 
@@ -94,42 +94,42 @@
                             <f:selectItem itemLabel="SELECCIONE CUENTA"/>
                             <f:selectItems value="#{plandecuentasController.itemsordenados}"
                                            var="itemplancuenta"
-                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                                           itemLabel="#{itemplancuenta.codigocuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.codigocuenta}"/>
                         </p:selectOneMenu>                        
                         <p:outputLabel value="Retenciones IVA por Enterar" for="retivaxenterar" />
                         <p:selectOneMenu id="retivaxenterar" value="#{empresaController.selected.retivaxenterar}" filter="true" filterMatchMode="contains">
                             <f:selectItem itemLabel="SELECCIONE CUENTA"/>
                             <f:selectItems value="#{plandecuentasController.itemsordenados}"
                                            var="itemplancuenta"
-                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                                           itemLabel="#{itemplancuenta.codigocuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.codigocuenta}"/>
                         </p:selectOneMenu>                        
                         <p:outputLabel value="Retensiones ISLR por Enterar" for="retislrxenterar" />
                         <p:selectOneMenu id="retislrxenterar" value="#{empresaController.selected.retislrxenterar}" filter="true" filterMatchMode="contains">
                             <f:selectItem itemLabel="SELECCIONE CUENTA"/>
                             <f:selectItems value="#{plandecuentasController.itemsordenados}"
                                            var="itemplancuenta"
-                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                                           itemLabel="#{itemplancuenta.codigocuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.codigocuenta}"/>
                         </p:selectOneMenu>                        
                         <p:outputLabel value="Cuentas por Pagar Proveedores" for="ctaxpagarp" />
                         <p:selectOneMenu id="ctaxpagarp" value="#{empresaController.selected.ctaxpagarproved}" filter="true" filterMatchMode="contains">
                             <f:selectItem itemLabel="SELECCIONE CUENTA"/>
                             <f:selectItems value="#{plandecuentasController.itemsordenados}"
                                            var="itemplancuenta"
-                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                                           itemLabel="#{itemplancuenta.codigocuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.codigocuenta}"/>
                         </p:selectOneMenu>                        
                         <p:outputLabel value="Cuentas Internas por Pagar" for="ctasintxpagarp" />
                         <p:selectOneMenu id="ctasintxpagarp" value="#{empresaController.selected.ctaxpagarinterna}" filter="true" filterMatchMode="contains">
                             <f:selectItem itemLabel="SELECCIONE CUENTA"/>
                             <f:selectItems value="#{plandecuentasController.itemsordenados}"
                                            var="itemplancuenta"
-                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                                           itemLabel="#{itemplancuenta.codigocuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.codigocuenta}"/>
                         </p:selectOneMenu>                        
                         <p:outputLabel value="Cuenta Gasto Provisional" for="ctagastop" />
                         <p:selectOneMenu id="ctagastop" value="#{empresaController.selected.ctagastoprovisional}" filter="true" filterMatchMode="contains">
                             <f:selectItem itemLabel="SELECCIONE CUENTA"/>
                             <f:selectItems value="#{plandecuentasController.itemsordenados}"
                                            var="itemplancuenta"
-                                           itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                                           itemLabel="#{itemplancuenta.codigocuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.codigocuenta}"/>
                         </p:selectOneMenu>                        
 
 

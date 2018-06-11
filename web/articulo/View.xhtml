@@ -36,8 +36,11 @@
                         <h:outputText value="#{articuloController.selected.idgravamen.alicuota} %"  title="#{bundle.ViewArticuloTitle_idgravamen}"/>
                         <h:outputText value="#{bundle.ViewArticuloLabel_idusuario}"/>
                         <h:outputText value="#{articuloController.selected.idusuario.nombre}" title="#{bundle.ViewArticuloTitle_idusuario}"/>
-                        <h:outputText value="#{bundle.ViewArticuloLabel_codigocuenta}"/>
-                        <h:outputText value="#{articuloController.selected.idplandecuenta.idplandecuenta} #{articuloController.selected.idplandecuenta.descripcioncuenta}" title="#{bundle.ViewArticuloTitle_idusuario}"/>
+                        <h:outputText value="#{bundle.ViewArticuloLabel_codigocuenta} Compras"/>
+                        <h:outputText value="#{articuloController.selected.idplandecuenta.codigocuenta} #{articuloController.selected.idplandecuenta.descripcioncuenta}" title="#{bundle.ViewArticuloTitle_codigo}"/>
+                        <h:outputText value="#{bundle.ViewArticuloLabel_codigocuenta} Ventas"/>
+                        <h:outputText value="#{articuloController.selected.idcuentaventa.codigocuenta} #{articuloController.selected.idcuentaventa.descripcioncuenta}" title="#{bundle.ViewArticuloTitle_codigo}"/>
+
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="ArticuloViewDialog.hide()"/>
                 </h:panelGroup>

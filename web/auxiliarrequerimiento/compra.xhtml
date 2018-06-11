@@ -82,7 +82,7 @@
                                     <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                                     <f:selectItems value="#{comprasController.articulos}"
                                                    var="idarticuloItem"
-                                                   itemLabel="#{idarticuloItem.descripcion}"  itemValue="#{idarticuloItem}" /> 
+                                                   itemLabel="#{idarticuloItem.idarticulo} #{idarticuloItem.descripcion}"  itemValue="#{idarticuloItem}" /> 
                                 </p:selectOneMenu>
 
                                 <p:outputLabel for="cantidad" value="Cantidad" />

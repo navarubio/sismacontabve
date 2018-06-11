@@ -52,17 +52,17 @@
                         <p:outputLabel value="CUENTA CONTABLE EN COMPRAS" for="idplandecuenta" />
                         <p:selectOneMenu id="idplandecuenta" value="#{articuloController.selected.idplandecuenta}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{plandecuentaController.itemsAvailableSelectOne}"
+                            <f:selectItems value="#{plandecuentaController.itemsordenados}"
                                            var="idplandecuentaItem"
-                                           itemValue="#{idplandecuentaItem}"/>
+                                           itemValue="#{idplandecuentaItem}" itemLabel="#{idplandecuentaItem.codigocuenta} #{idplandecuentaItem.descripcioncuenta} "/>
                         </p:selectOneMenu>
 
                         <p:outputLabel value="CUENTA CONTABLE EN VENTAS" for="idcuentaventa" />
                         <p:selectOneMenu id="idcuentaventa" value="#{articuloController.selected.idcuentaventa}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{plandecuentaController.itemsAvailableSelectOne}"
+                            <f:selectItems value="#{plandecuentaController.itemsordenados}"
                                            var="idplandecuentaItem"
-                                           itemValue="#{idplandecuentaItem}"/>
+                                           itemValue="#{idplandecuentaItem}" itemLabel="#{idplandecuentaItem.codigocuenta} #{idplandecuentaItem.descripcioncuenta} "/>
                         </p:selectOneMenu>
 
                     </p:panelGrid>

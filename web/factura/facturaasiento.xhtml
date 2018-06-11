@@ -97,7 +97,7 @@
                                      var="req" emptyMessage="No hay articulos para mostrar" 
                                       rowStyleClass="#{req.codigo.idplandecuenta.idplandecuenta != null ? 'articulosinclasificar' : null}">
                             <p:column style="width:8%"  headerText="Codigo Articulo">
-                                <h:outputText value="#{req.codigo.codigo}" />
+                                <h:outputText value="#{req.codigo.idarticulo}" />
                             </p:column>
                             <p:column style="width:35%"  headerText="Descripcion del Articulo">
                                 <h:outputText value="#{req.codigo.descripcion}"/>  
@@ -161,7 +161,7 @@
                                     <!--f:selectItem itemLabel="SIN APLICAR" itemValue="0" noSelectionOption="false" /-->
                                     <f:selectItems value="#{plandecuentaController.itemsordenados}"
                                                    var="subespecificocontableItem"
-                                                   itemValue="#{subespecificocontableItem.idplandecuenta}" /> 
+                                                   itemValue="#{subespecificocontableItem.idplandecuenta}" itemLabel="#{subespecificocontableItem.codigocuenta} #{subespecificocontableItem.descripcioncuenta} "/> 
                                 </p:selectOneMenu>
                                 <p:outputLabel id="codigocta" value="#{asientosventasController.cuentaseleccionada}" />
                                 <!--p:outputLabel id="saldoactual" value=".{asientosventasController.detalleaanexar.idplandecuenta.saldogeneral}" styleClass="optionalLbl"/-->
@@ -178,7 +178,7 @@
                                      selectionMode="single" rowKey="#{req1.idplandecuenta.idplandecuenta}">
                                     <!--rowStyleClass=".{req1.idplandecuenta.idplandecuenta== 12620 ? 'facturaabonada' : null}"-->
                             <p:column style="text-align: center" width="60" headerText="Codigo">
-                                <h:outputText value="#{req1.idplandecuenta.idplandecuenta}" styleClass="text-ouput"/> 
+                                <h:outputText value="#{req1.idplandecuenta.codigocuenta}" styleClass="text-ouput"/> 
                             </p:column>
                             <p:column style="width:35%"  headerText="Cuenta Contable" >
                                 <h:outputText value="#{req1.idplandecuenta.descripcioncuenta}" styleClass="text-ouput"/>

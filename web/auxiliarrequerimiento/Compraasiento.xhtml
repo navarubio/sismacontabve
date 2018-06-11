@@ -57,7 +57,7 @@
                                     <p:outputLabel for="usua" value="Usuario" styleClass="optionalLbl"/>
                                     <p:outputLabel id="usua" value="#{asientoscontablesController.compra.idusuario.nombre}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="depto" value="Departamento" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="depto" value="#{asientoscontablesController.compra.idusuario.iddepartamento.departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="depto" value="#{asientoscontablesController.compra.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="proveedor1" value="Proveedor" styleClass="optionalLbl"/>
                                     <p:outputLabel id="proveedor1" value="#{asientoscontablesController.compra.rifproveedor.razonsocial}"   /> 
                                     <p:outputLabel for="rif" value="R.I.F." styleClass="optionalLbl"/>
@@ -75,7 +75,7 @@
                                     <p:outputLabel for="usua1" value="USUARIO" styleClass="optionalLbl"/>
                                     <p:outputLabel id="usua1" value="#{asientoscontablesController.compra.idusuario.nombre}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="depto1" value="DEPARTAMENTO" styleClass="optionalLbl"/>
-                                    <p:outputLabel id="depto1" value="#{asientoscontablesController.compra.idusuario.iddepartamento.departamento}" styleClass="optionalLbl"/>
+                                    <p:outputLabel id="depto1" value="#{asientoscontablesController.compra.iddepartamento.departamento}" styleClass="optionalLbl"/>
                                     <p:outputLabel for="numerofact" value="Numero Factura" styleClass="optionalLbl"/>
                                     <p:outputLabel id="numerofact" value="#{asientoscontablesController.compra.numerofactura}" />
                                     <p:outputLabel for="numerocontrol" value="Numero Control" styleClass="optionalLbl"/>
@@ -216,7 +216,7 @@
                                     <!--f:selectItem itemLabel="SIN APLICAR" itemValue="0" noSelectionOption="false" /-->
                                     <f:selectItems value="#{plandecuentaController.itemsordenados}"
                                                    var="subespecificocontableItem"
-                                                   itemValue="#{subespecificocontableItem.idplandecuenta}" /> 
+                                                   itemValue="#{subespecificocontableItem.idplandecuenta}" itemLabel="#{subespecificocontableItem.codigocuenta} #{subespecificocontableItem.descripcioncuenta} " /> 
                                 </p:selectOneMenu>
                                 <p:outputLabel id="codigocta" value="#{asientoscontablesController.cuentaseleccionada}" />
                                 <!--p:outputLabel id="saldoactual" value=".{asientosventasController.detalleaanexar.idplandecuenta.saldogeneral}" styleClass="optionalLbl"/-->
@@ -282,7 +282,7 @@
                                 <!--f:selectItem itemLabel="SIN APLICAR" itemValue="0" noSelectionOption="false" /-->
                                 <f:selectItems value="#{plandecuentaController.itemsordenados}"
                                                var="subespecificocontableItem"
-                                               itemValue="#{subespecificocontableItem.idplandecuenta}" /> 
+                                               itemValue="#{subespecificocontableItem.idplandecuenta}" itemLabel="#{subespecificocontableItem.codigocuenta} #{subespecificocontableItem.descripcioncuenta} " /> 
                             </p:selectOneMenu>
                             <p:outputLabel for="debito1"  value="DEBE" />
                             <p:inputText id="debito1"  size="10" value="#{asientoscontablesController.detalleamodificar.debe}" style="text-align:right" />

@@ -33,8 +33,10 @@ public interface PlandecuentaFacadeLocal {
 
     int count();
     
-    Plandecuenta buscarcuenta(int codcta);
+    Plandecuenta buscarcuenta(int codcta, Empresa empre);
     
     double buscarsaldoanterior(int codcta);
+    
+    List<Plandecuenta> cuentasdeMovimiento();
     
 }

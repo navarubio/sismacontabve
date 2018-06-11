@@ -5,6 +5,7 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.PlandecuentaFacade;
 import Jpa.PlandecuentaFacadeLocal;
+import Modelo.Empresa;
 import Modelo.Especificocontable;
 import Modelo.Grupocontable;
 import Modelo.Subespecificocontable;
@@ -21,6 +22,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -44,6 +46,7 @@ public class PlandecuentasController implements Serializable {
     private Jpa.SubespecificocontableFacadeLocal ejbFacadeSE;
 
     private List<Plandecuenta> items = null;
+    private List<Plandecuenta> itemsmov = null;
     private Plandecuenta selected;
 
     private List<Grupocontable> lstGrupos;
@@ -52,6 +55,10 @@ public class PlandecuentasController implements Serializable {
     private List<Subespecificocontable> lstSubespecificos;
     @Inject
     private RequerimientosController requerimientosController;
+    @Inject
+    private Plandecuenta cuentamovimiento;
+    @Inject
+    private Plandecuenta plandecuenta;
 
     public List<Grupocontable> getLstGrupos() {
         return lstGrupos;
@@ -172,6 +179,39 @@ public class PlandecuentasController implements Serializable {
     public List<Plandecuenta> getItemsordenados() {
         items = getFacade().itemsordenados(requerimientosController.getEmpresa());
         return items;
+    }
+    
+    public List<Plandecuenta> getCuentasdemovimiento() {
+        itemsmov = getFacade().cuentasdeMovimiento();
+        return itemsmov;
+    }
+    
+        public void clonarCuentasdeMovimiento() {
+        try {
+            Empresa empresa = requerimientosController.getEmpresa();
+            int estructura = 0;
+            for (Plandecuenta movi : itemsmov) {
+
+                plandecuenta.setCodigocuenta(movi.getCodigocuenta());
+                plandecuenta.setIdgrupocontable(movi.getIdgrupocontable());
+                plandecuenta.setIdsubgrupocontable(movi.getIdsubgrupocontable());
+                plandecuenta.setIdespecificocontable(movi.getIdespecificocontable());
+                plandecuenta.setIdsubespecificocontable(movi.getIdsubespecificocontable());
+                plandecuenta.setIdgeneralcuenta(movi.getIdgeneralcuenta());
+                plandecuenta.setSaldogeneral(0.0);
+                plandecuenta.setIdempresa(empresa.getIdempresa());
+                plandecuenta.setDescripcioncuenta(movi.getDescripcioncuenta());
+                plandecuenta.setIdtipopartidacontable(movi.getIdtipopartidacontable());
+                plandecuenta.setIdtipocuentacontable(movi.getIdtipocuentacontable());
+                plandecuenta.setIdtiposaldocontable(movi.getIdtiposaldocontable());
+                plandecuenta.setFujodeefectivo(movi.getFujodeefectivo());                
+                ejbFacade.create(plandecuenta);
+            }
+            items = ejbFacade.itemsordenados(empresa);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Cuentas de Movimiento Modelo Clonado Satisfactoriamente"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Clonar las Cuentas de Movimiento Modelo", "Error al Clonar las Cuentas de Movimiento Modelo"));
+        }
     }
     
     public String getComprobacionTotal() {
