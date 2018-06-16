@@ -700,7 +700,7 @@ public class AsientosotrosingresosController implements Serializable {
             for (Detallelibrodiario dld : listadetalleslibrodiario) {
                 detalleld.setIdlibrodiario(codlibrodiario);
                 libromy.setIdlibrodiario(codlibrodiario);
-                cuentacontable = plandecuentaEJB.buscarcuenta(dld.getIdplandecuenta().getCodigocuenta(), empresa);
+                cuentacontable = plandecuentaEJB.buscarcuenta(dld.getIdplandecuenta().getIdplandecuenta(), empresa);
 
                 detalleld.setIdplandecuenta(dld.getIdplandecuenta());
                 libromy.setIdplandecuenta(dld.getIdplandecuenta());

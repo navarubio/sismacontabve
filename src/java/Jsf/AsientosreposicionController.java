@@ -700,6 +700,7 @@ public class AsientosreposicionController implements Serializable {
     }
 
     public void asignarReposicion(Reposicioncajachica repo, Maestromovimiento maestro) {
+        empresa= requerimientosController.getEmpresa();
         this.retiva = 0;
         this.retislr = 0;
         this.tamaño = 0;
@@ -716,10 +717,10 @@ public class AsientosreposicionController implements Serializable {
         if (lstDetallesConsumos.isEmpty()) {
             tamaño = 0;
             this.vercasilla = 1;
-            librodiario.setDescripcionasiento("P/R APERTURA DE CAJA REP- " + reposicionCajachica.getIdreposicioncajachica() + " POR TRASPASO DESDE " + reposicionCajachica.getObservaciones());
+            librodiario.setDescripcionasiento("P/R APERTURA DE CAJA CHICA SEGUN REP- " + reposicionCajachica.getSerialreposicion());
         } else {
             tamaño = 1;
-            librodiario.setDescripcionasiento("P/R REPOSICION DE CAJA REP- " + reposicionCajachica.getIdreposicioncajachica() + " POR CONCEPTO DE " + reposicionCajachica.getObservaciones());
+            librodiario.setDescripcionasiento("P/R REPOSICION DE CAJA CHICA SEGUN REP- " + reposicionCajachica.getIdreposicioncajachica() + " POR CONCEPTO DE " + reposicionCajachica.getObservaciones());
         }
         listadetalleslibrodiario = detallesasiento();
         librodiario.setFecha(reposicionCajachica.getFecharesposicion());
@@ -783,6 +784,7 @@ public class AsientosreposicionController implements Serializable {
             double debe = 0;
             double haber = 0;
             double saldototaltotal = 0;
+            librodiario.setIdempresa(empresa.getIdempresa());
             librodiarioEJB.create(librodiario);
             codlibrodiario = librodiarioEJB.ultimoInsertado();
 

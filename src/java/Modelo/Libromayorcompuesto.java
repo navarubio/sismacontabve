@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Libromayorcompuesto.findByHaber", query = "SELECT l FROM Libromayorcompuesto l WHERE l.haber = :haber"),
     @NamedQuery(name = "Libromayorcompuesto.findBySaldoposterior", query = "SELECT l FROM Libromayorcompuesto l WHERE l.saldoposterior = :saldoposterior")})
 public class Libromayorcompuesto implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -63,6 +64,8 @@ public class Libromayorcompuesto implements Serializable {
     private Double haber;
     @Column(name = "saldoposterior")
     private Double saldoposterior;
+    @Column(name = "idempresa")
+    private Integer idempresa;
 
     public Libromayorcompuesto() {
     }
@@ -139,4 +142,12 @@ public class Libromayorcompuesto implements Serializable {
         this.saldoposterior = saldoposterior;
     }
     
+    public Integer getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(Integer idempresa) {
+        this.idempresa = idempresa;
+    } 
+
 }

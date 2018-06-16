@@ -29,7 +29,7 @@
                                     <f:selectItem noSelectionOption="true" itemLabel="SELECCIONE CUENTA"/>
                                     <f:selectItems value="#{plandecuentasController.itemsordenados}"
                                                    var="itemplancuenta"
-                                                   itemLabel="#{itemplancuenta.idplandecuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
+                                                   itemLabel="#{itemplancuenta.codigocuenta} #{itemplancuenta.descripcioncuenta}" itemValue="#{itemplancuenta.idplandecuenta}"/>
                                 </p:selectOneMenu>                               
 
                                 <p:outputLabel for="fechadesde" value="Fecha Desde" styleClass="text-ouputnormal"/>

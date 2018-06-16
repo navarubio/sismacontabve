@@ -308,7 +308,7 @@ public class ConsumoscajachicaController implements Serializable {
         } else {
             consumocajachica.setFechaloteconsumo(fechaactual);
             reposicionCajaChica.setFecharesposicion(fechaactual);
-            tiposdegastos = tipogastocajachicaEJB.findAll();
+            tiposdegastos = tipogastocajachicaEJB.tipogastocajachicaAll(empresa);
             visualizar = 2;
 //        empresa = consumocajachica.getIdcajachica().getIdempresa();
         }

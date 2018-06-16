@@ -43,7 +43,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecajachica.ListTipogastocajachicaTitle_idplandecuenta}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idplandecuenta.idplandecuenta} #{item.idplandecuenta.descripcioncuenta}"/>
+                            <h:outputText value="#{item.idplandecuenta.codigocuenta} #{item.idplandecuenta.descripcioncuenta}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlecajachica.Create}" actionListener="#{tipogastocajachicaController.prepareCreate}" update=":TipogastocajachicaCreateForm" oncomplete="PF('TipogastocajachicaCreateDialog').show()"/>
