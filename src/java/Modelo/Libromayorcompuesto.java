@@ -66,6 +66,8 @@ public class Libromayorcompuesto implements Serializable {
     private Double saldoposterior;
     @Column(name = "idempresa")
     private Integer idempresa;
+    @Column(name = "codigocuenta")
+    private Integer codigocuenta;
 
     public Libromayorcompuesto() {
     }
@@ -150,4 +152,11 @@ public class Libromayorcompuesto implements Serializable {
         this.idempresa = idempresa;
     } 
 
+    public Integer getCodigocuenta() {
+        return codigocuenta;
+    }
+
+    public void setCodigocuenta(Integer codigocuenta) {
+        this.codigocuenta = codigocuenta;
+    }
 }

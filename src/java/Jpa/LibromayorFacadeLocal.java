@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
 import Modelo.Librodiario;
 import Modelo.Libromayor;
 import Modelo.Medida;
@@ -38,6 +39,6 @@ public interface LibromayorFacadeLocal {
     
     Libromayor ultimoInsertado();
     
-    List<Libromayor> libromayorAll();
+    List<Libromayor> libromayorAll(Empresa empre);
     
 }

@@ -85,14 +85,14 @@
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                                 </h:outputText>
                             </p:column>    
-                            <p:column style="text-align: center" filterBy="#{item.idplandecuenta.idplandecuenta}" filterMatchMode="exact" filterStyle="width:50px;">
+                            <p:column style="text-align: center" >
                                 <f:facet name="header">
-                                    <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_idplandecuenta}"/>
+                                    <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_codigocuenta}"/>
                                 </f:facet>
-                                <h:outputText value="#{item.idplandecuenta}"/>
+                                <h:outputText value="#{item.codigocuenta}"/>
                             </p:column>
                             <p:column width="450">
-                                <f:facet name="header">
+                                <f:facet name="header"> 
                                     <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_cuenta}"/>
                                 </f:facet>
                                 <h:outputText value="#{item.descripcioncuenta}"/>

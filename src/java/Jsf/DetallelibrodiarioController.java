@@ -21,6 +21,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 @Named("detallelibrodiarioController")
 @ViewScoped
@@ -30,6 +31,8 @@ public class DetallelibrodiarioController implements Serializable {
     private Jpa.DetallelibrodiarioFacadeLocal ejbFacade;
     private List<Detallelibrodiario> items = null;
     private Detallelibrodiario selected;
+    @Inject
+    private RequerimientosController requerimientosController;
     
     public DetallelibrodiarioController() {
     }
@@ -79,7 +82,7 @@ public class DetallelibrodiarioController implements Serializable {
 
     public List<Detallelibrodiario> getItems() {
         if (items == null) {
-            items = getFacade().detalleslibrodiarioAll();
+            items = getFacade().detalleslibrodiarioAll(requerimientosController.getEmpresa());
         }
         return items;
     }

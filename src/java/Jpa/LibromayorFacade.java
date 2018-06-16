@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Articulo;
+import Modelo.Empresa;
 import Modelo.Librodiario;
 import Modelo.Libromayor;
 import Modelo.Plandecuenta;
@@ -90,12 +91,13 @@ public class LibromayorFacade extends AbstractFacade<Libromayor> implements Libr
     }
     
     @Override
-    public List<Libromayor> libromayorAll() {
+    public List<Libromayor> libromayorAll(Empresa empre) {
         String consulta;
         List<Libromayor> lista = null;
         try {
-            consulta = "SELECT l FROM Libromayor l order by l.idlibromayor";
+            consulta = "SELECT l FROM Libromayor l where l.idlibrodiario.idempresa = ?1 order by l.idlibromayor";
             Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;

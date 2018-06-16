@@ -27,8 +27,8 @@
                                  selectionMode="single" selection="#{detallelibrodiarioController.selected}"
                                  paginator="true"
                                  rowKey="#{item.iddetallelibrodiario}"
-                                 rows="20"
-                                 rowsPerPageTemplate="20,30,40,50"
+                                 rows="30"
+                                 rowsPerPageTemplate="30,50,100"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -54,11 +54,11 @@
                             </f:facet>
                             <h:outputText value="#{item.idlibrodiario}"/>
                         </p:column>
-                        <p:column style="text-align: center" filterBy="#{item.idplandecuenta.idplandecuenta}" filterMatchMode="exact" filterStyle="width:50px;">
+                        <p:column style="text-align: center" filterBy="#{item.idplandecuenta.codigocuenta}" filterMatchMode="exact" filterStyle="width:50px;">
                             <f:facet name="header">
-                                <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_idplandecuenta}"/>
+                                <h:outputText value="#{bundlecontabilidad.ListDetallelibrodiarioTitle_codigocuenta}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idplandecuenta}"/>
+                            <h:outputText value="#{item.idplandecuenta.codigocuenta}"/>
                         </p:column>
                         <p:column width="450" filterBy="#{item.idplandecuenta.descripcioncuenta}" filterMatchMode="contains" filterStyle="width:200px;">
                             <f:facet name="header">

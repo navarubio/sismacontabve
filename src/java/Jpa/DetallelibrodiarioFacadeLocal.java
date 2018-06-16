@@ -6,6 +6,7 @@
 package Jpa;
 
 import Modelo.Detallelibrodiario;
+import Modelo.Empresa;
 import Modelo.Librodiario;
 import Modelo.Medida;
 import java.util.List;
@@ -32,6 +33,6 @@ public interface DetallelibrodiarioFacadeLocal {
 
     int count();
     
-    List<Detallelibrodiario> detalleslibrodiarioAll(); 
+    List<Detallelibrodiario> detalleslibrodiarioAll(Empresa empre); 
     
 }
