@@ -41,4 +41,6 @@ public interface PlandecuentaFacadeLocal {
     
     List<Plandecuenta> cuentasdeMovimiento();
     
+    List<Plandecuenta> itemseeff(Empresa empre, int tipocuenta);
+    
 }

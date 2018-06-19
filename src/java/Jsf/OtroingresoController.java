@@ -11,6 +11,7 @@ import Jsf.util.JsfUtil.PersistAction;
 import Jpa.OtroingresoFacade;
 import Jpa.OtroingresoFacadeLocal;
 import Jpa.TipoconjuntoFacadeLocal;
+import Jpa.TipoingresoFacadeLocal;
 import Modelo.Banco;
 import Modelo.Cobroventa;
 import Modelo.Cuentabancaria;
@@ -58,6 +59,8 @@ public class OtroingresoController implements Serializable {
     private MovimientobancarioFacadeLocal movimientoBancarioEJB;
     @EJB
     private BancoFacadeLocal bancoEJB;
+    @EJB
+    private TipoingresoFacadeLocal tipoingresoEJB;
     @Inject
     private Maestromovimiento maestromovi;
     @Inject
@@ -84,6 +87,8 @@ public class OtroingresoController implements Serializable {
     private Tipoconjunto tipoconjunto = null;
     private Banco banco;
     private Banco bancoemisor;
+    private String mensaje;
+    private int tipomovimiento = 0;
 
     public OtroingresoController() {
     }
@@ -194,6 +199,22 @@ public class OtroingresoController implements Serializable {
         this.lstCuentasSeleccemisor = lstCuentasSeleccemisor;
     }
 
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    public int getTipomovimiento() {
+        return tipomovimiento;
+    }
+
+    public void setTipomovimiento(int tipomovimiento) {
+        this.tipomovimiento = tipomovimiento;
+    }
+
     @PostConstruct
     public void init() {
         visual = 3;
@@ -272,6 +293,19 @@ public class OtroingresoController implements Serializable {
             }
         }
     }
+    
+    public void selecciontipomovimiento() {
+        if (mensaje.equals("Ingreso")) {
+            tipomovimiento = 1;
+            visual=0;
+        } else if (mensaje.equals("Traspaso")) {
+            tipomovimiento = 2;
+            visual=1;
+        } else {
+            tipomovimiento = 0;
+        }
+
+    }
 
     public Otroingreso getOtroingreso(java.lang.Integer id) {
         return getFacade().find(id);
@@ -328,7 +362,6 @@ public class OtroingresoController implements Serializable {
     public void registrar() {
         try {
             cuentabancaria = cobro.getIdcuentabancaria();
-
             ingreso.setIdcuentabancaria(cuentabancaria);
             usa = requer.getUsa();
             ingreso.setIdusuario(usa);
@@ -339,10 +372,12 @@ public class OtroingresoController implements Serializable {
 
             saldoanteriorbanco = cuentabancaria.getSaldo();
             saldoactualbanco = requer.redondearDecimales(montoingreso + saldoanteriorbanco);
-
+            
+            
             if (visual == 1) {
                 saldoanterioremisor = cuentaemisora.getSaldo();
                 saldoactualbancoemisor = requer.redondearDecimales(saldoanterioremisor - montoingreso);
+                ingreso.setIdtipoingreso(tipoingresoEJB.devolverTipoingresoTraspaso());
             }
 
             cuentabancaria.setSaldo(saldoactualbanco);

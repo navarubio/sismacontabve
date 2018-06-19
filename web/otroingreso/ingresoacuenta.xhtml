@@ -44,18 +44,33 @@
                                                        itemLabel="#{idtpagoItem.tipopago}"  itemValue="#{idtpagoItem}" /> 
                                     </p:selectOneMenu>
 
-                                    <p:outputLabel for="tipoingreso" value="Tipo Ingreso" styleClass="text-ouputnormal"/>
-                                    <p:selectOneMenu id="tipoingreso" value="#{otroingresoController.ingreso.idtipoingreso}" converter="omnifaces.SelectItemsConverter" > 
-                                        <p:ajax event="valueChange" 
-                                                update="contenedorLabel,contenedornormal" listener="#{otroingresoController.selecciontipoingreso()}" 
-                                                process="@this">
-                                        </p:ajax>
-                                        <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
-                                        <f:selectItems value="#{tipoingresoController.items}"
-                                                       var="idtpagoItem"
-                                                       itemLabel="#{idtpagoItem.tipoingreso}"  itemValue="#{idtpagoItem}" /> 
-                                    </p:selectOneMenu>
+                                    <p:outputLabel value="Tipo Movimiento" styleClass="text-ouput"/>
+                                    <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
+                                        <p:outputLabel for="console" value="" />
+                                        <p:selectOneRadio id="console" value="#{otroingresoController.mensaje}" >
+                                            <f:selectItem itemLabel="Ingreso" itemValue="Ingreso"/>
+                                            <f:selectItem itemLabel="Traspaso" itemValue="Traspaso"/>
+                                            <p:ajax event="valueChange" 
+                                                    update="contenedorComponente,contenedorLabel,contenedorNormal" listener="#{otroingresoController.selecciontipomovimiento()}"   
+                                                    process="@this" > 
+                                            </p:ajax>    
+                                        </p:selectOneRadio>                                        
+                                    </h:panelGrid>                             
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
+                                    <p:outputLabel/>
 
+                                    <h:panelGroup id="contenedorComponente"  >
+                                        <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5"  rendered="#{otroingresoController.tipomovimiento== 1 ? true:false}">
+                                            <p:outputLabel for="tipoingreso" value="Tipo Ingreso" styleClass="text-ouputnormal"/>
+                                            <p:selectOneMenu id="tipoingreso" value="#{otroingresoController.ingreso.idtipoingreso}" converter="omnifaces.SelectItemsConverter" > 
+                                                <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                                <f:selectItems value="#{tipoingresoController.items}"
+                                                               var="idtpagoItem"
+                                                               itemLabel="#{idtpagoItem.tipoingreso}"  itemValue="#{idtpagoItem}" /> 
+                                            </p:selectOneMenu>
+                                        </h:panelGrid>
+                                    </h:panelGroup>
                                 </p:panelGrid>
                             </p:fieldset>
                             <h:panelGroup id="contenedorLabel">
@@ -85,7 +100,7 @@
                                     </p:fieldset>
                                 </p:panelGrid>
                             </h:panelGroup>
-                            <h:panelGroup id="contenedornormal">
+                            <h:panelGroup id="contenedorNormal">
                                 <p:panelGrid columns="2" rendered="#{otroingresoController.visual==0 || otroingresoController.visual== 1  ? true:false}">
                                     <p:fieldset  legend="Datos Cuenta Receptora" >
                                         <p:panelGrid columns="4" styleClass="ui-custompanelgrid3">

@@ -34,4 +34,6 @@ public interface TipoingresoFacadeLocal {
     
     List<Tipoingreso> tipoingresoAll(Empresa empre);
     
+    Tipoingreso devolverTipoingresoTraspaso ();
+    
 }

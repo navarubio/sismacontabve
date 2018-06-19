@@ -5,8 +5,11 @@
  */
 package Jpa;
 
+import Modelo.Detalleconsumocajachica;
 import Modelo.Empresa;
 import Modelo.Plandecuenta;
+import Modelo.Tipocuentacontable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -51,10 +54,10 @@ public class PlandecuentaFacade extends AbstractFacade<Plandecuenta> implements 
         }
         return lista;
     }
-    
+
     @Override
     public List<Plandecuenta> cuentasdeMovimiento() {
-        int empresamodelo=0;
+        int empresamodelo = 0;
         try {
             consulta = "SELECT p FROM Plandecuenta p where p.idempresa= ?1 and p.idgeneralcuenta>0 order by p.idgrupocontable,p.idsubgrupocontable,p.idespecificocontable,p.idsubespecificocontable,p.idgeneralcuenta";
             Query query = em.createQuery(consulta);
@@ -79,7 +82,7 @@ public class PlandecuentaFacade extends AbstractFacade<Plandecuenta> implements 
             Query query = em.createQuery(consulta);
             query.setParameter(1, empre.getIdempresa());
             query.setParameter(2, codcta);
-            
+
             lista = query.getResultList();
             if (!lista.isEmpty()) {
                 cuenta = lista.get(0);
@@ -89,7 +92,7 @@ public class PlandecuentaFacade extends AbstractFacade<Plandecuenta> implements 
         }
         return cuenta;
     }
-    
+
     @Override
     public Plandecuenta buscarcuentaxcodigo(int codcta, Empresa empre) {
         String consulta;
@@ -100,7 +103,7 @@ public class PlandecuentaFacade extends AbstractFacade<Plandecuenta> implements 
             Query query = em.createQuery(consulta);
             query.setParameter(1, empre.getIdempresa());
             query.setParameter(2, codcta);
-            
+
             lista = query.getResultList();
             if (!lista.isEmpty()) {
                 cuenta = lista.get(0);
@@ -110,12 +113,12 @@ public class PlandecuentaFacade extends AbstractFacade<Plandecuenta> implements 
         }
         return cuenta;
     }
-    
+
     @Override
     public double buscarsaldoanterior(int codcta) {
         String consulta;
         Plandecuenta cuenta = null;
-        double sandoant=0;
+        double sandoant = 0;
         List<Plandecuenta> lista = null;
         try {
             consulta = "From Plandecuenta p where p.idplandecuenta= ?1";
@@ -130,6 +133,110 @@ public class PlandecuentaFacade extends AbstractFacade<Plandecuenta> implements 
         }
         return cuenta.getSaldogeneral();
     }
-    
-    
+
+    @Override
+    public List<Plandecuenta> itemseeff(Empresa empre, int tipocuenta) {
+        List<Plandecuenta> listaeeff = new ArrayList<>();
+        List<Plandecuenta> listaeeffinal = new ArrayList<>();
+        int one, two, tree, four, five = 0;
+        int oneant=0;
+        int twoant=0;
+        int treeant=0;
+        int fourant=0;
+        int fiveant=0;
+        Plandecuenta cuentacontable;
+        try {
+            if(tipocuenta<3){
+                consulta = "SELECT p FROM Plandecuenta p where p.idempresa= ?1 and p.idtipocuentacontable.idtipocuentacontable= ?2 order by p.idgrupocontable,p.idsubgrupocontable,p.idespecificocontable,p.idsubespecificocontable,p.idgeneralcuenta";
+            }else{
+                consulta = "SELECT p FROM Plandecuenta p where p.idempresa= ?1 and p.idtipocuentacontable.idtipocuentacontable< ?2 order by p.idgrupocontable,p.idsubgrupocontable,p.idespecificocontable,p.idsubespecificocontable,p.idgeneralcuenta";
+            }
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
+            query.setParameter(2, tipocuenta);
+            lista = query.getResultList();
+            for (Plandecuenta plan : lista) {
+                if (plan.getSaldogeneral() != null) {
+                    if (plan.getSaldogeneral() > 0) {
+                        listaeeff.add(plan);
+                    } else if (plan.getSaldogeneral() < 0) {
+                        listaeeff.add(plan);
+                    }
+
+                }
+            }
+            for (Plandecuenta plan1 : listaeeff) {
+                String codigog = plan1.getIdgrupocontable() + "0000";
+                one = Integer.parseInt(codigog);
+
+                String codigosg = plan1.getIdgrupocontable() + "" + plan1.getIdsubgrupocontable() + "000";
+                two = Integer.parseInt(codigosg);
+
+                String codigoesp = plan1.getIdgrupocontable() + "" + plan1.getIdsubgrupocontable() + "" + plan1.getIdespecificocontable() + "00";
+                tree = Integer.parseInt(codigoesp);
+
+                String codigosubesp = plan1.getIdgrupocontable() + "" + plan1.getIdsubgrupocontable() + "" + plan1.getIdespecificocontable() + "" + plan1.getIdsubespecificocontable() + "0";
+                four = Integer.parseInt(codigosubesp);
+                
+                String codigogral = plan1.getIdgrupocontable() + "" + plan1.getIdsubgrupocontable() + "" + plan1.getIdespecificocontable() + "" + plan1.getIdsubespecificocontable() + ""+plan1.getIdgeneralcuenta();
+                five = Integer.parseInt(codigogral);
+                
+
+                for (Plandecuenta general : lista) {
+
+                    String codigogrupo = general.getIdgrupocontable() + "0000";
+                    int uno = Integer.parseInt(codigogrupo);
+
+                    String codigosubgrupo = general.getIdgrupocontable() + "" + general.getIdsubgrupocontable() + "000";
+                    int dos = Integer.parseInt(codigosubgrupo);
+
+                    String codigoespecifico = general.getIdgrupocontable() + "" + general.getIdsubgrupocontable() + "" + general.getIdespecificocontable() + "00";
+                    int tres = Integer.parseInt(codigoespecifico);
+
+                    String codigosubespecifico = general.getIdgrupocontable() + "" + general.getIdsubgrupocontable() + "" + general.getIdespecificocontable() + "" + general.getIdsubespecificocontable() + "0";
+                    int cuatro = Integer.parseInt(codigosubespecifico);
+                    
+                    String codigogeneral = general.getIdgrupocontable() + "" + general.getIdsubgrupocontable() + "" + general.getIdespecificocontable() + "" + general.getIdsubespecificocontable() + ""+general.getIdgeneralcuenta();
+                    int cinco = Integer.parseInt(codigogeneral);
+
+                    if (uno == one && uno == dos ) {
+                        if (oneant!=one){
+                            listaeeffinal.add(general);
+                        }
+                    }
+                    if (uno == one && dos == two && dos == tres) {
+                        if (twoant!=two ){
+                            listaeeffinal.add(general);
+                        }
+                    }
+                    if (uno == one && dos == two && tres == tree && tres==cuatro) {
+                        if (treeant!=tree){
+                            listaeeffinal.add(general);
+                        }
+                    }
+                    if (uno == one && dos == two && tres == tree && cuatro==four && cuatro==cinco) {
+                        if (fourant!=four){
+                            listaeeffinal.add(general);
+                        }
+                    }
+                    if (uno == one && dos == two && tres == tree && cuatro==four && cinco==five) {
+                        if (fiveant!=five){
+                            listaeeffinal.add(general);
+                        }
+                    }                    
+
+                }
+                oneant=one;
+                twoant=two;
+                treeant=tree;
+                fourant=four;
+                fiveant=five;
+            }
+
+        } catch (Exception e) {
+            throw e;
+        }
+        return listaeeffinal;
+    }
+
 }

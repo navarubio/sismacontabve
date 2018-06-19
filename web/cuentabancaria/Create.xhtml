@@ -28,7 +28,7 @@
                         <p:selectOneMenu id="idplandecuenta" value="#{cuentabancariaController.selected.idplandecuenta}" filter="true" filterMatchMode="contains"  converter="omnifaces.SelectItemsConverter" >
                             <f:selectItems value="#{plandecuentaController.itemsordenados}"
                                            var="idplandecuentaItem"
-                                           itemValue="#{idplandecuentaItem}"/>
+                                           itemValue="#{idplandecuentaItem}" itemLabel="#{idplandecuentaItem.codigocuenta} #{idplandecuentaItem.descripcioncuenta}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{cuentabancariaController.create}" value="#{bundlebanco.Save}" update="display,:CuentabancariaListForm:datalist,:growl" oncomplete="handleSubmit(args,'CuentabancariaCreateDialog');"/>

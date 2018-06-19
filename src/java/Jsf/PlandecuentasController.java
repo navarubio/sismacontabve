@@ -181,6 +181,21 @@ public class PlandecuentasController implements Serializable {
         return items;
     }
     
+    public List<Plandecuenta> getItemsBalance() {
+        items = getFacade().itemseeff(requerimientosController.getEmpresa(),1);
+        return items;
+    }
+    
+    public List<Plandecuenta> getItemsResultados() {
+        items = getFacade().itemseeff(requerimientosController.getEmpresa(),2);
+        return items;
+    }
+    
+    public List<Plandecuenta> getItemsComprobacion() {
+        items = getFacade().itemseeff(requerimientosController.getEmpresa(),3);
+        return items;
+    }
+    
     public List<Plandecuenta> getCuentasdemovimiento() {
         itemsmov = getFacade().cuentasdeMovimiento();
         return itemsmov;

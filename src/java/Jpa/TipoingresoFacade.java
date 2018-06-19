@@ -47,4 +47,23 @@ public class TipoingresoFacade extends AbstractFacade<Tipoingreso> implements Ti
         return lista;
     }
     
+    @Override
+    public Tipoingreso devolverTipoingresoTraspaso () {
+        int traspaso = 0;
+        String consulta;
+        Tipoingreso tipoingre=null;
+        try {
+            consulta = "From Tipoingreso t where t.idtipoingreso= ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, traspaso);
+            List<Tipoingreso> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                tipoingre = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return tipoingre;
+    }
+    
 }
