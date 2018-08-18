@@ -10,7 +10,7 @@
         <f:event type="preRenderView" listener="#{plandecuentasController.itemsBalance} "/>
 
         <ui:define name="title">
-            <h:outputText value="#{bundlecontable.ListPlandecuentaTitleComprobacion}"></h:outputText>
+            <h:outputText value="#{bundlecontable.ListPlandecuentaTitleBalance}"></h:outputText>
             <h:outputStylesheet library="css" name="index.css" />
         </ui:define>
 
@@ -24,7 +24,7 @@
                 <img src="../resources/images/viewtree.png" width="70" height="70" alt="Solicitudes" align="right" />
 
                 <p:panel header="#{bundlecontable.ListPlandecuentaTitleComprobacion}">
-                    <p:dataTable id="datalist" value="#{plandecuentasController.itemsBalance}" var="item"
+                        <p:dataTable id="datalist" value="#{plandecuentasController.itemsBalance}" var="item"
                                  selectionMode="single" selection="#{plandecuentaController.selected}"  style="width: 700px;"
                                  paginator="true"
                                  rowKey="#{item.idplandecuenta}"

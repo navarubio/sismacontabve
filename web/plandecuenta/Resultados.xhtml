@@ -23,52 +23,69 @@
                 </div>     
                 <img src="../resources/images/viewtree.png" width="70" height="70" alt="Solicitudes" align="right" />
 
-                <p:panel header="#{bundlecontable.ListPlandecuentaTitleResultados}">
-                    <p:dataTable id="datalist" value="#{plandecuentasController.itemsResultados}" var="item"
-                                 selectionMode="single" selection="#{plandecuentaController.selected}"  style="width: 700px;"
-                                 paginator="true"
-                                 rowKey="#{item.idplandecuenta}"
-                                 rows="30"
-                                 rowStyleClass="#{item.idgeneralcuenta> 0 ? 'facturaabonada' : null} #{item.idgeneralcuenta== 0 ? 'asientocuadrado' : null}"
-                                 rowsPerPageTemplate="30,40,50"
-                                 >
+                <p:panel id="panel1" header="#{bundlecontable.ListPlandecuentaTitleResultados}">
+                    <p:panelGrid columns="1" >
+                        <p:fieldset  legend="Seleccione el Periodo"  toggleable="true" toggleSpeed="500" collapsed="false" >
+                            <p:panelGrid columns="8" styleClass="ui-custompanelgrid1">
+                                <p:outputLabel for="fechadesde" value="Fecha Desde" styleClass="text-ouputnormal"/>
+                                <p:calendar size="10"  locale="es" id="fechadesde" pattern="dd/MM/yyyy" value="#{movimientobancarioController.fechadesde}" showOn="button" navigator="true" required="true"/>                                
+                                <p:outputLabel for="fechahasta" value="Fecha Hasta" styleClass="text-ouputnormal" />
+                                <p:calendar size="10"  locale="es" id="fechahasta" pattern="dd/MM/yyyy" value="#{movimientobancarioController.fechahasta}" showOn="button" navigator="true" required="true"/>                                
+                                <p:commandButton value="Buscar" icon="ui-icon-check" actionListener="#{libromayorController.actualizar()}" update="datalist,panel1"/>
+                                <!--p:commandButton id="printButtom"  type="submit" icon="ui-icon-print"   value=".{bundle.Imprimir}" actionListener=".{movimientobancarioController.verMovimiento()}" ajax="false" onclick="form.target = '_blank'"/-->
+                            </p:panelGrid>
+                        </p:fieldset>
+                    </p:panelGrid>
+                </p:panel>
+                <p:panel id="listado">
+                    <p:panelGrid columns="1" >
+                        
+                        <p:dataTable id="datalist" value="#{plandecuentasController.itemsResultados}" var="item"
+                                     selectionMode="single" selection="#{plandecuentaController.selected}"  style="width: 700px;"
+                                     paginator="true"
+                                     rowKey="#{item.idplandecuenta}"
+                                     rows="30"
+                                     rowStyleClass="#{item.idgeneralcuenta> 0 ? 'facturaabonada' : null} #{item.idgeneralcuenta== 0 ? 'asientocuadrado' : null}"
+                                     rowsPerPageTemplate="30,40,50"
+                                     >
 
-                        <p:column filterBy="#{item.codigocuenta}" filterMatchMode="exact" filterStyle="width:50px;">
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecontable.ListPlandecuentaTitle_idplandecuenta}"/>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundlecontable.ListPlandecuentaTitle_idplandecuenta}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codigocuenta}"/>
+                            </p:column>
+                            <p:column width="340" >
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundlecontable.ListPlandecuentaTitle_descripcioncuenta}"/>
+                                </f:facet>
+                                <h:outputText  value="#{item.descripcioncuenta}"/>
+                            </p:column>
+                            <p:column style="text-align: right" width="100" >
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundlecontable.ListPlandecuentaTitle_saldogeneral}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.saldogeneral}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align: center">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundlecontable.ListPlandecuentaTitle_idtipocuentacontable}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idtipocuentacontable.tipocuentacontable}"/>
+                            </p:column>
+                            <p:columnGroup type="footer">
+                                <p:row>
+                                    <p:column colspan="2" style="text-align:right" footerText="Resultado del Ejercicio" />
+                                    <p:column footerText="#{plandecuentasController.comprobacionTotal}" style="text-align: right" />
+                                </p:row>
+                            </p:columnGroup>
+                            <f:facet name="footer">
+                                <p:commandButton id="printButton" icon="ui-icon-print"   value="#{bundlecontable.Print}" actionListener="#{plandecuentaController.prepareCreate}" update=":PlandecuentaCreateForm" oncomplete="PF('PlandecuentaCreateDialog').show()"/>
                             </f:facet>
-                            <h:outputText value="#{item.codigocuenta}"/>
-                        </p:column>
-                        <p:column width="340" filterBy="#{item.descripcioncuenta}" filterMatchMode="contains">
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecontable.ListPlandecuentaTitle_descripcioncuenta}"/>
-                            </f:facet>
-                            <h:outputText  value="#{item.descripcioncuenta}"/>
-                        </p:column>
-                        <p:column style="text-align: right" width="100" >
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecontable.ListPlandecuentaTitle_saldogeneral}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.saldogeneral}">
-                                <f:convertNumber type="currency" currencySymbol=" " />
-                            </h:outputText>
-                        </p:column>
-                        <p:column style="text-align: center">
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecontable.ListPlandecuentaTitle_idtipocuentacontable}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idtipocuentacontable.tipocuentacontable}"/>
-                        </p:column>
-                        <p:columnGroup type="footer">
-                            <p:row>
-                                <p:column colspan="2" style="text-align:right" footerText="Resultado del Ejercicio" />
-                                <p:column footerText="#{plandecuentasController.comprobacionTotal}" style="text-align: right" />
-                            </p:row>
-                        </p:columnGroup>
-                        <f:facet name="footer">
-                            <p:commandButton id="printButton" icon="ui-icon-plus"   value="#{bundlecontable.Create}" actionListener="#{plandecuentaController.prepareCreate}" update=":PlandecuentaCreateForm" oncomplete="PF('PlandecuentaCreateDialog').show()"/>
-                        </f:facet>
-                    </p:dataTable>
+                        </p:dataTable>
+                    </p:panelGrid>
                 </p:panel>
             </h:form>
 

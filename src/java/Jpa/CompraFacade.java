@@ -70,7 +70,7 @@ public class CompraFacade extends AbstractFacade<Compra> implements CompraFacade
     @Override
     public List<Compra> buscarcomprasporPagar(Empresa empre) {
         String consulta;
-        int idstatus = 3;
+        int idstatus = 4;
         List<Compra> lista = null;
         try {
             consulta = "From Compra c where c.idauxiliarrequerimiento.iddepartamento.idempresa.idempresa = ?1 and c.idestatusfactura.idestatusfactura < ?2 order by c.serialcompra";

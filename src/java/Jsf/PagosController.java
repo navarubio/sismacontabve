@@ -757,7 +757,7 @@ public class PagosController implements Serializable {
                         pagocompra.setTotalpago(requerimientosController.redondearDecimales(montoapagar));
                         compra.setMontopendiente(saldo);
                         pagocompra.setMontoretenido(saldo);
-                        int tipo = 3;
+                        int tipo = 4;
                         statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
                     } else {
                         pagocompra.setTotalpago(requerimientosController.redondearDecimales(montoapagar));
@@ -775,9 +775,9 @@ public class PagosController implements Serializable {
                         saldop = ((compra.getMontopendiente() - pagocompra.getTotalpago()) - (compra.getMontopendiente() - montoapagar));
                     }
                     if (saldop < 1) {
-                        tipo = 3;
-                    } else {
                         tipo = 4;
+                    } else {
+                        tipo = 3;
                     }
                     compra.setMontopendiente(requerimientosController.redondearDecimales(saldop));
                     statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);

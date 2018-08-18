@@ -8,6 +8,7 @@ import Jpa.LibromayorFacadeLocal;
 import Jpa.PlandecuentaFacadeLocal;
 import Modelo.Caja;
 import Modelo.Cuentabancaria;
+import Modelo.Empresa;
 import Modelo.Libromayorcompuesto;
 import Modelo.Movimientobancario;
 import Modelo.Plandecuenta;
@@ -222,6 +223,10 @@ public class LibromayorController implements Serializable {
             saldocontable = movimiento.getSaldoposterior();
         }
 
+    }
+    public void Buscar (){
+        
+        
     }
 
     /*public void conciliarSaldos() {

@@ -8,6 +8,7 @@ import Jpa.PlandecuentaFacadeLocal;
 import Modelo.Empresa;
 import Modelo.Especificocontable;
 import Modelo.Grupocontable;
+import Modelo.Libromayor;
 import Modelo.Subespecificocontable;
 import Modelo.Subgrupocontable;
 
@@ -44,8 +45,12 @@ public class PlandecuentasController implements Serializable {
     private Jpa.EspecificocontableFacadeLocal ejbFacadeES;
     @EJB
     private Jpa.SubespecificocontableFacadeLocal ejbFacadeSE;
+    @EJB
+    private Jpa.LibromayorFacadeLocal ejbFacadeLM;
+    
 
     private List<Plandecuenta> items = null;
+    private List<Libromayor> itemsvista=null;
     private List<Plandecuenta> itemsmov = null;
     private Plandecuenta selected;
 

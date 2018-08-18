@@ -36,60 +36,60 @@
                     <h:panelGroup id="display">
                         <h:panelGrid columns="2" columnClasses="value" >
                             <p:fieldset style="width: 70%" legend="Requerimientos Pendientes"  >
-                                <p:dataTable id="datalist" value="#{auxiliarrequerimientoController1.buscarRequerimientosActivos()}" var="item" widgetVar="requerimientos"
-                                             selectionMode="single" selection="#{auxiliarrequerimientoController.selected}"
-                                             rowKey="#{item.idauxiliarrequerimiento}"
-                                             rowStyleClass="requerimientoactivo"
-                                             >
+                                    <p:dataTable id="datalist" value="#{auxiliarrequerimientoController1.buscarRequerimientosActivos()}" var="item" widgetVar="requerimientos"
+                                                 selectionMode="single" selection="#{auxiliarrequerimientoController.selected}"
+                                                 rowKey="#{item.idauxiliarrequerimiento}"
+                                                 rowStyleClass="requerimientoactivo"
+                                                 >
 
-                                    <p:column width="50" filterBy="#{item.idauxiliarrequerimiento}" filterMatchMode="exact" filterStyle="width:20px;">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_idauxiliarrequerimiento}"/>
-                                        </f:facet>
-                                        <h:outputText value="REQ-#{item.idauxiliarrequerimiento}"/>
-                                    </p:column >
-                                    <p:column width="200" >
-                                        <f:facet name="header">
-                                            <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_posibleproveedor}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.posibleproveedor}"/>
-                                    </p:column>
-                                    <p:column width="200" >
-                                        <f:facet name="header">
-                                            <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_descripcion}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.descripcion}"/>
-                                    </p:column>
-                                    <p:column style="text-align: center" width="80" >
-                                        <f:facet name="header">
-                                            <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_fecharequerimiento}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.fecharequerimiento}">
-                                            <f:convertDateTime pattern="dd/MM/yyyy" />
-                                        </h:outputText>
-                                    </p:column>
-                                    <p:column style="text-align: right" width="80" sortBy="#{item.montototal}" >                    
-                                        <f:facet name="header">
-                                            <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_montototal}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.montototal}">
-                                            <f:convertNumber type="currency" currencySymbol=" " />
-                                        </h:outputText>
-                                    </p:column>
-                                    <p:column width="150" filterBy="#{item.iddepartamento.departamento}" headerText="#{bundle.ListAuxiliarrequerimientoTitle_iddepartamento}" filterMatchMode="exact" style="text-align: center">
-                                        <f:facet name="filter">
-                                            <p:selectOneMenu onchange="PF('requerimientos').filter()" >
-                                                <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
-                                                <f:selectItems value="#{departamentoController.items}" />
-                                            </p:selectOneMenu>
-                                        </f:facet>
-                                        <h:outputText value="#{item.iddepartamento.departamento}" />
-                                    </p:column>                       
-                                </p:dataTable>
-                            </p:fieldset>
+                                        <p:column width="50" filterBy="#{item.idauxiliarrequerimiento}" filterMatchMode="exact" filterStyle="width:20px;">
+                                            <f:facet name="header">
+                                                <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_idauxiliarrequerimiento}"/>
+                                            </f:facet>
+                                            <h:outputText value="REQ-#{item.idauxiliarrequerimiento}"/>
+                                        </p:column >
+                                        <p:column width="200" >
+                                            <f:facet name="header">
+                                                <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_posibleproveedor}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.posibleproveedor}"/>
+                                        </p:column>
+                                        <p:column width="200" >
+                                            <f:facet name="header">
+                                                <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_descripcion}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.descripcion}"/>
+                                        </p:column>
+                                        <p:column style="text-align: center" width="80" >
+                                            <f:facet name="header">
+                                                <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_fecharequerimiento}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.fecharequerimiento}">
+                                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                            </h:outputText>
+                                        </p:column>
+                                        <p:column style="text-align: right" width="80" sortBy="#{item.montototal}" >                    
+                                            <f:facet name="header">
+                                                <h:outputText value="#{bundle.ListAuxiliarrequerimientoTitle_montototal}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.montototal}">
+                                                <f:convertNumber type="currency" currencySymbol=" " />
+                                            </h:outputText>
+                                        </p:column>
+                                        <p:column width="150" filterBy="#{item.iddepartamento.departamento}" headerText="#{bundle.ListAuxiliarrequerimientoTitle_iddepartamento}" filterMatchMode="exact" style="text-align: center">
+                                            <f:facet name="filter">
+                                                <p:selectOneMenu onchange="PF('requerimientos').filter()" >
+                                                    <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true" />
+                                                    <f:selectItems value="#{departamentoController.items}" />
+                                                </p:selectOneMenu>
+                                            </f:facet>
+                                            <h:outputText value="#{item.iddepartamento.departamento}" />
+                                        </p:column>                       
+                                    </p:dataTable>
+                                </p:fieldset>
                             <p:fieldset style="width: 90%" legend="Calendario de Pagos SRI">
                                 <p:schedule id="schedule" value="#{scheduleView.eventModel}" allDaySlot="false" resizable="true"/>                        
-                            </p:fieldset>
+                                </p:fieldset>
                         </h:panelGrid>
                     </h:panelGroup>
                 </h:form>
