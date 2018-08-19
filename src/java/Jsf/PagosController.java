@@ -763,7 +763,7 @@ public class PagosController implements Serializable {
                         pagocompra.setTotalpago(requerimientosController.redondearDecimales(montoapagar));
                         compra.setMontopendiente(saldo);
                         pagocompra.setMontoretenido(requerimientosController.redondearDecimales(compra.getTotal() - montoapagar));
-                        int tipo = 3;
+                        int tipo = 4;
                         statusfactu = estatusfacturaEJB.cambiarestatusFactura(tipo);
                     }
                 } else {
@@ -846,7 +846,7 @@ public class PagosController implements Serializable {
                 movimientobancario.setConciliado(Boolean.FALSE);
                 movimientoBancarioEJB.create(movimientobancario);
 
-                String subject;
+                String subject; 
                 String fechapag = formateador.format(pagocompra.getFechapago());
                 correo = "COMPRA NRO: " + compra.getIdcompra()
                         + "  FECHA: " + fechapag
@@ -856,7 +856,7 @@ public class PagosController implements Serializable {
                         + "  BANCO: " + pagocompra.getIdcuentabancaria().getIdbanco().getNombrebanco()
                         + "  TOTAL: $" + formatearnumero.format(pagocompra.getTotalpago())
                         + "  SALDO PENDIENTE: $" + formatearnumero.format(pagocompra.getSaldopendiente())
-                        + "  OBSERVACIONES: " + pagocompra.getObservacionespago();
+                        + "  OBSERVACIONES : " + pagocompra.getObservacionespago();
 
                 subject = empresa.getNombrecomercial() + " Pago N° " + pagocompra.getSerialpagocompra();
                 enviomail = new envioCorreo(correo, subject);

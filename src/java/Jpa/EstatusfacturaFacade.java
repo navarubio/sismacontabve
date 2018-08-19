@@ -73,16 +73,12 @@ public class EstatusfacturaFacade extends AbstractFacade<Estatusfactura> impleme
     @Override
     public List<Estatusfactura> ListarEstatusporPagar() {
         String consulta;
-        int idstatus = 0;
-        int idstatus2 =2;
-        int idstatus3= 4;
+        int idstatus = 4;
         List<Estatusfactura> lista = null;
         try {
-            consulta = "From Estatusfactura e where e.idestatusfactura= ?1 or e.idestatusfactura= ?2 or e.idestatusfactura= ?3";
+            consulta = "From Estatusfactura e where e.idestatusfactura< ?1 ";
             Query query = em.createQuery(consulta);
             query.setParameter(1, idstatus);
-            query.setParameter(2, idstatus2);            
-            query.setParameter(3, idstatus3);            
             lista = query.getResultList();
         } catch (Exception e) {
             throw e;
