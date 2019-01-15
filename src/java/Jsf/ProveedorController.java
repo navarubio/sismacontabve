@@ -56,6 +56,8 @@ public class ProveedorController implements Serializable {
     private ValidaRUCep validarrucep = new ValidaRUCep();
     private ValidaCedula validarcedula = new ValidaCedula();
     private Boolean rucvalido;
+    
+    
 
     public ProveedorController() {
     }
@@ -245,14 +247,14 @@ public class ProveedorController implements Serializable {
 
     public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 
-        //Instancia hacia la clase reporteClientes        
+        //Instancia hacia la clase reporteProveedores 
         reporteArticulo rArticulo = new reporteArticulo();
-
+        empresa= (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-        String ruta = servletContext.getRealPath("/resources/reportes/proveedores.jasper");
+        String ruta = servletContext.getRealPath("/resources/reportes/provee.jasper");
 
-        rArticulo.getReporte(ruta);
+        rArticulo.getReporteProvee(ruta, empresa.getIdempresa() );
         FacesContext.getCurrentInstance().responseComplete();
     }
 

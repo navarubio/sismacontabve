@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ddba77e-51be-47ac-8b24-c3354df35f82">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="IdEmpre" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     articulo."idarticulo" AS articulo_idarticulo,
+     articulo."descripcion" AS articulo_descripcion,
+     articulo."idmedida" AS articulo_idmedida,
+     articulo."idgravamen" AS articulo_idgravamen,
+     articulo."idgrupo" AS articulo_idgrupo,
+     articulo."idsubgrupo" AS articulo_idsubgrupo,
+     articulo."minimo" AS articulo_minimo,
+     articulo."maximo" AS articulo_maximo,
+     articulo."pcosto" AS articulo_pcosto,
+     articulo."pventa" AS articulo_pventa,
+     articulo."idusuario" AS articulo_idusuario,
+     articulo."idplandecuenta" AS articulo_idplandecuenta,
+     articulo."idcuentaventa" AS articulo_idcuentaventa,
+     articulo."idempresa" AS articulo_idempresa,
+     articulo."codigo" AS articulo_codigo,
+     empresa."idempresa" AS empresa_idempresa,
+     empresa."rif" AS empresa_rif,
+     empresa."razonsocial" AS empresa_razonsocial,
+     empresa."nombrecomercial" AS empresa_nombrecomercial,
+     empresa."direccionfiscal" AS empresa_direccionfiscal,
+     empresa."telefonos" AS empresa_telefonos,
+     empresa."presidente" AS empresa_presidente,
+     empresa."administrador" AS empresa_administrador,
+     empresa."contador" AS empresa_contador,
+     empresa."idcontribuyente" AS empresa_idcontribuyente,
+     empresa."montoparaautorizacion" AS empresa_montoparaautorizacion,
+     empresa."serialconsumo" AS empresa_serialconsumo,
+     empresa."serialreposicion" AS empresa_serialreposicion,
+     empresa."idpersonalidad" AS empresa_idpersonalidad,
+     empresa."credfiscal" AS empresa_credfiscal,
+     empresa."retivacliente" AS empresa_retivacliente,
+     empresa."retislrcliente" AS empresa_retislrcliente,
+     empresa."ctasxcobrar" AS empresa_ctasxcobrar,
+     empresa."ctagastoprovisional" AS empresa_ctagastoprovisional,
+     empresa."debfiscal" AS empresa_debfiscal,
+     empresa."retislrxenterar" AS empresa_retislrxenterar,
+     empresa."retivaxenterar" AS empresa_retivaxenterar,
+     empresa."ctaxpagarproveed" AS empresa_ctaxpagarproveed,
+     empresa."ctaxpagarinterna" AS empresa_ctaxpagarinterna,
+     empresa."serialconciliacion" AS empresa_serialconciliacion,
+     empresa."serialrequerimiento" AS empresa_serialrequerimiento,
+     empresa."serialcompra" AS empresa_serialcompra,
+     empresa."serialpagocompra" AS empresa_serialpagocompra,
+     empresa."serialcomprobanteiva" AS empresa_serialcomprobanteiva,
+     empresa."serialcomprobanteislr" AS empresa_serialcomprobanteislr,
+     empresa."serialfactura" AS empresa_serialfactura,
+     grupo."idgrupo" AS grupo_idgrupo,
+     grupo."grupo" AS grupo_grupo,
+     subgrupo."idsubgrupo" AS subgrupo_idsubgrupo,
+     subgrupo."idgrupo" AS subgrupo_idgrupo,
+     subgrupo."subgrupo" AS subgrupo_subgrupo,
+     subgrupo."porcentajeretencion" AS subgrupo_porcentajeretencion,
+     gravamen."idgravamen" AS gravamen_idgravamen,
+     gravamen."categoria" AS gravamen_categoria,
+     gravamen."alicuota" AS gravamen_alicuota,
+     medida."idmedida" AS medida_idmedida,
+     medida."medida" AS medida_medida
+FROM
+     "public"."grupo" grupo INNER JOIN "public"."articulo" articulo ON grupo."idgrupo" = articulo."idgrupo"
+     INNER JOIN "public"."subgrupo" subgrupo ON grupo."idgrupo" = subgrupo."idgrupo"
+     AND subgrupo."idsubgrupo" = articulo."idsubgrupo"
+     INNER JOIN "public"."gravamen" gravamen ON articulo."idgravamen" = gravamen."idgravamen"
+     INNER JOIN "public"."medida" medida ON articulo."idmedida" = medida."idmedida"
+     INNER JOIN "public"."empresa" empresa ON articulo."idempresa" = empresa."idempresa"
+WHERE
+     articulo."idempresa" = $P{IdEmpre}
+ORDER BY
+     articulo."descripcion" ASC]]>
+	</queryString>
+	<field name="articulo_idarticulo" class="java.lang.String"/>
+	<field name="articulo_descripcion" class="java.lang.String"/>
+	<field name="articulo_idmedida" class="java.lang.Integer"/>
+	<field name="articulo_idgravamen" class="java.lang.Integer"/>
+	<field name="articulo_idgrupo" class="java.lang.Integer"/>
+	<field name="articulo_idsubgrupo" class="java.lang.Integer"/>
+	<field name="articulo_minimo" class="java.lang.Integer"/>
+	<field name="articulo_maximo" class="java.lang.Integer"/>
+	<field name="articulo_pcosto" class="java.lang.Double"/>
+	<field name="articulo_pventa" class="java.lang.Double"/>
+	<field name="articulo_idusuario" class="java.lang.Integer"/>
+	<field name="articulo_idplandecuenta" class="java.lang.Integer"/>
+	<field name="articulo_idcuentaventa" class="java.lang.Integer"/>
+	<field name="articulo_idempresa" class="java.lang.Integer"/>
+	<field name="articulo_codigo" class="java.lang.Integer"/>
+	<field name="empresa_idempresa" class="java.lang.Integer"/>
+	<field name="empresa_rif" class="java.lang.String"/>
+	<field name="empresa_razonsocial" class="java.lang.String"/>
+	<field name="empresa_nombrecomercial" class="java.lang.String"/>
+	<field name="empresa_direccionfiscal" class="java.lang.String"/>
+	<field name="empresa_telefonos" class="java.lang.String"/>
+	<field name="empresa_presidente" class="java.lang.String"/>
+	<field name="empresa_administrador" class="java.lang.String"/>
+	<field name="empresa_contador" class="java.lang.String"/>
+	<field name="empresa_idcontribuyente" class="java.lang.Integer"/>
+	<field name="empresa_montoparaautorizacion" class="java.lang.Double"/>
+	<field name="empresa_serialconsumo" class="java.lang.Integer"/>
+	<field name="empresa_serialreposicion" class="java.lang.Integer"/>
+	<field name="empresa_idpersonalidad" class="java.lang.Integer"/>
+	<field name="empresa_credfiscal" class="java.lang.Integer"/>
+	<field name="empresa_retivacliente" class="java.lang.Integer"/>
+	<field name="empresa_retislrcliente" class="java.lang.Integer"/>
+	<field name="empresa_ctasxcobrar" class="java.lang.Integer"/>
+	<field name="empresa_ctagastoprovisional" class="java.lang.Integer"/>
+	<field name="empresa_debfiscal" class="java.lang.Integer"/>
+	<field name="empresa_retislrxenterar" class="java.lang.Integer"/>
+	<field name="empresa_retivaxenterar" class="java.lang.Integer"/>
+	<field name="empresa_ctaxpagarproveed" class="java.lang.Integer"/>
+	<field name="empresa_ctaxpagarinterna" class="java.lang.Integer"/>
+	<field name="empresa_serialconciliacion" class="java.lang.Integer"/>
+	<field name="empresa_serialrequerimiento" class="java.lang.Integer"/>
+	<field name="empresa_serialcompra" class="java.lang.Integer"/>
+	<field name="empresa_serialpagocompra" class="java.lang.Integer"/>
+	<field name="empresa_serialcomprobanteiva" class="java.lang.Integer"/>
+	<field name="empresa_serialcomprobanteislr" class="java.lang.Integer"/>
+	<field name="empresa_serialfactura" class="java.lang.Integer"/>
+	<field name="grupo_idgrupo" class="java.lang.Integer"/>
+	<field name="grupo_grupo" class="java.lang.String"/>
+	<field name="subgrupo_idsubgrupo" class="java.lang.Integer"/>
+	<field name="subgrupo_idgrupo" class="java.lang.Integer"/>
+	<field name="subgrupo_subgrupo" class="java.lang.String"/>
+	<field name="subgrupo_porcentajeretencion" class="java.lang.Double"/>
+	<field name="gravamen_idgravamen" class="java.lang.Integer"/>
+	<field name="gravamen_categoria" class="java.lang.String"/>
+	<field name="gravamen_alicuota" class="java.lang.Double"/>
+	<field name="medida_idmedida" class="java.lang.Integer"/>
+	<field name="medida_medida" class="java.lang.String"/>
+	<group name="cliente_razonsocial">
+		<groupExpression><![CDATA[$F{articulo_codigo}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="44" splitType="Stretch">
+			<image>
+				<reportElement x="634" y="-3" width="118" height="47" uuid="753d1aab-962a-4e5f-8f4f-aa1d3635fa60"/>
+				<imageExpression><![CDATA["D:\\APLICACIONES JAVA SE - EE\\SistemaINPECA\\Inpeca\\web\\resources\\images\\LogoInpeca.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="0" width="477" height="13" uuid="aa5b2fd9-5c6b-491e-a7d3-58080e99359f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_razonsocial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="14" width="28" height="11" uuid="98e346ef-6546-45d3-83c7-8f844dfa1f38"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R.U.C]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="28" y="13" width="107" height="12" uuid="7b64c820-90b8-4890-a9d6-a601dc2a7485"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_rif}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="25" width="489" height="19" uuid="cebbc51d-e62a-4aff-87d3-c8df82a876ea"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_direccionfiscal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="209" y="3" width="268" height="20" uuid="34867c07-73a8-48ed-9283-8f2ca4018671"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CATALOGO GENERAL DE ARTICULOS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="4" width="54" height="20" uuid="67466b27-1919-471e-a9c0-d8c58651b4f7"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="89" y="4" width="136" height="20" uuid="c3d1b701-c5d1-4c06-aafb-3efc4b5915ef"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="5" width="53" height="20" uuid="b68e8447-e6c1-4aaf-b608-807ce6c13682"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COSTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="5" width="66" height="20" uuid="07b03ad7-74e4-46e9-bf19-1bd21d576f7d"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MEDIDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="441" y="5" width="86" height="20" uuid="38855cd7-dfb8-4edd-ada4-37fc12b40c74"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GRUPO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="719" y="4" width="32" height="20" uuid="dc84d994-5c7c-446f-883b-feb704f7d549"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IVA %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="527" y="5" width="142" height="20" uuid="1420c065-20a4-49d3-8660-8fccbbfd2b8f"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUBGRUPO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="89" height="22" uuid="8cb3009c-0bf2-49bf-b073-2169639c3def"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{articulo_codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="89" y="0" width="209" height="22" uuid="c059d5e7-f733-44c5-a55b-4b4015878a0a"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{articulo_descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="0" width="66" height="22" uuid="a88a62a8-956d-42bc-8819-3d6a28b4abcd"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medida_medida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="719" y="0" width="32" height="21" uuid="898be46b-b0b4-49e6-8e89-961abf8f3735"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gravamen_alicuota}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="298" y="0" width="53" height="22" uuid="a522a60c-dc1f-46a3-8fb8-ae81de4500a8"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{articulo_pcosto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="441" y="0" width="86" height="22" uuid="b5d4ce44-0a4e-41f4-97c2-f313850ff390"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{grupo_grupo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="527" y="2" width="187" height="20" uuid="506ee791-db92-4115-a2a5-100c81802b0d"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subgrupo_subgrupo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="8" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="33" width="100" height="9" uuid="981c901a-0250-4a68-b429-9e601a083caa"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="589" y="33" width="99" height="20" uuid="692bb79a-4fae-49ee-895c-7bd376903665"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="688" y="33" width="40" height="20" uuid="b973ba96-b3ae-4dee-8dfc-169761e1622e"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="298" y="33" width="99" height="9" uuid="03ad79b6-f9ca-4593-92ce-0d78eec316e0"/>
+				<textElement textAlignment="Center">
+					<font fontName="Poor Richard" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISMACONTAB WEB ]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

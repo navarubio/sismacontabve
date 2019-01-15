@@ -7,6 +7,7 @@ import Jpa.ArticuloFacadeLocal;
 import Jpa.PlandecuentaFacadeLocal;
 import Jpa.SubgrupoFacadeLocal;
 import Modelo.Contribuyente;
+import Modelo.Empresa;
 import Modelo.Plandecuenta;
 import Modelo.Subgrupo;
 import Modelo.Usuario;
@@ -50,7 +51,9 @@ public class ArticuloController implements Serializable {
     private Usuario usa;
     @Inject
     private RequerimientosController requerimientosController;
-
+    @Inject 
+    private Empresa empresa;    
+    
     public ArticuloController() {
     }
 
@@ -244,9 +247,11 @@ public class ArticuloController implements Serializable {
         
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-        String ruta = servletContext.getRealPath("/resources/reportes/articulos.jasper");
+        String ruta = servletContext.getRealPath("/resources/reportes/catalogo.jasper");
        
-        rArticulo.getReporte(ruta);        
+        empresa= (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+
+        rArticulo.getCatalogo(ruta, empresa.getIdempresa());        
         FacesContext.getCurrentInstance().responseComplete();               
     }
     
