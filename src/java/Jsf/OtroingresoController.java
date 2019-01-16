@@ -465,7 +465,7 @@ public class OtroingresoController implements Serializable {
         int codigootroingreso = item.getIdotroingreso();
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-        String ruta = servletContext.getRealPath("/resources/reportes/comprobanteingreso.jasper");
+        String ruta = servletContext.getRealPath("/resources/reportes/comprobanteingre.jasper");
 
         rArticulo.getComprobanteIngreso(ruta, codigootroingreso);
         FacesContext.getCurrentInstance().responseComplete();

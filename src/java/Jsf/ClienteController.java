@@ -7,6 +7,7 @@ import Jpa.ClienteFacadeLocal;
 import Jpa.ContribuyenteFacadeLocal;
 import Modelo.Contribuyente;
 import Modelo.Cuentabancaria;
+import Modelo.Empresa;
 import Modelo.Proveedor;
 import Modelo.Usuario;
 
@@ -50,6 +51,9 @@ public class ClienteController implements Serializable {
     private ValidaRUCep validarrucep= new ValidaRUCep();
     private ValidaCedula validarcedula= new ValidaCedula();
     private Boolean rucvalido;
+    @Inject 
+    private Empresa empresa;     
+    
 
     public ClienteController() {
     }
@@ -252,9 +256,10 @@ public void verReporte() throws SQLException, ClassNotFoundException, Instantiat
         
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-        String ruta = servletContext.getRealPath("/resources/reportes/clientes.jasper");
+        String ruta = servletContext.getRealPath("/resources/reportes/clientesgeneral.jasper");
+        empresa= (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
        
-        rArticulo.getReporte(ruta);        
+        rArticulo.getReporteClient(ruta, empresa.getIdempresa());        
         FacesContext.getCurrentInstance().responseComplete();               
     }
     
