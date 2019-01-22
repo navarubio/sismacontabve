@@ -103,6 +103,9 @@ public class Pagocompra implements Serializable {
     private Usuario idusuario;
     @Column(name = "serialpagocompra")
     private Integer serialpagocompra;
+    @Size(max = 10)
+    @Column(name = "autorizacion")
+    private String autorizacion;
     
 
     public Pagocompra() {
@@ -298,6 +301,14 @@ public class Pagocompra implements Serializable {
 
     public void setIdmaestro(Maestromovimiento idmaestro) {
         this.idmaestro = idmaestro;
+    }
+
+    public String getAutorizacion() {
+        return autorizacion;
+    }
+
+    public void setAutorizacion(String autorizacion) {
+        this.autorizacion = autorizacion;
     }
 
 }

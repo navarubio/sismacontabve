@@ -12,6 +12,8 @@
             <h:form id="ProveedorViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{proveedorController.selected != null}">
+                        <h:outputText value="#{bundletipodocumento.CreateTipodocumentoLabel_documento}"/>
+                        <h:outputText value="#{proveedorController.selected.iddocumento}" title="#{bundletipodocumento.ViewTipodocumentoLabel_documento}"/>
                         <h:outputText value="#{bundle.ViewProveedorLabel_rifproveedor}"/>
                         <h:outputText value="#{proveedorController.selected.rifproveedor}" title="#{bundle.ViewProveedorTitle_rifproveedor}"/>
                         <h:outputText value="#{bundle.ViewProveedorLabel_razonsocial}"/>

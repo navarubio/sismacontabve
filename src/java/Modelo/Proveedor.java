@@ -97,6 +97,9 @@ public class Proveedor implements Serializable {
     @JoinColumn(name = "idcontribuyente", referencedColumnName = "idcontribuyente")
     @ManyToOne
     private Contribuyente idcontribuyente;
+    @Size(max = 2)
+    @Column(name = "iddocumento")
+    private String iddocumento;
 
     public Proveedor() {
     }
@@ -277,6 +280,14 @@ public class Proveedor implements Serializable {
 
     public void setDetalleconsumocajachicaCollection(Collection<Detalleconsumocajachica> detalleconsumocajachicaCollection) {
         this.detalleconsumocajachicaCollection = detalleconsumocajachicaCollection;
+    }
+
+    public String getIddocumento() {
+        return iddocumento;
+    }
+
+    public void setIddocumento(String iddocumento) {
+        this.iddocumento = iddocumento;
     }
     
 }

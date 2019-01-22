@@ -88,5 +88,9 @@
             <base-name>/Bundleconciliacion</base-name>
             <var>bundleconciliacion</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/Bundletipodocumento</base-name>
+            <var>bundletipodocumento</var>
+        </resource-bundle>
     </application>
 </faces-config>

@@ -12,6 +12,12 @@
             <h:form id="ProveedorEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{proveedorController.selected != null}">
+                        <p:outputLabel value="#{bundletipodocumento.CreateTipodocumentoLabel_documento}" for="tipodocument" />
+                        <p:selectOneMenu id="tipodocument" value="#{proveedorController.selected.iddocumento}" >
+                            <f:selectItems value="#{tipodocumentoController.itemsAvailableSelectOne}"
+                                           var="iddocumento"
+                                           itemValue="#{iddocumento.iddocumento}" itemLabel="#{iddocumento.documento}"/>
+                        </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditProveedorLabel_rifproveedor}" for="rifproveedor" />
                         <p:inputText id="rifproveedor" value="#{proveedorController.selected.rifproveedor}" title="#{bundle.EditProveedorTitle_rifproveedor}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_rifproveedor}"/>
                         <p:outputLabel value="#{bundle.EditProveedorLabel_razonsocial}" for="razonsocial" />
