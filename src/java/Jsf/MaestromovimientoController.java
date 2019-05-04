@@ -86,7 +86,7 @@ public class MaestromovimientoController implements Serializable {
         return items;
     }
     
-        public List<Maestromovimiento> getItemsordenados() {
+    public List<Maestromovimiento> getItemsordenados() {
         if (items == null) {
             items = getFacade().MovimientosOrdenadosFecha(requerimientosController.getEmpresa());
         }

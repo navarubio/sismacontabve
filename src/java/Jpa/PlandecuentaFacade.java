@@ -78,7 +78,7 @@ public class PlandecuentaFacade extends AbstractFacade<Plandecuenta> implements 
         Plandecuenta cuenta = null;
         List<Plandecuenta> lista = null;
         try {
-            consulta = "From Plandecuenta p where p.idempresa= ?1 and p.idplandecuenta= ?2";
+            consulta = "From Plandecuenta p where p.idempresa= ?1 and p.codigocuenta= ?2";
             Query query = em.createQuery(consulta);
             query.setParameter(1, empre.getIdempresa());
             query.setParameter(2, codcta);
@@ -115,15 +115,16 @@ public class PlandecuentaFacade extends AbstractFacade<Plandecuenta> implements 
     }
 
     @Override
-    public double buscarsaldoanterior(int codcta) {
+    public double buscarsaldoanterior(int codcta , Empresa empre) {
         String consulta;
         Plandecuenta cuenta = null;
         double sandoant = 0;
         List<Plandecuenta> lista = null;
         try {
-            consulta = "From Plandecuenta p where p.idplandecuenta= ?1";
+            consulta = "From Plandecuenta p where p.idempresa= ?1 and p.codigocuenta= ?2";
             Query query = em.createQuery(consulta);
-            query.setParameter(1, codcta);
+            query.setParameter(1, empre.getIdempresa());
+            query.setParameter(2, codcta);
             lista = query.getResultList();
             if (!lista.isEmpty()) {
                 cuenta = lista.get(0);

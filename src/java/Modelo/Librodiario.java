@@ -57,7 +57,8 @@ public class Librodiario implements Serializable {
     private Collection<Detallelibrodiario> detallelibrodiarioCollection;
     @Column(name = "idempresa")
     private Integer idempresa;
-
+    @Column(name = "serialasiento")
+    private Integer serialasiento;
     public Librodiario() {
     }
 
@@ -105,6 +106,14 @@ public class Librodiario implements Serializable {
     public void setIdempresa(Integer idempresa) {
         this.idempresa = idempresa;
     } 
+
+    public Integer getSerialasiento() {
+        return serialasiento;
+    }
+
+    public void setSerialasiento(Integer serialasiento) {
+        this.serialasiento = serialasiento;
+    }
 
     @XmlTransient
     public Collection<Detallelibrodiario> getDetallelibrodiarioCollection() {

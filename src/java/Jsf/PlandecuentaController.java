@@ -5,6 +5,7 @@ import Jsf.util.JsfUtil;
 import Jsf.util.JsfUtil.PersistAction;
 import Jpa.PlandecuentaFacade;
 import Jpa.PlandecuentaFacadeLocal;
+import Modelo.Empresa;
 import Modelo.Especificocontable;
 import Modelo.Grupocontable;
 import Modelo.Subespecificocontable;
@@ -52,6 +53,8 @@ public class PlandecuentaController implements Serializable {
     private List<Subespecificocontable> lstSubespecificos;
     @Inject
     private RequerimientosController requerimientosController;
+    @Inject
+    private Empresa empresa;
 
     public List<Grupocontable> getLstGrupos() {
         return lstGrupos;
@@ -64,10 +67,20 @@ public class PlandecuentaController implements Serializable {
     @PostConstruct
     public void init() {
         lstGrupos = ejbFacadeG.grupocontableAll(requerimientosController.getEmpresa());
+        Empresa empre = (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        empresa=empre;
     }
 
     public List<Subgrupocontable> getLstSubgrupos() {
         return lstSubgrupos;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
     public void setLstSubgrupos(List<Subgrupocontable> lstSubgrupos) {
@@ -117,7 +130,7 @@ public class PlandecuentaController implements Serializable {
     public Plandecuenta prepareCreate() {
         selected = new Plandecuenta();
         selected.setIdempresa(requerimientosController.getEmpresa().getIdempresa());
-        
+
         initializeEmbeddableKey();
         return selected;
     }
@@ -140,7 +153,7 @@ public class PlandecuentaController implements Serializable {
 
     public List<Subespecificocontable> refrescarSubespecificos() {
         try {
-            lstSubespecificos = ejbFacadeSE.subespxEspecifico(selected.getIdgrupocontable(), selected.getIdsubgrupocontable(), selected.getIdespecificocontable(),requerimientosController.getEmpresa());
+            lstSubespecificos = ejbFacadeSE.subespxEspecifico(selected.getIdgrupocontable(), selected.getIdsubgrupocontable(), selected.getIdespecificocontable(), requerimientosController.getEmpresa());
         } catch (Exception e) {
         }
         return lstSubespecificos;
@@ -178,14 +191,14 @@ public class PlandecuentaController implements Serializable {
         }
         return items;
     }
-    
+
     public String getComprobacionTotal() {
         double total = 0;
- 
-        for(Plandecuenta plandcta : getItems()) {
-            if (plandcta.getSaldogeneral()!=null){
-                if (plandcta.getSaldogeneral()<0 || plandcta.getSaldogeneral()>0){
-                    total += plandcta.getSaldogeneral();            
+
+        for (Plandecuenta plandcta : getItems()) {
+            if (plandcta.getSaldogeneral() != null) {
+                if (plandcta.getSaldogeneral() < 0 || plandcta.getSaldogeneral() > 0) {
+                    total += plandcta.getSaldogeneral();
                 }
             }
         }

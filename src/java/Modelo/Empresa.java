@@ -122,6 +122,8 @@ public class Empresa implements Serializable {
     private Integer retivaxenterar;
     @Column(name = "ctaxpagarinterna")
     private Integer ctaxpagarinterna;
+    @Column(name = "serialasiento")
+    private Integer serialasiento;
 
     @OneToMany(mappedBy = "idempresa")
     private Collection<Departamento> departamentoCollection;
@@ -255,6 +257,14 @@ public class Empresa implements Serializable {
 
     public void setSerialreposicion(Integer serialreposicion) {
         this.serialreposicion = serialreposicion;
+    }
+
+    public Integer getSerialasiento() {
+        return serialasiento;
+    }
+
+    public void setSerialasiento(Integer serialasiento) {
+        this.serialasiento = serialasiento;
     }
 
     public Integer getCtaxpagarproved() {

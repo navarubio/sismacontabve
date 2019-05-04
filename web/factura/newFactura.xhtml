@@ -41,10 +41,10 @@
                                                    itemLabel="#{idarticuloItem.razonsocial}"  itemValue="#{idarticuloItem}"/> 
                                 </p:selectOneMenu>
 
-                                <p:outputLabel for="rif" styleClass="text-ouputnormal" value="R.U.C." />
+                                <p:outputLabel for="rif" styleClass="text-ouputnormal" value="R.I.F." />
                                 <p:outputLabel id="rif" value="#{facturasController.cliente.rifcliente}" styleClass="optionalLbl"/>
                                 <p:outputLabel for="direccioncliente" styleClass="text-ouputnormal"  value="Direccion Fiscal" />
-                                <p:outputLabel id="direccioncliente" value="#{facturasController.cliente.direccionfiscal}"/>
+                                <p:outputLabel id="direccioncliente" value="#{facturasController.cliente.direccionfiscal}" />
                                 <p:outputLabel for="telefono" styleClass="text-ouputnormal" value="Telefonos" />
                                 <p:outputLabel id="telefono" value="#{facturasController.cliente.telefonos}" />
                                 <p:outputLabel for="fechaventa" styleClass="text-ouputnormal"  value="Fecha Venta"  />
@@ -110,9 +110,9 @@
                                 <p:columnGroup type="footer">
                                     <p:row>
                                         <p:column colspan="4" style="text-align:right" footerText="TOTALES GENERALES" />
-                                        <p:column style="text-align: right"  footerText="$ #{facturasController.totalsubtotalform}"/> 
-                                        <p:column style="text-align: right"  footerText="$ #{facturasController.totalivaform}" />
-                                        <p:column style="text-align: right"  footerText="$ #{facturasController.totalgeneralform}" />
+                                        <p:column style="text-align: right"  footerText="Bs #{facturasController.totalsubtotalform}" styleClass="text-ouputsaldo"/> 
+                                        <p:column style="text-align: right"  footerText="Bs #{facturasController.totalivaform}" styleClass="text-ouputsaldo" />
+                                        <p:column style="text-align: right"  footerText="Bs #{facturasController.totalgeneralform}" styleClass="text-ouputsaldo" />
                                     </p:row>
                                 </p:columnGroup>                            
                             </p:dataTable>

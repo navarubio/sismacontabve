@@ -42,9 +42,9 @@
                         </p:column>
                         <p:column style="text-align: center" filterBy="#{item.idlibrodiario.idlibrodiario}" filterMatchMode="exact" filterStyle="width:50px;">
                             <f:facet name="header">
-                               <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_idlibrodiario}"/>
+                               <h:outputText value="Asiento"/>
                             </f:facet>
-                            <h:outputText value="#{item.idlibrodiario}"/>
+                            <h:outputText value="#{item.idlibrodiario.serialasiento}"/>
                         </p:column>    
                         <p:column style="text-align: center" >
                             <f:facet name="header">
@@ -102,10 +102,10 @@
                         <p:columnGroup type="footer">
                             <p:row>
                                 <p:column colspan="5" style="text-align:right" footerText="Totales:" />
-                                <p:column></p:column>
+                                <p:column footerText="#{libromayorController.totalAnt}" style="text-align: right" />                               
                                 <p:column footerText="#{libromayorController.totalDebe}" style="text-align: right" />
-
                                 <p:column footerText="#{libromayorController.totalHaber}" style="text-align: right" />
+                                <p:column footerText="#{libromayorController.totalPost}" style="text-align: right" />                                
                             </p:row>
                         </p:columnGroup>
                         <f:facet name="footer">

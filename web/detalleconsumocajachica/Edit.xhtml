@@ -50,7 +50,7 @@
                             <f:selectItem itemLabel="#{bundlecajachica.SelectOneMessage}"/>
                             <f:selectItems value="#{tipogastocajachicaController.itemsAvailableSelectOne}"
                                            var="idtipogastocajachicaItem"
-                                           itemValue="#{idtipogastocajachicaItem}"/>
+                                           itemValue="#{idtipogastocajachicaItem}" itemLabel="#{idtipogastocajachicaItem.tipogastocajachica}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{detalleconsumocajachicaController.update}" value="#{bundlecajachica.Save}" update="display,:DetalleconsumocajachicaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DetalleconsumocajachicaEditDialog');"/>

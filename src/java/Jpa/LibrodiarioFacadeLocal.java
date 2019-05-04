@@ -5,6 +5,7 @@
  */
 package Jpa;
 
+import Modelo.Empresa;
 import Modelo.Librodiario;
 import Modelo.Medida;
 import java.util.List;
@@ -31,6 +32,6 @@ public interface LibrodiarioFacadeLocal {
 
     int count();
     
-    Librodiario ultimoInsertado();
+    Librodiario ultimoInsertado(Empresa empre);
     
 }

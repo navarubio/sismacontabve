@@ -430,6 +430,15 @@ public class LibromayorController implements Serializable {
         }
         return new DecimalFormat("###,###.##").format(total);
     }
+    
+    public String getTotalAnt() {
+        double total = 0;
+
+        for (Libromayor debe : getItems()) {
+            total += debe.getSaldoanterior();
+        }
+        return new DecimalFormat("###,###.##").format(total);
+    }
 
     public String getTotalHaber() {
         double total = 0;
@@ -450,6 +459,15 @@ public class LibromayorController implements Serializable {
         return new DecimalFormat("###,###.##").format(total);
     }
 
+    public String getTotalPost() {
+        double total = 0;
+
+        for (Libromayor debe : getItems()) {
+            total += debe.getSaldoposterior();
+        }
+        return new DecimalFormat("###,###.##").format(total);
+    }
+    
     public String getMayTotalHaber() {
         double total = 0;
         if (itemsfiltrados != null) {

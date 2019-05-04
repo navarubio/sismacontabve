@@ -34,4 +34,6 @@ public interface EmpresaFacadeLocal {
     
     int devolverSerialConsumo (Empresa empre);
     
+    int devolverSerialAsiento (Empresa empre);
+    
 }

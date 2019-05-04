@@ -117,7 +117,10 @@ public class AsientosespecificosController implements Serializable {
     private LibromayorFacadeLocal libromayorEJB;
     @EJB
     private DetallelibrodiarioFacadeLocal detallelibrodiarioEJB;
+    @EJB
+    private EmpresaFacadeLocal empresaEJB;
 
+    
     private Auxiliarrequerimiento auxiliarrequerimiento;
     private Compra compra;
     @Inject
@@ -139,7 +142,8 @@ public class AsientosespecificosController implements Serializable {
     private Usuario usa;
     private Departamento dpto;
     private Compra codCompra;
-    private Empresa empresa;
+    private double totaldebe = 0;
+    private double totalhaber = 0;
     private int visualizar = 0;
     private int tipocompra = 1;
     private double montoUT = 0;
@@ -177,6 +181,8 @@ public class AsientosespecificosController implements Serializable {
     private Movimientobancario movimientoingreso;
     @Inject
     private Movimientobancario movimientoegreso;
+    @Inject
+    private Empresa empresa;
     private double ivaretenido;
     private double islrretenido;
     private double montoapagar;
@@ -260,6 +266,22 @@ public class AsientosespecificosController implements Serializable {
 
     public void setRetiva(double retiva) {
         this.retiva = retiva;
+    }
+
+    public double getTotaldebe() {
+        return totaldebe;
+    }
+
+    public void setTotaldebe(double totaldebe) {
+        this.totaldebe = totaldebe;
+    }
+
+    public double getTotalhaber() {
+        return totalhaber;
+    }
+
+    public void setTotalhaber(double totalhaber) {
+        this.totalhaber = totalhaber;
     }
 
     public double getRetislr() {
@@ -584,6 +606,8 @@ public class AsientosespecificosController implements Serializable {
         retislr = 0;
         detalleaanexar.setDebe(0.0);
         detalleaanexar.setHaber(0.0);
+        Empresa empre = (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        empresa=empre;
         //articulos = articuloEJB.findAll();
         //comprasporautorizar=compraEJB.buscarcomprasporAutorizar();
 
@@ -673,8 +697,11 @@ public class AsientosespecificosController implements Serializable {
             double debe = 0;
             double haber = 0;
             double saldototaltotal = 0;
+            Integer serial = empresaEJB.devolverSerialAsiento(empresa);
+            librodiario.setIdempresa(empresa.getIdempresa());
+            librodiario.setSerialasiento(serial);
             librodiarioEJB.create(librodiario);
-            codlibrodiario = librodiarioEJB.ultimoInsertado();
+            codlibrodiario = librodiarioEJB.ultimoInsertado(empresa);
 
             Detallelibrodiario detalleld = new Detallelibrodiario();
             Libromayor libromy = new Libromayor();
@@ -683,7 +710,7 @@ public class AsientosespecificosController implements Serializable {
             for (Detallelibrodiario dld : listadetalleslibrodiario) {
                 detalleld.setIdlibrodiario(codlibrodiario);
                 libromy.setIdlibrodiario(codlibrodiario);
-                cuentacontable = plandecuentaEJB.buscarcuenta(dld.getIdplandecuenta().getIdplandecuenta(), empresa);
+                cuentacontable = plandecuentaEJB.buscarcuenta(dld.getIdplandecuenta().getCodigocuenta(), empresa);
 
                 detalleld.setIdplandecuenta(dld.getIdplandecuenta());
                 libromy.setIdplandecuenta(dld.getIdplandecuenta());
@@ -702,7 +729,7 @@ public class AsientosespecificosController implements Serializable {
                     libromy.setDebe(0.0);
                     libromy.setHaber(dld.getHaber());
                 }
-                double saldoant = plandecuentaEJB.buscarsaldoanterior(dld.getIdplandecuenta().getIdplandecuenta());
+                double saldoant = plandecuentaEJB.buscarsaldoanterior(dld.getIdplandecuenta().getCodigocuenta(), empresa);
                 libromy.setSaldoanterior(saldoant);
                 if (dld.getIdplandecuenta().getIdtiposaldocontable().getIdtiposaldocontable() == 1) {
                     saldototaltotal = (((saldoant) + debe) - haber);
@@ -718,7 +745,11 @@ public class AsientosespecificosController implements Serializable {
                 haber = 0;
                 saldototaltotal = 0;
             }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Asiento fue Almacenado Codigo" + codlibrodiario.getIdlibrodiario(), ""));
+ //--------Actualizando el serial reposicion de tabla Empresa ------- \\
+            empresa.setSerialasiento(serial);
+            empresaEJB.edit(empresa);
+            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Asiento fue Almacenado bajo la Referencia " + serial, ""));
             listadetalleslibrodiario.clear();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Asiento Contable", "Aviso"));
@@ -907,5 +938,25 @@ public class AsientosespecificosController implements Serializable {
 
         }
     }
+    public String getTotalDeudor() {
+        double totald = 0;
 
+        for (Detallelibrodiario inventa : listadetalleslibrodiario) {
+            totald += inventa.getDebe();
+        }
+        totaldebe = totald;
+        totaldebegeneral = totaldebe;
+        return new DecimalFormat("###,###.##").format(totald);
+    }
+
+        public String getTotalAcreedor() {
+        double totalh = 0;
+
+        for (Detallelibrodiario inventa : listadetalleslibrodiario) {
+            totalh += inventa.getHaber();
+        }
+        totalhaber = totalh;
+        totalhabergeneral = totalhaber;
+        return new DecimalFormat("###,###.##").format(totalh);
+    }
 }

@@ -114,44 +114,15 @@ public class ClienteController implements Serializable {
     }
 
     public void create() {
-        int tipocontri=selected.getIdcontribuyente().getIdcontribuyente();
-        if (tipocontri==4 || tipocontri==6){
-            rucvalido = validarucspv.validacionRUC(selected.getRifcliente());
-        }else if (tipocontri==1 ||tipocontri==2 || tipocontri==3){
-            rucvalido = validarcedula.validacionCedula(selected.getRifcliente());
-        }else if (tipocontri==5){
-            rucvalido = validarrucep.validaRucEP(selected.getRifcliente());
-        }
-        if (rucvalido) {
-            System.out.print("RUC VALIDADO");
-            persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));
-            if (!JsfUtil.isValidationFailed()) {
-                items = null;    // Invalidate list of items to trigger re-query.
-            }
-
-        }else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error en el RUC ingresado", "Error en el RUC ingresado"));
-            System.out.print("RUC ERRADO");
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ClienteCreated"));
+        if (!JsfUtil.isValidationFailed()) {
+           items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
 
     public void update() {
-        int tipocontri=selected.getIdcontribuyente().getIdcontribuyente();
-        if (tipocontri==4 || tipocontri==6){
-            rucvalido = validarucspv.validacionRUC(selected.getRifcliente());
-        }else if (tipocontri==1 ||tipocontri==2 || tipocontri==3){
-            rucvalido = validarcedula.validacionCedula(selected.getRifcliente());
-        }else if (tipocontri==5){
-            rucvalido = validarrucep.validaRucEP(selected.getRifcliente());
-        }
-        if (rucvalido) {
-            System.out.print("RUC VALIDADO");
-            persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ClienteUpdated"));
-        }else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error en el RUC ingresado", "Error en el RUC ingresado"));
-            System.out.print("RUC ERRADO");
-        }
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ClienteUpdated"));
     }
 
     public void destroy() {

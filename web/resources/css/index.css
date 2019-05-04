@@ -19,7 +19,7 @@
 #imag1 {
     position: absolute; 
     top: 20px; 
-    left: 950px; 
+    left: 1250px; 
 }
 
 #imag2 {
@@ -28,6 +28,7 @@
     left: 20px;
 
 }
+
 #panel1
 { 
     background-color:#999999;

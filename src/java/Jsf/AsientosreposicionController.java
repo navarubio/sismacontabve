@@ -109,7 +109,8 @@ public class AsientosreposicionController implements Serializable {
     private TipopagoFacadeLocal tipopagoEJB;
     @EJB
     private BancoFacadeLocal bancoEJB;
-
+    @EJB
+    private EmpresaFacadeLocal empresaEJB;
     @EJB
     private MaestromovimientoFacadeLocal maestromovimientoEJB;
 
@@ -667,6 +668,8 @@ public class AsientosreposicionController implements Serializable {
         listadetalleslibrodiario.clear();
         retiva = 0;
         retislr = 0;
+        Usuario us = requerimientosController.getUsa();
+        empresa = requerimientosController.getEmpresa();
         //articulos = articuloEJB.findAll();
         //comprasporautorizar=compraEJB.buscarcomprasporAutorizar();
 
@@ -700,7 +703,7 @@ public class AsientosreposicionController implements Serializable {
     }
 
     public void asignarReposicion(Reposicioncajachica repo, Maestromovimiento maestro) {
-        empresa= requerimientosController.getEmpresa();
+//        empresa= requerimientosController.getEmpresa();
         this.retiva = 0;
         this.retislr = 0;
         this.tamaño = 0;
@@ -784,9 +787,11 @@ public class AsientosreposicionController implements Serializable {
             double debe = 0;
             double haber = 0;
             double saldototaltotal = 0;
+            Integer serial = empresaEJB.devolverSerialAsiento(empresa);
             librodiario.setIdempresa(empresa.getIdempresa());
+            librodiario.setSerialasiento(serial);
             librodiarioEJB.create(librodiario);
-            codlibrodiario = librodiarioEJB.ultimoInsertado();
+            codlibrodiario = librodiarioEJB.ultimoInsertado(empresa);
 
             Detallelibrodiario detalleld = new Detallelibrodiario();
             Libromayor libromy = new Libromayor();
@@ -798,7 +803,7 @@ public class AsientosreposicionController implements Serializable {
             for (Detallelibrodiario dld : listadetalleslibrodiario) {
                 detalleld.setIdlibrodiario(codlibrodiario);
                 libromy.setIdlibrodiario(codlibrodiario);
-                cuentacontable = plandecuentaEJB.buscarcuenta(dld.getIdplandecuenta().getIdplandecuenta(), empresa);
+                cuentacontable = plandecuentaEJB.buscarcuenta(dld.getIdplandecuenta().getCodigocuenta(), empresa);
 
                 detalleld.setIdplandecuenta(dld.getIdplandecuenta());
                 libromy.setIdplandecuenta(dld.getIdplandecuenta());
@@ -817,7 +822,7 @@ public class AsientosreposicionController implements Serializable {
                     libromy.setDebe(0.0);
                     libromy.setHaber(dld.getHaber());
                 }
-                double saldoant = plandecuentaEJB.buscarsaldoanterior(dld.getIdplandecuenta().getIdplandecuenta());
+                double saldoant = plandecuentaEJB.buscarsaldoanterior(dld.getIdplandecuenta().getCodigocuenta(), empresa);
                 libromy.setSaldoanterior(requerimientosController.redondearDecimales(saldoant));
                 if (dld.getIdplandecuenta().getIdtiposaldocontable().getIdtiposaldocontable() == 1) {
                     saldototaltotal = (((saldoant) + debe) - haber);
@@ -830,6 +835,7 @@ public class AsientosreposicionController implements Serializable {
                 detallelibrodiarioEJB.create(detalleld);
                 libromayorEJB.create(libromy);
                 codlibromayor = libromayorEJB.ultimoInsertado();
+
                 if (cuentareposiciom == cuentamovi) {
                     movimientobancario = movimientoBancarioEJB.buscarmovimientoxreposicion(reposicionCajachica);
                     movimientobancario.setIdlibromayor(codlibromayor);
@@ -844,7 +850,12 @@ public class AsientosreposicionController implements Serializable {
                 haber = 0;
                 saldototaltotal = 0;
             }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Asiento fue Almacenado Codigo" + codlibrodiario.getIdlibrodiario(), ""));
+
+//--------Actualizando el serial de asiento en la tabla Empresa ------- \\
+            empresa.setSerialasiento(serial);
+            empresaEJB.edit(empresa);   
+            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Asiento fue Almacenado bajo la Referencia  " + serial, ""));
             listadetalleslibrodiario.clear();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Grabar Asiento Contable", "Aviso"));

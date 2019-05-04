@@ -26,7 +26,7 @@
                                  paginator="true"
                                  rowKey="#{item.codigo}"
                                  rows="30"
-                                 rowStyleClass="#{item.idplandecuenta.idplandecuenta != null ? 'articulosinclasificar' : null}"
+                                 rowStyleClass="#{item.idplandecuenta.codigocuenta!= null || item.idcuentaventa.codigocuenta != null  ? 'articulosinclasificar' : null}"
                                  rowsPerPageTemplate="30,40,50,60"
                                  >
 

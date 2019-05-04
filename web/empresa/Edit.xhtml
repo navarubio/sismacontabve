@@ -7,21 +7,6 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <p:dialog id="EmpresaEditDlg" widgetVar="EmpresaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleEmpresa.EditEmpresaTitle}">
             <h:form id="EmpresaEditForm">
                 <h:panelGroup id="display">
@@ -172,7 +157,8 @@
                                 <p:inputText id="serialcomprobanteiva" value="#{empresaController.selected.serialcomprobanteiva}" title="#{bundleEmpresa.EditEmpresaTitle_serialcomprobanteiva}" />                        
                                 <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_serialcomprobanteislr}" for="serialcomprobanteislr" />
                                 <p:inputText id="serialcomprobanteislr" value="#{empresaController.selected.serialcomprobanteislr}" title="#{bundleEmpresa.EditEmpresaTitle_serialcomprobanteislr}" />                        
-
+                                <p:outputLabel value="#{bundleEmpresa.EditEmpresaLabel_serialasiento}" for="serialasiento" />
+                                <p:inputText id="serialasiento" value="#{empresaController.selected.serialasiento}" title="#{bundleEmpresa.EditEmpresaTitle_serialasiento}" />                        
                             </h:panelGrid>
                         </p:tab>
                     </p:tabView>

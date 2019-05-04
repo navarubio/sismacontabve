@@ -37,7 +37,7 @@ public interface PlandecuentaFacadeLocal {
     
     Plandecuenta buscarcuentaxcodigo(int codcta, Empresa empre);
     
-    double buscarsaldoanterior(int codcta);
+    double buscarsaldoanterior(int codcta, Empresa empre );
     
     List<Plandecuenta> cuentasdeMovimiento();
     
