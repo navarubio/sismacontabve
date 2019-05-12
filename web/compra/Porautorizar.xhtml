@@ -212,7 +212,7 @@
                                     <p:dataTable id="listado" value="#{comprasController.requerimientosFiltrados}"
                                                  var="req" emptyMessage="No hay articulos para mostrar"  >
                                         <p:column style="width:12%"  headerText="Codigo Articulo">
-                                            <h:outputText value="#{req.codigo.codigo}" />
+                                            <h:outputText value="#{req.codigo.idarticulo}" />
                                         </p:column>
                                         <p:column style="width:35%"  headerText="Descripcion del Articulo">
                                             <h:outputText value="#{req.codigo.descripcion}"/>  

@@ -148,26 +148,28 @@
                             </p:panelGrid>                                
                         </p:fieldset>
                         <p:fieldset legend="Registros Contables"  toggleable="true" toggleSpeed="500" collapsed="true" >
-                            <p:panelGrid columns="6" styleClass="ui-custompanelgrid3" > 
+                            <p:panelGrid columns="7" styleClass="ui-custompanelgrid3" > 
                                 <p:outputLabel for="descripcioncta" value="Cuenta" styleClass="text-ouput"/>
                                 <p:outputLabel for="codigocta" value="Codigo" styleClass="text-ouput"/>
-                                <!--p:outputLabel for="saldoactual" value="Saldo Cta" styleClass="text-ouput"/-->
+                                <p:outputLabel for="saldoactual" value="SALDO" styleClass="text-ouput"/>
+                                <p:outputLabel for="cuadre" value="CUADRE" styleClass="text-ouput"/>
                                 <p:outputLabel for="debe" value="DEBE" style="float:right" styleClass="text-ouput" />
                                 <p:outputLabel for="haber" value="HABER" style="float:right" styleClass="text-ouput" />
                                 <p:outputLabel></p:outputLabel>                                
                                 <p:selectOneMenu id="descripcioncta" value="#{asientosventasController.cuentaseleccionada}" 
                                                  converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
-                                    <p:ajax event="change" update="codigocta"/>
-                                    <!--f:selectItem itemLabel="SIN APLICAR" itemValue="0" noSelectionOption="false" /-->
+                                    <p:ajax event="change" update="codigocta, saldoactual, cuadre"/>
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
                                     <f:selectItems value="#{plandecuentaController.itemsordenados}"
                                                    var="subespecificocontableItem"
-                                                   itemValue="#{subespecificocontableItem.idplandecuenta}" itemLabel="#{subespecificocontableItem.codigocuenta} #{subespecificocontableItem.descripcioncuenta} "/> 
+                                                   itemValue="#{subespecificocontableItem.codigocuenta}" itemLabel="#{subespecificocontableItem.codigocuenta} #{subespecificocontableItem.descripcioncuenta} "/> 
                                 </p:selectOneMenu>
                                 <p:outputLabel id="codigocta" value="#{asientosventasController.cuentaseleccionada}" />
-                                <!--p:outputLabel id="saldoactual" value=".{asientosventasController.detalleaanexar.idplandecuenta.saldogeneral}" styleClass="optionalLbl"/-->
+                                <p:outputLabel id="saldoactual" value="#{asientosventasController.saldoCuentaSeleccionada()}" styleClass="optionalLbl"/>                                    
+                                <p:outputLabel id="cuadre" value="#{asientosventasController.montoCuadre}" styleClass="text-ouputfact"/>                                    
                                 <p:inputText id="debe"  size="20" value="#{asientosventasController.detalleaanexar.debe}" style="text-align:right"/>
                                 <p:inputText id="haber"  size="20" value="#{asientosventasController.detalleaanexar.haber}" style="text-align:right"/>                               
-                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{asientosventasController.anexarregistro()}" update=":formulario:listadoasiento,:growl"/>   
+                                <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{asientosventasController.anexarregistro()}" update=":formulario:listadoasiento,panelcontab,contable,:growl"/>   
                             </p:panelGrid>                                
                         </p:fieldset>
 
@@ -199,7 +201,7 @@
                                 </p:commandLink>
                             </p:column>
                             <p:column style="text-align: center" headerText="Eliminar">
-                                <p:commandLink actionListener="#{asientosventasController.eliminar(req1)}" update=":formulario:contable,listadoasiento" >
+                                <p:commandLink actionListener="#{asientosventasController.eliminar(req1)}" update=":formulario:panelcontab,listadoasiento" >
                                     <h:graphicImage library="images" name="button_cancel.png" width="20" height="20" alt="Eliminar Asiento"/> 
                                 </p:commandLink>
                             </p:column>
@@ -207,8 +209,8 @@
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="2" style="text-align:right" footerText="TOTAL ASIENTO" />
-                                    <p:column style="text-align: right"  footerText="$ #{asientosventasController.totaldebe()}" />
-                                    <p:column style="text-align: right"  footerText="$ #{asientosventasController.totalhaber()}" />
+                                    <p:column style="text-align: right"  footerText="$ #{asientosventasController.totalDeudor}" />
+                                    <p:column style="text-align: right"  footerText="$ #{asientosventasController.totalAcreedor}" />
                                 </p:row>
                             </p:columnGroup>                            
                         </p:dataTable>
@@ -227,16 +229,17 @@
                                              converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="contains">
                                 <!--p:ajax event="change" update="codigcta"/-->
                                 <!--f:selectItem itemLabel="SIN APLICAR" itemValue="0" noSelectionOption="false" /-->
+                                <f:selectItem noSelectionOption="true" itemLabel="Seleccione"/>
                                 <f:selectItems value="#{plandecuentaController.itemsordenados}"
                                                var="subespecificocontableItem"
-                                               itemValue="#{subespecificocontableItem.idplandecuenta}" /> 
+                                               itemValue="#{subespecificocontableItem.codigocuenta}" itemLabel="#{subespecificocontableItem.codigocuenta} #{subespecificocontableItem.descripcioncuenta} "/> 
                             </p:selectOneMenu>
                             <p:outputLabel for="debito1"  value="DEBE" />
                             <p:inputText id="debito1"  size="10" value="#{asientosventasController.detalleamodificar.debe}" style="text-align:right" />
                             <p:outputLabel for="credito1"  value="HABER" />
                             <p:inputText id="credito1"  size="10" value="#{asientosventasController.detalleamodificar.haber}" style="text-align:right"/>
                             <p:commandButton value="Grabar" icon="ui-icon-check" actionListener="#{asientosventasController.modificar()}"  
-                                             oncomplete="PF('wdialogo').hide();" update="display,:formulario:contable,:growl" />
+                                             oncomplete="PF('wdialogo').hide();" update="display,:formulario:panelcontab,:formulario:contable,:growl" />
                             <p:commandButton value="Cancelar" icon="ui-icon-close" immediate="true" onclick="PF('wdialogo').hide();" /> 
                         </h:panelGrid>
                     </h:form>

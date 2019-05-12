@@ -378,10 +378,10 @@ public class FacturasController implements Serializable {
         String proximo;
         int serial = 0;
         DecimalFormat myFormatter = new DecimalFormat("00000000");
-        serial = empresa.getSerialfactura() + 1;
+        serial = empresaEJB.devolverSerialFactura(empresa);
         siguiente = myFormatter.format(serial);
-        proximo = facturaEJB.siguientefacturaformat();
-        number = Integer.parseInt(proximo);
+//        proximo = facturaEJB.siguientefacturaformat();
+        number = serial;
         factura.setSerialfactura(serial);
         return siguiente;
     }

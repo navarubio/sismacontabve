@@ -233,13 +233,37 @@ public class PlandecuentasController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error al Clonar las Cuentas de Movimiento Modelo", "Error al Clonar las Cuentas de Movimiento Modelo"));
         }
     }
-    
     public String getComprobacionTotal() {
         double total = 0;
  
         for(Plandecuenta plandcta : getItems()) {
             if (plandcta.getSaldogeneral()!=null){
                 if (plandcta.getSaldogeneral()<0 || plandcta.getSaldogeneral()>0){
+                    total += plandcta.getSaldogeneral();            
+                }
+            }
+        }
+        return new DecimalFormat("###,###.##").format(total);
+    }
+    public String getComprobacionTotalDebe() {
+        double total = 0;
+ 
+        for(Plandecuenta plandcta : getItems()) {
+            if (plandcta.getSaldogeneral()!=null){
+                if (plandcta.getSaldogeneral()>0){
+                    total += plandcta.getSaldogeneral();            
+                }
+            }
+        }
+        return new DecimalFormat("###,###.##").format(total);
+    }
+    
+    public String getComprobacionTotalHaber() {
+        double total = 0;
+ 
+        for(Plandecuenta plandcta : getItems()) {
+            if (plandcta.getSaldogeneral()!=null){
+                if (plandcta.getSaldogeneral()<0){
                     total += plandcta.getSaldogeneral();            
                 }
             }

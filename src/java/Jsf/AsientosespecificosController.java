@@ -715,14 +715,14 @@ public class AsientosespecificosController implements Serializable {
                 detalleld.setIdplandecuenta(dld.getIdplandecuenta());
                 libromy.setIdplandecuenta(dld.getIdplandecuenta());
 
-                if (dld.getDebe() != 0) {
+                if (dld.getDebe() != null) {
                     detalleld.setDebe(dld.getDebe());
                     detalleld.setHaber(0.0);
                     debe = dld.getDebe();
                     libromy.setHaber(0.0);
                     libromy.setDebe(dld.getDebe());
                 }
-                if (dld.getHaber() != 0) {
+                if (dld.getHaber() != null) {
                     detalleld.setHaber(dld.getHaber());
                     detalleld.setDebe(0.0);
                     haber = dld.getHaber();
@@ -872,7 +872,7 @@ public class AsientosespecificosController implements Serializable {
 
         for (Detallelibrodiario detall : listadetalleslibrodiario) {
             if (detall.getDebe() != null) {
-                montotdebe += detall.getDebe();
+                montotdebe += requerimientosController.redondearDecimales(detall.getDebe());
             }
         }
         totaldebegeneral = montotdebe;
@@ -884,7 +884,7 @@ public class AsientosespecificosController implements Serializable {
 
         for (Detallelibrodiario detall : listadetalleslibrodiario) {
             if (detall.getHaber() != null) {
-                montothaber += detall.getHaber();
+                montothaber += requerimientosController.redondearDecimales(detall.getHaber());
             }
         }
         totalhabergeneral = montothaber;
@@ -916,6 +916,18 @@ public class AsientosespecificosController implements Serializable {
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cuenta fue modificada"));
     }
+    
+    public String saldoCuentaSeleccionada () {
+        String saldo;
+        Plandecuenta cuentaElegida = new Plandecuenta();
+        if (cuentaseleccionada>0){
+            cuentaElegida=plandecuentaEJB.buscarcuentaxcodigo(cuentaseleccionada, empresa);
+            return new DecimalFormat("###,###.##").format(cuentaElegida.getSaldogeneral());
+        }else{ 
+            int saldocero=0;
+            return new DecimalFormat("###,###.##").format(saldocero);
+        }
+    }
 
     public void anexarregistro() {
         Plandecuenta cuentaelegida = plandecuentaEJB.buscarcuenta(cuentaseleccionada, empresa);
@@ -926,8 +938,12 @@ public class AsientosespecificosController implements Serializable {
             detalleaanexar.setIddetallelibrodiario(indic);
             detalleanexo.setIddetallelibrodiario(indic);
             detalleanexo.setIdplandecuenta(detalleaanexar.getIdplandecuenta());
-            detalleanexo.setDebe(detalleaanexar.getDebe());
-            detalleanexo.setHaber(detalleaanexar.getHaber());
+            if (detalleaanexar.getDebe()>0){
+                detalleanexo.setDebe(detalleaanexar.getDebe());
+            }
+            if (detalleaanexar.getHaber()>0){            
+                detalleanexo.setHaber(detalleaanexar.getHaber());
+            }
             this.listadetalleslibrodiario.add(detalleanexo);
             detalleaanexar.setDebe(0.0);
             detalleaanexar.setHaber(0.0);
@@ -939,24 +955,24 @@ public class AsientosespecificosController implements Serializable {
         }
     }
     public String getTotalDeudor() {
-        double totald = 0;
-
-        for (Detallelibrodiario inventa : listadetalleslibrodiario) {
-            totald += inventa.getDebe();
-        }
-        totaldebe = totald;
-        totaldebegeneral = totaldebe;
-        return new DecimalFormat("###,###.##").format(totald);
+        totaldebe();
+        return new DecimalFormat("###,###.##").format(totaldebegeneral);
     }
 
-        public String getTotalAcreedor() {
-        double totalh = 0;
-
-        for (Detallelibrodiario inventa : listadetalleslibrodiario) {
-            totalh += inventa.getHaber();
-        }
-        totalhaber = totalh;
-        totalhabergeneral = totalhaber;
-        return new DecimalFormat("###,###.##").format(totalh);
+    public String getTotalAcreedor() {
+        totalhaber();
+        return new DecimalFormat("###,###.##").format(totalhabergeneral);
     }
+    
+    public String getMontoCuadre() {
+        double montoCuadre=0;
+        totaldebe();
+        totalhaber();
+        montoCuadre= totaldebegeneral-totalhabergeneral;
+        if (montoCuadre < 0){
+            montoCuadre=montoCuadre*-1;
+        }
+        return new DecimalFormat("###,###.##").format(montoCuadre);
+    }
+    
 }

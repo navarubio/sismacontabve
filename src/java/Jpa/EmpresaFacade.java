@@ -17,7 +17,8 @@ import javax.persistence.Query;
  * @author sofimar
  */
 @Stateless
-public class EmpresaFacade extends AbstractFacade<Empresa> implements EmpresaFacadeLocal{
+public class EmpresaFacade extends AbstractFacade<Empresa> implements EmpresaFacadeLocal {
+
     @PersistenceContext(unitName = "SismacontabecPU")
     private EntityManager em;
 
@@ -29,9 +30,9 @@ public class EmpresaFacade extends AbstractFacade<Empresa> implements EmpresaFac
     public EmpresaFacade() {
         super(Empresa.class);
     }
-    
+
     @Override
-    public Empresa devolverEmpresabase () {
+    public Empresa devolverEmpresabase() {
         Empresa empresa = null;
         String consulta;
         try {
@@ -46,30 +47,44 @@ public class EmpresaFacade extends AbstractFacade<Empresa> implements EmpresaFac
         }
         return empresa;
     }
-    
+
     @Override
-    public int devolverSerialConsumo (Empresa empre) {
-        Empresa empresa=null;
+    public List<Empresa> listadoEmpresas() {
+        List<Empresa> lista = null;
+        String consulta;
+        try {
+            consulta = "SELECT e FROM Empresa e order by e.razonsocial";
+            Query query = em.createQuery(consulta);
+            lista = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
+    }
+
+    @Override
+    public int devolverSerialConsumo(Empresa empre) {
+        Empresa empresa = null;
         int serialconsumo = 0;
         String consulta;
         try {
-            consulta = "From Empresa e where e.idempresa = ?1";
+            consulta = "From Empresa e where e.idempresa = ?1 ";
             Query query = em.createQuery(consulta);
             query.setParameter(1, empre.getIdempresa());
             List<Empresa> lista = query.getResultList();
             if (!lista.isEmpty()) {
                 empresa = lista.get(0);
-                serialconsumo=empre.getSerialconsumo()+1;
+                serialconsumo = empre.getSerialconsumo() + 1;
             }
         } catch (Exception e) {
             throw e;
         }
         return serialconsumo;
     }
-    
-   @Override
-    public int devolverSerialAsiento (Empresa empre) {
-        Empresa empresa=null;
+
+    @Override
+    public int devolverSerialAsiento(Empresa empre) {
+        Empresa empresa = null;
         int serialasiento = 0;
         String consulta;
         try {
@@ -79,11 +94,32 @@ public class EmpresaFacade extends AbstractFacade<Empresa> implements EmpresaFac
             List<Empresa> lista = query.getResultList();
             if (!lista.isEmpty()) {
                 empresa = lista.get(0);
-                serialasiento=empre.getSerialasiento()+1;
+                serialasiento = empre.getSerialasiento() + 1;
             }
         } catch (Exception e) {
             throw e;
         }
         return serialasiento;
     }
+
+    @Override
+    public int devolverSerialFactura(Empresa empre) {
+        Empresa empresa = null;
+        int serialfactura = 0;
+        String consulta;
+        try {
+            consulta = "From Empresa e where e.idempresa = ?1";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, empre.getIdempresa());
+            List<Empresa> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                empresa = lista.get(0);
+                serialfactura = empre.getSerialfactura() + 1;
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return serialfactura;
+    }
+
 }

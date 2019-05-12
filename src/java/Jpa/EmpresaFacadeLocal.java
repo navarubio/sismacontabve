@@ -36,4 +36,8 @@ public interface EmpresaFacadeLocal {
     
     int devolverSerialAsiento (Empresa empre);
     
+    int devolverSerialFactura (Empresa empre); 
+    
+    List<Empresa> listadoEmpresas(); 
+    
 }

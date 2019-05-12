@@ -39,7 +39,7 @@
                 </p:panel>
                 <p:panel id="listado">
                     <p:panelGrid columns="1" >
-                        
+
                         <p:dataTable id="datalist" value="#{plandecuentasController.itemsResultados}" var="item"
                                      selectionMode="single" selection="#{plandecuentaController.selected}"  style="width: 700px;"
                                      paginator="true"
@@ -65,20 +65,23 @@
                                 <f:facet name="header">
                                     <h:outputText value="#{bundlecontable.ListPlandecuentaTitle_saldogeneral}"/>
                                 </f:facet>
-                                <h:outputText value="#{item.saldogeneral}">
+                                <h:outputText value="#{item.saldogeneral}" rendered="#{item.idtiposaldocontable.idtiposaldocontable == 1  ? true:false}">
                                     <f:convertNumber type="currency" currencySymbol=" " />
                                 </h:outputText>
                             </p:column>
-                            <p:column style="text-align: center">
+                            <p:column style="text-align: right" width="100">
                                 <f:facet name="header">
-                                    <h:outputText value="#{bundlecontable.ListPlandecuentaTitle_idtipocuentacontable}"/>
+                                    <h:outputText value=""/>
                                 </f:facet>
-                                <h:outputText value="#{item.idtipocuentacontable.tipocuentacontable}"/>
+                                <h:outputText value="#{item.saldogeneral} " rendered="#{item.idtiposaldocontable.idtiposaldocontable == 2 ? true:false}">
+                                    <f:convertNumber type="currency" currencySymbol=" " />
+                                </h:outputText>
                             </p:column>
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="2" style="text-align:right" footerText="Resultado del Ejercicio" />
-                                    <p:column footerText="#{plandecuentasController.comprobacionTotal}" style="text-align: right" />
+                                    <p:column footerText="#{plandecuentasController.comprobacionTotalDebe}" style="text-align: right" />
+                                    <p:column footerText="#{plandecuentasController.comprobacionTotalHaber}" style="text-align: right" />
                                 </p:row>
                             </p:columnGroup>
                             <f:facet name="footer">

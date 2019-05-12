@@ -125,14 +125,14 @@
                                 <h:graphicImage library="images" name="contable1.png" width="30" height="30" alt="Reposicion"
                                                 rendered="#{item.idreposicioncajachica!= null and item.idestatuscontable.idestatuscontable==1 ? true:false}"/>  
                             </h:commandLink>   
-                            <h:outputText value="#{item.idreposicioncajachica}"/>
+                            <h:outputText value="#{item.idreposicioncajachica.serialreposicion}"/>
                         </p:column>
                         
                         <p:column style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idlibrodiario}"/>
                             </f:facet>                         
-                            <h:outputText value="#{item.idlibrodiario}"/>
+                            <h:outputText value="#{item.idlibrodiario.serialasiento}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlecontabilidad.Create}" actionListener="#{maestromovimientoController.prepareCreate}" update=":MaestromovimientoCreateForm" oncomplete="PF('MaestromovimientoCreateDialog').show()"/>

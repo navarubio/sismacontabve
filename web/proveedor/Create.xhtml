@@ -11,14 +11,7 @@
         <p:dialog id="ProveedorCreateDlg" widgetVar="ProveedorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateProveedorTitle}">
             <h:form id="ProveedorCreateForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{proveedorController.selected != null}">
-                        <p:outputLabel value="#{bundletipodocumento.CreateTipodocumentoLabel_documento}" for="tipodocument" />
-                        <p:selectOneMenu id="tipodocument" value="#{proveedorController.selected.iddocumento}" >
-                            <f:selectItems value="#{tipodocumentoController.itemsAvailableSelectOne}"
-                                           var="iddocumento"
-                                           itemValue="#{iddocumento.iddocumento}" itemLabel="#{iddocumento.documento}"/>
-                        </p:selectOneMenu>
-                        
+                    <p:panelGrid columns="2" rendered="#{proveedorController.selected != null}">                      
                         <p:outputLabel value="#{bundle.CreateProveedorLabel_rifproveedor}" for="rifproveedor" />
                         <p:inputText id="rifproveedor" value="#{proveedorController.selected.rifproveedor}" title="#{bundle.CreateProveedorTitle_rifproveedor}" required="true" requiredMessage="#{bundle.CreateProveedorRequiredMessage_rifproveedor}"/>
                         <p:outputLabel value="#{bundle.CreateProveedorLabel_razonsocial}" for="razonsocial" />

@@ -77,7 +77,7 @@ public class EmpresaController implements Serializable {
 
     public List<Empresa> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().listadoEmpresas();
         }
         return items;
     }

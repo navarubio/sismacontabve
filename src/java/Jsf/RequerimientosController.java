@@ -250,7 +250,8 @@ public class RequerimientosController implements Serializable {
 
     @PostConstruct
     public void init() {
-
+        Empresa empre = (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        empresa = empre;
         auxrequer.setFecharequerimiento(fechaactual);
         listarequerimiento.clear();
         visualizar = 0;
@@ -260,9 +261,7 @@ public class RequerimientosController implements Serializable {
 
     public void ObtenerUsuario() {
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        Empresa empre = (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
         Usuariodeprol usdeprol = (Usuariodeprol) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuariodeprol");
-        empresa = empre;
         usa = us;
         usuariodeprol = usdeprol;
         statusreq.setIdestatusrequerimiento(statu);

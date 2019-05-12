@@ -1017,23 +1017,25 @@ public class AsientoscontablesController implements Serializable {
 //        empresa = empresaEJB.devolverEmpresabase();
         id = 0;
         visualizar = 0;
-        Detallecompra detalle1 = detallecompraFiltrados.get(0);
-        Articulo arti = detalle1.getCodigo();
-        Detallelibrodiario detallelib = new Detallelibrodiario();
-        if (arti.getIdplandecuenta() != null) {
-            detallelib.setIdplandecuenta(arti.getIdplandecuenta());
-            detallelibroventa.setIdplandecuenta(arti.getIdplandecuenta());
-        } else {
-            int codcta = empresa.getCtagastoprovisional();
-            Plandecuenta cuentaprovisional = plandecuentaEJB.buscarcuenta(codcta, empresa);
-            detallelib.setIdplandecuenta(cuentaprovisional);
-            detallelibroventa.setIdplandecuenta(detallelib.getIdplandecuenta());
+        Articulo arti= new Articulo();
+        for (Detallecompra detalle1 : detallecompraFiltrados) {
+            //Detallecompra detalle1 = detallecompraFiltrados.get(0);
+            arti = detalle1.getCodigo();
+            Detallelibrodiario detallelib = new Detallelibrodiario();
+            if (arti.getIdplandecuenta() != null) {
+                detallelib.setIdplandecuenta(arti.getIdplandecuenta());
+                detallelibroventa.setIdplandecuenta(arti.getIdplandecuenta());
+            } else {
+                int codcta = empresa.getCtagastoprovisional();
+                Plandecuenta cuentaprovisional = plandecuentaEJB.buscarcuenta(codcta, empresa);
+                detallelib.setIdplandecuenta(cuentaprovisional);
+                detallelibroventa.setIdplandecuenta(detallelib.getIdplandecuenta());
+            }
+            detallelib.setDebe(detalle1.getSubtotal());
+            detallelib.setIddetallelibrodiario(id);
+            this.listadetalleslibrodiario.add(detallelib);
+            id++;
         }
-        detallelib.setDebe(compra.getSubtotal());
-        detallelib.setIddetallelibrodiario(id);
-        this.listadetalleslibrodiario.add(detallelib);
-        id++;
-
         if (compra.getIva() > 0.0) {
             Detallelibrodiario detallelibr = new Detallelibrodiario();
 
@@ -1284,7 +1286,7 @@ public class AsientoscontablesController implements Serializable {
 
     public void asignarDetallelibrodiario(Detallelibrodiario detallelbr) {
         detalleamodificar = detallelbr;
-        cuentaseleccionada = detallelbr.getIdplandecuenta().getIdplandecuenta();
+        cuentaseleccionada = detallelbr.getIdplandecuenta().getCodigocuenta();
         indicearreglo = detallelbr.hashCode();
     }
 
@@ -1302,9 +1304,48 @@ public class AsientoscontablesController implements Serializable {
         detalleaanexar.setIddetallelibrodiario(indic);
         detalleanexo.setIddetallelibrodiario(indic);
         detalleanexo.setIdplandecuenta(detalleaanexar.getIdplandecuenta());
-        detalleanexo.setDebe(detalleaanexar.getDebe());
-        detalleanexo.setHaber(detalleaanexar.getHaber());
+        if (detalleaanexar.getDebe()!=null){
+            detalleanexo.setDebe(detalleaanexar.getDebe());
+        }
+        if (detalleaanexar.getHaber()!=null){  
+            detalleanexo.setHaber(detalleaanexar.getHaber());
+        }
         this.listadetalleslibrodiario.add(detalleanexo);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cuenta fue modificada"));
+        detalleaanexar.setDebe(0.0);
+        detalleaanexar.setHaber(0.0);
+        cuentaseleccionada = 0;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Su Cuenta fue Anexada"));
+    }
+    
+    public String saldoCuentaSeleccionada () {
+        String saldo;
+        Plandecuenta cuentaElegida = new Plandecuenta();
+        if (cuentaseleccionada>0){
+            cuentaElegida=plandecuentaEJB.buscarcuentaxcodigo(cuentaseleccionada, empresa);
+            return new DecimalFormat("###,###.##").format(cuentaElegida.getSaldogeneral());
+        }else{ 
+            int saldocero=0;
+            return new DecimalFormat("###,###.##").format(saldocero);
+        }
+    }
+    public String getTotalDeudor() {
+        totaldebe();
+        return new DecimalFormat("###,###.##").format(totaldebegeneral);
+    }
+
+    public String getTotalAcreedor() {
+        totalhaber();
+        return new DecimalFormat("###,###.##").format(totalhabergeneral);
+    }
+    
+    public String getMontoCuadre() {
+        double montoCuadre=0;
+        totaldebe();
+        totalhaber();
+        montoCuadre= totaldebegeneral-totalhabergeneral;
+        if (montoCuadre < 0){
+            montoCuadre=montoCuadre*-1;
+        }
+        return new DecimalFormat("###,###.##").format(montoCuadre);
     }
 }
