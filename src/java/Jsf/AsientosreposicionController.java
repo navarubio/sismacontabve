@@ -1033,7 +1033,7 @@ public class AsientosreposicionController implements Serializable {
 
     public void asignarDetallelibrodiario(Detallelibrodiario detallelbr) {
         detalleamodificar = detallelbr;
-        cuentaseleccionada = detallelbr.getIdplandecuenta().getIdplandecuenta();
+        cuentaseleccionada = detallelbr.getIdplandecuenta().getCodigocuenta();
         indicearreglo = detallelbr.hashCode();
     }
 
@@ -1064,6 +1064,39 @@ public class AsientosreposicionController implements Serializable {
             montotgeneral += consutotal.getTotalconsumo();
         }
         totalgeneralform = formatearnumero.format(montotgeneral);
+    }
+    
+    public String saldoCuentaSeleccionada () {
+        String saldo;
+        Plandecuenta cuentaElegida = new Plandecuenta();
+        if (cuentaseleccionada>0){
+            cuentaElegida=plandecuentaEJB.buscarcuentaxcodigo(cuentaseleccionada, empresa);
+            return new DecimalFormat("###,###.##").format(cuentaElegida.getSaldogeneral());
+        }else{ 
+            int saldocero=0;
+            return new DecimalFormat("###,###.##").format(saldocero);
+        }
+    }
+    
+    public String getTotalDeudor() {
+        totaldebe();
+        return new DecimalFormat("###,###.##").format(totaldebegeneral);
+    }
+
+    public String getTotalAcreedor() {
+        totalhaber();
+        return new DecimalFormat("###,###.##").format(totalhabergeneral);
+    }
+    
+    public String getMontoCuadre() {
+        double montoCuadre=0;
+        totaldebe();
+        totalhaber();
+        montoCuadre= totaldebegeneral-totalhabergeneral;
+        if (montoCuadre < 0){
+            montoCuadre=montoCuadre*-1;
+        }
+        return new DecimalFormat("###,###.##").format(montoCuadre);
     }
 
 }

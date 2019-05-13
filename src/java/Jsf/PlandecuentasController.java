@@ -64,7 +64,12 @@ public class PlandecuentasController implements Serializable {
     private Plandecuenta cuentamovimiento;
     @Inject
     private Plandecuenta plandecuenta;
-
+    private double totaldebegeneral = 0;
+    private double totalhabergeneral = 0;
+    private String resultado="RESULTADO";
+    private double resultadoEjercicio=0;
+    int visualizarResultado=0;
+    
     public List<Grupocontable> getLstGrupos() {
         return lstGrupos;
     }
@@ -76,6 +81,7 @@ public class PlandecuentasController implements Serializable {
     @PostConstruct
     public void init() {
         lstGrupos = ejbFacadeG.grupocontableAll(requerimientosController.getEmpresa());
+        visualizarResultado=0;
     }
 
     public List<Subgrupocontable> getLstSubgrupos() {
@@ -121,6 +127,46 @@ public class PlandecuentasController implements Serializable {
 
     private PlandecuentaFacadeLocal getFacade() {
         return ejbFacade;
+    }
+
+    public double getTotaldebegeneral() {
+        return totaldebegeneral;
+    }
+
+    public void setTotaldebegeneral(double totaldebegeneral) {
+        this.totaldebegeneral = totaldebegeneral;
+    }
+
+    public double getTotalhabergeneral() {
+        return totalhabergeneral;
+    }
+
+    public void setTotalhabergeneral(double totalhabergeneral) {
+        this.totalhabergeneral = totalhabergeneral;
+    }
+
+    public String getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(String resultado) {
+        this.resultado = resultado;
+    }
+
+    public int getVisualizarResultado() {
+        return visualizarResultado;
+    }
+
+    public void setVisualizarResultado(int visualizarResultado) {
+        this.visualizarResultado = visualizarResultado;
+    }
+
+    public double getResultadoEjercicio() {
+        return resultadoEjercicio;
+    }
+
+    public void setResultadoEjercicio(double resultadoEjercicio) {
+        this.resultadoEjercicio = resultadoEjercicio;
     }
 
     public Plandecuenta prepareCreate() {
@@ -248,27 +294,95 @@ public class PlandecuentasController implements Serializable {
     public String getComprobacionTotalDebe() {
         double total = 0;
  
-        for(Plandecuenta plandcta : getItems()) {
+        for(Plandecuenta plandcta : items) {
             if (plandcta.getSaldogeneral()!=null){
                 if (plandcta.getSaldogeneral()>0){
                     total += plandcta.getSaldogeneral();            
                 }
             }
         }
+        totaldebegeneral=total;        
         return new DecimalFormat("###,###.##").format(total);
     }
     
     public String getComprobacionTotalHaber() {
         double total = 0;
  
-        for(Plandecuenta plandcta : getItems()) {
+        for(Plandecuenta plandcta : items) {
             if (plandcta.getSaldogeneral()!=null){
                 if (plandcta.getSaldogeneral()<0){
                     total += plandcta.getSaldogeneral();            
                 }
             }
         }
+        totalhabergeneral=total;
+        resultadoEjercicio = totaldebegeneral+totalhabergeneral;
+        if (resultadoEjercicio>0){
+            resultado="UTILIDAD EN EL EJERCICIO";
+            resultadoEjercicio = resultadoEjercicio*-1;
+            visualizarResultado=1;
+            totalhabergeneral= totalhabergeneral+resultadoEjercicio;
+        }else{
+            resultado="PERDIDA EN EL EJERCICIO";
+            resultadoEjercicio = resultadoEjercicio*-1;            
+            visualizarResultado=2;
+            totaldebegeneral= totaldebegeneral+resultadoEjercicio;
+        }
         return new DecimalFormat("###,###.##").format(total);
+    } 
+    
+        public String getComprobacionDebe() {
+        double total = 0;
+ 
+        for(Plandecuenta plandcta : items) {
+            if (plandcta.getSaldogeneral()!=null){
+                if (plandcta.getSaldogeneral()>0){
+                    total += plandcta.getSaldogeneral();            
+                }
+            }
+        }
+        totaldebegeneral=total;        
+        return new DecimalFormat("###,###.##").format(total);
+    }
+    
+    public String getComprobacionHaber() {
+        double total = 0;
+ 
+        for(Plandecuenta plandcta : items) {
+            if (plandcta.getSaldogeneral()!=null){
+                if (plandcta.getSaldogeneral()<0){
+                    total += plandcta.getSaldogeneral();            
+                }
+            }
+        }
+        totalhabergeneral=total;
+        resultadoEjercicio = totaldebegeneral+totalhabergeneral;
+        if (resultadoEjercicio<0){
+            resultado="UTILIDAD EN EL EJERCICIO";
+            resultadoEjercicio = resultadoEjercicio*-1;
+            visualizarResultado=1;
+            totaldebegeneral= totaldebegeneral+resultadoEjercicio;
+        }else{
+            resultado="PERDIDA EN EL EJERCICIO";
+            resultadoEjercicio = resultadoEjercicio*-1;            
+            visualizarResultado=2;
+            totalhabergeneral= totalhabergeneral+resultadoEjercicio;
+        }
+        return new DecimalFormat("###,###.##").format(total);
+    } 
+    
+    public String getResultadoFinal() {
+        
+        return new DecimalFormat("###,###.##").format(resultadoEjercicio);
+    }
+    
+    public String getTotalDeudor() {
+        return new DecimalFormat("###,###.##").format(totaldebegeneral);
+    }
+
+    public String getTotalAcreedor() {
+        
+        return new DecimalFormat("###,###.##").format(totalhabergeneral);
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -349,6 +463,7 @@ public class PlandecuentasController implements Serializable {
                 return null;
             }
         }
+        
 
     }
 
