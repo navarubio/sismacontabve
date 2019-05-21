@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ddba77e-51be-47ac-8b24-c3354df35f82">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="419"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="idempresa" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     cliente.`rifcliente` AS cliente_rifcliente,
-     cliente.`razonsocial` AS cliente_razonsocial,
-     cliente.`direccionfiscal` AS cliente_direccionfiscal,
-     cliente.`telefonos` AS cliente_telefonos,
-     cliente.`correo` AS cliente_correo,
-     cliente.`fechainscripcion` AS cliente_fechainscripcion,
-     cliente.`personacontacto` AS cliente_personacontacto,
-     cliente.`telefonocontacto` AS cliente_telefonocontacto,
-     cliente.`idpersonalidad` AS cliente_idpersonalidad,
-     cliente.`idcontribuyente` AS cliente_idcontribuyente,
-     cliente.`idusuario` AS cliente_idusuario,
-     contribuyente.`idcontribuyente` AS contribuyente_idcontribuyente,
-     contribuyente.`contribuyente` AS contribuyente_contribuyente,
-     personalidadjuridica.`idpersonalidad` AS personalidadjuridica_idpersonalidad,
-     personalidadjuridica.`personalidad` AS personalidadjuridica_personalidad,
-     empresa.`rif` AS empresa_rif,
-     empresa.`razonsocial` AS empresa_razonsocial,
-     empresa.`nombrecomercial` AS empresa_nombrecomercial,
-     empresa.`direccionfiscal` AS empresa_direccionfiscal,
-     empresa.`telefonos` AS empresa_telefonos,
-     empresa.`presidente` AS empresa_presidente,
-     empresa.`administrador` AS empresa_administrador,
-     empresa.`contador` AS empresa_contador,
-     empresa.`idcontribuyente` AS empresa_idcontribuyente
+     cliente."rifcliente" AS cliente_rifcliente,
+     cliente."razonsocial" AS cliente_razonsocial,
+     cliente."direccionfiscal" AS cliente_direccionfiscal,
+     cliente."telefonos" AS cliente_telefonos,
+     cliente."correo" AS cliente_correo,
+     cliente."fechainscripcion" AS cliente_fechainscripcion,
+     cliente."personacontacto" AS cliente_personacontacto,
+     cliente."telefonocontacto" AS cliente_telefonocontacto,
+     cliente."idpersonalidad" AS cliente_idpersonalidad,
+     cliente."idcontribuyente" AS cliente_idcontribuyente,
+     cliente."idusuario" AS cliente_idusuario,
+     contribuyente."idcontribuyente" AS contribuyente_idcontribuyente,
+     contribuyente."contribuyente" AS contribuyente_contribuyente,
+     personalidadjuridica."idpersonalidad" AS personalidadjuridica_idpersonalidad,
+     personalidadjuridica."personalidad" AS personalidadjuridica_personalidad,
+     empresa."rif" AS empresa_rif,
+     empresa."razonsocial" AS empresa_razonsocial,
+     empresa."nombrecomercial" AS empresa_nombrecomercial,
+     empresa."direccionfiscal" AS empresa_direccionfiscal,
+     empresa."telefonos" AS empresa_telefonos,
+     empresa."presidente" AS empresa_presidente,
+     empresa."contador" AS empresa_contador,
+     empresa."administrador" AS empresa_administrador
 FROM
-     `contribuyente` contribuyente INNER JOIN `cliente` cliente ON contribuyente.`idcontribuyente` = cliente.`idcontribuyente`
-     INNER JOIN `personalidadjuridica` personalidadjuridica ON cliente.`idpersonalidad` = personalidadjuridica.`idpersonalidad`,
-     `empresa` empresa]]>
+     "contribuyente" contribuyente INNER JOIN "cliente" cliente ON contribuyente."idcontribuyente" = cliente."idcontribuyente"
+     INNER JOIN "personalidadjuridica" personalidadjuridica ON cliente."idpersonalidad" = personalidadjuridica."idpersonalidad",
+     "empresa" empresa
+WHERE
+     empresa."idempresa" = $P{idempresa}]]>
 	</queryString>
 	<field name="cliente_rifcliente" class="java.lang.String"/>
 	<field name="cliente_razonsocial" class="java.lang.String"/>
@@ -55,9 +59,8 @@ FROM
 	<field name="empresa_direccionfiscal" class="java.lang.String"/>
 	<field name="empresa_telefonos" class="java.lang.String"/>
 	<field name="empresa_presidente" class="java.lang.String"/>
-	<field name="empresa_administrador" class="java.lang.String"/>
 	<field name="empresa_contador" class="java.lang.String"/>
-	<field name="empresa_idcontribuyente" class="java.lang.Integer"/>
+	<field name="empresa_administrador" class="java.lang.String"/>
 	<group name="cliente_razonsocial">
 		<groupExpression><![CDATA[$F{cliente_razonsocial}]]></groupExpression>
 	</group>
@@ -82,7 +85,7 @@ FROM
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[R.U.C]]></text>
+				<text><![CDATA[R.I.F]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="2" y="0" width="477" height="13" uuid="a2e1f690-5f39-41b4-b8bc-5a7c93278375"/>
@@ -118,102 +121,74 @@ FROM
 				<textElement textAlignment="Center">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[RUC]]></text>
+				<text><![CDATA[RIF]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="54" y="4" width="100" height="20" uuid="c3d1b701-c5d1-4c06-aafb-3efc4b5915ef"/>
+				<reportElement x="100" y="4" width="100" height="20" uuid="c3d1b701-c5d1-4c06-aafb-3efc4b5915ef"/>
 				<textElement textAlignment="Center">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[RAZON SOCIAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="209" y="5" width="96" height="20" uuid="b68e8447-e6c1-4aaf-b608-807ce6c13682"/>
+				<reportElement x="275" y="5" width="126" height="20" uuid="b68e8447-e6c1-4aaf-b608-807ce6c13682"/>
 				<textElement textAlignment="Center">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DIRECCION FISCAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="417" y="5" width="60" height="20" uuid="07b03ad7-74e4-46e9-bf19-1bd21d576f7d"/>
+				<reportElement x="560" y="5" width="60" height="20" uuid="07b03ad7-74e4-46e9-bf19-1bd21d576f7d"/>
 				<textElement textAlignment="Center">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TELEFONOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="492" y="5" width="85" height="20" uuid="38855cd7-dfb8-4edd-ada4-37fc12b40c74"/>
-				<textElement textAlignment="Center">
+				<reportElement x="646" y="5" width="106" height="20" uuid="38855cd7-dfb8-4edd-ada4-37fc12b40c74"/>
+				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CORREO]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="589" y="4" width="88" height="20" uuid="9e60caad-2501-4c9b-8af6-015026238256"/>
-				<textElement textAlignment="Center">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[PERSONALIDAD]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="677" y="4" width="89" height="20" uuid="dc84d994-5c7c-446f-883b-feb704f7d549"/>
-				<textElement textAlignment="Center">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[CONTRIBUYENTE]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="54" height="22" uuid="8cb3009c-0bf2-49bf-b073-2169639c3def"/>
+				<reportElement x="0" y="0" width="79" height="22" uuid="8cb3009c-0bf2-49bf-b073-2169639c3def"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cliente_rifcliente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="54" y="0" width="155" height="22" uuid="c059d5e7-f733-44c5-a55b-4b4015878a0a"/>
+				<reportElement x="100" y="0" width="163" height="22" uuid="c059d5e7-f733-44c5-a55b-4b4015878a0a"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cliente_razonsocial}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="209" y="0" width="208" height="22" uuid="a522a60c-dc1f-46a3-8fb8-ae81de4500a8"/>
+				<reportElement x="275" y="0" width="275" height="22" uuid="a522a60c-dc1f-46a3-8fb8-ae81de4500a8"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cliente_direccionfiscal}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="417" y="0" width="86" height="22" uuid="b5d4ce44-0a4e-41f4-97c2-f313850ff390"/>
+				<reportElement x="560" y="0" width="86" height="22" uuid="b5d4ce44-0a4e-41f4-97c2-f313850ff390"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cliente_telefonos}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="503" y="0" width="106" height="22" uuid="6c24e338-9d81-42dc-aa07-d5ab5359ef3f"/>
+				<reportElement x="646" y="0" width="106" height="22" uuid="6c24e338-9d81-42dc-aa07-d5ab5359ef3f"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cliente_correo}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="623" y="0" width="54" height="22" uuid="898be46b-b0b4-49e6-8e89-961abf8f3735"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{personalidadjuridica_personalidad}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="698" y="0" width="54" height="22" uuid="f0b519ae-ba61-43f9-8ef5-bc594a5b6687"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{contribuyente_contribuyente}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

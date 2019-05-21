@@ -29,109 +29,109 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     compra.`idcompra` AS compra_idcompra,
-     compra.`idauxiliarrequerimiento` AS compra_idauxiliarrequerimiento,
-     compra.`idusuario` AS compra_idusuario,
-     compra.`rifproveedor` AS compra_rifproveedor,
-     compra.`fechaorden` AS compra_fechaorden,
-     compra.`subtotal` AS compra_subtotal,
-     compra.`iva` AS compra_iva,
-     compra.`total` AS compra_total,
-     compra.`observacionescompra` AS compra_observacionescompra,
-     compra.`numerofactura` AS compra_numerofactura,
-     compra.`controlfactura` AS compra_controlfactura,
-     compra.`fechafactura` AS compra_fechafactura,
-     compra.`idestatusfactura` AS compra_idestatusfactura,
-     compra.`montopendiente` AS compra_montopendiente,
-     detallecompra.`iddetallecompra` AS detallecompra_iddetallecompra,
-     detallecompra.`idcompra` AS detallecompra_idcompra,
-     detallecompra.`codigo` AS detallecompra_codigo,
-     detallecompra.`cantidad` AS detallecompra_cantidad,
-     detallecompra.`pcosto` AS detallecompra_pcosto,
-     detallecompra.`subtotal` AS detallecompra_subtotal,
-     detallecompra.`tributoiva` AS detallecompra_tributoiva,
-     detallecompra.`totalapagar` AS detallecompra_totalapagar,
-     detallecompra.`idestatuscontable` AS detallecompra_idestatuscontable,
-     detallecompra.`idplandecuenta` AS detallecompra_idplandecuenta,
-     articulo.`codigo` AS articulo_codigo,
-     articulo.`descripcion` AS articulo_descripcion,
-     articulo.`idmedida` AS articulo_idmedida,
-     articulo.`idgravamen` AS articulo_idgravamen,
-     articulo.`idgrupo` AS articulo_idgrupo,
-     articulo.`idsubgrupo` AS articulo_idsubgrupo,
-     articulo.`minimo` AS articulo_minimo,
-     articulo.`maximo` AS articulo_maximo,
-     articulo.`pcosto` AS articulo_pcosto,
-     articulo.`pventa` AS articulo_pventa,
-     articulo.`idusuario` AS articulo_idusuario,
-     articulo.`idplandecuenta` AS articulo_idplandecuenta,
-     proveedor.`rifproveedor` AS proveedor_rifproveedor,
-     proveedor.`razonsocial` AS proveedor_razonsocial,
-     proveedor.`direccionfiscal` AS proveedor_direccionfiscal,
-     proveedor.`telefonos` AS proveedor_telefonos,
-     proveedor.`correo` AS proveedor_correo,
-     proveedor.`fechainscripcion` AS proveedor_fechainscripcion,
-     proveedor.`personacontacto` AS proveedor_personacontacto,
-     proveedor.`telefonocontacto` AS proveedor_telefonocontacto,
-     proveedor.`idtipoproveedor` AS proveedor_idtipoproveedor,
-     proveedor.`idpersonalidad` AS proveedor_idpersonalidad,
-     proveedor.`idusuario` AS proveedor_idusuario,
-     pagocompra.`idpagocompra` AS pagocompra_idpagocompra,
-     pagocompra.`idcompra` AS pagocompra_idcompra,
-     pagocompra.`idtipopago` AS pagocompra_idtipopago,
-     pagocompra.`idcuentabancaria` AS pagocompra_idcuentabancaria,
-     pagocompra.`idbanco` AS pagocompra_idbanco,
-     pagocompra.`cuentareceptora` AS pagocompra_cuentareceptora,
-     pagocompra.`totalpago` AS pagocompra_totalpago,
-     pagocompra.`aprobacion` AS pagocompra_aprobacion,
-     pagocompra.`fechapago` AS pagocompra_fechapago,
-     pagocompra.`idplandecuenta` AS pagocompra_idplandecuenta,
-     pagocompra.`saldopendiente` AS pagocompra_saldopendiente,
-     pagocompra.`montoretenido` AS pagocompra_montoretenido,
-     pagocompra.`observacionespago` AS pagocompra_observacionespago,
-     tipopago.`idtipopago` AS tipopago_idtipopago,
-     tipopago.`tipopago` AS tipopago_tipopago,
-     banco.`idbanco` AS banco_idbanco,
-     banco.`nombrebanco` AS banco_nombrebanco,
-     banco.`telefonos` AS banco_telefonos,
-     cuentabancaria.`idcuentabancaria` AS cuentabancaria_idcuentabancaria,
-     cuentabancaria.`idbanco` AS cuentabancaria_idbanco,
-     cuentabancaria.`numerocuenta` AS cuentabancaria_numerocuenta,
-     cuentabancaria.`saldo` AS cuentabancaria_saldo,
-     cuentabancaria.`idplandecuenta` AS cuentabancaria_idplandecuenta,
-     empresa.`rif` AS empresa_rif,
-     empresa.`razonsocial` AS empresa_razonsocial,
-     empresa.`nombrecomercial` AS empresa_nombrecomercial,
-     empresa.`direccionfiscal` AS empresa_direccionfiscal,
-     empresa.`telefonos` AS empresa_telefonos,
-     empresa.`presidente` AS empresa_presidente,
-     empresa.`administrador` AS empresa_administrador,
-     empresa.`contador` AS empresa_contador,
-     empresa.`idcontribuyente` AS empresa_idcontribuyente,
-     empresa.`idpersonalidad` AS empresa_idpersonalidad,
-     empresa.`montoparaautorizacion` AS empresa_montoparaautorizacion,
-     empresa.`credfiscal` AS empresa_credfiscal,
-     empresa.`retivacliente` AS empresa_retivacliente,
-     empresa.`retislrcliente` AS empresa_retislrcliente,
-     empresa.`ctasxcobrar` AS empresa_ctasxcobrar,
-     empresa.`ctagastoprovisional` AS empresa_ctagastoprovisional,
-     empresa.`debfiscal` AS empresa_debfiscal,
-     empresa.`retislrxenterar` AS empresa_retislrxenterar,
-     empresa.`retivaxenterar` AS empresa_retivaxenterar,
-     empresa.`ctaxpagarproveed` AS empresa_ctaxpagarproveed,
-     empresa.`ctaxpagarinterna` AS empresa_ctaxpagarinterna
+     compra."idcompra" AS compra_idcompra,
+     compra."idauxiliarrequerimiento" AS compra_idauxiliarrequerimiento,
+     compra."idusuario" AS compra_idusuario,
+     compra."rifproveedor" AS compra_rifproveedor,
+     compra."fechaorden" AS compra_fechaorden,
+     compra."subtotal" AS compra_subtotal,
+     compra."iva" AS compra_iva,
+     compra."total" AS compra_total,
+     compra."observacionescompra" AS compra_observacionescompra,
+     compra."numerofactura" AS compra_numerofactura,
+     compra."controlfactura" AS compra_controlfactura,
+     compra."fechafactura" AS compra_fechafactura,
+     compra."idestatusfactura" AS compra_idestatusfactura,
+     compra."montopendiente" AS compra_montopendiente,
+     detallecompra."iddetallecompra" AS detallecompra_iddetallecompra,
+     detallecompra."idcompra" AS detallecompra_idcompra,
+     detallecompra."codigo" AS detallecompra_codigo,
+     detallecompra."cantidad" AS detallecompra_cantidad,
+     detallecompra."pcosto" AS detallecompra_pcosto,
+     detallecompra."subtotal" AS detallecompra_subtotal,
+     detallecompra."tributoiva" AS detallecompra_tributoiva,
+     detallecompra."totalapagar" AS detallecompra_totalapagar,
+     detallecompra."idestatuscontable" AS detallecompra_idestatuscontable,
+     detallecompra."idplandecuenta" AS detallecompra_idplandecuenta,
+     articulo."codigo" AS articulo_codigo,
+     articulo."descripcion" AS articulo_descripcion,
+     articulo."idmedida" AS articulo_idmedida,
+     articulo."idgravamen" AS articulo_idgravamen,
+     articulo."idgrupo" AS articulo_idgrupo,
+     articulo."idsubgrupo" AS articulo_idsubgrupo,
+     articulo."minimo" AS articulo_minimo,
+     articulo."maximo" AS articulo_maximo,
+     articulo."pcosto" AS articulo_pcosto,
+     articulo."pventa" AS articulo_pventa,
+     articulo."idusuario" AS articulo_idusuario,
+     articulo."idplandecuenta" AS articulo_idplandecuenta,
+     proveedor."rifproveedor" AS proveedor_rifproveedor,
+     proveedor."razonsocial" AS proveedor_razonsocial,
+     proveedor."direccionfiscal" AS proveedor_direccionfiscal,
+     proveedor."telefonos" AS proveedor_telefonos,
+     proveedor."correo" AS proveedor_correo,
+     proveedor."fechainscripcion" AS proveedor_fechainscripcion,
+     proveedor."personacontacto" AS proveedor_personacontacto,
+     proveedor."telefonocontacto" AS proveedor_telefonocontacto,
+     proveedor."idtipoproveedor" AS proveedor_idtipoproveedor,
+     proveedor."idpersonalidad" AS proveedor_idpersonalidad,
+     proveedor."idusuario" AS proveedor_idusuario,
+     pagocompra."idpagocompra" AS pagocompra_idpagocompra,
+     pagocompra."idcompra" AS pagocompra_idcompra,
+     pagocompra."idtipopago" AS pagocompra_idtipopago,
+     pagocompra."idcuentabancaria" AS pagocompra_idcuentabancaria,
+     pagocompra."idbanco" AS pagocompra_idbanco,
+     pagocompra."cuentareceptora" AS pagocompra_cuentareceptora,
+     pagocompra."totalpago" AS pagocompra_totalpago,
+     pagocompra."aprobacion" AS pagocompra_aprobacion,
+     pagocompra."fechapago" AS pagocompra_fechapago,
+     pagocompra."idplandecuenta" AS pagocompra_idplandecuenta,
+     pagocompra."saldopendiente" AS pagocompra_saldopendiente,
+     pagocompra."montoretenido" AS pagocompra_montoretenido,
+     pagocompra."observacionespago" AS pagocompra_observacionespago,
+     tipopago."idtipopago" AS tipopago_idtipopago,
+     tipopago."tipopago" AS tipopago_tipopago,
+     banco."idbanco" AS banco_idbanco,
+     banco."nombrebanco" AS banco_nombrebanco,
+     banco."telefonos" AS banco_telefonos,
+     cuentabancaria."idcuentabancaria" AS cuentabancaria_idcuentabancaria,
+     cuentabancaria."idbanco" AS cuentabancaria_idbanco,
+     cuentabancaria."numerocuenta" AS cuentabancaria_numerocuenta,
+     cuentabancaria."saldo" AS cuentabancaria_saldo,
+     cuentabancaria."idplandecuenta" AS cuentabancaria_idplandecuenta,
+     empresa."rif" AS empresa_rif,
+     empresa."razonsocial" AS empresa_razonsocial,
+     empresa."nombrecomercial" AS empresa_nombrecomercial,
+     empresa."direccionfiscal" AS empresa_direccionfiscal,
+     empresa."telefonos" AS empresa_telefonos,
+     empresa."presidente" AS empresa_presidente,
+     empresa."administrador" AS empresa_administrador,
+     empresa."contador" AS empresa_contador,
+     empresa."idcontribuyente" AS empresa_idcontribuyente,
+     empresa."idpersonalidad" AS empresa_idpersonalidad,
+     empresa."montoparaautorizacion" AS empresa_montoparaautorizacion,
+     empresa."credfiscal" AS empresa_credfiscal,
+     empresa."retivacliente" AS empresa_retivacliente,
+     empresa."retislrcliente" AS empresa_retislrcliente,
+     empresa."ctasxcobrar" AS empresa_ctasxcobrar,
+     empresa."ctagastoprovisional" AS empresa_ctagastoprovisional,
+     empresa."debfiscal" AS empresa_debfiscal,
+     empresa."retislrxenterar" AS empresa_retislrxenterar,
+     empresa."retivaxenterar" AS empresa_retivaxenterar,
+     empresa."ctaxpagarproveed" AS empresa_ctaxpagarproveed,
+     empresa."ctaxpagarinterna" AS empresa_ctaxpagarinterna
 FROM
-     `compra` compra INNER JOIN `detallecompra` detallecompra ON compra.`idcompra` = detallecompra.`idcompra`
-     INNER JOIN `articulo` articulo ON detallecompra.`codigo` = articulo.`codigo`
-     INNER JOIN `proveedor` proveedor ON compra.`rifproveedor` = proveedor.`rifproveedor`
-     INNER JOIN `pagocompra` pagocompra ON compra.`idcompra` = pagocompra.`idcompra`
-     INNER JOIN `tipopago` tipopago ON pagocompra.`idtipopago` = tipopago.`idtipopago`
-     INNER JOIN `banco` banco ON pagocompra.`idbanco` = banco.`idbanco`
-     INNER JOIN `cuentabancaria` cuentabancaria ON pagocompra.`idcuentabancaria` = cuentabancaria.`idcuentabancaria`
-     AND banco.`idbanco` = cuentabancaria.`idbanco`,
-     `empresa` empresa
+     "compra" compra INNER JOIN "detallecompra" detallecompra ON compra."idcompra" = detallecompra."idcompra"
+     INNER JOIN "articulo" articulo ON detallecompra."codigo" = articulo."codigo"
+     INNER JOIN "proveedor" proveedor ON compra."rifproveedor" = proveedor."rifproveedor"
+     INNER JOIN "pagocompra" pagocompra ON compra."idcompra" = pagocompra."idcompra"
+     INNER JOIN "tipopago" tipopago ON pagocompra."idtipopago" = tipopago."idtipopago"
+     INNER JOIN "banco" banco ON pagocompra."idbanco" = banco."idbanco"
+     INNER JOIN "cuentabancaria" cuentabancaria ON pagocompra."idcuentabancaria" = cuentabancaria."idcuentabancaria"
+     AND banco."idbanco" = cuentabancaria."idbanco"
+     INNER JOIN "empresa" empresa ON cuentabancaria."idempresa" = empresa."idempresa"
 WHERE
-     pagocompra.`idpagocompra` = $P{numeroordenpago}]]>
+     pagocompra."idpagocompra" = $P{numeroordenpago}]]>
 	</queryString>
 	<field name="compra_idcompra" class="java.lang.Integer"/>
 	<field name="compra_idauxiliarrequerimiento" class="java.lang.Integer"/>
@@ -149,15 +149,15 @@ WHERE
 	<field name="compra_montopendiente" class="java.lang.Double"/>
 	<field name="detallecompra_iddetallecompra" class="java.lang.Integer"/>
 	<field name="detallecompra_idcompra" class="java.lang.Integer"/>
-	<field name="detallecompra_codigo" class="java.lang.String"/>
-	<field name="detallecompra_cantidad" class="java.lang.Double"/>
+	<field name="detallecompra_codigo" class="java.lang.Integer"/>
+	<field name="detallecompra_cantidad" class="java.lang.Integer"/>
 	<field name="detallecompra_pcosto" class="java.lang.Double"/>
 	<field name="detallecompra_subtotal" class="java.lang.Double"/>
 	<field name="detallecompra_tributoiva" class="java.lang.Double"/>
 	<field name="detallecompra_totalapagar" class="java.lang.Double"/>
 	<field name="detallecompra_idestatuscontable" class="java.lang.Integer"/>
 	<field name="detallecompra_idplandecuenta" class="java.lang.Integer"/>
-	<field name="articulo_codigo" class="java.lang.String"/>
+	<field name="articulo_codigo" class="java.lang.Integer"/>
 	<field name="articulo_descripcion" class="java.lang.String"/>
 	<field name="articulo_idmedida" class="java.lang.Integer"/>
 	<field name="articulo_idgravamen" class="java.lang.Integer"/>
@@ -615,7 +615,7 @@ WHERE
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[R.U.C]]></text>
+				<text><![CDATA[R.I.F]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="169" y="22" width="107" height="12" uuid="98aa7896-7892-4152-bf65-c1c410cde8d3"/>

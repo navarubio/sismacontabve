@@ -223,9 +223,9 @@ public class ProveedorController implements Serializable {
         //Instancia hacia la clase reporteProveedores 
         reporteArticulo rArticulo = new reporteArticulo();
         empresa= (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
-        FacesContext facesContext = FacesContext.getCurrentInstance();
+        FacesContext facesContext = FacesContext.getCurrentInstance(); 
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-        String ruta = servletContext.getRealPath("/resources/reportes/provee.jasper");
+        String ruta = servletContext.getRealPath("/resources/reportes/proveedores.jasper");
 
         rArticulo.getReporteProvee(ruta, empresa.getIdempresa() );
         FacesContext.getCurrentInstance().responseComplete();

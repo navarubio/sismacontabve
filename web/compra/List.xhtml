@@ -69,7 +69,7 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column width="150" >
+                        <p:column width="250" >
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCompraTitle_observacionescompra}"/>
                             </f:facet>
@@ -94,9 +94,17 @@
                         </p:column>
                         <p:column width="70" style="text-align: right">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCompraTitle_total}"/>
+                                <h:outputText value="#{bundle.ListCompraTitle_total}" />
                             </f:facet>
-                            <h:outputText value="#{item.total}">
+                            <h:outputText value="#{item.total}" styleClass="text-ouput" >
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>
+                        </p:column>
+                        <p:column width="70" style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="PENDIENTE"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montopendiente}" styleClass="text-ouput" >
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>
                         </p:column>

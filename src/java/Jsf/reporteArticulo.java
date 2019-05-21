@@ -78,12 +78,12 @@ public class reporteArticulo {
             }
         }
     }
-        public void getCatalogo(String ruta, int empre ) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
+    public void getCatalogo(String ruta, int empre ) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         if (ruta != null) {
 
             Connection conexion;
             Class.forName("org.postgresql.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sismacontab", "postgres", "091095");
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sismacontabve", "postgres", "091095");
 
             //Se definen los parametros si es que el reporte necesita
             Map parameter = new HashMap();
@@ -132,7 +132,7 @@ public class reporteArticulo {
 
             Connection conexion;
             Class.forName("org.postgresql.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sismacontab", "postgres", "091095");
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sismacontabve", "postgres", "091095");
 
             //Se definen los parametros si es que el reporte necesita
             Map parameter = new HashMap();
@@ -181,7 +181,7 @@ public class reporteArticulo {
 
             Connection conexion;
             Class.forName("org.postgresql.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sismacontab", "postgres", "091095");
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sismacontabve", "postgres", "091095");
 
             //Se definen los parametros si es que el reporte necesita
             Map parameter = new HashMap();
@@ -229,8 +229,8 @@ public class reporteArticulo {
         if (ruta != null) {
 
             Connection conexion;
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/sismacontab_ec", "root", "091095");
+            Class.forName("org.postgresql.Driver").newInstance();
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sismacontabve", "postgres", "091095");
 
             //Se definen los parametros si es que el reporte necesita
             Map parameter = new HashMap();
@@ -279,8 +279,10 @@ public class reporteArticulo {
         if (ruta != null) {
 
             Connection conexion;
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/sismacontab_ec", "root", "091095");
+//            Class.forName("com.mysql.jdbc.Driver").newInstance();
+//            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/sismacontab_ec", "root", "091095");
+            Class.forName("org.postgresql.Driver").newInstance();
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sismacontabve", "postgres", "091095");
 
             //Se definen los parametros si es que el reporte necesita
             Map parameter = new HashMap();
@@ -329,8 +331,10 @@ public class reporteArticulo {
         if (ruta != null) {
 
             Connection conexion;
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/sismacontab_ec", "root", "091095");
+//            Class.forName("com.mysql.jdbc.Driver").newInstance();
+//            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/sismacontab_ec", "root", "091095");
+            Class.forName("org.postgresql.Driver").newInstance();
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sismacontabve", "postgres", "091095");
 
             //Se definen los parametros si es que el reporte necesita
             Map parameter = new HashMap();
@@ -379,8 +383,8 @@ public class reporteArticulo {
         if (ruta != null) {
 
             Connection conexion;
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/sismacontab_ec", "root", "091095");
+            Class.forName("org.postgresql.Driver").newInstance();
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sismacontabve", "postgres", "091095");
 
             //Se definen los parametros si es que el reporte necesita
             Map parameter = new HashMap();
@@ -429,7 +433,7 @@ public class reporteArticulo {
 
             Connection conexion;
             Class.forName("org.postgresql.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sismacontab", "postgres", "091095");
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sismacontabve", "postgres", "091095");
 
             //Se definen los parametros si es que el reporte necesita
             Map parameter = new HashMap();
@@ -477,8 +481,8 @@ public class reporteArticulo {
         if (ruta != null) {
 
             Connection conexion;
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/sismacontab_ec", "root", "091095");
+            Class.forName("org.postgresql.Driver").newInstance();
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sismacontabve", "postgres", "091095");
 
             //Se definen los parametros si es que el reporte necesita
             Map parameter = new HashMap();
@@ -526,8 +530,8 @@ public class reporteArticulo {
         if (ruta != null) {
 
             Connection conexion;
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/sismacontab_ec", "root", "091095");
+            Class.forName("org.postgresql.Driver").newInstance();
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sismacontabve", "postgres", "091095");
 
             //Se definen los parametros si es que el reporte necesita
             Map parameter = new HashMap();
@@ -579,8 +583,8 @@ public class reporteArticulo {
         if (ruta != null) {
 
             Connection conexion;
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/sismacontab_ec", "root", "091095");
+            Class.forName("org.postgresql.Driver").newInstance();
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sismacontabve", "postgres", "091095");
 
             //Se definen los parametros si es que el reporte necesita
             Map parameter = new HashMap();

@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -59,6 +61,10 @@ public class Librodiario implements Serializable {
     private Integer idempresa;
     @Column(name = "serialasiento")
     private Integer serialasiento;
+    @JoinColumn(name = "idtipoasiento", referencedColumnName = "idtipoasiento")
+    @ManyToOne
+    private Tipoasiento idtipoasiento;
+    
     public Librodiario() {
     }
 
@@ -113,6 +119,14 @@ public class Librodiario implements Serializable {
 
     public void setSerialasiento(Integer serialasiento) {
         this.serialasiento = serialasiento;
+    }
+
+    public Tipoasiento getIdtipoasiento() {
+        return idtipoasiento;
+    }
+
+    public void setIdtipoasiento(Tipoasiento idtipoasiento) {
+        this.idtipoasiento = idtipoasiento;
     }
 
     @XmlTransient

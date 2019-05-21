@@ -635,7 +635,7 @@ public class CobroventasController implements Serializable {
                         + "  MONTO PENDIENTE: " + formatearnumero.format(cobro.getMontopendiente())
                         + "  OBSERVACIONES: " + cobro.getObservacionescobro();
 
-                subject = "Cobro N° " + cobro.getIdcobroventa();
+                subject = empresa.getNombrecomercial() + " Cobro N° " + cobro.getIdcobroventa();
                 enviomail = new envioCorreo(correo, subject);
                 enviomail.start();
             } catch (Exception e) {
