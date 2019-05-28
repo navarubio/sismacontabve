@@ -46,7 +46,7 @@
                             </f:facet>
                             <h:outputText value="#{item.razonsocial}"/>
                         </p:column>
-                        <p:column width="250">
+                        <p:column width="300">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListClienteTitle_direccionfiscal}"/>
                             </f:facet>
@@ -64,7 +64,7 @@
                             </f:facet>
                             <h:outputText value="#{item.correo}"/>
                         </p:column>
-                        <p:column style="text-align: center" width="70">
+                        <p:column style="text-align: center" width="90">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListClienteTitle_fechainscripcion}"/>
                             </f:facet>
@@ -90,11 +90,11 @@
                             </f:facet>
                             <h:outputText value="#{item.idcontribuyente.contribuyente}"/>
                         </p:column>
-                        <p:column width="100">
+                        <p:column width="100" style="text-align: center">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListClienteTitle_idpersonalidad}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idpersonalidad.personalidad}"/>
+                            <h:outputText value="#{item.idpersonalidad.abreviatura}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{clienteController.prepareCreate}" update=":ClienteCreateForm" oncomplete="PF('ClienteCreateDialog').show()"/>

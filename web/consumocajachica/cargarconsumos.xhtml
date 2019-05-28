@@ -43,11 +43,11 @@
                                     </p:selectOneMenu>
                                     <p:outputLabel for="saldo" value="Saldo Actual: " styleClass="text-ouput"/>
                                     <p:outputLabel id="saldo" value="#{consumoscajachicaController.consumocajachica.idcajachica.saldoactual}" styleClass="text-ouputsaldo">
-                                        <f:convertNumber type="currency" currencySymbol="$ " />
+                                        <f:convertNumber type="currency" currencySymbol="#{bundle.Money} " />
                                     </p:outputLabel>
                                     <p:outputLabel for="montomaximo" value="Monto Maximo por Consumo" styleClass="text-ouput"/>
                                     <p:outputLabel id="montomaximo" value="#{consumoscajachicaController.consumocajachica.idcajachica.montomaximo}" styleClass="text-ouputfactura" >                                    
-                                        <f:convertNumber type="currency" currencySymbol="$ " />
+                                        <f:convertNumber type="currency" currencySymbol="#{bundle.Money} " />
                                     </p:outputLabel>
                                     <p:outputLabel for="fechacarga" value="Fecha Procesamiento" styleClass="text-ouput" />
                                     <p:calendar id="fechacarga" locale="es" pattern="dd/MM/yyyy" value="#{consumoscajachicaController.consumocajachica.fechaloteconsumo}" showOn="button" navigator="true" required="true" />
@@ -131,9 +131,9 @@
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
-                                    <p:column style="text-align: right"  footerText="$ #{consumoscajachicaController.totalsubtotalform}" /> 
-                                    <p:column style="text-align: right"  footerText="$ #{consumoscajachicaController.totalivaform}" />
-                                    <p:column style="text-align: right"  footerText="$ #{consumoscajachicaController.totalgeneralform}" />                                        
+                                    <p:column style="text-align: right"  footerText="#{bundle.Money} #{consumoscajachicaController.totalsubtotalform}" /> 
+                                    <p:column style="text-align: right"  footerText="#{bundle.Money} #{consumoscajachicaController.totalivaform}" />
+                                    <p:column style="text-align: right"  footerText="#{bundle.Money} #{consumoscajachicaController.totalgeneralform}" />                                        
                                 </p:row>
                             </p:columnGroup>       
                         </p:dataTable> 

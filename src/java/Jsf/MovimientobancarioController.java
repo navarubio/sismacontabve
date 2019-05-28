@@ -9,6 +9,7 @@ import Jpa.MovimientobancarioFacade;
 import Jpa.MovimientobancarioFacadeLocal;
 import Modelo.Banco;
 import Modelo.Cuentabancaria;
+import Modelo.Empresa;
 import Modelo.Plandecuenta;
 
 import java.io.Serializable;
@@ -63,6 +64,8 @@ public class MovimientobancarioController implements Serializable {
     double saldocuenta=0.0;
     @Inject 
     private RequerimientosController requerimientosController;
+    private Empresa empresa;
+
 
     public MovimientobancarioController() {
     }
@@ -414,7 +417,9 @@ public class MovimientobancarioController implements Serializable {
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
         String ruta = servletContext.getRealPath("/resources/reportes/movimientobancario.jasper");
 
-        rArticulo.getMovimientoBancario(ruta, codigocuenta, fechadesde, fechahasta);
+        empresa= (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+        
+        rArticulo.getMovimientoBancario(ruta, codigocuenta, fechadesde, fechahasta, empresa.getIdempresa());
         FacesContext.getCurrentInstance().responseComplete();
     }
 }

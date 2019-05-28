@@ -27,86 +27,71 @@
 	<parameter name="numeroordencobro" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[SELECT
-     tipopago.`idtipopago` AS tipopago_idtipopago,
-     tipopago.`tipopago` AS tipopago_tipopago,
-     banco.`idbanco` AS banco_idbanco,
-     banco.`nombrebanco` AS banco_nombrebanco,
-     banco.`telefonos` AS banco_telefonos,
-     cuentabancaria.`idcuentabancaria` AS cuentabancaria_idcuentabancaria,
-     cuentabancaria.`idbanco` AS cuentabancaria_idbanco,
-     cuentabancaria.`numerocuenta` AS cuentabancaria_numerocuenta,
-     cuentabancaria.`saldo` AS cuentabancaria_saldo,
-     cuentabancaria.`idplandecuenta` AS cuentabancaria_idplandecuenta,
-     cobroventa.`idcobroventa` AS cobroventa_idcobroventa,
-     cobroventa.`numerofact` AS cobroventa_numerofact,
-     cobroventa.`idtipopago` AS cobroventa_idtipopago,
-     cobroventa.`idcuentabancaria` AS cobroventa_idcuentabancaria,
-     cobroventa.`cuentaoriginadora` AS cobroventa_cuentaoriginadora,
-     cobroventa.`montocobrado` AS cobroventa_montocobrado,
-     cobroventa.`montoretenido` AS cobroventa_montoretenido,
-     cobroventa.`aprobacion` AS cobroventa_aprobacion,
-     cobroventa.`fechacobro` AS cobroventa_fechacobro,
-     cobroventa.`montopendiente` AS cobroventa_montopendiente,
-     cobroventa.`observacionescobro` AS cobroventa_observacionescobro,
-     cobroventa.`idestatuscontable` AS cobroventa_idestatuscontable,
-     cobroventa.`idmaestro` AS cobroventa_idmaestro,
-     factura.`numerofact` AS factura_numerofact,
-     factura.`numerocontrol` AS factura_numerocontrol,
-     factura.`idcaja` AS factura_idcaja,
-     factura.`idusuario` AS factura_idusuario,
-     factura.`fecha` AS factura_fecha,
-     factura.`hora` AS factura_hora,
-     factura.`rifcliente` AS factura_rifcliente,
-     factura.`observacionesfact` AS factura_observacionesfact,
-     factura.`bimponiblefact` AS factura_bimponiblefact,
-     factura.`ivafact` AS factura_ivafact,
-     factura.`totalgeneral` AS factura_totalgeneral,
-     factura.`saldopendiente` AS factura_saldopendiente,
-     factura.`cantidadenletras` AS factura_cantidadenletras,
-     factura.`idestatusfacturaventa` AS factura_idestatusfacturaventa,
-     factura.`idestatuscontable` AS factura_idestatuscontable,
-     factura.`idmaestro` AS factura_idmaestro,
-     cliente.`rifcliente` AS cliente_rifcliente,
-     cliente.`razonsocial` AS cliente_razonsocial,
-     cliente.`direccionfiscal` AS cliente_direccionfiscal,
-     cliente.`telefonos` AS cliente_telefonos,
-     cliente.`correo` AS cliente_correo,
-     cliente.`fechainscripcion` AS cliente_fechainscripcion,
-     cliente.`personacontacto` AS cliente_personacontacto,
-     cliente.`telefonocontacto` AS cliente_telefonocontacto,
-     cliente.`idpersonalidad` AS cliente_idpersonalidad,
-     cliente.`idcontribuyente` AS cliente_idcontribuyente,
-     cliente.`idusuario` AS cliente_idusuario,
-     empresa.`rif` AS empresa_rif,
-     empresa.`razonsocial` AS empresa_razonsocial,
-     empresa.`nombrecomercial` AS empresa_nombrecomercial,
-     empresa.`direccionfiscal` AS empresa_direccionfiscal,
-     empresa.`telefonos` AS empresa_telefonos,
-     empresa.`presidente` AS empresa_presidente,
-     empresa.`administrador` AS empresa_administrador,
-     empresa.`contador` AS empresa_contador,
-     empresa.`idcontribuyente` AS empresa_idcontribuyente,
-     empresa.`idpersonalidad` AS empresa_idpersonalidad,
-     empresa.`montoparaautorizacion` AS empresa_montoparaautorizacion,
-     empresa.`credfiscal` AS empresa_credfiscal,
-     empresa.`retivacliente` AS empresa_retivacliente,
-     empresa.`retislrcliente` AS empresa_retislrcliente,
-     empresa.`ctasxcobrar` AS empresa_ctasxcobrar,
-     empresa.`ctagastoprovisional` AS empresa_ctagastoprovisional,
-     empresa.`debfiscal` AS empresa_debfiscal,
-     empresa.`retislrxenterar` AS empresa_retislrxenterar,
-     empresa.`retivaxenterar` AS empresa_retivaxenterar,
-     empresa.`ctaxpagarproveed` AS empresa_ctaxpagarproveed,
-     empresa.`ctaxpagarinterna` AS empresa_ctaxpagarinterna
+     tipopago."idtipopago" AS tipopago_idtipopago,
+     tipopago."tipopago" AS tipopago_tipopago,
+     banco."idbanco" AS banco_idbanco,
+     banco."nombrebanco" AS banco_nombrebanco,
+     banco."telefonos" AS banco_telefonos,
+     cuentabancaria."idcuentabancaria" AS cuentabancaria_idcuentabancaria,
+     cuentabancaria."idbanco" AS cuentabancaria_idbanco,
+     cuentabancaria."numerocuenta" AS cuentabancaria_numerocuenta,
+     cuentabancaria."saldo" AS cuentabancaria_saldo,
+     cuentabancaria."idplandecuenta" AS cuentabancaria_idplandecuenta,
+     cobroventa."idcobroventa" AS cobroventa_idcobroventa,
+     cobroventa."numerofact" AS cobroventa_numerofact,
+     cobroventa."idtipopago" AS cobroventa_idtipopago,
+     cobroventa."idcuentabancaria" AS cobroventa_idcuentabancaria,
+     cobroventa."cuentaoriginadora" AS cobroventa_cuentaoriginadora,
+     cobroventa."montocobrado" AS cobroventa_montocobrado,
+     cobroventa."montoretenido" AS cobroventa_montoretenido,
+     cobroventa."aprobacion" AS cobroventa_aprobacion,
+     cobroventa."fechacobro" AS cobroventa_fechacobro,
+     cobroventa."montopendiente" AS cobroventa_montopendiente,
+     cobroventa."observacionescobro" AS cobroventa_observacionescobro,
+     cobroventa."idestatuscontable" AS cobroventa_idestatuscontable,
+     cobroventa."idmaestro" AS cobroventa_idmaestro,
+     factura."numerofact" AS factura_numerofact,
+     factura."numerocontrol" AS factura_numerocontrol,
+     factura."idcaja" AS factura_idcaja,
+     factura."idusuario" AS factura_idusuario,
+     factura."fecha" AS factura_fecha,
+     factura."hora" AS factura_hora,
+     factura."rifcliente" AS factura_rifcliente,
+     factura."observacionesfact" AS factura_observacionesfact,
+     factura."bimponiblefact" AS factura_bimponiblefact,
+     factura."ivafact" AS factura_ivafact,
+     factura."totalgeneral" AS factura_totalgeneral,
+     factura."saldopendiente" AS factura_saldopendiente,
+     factura."cantidadenletras" AS factura_cantidadenletras,
+     factura."idestatusfacturaventa" AS factura_idestatusfacturaventa,
+     factura."idestatuscontable" AS factura_idestatuscontable,
+     factura."idmaestro" AS factura_idmaestro,
+     cliente."rifcliente" AS cliente_rifcliente,
+     cliente."razonsocial" AS cliente_razonsocial,
+     cliente."direccionfiscal" AS cliente_direccionfiscal,
+     cliente."telefonos" AS cliente_telefonos,
+     cliente."correo" AS cliente_correo,
+     cliente."fechainscripcion" AS cliente_fechainscripcion,
+     cliente."personacontacto" AS cliente_personacontacto,
+     cliente."telefonocontacto" AS cliente_telefonocontacto,
+     cliente."idpersonalidad" AS cliente_idpersonalidad,
+     cliente."idcontribuyente" AS cliente_idcontribuyente,
+     cliente."idusuario" AS cliente_idusuario,
+     empresa."idempresa" AS empresa_idempresa,
+     empresa."rif" AS empresa_rif,
+     empresa."razonsocial" AS empresa_razonsocial,
+     empresa."nombrecomercial" AS empresa_nombrecomercial,
+     empresa."direccionfiscal" AS empresa_direccionfiscal,
+     empresa."telefonos" AS empresa_telefonos
 FROM
-     `banco` banco INNER JOIN `cuentabancaria` cuentabancaria ON banco.`idbanco` = cuentabancaria.`idbanco`
-     INNER JOIN `cobroventa` cobroventa ON cuentabancaria.`idcuentabancaria` = cobroventa.`idcuentabancaria`
-     INNER JOIN `tipopago` tipopago ON cobroventa.`idtipopago` = tipopago.`idtipopago`
-     INNER JOIN `factura` factura ON cobroventa.`numerofact` = factura.`numerofact`
-     INNER JOIN `cliente` cliente ON factura.`rifcliente` = cliente.`rifcliente`,
-     `empresa` empresa
+     "banco" banco INNER JOIN "cuentabancaria" cuentabancaria ON banco."idbanco" = cuentabancaria."idbanco"
+     INNER JOIN "cobroventa" cobroventa ON cuentabancaria."idcuentabancaria" = cobroventa."idcuentabancaria"
+     INNER JOIN "empresa" empresa ON cuentabancaria."idempresa" = empresa."idempresa"
+     INNER JOIN "tipopago" tipopago ON cobroventa."idtipopago" = tipopago."idtipopago"
+     INNER JOIN "factura" factura ON cobroventa."numerofact" = factura."numerofact"
+     INNER JOIN "cliente" cliente ON factura."rifcliente" = cliente."rifcliente"
 WHERE
-     cobroventa.`idcobroventa` = $P{numeroordencobro}]]>
+     cobroventa."idcobroventa" = $P{numeroordencobro}]]>
 	</queryString>
 	<field name="tipopago_idtipopago" class="java.lang.Integer"/>
 	<field name="tipopago_tipopago" class="java.lang.String"/>
@@ -158,27 +143,12 @@ WHERE
 	<field name="cliente_idpersonalidad" class="java.lang.Integer"/>
 	<field name="cliente_idcontribuyente" class="java.lang.Integer"/>
 	<field name="cliente_idusuario" class="java.lang.Integer"/>
+	<field name="empresa_idempresa" class="java.lang.Integer"/>
 	<field name="empresa_rif" class="java.lang.String"/>
 	<field name="empresa_razonsocial" class="java.lang.String"/>
 	<field name="empresa_nombrecomercial" class="java.lang.String"/>
 	<field name="empresa_direccionfiscal" class="java.lang.String"/>
 	<field name="empresa_telefonos" class="java.lang.String"/>
-	<field name="empresa_presidente" class="java.lang.String"/>
-	<field name="empresa_administrador" class="java.lang.String"/>
-	<field name="empresa_contador" class="java.lang.String"/>
-	<field name="empresa_idcontribuyente" class="java.lang.Integer"/>
-	<field name="empresa_idpersonalidad" class="java.lang.Integer"/>
-	<field name="empresa_montoparaautorizacion" class="java.lang.Double"/>
-	<field name="empresa_credfiscal" class="java.lang.Integer"/>
-	<field name="empresa_retivacliente" class="java.lang.Integer"/>
-	<field name="empresa_retislrcliente" class="java.lang.Integer"/>
-	<field name="empresa_ctasxcobrar" class="java.lang.Integer"/>
-	<field name="empresa_ctagastoprovisional" class="java.lang.Integer"/>
-	<field name="empresa_debfiscal" class="java.lang.Integer"/>
-	<field name="empresa_retislrxenterar" class="java.lang.Integer"/>
-	<field name="empresa_retivaxenterar" class="java.lang.Integer"/>
-	<field name="empresa_ctaxpagarproveed" class="java.lang.Integer"/>
-	<field name="empresa_ctaxpagarinterna" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -484,7 +454,7 @@ WHERE
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[R.U.C]]></text>
+				<text><![CDATA[R.I.F]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="141" y="9" width="245" height="13" uuid="f832ed10-3c73-4297-aff3-c678d6978181"/>

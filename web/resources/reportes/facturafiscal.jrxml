@@ -29,56 +29,65 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     factura.`numerofact` AS factura_numerofact,
-     factura.`numerocontrol` AS factura_numerocontrol,
-     factura.`idcaja` AS factura_idcaja,
-     factura.`idusuario` AS factura_idusuario,
-     factura.`fecha` AS factura_fecha,
-     factura.`hora` AS factura_hora,
-     factura.`rifcliente` AS factura_rifcliente,
-     factura.`observacionesfact` AS factura_observacionesfact,
-     factura.`bimponiblefact` AS factura_bimponiblefact,
-     factura.`ivafact` AS factura_ivafact,
-     factura.`totalgeneral` AS factura_totalgeneral,
-     factura.`saldopendiente` AS factura_saldopendiente,
-     factura.`cantidadenletras` AS factura_cantidadenletras,
-     factura.`idestatusfacturaventa` AS factura_idestatusfacturaventa,
-     factura.`idestatuscontable` AS factura_idestatuscontable,
-     cliente.`rifcliente` AS cliente_rifcliente,
-     cliente.`razonsocial` AS cliente_razonsocial,
-     cliente.`direccionfiscal` AS cliente_direccionfiscal,
-     cliente.`telefonos` AS cliente_telefonos,
-     cliente.`correo` AS cliente_correo,
-     cliente.`fechainscripcion` AS cliente_fechainscripcion,
-     cliente.`personacontacto` AS cliente_personacontacto,
-     cliente.`telefonocontacto` AS cliente_telefonocontacto,
-     cliente.`idpersonalidad` AS cliente_idpersonalidad,
-     cliente.`idcontribuyente` AS cliente_idcontribuyente,
-     cliente.`idusuario` AS cliente_idusuario,
-     detallefactura.`iddetallefact` AS detallefactura_iddetallefact,
-     detallefactura.`numerofact` AS detallefactura_numerofact,
-     detallefactura.`codigo` AS detallefactura_codigo,
-     detallefactura.`unidades` AS detallefactura_unidades,
-     detallefactura.`precioventa` AS detallefactura_precioventa,
-     detallefactura.`subtotal` AS detallefactura_subtotal,
-     detallefactura.`tributoiva` AS detallefactura_tributoiva,
-     detallefactura.`total` AS detallefactura_total,
-     articulo.`codigo` AS articulo_codigo,
-     articulo.`descripcion` AS articulo_descripcion,
-     articulo.`idmedida` AS articulo_idmedida,
-     articulo.`idgravamen` AS articulo_idgravamen,
-     articulo.`idgrupo` AS articulo_idgrupo,
-     articulo.`idsubgrupo` AS articulo_idsubgrupo,
-     articulo.`minimo` AS articulo_minimo,
-     articulo.`maximo` AS articulo_maximo,
-     articulo.`pcosto` AS articulo_pcosto,
-     articulo.`pventa` AS articulo_pventa,
-     articulo.`idusuario` AS articulo_idusuario,
-     articulo.`idplandecuenta` AS articulo_idplandecuenta
+     factura."numerofact" AS factura_numerofact,
+     factura."numerocontrol" AS factura_numerocontrol,
+     factura."idcaja" AS factura_idcaja,
+     factura."idusuario" AS factura_idusuario,
+     factura."fecha" AS factura_fecha,
+     factura."hora" AS factura_hora,
+     factura."rifcliente" AS factura_rifcliente,
+     factura."observacionesfact" AS factura_observacionesfact,
+     factura."bimponiblefact" AS factura_bimponiblefact,
+     factura."ivafact" AS factura_ivafact,
+     factura."totalgeneral" AS factura_totalgeneral,
+     factura."saldopendiente" AS factura_saldopendiente,
+     factura."cantidadenletras" AS factura_cantidadenletras,
+     factura."idestatusfacturaventa" AS factura_idestatusfacturaventa,
+     factura."idestatuscontable" AS factura_idestatuscontable,
+     cliente."rifcliente" AS cliente_rifcliente,
+     cliente."razonsocial" AS cliente_razonsocial,
+     cliente."direccionfiscal" AS cliente_direccionfiscal,
+     cliente."telefonos" AS cliente_telefonos,
+     cliente."correo" AS cliente_correo,
+     cliente."fechainscripcion" AS cliente_fechainscripcion,
+     cliente."personacontacto" AS cliente_personacontacto,
+     cliente."telefonocontacto" AS cliente_telefonocontacto,
+     cliente."idpersonalidad" AS cliente_idpersonalidad,
+     cliente."idcontribuyente" AS cliente_idcontribuyente,
+     cliente."idusuario" AS cliente_idusuario,
+     detallefactura."iddetallefact" AS detallefactura_iddetallefact,
+     detallefactura."numerofact" AS detallefactura_numerofact,
+     detallefactura."codigo" AS detallefactura_codigo,
+     detallefactura."unidades" AS detallefactura_unidades,
+     detallefactura."precioventa" AS detallefactura_precioventa,
+     detallefactura."subtotal" AS detallefactura_subtotal,
+     detallefactura."tributoiva" AS detallefactura_tributoiva,
+     detallefactura."total" AS detallefactura_total,
+     articulo."codigo" AS articulo_codigo,
+     articulo."descripcion" AS articulo_descripcion,
+     articulo."idmedida" AS articulo_idmedida,
+     articulo."idgravamen" AS articulo_idgravamen,
+     articulo."idgrupo" AS articulo_idgrupo,
+     articulo."idsubgrupo" AS articulo_idsubgrupo,
+     articulo."minimo" AS articulo_minimo,
+     articulo."maximo" AS articulo_maximo,
+     articulo."pcosto" AS articulo_pcosto,
+     articulo."pventa" AS articulo_pventa,
+     articulo."idusuario" AS articulo_idusuario,
+     articulo."idplandecuenta" AS articulo_idplandecuenta,
+     empresa."idempresa" AS empresa_idempresa,
+     empresa."rif" AS empresa_rif,
+     empresa."razonsocial" AS empresa_razonsocial,
+     empresa."nombrecomercial" AS empresa_nombrecomercial,
+     empresa."direccionfiscal" AS empresa_direccionfiscal,
+     empresa."telefonos" AS empresa_telefonos
 FROM
-     `cliente` cliente INNER JOIN `factura` factura ON cliente.`rifcliente` = factura.`rifcliente`
-     INNER JOIN `detallefactura` detallefactura ON factura.`numerofact` = detallefactura.`numerofact`
-     INNER JOIN `articulo` articulo ON detallefactura.`codigo` = articulo.`codigo` WHERE factura.`numerofact` = $P{numfactura}]]>
+     "cliente" cliente INNER JOIN "factura" factura ON cliente."rifcliente" = factura."rifcliente"
+     INNER JOIN "detallefactura" detallefactura ON factura."numerofact" = detallefactura."numerofact"
+     INNER JOIN "public"."empresa" empresa ON factura."idempresa" = empresa."idempresa"
+     INNER JOIN "articulo" articulo ON detallefactura."codigo" = articulo."codigo"
+WHERE
+     factura."numerofact" = $P{numfactura}]]>
 	</queryString>
 	<field name="factura_numerofact" class="java.lang.Integer"/>
 	<field name="factura_numerocontrol" class="java.lang.String"/>
@@ -108,13 +117,13 @@ FROM
 	<field name="cliente_idusuario" class="java.lang.Integer"/>
 	<field name="detallefactura_iddetallefact" class="java.lang.Integer"/>
 	<field name="detallefactura_numerofact" class="java.lang.Integer"/>
-	<field name="detallefactura_codigo" class="java.lang.String"/>
+	<field name="detallefactura_codigo" class="java.lang.Integer"/>
 	<field name="detallefactura_unidades" class="java.lang.Double"/>
 	<field name="detallefactura_precioventa" class="java.lang.Double"/>
 	<field name="detallefactura_subtotal" class="java.lang.Double"/>
 	<field name="detallefactura_tributoiva" class="java.lang.Double"/>
 	<field name="detallefactura_total" class="java.lang.Double"/>
-	<field name="articulo_codigo" class="java.lang.String"/>
+	<field name="articulo_codigo" class="java.lang.Integer"/>
 	<field name="articulo_descripcion" class="java.lang.String"/>
 	<field name="articulo_idmedida" class="java.lang.Integer"/>
 	<field name="articulo_idgravamen" class="java.lang.Integer"/>
@@ -126,6 +135,12 @@ FROM
 	<field name="articulo_pventa" class="java.lang.Double"/>
 	<field name="articulo_idusuario" class="java.lang.Integer"/>
 	<field name="articulo_idplandecuenta" class="java.lang.Integer"/>
+	<field name="empresa_idempresa" class="java.lang.Integer"/>
+	<field name="empresa_rif" class="java.lang.String"/>
+	<field name="empresa_razonsocial" class="java.lang.String"/>
+	<field name="empresa_nombrecomercial" class="java.lang.String"/>
+	<field name="empresa_direccionfiscal" class="java.lang.String"/>
+	<field name="empresa_telefonos" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -136,7 +151,7 @@ FROM
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[DIRECCION:]]></text>
+				<text><![CDATA[DIRECCION :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="106" y="113" width="280" height="14" uuid="bd43567d-5652-42e5-81d1-5c70f237c76f"/>

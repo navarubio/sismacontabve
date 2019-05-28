@@ -214,8 +214,8 @@
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="2" style="text-align:right" footerText="TOTAL ASIENTO" />
-                                    <p:column style="text-align: right"  footerText="$ #{asientosventasController.totalDeudor}" />
-                                    <p:column style="text-align: right"  footerText="$ #{asientosventasController.totalAcreedor}" />
+                                    <p:column style="text-align: right"  footerText="#{bundle.Money} #{asientosventasController.totalDeudor}" />
+                                    <p:column style="text-align: right"  footerText="#{bundle.Money} #{asientosventasController.totalAcreedor}" />
                                 </p:row>
                             </p:columnGroup>                            
                         </p:dataTable>

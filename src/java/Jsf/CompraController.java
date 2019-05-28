@@ -428,7 +428,9 @@ public class CompraController implements Serializable {
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
         String ruta = servletContext.getRealPath("/resources/reportes/comprashechas.jasper");
 
-        rArticulo.getMovimientoCompras(ruta, codigoestatus,fechadesde,fechahasta);
+        empresa= (Empresa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("empresa");
+
+        rArticulo.getMovimientoCompras(ruta, codigoestatus,fechadesde,fechahasta,empresa.getIdempresa());
         FacesContext.getCurrentInstance().responseComplete();
     }
 

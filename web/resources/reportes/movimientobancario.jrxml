@@ -6,29 +6,46 @@
 	<parameter name="cuenta" class="java.lang.Integer"/>
 	<parameter name="fechaini" class="java.util.Date"/>
 	<parameter name="fechafin" class="java.util.Date"/>
+	<parameter name="idempresa" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     banco.`idbanco` AS banco_idbanco,
-     banco.`nombrebanco` AS banco_nombrebanco,
-     banco.`telefonos` AS banco_telefonos,
-     cuentabancaria.`idcuentabancaria` AS cuentabancaria_idcuentabancaria,
-     cuentabancaria.`idbanco` AS cuentabancaria_idbanco,
-     cuentabancaria.`numerocuenta` AS cuentabancaria_numerocuenta,
-     cuentabancaria.`saldo` AS cuentabancaria_saldo,
-     cuentabancaria.`idplandecuenta` AS cuentabancaria_idplandecuenta,
-     movimientobancario.`idmovimiento` AS movimientobancario_idmovimiento,
-     movimientobancario.`idcuentabancaria` AS movimientobancario_idcuentabancaria,
-     movimientobancario.`fecha` AS movimientobancario_fecha,
-     movimientobancario.`saldoanterior` AS movimientobancario_saldoanterior,
-     movimientobancario.`debito` AS movimientobancario_debito,
-     movimientobancario.`idpagocompra` AS movimientobancario_idpagocompra,
-     movimientobancario.`credito` AS movimientobancario_credito,
-     movimientobancario.`idcobroventa` AS movimientobancario_idcobroventa,
-     movimientobancario.`idotroingreso` AS movimientobancario_idotroingreso,
-     movimientobancario.`saldoactual` AS movimientobancario_saldoactual
+     banco."idbanco" AS banco_idbanco,
+     banco."nombrebanco" AS banco_nombrebanco,
+     banco."telefonos" AS banco_telefonos,
+     cuentabancaria."idcuentabancaria" AS cuentabancaria_idcuentabancaria,
+     cuentabancaria."idbanco" AS cuentabancaria_idbanco,
+     cuentabancaria."numerocuenta" AS cuentabancaria_numerocuenta,
+     cuentabancaria."saldo" AS cuentabancaria_saldo,
+     cuentabancaria."idplandecuenta" AS cuentabancaria_idplandecuenta,
+     movimientobancario."idmovimiento" AS movimientobancario_idmovimiento,
+     movimientobancario."idcuentabancaria" AS movimientobancario_idcuentabancaria,
+     movimientobancario."fecha" AS movimientobancario_fecha,
+     movimientobancario."saldoanterior" AS movimientobancario_saldoanterior,
+     movimientobancario."debito" AS movimientobancario_debito,
+     movimientobancario."idpagocompra" AS movimientobancario_idpagocompra,
+     movimientobancario."credito" AS movimientobancario_credito,
+     movimientobancario."idcobroventa" AS movimientobancario_idcobroventa,
+     movimientobancario."idotroingreso" AS movimientobancario_idotroingreso,
+     movimientobancario."saldoactual" AS movimientobancario_saldoactual,
+     empresa."idempresa" AS empresa_idempresa,
+     empresa."rif" AS empresa_rif,
+     empresa."razonsocial" AS empresa_razonsocial,
+     empresa."nombrecomercial" AS empresa_nombrecomercial,
+     empresa."direccionfiscal" AS empresa_direccionfiscal,
+     empresa."telefonos" AS empresa_telefonos
 FROM
-     `banco` banco INNER JOIN `cuentabancaria` cuentabancaria ON banco.`idbanco` = cuentabancaria.`idbanco`
-     INNER JOIN `movimientobancario` movimientobancario ON cuentabancaria.`idcuentabancaria` = movimientobancario.`idcuentabancaria` WHERE cuentabancaria.`idcuentabancaria`= $P{cuenta} AND  movimientobancario.`fecha` BETWEEN $P{fechaini} AND $P{fechafin}  ORDER BY  cuentabancaria.`numerocuenta`, movimientobancario.`idmovimiento`]]>
+     "banco" banco INNER JOIN "cuentabancaria" cuentabancaria ON banco."idbanco" = cuentabancaria."idbanco"
+     INNER JOIN "movimientobancario" movimientobancario ON cuentabancaria."idcuentabancaria" = movimientobancario."idcuentabancaria"
+     INNER JOIN "public"."empresa" empresa ON cuentabancaria."idempresa" = empresa."idempresa"
+WHERE
+     cuentabancaria."idcuentabancaria" = $P{cuenta}
+ AND movimientobancario."fecha" BETWEEN $P{fechaini} AND $P{fechafin}
+ AND empresa."idempresa" = $P{idempresa}
+ORDER BY
+     cuentabancaria."numerocuenta" ASC,
+     movimientobancario."idmovimiento" ASC]]>
 	</queryString>
 	<field name="banco_idbanco" class="java.lang.Integer"/>
 	<field name="banco_nombrebanco" class="java.lang.String"/>
@@ -48,6 +65,12 @@ FROM
 	<field name="movimientobancario_idcobroventa" class="java.lang.Integer"/>
 	<field name="movimientobancario_idotroingreso" class="java.lang.Integer"/>
 	<field name="movimientobancario_saldoactual" class="java.lang.Double"/>
+	<field name="empresa_idempresa" class="java.lang.Integer"/>
+	<field name="empresa_rif" class="java.lang.String"/>
+	<field name="empresa_razonsocial" class="java.lang.String"/>
+	<field name="empresa_nombrecomercial" class="java.lang.String"/>
+	<field name="empresa_direccionfiscal" class="java.lang.String"/>
+	<field name="empresa_telefonos" class="java.lang.String"/>
 	<group name="cliente_razonsocial">
 		<groupExpression><![CDATA[]]></groupExpression>
 	</group>
@@ -65,7 +88,7 @@ FROM
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[R.U.C]]></text>
+				<text><![CDATA[R.I.F]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="0" width="477" height="13" uuid="fd7466ea-1aa3-471c-bd14-54f157c1e020"/>
@@ -211,7 +234,7 @@ FROM
 			<textField>
 				<reportElement x="57" y="2" width="72" height="20" uuid="f4cfbcf0-2d9c-45e4-900c-11c389bc202e"/>
 				<textElement textAlignment="Center">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{banco_nombrebanco}]]></textFieldExpression>
 			</textField>

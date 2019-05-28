@@ -41,11 +41,11 @@
                                     </p:selectOneMenu>
                                     <p:outputLabel for="montoasignado" value="Monto Asignado:" styleClass="text-ouputnortmal"/>
                                     <p:outputLabel id="montoasignado" value="#{consumoscajachicaController.consumocajachica.idcajachica.montoasignado}" styleClass="text-ouputasignado">
-                                        <f:convertNumber type="currency" currencySymbol="$ " />
+                                        <f:convertNumber type="currency" currencySymbol="#{bundle.Money} " />
                                     </p:outputLabel>                                    
                                     <p:outputLabel for="saldo" value="Saldo Actual: " styleClass="text-ouputnortmal"/>
                                     <p:outputLabel id="saldo" value="#{consumoscajachicaController.consumocajachica.idcajachica.saldoactual}" styleClass="text-ouputfactura">
-                                        <f:convertNumber type="currency" currencySymbol="$ " />
+                                        <f:convertNumber type="currency" currencySymbol="#{bundle.Money} " />
                                     </p:outputLabel>
 
                                 </p:panelGrid>
@@ -57,7 +57,7 @@
                                     <p:outputLabel/>
                                     <p:outputLabel/>
                                     <p:outputLabel for="montof" value="MONTO DE REPOSICION" styleClass="text-ouput"/>
-                                    <p:outputLabel id="montof" value="$ #{consumoscajachicaController.totalgeneralform}" styleClass="text-ouputfactura"/> 
+                                    <p:outputLabel id="montof" value="#{bundle.Money} #{consumoscajachicaController.totalgeneralform}" styleClass="text-ouputfactura"/> 
                                     <p:outputLabel for="tipopag"  value="Forma de Pago" styleClass="text-ouput"/>
                                     <p:selectOneMenu id="tipopag" value="#{consumoscajachicaController.reposicionCajaChica.idtipopago}" converter="omnifaces.SelectItemsConverter" > 
                                         <!--f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue=".{null}"/-->
@@ -155,7 +155,7 @@
                                     <p:columnGroup type="footer">
                                         <p:row>
                                             <p:column colspan="6" style="text-align:right" footerText="TOTAL REPOSICION" />
-                                            <p:column style="text-align: right"  footerText="$ #{consumoscajachicaController.totalgeneralform}" />
+                                            <p:column style="text-align: right"  footerText="#{bundle.Money} #{consumoscajachicaController.totalgeneralform}" />
                                         </p:row>
                                     </p:columnGroup>                            
                                 </p:dataTable>

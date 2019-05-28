@@ -132,7 +132,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundlecontabilidad.ListMaestromovimientoTitle_idlibrodiario}"/>
                             </f:facet>                         
-                            <h:outputText value="#{item.idlibrodiario.serialasiento}"/>
+                            <p:commandLink value="#{item.idlibrodiario.serialasiento}" styleClass="text-ouputfact"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundlecontabilidad.Create}" actionListener="#{maestromovimientoController.prepareCreate}" update=":MaestromovimientoCreateForm" oncomplete="PF('MaestromovimientoCreateDialog').show()"/>

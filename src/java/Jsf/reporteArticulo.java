@@ -136,7 +136,7 @@ public class reporteArticulo {
 
             //Se definen los parametros si es que el reporte necesita
             Map parameter = new HashMap();
-            parameter.put("IdEmpre", empre);
+            parameter.put("idempresa", empre);
 
             try {
                 File file = new File(ruta);
@@ -526,7 +526,7 @@ public class reporteArticulo {
             }
         }
     }  
-    public void getMovimientoBancario(String ruta, int cta, Date fechaini, Date fechafinal) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
+    public void getMovimientoBancario(String ruta, int cta, Date fechaini, Date fechafinal, int empre) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         if (ruta != null) {
 
             Connection conexion;
@@ -538,7 +538,7 @@ public class reporteArticulo {
             parameter.put("cuenta", cta);
             parameter.put("fechaini", fechaini);
             parameter.put("fechafin", fechafinal);
-            
+            parameter.put("idempresa", empre);
 
             try {
                 File file = new File(ruta);
@@ -579,7 +579,7 @@ public class reporteArticulo {
         }
     }  
     
-    public void getMovimientoCompras(String ruta, int status, Date fechaini, Date fechafinal) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
+    public void getMovimientoCompras(String ruta, int status, Date fechaini, Date fechafinal, int empre) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         if (ruta != null) {
 
             Connection conexion;
@@ -591,6 +591,8 @@ public class reporteArticulo {
             parameter.put("estatus", status);
             parameter.put("fechaini", fechaini);
             parameter.put("fechafin", fechafinal);
+            parameter.put("idempresa", empre);
+            
 
             try {
                 File file = new File(ruta);
