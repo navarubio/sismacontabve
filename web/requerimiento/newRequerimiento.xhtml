@@ -52,9 +52,7 @@
                                 <p:outputLabel for="cantidad" style="font-weight:bold" value="Cantidad"/>
                                 <p:inputText id="cantidad" value="#{requerimientosController.cantidad}" style="text-align:right" required="true" size="5"/>
                                 <p:outputLabel for="precio"  style="font-weight:bold" value="Precio sin IVA" styleClass="optionalLbl"/>
-                                <p:inputText id="precio"  size="10" value="#{requerimientosController.pcosto}" style="text-align:right">
-                                    <f:convertNumber type="currency" currencySymbol="" />
-                                </p:inputText>
+                                <p:inputText id="precio"  size="10" value="#{requerimientosController.pcosto}" style="text-align:right"/>
                                 <p:commandButton value="Anexar" icon="ui-icon-plusthick"  action="#{requerimientosController.anexar()}" update="listaarticulos,listado,datosarticulo"/>   
                             </p:panelGrid>
                         </p:fieldset>

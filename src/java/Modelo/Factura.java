@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -46,26 +48,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Factura.findByCantidadenletras", query = "SELECT f FROM Factura f WHERE f.cantidadenletras = :cantidadenletras")})
 public class Factura implements Serializable {
 
-    @JoinColumn(name = "idmaestro", referencedColumnName = "idmaestro")
-    @ManyToOne
-    private Maestromovimiento idmaestro;
-    @OneToMany(mappedBy = "numerofact")
-    private Collection<Maestromovimiento> maestromovimientoCollection;
-    @OneToMany(mappedBy = "numerofact")
-    private Collection<Detalleretencionivasp> detalleretencionivaspCollection;
-    @OneToMany(mappedBy = "numerofact")
-    private Collection<Detalleretencionislrsp> detalleretencionislrspCollection;
-    @OneToMany(mappedBy = "numerofact")
-    private Collection<Detallefactura> detallefacturaCollection;
-    @OneToMany(mappedBy = "numerofact")
-    private Collection<Cobroventa> cobroventaCollection;
-    @OneToMany(mappedBy = "numerofact")
-    private Collection<Despachopicadora> despachopicadoraCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    
     @Basic(optional = false)
-    @NotNull
     @Column(name = "numerofact")
     private Integer numerofact;
     @Size(max = 11)
@@ -112,6 +98,22 @@ public class Factura implements Serializable {
     @Column(name = "idempresa")
     private Integer idempresa;
     
+    @JoinColumn(name = "idmaestro", referencedColumnName = "idmaestro")
+    @ManyToOne
+    private Maestromovimiento idmaestro;
+    @OneToMany(mappedBy = "numerofact")
+    private Collection<Maestromovimiento> maestromovimientoCollection;
+    @OneToMany(mappedBy = "numerofact")
+    private Collection<Detalleretencionivasp> detalleretencionivaspCollection;
+    @OneToMany(mappedBy = "numerofact")
+    private Collection<Detalleretencionislrsp> detalleretencionislrspCollection;
+    @OneToMany(mappedBy = "numerofact")
+    private Collection<Detallefactura> detallefacturaCollection;
+    @OneToMany(mappedBy = "numerofact")
+    private Collection<Cobroventa> cobroventaCollection;
+    @OneToMany(mappedBy = "numerofact")
+    private Collection<Despachopicadora> despachopicadoraCollection;
+
 
     public Factura() {
     }

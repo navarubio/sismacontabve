@@ -293,7 +293,7 @@ public class FacturasController implements Serializable {
 
         try {
             Usuario usua = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-            factura.setNumerofact(number);
+            factura.setSerialfactura(number);
             factura.setIdusuario(usua);
             factura.setRifcliente(cliente);
             factura.setBimponiblefact(requerimientosController.redondearDecimales(totalbaseimponible()));

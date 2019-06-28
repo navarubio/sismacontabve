@@ -99,6 +99,14 @@
                                 <f:convertNumber type="currency" currencySymbol=" " />
                             </h:outputText>                                  
                         </p:column>
+                        <p:column style="text-align:right" styleClass="text-output">
+                            <f:facet name="header">
+                                <h:outputText value="PENDIENTE"/>
+                            </f:facet>
+                            <h:outputText value="#{item.saldopendiente}" >
+                                <f:convertNumber type="currency" currencySymbol=" " />
+                            </h:outputText>                                  
+                        </p:column>                        
                         <p:column width="120" filterBy="#{item.idestatusfacturaventa.estatusfacturaventa}" headerText="Estatus" filterMatchMode="exact" style="text-align: center">
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('facturas').filter()" >

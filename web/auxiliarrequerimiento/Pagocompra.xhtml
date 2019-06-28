@@ -101,25 +101,25 @@
                                     <p:inputText id="numerocontrol" label="Control" size ="10" value="#{pagosController.compra.controlfactura}" />
                                     <p:outputLabel for="montof" value="Monto Factura" styleClass="text-ouput"/>
                                     <p:outputLabel id="montof" value="#{pagosController.compra.total}" styleClass="text-ouputfactura" >
-                                        <f:convertNumber type="currency" currencySymbol="$ " />
+                                        <f:convertNumber type="currency" currencySymbol="#{bundle.Money} " />
                                     </p:outputLabel>                                        
                                     <p:outputLabel/>
                                     <p:outputLabel/>
                                     <p:outputLabel for="montoretiva" value="IVA Retenido" styleClass="text-ouput"/>
                                     <p:outputLabel id="montoretiva" value="#{pagosController.detalleretencionivaef.totalivaretenido}" styleClass="text-ouputfactura" >
-                                        <f:convertNumber type="currency" currencySymbol="$ " />
+                                        <f:convertNumber type="currency" currencySymbol="#{bundle.Money} " />
                                     </p:outputLabel>
                                     <p:outputLabel/>
                                     <p:outputLabel/>
                                     <p:outputLabel for="montoretislr" value="ISLR retenido" styleClass="text-ouput"/>
                                     <p:outputLabel id="montoretislr" value="#{pagosController.detalleretencionislref.totalislrretenido}" styleClass="text-ouputfactura" >
-                                        <f:convertNumber type="currency" currencySymbol="$ " />
+                                        <f:convertNumber type="currency" currencySymbol="#{bundle.Money} " />
                                     </p:outputLabel>
                                     <p:outputLabel/>
                                     <p:outputLabel/>
                                     <p:outputLabel for="montop" value="Monto a Pagar" styleClass="text-ouput"/>
                                     <p:outputLabel id="montop" value="#{pagosController.pagocompra.totalpago}" styleClass="text-ouputfactura" >
-                                        <f:convertNumber type="currency" currencySymbol="$ " />
+                                        <f:convertNumber type="currency" currencySymbol="#{bundle.Money} " />
                                     </p:outputLabel>
                                     <p:outputLabel value="Porción Pago" styleClass="text-ouput"/>
                                     <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
@@ -172,7 +172,7 @@
                                     </p:selectOneMenu>
                                     <p:outputLabel for="saldocuenta" value="Saldo Cuenta" styleClass="text-ouput"/>
                                     <h:outputText id="saldocuenta" value="#{pagosController.pagocompra.idcuentabancaria.saldo}" styleClass="text-ouputsaldo">
-                                        <f:convertNumber type="currency" currencySymbol="$ "   />
+                                        <f:convertNumber type="currency" currencySymbol="#{bundle.Money} "   />
                                     </h:outputText>
                                     <p:outputLabel for="ctareceptora" value="Cta. Receptora" styleClass="text-ouput"/>
                                     <p:inputMask id="ctareceptora" label="Cta. Receptora" mask="9999-9999-99-9999999999" size ="25" value="#{pagosController.pagocompra.cuentareceptora}" />                                    
@@ -248,9 +248,9 @@
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
-                                    <p:column style="text-align: right"  footerText="$ #{pagosController.totalsubtotalform}" /> 
-                                    <p:column style="text-align: right"  footerText="$ #{pagosController.totalivaform}" />
-                                    <p:column style="text-align: right"  footerText="$ #{pagosController.totalgeneralform}" />                                        
+                                    <p:column style="text-align: right"  footerText="#{bundle.Money} #{pagosController.totalsubtotalform}" /> 
+                                    <p:column style="text-align: right"  footerText="#{bundle.Money} #{pagosController.totalivaform}" />
+                                    <p:column style="text-align: right"  footerText="#{bundle.Money} #{pagosController.totalgeneralform}" />                                        
                                 </p:row>
                             </p:columnGroup>       
                         </p:dataTable> 

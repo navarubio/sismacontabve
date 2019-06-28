@@ -55,25 +55,25 @@
                                     </p:calendar>                                          
                                     <p:outputLabel for="montofact" value="MONTO POR COBRAR" styleClass="text-ouput"/>
                                     <p:outputLabel id="montofact" value="#{cobroventasController.factura.saldopendiente}" styleClass="text-ouputcxc" >
-                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                        <f:convertNumber type="currency" currencySymbol="#{bundle.Money} " />
                                     </p:outputLabel>
                                     <p:outputLabel/>
                                     <p:outputLabel/>
                                     <p:outputLabel for="montoretiva" value="IVA Retenido" styleClass="text-ouput"/>
                                     <p:outputLabel id="montoretiva" value="#{cobroventasController.detalleretencionivasp.totalivaretenido}" styleClass="text-ouputfact" >
-                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                        <f:convertNumber type="currency" currencySymbol="#{bundle.Money} " />
                                     </p:outputLabel>
                                     <p:outputLabel/>
                                     <p:outputLabel/>
                                     <p:outputLabel for="montoretislr" value="ISLR retenido" styleClass="text-ouput"/>
                                     <p:outputLabel id="montoretislr" value="#{cobroventasController.detalleretencionislrsp.totalislrretenido}" styleClass="text-ouputfact" >
-                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                        <f:convertNumber type="currency" currencySymbol="#{bundle.Money} " />
                                     </p:outputLabel>
                                     <p:outputLabel/>
                                     <p:outputLabel/>
                                     <p:outputLabel for="montop" value="Monto a Cobrar" styleClass="text-ouput"/>
                                     <p:outputLabel id="montop" value="#{cobroventasController.cobro.montocobrado}" styleClass="text-ouputfact" >
-                                        <f:convertNumber type="currency" currencySymbol=" " />
+                                        <f:convertNumber type="currency" currencySymbol="#{bundle.Money} " />
                                     </p:outputLabel>
 
                                     <p:outputLabel value="Porción de Cobro" styleClass="text-ouput"/>
@@ -174,9 +174,9 @@
                             <p:columnGroup type="footer">
                                 <p:row>
                                     <p:column colspan="4" style="text-align:right" footerText="TOTALES" />
-                                    <p:column style="text-align: right"  footerText="#{cobroventasController.factura.bimponiblefact}" /> 
-                                    <p:column style="text-align: right"  footerText="#{cobroventasController.factura.ivafact}" />
-                                    <p:column style="text-align: right"  footerText="#{cobroventasController.factura.totalgeneral}" />                                        
+                                    <p:column style="text-align: right"  footerText="#{bundle.Money} #{cobroventasController.factura.bimponiblefact}" /> 
+                                    <p:column style="text-align: right"  footerText="#{bundle.Money} #{cobroventasController.factura.ivafact}" />
+                                    <p:column style="text-align: right"  footerText="#{bundle.Money} #{cobroventasController.factura.totalgeneral}" />                                        
                                 </p:row>
                             </p:columnGroup>       
                         </p:dataTable>                                                                            

@@ -11,6 +11,7 @@ import Modelo.Empresa;
 import Modelo.Plandecuenta;
 import Modelo.Subgrupo;
 import Modelo.Usuario;
+import Modelo.Usuariodeprol;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -53,6 +54,8 @@ public class ArticuloController implements Serializable {
     private RequerimientosController requerimientosController;
     @Inject 
     private Empresa empresa;    
+    @Inject
+    private Usuariodeprol usuariodeprol;
     
     public ArticuloController() {
     }
@@ -106,10 +109,10 @@ public class ArticuloController implements Serializable {
         initializeEmbeddableKey();
         usa=getUsuario();
         selected.setIdusuario(usa);
-        selected.setIdempresa(requerimientosController.getEmpresa().getIdempresa());
+        selected.setIdempresa(usa.getIddepartamento().getIdempresa().getIdempresa());
         return selected;
     }
-    
+       
     public void asignarArticulo(Articulo articulo) {
         this.selected = ejbFacade.buscarArticulo(articulo.getCodigo());
         this.articuloaclasificar=selected;

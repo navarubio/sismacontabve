@@ -27,7 +27,7 @@
                             <p:fieldset legend="Datos Facturación" >
                                 <p:panelGrid columns="4" styleClass="ui-custompanelgrid" >
                                     <p:outputLabel for="numero" value="Numero Factura" styleClass="text-ouput"/>
-                                    <p:outputLabel id="numero" value="#{asientosventasController.factura.numerofact}" styleClass="optionalLbl">
+                                    <p:outputLabel id="numero" value="#{asientosventasController.factura.serialfactura}" styleClass="optionalLbl">
                                         <f:convertNumber pattern="00000" type="number"/>
                                     </p:outputLabel>
                                     <p:outputLabel for="control" styleClass="text-ouput" value="Numero Control" />

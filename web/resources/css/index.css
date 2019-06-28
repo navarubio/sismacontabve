@@ -126,6 +126,12 @@ ui-custompanelgrid5, .ui-custompanelgrid5 td {
     color: black ;
     font-weight: bolder;
 }
+.facturaabonadacobrada{
+    border: 2px solid black ;
+    background: appworkspace;
+    color: black ;
+    font-weight: bolder;
+}
 .articulosinclasificar{
     border: 2px solid black ;
     background: yellowgreen ;

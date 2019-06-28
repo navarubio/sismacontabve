@@ -34,13 +34,7 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column style="text-align: center">
-                            <f:facet name="header">
-                                <h:outputText value="#{bundlecontabilidad.ListLibromayorTitle_idlibromayor}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idlibromayor}"/>
-                        </p:column>
-                        <p:column style="text-align: center" filterBy="#{item.idlibrodiario.idlibrodiario}" filterMatchMode="exact" filterStyle="width:50px;">
+                        <p:column style="text-align: center" filterBy="#{item.idlibrodiario.serialasiento}" filterMatchMode="exact" filterStyle="width:50px;">
                             <f:facet name="header">
                                <h:outputText value="Asiento"/>
                             </f:facet>
@@ -101,7 +95,7 @@
                         </p:column>
                         <p:columnGroup type="footer">
                             <p:row>
-                                <p:column colspan="5" style="text-align:right" footerText="Totales:" />
+                                <p:column colspan="4" style="text-align:right" footerText="Totales:" />
                                 <p:column footerText="#{libromayorController.totalAnt}" style="text-align: right" />                               
                                 <p:column footerText="#{libromayorController.totalDebe}" style="text-align: right" />
                                 <p:column footerText="#{libromayorController.totalHaber}" style="text-align: right" />
