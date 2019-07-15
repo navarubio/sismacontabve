@@ -38,7 +38,7 @@ public class LibromayorcompuestoFacade extends AbstractFacade<Libromayorcompuest
         String consulta;
         List<Libromayorcompuesto> lista = null;
         try {
-            consulta = "From Libromayorcompuesto l where l.idplandecuenta= ?1 and l.fecha between ?2 and ?3 order by l.fecha, l.idlibromayor";
+            consulta = "From Libromayorcompuesto l where l.idplandecuenta= ?1 and l.fecha between ?2 and ?3 order by l.fecha, l.idlibrodiario";
             Query query = em.createQuery(consulta);
             query.setParameter(1, cuentacontable);
             query.setParameter(2, fechaini);

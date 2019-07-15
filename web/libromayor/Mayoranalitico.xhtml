@@ -25,7 +25,7 @@
                         <p:fieldset  legend="Anilizar por Fecha"  toggleable="true" toggleSpeed="500" collapsed="false" >
                             <p:panelGrid columns="6" styleClass="ui-custompanelgrid1" style="width: 100%">
                                 <p:outputLabel for="cuentacontable" value="Cuenta Contable" styleClass="text-ouputnormal"/>
-                                <p:selectOneMenu id="cuentacontable" value="#{libromayorController.cuentacontab}" converter="omnifaces.SelectItemsConverter" required="true" filter="true" filterMatchMode="contains"> 
+                                <p:selectOneMenu id="cuentacontable" value="#{libromayorController.cuentacontab}"  required="true" filter="true" filterMatchMode="contains"> 
                                     <f:selectItem noSelectionOption="true" itemLabel="SELECCIONE CUENTA"/>
                                     <f:selectItems value="#{plandecuentasController.itemsordenados}"
                                                    var="itemplancuenta"

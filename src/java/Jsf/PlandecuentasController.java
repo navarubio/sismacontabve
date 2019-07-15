@@ -331,7 +331,7 @@ public class PlandecuentasController implements Serializable {
         return new DecimalFormat("###,###.##").format(total);
     } 
     
-        public String getComprobacionDebe() {
+    public String getComprobacionDebe() {
         double total = 0;
  
         for(Plandecuenta plandcta : items) {
